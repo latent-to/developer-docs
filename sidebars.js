@@ -153,6 +153,7 @@ const sidebars = {
         "subnets/consensus-based-weights",
         "subnets/bt-logging-levels",
         "utilities",
+        "indexers",
       ],
     },
 
