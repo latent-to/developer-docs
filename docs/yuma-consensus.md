@@ -13,8 +13,7 @@ Each of a subnet's validators periodically submits a vector of weights ranking t
 The algorithm is designed to more heavily weight the inputs of more trusted validators, in order to ignore the portion of the validation signal that is less reliable. By disregarding unreliable weight-settings, YC incentivizes validators to be worthy of trust by working hard to give consistent, fast, honest evaluations of miners that predict the eventual convergence of other validators' evaluations. YC incentivizes miners to work hard for the highest combined evaluation by the community of validators.
 
 See:
-- [How Yuma Consensus 3 Makes Bittensor More Fair](./subnets/yc3-blog)
-- [Yuma Consensus 3 Migration Guide](./subnets/yuma3-migration-guide)
+
 - [Emissions](./emissions)
 - [Subtensor Docs: Yuma Consensus](https://github.com/opentensor/subtensor/blob/main/docs/consensus.md)
 
