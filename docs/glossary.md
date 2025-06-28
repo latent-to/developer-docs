@@ -10,13 +10,19 @@ title: "Glossary"
 
 A UID slot that is considered active within a specific subnet, allowing the associated hotkey to participate as a subnet validator or subnet miner.
 
+**See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/)
+
 ### Archive Node
 
 A type of public subtensor node that stores the entire blockchain history, allowing for full data access and querying capabilities.
 
+**See also:** [Subtensor Nodes](./subtensor-nodes/), [Managing Subtensor Connections](./sdk/managing-subtensor-connections.md)
+
 ### Axon
 
 A module in the Bittensor API that uses the FastAPI library to create and run API servers. Axons receive incoming Synapse objects. Typically, an Axon is the entry point advertised by a subnet miner on the Bittensor blockchain, allowing subnet validators to communicate with the miner.
+
+**See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/)
 
 ## B
 
@@ -24,14 +30,19 @@ A module in the Bittensor API that uses the FastAPI library to create and run AP
 
 A two-tier legislative system comprising the Triumvirate and the Senate for proposal approval.
 
+**See also:** [Governance](./governance.md), [Senate](./senate.md)
 
 ### Bittensor Wallet
 
 A digital wallet that holds the core ownership in the Bittensor network and serves as the user's identity technology underlying all operations.
 
+**See also:** [Wallets](./getting-started/wallets.md), [Working with Keys](./working-with-keys.md)
+
 ### Block
 
 A unit of data in the Bittensor blockchain, containing a collection of transactions and a unique identifier (block hash). A single block is processed every 12 seconds in the Bittensor blockchain. 
+
+**See also:** [Subtensor API](./sdk/subtensor-api.md)
 
 ## C
 
@@ -39,19 +50,194 @@ A unit of data in the Bittensor blockchain, containing a collection of transacti
 
 A component of a Bittensor wallet responsible for securely storing funds and performing high-risk operations such as transfers and staking. It is encrypted on the user's device. This is analogous to a private key.
 
+**See also:** [Coldkey-Hotkey Security](./getting-started/coldkey-hotkey-security.md), [Working with Keys](./working-with-keys.md)
+
 ### Coldkey-hotkey pair
 
 A combination of two keys, a coldkey for secure storage and high-risk operations, and a hotkey for less secure operations and network interactions.
+
+**See also:** [Coldkey-Hotkey Security](./getting-started/coldkey-hotkey-security.md), [Working with Keys](./working-with-keys.md)
 
 ### Commit Reveal
 
 The commit reveal feature is designed to solve the weight-copying problem by giving would-be weight-copiers access only to stale weights. Copying stale weights should result in validators departing from consensus.
 
-See [Commit Reveal](./subnets/commit-reveal.md) for details.
+**See also:** [Commit Reveal](./subnets/commit-reveal.md)
+
+Code References and Implementation Details
+
+**Commit Reveal as Anti-Weight-Copying Mechanism:**
+- Commit reveal prevents weight copying by introducing a time delay between weight commitment and revelation
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:41` - `do_commit_weights()` implementation
+- Validators commit to weights without revealing them immediately, creating a temporal offset
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:74` - Weight commit storage in `WeightCommits<T>`
+- The mechanism ensures that copied weights are stale by the time they can be used
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1075` - `get_reveal_blocks()` timing calculation
+
+**Core Storage and Configuration:**
+
+**Commit Reveal Enablement:**
+- Commit reveal is controlled per subnet via `CommitRevealWeightsEnabled` storage
+  - `subtensor/pallets/subtensor/src/lib.rs:1430` - `pub type CommitRevealWeightsEnabled<T> = StorageMap<_, Identity, u16, bool, ValueQuery, DefaultCommitRevealWeightsEnabled<T>>;`
+- Enablement can be toggled by subnet owners or root
+  - `subtensor/pallets/subtensor/src/utils/misc.rs:472-477` - `get_commit_reveal_weights_enabled()` and `set_commit_reveal_weights_enabled()`
+
+**Weight Commit Storage:**
+- **WeightCommits**: Stores commit hashes and timing information for each validator
+  - `subtensor/pallets/subtensor/src/lib.rs:1662-1669` - `pub type WeightCommits<T: Config> = StorageDoubleMap<_, Twox64Concat, u16, Twox64Concat, T::AccountId, VecDeque<(H256, u64, u64, u64)>, OptionQuery>;`
+- **CRV3WeightCommits**: Stores v3 encrypted commits with epoch-based organization
+  - `subtensor/pallets/subtensor/src/lib.rs:1671-1680` - `pub type CRV3WeightCommits<T: Config> = StorageDoubleMap<_, Twox64Concat, u16, Twox64Concat, u64, VecDeque<(T::AccountId, BoundedVec<u8, ConstU32<MAX_CRV3_COMMIT_SIZE_BYTES>>, RoundNumber)>, ValueQuery>;`
+- **RevealPeriodEpochs**: Configurable reveal period per subnet
+  - `subtensor/pallets/subtensor/src/lib.rs:1682-1684` - `pub type RevealPeriodEpochs<T: Config> = StorageMap<_, Twox64Concat, u16, u64, ValueQuery, DefaultRevealPeriodEpochs<T>>;`
+
+**Commit Phase Implementation:**
+
+**Commit Hash Generation:**
+- Commit hash is generated from validator data using BlakeTwo256
+  - `subtensor/pallets/subtensor/src/tests/weights.rs:1520` - `let commit_hash: H256 = BlakeTwo256::hash_of(&(hotkey, netuid, uids.clone(), weight_values.clone(), salt.clone(), version_key));`
+- Hash includes: hotkey, netuid, uids, weight_values, salt, and version_key
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:74` - Commit storage with hash and timing information
+
+**Commit Validation:**
+- **Enablement Check**: Ensures commit-reveal is enabled for the subnet
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:52` - `ensure!(Self::get_commit_reveal_weights_enabled(netuid), Error::<T>::CommitRevealDisabled);`
+- **Registration Check**: Validates hotkey is registered on the network
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:56-59` - `ensure!(Self::is_hotkey_registered_on_network(netuid, &who), Error::<T>::HotKeyNotRegisteredInSubNet);`
+- **Rate Limiting**: Prevents excessive commit frequency
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:61-66` - Rate limit check via `check_rate_limit()`
+
+**Reveal Timing Calculation:**
+
+**Epoch-Based Timing:**
+- **Epoch Calculation**: Epochs are calculated based on tempo and netuid offset
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1040-1047` - `get_epoch_index()` implementation
+- **Reveal Period**: Configurable number of epochs between commit and reveal
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1095-1097` - `get_reveal_period()` and `set_reveal_period()`
+
+**Reveal Block Range:**
+- **First Reveal Block**: Calculated from commit epoch + reveal period
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1075-1085` - `get_reveal_blocks()` implementation
+- **Last Reveal Block**: First reveal block + tempo (one epoch duration)
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1086-1087` - `let last_reveal_block = first_reveal_block.saturating_add(tempo);`
+
+**Reveal Phase Implementation:**
+
+**Reveal Validation:**
+- **Enablement Check**: Ensures commit-reveal is still enabled
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:353` - `ensure!(Self::get_commit_reveal_weights_enabled(netuid), Error::<T>::CommitRevealDisabled);`
+- **Hash Verification**: Validates revealed data matches committed hash
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:396-396` - Hash matching in reveal validation
+- **Timing Validation**: Ensures reveal occurs within valid time window
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1020-1027` - `is_reveal_block_range()` implementation
+
+**Reveal Timing Checks:**
+- **Too Early**: Reveal attempted before valid reveal period
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1020-1027` - `is_reveal_block_range()` check
+- **Expired**: Commit has expired beyond reveal period
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1029-1035` - `is_commit_expired()` implementation
+- **Valid Window**: Reveal must occur exactly at `commit_epoch + reveal_period`
+
+**Commit Expiration and Cleanup:**
+
+**Expiration Logic:**
+- **Expiration Check**: Commits expire after reveal period + 1 epoch
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1029-1035` - `is_commit_expired()` function
+- **Automatic Cleanup**: Expired commits are removed during reveal operations
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:512-520` - Expired commit removal in batch reveal
+
+**Queue Management:**
+- **FIFO Processing**: Commits are processed in first-in-first-out order
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:74` - `VecDeque<(H256, u64, u64, u64)>` storage
+- **Commit Removal**: Revealed commits are removed from the queue
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:410-415` - Commit removal after successful reveal
+
+**Security Properties:**
+
+**Anti-Weight-Copying:**
+- **Temporal Offset**: Time delay prevents immediate weight copying
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1075` - Reveal timing calculation
+- **Stale Data**: Copied weights become irrelevant due to network changes
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1029-1035` - Commit expiration mechanism
+- **Hash Verification**: Cryptographic commitment prevents manipulation
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:396` - Hash verification in reveal
+
+**Rate Limiting:**
+- **Commit Rate Limit**: Prevents excessive commit frequency
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:61-66` - Rate limit validation
+- **Reveal Timing**: Strict timing windows prevent timing attacks
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1020-1027` - Reveal timing validation
+
+**Testing and Validation:**
+
+**Comprehensive Test Coverage:**
+- **Basic Functionality**: Tests verify commit and reveal workflow
+  - `subtensor/pallets/subtensor/src/tests/weights.rs:1502-1559` - `test_reveal_weights_when_commit_reveal_disabled()`
+- **Timing Validation**: Tests verify reveal timing constraints
+  - `subtensor/pallets/subtensor/src/tests/weights.rs:1663-1750` - Timing validation tests
+- **Hash Verification**: Tests verify cryptographic commitment integrity
+  - `subtensor/pallets/subtensor/src/tests/weights.rs:1750-1831` - `test_commit_reveal_hash()`
+
+**Error Handling:**
+- **CommitRevealDisabled**: Attempting operations when disabled
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:52` - Enablement check
+- **RevealTooEarly**: Reveal attempted before valid window
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1020-1027` - Timing validation
+- **ExpiredWeightCommit**: Reveal attempted after expiration
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1029-1035` - Expiration check
+- **InvalidRevealCommitHashNotMatch**: Hash verification failure
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:396` - Hash matching
+
+**Network Configuration:**
+
+**Subnet-Level Settings:**
+- **Enablement**: Per-subnet commit reveal toggle
+  - `subtensor/pallets/subtensor/src/utils/misc.rs:472-477` - Enablement functions
+- **Reveal Period**: Configurable epochs between commit and reveal
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:1095-1097` - Reveal period configuration
+- **Rate Limits**: Commit frequency restrictions
+  - `subtensor/pallets/subtensor/src/subnets/weights.rs:61-66` - Rate limiting
+
+**Default Values:**
+- **DefaultCommitRevealWeightsEnabled**: Defaults to false (disabled)
+  - `subtensor/pallets/subtensor/src/lib.rs:799` - `pub fn DefaultCommitRevealWeightsEnabled<T: Config>() -> bool { false }`
+- **DefaultRevealPeriodEpochs**: Default reveal period configuration
+  - `subtensor/pallets/subtensor/src/lib.rs:735` - `pub fn DefaultRevealPeriodEpochs<T: Config>() -> u64 { 1 }`
+
+**Key Mathematical Insights:**
+1. **Commit Hash = BlakeTwo256(hotkey, netuid, uids, weights, salt, version_key)**: Cryptographic commitment
+2. **Reveal Epoch = Commit Epoch + Reveal Period**: Timing calculation
+3. **Reveal Block Range = [first_reveal_block, last_reveal_block]**: Valid reveal window
+4. **Expiration = Current Epoch > Commit Epoch + Reveal Period + 1**: Automatic cleanup
+5. **Temporal Offset = Reveal Period × Tempo**: Anti-copying delay
+
+**Network Security Implications:**
+- **Weight Copying Prevention**: Temporal offset makes copied weights stale
+- **Consensus Stability**: Prevents rapid weight manipulation
+- **Validator Commitment**: Requires validators to commit to their assessments
+- **Network Decentralization**: Reduces influence of weight-copying validators
+- **Dynamic Adaptation**: Network changes make stale weights irrelevant
+
+**Complete Commit Reveal Flow:**
+1. **Configuration** → Subnet enables commit reveal and sets reveal period
+2. **Commit Phase** → Validator commits hash of weights without revealing them
+3. **Temporal Offset** → Network progresses for reveal_period epochs
+4. **Reveal Window** → Validator reveals weights within valid time window
+5. **Hash Verification** → System verifies revealed data matches commit hash
+6. **Weight Application** → Verified weights are applied to consensus
+7. **Cleanup** → Expired commits are automatically removed
+
+**Commit Reveal vs Traditional Weight Setting:**
+- **Traditional**: Immediate weight setting and consensus participation
+- **Commit Reveal**: Delayed weight revelation with temporal offset
+- **Security**: Commit reveal prevents weight copying and manipulation
+- **Complexity**: Additional timing and hash verification requirements
+- **Flexibility**: Configurable per subnet based on security needs
 
 ### Consensus
 
 A measure of a subnet validator's agreement with other validators on the network, calculated based on their trust scores. This is a $\kappa$-centered sigmoid of trust, influencing the emission calculation.
+
+**See also:** [Yuma Consensus](./yuma-consensus.md), [Consensus-Based Weights](./subnets/consensus-based-weights.md)
 
 ## D
 
@@ -59,27 +245,275 @@ A measure of a subnet validator's agreement with other validators on the network
 
 A subnet validator that receives staked TAO tokens from delegators and performs validation tasks in one or more subnets.
 
+**See also:** [Delegation](./staking-and-delegation/delegation.md), [Managing Stake with btcli](./staking-and-delegation/managing-stake-btcli.md)
+
 ### Delegate Stake
 
 The amount of TAO staked by the delegate themselves.
+
+**See also:** [Managing Stake with btcli](./staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](./staking-and-delegation/managing-stake-sdk.md)
 
 ### Validator Take %
 
 The percentage of emissions a validator takes, of the portion that depends on delegated stake (not including their emissions in proportion to their own self-stake), before the remainder is extracted back to the stakers.
 
-See [Emissions](./emissions).
+**See also:** [Emissions](./emissions.md)
+
+Code References and Implementation Details
+
+**Validator Take as Delegation Fee:**
+- Validator take represents the fee percentage that validators charge delegators for validation services
+  - `subtensor/pallets/subtensor/src/lib.rs:992-994` - `pub type Delegates<T: Config> = StorageMap<_, Blake2_128Concat, T::AccountId, u16, ValueQuery, DefaultDelegateTake<T>>;`
+- Take is stored as a u16 value representing percentage of u16::MAX (65,535)
+  - `subtensor/pallets/subtensor/src/tests/mock.rs:168` - `pub const InitialDefaultDelegateTake: u16 = 11_796; // 18%`
+- Default take is 18% (11,796/65,535), with configurable min/max bounds
+  - `subtensor/pallets/subtensor/src/lib.rs:382` - `T::InitialDefaultDelegateTake::get()`
+
+**Storage and Configuration:**
+
+**Core Storage Implementation:**
+- **Delegates Storage**: Maps hotkey to take value in blockchain state
+  - `subtensor/pallets/subtensor/src/lib.rs:992-994` - `pub type Delegates<T: Config> = StorageMap<_, Blake2_128Concat, T::AccountId, u16, ValueQuery, DefaultDelegateTake<T>>;`
+- **Default Values**: Network-wide configuration for take limits
+  - `subtensor/pallets/subtensor/src/lib.rs:382` - `DefaultDelegateTake<T>()` - Default 18%
+  - `subtensor/pallets/subtensor/src/lib.rs:393` - `DefaultMinDelegateTake<T>()` - Minimum 9%
+  - `subtensor/pallets/subtensor/src/lib.rs:977` - `MaxDelegateTake<T>` - Maximum 18%
+
+**Take Management Functions:**
+
+**Increase Take Implementation:**
+- **Rate Limiting**: Prevents rapid take increases to maintain network stability
+  - `subtensor/pallets/subtensor/src/staking/increase_take.rs:55-62` - Rate limit validation
+- **Strict Increase**: Take can only be increased, never decreased via this function
+  - `subtensor/pallets/subtensor/src/staking/increase_take.rs:50-52` - `ensure!(take > current_take, Error::<T>::DelegateTakeTooLow);`
+- **Max Bound Check**: Take cannot exceed network maximum (18%)
+  - `subtensor/pallets/subtensor/src/staking/increase_take.rs:55-56` - `ensure!(take <= max_take, Error::<T>::DelegateTakeTooHigh);`
+
+**Decrease Take Implementation:**
+- **Rate Limiting**: Prevents rapid take decreases
+  - `subtensor/pallets/subtensor/src/staking/decrease_take.rs:45-50` - Rate limit validation
+- **Strict Decrease**: Take can only be decreased, never increased via this function
+  - `subtensor/pallets/subtensor/src/staking/decrease_take.rs:48-50` - `ensure!(take < current_take, Error::<T>::DelegateTakeTooLow);`
+- **Min Bound Check**: Take cannot fall below network minimum (9%)
+  - `subtensor/pallets/subtensor/src/staking/decrease_take.rs:52-53` - `ensure!(take >= min_take, Error::<T>::DelegateTakeTooLow);`
+
+**Emission Calculation Formula:**
+
+**Return Per 1000 TAO Calculation:**
+- **Mathematical Formula**: `return_per_1000 = (emissions_per_day * (1 - take_percentage)) / (total_stake / 1000)`
+  - `subtensor/pallets/subtensor/src/rpc_info/delegate_info.rs:23-40` - `return_per_1000_tao()` implementation
+- **Take Percentage Conversion**: `take_percentage = take_value / u16::MAX`
+  - `subtensor/pallets/subtensor/src/rpc_info/delegate_info.rs:28-29` - Take to percentage conversion
+- **Delegator Return**: Delegators receive `(1 - take_percentage)` of validator emissions
+  - `subtensor/pallets/subtensor/src/rpc_info/delegate_info.rs:30-35` - Delegator return calculation
+
+**Emission Distribution Logic:**
+
+**Validator vs Delegator Emissions:**
+- **Validator Self-Stake**: Validator keeps 100% of emissions from their own stake
+  - `developer-docs/docs/staking-and-delegation/delegation.md:73-121` - Emission distribution examples
+- **Delegated Stake**: Validator takes percentage from delegated stake emissions
+  - `subtensor/pallets/subtensor/src/rpc_info/delegate_info.rs:113` - Take application to delegated emissions
+- **Delegator Proportional**: Delegators receive proportional shares of remaining emissions
+  - `developer-docs/docs/staking-and-delegation/delegation.md:73-85` - Proportional distribution formula
+
+**Example Calculation:**
+- **Validator with 18% take**: Takes 18% of delegated stake emissions
+- **Delegators receive**: 82% of delegated stake emissions
+- **Total validator emissions**: 100% of self-stake + 18% of delegated stake
+- **Mathematical representation**: `validator_total = self_stake_emissions + (delegated_stake_emissions * 0.18)`
+
+**Rate Limiting and Security:**
+
+**Transaction Rate Limits:**
+- **Take Change Rate Limit**: Prevents rapid take manipulation
+  - `subtensor/pallets/subtensor/src/staking/increase_take.rs:55-62` - Rate limit enforcement
+- **Rate Limit Storage**: Tracks last take change timestamp per hotkey
+  - `subtensor/pallets/subtensor/src/lib.rs:1656` - `LastTxBlockDelegateTake<T: Config>`
+- **Rate Limit Configuration**: Network-wide rate limit parameter
+  - `subtensor/pallets/subtensor/src/lib.rs:1473` - `TxDelegateTakeRateLimit<T>`
+
+**Ownership Validation:**
+- **Coldkey Verification**: Only hotkey owner can modify take
+  - `subtensor/pallets/subtensor/src/staking/increase_take.rs:42` - `Self::do_take_checks(&coldkey, &hotkey)?;`
+- **Registration Check**: Hotkey must be registered to set take
+  - `subtensor/pallets/subtensor/src/staking/helpers.rs:15-20` - Registration validation
+
+**Testing and Validation:**
+
+**Return Calculation Testing:**
+- **18% Take Test**: Verifies correct return calculation for 18% take
+  - `subtensor/pallets/subtensor/src/tests/delegate_info.rs:9-37` - `test_return_per_1000_tao()`
+- **Mathematical Verification**: Tests verify `return_per_1000 = 82` for 18% take with 10,000 TAO stake
+  - `subtensor/pallets/subtensor/src/tests/delegate_info.rs:19-25` - Expected return calculation
+
+**Take Management Testing:**
+- **Increase Take Tests**: Verify take can be increased up to maximum
+  - `subtensor/pallets/subtensor/src/tests/staking.rs:2761-2830` - Take increase validation
+- **Decrease Take Tests**: Verify take can be decreased down to minimum
+  - `subtensor/pallets/subtensor/src/tests/staking.rs:2830-2900` - Take decrease validation
+- **Boundary Testing**: Tests verify min/max take enforcement
+  - `subtensor/pallets/subtensor/src/tests/staking.rs:2786-2829` - Boundary condition tests
+
+**Network Configuration:**
+
+**Default Network Parameters:**
+- **InitialDefaultDelegateTake**: 18% (11,796/65,535)
+  - `subtensor/pallets/subtensor/src/tests/mock.rs:168` - Default take value
+- **MinDelegateTake**: 9% (5,898/65,535) - Minimum allowed take
+  - `subtensor/pallets/subtensor/src/lib.rs:393` - Minimum take configuration
+- **MaxDelegateTake**: 18% (11,796/65,535) - Maximum allowed take
+  - `subtensor/pallets/subtensor/src/lib.rs:977` - Maximum take configuration
+
+**Rate Limit Configuration:**
+- **TxDelegateTakeRateLimit**: Controls frequency of take changes
+  - `subtensor/pallets/subtensor/src/lib.rs:1473` - Rate limit parameter
+- **LastTxBlockDelegateTake**: Per-hotkey rate limit tracking
+  - `subtensor/pallets/subtensor/src/lib.rs:1656` - Rate limit storage
+
+**Key Mathematical Insights:**
+1. **Take Percentage = take_value / u16::MAX**: Conversion from u16 to percentage
+2. **Delegator Return = emissions * (1 - take_percentage)**: Delegator share calculation
+3. **Validator Total = self_emissions + (delegated_emissions * take_percentage)**: Total validator earnings
+4. **Return Per 1000 = (daily_emissions * (1 - take)) / (total_stake / 1000)**: Delegator return rate
+
+**Network Security Properties:**
+- **Economic Incentives**: Take creates market-driven validation fees
+- **Rate Limiting**: Prevents take manipulation and network instability
+- **Bounded Range**: Min/max limits prevent extreme take values
+- **Ownership Control**: Only hotkey owners can modify their take
+- **Transparent Calculation**: Clear mathematical formula for delegator returns
+
+**Complete Validator Take Flow:**
+1. **Registration** → Validator registers and sets initial take (18% default)
+2. **Delegation** → Delegators stake to validator
+3. **Emission Calculation** → Yuma Consensus calculates validator emissions
+4. **Take Application** → Validator extracts take percentage from delegated emissions
+5. **Distribution** → Remaining emissions distributed to delegators proportionally
+6. **Take Management** → Validator can increase/decrease take within bounds
+7. **Rate Limiting** → Changes rate-limited to prevent manipulation
+
+**Validator Take vs Other Network Fees:**
+- **Validator Take**: Fee for validation services (9-18%)
+- **Staking Fee**: One-time fee for delegation (network parameter)
+- **Registration Fee**: One-time fee for subnet registration
+- **Childkey Take**: Fee for childkey delegation (separate parameter)
+- **Network Owner Cut**: Subnet owner's share of emissions
+
+**Economic Implications:**
+- **Market Competition**: Validators compete on take rates and performance
+- **Delegator Choice**: Delegators choose validators based on take and returns
+- **Network Efficiency**: Take incentivizes quality validation services
+- **Economic Security**: Take creates skin-in-the-game for validators
+- **Dynamic Adjustment**: Take can be adjusted based on market conditions
+
+**Python SDK Usage:**
+
+**Setting Validator Take:**
+- **Main Method**: `subtensor.set_delegate_take()` - Automatically chooses increase/decrease based on current value
+  - `bittensor/bittensor/core/subtensor.py:3283-3366` - `set_delegate_take()` implementation
+- **Direct Methods**: `increase_take_extrinsic()` and `decrease_take_extrinsic()` for specific operations
+  - `bittensor/bittensor/core/extrinsics/take.py:1-110` - Direct extrinsic implementations
+- **Async Support**: `async_subtensor.set_delegate_take()` for asynchronous operations
+  - `bittensor/bittensor/core/async_subtensor.py:4537-4619` - Async implementation
+
+**Basic Usage Example:**
+```python
+import bittensor as bt
+
+# Initialize subtensor connection
+subtensor = bt.subtensor()
+
+# Create wallet (must own the hotkey)
+wallet = bt.wallet()
+
+# Set validator take to 15% (0.15)
+success, message = subtensor.set_delegate_take(
+    wallet=wallet,
+    hotkey_ss58=wallet.hotkey.ss58_address,
+    take=0.15,  # 15% take
+    wait_for_inclusion=True,
+    wait_for_finalization=True
+)
+
+if success:
+    print(f"✅ Take updated successfully: {message}")
+else:
+    print(f"❌ Failed to update take: {message}")
+```
+
+**Getting Current Take:**
+```python
+# Get current take for a hotkey
+current_take = subtensor.get_delegate_take(hotkey_ss58="5F...")
+print(f"Current take: {current_take:.2%}")  # e.g., "Current take: 18.00%"
+```
+
+**Error Handling:**
+- **DelegateTakeTooHigh**: Take exceeds maximum (18%)
+  - `bittensor/bittensor/core/errors.py:63-67` - Error definition
+- **DelegateTakeTooLow**: Take below minimum (9%) or invalid decrease
+  - `bittensor/bittensor/core/errors.py:70-75` - Error definition
+- **DelegateTxRateLimitExceeded**: Too frequent take changes
+  - `bittensor/bittensor/core/errors.py:165-171` - Rate limit error
+- **NonAssociatedColdKey**: Wallet doesn't own the hotkey
+- **HotKeyAccountNotExists**: Hotkey not registered
+
+**Advanced Usage:**
+```python
+# Async usage
+async def update_validator_take():
+    async with bt.subtensor() as subtensor:
+        success, message = await subtensor.set_delegate_take(
+            wallet=wallet,
+            hotkey_ss58=wallet.hotkey.ss58_address,
+            take=0.12,  # 12% take
+            raise_error=True  # Raise exceptions instead of returning False
+        )
+        return success, message
+
+# Direct extrinsic calls (for specific increase/decrease)
+from bittensor.core.extrinsics.take import increase_take_extrinsic, decrease_take_extrinsic
+
+# Force increase take
+success, message = increase_take_extrinsic(
+    subtensor=subtensor,
+    wallet=wallet,
+    hotkey_ss58=wallet.hotkey.ss58_address,
+    take=13107,  # u16 value for ~20% (13107/65535)
+    wait_for_inclusion=True
+)
+```
+
+**Take Value Conversion:**
+- **Float to u16**: `take_u16 = int(take_float * 0xFFFF)`
+  - `bittensor/bittensor/core/subtensor.py:3330` - Conversion implementation
+- **u16 to Float**: `take_float = take_u16 / 0xFFFF`
+  - `bittensor/bittensor/core/subtensor.py:1117` - `u16_normalized_float()` usage
+- **Example**: 18% = 0.18 * 65535 = 11,796 u16 value
+
+**Testing Examples:**
+- **E2E Tests**: `bittensor/tests/e2e_tests/test_delegate.py:84-170` - Comprehensive testing
+- **Unit Tests**: `bittensor/tests/unit_tests/test_subtensor_extended.py:956-1002` - SDK method testing
+- **Async Tests**: `bittensor/tests/unit_tests/test_async_subtensor.py:2692-2750` - Async method testing
 
 ### Delegation
 
 Also known as staking, delegating TAO to a validator (who is thereby the delegate), increases the validator's stake and secure a validator permit.
 
+**See also:** [Delegation](./staking-and-delegation/delegation.md), [Managing Stake with btcli](./staking-and-delegation/managing-stake-btcli.md)
+
 ### Dendrite  
 
 A client instance used by subnet validators and subnet miners to transmit information to axons on subnet miners and subnet validators. Dendrites communicate with axons using the server-client (Axon-dendrite) protocol.
 
+**See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/)
+
 ### Deregistration
 
 The process of removing a subnet miner or a subnet validator from the subnet due to poor performance.
+
+**See also:** [Miner Deregistration](./miners/#miner-deregistration), [Subnet Miners](./miners/)
 
 ## E 
 
@@ -87,9 +521,13 @@ The process of removing a subnet miner or a subnet validator from the subnet due
 
 A cryptographic algorithm used to generate public and private key pairs for coldkeys and hotkeys in the Bittensor wallet.
 
+**See also:** [Working with Keys](./working-with-keys.md), [Coldkey-Hotkey Security](./getting-started/coldkey-hotkey-security.md)
+
 ### Effective stake
 
 The total staked TAO amount of a delegate, including their own TAO tokens and those delegated by nominators.
+
+**See also:** [Managing Stake with btcli](./staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](./staking-and-delegation/managing-stake-sdk.md)
 
 ### Emission
 
@@ -97,15 +535,19 @@ Every block, currency is injected into each subnet in Bittensor, and every tempo
 
 Emission is this process of generating and allocating currency to participants. The amount allocated to a given participant over some duration of time is also often referred to as 'their emissions' for the period.
 
-See [emissions](./emissions).
+**See also:** [Emissions](./emissions.md)
 
 ### Encrypting the Hotkey
 
 An optional security measure for the hotkey.
 
+**See also:** [Coldkey-Hotkey Security](./getting-started/coldkey-hotkey-security.md), [Working with Keys](./working-with-keys.md)
+
 ### External Wallet
 
 A Bittensor wallet created through the Bittensor website or using a tool like [subkey](https://docs.substrate.io/reference/command-line-tools/subkey/), allowing users to use TAO without installing Bittensor.
+
+**See also:** [Wallets](./getting-started/wallets.md), [Installation](./getting-started/installation.md)
 
 ## H 
 
@@ -113,9 +555,13 @@ A Bittensor wallet created through the Bittensor website or using a tool like [s
 
 A component of a Bittensor wallet responsible for less secure operations such as signing messages into the network, secure a UID slot in a subnet, running subnet miners and subnet validators in a subnet. It can be encrypted or unencrypted, but is unencrypted by default. The terms "account" and "hotkey" are used synonymously.
 
+**See also:** [Coldkey-Hotkey Security](./getting-started/coldkey-hotkey-security.md), [Working with Keys](./working-with-keys.md)
+
 ### Hotkey-Coldkey Pair
 
 Authentication mechanism for delegates and nominators and for delegates participating in the Senate.
+
+**See also:** [Coldkey-Hotkey Security](./getting-started/coldkey-hotkey-security.md), [Working with Keys](./working-with-keys.md)
 
 ## I 
 
@@ -123,13 +569,233 @@ Authentication mechanism for delegates and nominators and for delegates particip
 
 A grace period granted to a newly registered subnet miner or subnet validator, during which they will not be deregistered due to performance. Allows a miner or validator new to the subnet to adapt and improve their performance, in order to avoid deregistration once the immunity period expires.
 
+**See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/)
+
+Code References and Implementation Details
+
+**Immunity Period as Protection Mechanism:**
+- Immunity period provides a grace period for new neurons to establish themselves without immediate deregistration risk
+  - `subtensor/pallets/subtensor/src/utils/misc.rs:442-448` - `get_neuron_is_immune()` implementation
+- Immunity status is calculated dynamically based on registration block and current block
+  - `subtensor/pallets/subtensor/src/utils/misc.rs:442-448` - `current_block.saturating_sub(registered_at) < u64::from(immunity_period)`
+- Immunity period is configurable per subnet and can be adjusted by subnet owners
+  - `subtensor/pallets/subtensor/src/lib.rs:1369-1371` - `pub type ImmunityPeriod<T> = StorageMap<_, Identity, u16, u16, ValueQuery, DefaultImmunityPeriod<T>>;`
+
+**Storage and Configuration:**
+
+**Core Storage Implementation:**
+- **ImmunityPeriod Storage**: Maps netuid to immunity period value in blockchain state
+  - `subtensor/pallets/subtensor/src/lib.rs:1369-1371` - `pub type ImmunityPeriod<T> = StorageMap<_, Identity, u16, u16, ValueQuery, DefaultImmunityPeriod<T>>;`
+- **Default Values**: Network-wide configuration for immunity period
+  - `subtensor/pallets/subtensor/src/lib.rs:660-662` - `DefaultImmunityPeriod<T>()` - Default 4096 blocks
+  - `subtensor/runtime/src/lib.rs:1077` - `pub const SubtensorInitialImmunityPeriod: u16 = 4096;`
+- **BlockAtRegistration Storage**: Tracks registration block for each neuron
+  - `subtensor/pallets/subtensor/src/lib.rs:1580-1588` - `pub type BlockAtRegistration<T: Config> = StorageDoubleMap<_, Identity, u16, Identity, u16, u64, ValueQuery, DefaultBlockAtRegistration<T>>;`
+
+**Immunity Status Calculation:**
+
+**Dynamic Immunity Check:**
+- **Registration Block Retrieval**: Gets the block number when neuron was registered
+  - `subtensor/pallets/subtensor/src/utils/misc.rs:442-448` - `let registered_at = Self::get_neuron_block_at_registration(netuid, uid);`
+- **Current Block Retrieval**: Gets the current blockchain block number
+  - `subtensor/pallets/subtensor/src/utils/misc.rs:442-448` - `let current_block = Self::get_current_block_as_u64();`
+- **Immunity Period Retrieval**: Gets the configured immunity period for the subnet
+  - `subtensor/pallets/subtensor/src/utils/misc.rs:442-448` - `let immunity_period = Self::get_immunity_period(netuid);`
+- **Immunity Formula**: `is_immune = (current_block - registered_at) < immunity_period`
+  - `subtensor/pallets/subtensor/src/utils/misc.rs:442-448` - `current_block.saturating_sub(registered_at) < u64::from(immunity_period)`
+
+**Pruning Algorithm Integration:**
+
+**Pruning Score Calculation:**
+- **Score-Based Selection**: Neuron with lowest pruning score is selected for replacement
+  - `subtensor/pallets/subtensor/src/subnets/registration.rs:409-485` - `get_neuron_to_prune()` implementation
+- **Immunity Priority**: Non-immune neurons are prioritized over immune neurons for pruning
+  - `subtensor/pallets/subtensor/src/subnets/registration.rs:439-485` - Immunity status check in pruning algorithm
+- **Tie-Breaking**: When scores are equal, earliest registered neuron is pruned
+  - `subtensor/pallets/subtensor/src/subnets/registration.rs:440-485` - Registration time tie-breaking
+
+**Pruning Algorithm Logic:**
+
+**Two-Tier Selection Process:**
+- **Non-Immune Neurons**: First priority for pruning when available
+  - `subtensor/pallets/subtensor/src/subnets/registration.rs:454-465` - Non-immune neuron selection logic
+- **Immune Neurons**: Second priority, only pruned when all neurons are immune
+  - `subtensor/pallets/subtensor/src/subnets/registration.rs:440-453` - Immune neuron selection logic
+- **Owner Protection**: Subnet owner hotkey is protected from pruning regardless of immunity status
+  - `subtensor/pallets/subtensor/src/subnets/registration.rs:425-433` - Owner protection check
+
+**Score Comparison Logic:**
+- **Lower Score Priority**: Neurons with lower pruning scores are selected first
+  - `subtensor/pallets/subtensor/src/subnets/registration.rs:440-485` - Score comparison in pruning algorithm
+- **Registration Time Tie-Breaking**: When scores are equal, earlier registration wins
+  - `subtensor/pallets/subtensor/src/subnets/registration.rs:440-485` - Registration time comparison
+- **UID Tie-Breaking**: When registration times are equal, lower UID wins
+  - `subtensor/pallets/subtensor/src/subnets/registration.rs:440-485` - UID-based tie-breaking
+
+**Registration Process Integration:**
+
+**Registration Block Recording:**
+- **Block Storage**: Registration block is recorded when neuron is registered
+  - `subtensor/pallets/subtensor/src/subnets/registration.rs:214-339` - Registration block storage in `do_registration()`
+- **Timestamp Tracking**: Each neuron's registration time is tracked for immunity calculation
+  - `subtensor/pallets/subtensor/src/lib.rs:1580-1588` - `BlockAtRegistration` storage definition
+- **Dynamic Updates**: Immunity status updates automatically as blocks progress
+
+**Registration Methods:**
+- **Proof-of-Work Registration**: Traditional registration with block recording
+  - `subtensor/pallets/subtensor/src/subnets/registration.rs:214-339` - `do_registration()` implementation
+- **Burned Registration**: Registration by burning TAO with block recording
+  - `subtensor/pallets/subtensor/src/subnets/registration.rs:54-206` - `do_burned_registration()` implementation
+
+**Python SDK Integration:**
+
+**Immunity Period Retrieval:**
+- **Synchronous Method**: `subtensor.immunity_period()` retrieves immunity period for subnet
+  - `bittensor/bittensor/core/subtensor.py:1998-2025` - `immunity_period()` implementation
+- **Asynchronous Method**: `async_subtensor.immunity_period()` for async operations
+  - `bittensor/bittensor/core/async_subtensor.py:2931-2970` - Async `immunity_period()` implementation
+- **Block-Specific Queries**: Immunity period can be queried at specific block numbers
+  - `bittensor/bittensor/core/subtensor.py:1998-2025` - Block parameter support
+
+**Testing and Validation:**
+
+**Comprehensive Test Coverage:**
+- **Immunity Status Testing**: Tests verify correct immunity calculation
+  - `subtensor/pallets/subtensor/src/tests/registration.rs:621-675` - Immunity status validation tests
+- **Pruning Algorithm Testing**: Tests verify immunity-aware pruning
+  - `subtensor/pallets/subtensor/src/tests/registration.rs:583-701` - Pruning algorithm tests
+- **Edge Case Testing**: Tests verify behavior when all neurons are immune
+  - `subtensor/pallets/subtensor/src/tests/registration.rs:1261-1311` - All-immune scenarios
+
+**Test Scenarios:**
+- **Mixed Immunity**: Tests with both immune and non-immune neurons
+  - `subtensor/pallets/subtensor/src/tests/registration.rs:583-701` - Mixed immunity test scenarios
+- **All Immune**: Tests when all neurons are in immunity period
+  - `subtensor/pallets/subtensor/src/tests/registration.rs:1261-1311` - All-immune test scenarios
+- **Tie-Breaking**: Tests for score and registration time tie-breaking
+  - `subtensor/pallets/subtensor/src/tests/registration.rs:583-701` - Tie-breaking validation
+
+**Network Configuration:**
+
+**Default Network Parameters:**
+- **SubtensorInitialImmunityPeriod**: 4096 blocks (default for mainnet)
+  - `subtensor/runtime/src/lib.rs:1077` - Default immunity period value
+- **Test Immunity Period**: 2 blocks (for testing environments)
+  - `subtensor/pallets/subtensor/src/tests/mock.rs:161` - Test immunity period value
+- **Subnet-Specific**: Each subnet can have different immunity periods
+  - `subtensor/pallets/subtensor/src/lib.rs:1369-1371` - Per-subnet immunity period storage
+
+**Configuration Management:**
+- **Subnet Owner Control**: Subnet owners can adjust immunity period
+  - `subtensor/pallets/subtensor/src/utils/misc.rs:442-448` - Immunity period management functions
+- **Dynamic Adjustment**: Immunity period can be changed during subnet operation
+  - `subtensor/pallets/subtensor/src/utils/misc.rs:442-448` - `set_immunity_period()` function
+- **Event Emission**: Immunity period changes emit blockchain events
+  - `subtensor/pallets/subtensor/src/utils/misc.rs:442-448` - Event emission for immunity changes
+
+**Key Mathematical Insights:**
+1. **Immunity Formula**: `is_immune = (current_block - registered_at) < immunity_period`
+2. **Block Duration**: Each block is 12 seconds, so 4096 blocks = ~13.7 hours
+3. **Dynamic Status**: Immunity status updates every block automatically
+4. **Pruning Priority**: Non-immune neurons are pruned before immune neurons
+5. **Owner Protection**: Subnet owners are protected regardless of immunity status
+
+**Network Security Properties:**
+- **Grace Period**: New neurons have time to establish performance
+- **Performance Pressure**: Immunity eventually expires, creating performance incentives
+- **Owner Stability**: Subnet owners are protected from immediate pruning
+- **Dynamic Adjustment**: Immunity periods can be tuned per subnet needs
+- **Fair Competition**: Immunity prevents immediate replacement of new participants
+
+**Complete Immunity Period Flow:**
+1. **Registration** → Neuron registers and registration block is recorded
+2. **Immunity Calculation** → System calculates immunity status every block
+3. **Performance Building** → Neuron has immunity_period blocks to improve performance
+4. **Immunity Expiration** → Neuron becomes eligible for pruning after immunity expires
+5. **Pruning Evaluation** → Non-immune neurons are prioritized for pruning
+6. **Owner Protection** → Subnet owners are protected regardless of immunity status
+7. **Dynamic Updates** → Immunity status updates automatically with each block
+
+**Immunity Period vs Other Protection Mechanisms:**
+- **Immunity Period**: Temporary protection for new neurons (4096 blocks)
+- **Owner Protection**: Permanent protection for subnet owners
+- **Validator Permits**: Performance-based validation rights
+- **Stake Requirements**: Economic barriers to participation
+- **Rate Limiting**: Transaction frequency restrictions
+
+**Economic Implications:**
+- **Performance Incentives**: Immunity creates pressure to improve performance
+- **Network Stability**: Prevents rapid turnover of new participants
+- **Owner Commitment**: Protects subnet owners from immediate replacement
+- **Competition Balance**: Balances protection with performance requirements
+- **Dynamic Governance**: Allows subnet-specific immunity tuning
+
+**Python SDK Usage:**
+
+**Getting Immunity Period:**
+```python
+import bittensor as bt
+
+# Initialize subtensor connection
+subtensor = bt.subtensor()
+
+# Get immunity period for a subnet
+immunity_period = subtensor.immunity_period(netuid=1)
+print(f"Immunity period: {immunity_period} blocks")  # e.g., "Immunity period: 4096 blocks"
+
+# Get immunity period at specific block
+immunity_period_at_block = subtensor.immunity_period(netuid=1, block=1000000)
+print(f"Immunity period at block 1000000: {immunity_period_at_block}")
+```
+
+**Async Usage:**
+```python
+async def get_immunity_period():
+    async with bt.subtensor() as subtensor:
+        immunity_period = await subtensor.immunity_period(netuid=1)
+        return immunity_period
+
+# Usage
+immunity_period = await get_immunity_period()
+print(f"Immunity period: {immunity_period} blocks")
+```
+
+**Error Handling:**
+- **Subnet Not Found**: Returns `None` if subnet doesn't exist
+  - `bittensor/bittensor/core/subtensor.py:1998-2025` - Error handling in immunity_period()
+- **Block Not Found**: Returns `None` if specified block doesn't exist
+  - `bittensor/bittensor/core/subtensor.py:1998-2025` - Block validation
+- **Network Issues**: Handles connection and RPC errors gracefully
+  - `bittensor/bittensor/core/subtensor.py:1998-2025` - Network error handling
+
+**Testing Examples:**
+- **E2E Tests**: `bittensor/tests/e2e_tests/test_root_set_weights.py:63-115` - Immunity period testing
+- **Unit Tests**: `bittensor/tests/unit_tests/test_subtensor_extended.py` - SDK method testing
+- **Async Tests**: `bittensor/tests/unit_tests/test_async_subtensor.py` - Async method testing
+
+**Immunity Period Calculation Examples:**
+- **Block 1000 Registration**: Immunity until block 5096 (1000 + 4096)
+- **Block 5000 Registration**: Immunity until block 9096 (5000 + 4096)
+- **Current Block 8000**: Neuron registered at block 3000 is no longer immune
+- **Current Block 6000**: Neuron registered at block 2000 is no longer immune
+
+**Network Configuration Examples:**
+- **Subnet 1**: 7200 blocks immunity period (24 hours)
+- **Default Subnets**: 4096 blocks immunity period (~13.7 hours)
+- **Test Networks**: 2 blocks immunity period (24 seconds)
+- **Custom Subnets**: Configurable immunity periods based on subnet needs
+
 ### Incentives
 
 A portion of the TAO emission received by the subnet miners when they provide valuable services and compete for UID slots in a subnet.
 
+**See also:** [Emissions](./emissions.md), [Anatomy of Incentive Mechanism](./learn/anatomy-of-incentive-mechanism.md)
+
 ### Incentive Mechanism
 
 A system that drives the behavior of subnet miners and governs consensus among subnet validators in a Bittensor subnet. Each subnet has its own incentive mechanism, which should be designed carefully to promote desired behaviors and penalize undesired ones.
+
+**See also:** [Anatomy of Incentive Mechanism](./learn/anatomy-of-incentive-mechanism.md), [Understanding Subnets](./subnets/understanding-subnets.md)
 
 ## L 
 
@@ -137,17 +803,25 @@ A system that drives the behavior of subnet miners and governs consensus among s
 
 A type of public subtensor node that stores limited blockchain data and relies on archive nodes for full historical data.
 
+**See also:** [Subtensor Nodes](./subtensor-nodes/), [Managing Subtensor Connections](./sdk/managing-subtensor-connections.md)
+
 ### Local Blockchain
 
 A private blockchain used for developing and testing subnet incentive mechanisms. A local blockchain is not public and is isolated from any Bittensor network.
+
+**See also:** [Local Build](./local-build/deploy), [Create a Subnet](./local-build/create-subnet.md)
 
 ### Local Wallet
 
 A Bittensor wallet created on the user's machine, requiring the installation of Bittensor.
 
+**See also:** [Wallets](./getting-started/wallets.md), [Installation](./getting-started/installation.md)
+
 ### Loss Function
 
 In the context of machine learning, a mathematical function that measures the difference between the predicted output and the ground truth. In Bittensor, incentive mechanisms act as loss functions that steer subnet miners towards desirable outcomes.
+
+**See also:** [Anatomy of Incentive Mechanism](./learn/anatomy-of-incentive-mechanism.md), [Understanding Subnets](./subnets/understanding-subnets.md)
 
 ## M 
 
@@ -155,19 +829,25 @@ In the context of machine learning, a mathematical function that measures the di
 
 The primary Bittensor blockchain network, used for production purposes and connected to lite or archive nodes.
 
+**See also:** [Bittensor Networks](./bittensor-networks.md), [Subtensor Nodes](./subtensor-nodes/)
+
 ### Metagraph
 
 A data structure that contains comprehensive information about the current state of a subnet, including detailed information on all the nodes (neurons) such as subnet validator stakes and subnet weights in the subnet. Metagraph aids in calculating emissions.
+
+**See also:** [Subtensor API](./sdk/subtensor-api.md), [Understanding Subnets](./subnets/understanding-subnets.md)
 
 ### Miner Deregistration
 
 The process of removing a poor-performing subnet miner from a UID slot, making room for a newly registered miner.
 
-See [Mining in Bittensor: Miner Deregistration](./miners/#miner-deregistration)
+**See also:** [Miner Deregistration](./miners/#miner-deregistration)
 
 ### Mnemonic
 
 A sequence of words used to regenerate keys, in case of loss, and restore coldkeys and hotkeys in the Bittensor wallet.
+
+**See also:** [Handle Seed Phrase](./keys/handle-seed-phrase.md), [Working with Keys](./working-with-keys.md)
 
 ## N 
 
@@ -175,9 +855,13 @@ A sequence of words used to regenerate keys, in case of loss, and restore coldke
 
 A secure encryption format, using the [NaCl](https://nacl.cr.yp.to/) library, used for updating legacy Bittensor wallets to improve security.
 
+**See also:** [Working with Keys](./working-with-keys.md), [Coldkey-Hotkey Security](./getting-started/coldkey-hotkey-security.md)
+
 ### Netuid
 
 A unique identifier assigned to a subnet within the Bittensor network.
+
+**See also:** [Understanding Subnets](./subnets/understanding-subnets.md), [Working with Subnets](./subnets/working-with-subnets.md)
 
 ### Neuron
 
@@ -437,27 +1121,39 @@ A TAO holder who delegates their stake.
 
 In the context of machine learning and subnet operations, this refers to the goal that the subnet is continuously optimizing for, through its incentive mechanism.
 
+**See also:** [Anatomy of Incentive Mechanism](./learn/anatomy-of-incentive-mechanism.md), [Understanding Subnets](./subnets/understanding-subnets.md)
+
 ## P 
 
 ### Private Key
 
 A private component of the cryptographic key pair, crucial for securing and authorizing transactions and operations within the Bittensor network.
 
+**See also:** [Working with Keys](./working-with-keys.md), [Coldkey-Hotkey Security](./getting-started/coldkey-hotkey-security.md)
+
 ### Proposal
 
 A suggestion or plan put forward by the Triumvirate for the Senate to vote on.
+
+**See also:** [Governance](./governance.md), [Senate](./senate.md)
 
 ### Proposal hash
 
 A unique identifier for a proposal used in the voting process.
 
+**See also:** [Governance](./governance.md), [Senate](./senate.md)
+
 ### Public Key
 
 A cryptographic key that is publicly available and used for verifying signatures, encrypting messages, and identifying accounts in the Bittensor network. This is the publicly shareable part of the cryptographic key pair associated with both the coldkey and hotkey, allowing others to securely interact with the wallet.
 
+**See also:** [Working with Keys](./working-with-keys.md), [Coldkey-Hotkey Security](./getting-started/coldkey-hotkey-security.md)
+
 ### Public Subtensor
 
 A publicly accessible node in the Bittensor network that can be run as a lite node or an archive node and synchronized with either the mainchain or testchain.
+
+**See also:** [Subtensor Nodes](./subtensor-nodes/), [Managing Subtensor Connections](./sdk/managing-subtensor-connections.md)
 
 ## R 
 
@@ -465,9 +1161,13 @@ A publicly accessible node in the Bittensor network that can be run as a lite no
 
 A denomination of TAO, representing one billionth (10<sup>-9</sup>) of a TAO.
 
+**See also:** [Emissions](./emissions.md)
+
 ### Rank
 
 A measure of a subnet miner's performance relative to other subnet miners in the same subnet, calculated based on the subnet miner's trust and incentive scores. This is the sum of weighted stake, contributing to the emission process.
+
+**See also:** [Emissions](./emissions.md), [Yuma Consensus](./yuma-consensus.md)
 
 ### Recycling, burning, and locking
 
@@ -482,14 +1182,19 @@ When TAO is burned it is permanently removed from circulation, reducing total su
 
 Locked TAO is neither recycled nor burned, but held unspent, without the ability to move it until it is unlocked. The cost for subnet registration is locked and returned if the subnet is deregistered.
 
+**See also:** [Emissions](./emissions.md), [Subnet Miners](./miners/), [Subnet Validators](./validators/)
+
 ### Regenerating a Key
 
 The process of recreating a lost or deleted coldkey or hotkey using the associated mnemonic.
+
+**See also:** [Handle Seed Phrase](./keys/handle-seed-phrase.md), [Working with Keys](./working-with-keys.md)
 
 ### Register
 
 The process of registering keys with a subnet and purchasing a UID slot.
 
+**See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/), [Working with Subnets](./subnets/working-with-subnets.md)
 
 ## S 
 
@@ -497,9 +1202,13 @@ The process of registering keys with a subnet and purchasing a UID slot.
 
 A compact representation of public keys corresponding to the wallet's coldkey and hotkey, used as wallet addresses for secure TAO transfers.
 
+**See also:** [Working with Keys](./working-with-keys.md), [Wallets](./getting-started/wallets.md)
+
 ### Senate
 
 A group of elected delegates formed from the top K delegate hotkeys, responsible for approving or disapproving proposals made by the Triumvirate.
+
+**See also:** [Senate](./senate.md), [Governance](./governance.md)
 
 ### Stake
 
@@ -507,42 +1216,61 @@ The amount of currency tokens delegated to a validator UID in a subnet. Includes
 
 Stake determines a validator's weight in consensus as well as their emissions.
 
+**See also:** [Managing Stake with btcli](./staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](./staking-and-delegation/managing-stake-sdk.md), [Delegation](./staking-and-delegation/delegation.md)
+
 ### Staking
 
 The process of attaching TAO to a hotkey, i.e., locking TAO to a hotkey, to participate as a subnet validator, and to secure a validator permit.
+
+**See also:** [Managing Stake with btcli](./staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](./staking-and-delegation/managing-stake-sdk.md), [Delegation](./staking-and-delegation/delegation.md)
 
 ### Subnet
 
 A Bittensor subnet is an incentive-based competition market that produces a specific kind of digital commodity. It consists of a community of miners that produce the commodity, and a community of validators that measures the miners' work to ensure its quality.
 
+**See also:** [Understanding Subnets](./subnets/understanding-subnets.md), [Working with Subnets](./subnets/working-with-subnets.md), [Create a Subnet](./subnets/create-a-subnet.md)
+
 ### Subnet Incentive Mechanism
 
 The framework that governs the behavior of subnet miners and ensures consensus among subnet validators by promoting desirable actions and penalizing undesired ones.
+
+**See also:** [Anatomy of Incentive Mechanism](./learn/anatomy-of-incentive-mechanism.md), [Understanding Subnets](./subnets/understanding-subnets.md)
 
 ### Subnet Miner
 
 The task-performing entity within a Bittensor subnet. A subnet miner is a type of node in a Bittensor subnet that is connected only to subnet validators. Subnet miners are isolated from the external world and communicate bidirectionally with subnet validators. A subnet miner is responsible for performing tasks given to them by the subnet validators in that subnet. 
 
+**See also:** [Subnet Miners](./miners/), [Subnet Miner Documentation](./miners/subnet_miner_docs.md)
+
 ### Subnet Creator
 
 The individual or entity responsible for defining the specific digital task to be performed by subnet miners, implementing an incentive mechanism, and providing sufficient documentation for participation in the subnet.
+
+**See also:** [Create a Subnet](./subnets/create-a-subnet.md), [Subnet Creators btcli Guide](./subnets/subnet-creators-btcli-guide.md)
 
 ### Subnet Protocol
 
 A unique set of rules defining interactions between subnet validators and miners, including how tasks are queried and responses are provided.
 
+**See also:** [Understanding Subnets](./subnets/understanding-subnets.md), [Working with Subnets](./subnets/working-with-subnets.md)
+
 ### Subnet scoring model
 
 A component of the incentive mechanism that defines how subnet miners' responses are evaluated, aiming to align subnet miner behavior with the subnet's goals and user preferences. It is a mathematical object that converts miner responses into numerical scores, enabling continuous improvement and competition among miners.
+
+**See also:** [Anatomy of Incentive Mechanism](./learn/anatomy-of-incentive-mechanism.md), [Understanding Subnets](./subnets/understanding-subnets.md)
 
 ### Subnet Task
 
 A key component of any incentive mechanism that defines the work the subnet miners will perform. The task should be chosen to maximize subnet miner effectiveness at the intended use case for the subnet.
 
+**See also:** [Understanding Subnets](./subnets/understanding-subnets.md), [Anatomy of Incentive Mechanism](./learn/anatomy-of-incentive-mechanism.md)
 
 ### Subnet Weights
 
 The importance assigned to each subnet determined by relative price among subnets and used to determine the percentage emissions to subnets.
+
+**See also:** [Emissions](./emissions.md), [Consensus-Based Weights](./subnets/consensus-based-weights.md)
 
 ### Subtensor
 
@@ -550,13 +1278,19 @@ The importance assigned to each subnet determined by relative price among subnet
 
 The Bittensor SDK offers the [`bittensor.core.subtensor`](pathname:///python-api/html/autoapi/bittensor/core/subtensor/index.html) and [`bittensor.core.async_subtensor`](pathname:///python-api/html/autoapi/bittensor/core/async_subtensor/index.html) modules to handle Subtensor blockchain interactions.
 
+**See also:** [Subtensor API](./sdk/subtensor-api.md), [Subtensor Nodes](./subtensor-nodes/), [Managing Subtensor Connections](./sdk/managing-subtensor-connections.md)
+
 ### Sudo
 
 A privileged key for administrative actions, replaced by governance protocol for enhanced security.
 
+**See also:** [Governance](./governance.md), [btcli Permissions](./btcli-permissions.md)
+
 ### Synapse
 
 A data object used by subnet validators and subnet miners as the main vehicle to exchange information. Synapse objects are based on the BaseModel of the Pydantic data validation library.
+
+**See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/)
 
 ## T 
 
@@ -564,17 +1298,25 @@ A data object used by subnet validators and subnet miners as the main vehicle to
 
 The cryptocurrency of the Bittensor network, used to incentivize participation in network activities (mining, validation, subnet creation and management). A single TAO is newly created (i.e., minted) every 12 seconds on the Bittensor blockchain.
 
+**See also:** [Emissions](./emissions.md), [Wallets](./getting-started/wallets.md)
+
 ### Tempo
 
 A 360-block period during which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo occurs every 4320 seconds or 72 minutes. 
+
+**See also:** [Yuma Consensus](./yuma-consensus.md), [Emissions](./emissions.md)
 
 ### Transfer
 
 The process of sending TAO tokens from one wallet address to another in the Bittensor network.
 
+**See also:** [Wallets](./getting-started/wallets.md), [Working with Keys](./working-with-keys.md)
+
 ### Triumvirate
 
 A group of three Opentensor Foundation employees responsible for creating proposals.
+
+**See also:** [Governance](./governance.md), [Senate](./senate.md)
 
 ### Trust
 
@@ -792,6 +1534,8 @@ The relationship between trust, consensus, rank, incentive, and emission can be 
 
 A position occupied by a subnet miner or subnet validator within a subnet, identified by a unique UID. The UID is assigned to a hotkey when it is registered in a subnet, allowing the hotkey to participate as a subnet validator or subnet miner.
 
+**See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/), [Working with Subnets](./subnets/working-with-subnets.md)
+
 ## V 
 
 ### VPermit
@@ -954,6 +1698,8 @@ Code References and Implementation Details
 ### Validator
 
 A type of node in a subnet that creates tasks, evaluates the performance of subnet miners and sets weights based on their output. A subnet validator is connected only to subnet miners and to the external world. Subnet validators receive inputs from the external world and communicate bidirectionally with subnet miners. 
+
+**See also:** [Subnet Validators](./validators/), [Validators btcli Guide](./validators/validators-btcli-guide.md)
 
 ### Validator-Miner Bonds
 
@@ -1216,13 +1962,19 @@ Code References and Implementation Details
 
 A unique identifier derived from the public key, used as a destination for sending and receiving TAO tokens in the Bittensor network.
 
+**See also:** [Wallets](./getting-started/wallets.md), [Working with Keys](./working-with-keys.md)
+
 ### Wallet Location
 
 The directory path where the generated Bittensor wallets are stored locally on the user's machine.
 
+**See also:** [Wallets](./getting-started/wallets.md), [Installation](./getting-started/installation.md)
+
 ### Weight Matrix
 
 A matrix formed from the ranking weight vectors of all subnet validators in a subnet, used as input for the Yuma Consensus module to calculate emissions to that subnet.
+
+**See also:** [Yuma Consensus](./yuma-consensus.md), [Consensus-Based Weights](./subnets/consensus-based-weights.md)
 
 ### Weight Vector
 
@@ -1230,10 +1982,12 @@ A vector maintained by each subnet validator, with each element representing the
 
 The ranking weight vectors for each subnet are transmitted to the blockchain, where they combine to form the [weight matrix](#weight-matrix) that is input for Yuma Consensus.
 
+**See also:** [Consensus-Based Weights](./subnets/consensus-based-weights.md), [Yuma Consensus](./yuma-consensus.md)
+
 ## Y 
 
 ### Yuma Consensus
 
 The consensus mechanism in the Bittensor blockchain that computes emissions to participants. 
 
-See [Yuma Consensus](./yuma-consensus.md)
+**See also:** [Yuma Consensus](./yuma-consensus.md)
