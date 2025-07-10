@@ -10,9 +10,8 @@ const darkTheme = themes.dracula;
 // KaTex stuff
 // const math = require("remark-math");
 // const katex = require("rehype-katex");
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
-
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -91,11 +90,11 @@ const config = {
           },
           {
             from: "/subnets/register-validate-mine",
-            to: "validators/index"
+            to: "validators/index",
           },
           {
             from: "/recycled-tao",
-            to: "/glossary"
+            to: "/glossary",
           },
           {
             to: "/subnets/walkthrough-prompting",
@@ -117,7 +116,7 @@ const config = {
             to: "/subnets/schedule-coldkey-swap",
             from: "/subnets/schedule-key-swap",
           },
-	  {
+          {
             to: "/bt-api-ref",
             from: "/reference/bittensor-api-ref",
           },
@@ -141,7 +140,6 @@ const config = {
   ],
   // clientModules: ["/static/feedbug-widjet.js"],
 
-
   stylesheets: [
     {
       href: "https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css",
@@ -151,7 +149,7 @@ const config = {
       crossorigin: "anonymous",
     },
     {
-        href: "https://unpkg.com/@antonz/codapi@0.19.10/dist/snippet.css",
+      href: "https://unpkg.com/@antonz/codapi@0.19.10/dist/snippet.css",
     },
   ],
   themeConfig:
@@ -165,6 +163,7 @@ const config = {
           hideable: false,
         },
       },
+
       // announcementBar: {
       //   id: 'support_us',
       //   content:
@@ -206,7 +205,7 @@ const config = {
             label: "BTCLI Live Coding Playground",
             to: "btcli/btcli-playground",
           },
-          
+
           {
             position: "left",
             label: "EVM on Bittensor",
@@ -236,12 +235,18 @@ const config = {
         additionalLanguages: ["bash", "python", "diff", "json", "yaml"],
       },
       algolia: {
-        appId: "B07G29NY9F",
-        apiKey: "d23c920e8a9bdae899572be3c8494696",
-        indexName: "new--alpha",
+        appId: "UXNFOAH677",
+        apiKey: "72af66272aba6bd27e76ac6f7eec0068",
+        indexName: "learnbittensor",
         contextualSearch: true,
         insights: true,
         debug: false,
+        searchPagePath: "search",
+        // // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
+        // replaceSearchResultPathname: {
+        //   from: "/docs/", // or as RegExp: /\/docs\//
+        //   to: "/",
+        // },
       },
       footer: {
         copyright: `
