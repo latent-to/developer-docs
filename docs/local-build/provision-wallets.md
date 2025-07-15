@@ -42,10 +42,10 @@ You will need wallets for the different personas, i.e., subnet owner, subnet val
 - The owner wallet creates and controls the subnet. 
 - The validator and miner will be registered to the subnet created by the owner. This ensures that the validator and miner can run the respective validator and miner scripts.
 
-### Create a coldkey-only wallet for the subnet creator role (they do not need a hotkey):
+### Create a coldkey-hotkey wallet for the subnet creator role:
 
 ```bash
-btcli wallet new_coldkey \
+btcli wallet create \
 --wallet.name sn-creator
 ```
 

@@ -1,5 +1,5 @@
 ---
-title: "Build and Deploy the Blockchain"
+title: "Deploy a Local Bittensor Blockchain Instance"
 toc_max_heading_level: 2
 ---
 
@@ -7,7 +7,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Heading from '@theme/Heading';
 
-# Create a Local Bittensor Blockchain Instance
+# Deploy a Local Bittensor Blockchain Instance
 
 This tutorial will guide the user through deploying a local instance of Subtensor, Bittensor's L1 blockchain. Running a local instance of the Subtensor blockchain is a great way to test changes and explore the network in a safe and isolated environment.
 

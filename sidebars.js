@@ -83,6 +83,16 @@ const sidebars = {
     },
     {
       type: "category",
+      label: "Liquidity Positions (Uniswap)",
+      collapsible: true,
+      collapsed: true,
+      items: [              
+        'liquidity-positions/liquidity-positions'
+        'liquidity-positions/managing-liquidity-positions'
+      ],
+    },
+    {
+      type: "category",
       label: "Managing Subnets",
       collapsible: true,
       collapsed: true,

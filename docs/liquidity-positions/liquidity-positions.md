@@ -1,8 +1,8 @@
 ---
-title: Provisioning Liquidity to Subnets
+title: User Liquidity Positions (Uniswap)
 ---
 
-# Provisioning Liquidity to Subnets
+# User Liquidity Positions (Uniswap)
 
 ## Overview
 
@@ -162,85 +162,4 @@ This means you must actively manage your positions to claim your earned fees - t
 When a position is destroyed/removed, the position's liquidity is converted back to tokens based on the current subnet price relative to your position's price range. The position is then deleted from the system.
 
 [See source code](https://github.com/opentensor/bittensor/blob/staging/bittensor/core/extrinsics/asyncex/liquidity.py#L127-L185)
-
-## Managing positions
-
-### Adding a liquidity position
-
-Create a liquidity position with `add_liquidity`.
-```python
-await subtensor.add_liquidity(
-    wallet=wallet,
-    netuid=netuid,
-    liquidity=Balance.from_tao(1.0),
-    price_low=Balance.from_tao(1.5),
-    price_high=Balance.from_tao(2.0),
-    wait_for_inclusion=True,
-    wait_for_finalization=False,
-    period=None
-)
-```
-
-[See source code](https://github.com/opentensor/bittensor/blob/staging/bittensor/core/subtensor.py#L2997-L3056)
-
-### Modifying a position
-
-Use `modify_liquidity` with the desired amount to add or subtract liquidity to an existing position.
-
-```python
-# Adding liquidity (positive delta)
-await subtensor.modify_liquidity(
-    wallet=wallet,
-    netuid=netuid,
-    position_id=position_id,
-    liquidity_delta=Balance.from_tao(0.5),
-    wait_for_inclusion=True,
-    wait_for_finalization=False,
-    period=None
-)
-
-# Subtracting liquidity (negative delta)
-await subtensor.modify_liquidity(
-    wallet=wallet,
-    netuid=netuid,
-    position_id=position_id,
-    liquidity_delta=Balance.from_tao(0.6) * -1,  # or -Balance.from_tao(0.6)
-    wait_for_inclusion=True,
-    wait_for_finalization=False,
-    period=None
-)
-```
-
-[See source code](https://github.com/opentensor/bittensor/blob/staging/bittensor/core/subtensor.py#L3210-L3269)
-
-### Removing a liquidity position
-
-Removes liquidity and credits balances back to the creator's wallet.
-
-```python
-await subtensor.remove_liquidity(
-    wallet=wallet,
-    netuid=netuid,
-    position_id=position_id,
-    wait_for_inclusion=True,
-    wait_for_finalization=False,
-    period=None
-)
-```
-
-[See source code](https://github.com/opentensor/bittensor/blob/staging/bittensor/core/subtensor.py#L3418-L3477)
-
-### Listing positions
-
-Get all positions on a specific subnet for a specific wallet. Returns a list of `LiquidityPosition` objects with calculated fees.
-
-```python
-positions = await subtensor.get_liquidity_list(
-    wallet=wallet,
-    netuid=netuid,
-    block=None
-)
-```
-
-[See source code](https://github.com/opentensor/bittensor/blob/staging/bittensor/core/subtensor.py#L1451-L1523)
 
