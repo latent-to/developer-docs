@@ -4,6 +4,8 @@ title: "Creating/Importing a Bittensor Wallet"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Creating/Importing a Bittensor Wallet
 
@@ -23,11 +25,49 @@ The most critical operational goal when handling Bittensor wallets is to avoid l
 
 ## Creating a wallet with `btcli`
 
-### Creating a coldkey-only wallet
+<Tabs queryString="create-wallet">
+<TabItem value="cold-hot" label="Coldkey and Hotkey">
+If you plan to validate or mine in a subnet, you must have both a coldkey and a hotkey. If you already have a coldkey, you can [create a new hotkey](?create-wallet=hotkey) for it.
 
-Users that will not mine, validate, manage subnets or participate in governance do not need a hotkey, and for simplicity's sake should use coldkey-only wallets.
+To create a new coldkey and hotkey, run the following command in the terminal:
 
-Run the following command to create a coldkey-only wallet.
+```bash
+btcli wallet create --wallet.name <my_coldkey> --wallet.hotkey <my_hotkey>
+```
+
+:::info
+Use the below command to generate the hotkey. Replace `<my_coldkey>` with the name of the coldkey generated above, and `<my_hotkey>` with a name for your hotkey.
+
+For example,
+
+```bash
+btcli wallet create --wallet.name test-coldkey --wallet.hotkey test-hotkey
+```
+
+:::
+
+Next, you'll be prompted to configure the wallet by setting a password for the coldkey, and choosing the desired mnemonic length. Completing the prompts creates a complete Bittensor wallet by setting up both coldkey and hotkeys. A unique mnemonic is generated for each key and output to the terminal upon creation.
+
+:::tip Regenerating the wallet keys
+Take note of the mnemonics in the response as they are required to regenerate your coldkey and hotkey. To regenerate your coldkey, run the following command in the terminal:
+
+```sh
+btcli wallet regen_coldkey --mnemonic "word1 word2 ... word12"
+```
+
+Similarly, run the following command in the terminal to regenerate your hotkey:
+
+```sh
+btcli wallet regen_hotkey --mnemonic "word1 word2 ... word12"
+```
+
+:::
+
+</TabItem>
+<TabItem value="coldkey" label="Coldkey only">
+If a user does not intend to mine, validate, manage subnets, or participate in governance, a hotkey is not required. In such cases, a coldkey-only wallet is recommended for simplicity.
+
+Run the following command to create a coldkey-only wallet:
 
 ```bash
 btcli wallet new_coldkey --wallet.name <my_coldkey>
@@ -44,21 +84,31 @@ You will see the terminal output like the following, which includes your all-imp
 ```text
 IMPORTANT: Store this mnemonic in a secure (preferable offline place), as anyone who has possession of this mnemonic can use it to regenerate the key and access your tokens.
 
-The mnemonic to the new coldkey is: paddle disagree swamp hill innocent enemy name shrug produce steak pupil joke
-You can use the mnemonic to recreate the key with `btcli` in case it gets lost.
+The mnemonic to the new hotkey is: **** *** **** **** ***** **** *** **** **** **** ***** *****
+You can use the mnemonic to recreate the key in case it gets lost.
 ```
 
-### Creating a hotkey
+:::tip Regenerating the coldkey
+Take note of the mnemonic in the response as it is required to regenerate your coldkey. To regenerate your coldkey, run the following command in the terminal:
 
+```sh
+btcli wallet regen_coldkey --mnemonic "word1 word2 ... word12"
+```
+
+:::
+
+</TabItem>
+<TabItem value="hotkey" label="Hotkey only">
 If you plan to validate or mine in a subnet, you must create both a coldkey and a hotkey.
 
-First, create a coldkey as described above in the [Creating a coldkey using `btcli`](#creating-a-coldkey-using-btcli). Then, provide this coldkey as a parameter to generate a hotkey. This will pair the hotkey with the coldkey. See below.
-
-Use the below command to generate the hotkey. Replace `<my_coldkey>` with the name of the coldkey generated above, and `<my_hotkey>` with a name for your hotkey.
+Before creating a hotkey, you must have created a coldkey as described in the [creating a coldkey tab](?create-wallet=coldkey). Next, provide this coldkey as a parameter to generate a hotkey. This will pair the hotkey with the coldkey as shown:
 
 ```bash
 btcli wallet new_hotkey --wallet.name <my_coldkey> --wallet.hotkey <my_hotkey>
 ```
+
+:::info
+Use the below command to generate the hotkey. Replace `<my_coldkey>` with the name of the coldkey generated above, and `<my_hotkey>` with a name for your hotkey.
 
 For example,
 
@@ -66,26 +116,37 @@ For example,
 btcli wallet new_hotkey --wallet.name test-coldkey --wallet.hotkey test-hotkey
 ```
 
+:::
+
 You will see the terminal log like below. The mnemonic is hidden for security reasons.
 
 ```text
 IMPORTANT: Store this mnemonic in a secure (preferably offline place), as anyone who has possession of this mnemonic can use it to regenerate the key and access your tokens.
 The mnemonic to the new hotkey is:
 **** *** **** **** ***** **** *** **** **** **** ***** *****
-You can use the mnemonic to recreate the key in case it gets lost. The command to use to regenerate the key using this mnemonic is:
-btcli w regen_hotkey --mnemonic **** *** **** **** ***** **** *** **** **** **** ***** *****
+You can use the mnemonic to recreate the key in case it gets lost.
 ```
 
 :::tip Regenerating the hotkey
-Make a note of the above command option `regen_hotkey` showing how to regenerate your hotkey in case you lose it.
+Take note of the mnemonic in the response as it is required to regenerate your hotkey. To regenerate your hotkey, run the following command in the terminal:
+
+```sh
+btcli wallet regen_hotkey --mnemonic "word1 word2 ... word12"
+```
+
 :::
+
+</TabItem>
+</Tabs>
+
+---
 
 ### Encrypting the hotkey
 
-By default, the hotkey is not encrypted on the device, whereas the coldkey is encrypted. To encrypt your hotkey, run this command:
+By default, a hotkey is not encrypted on the device, whereas the coldkey is encrypted. To encrypt your hotkey, include the `--use-password` in the hotkey creation command as shown:
 
 ```bash
-btcli wallet new_hotkey --use-password
+btcli wallet new_hotkey --use-password --wallet.name test-coldkey --wallet.hotkey test-hotkey
 ```
 
 ## Creating a wallet using Python
