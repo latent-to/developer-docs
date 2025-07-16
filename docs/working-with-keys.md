@@ -25,7 +25,7 @@ The most critical operational goal when handling Bittensor wallets is to avoid l
 
 ## Creating a wallet with `btcli`
 
-<Tabs queryString="create-wallet">
+<Tabs queryString="create-wallet" groupId="create-wallet">
 <TabItem value="cold-hot" label="Coldkey and Hotkey">
 If you plan to validate or mine in a subnet, you must have both a coldkey and a hotkey. If you already have a coldkey, you can [create a new hotkey](?create-wallet=hotkey) for it.
 
@@ -46,7 +46,7 @@ btcli wallet create --wallet.name test-coldkey --wallet.hotkey test-hotkey
 
 :::
 
-Next, you'll be prompted to configure the wallet by setting a password for the coldkey, and choosing the desired mnemonic length. Completing the prompts creates a complete Bittensor wallet by setting up both coldkey and hotkeys. A unique mnemonic is generated for each key and output to the terminal upon creation.
+Next, you will be prompted to configure the wallet by setting a password for the coldkey, and choosing the desired mnemonic length. Completing the prompts creates a complete Bittensor wallet by setting up both coldkey and hotkeys. A unique mnemonic is generated for each key and output to the terminal upon creation.
 
 :::tip Regenerating the wallet keys
 Take note of the mnemonics in the response as they are required to regenerate your coldkey and hotkey. To regenerate your coldkey, run the following command in the terminal:
@@ -151,6 +151,10 @@ btcli wallet new_hotkey --use-password --wallet.name test-coldkey --wallet.hotke
 
 ## Creating a wallet using Python
 
+<Tabs queryString="create-wallet" groupId="create-wallet">
+<TabItem value="cold-hot" label="Coldkey and Hotkey">
+If you plan to validate or mine in a subnet, you must have both a coldkey and a hotkey.
+
 Copy and paste the following three lines into your Python interpreter. Replace the string values for `name` (`my_coldkey`) and `hotkey` (`my_hotkey`) with your own.
 
 ```python showLineNumbers
@@ -172,23 +176,74 @@ The mnemonic to the new coldkey is:
 
 **** **** **** **** **** **** **** **** **** **** **** ****
 
-You can use the mnemonic to recreate the key in case it gets lost. The command to use to regenerate the key using this mnemonic is:
-btcli w regen_coldkey --mnemonic **** **** **** **** **** **** **** **** **** **** **** ****
-
-Specify password for key encryption:
+You can use the mnemonic to recreate the key with `btcli` in case it gets lost.
+Enter your password:
 Retype your password:
-
-IMPORTANT: Store this mnemonic in a secure (preferable offline place), as anyone who has possession of this mnemonic can use it to regenerate the key and access your tokens.
-
-The mnemonic to the new hotkey is:
-
-**** **** **** **** **** **** **** **** **** **** **** ****
-
-You can use the mnemonic to recreate the key in case it gets lost. The command to use to regenerate the key using this mnemonic is:
-btcli w regen_hotkey --mnemonic **** **** **** **** **** **** **** **** **** **** **** ****
-
+Encrypting...
 wallet(test-coldkey, test-hotkey, ~/.bittensor/wallets/)
 ```
+
+:::info Encrypting the hotkey
+Since the coldkey is encrypted by default, the command above only encrypts the newly created coldkey. To encrypt your hotkey when creating a wallet, include the `hotkey_use_password=True` parameter in the `wallet.create_if_non_existent()` method as shown:
+
+```python showLineNumbers
+import bittensor as bt
+wallet = bt.wallet(name = 'my_coldkey', hotkey = 'my_hotkey')
+wallet.create_if_non_existent(hotkey_use_password=True)
+```
+
+Then, you will be prompted to configure the wallet by setting a password for both the coldkey and the hotkey.
+:::
+
+</TabItem>
+<TabItem value="coldkey" label="Coldkey only">
+If a user does not intend to mine, validate, manage subnets, or participate in governance, a hotkey is not required. In such cases, a coldkey-only wallet is recommended for simplicity.
+
+Copy and paste the following lines into your Python interpreter. Replace the string values for `name` (`my_coldkey`) with your own.
+
+```python showLineNumbers
+import bittensor as bt
+wallet = bt.wallet(name = 'my_coldkey')
+wallet.create_new_coldkey()
+```
+
+You will be prompted to input a password for the coldkey and then see the terminal output, which includes your all-important seed phrase, a.k.a. the _mnemonic_ to the coldkey.
+
+```text
+IMPORTANT: Store this mnemonic in a secure (preferable offline place), as anyone who has possession of this mnemonic can use it to regenerate the key and access your tokens.
+
+The mnemonic to the new hotkey is: **** *** **** **** ***** **** *** **** **** **** ***** *****
+You can use the mnemonic to recreate the key in case it gets lost.
+```
+
+</TabItem>
+<TabItem value="hotkey" label="Hotkey only">
+If you plan to validate or mine in a subnet, you must have both a coldkey and a hotkey.
+
+Before creating a hotkey, you must have created a coldkey as described in the [creating a coldkey tab](?create-wallet=coldkey). Next, provide this coldkey as a parameter to generate a hotkey. This will pair the hotkey with the coldkey as shown:
+
+```python showLineNumbers
+import bittensor as bt
+wallet = bt.wallet(name = 'my_coldkey')
+wallet.create_new_hotkey()
+```
+
+:::info Encrypting the hotkey
+To encrypt your hotkey when creating a wallet, include the `use_password=True` parameter in the `wallet.create_new_hotkey()` method as shown:
+
+```python showLineNumbers
+import bittensor as bt
+wallet = bt.wallet(name = 'my_coldkey')
+wallet.create_new_hotkey(use_password=True)
+```
+
+Then, you will be prompted to configure the wallet by setting a password for both the hotkey.
+:::
+
+</TabItem>
+</Tabs>
+
+---
 
 ## Location and addresses of the local wallets
 
