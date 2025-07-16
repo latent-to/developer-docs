@@ -87,7 +87,7 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [              
-        'liquidity-positions/liquidity-positions'
+        'liquidity-positions/liquidity-positions',
         'liquidity-positions/managing-liquidity-positions'
       ],
     },
@@ -98,8 +98,7 @@ const sidebars = {
       collapsed: true,
       items: [
         "subnets/metagraph",
-        "subnets/create-a-subnet",
-        'liquidity-provider',
+        "subnets/create-a-subnet",        
         "subnets/subnet-creators-btcli-guide",
         "subnets/subnet-hyperparameters",
         "subnets/working-with-subnets",

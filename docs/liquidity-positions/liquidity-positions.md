@@ -36,17 +36,7 @@ Subnet creators can enable and disable user liquidity provision via the `toggle_
 
 ## Tokenomics
 
-### Fees
 
-Liquidity providers earn fees from trading activity within their price range: 
-
-- **TAO Fees**: Fees earned in TAO tokens
-- **Alpha Fees**: Fees earned in Alpha tokens
-- **Fee Distribution**: Proportional to liquidity provided and trading volume
-
-The `calculate_fees()` function calculates both TAO and Alpha fees based on global fee data and position liquidity.
-
-[See source code](https://github.com/opentensor/bittensor/blob/staging/bittensor/utils/liquidity.py#L130-L158)
 
 ### Dynamic token composition
 
@@ -99,10 +89,17 @@ def to_token_amounts(
 [See source code](https://github.com/opentensor/bittensor/blob/staging/bittensor/utils/liquidity.py#L28-L58)
 </details>
 
+### Fees
 
-### Price Range Considerations
-- **Narrow Ranges**: Higher fee concentration but more likely to become single-token when price moves
-- **Wide Ranges**: Lower fee concentration but more likely to maintain mixed token composition
+Liquidity providers earn fees from trading activity within their price range: 
+
+- **TAO Fees**: Fees earned in TAO tokens
+- **Alpha Fees**: Fees earned in Alpha tokens
+- **Fee Distribution**: Proportional to liquidity provided and trading volume
+
+The `calculate_fees()` function calculates both TAO and Alpha fees based on global fee data and position liquidity.
+
+[See source code](https://github.com/opentensor/bittensor/blob/staging/bittensor/utils/liquidity.py#L130-L158)
 
 
 ## Liquidity Position Lifecycle
