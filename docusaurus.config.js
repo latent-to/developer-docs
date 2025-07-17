@@ -78,6 +78,10 @@ const config = {
             from: "/reference/btcli",
           },
           {
+            to: "/liquidity-positions/",
+            from: "/liquidity-provider",
+          },
+          {
             to: "/staking-and-delegation/delegation",
             from: "/delegation",
           },
