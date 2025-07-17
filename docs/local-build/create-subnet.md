@@ -8,13 +8,13 @@ This page covers creating a subnet on a locally deployed Subtensor blockchain, w
 
 For creating a subnet on Bittensor test and main network, see [Create a Subnet](../subnets/create-a-subnet).
 
-Prerequisites:
+## Prerequisites:
 
 - [Deploy a Subtensor chain locally](./deploy)
-- [Provision wallets for the sn-creator, miner, and validator users for this tutorial.](./provision-wallets)
+- [Provision wallets for the subnet creator, miner, and validator users for this tutorial.](./provision-wallets)
+- Sufficient amount of TAO in your subnet creator wallet to cover the [burn cost](../glossary.md#burn-cost).
 
 ## Create subnet
-
 
 ```shell
 btcli subnet create \
@@ -23,94 +23,37 @@ btcli subnet create \
 --network ws://127.0.0.1:9945
 ```
 
-### Trouble shoot
-
-#### Insufficient funds
-
-If you are following this tutorial for the first time, the `subnet create` command will faill with an insufficient balance error.
-
-The coldkey signing the `subnet create` transaction must have a sufficient $\tau$ balance to cover the burn cost of subnet creation, so called because the funds cannot be recovered.
-
-```console
-Subnet burn cost: τ 1,000.0000
-Your balance of: τ 0.0000 is not enough to burn τ 1,000.0000 to register a subnet.
-```
-
-Transfer funds from the Alice account to cover it and try again. Consult `btcli w list` and carefully check the ss58 address of the destination coldkey (in this case, the one with the name `sn-creator`).
-
-```shell
-btcli wallet transfer \
---amount 1001 \
---wallet.name alice \
---destination "5C9xw4..." \
---network ws://127.0.0.1:9945
-```
-
-#### Network Rate Limit Error
-
-If you see a network rate limit error, you may need to adjust the `SubtensorInitialNetworkRateLimit` chain state parameter.
-
-See [Clone and tweak the Subtensor source](./deploy#clone-and-tweak-the-subtensor-source)
-
-### Burn cost
-
-The burn cost for subnet creation is dynamic; it lowers gradually and doubles every time a subnet is created.
-
-:::tip try it live
-
-Check the burn cost to create a subnet on Bittensor main network and test network:
-
-<link rel="stylesheet" href="https://unpkg.com/@antonz/codapi@0.19.10/dist/snippet.css" />
-<codapi-settings url="https://bittensor-codex.com/v1">
-</codapi-settings>
-
-```shell
-btcli subnet burn-cost --network finney
-```
-
-<codapi-snippet sandbox="python" editor="basic" init-delay="500">
-</codapi-snippet>
-
-```shell
-btcli subnet burn-cost --network test
-```
-
-<codapi-snippet sandbox="python" editor="basic" init-delay="500">
-</codapi-snippet>
-:::
-
 ## Fund your subnet
 
 To remedy your liquidity shortfall, transfer $\tau$ from the Alice account and try again.
 
 1. First, get the ss58 address for the destination wallet for the transfer:
-    ```shell
-    btcli w list
-    ```
-    ```shell
-    ...
-    ── Coldkey sn-creator  ss58_address 5C9xw4gDyu11ocdpWrmhT1sbi4xEHCpzEMsyMA4jGfAZQofQ
-    └── Hotkey default  ss58_address 5GVsCAY6RuSuoAA1E77xsHJ9PjdZJjJrRkNFDxVtRKPnw7TR
-    ```
+   ```shell
+   btcli w list
+   ```
+   ```shell
+   ...
+   ── Coldkey sn-creator  ss58_address 5C9xw4gDyu11ocdpWrmhT1sbi4xEHCpzEMsyMA4jGfAZQofQ
+   └── Hotkey default  ss58_address 5GVsCAY6RuSuoAA1E77xsHJ9PjdZJjJrRkNFDxVtRKPnw7TR
+   ```
 1. Execute the transfer from `alice` to the sn-creator wallet
 
-    ```console
-    btcli wallet transfer \
-    --amount 1001 \
-    --wallet.name alice \
-    --destination "5GVsCAY6RuSuoAA1E77xsHJ9PjdZJjJrRkNFDxVtRKPnw7TR" \
-    --subtensor.chain_endpoint ws://127.0.0.1:9945
-    ```
+   ```console
+   btcli wallet transfer \
+   --amount 1001 \
+   --wallet.name alice \
+   --destination "5GVsCAY6RuSuoAA1E77xsHJ9PjdZJjJrRkNFDxVtRKPnw7TR" \
+   --subtensor.chain_endpoint ws://127.0.0.1:9945
+   ```
 
-    ```shell
-    Do you want to transfer:
-    amount: τ 1,001.0000
-    from: alice : 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-    to: 5GVsCAY6RuSuoAA1E77xsHJ9PjdZJjJrRkNFDxVtRKPnw7TR
-    for fee: τ 0.0001 [y/n]: y
-    🌏  📡 Transferring...
-    ```
-
+   ```shell
+   Do you want to transfer:
+   amount: τ 1,001.0000
+   from: alice : 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+   to: 5GVsCAY6RuSuoAA1E77xsHJ9PjdZJjJrRkNFDxVtRKPnw7TR
+   for fee: τ 0.0001 [y/n]: y
+   🌏  📡 Transferring...
+   ```
 
 ## Success
 
@@ -177,3 +120,22 @@ btcli subnet list \
         │             │             │             │              │ 2.01k/29.00 │              │             │
         │             │             │             │              │ (6931.03%)  │              │             │
 ```
+
+## Troubleshooting
+
+### Insufficient funds
+
+The coldkey signing the `subnet create` transaction must have a sufficient $\tau$ balance to cover the burn cost of subnet creation, so called because the funds cannot be recovered.
+
+```console
+Subnet burn cost: τ 1,000.0000
+Your balance of: τ 0.0000 is not enough to burn τ 1,000.0000 to register a subnet.
+```
+
+To fix this, transfer TAO from the Alice account to cover this transaction and try again. For more information, see [Transfer TAO to wallets](./provision-wallets.md#transfer-tao-to-wallets)
+
+### Network Rate Limit Error
+
+If you see a network rate limit error, you may need to adjust the `SubtensorInitialNetworkRateLimit` chain state parameter.
+
+See [Clone and tweak the Subtensor source](./deploy#clone-and-tweak-the-subtensor-source)

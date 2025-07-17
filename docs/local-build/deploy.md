@@ -1,5 +1,5 @@
 ---
-title: "Build and Deploy the Blockchain"
+title: "Create a Local Bittensor Blockchain Instance"
 toc_max_heading_level: 2
 ---
 

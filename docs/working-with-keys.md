@@ -27,7 +27,7 @@ The most critical operational goal when handling Bittensor wallets is to avoid l
 
 <Tabs queryString="create-wallet" groupId="create-wallet">
 <TabItem value="cold-hot" label="Coldkey and Hotkey">
-If you plan to validate or mine in a subnet, you must have both a coldkey and a hotkey. If you already have a coldkey, you can [create a new hotkey](?create-wallet=hotkey) for it.
+If you intend to mine or validate within a subnet, or create and manage a subnet, you’ll need both a coldkey and a hotkey. If you already have a coldkey, you can [create a new hotkey](?create-wallet=hotkey) for it.
 
 To create a new coldkey and hotkey, run the following command in the terminal:
 
@@ -99,7 +99,7 @@ btcli wallet regen_coldkey --mnemonic "word1 word2 ... word12"
 
 </TabItem>
 <TabItem value="hotkey" label="Hotkey only">
-If you plan to validate or mine in a subnet, you must create both a coldkey and a hotkey.
+If you plan to validate or mine in a subnet, you must create both a coldkey and a hotkey. A hotkey is also required when creating and managing subnets.
 
 Before creating a hotkey, you must have created a coldkey as described in the [creating a coldkey tab](?create-wallet=coldkey). Next, provide this coldkey as a parameter to generate a hotkey. This will pair the hotkey with the coldkey as shown:
 
@@ -153,9 +153,9 @@ btcli wallet new_hotkey --use-password --wallet.name test-coldkey --wallet.hotke
 
 <Tabs queryString="create-wallet" groupId="create-wallet">
 <TabItem value="cold-hot" label="Coldkey and Hotkey">
-If you plan to validate or mine in a subnet, you must have both a coldkey and a hotkey.
+If you intend to mine or validate within a subnet, or create and manage a subnet, you’ll need both a coldkey and a hotkey. If you already have a coldkey, you can [create a new hotkey](?create-wallet=hotkey) for it.
 
-Copy and paste the following three lines into your Python interpreter. Replace the string values for `name` (`my_coldkey`) and `hotkey` (`my_hotkey`) with your own.
+To create a wallet with Python, copy and paste the following three lines into your Python interpreter. Replace the string values for `name` (`my_coldkey`) and `hotkey` (`my_hotkey`) with your own.
 
 ```python showLineNumbers
 import bittensor as bt
@@ -218,7 +218,7 @@ You can use the mnemonic to recreate the key in case it gets lost.
 
 </TabItem>
 <TabItem value="hotkey" label="Hotkey only">
-If you plan to validate or mine in a subnet, you must have both a coldkey and a hotkey.
+If you plan to validate or mine in a subnet, you must have both a coldkey and a hotkey. A hotkey is also required when creating and managing subnets.
 
 Before creating a hotkey, you must have created a coldkey as described in the [creating a coldkey tab](?create-wallet=coldkey). Next, provide this coldkey as a parameter to generate a hotkey. This will pair the hotkey with the coldkey as shown:
 

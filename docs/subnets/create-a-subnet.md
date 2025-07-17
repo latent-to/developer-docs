@@ -21,7 +21,7 @@ Prospective subnet creators should familiarize themselves with the space of exis
 
 ### Burn cost
 
-The burn cost for subnet creation is dynamic; it lowers gradually and doubles every time a subnet is created.
+This refers to the required amount of TAO to be recycled when creating a new subnet. The burn cost for subnet creation is dynamic and reflects the current cost to register a new subnet. Its value lowers gradually and doubles every time a subnet is created.
 
 :::tip try it live
 
@@ -68,7 +68,7 @@ Subnet creations are limited to **one subnet creation per 7200 blocks** (approxi
 
 - [Install the most recent version of BTCLI](../getting-started/install-btcli).
 
-- [Create a wallet](../getting-started/wallets.md#creating-a-local-wallet). 
+- [Create a wallet](../getting-started/wallets.md#creating-a-local-wallet).
 
 - To create a subnet on test chain, your wallet must have sufficient test net TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network.
 - To create a subnet on main network (finney) requires a substantial investment of TAO, depending on current registration cost for new subnets.
