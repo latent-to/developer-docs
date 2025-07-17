@@ -15,7 +15,6 @@ Prerequisites:
 
 ## Create subnet
 
-
 ```shell
 btcli subnet create \
 --subnet-name awesome-first-subnet \
@@ -176,4 +175,14 @@ btcli subnet list \
    4    │             │ τ 3.0       │             │ τ 0.0        │ τ           │              │             │
         │             │             │             │              │ 2.01k/29.00 │              │             │
         │             │             │             │              │ (6931.03%)  │              │             │
+```
+
+## Start emissions on your subnet
+
+To activate your subnet, beginning emissions and allowing staking, run:
+
+```
+btcli subnet start --netuid 2 \
+--wallet.name sn-creator \
+--network ws://127.0.0.1:9945 
 ```
