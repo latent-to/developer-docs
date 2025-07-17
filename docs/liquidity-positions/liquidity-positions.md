@@ -64,9 +64,7 @@ To create an LP, the user specifies a *liquidity* parameter, which is converted 
 
 ### Modifying a Position
 
-Position management through `modify_liquidity` allows you to adjust existing positions. When adding liquidity with a positive `liquidity_delta`, additional TAO and Alpha tokens are transferred from your wallet and the position's liquidity field is updated. When removing liquidity with a negative `liquidity_delta`, the system calculates the exact TAO and Alpha token amounts based on the current price and your position's price range using the same mathematical formulas as position creation [See source code](https://github.com/opentensor/subtensor/blob/master/pallets/swap/src/pallet/impls.rs#L952-L958). These calculated amounts are returned to your wallet and the position's liquidity field is updated.
-
-[See source code](https://github.com/opentensor/bittensor/blob/master/bittensor/core/extrinsics/asyncex/liquidity.py#L74-L125)
+Its creator can modify an existing LP by adding or removing liquidity. The same formula is applied to determine the required tokens when adding liquidity, and to determine the yield of tokens when exiting liquidity, as when creating the LP.
 
 ### Fee Accumulation
 
