@@ -26,6 +26,7 @@ docker run --rm --name test_local_chain_ -p 9944:9944 -p 9945:9945 ghcr.io/opent
 Create a subnet managed by the Alice wallet.
 
 See [Provision wallets: Access the Alice account](./provision-wallets#access-the-alice-account)
+
 ```
 btcli subnet create \
 --subnet-name awesome-first-subnet \
