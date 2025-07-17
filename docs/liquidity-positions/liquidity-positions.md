@@ -4,6 +4,12 @@ title: User Liquidity Positions (Uniswap)
 
 # User Liquidity Positions (Uniswap)
 
+
+<!-- Unanswered questions -->
+<!-- do you get fees both when you unstake and stake?  -->
+<!-- (how) do fees accumulate to positions during both staking/unstaking? -->
+<!-- how do the tokens from fees and the locked tokens get distributed back when you remove liquidity or remove the whole positions? -->
+
 ## Overview
 
 The Liquidity Position feature allows users to provide trading liquidity for specific subnets, within specified price ranges for the subnet $\alpha$ token. This system is based on Uniswap V3's concentrated liquidity model and enables providers to earn fees from trading activity.
@@ -35,8 +41,6 @@ Subnet creators can enable and disable user liquidity provision via the `toggle_
 :::
 
 ## Tokenomics
-
-
 
 ### Dynamic token composition
 
@@ -108,11 +112,6 @@ The `calculate_fees()` function calculates both TAO and Alpha fees based on glob
 
 When creating a liquidity position, users provide liquidity in the form of a single `liquidity` parameter (in RAO). The system automatically calculates and charges the appropriate amounts of TAO and Alpha tokens from the user's wallet based on the current price.
 
-1. User calls `add_liquidity()` with `liquidity`, `price_low`, and `price_high` parameters
-2. System converts price range to tick indices using `price_to_tick()` 
-3. System calculates required TAO and Alpha amounts based on current price and range
-4. Tokens are transferred from user's wallet to the liquidity pool
-5. A new `LiquidityPosition` is created with a unique `position_id`
 
 [See source code](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/swap/src/pallet/impls.rs#L807):
 
@@ -122,42 +121,23 @@ The `liquidity` parameter you specify is **not** the amount of TAO/Alpha tokens 
 
 See an example: [Managing User Liquidity Positions Tutorial: View your LPs](./managing-liquidity-positions#view-your-lps)
 
-The actual TAO and Alpha amounts that get locked are calculated by the `to_token_amounts()` function:
+The actual TAO and Alpha amounts that get locked are calculated by the `to_token_amounts()` function, represented below in pseudocode:
 
-```rust
-// Simplified version of the calculation
+```python
 if current_price < price_low {
-    // Only Alpha tokens required
+    # Only Alpha tokens required
     alpha_amount = liquidity * (1/√price_low - 1/√price_high)
     tao_amount = 0
 } else if current_price > price_high {
-    // Only TAO tokens required  
+    # Only TAO tokens required  
     tao_amount = liquidity * (√price_high - √price_low)
     alpha_amount = 0
 } else {
-    // Both TAO and Alpha required
+    # Both TAO and Alpha required
     tao_amount = liquidity * (√current_price - √price_low)
     alpha_amount = liquidity * (1/√current_price - 1/√price_high)
 }
 ```
-
-$$
-\begin{algorithmic}
-\If{$\text{current\_price} < \text{price\_low}$}
-    \State // Only Alpha tokens required
-    \State $\text{alpha\_amount} = \text{liquidity} \times \left( \frac{1}{\sqrt{\text{price\_low}}} - \frac{1}{\sqrt{\text{price\_high}}} \right)$
-    \State $\text{tao\_amount} = 0$
-\ElsIf{$\text{current\_price} > \text{price\_high}$}
-    \State // Only TAO tokens required
-    \State $\text{tao\_amount} = \text{liquidity} \times \left( \sqrt{\text{price\_high}} - \sqrt{\text{price\_low}} \right)$
-    \State $\text{alpha\_amount} = 0$
-\Else
-    \State // Both TAO and Alpha required
-    \State $\text{tao\_amount} = \text{liquidity} \times \left( \sqrt{\text{current\_price}} - \sqrt{\text{price\_low}} \right)$
-    \State $\text{alpha\_amount} = \text{liquidity} \times \left( \frac{1}{\sqrt{\text{current\_price}}} - \frac{1}{\sqrt{\text{price\_high}}} \right)$
-\EndIf
-\end{algorithmic}
-$$
 
 
 [See source code](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/swap/src/position.rs#L80-L122)

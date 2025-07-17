@@ -189,7 +189,7 @@ If we attempt to create an LP with high window, i.e. with its low price above th
 
 However, if we attempt to create a LP with a low window relative to the current price, i.e. with its high price below the current price, it will succeed, because the LP is composed entirely of TAO.
 
-See [Liquidity Positions: Dynamic token composition](./liquidity-positions#dynamic-token-composition).
+See [Liquidity Positions: Dynamic token composition](./#dynamic-token-composition).
 
 
 ### Check the price
