@@ -4,7 +4,6 @@ title: Managing User Liquidity Positions Tutorial
 
 In this tutorial we will explore the behavior of Bittensor's Uniswap-style user liquidity positions (LPs). To facilitate this, we'll deploy a Subtensor blockchain locally and create a subnet on it.
 
-
 Liquidity positions are complicated and potentially confusing, because their behavior is sensitive to the subnet price relative to the position's high' and 'low' price boundaries, at several stages of their life-cycle:
 
 - When a LP is created
@@ -22,15 +21,17 @@ Or try the easy way, by running:
 ```bash
 docker run --rm --name test_local_chain_ -p 9944:9944 -p 9945:9945 ghcr.io/opentensor/subtensor-localnet:devnet-ready
 ```
-
 ### Create a subnet
 
+Create a subnet managed by the Alice wallet.
 
+See [Provision wallets: Access the Alice account](./provision-wallets#access-the-alice-account)
+```
 btcli subnet create \
 --subnet-name awesome-first-subnet \
 --wallet.name alice \
 --network ws://127.0.0.1:9945
-
+```
 
 <!-- 
 To keep the subnet price stable, let's first stake a ubnch of liquidity in. this will result in a strangely high price because no other subnets have liquidity, but at least the price will be relatively stable.
