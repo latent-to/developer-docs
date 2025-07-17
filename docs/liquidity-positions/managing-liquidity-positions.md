@@ -4,7 +4,7 @@ title: Managing User Liquidity Positions Tutorial
 
 In this tutorial we will explore the behavior of Bittensor's Uniswap-style user liquidity positions (LPs). To facilitate this, we'll deploy a Subtensor blockchain locally and create a subnet on it.
 
-Liquidity positions are complicated and potentially confusing, because their behavior is sensitive to the subnet price relative to the position's high' and 'low' price boundaries, at several stages of their life-cycle:
+Liquidity positions can be complicated and potentially confusing, as their behavior is sensitive to the subnet price relative to the position's high' and 'low' price boundaries, at several stages of their life-cycle:
 
 - When a LP is created
 - When liquidity is added to an existing LP by modifying it
