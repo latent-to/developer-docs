@@ -296,7 +296,7 @@ Next, stake into your hotkey so you'll be able to create those other LPs.
 :::note notes
 Use `--partial` to make things easier; this option allows you to specify a large staking amount, and an amount will be staked up to your tolerance threshold.
 
-
+If you don't use partial (or unsafe-staking mode), you'll have to find a staking amount that will be tolerated by your slippage limit.
 :::
 
 ```shell
@@ -593,6 +593,10 @@ btcli liquidity list  --netuid 2 --network ws://127.0.0.1:9945 --wallet.name liq
 
 Let's remove the LP and recover the liquidity inside. To see how this affects our balance, run the `dashboard` command once before the `liquidity remove` command, and once after. You will see a small increase in your token balances.
 
+:::tip
+You can find the required LP ID with `btcli liquidity list`, as seen above.
+:::
+
 ```shell
 btcli liquidity remove --netuid 2 --network ws://127.0.0.1:9945 --wallet.name liquidity-manager
 ```
@@ -609,7 +613,3 @@ Enter your password:
 Decrypting...
 Position 5 has been removed.
 ```
-
-
-
-

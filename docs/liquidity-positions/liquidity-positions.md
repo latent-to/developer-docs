@@ -56,11 +56,10 @@ This compositions represents the token requirements for creating an LP depending
 
 ## Liquidity Position Lifecycle
 
-See also: [Managing User Liquidity Positions Tutorial](./managing-liquidity-positions).
 
 ### Creating Positions
 
-To create an LP, the user specifies a *liquidity* parameter, which is converted into some combination of TAO and alpha token balances. These tokens are taken from the users coldkey and hotkey respectively, and locked up in the LP.
+To create an LP, the user specifies a *liquidity* parameter, which is converted into some combination of TAO and alpha token balances. TAO are taken from the users coldkey, alpha tokens are taken from the hotkey on which the Liquidity Position was created, and they are and locked up in the LP.
 
 ### Modifying a Position
 
@@ -112,8 +111,11 @@ When a position is destroyed/removed, the position's liquidity is converted back
 
 The `liquidity` parameter that defines a LP is **not** an amount of TAO or Alpha tokens (or even a sum of the two). Instead, it's a mathematical scaling factor from Uniswap V3's concentrated liquidity model, which calculates the token amounts deducted from your hotkey and coldkey (alpha and TAO respectively) when creating a LP.
 
+The actual TAO and Alpha amounts that get locked are calculated by the `to_token_amounts()` function, represented below in pseudocode.
 
-The actual TAO and Alpha amounts that get locked are calculated by the `to_token_amounts()` function, represented below in pseudocode:
+:::note
+The composition of the tokens required to create an LP depends on the current token price.
+:::
 
 ```python
 if current_price < price_low {
@@ -133,6 +135,5 @@ if current_price < price_low {
 
 See also:
 
-- [Managing User Liquidity Positions Tutorial: View your LPs](./managing-liquidity-positions#view-your-lps)
 - [See source code](https://github.com/opentensor/subtensor/blob/master/pallets/swap/src/position.rs#L80-L122)
 
