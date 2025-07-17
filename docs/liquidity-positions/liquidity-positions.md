@@ -4,12 +4,6 @@ title: User Liquidity Positions (Uniswap)
 
 # User Liquidity Positions (Uniswap)
 
-
-<!-- Unanswered questions -->
-<!-- do you get fees both when you unstake and stake?  -->
-<!-- (how) do fees accumulate to positions during both staking/unstaking? -->
-<!-- how do the tokens from fees and the locked tokens get distributed back when you remove liquidity or remove the whole positions? -->
-
 ## Overview
 
 The Liquidity Position feature allows users to provide trading liquidity for specific subnets, within specified price ranges for the subnet $\alpha$ token. This system is based on Uniswap V3's concentrated liquidity model and enables providers to earn fees from trading activity.
