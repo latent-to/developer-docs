@@ -172,17 +172,6 @@ Additionally, in order to manage liquidity on a subnet, a user use a hotkey that
 
 The token input when creating a LP depends on whether the current token price is above, below, or within the window between the high and low price that define the position. Therefore you should always check the current token price when creating, removing, or modifying positions, so you correctly anticipate the behavior.
 
-### Understanding the `liquidity` Parameter
-
-:::tip
-To easily view token prices on your local chain, as well as your TAO balance and alpha stakes, use the BTCLI dashboard:
-```
-btcli view dashboard \
---wallet.name liquidity-manager \
---network ws://127.0.0.1:9945
-```
-:::
-
 To observe the token input behavior of liquidity positions, let's create attempt to create 3 LPs, such that the current price is below, within, and above, the positions' respective price windows.
 
 
@@ -197,6 +186,15 @@ See [Liquidity Positions: Dynamic token composition](./#dynamic-token-compositio
 ### Check the price
 
 Always check the token price prior to creating LPs so you can predict their behavior.
+
+To easily view token prices on your local chain, as well as your TAO balance and alpha stakes, use the BTCLI dashboard:
+```
+btcli view dashboard \
+--wallet.name liquidity-manager \
+--network ws://127.0.0.1:9945
+```
+
+You can also check the price with the following:
 
 ```
 btcli subnet list  --network ws://127.0.0.1:9945
