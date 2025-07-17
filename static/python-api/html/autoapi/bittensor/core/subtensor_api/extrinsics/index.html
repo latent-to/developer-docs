@@ -175,6 +175,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/btlogging/index.html">bittensor.utils.btlogging</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/formatting/index.html">bittensor.utils.formatting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/registration/index.html">bittensor.utils.registration</a></li>
@@ -400,15 +401,19 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics"><code class="docutils literal notranslate"><span class="pre">Extrinsics</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.add_liquidity"><code class="docutils literal notranslate"><span class="pre">Extrinsics.add_liquidity</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.add_stake"><code class="docutils literal notranslate"><span class="pre">Extrinsics.add_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.add_stake_multiple"><code class="docutils literal notranslate"><span class="pre">Extrinsics.add_stake_multiple</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.burned_register"><code class="docutils literal notranslate"><span class="pre">Extrinsics.burned_register</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.commit_weights"><code class="docutils literal notranslate"><span class="pre">Extrinsics.commit_weights</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.modify_liquidity"><code class="docutils literal notranslate"><span class="pre">Extrinsics.modify_liquidity</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.move_stake"><code class="docutils literal notranslate"><span class="pre">Extrinsics.move_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.register"><code class="docutils literal notranslate"><span class="pre">Extrinsics.register</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.register_subnet"><code class="docutils literal notranslate"><span class="pre">Extrinsics.register_subnet</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.remove_liquidity"><code class="docutils literal notranslate"><span class="pre">Extrinsics.remove_liquidity</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.reveal_weights"><code class="docutils literal notranslate"><span class="pre">Extrinsics.reveal_weights</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.root_register"><code class="docutils literal notranslate"><span class="pre">Extrinsics.root_register</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.root_set_pending_childkey_cooldown"><code class="docutils literal notranslate"><span class="pre">Extrinsics.root_set_pending_childkey_cooldown</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.root_set_weights"><code class="docutils literal notranslate"><span class="pre">Extrinsics.root_set_weights</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.serve_axon"><code class="docutils literal notranslate"><span class="pre">Extrinsics.serve_axon</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.set_children"><code class="docutils literal notranslate"><span class="pre">Extrinsics.set_children</span></code></a></li>
@@ -416,9 +421,11 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.set_weights"><code class="docutils literal notranslate"><span class="pre">Extrinsics.set_weights</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.start_call"><code class="docutils literal notranslate"><span class="pre">Extrinsics.start_call</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.swap_stake"><code class="docutils literal notranslate"><span class="pre">Extrinsics.swap_stake</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.toggle_user_liquidity"><code class="docutils literal notranslate"><span class="pre">Extrinsics.toggle_user_liquidity</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.transfer"><code class="docutils literal notranslate"><span class="pre">Extrinsics.transfer</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.transfer_stake"><code class="docutils literal notranslate"><span class="pre">Extrinsics.transfer_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.unstake"><code class="docutils literal notranslate"><span class="pre">Extrinsics.unstake</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.unstake_all"><code class="docutils literal notranslate"><span class="pre">Extrinsics.unstake_all</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.unstake_multiple"><code class="docutils literal notranslate"><span class="pre">Extrinsics.unstake_multiple</span></code></a></li>
 </ul>
 </li>
@@ -460,6 +467,11 @@
 </dd>
 </dl>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.subtensor_api.extrinsics.Extrinsics.add_liquidity">
+<span class="sig-name descname"><span class="pre">add_liquidity</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.add_liquidity" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.subtensor_api.extrinsics.Extrinsics.add_stake">
 <span class="sig-name descname"><span class="pre">add_stake</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.add_stake" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
@@ -480,6 +492,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.subtensor_api.extrinsics.Extrinsics.modify_liquidity">
+<span class="sig-name descname"><span class="pre">modify_liquidity</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.modify_liquidity" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.subtensor_api.extrinsics.Extrinsics.move_stake">
 <span class="sig-name descname"><span class="pre">move_stake</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.move_stake" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
@@ -495,6 +512,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.subtensor_api.extrinsics.Extrinsics.remove_liquidity">
+<span class="sig-name descname"><span class="pre">remove_liquidity</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.remove_liquidity" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.subtensor_api.extrinsics.Extrinsics.reveal_weights">
 <span class="sig-name descname"><span class="pre">reveal_weights</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.reveal_weights" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
@@ -502,6 +524,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.subtensor_api.extrinsics.Extrinsics.root_register">
 <span class="sig-name descname"><span class="pre">root_register</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.root_register" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.subtensor_api.extrinsics.Extrinsics.root_set_pending_childkey_cooldown">
+<span class="sig-name descname"><span class="pre">root_set_pending_childkey_cooldown</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.root_set_pending_childkey_cooldown" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -540,6 +567,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.subtensor_api.extrinsics.Extrinsics.toggle_user_liquidity">
+<span class="sig-name descname"><span class="pre">toggle_user_liquidity</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.toggle_user_liquidity" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.subtensor_api.extrinsics.Extrinsics.transfer">
 <span class="sig-name descname"><span class="pre">transfer</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.transfer" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
@@ -552,6 +584,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.subtensor_api.extrinsics.Extrinsics.unstake">
 <span class="sig-name descname"><span class="pre">unstake</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.unstake" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.subtensor_api.extrinsics.Extrinsics.unstake_all">
+<span class="sig-name descname"><span class="pre">unstake_all</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.unstake_all" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -613,15 +650,19 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics"><code class="docutils literal notranslate"><span class="pre">Extrinsics</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.add_liquidity"><code class="docutils literal notranslate"><span class="pre">Extrinsics.add_liquidity</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.add_stake"><code class="docutils literal notranslate"><span class="pre">Extrinsics.add_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.add_stake_multiple"><code class="docutils literal notranslate"><span class="pre">Extrinsics.add_stake_multiple</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.burned_register"><code class="docutils literal notranslate"><span class="pre">Extrinsics.burned_register</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.commit_weights"><code class="docutils literal notranslate"><span class="pre">Extrinsics.commit_weights</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.modify_liquidity"><code class="docutils literal notranslate"><span class="pre">Extrinsics.modify_liquidity</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.move_stake"><code class="docutils literal notranslate"><span class="pre">Extrinsics.move_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.register"><code class="docutils literal notranslate"><span class="pre">Extrinsics.register</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.register_subnet"><code class="docutils literal notranslate"><span class="pre">Extrinsics.register_subnet</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.remove_liquidity"><code class="docutils literal notranslate"><span class="pre">Extrinsics.remove_liquidity</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.reveal_weights"><code class="docutils literal notranslate"><span class="pre">Extrinsics.reveal_weights</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.root_register"><code class="docutils literal notranslate"><span class="pre">Extrinsics.root_register</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.root_set_pending_childkey_cooldown"><code class="docutils literal notranslate"><span class="pre">Extrinsics.root_set_pending_childkey_cooldown</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.root_set_weights"><code class="docutils literal notranslate"><span class="pre">Extrinsics.root_set_weights</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.serve_axon"><code class="docutils literal notranslate"><span class="pre">Extrinsics.serve_axon</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.set_children"><code class="docutils literal notranslate"><span class="pre">Extrinsics.set_children</span></code></a></li>
@@ -629,9 +670,11 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.set_weights"><code class="docutils literal notranslate"><span class="pre">Extrinsics.set_weights</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.start_call"><code class="docutils literal notranslate"><span class="pre">Extrinsics.start_call</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.swap_stake"><code class="docutils literal notranslate"><span class="pre">Extrinsics.swap_stake</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.toggle_user_liquidity"><code class="docutils literal notranslate"><span class="pre">Extrinsics.toggle_user_liquidity</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.transfer"><code class="docutils literal notranslate"><span class="pre">Extrinsics.transfer</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.transfer_stake"><code class="docutils literal notranslate"><span class="pre">Extrinsics.transfer_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.unstake"><code class="docutils literal notranslate"><span class="pre">Extrinsics.unstake</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.unstake_all"><code class="docutils literal notranslate"><span class="pre">Extrinsics.unstake_all</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.extrinsics.Extrinsics.unstake_multiple"><code class="docutils literal notranslate"><span class="pre">Extrinsics.unstake_multiple</span></code></a></li>
 </ul>
 </li>

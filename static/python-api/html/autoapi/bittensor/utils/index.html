@@ -175,6 +175,7 @@
 <li class="toctree-l4"><a class="reference internal" href="btlogging/index.html">bittensor.utils.btlogging</a></li>
 <li class="toctree-l4"><a class="reference internal" href="easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="formatting/index.html">bittensor.utils.formatting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="liquidity/index.html">bittensor.utils.liquidity</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="registration/index.html">bittensor.utils.registration</a></li>
@@ -402,6 +403,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.BT_DOCS_LINK"><code class="docutils literal notranslate"><span class="pre">BT_DOCS_LINK</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.Certificate"><code class="docutils literal notranslate"><span class="pre">Certificate</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.RAOPERTAO"><code class="docutils literal notranslate"><span class="pre">RAOPERTAO</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.U16_MAX"><code class="docutils literal notranslate"><span class="pre">U16_MAX</span></code></a></li>
@@ -458,6 +460,7 @@
 <li class="toctree-l1"><a class="reference internal" href="btlogging/index.html">bittensor.utils.btlogging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l1"><a class="reference internal" href="formatting/index.html">bittensor.utils.formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="liquidity/index.html">bittensor.utils.liquidity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l1"><a class="reference internal" href="networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="registration/index.html">bittensor.utils.registration</a></li>
@@ -472,37 +475,40 @@
 <h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.RAOPERTAO" title="bittensor.utils.RAOPERTAO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RAOPERTAO</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.BT_DOCS_LINK" title="bittensor.utils.BT_DOCS_LINK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BT_DOCS_LINK</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.U16_MAX" title="bittensor.utils.U16_MAX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U16_MAX</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.RAOPERTAO" title="bittensor.utils.RAOPERTAO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RAOPERTAO</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.U64_MAX" title="bittensor.utils.U64_MAX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U64_MAX</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.U16_MAX" title="bittensor.utils.U16_MAX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U16_MAX</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.VersionCheckError" title="bittensor.utils.VersionCheckError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VersionCheckError</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.U64_MAX" title="bittensor.utils.U64_MAX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U64_MAX</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.check_version" title="bittensor.utils.check_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_version</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.VersionCheckError" title="bittensor.utils.VersionCheckError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VersionCheckError</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.hex_to_bytes" title="bittensor.utils.hex_to_bytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hex_to_bytes</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.check_version" title="bittensor.utils.check_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_version</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.logging" title="bittensor.utils.logging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logging</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.hex_to_bytes" title="bittensor.utils.hex_to_bytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hex_to_bytes</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.ss58_decode" title="bittensor.utils.ss58_decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ss58_decode</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.logging" title="bittensor.utils.logging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logging</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.torch" title="bittensor.utils.torch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.ss58_decode" title="bittensor.utils.ss58_decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ss58_decode</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.use_torch" title="bittensor.utils.use_torch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_torch</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.torch" title="bittensor.utils.torch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.version_checking" title="bittensor.utils.version_checking"><code class="xref py py-obj docutils literal notranslate"><span class="pre">version_checking</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.use_torch" title="bittensor.utils.use_torch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_torch</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.version_checking" title="bittensor.utils.version_checking"><code class="xref py py-obj docutils literal notranslate"><span class="pre">version_checking</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -578,6 +584,11 @@
 </section>
 <section id="package-contents">
 <h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">#</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="bittensor.utils.BT_DOCS_LINK">
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">BT_DOCS_LINK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://docs.bittensor.com'</span></em><a class="headerlink" href="#bittensor.utils.BT_DOCS_LINK" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.utils.Certificate">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">Certificate</span></span><a class="reference internal" href="../../../_modules/bittensor/utils.html#Certificate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.Certificate" title="Link to this definition">#</a></dt>
@@ -959,6 +970,7 @@ false-y values are ‘n’, ‘no’, ‘f’, ‘false’, ‘off’, and ‘0�
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.BT_DOCS_LINK"><code class="docutils literal notranslate"><span class="pre">BT_DOCS_LINK</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.Certificate"><code class="docutils literal notranslate"><span class="pre">Certificate</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.RAOPERTAO"><code class="docutils literal notranslate"><span class="pre">RAOPERTAO</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.U16_MAX"><code class="docutils literal notranslate"><span class="pre">U16_MAX</span></code></a></li>
