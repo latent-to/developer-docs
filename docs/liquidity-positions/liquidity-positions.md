@@ -116,6 +116,62 @@ When creating a liquidity position, users provide liquidity in the form of a sin
 
 [See source code](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/swap/src/pallet/impls.rs#L807):
 
+#### Understanding the `liquidity` Parameter
+
+The `liquidity` parameter you specify is **not** the amount of TAO/Alpha tokens that will be locked up. Instead, it's a mathematical scaling factor from Uniswap V3's concentrated liquidity model, which calculates the token amounts deducted from your hotkey and coldkey (alpha and TAO respectively) when creating a LP.
+
+See an example: [Managing User Liquidity Positions Tutorial: View your LPs](./managing-liquidity-positions#view-your-lps)
+
+The actual TAO and Alpha amounts that get locked are calculated by the `to_token_amounts()` function:
+
+```rust
+// Simplified version of the calculation
+if current_price < price_low {
+    // Only Alpha tokens required
+    alpha_amount = liquidity * (1/√price_low - 1/√price_high)
+    tao_amount = 0
+} else if current_price > price_high {
+    // Only TAO tokens required  
+    tao_amount = liquidity * (√price_high - √price_low)
+    alpha_amount = 0
+} else {
+    // Both TAO and Alpha required
+    tao_amount = liquidity * (√current_price - √price_low)
+    alpha_amount = liquidity * (1/√current_price - 1/√price_high)
+}
+```
+
+$$
+\begin{algorithmic}
+\If{$\text{current\_price} < \text{price\_low}$}
+    \State // Only Alpha tokens required
+    \State $\text{alpha\_amount} = \text{liquidity} \times \left( \frac{1}{\sqrt{\text{price\_low}}} - \frac{1}{\sqrt{\text{price\_high}}} \right)$
+    \State $\text{tao\_amount} = 0$
+\ElsIf{$\text{current\_price} > \text{price\_high}$}
+    \State // Only TAO tokens required
+    \State $\text{tao\_amount} = \text{liquidity} \times \left( \sqrt{\text{price\_high}} - \sqrt{\text{price\_low}} \right)$
+    \State $\text{alpha\_amount} = 0$
+\Else
+    \State // Both TAO and Alpha required
+    \State $\text{tao\_amount} = \text{liquidity} \times \left( \sqrt{\text{current\_price}} - \sqrt{\text{price\_low}} \right)$
+    \State $\text{alpha\_amount} = \text{liquidity} \times \left( \frac{1}{\sqrt{\text{current\_price}}} - \frac{1}{\sqrt{\text{price\_high}}} \right)$
+\EndIf
+\end{algorithmic}
+$$
+
+
+[See source code](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/swap/src/position.rs#L80-L122)
+
+**Example**: From the test suite, a liquidity parameter of `2_000_000_000` might result in:
+- Actual TAO locked: `293_000_000` (much smaller!)
+- Actual Alpha locked: `1_171_000_000`
+
+This is why the actual amounts locked are typically much smaller than the liquidity parameter - the liquidity parameter is a mathematical input to Uniswap V3 formulas, not a direct token amount.
+
+:::tip
+Always check the actual token amounts that will be charged before confirming a liquidity position transaction. The CLI will show you the exact TAO and Alpha amounts that will be deducted from your wallet.
+:::
+
 ### Modifying a Position
 
 Position management through `modify_liquidity` allows you to adjust existing positions. When adding liquidity with a positive `liquidity_delta`, additional TAO and Alpha tokens are transferred from your wallet and the position's liquidity field is updated. When removing liquidity with a negative `liquidity_delta`, the system calculates the exact TAO and Alpha token amounts based on the current price and your position's price range using the same mathematical formulas as position creation [See source code](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/swap/src/pallet/impls.rs#L952-L958). These calculated amounts are returned to your wallet and the position's liquidity field is updated.
