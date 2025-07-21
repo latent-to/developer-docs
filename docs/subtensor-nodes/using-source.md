@@ -1,6 +1,7 @@
 ---
 title: "Using Source Code"
 ---
+
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
@@ -8,8 +9,8 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 To install and run a subtensor node by compiling the source code, follow the below steps.
 
-:::danger Not tested on cloud 
-We have not tested subtensor node installation scripts on any cloud service. In addition, if you are using Runpod cloud service, then note that this service is already [containerized](https://docs.runpod.io/pods/overview). Hence, the only option available to you for Runpod is to install a subtensor node by compiling from source, as described below. **Note that we have not tested any subtensor installation steps on Runpod.** 
+:::danger Not tested on cloud
+We have not tested subtensor node installation scripts on any cloud service. In addition, if you are using Runpod cloud service, then note that this service is already [containerized](https://docs.runpod.io/pods/overview). Hence, the only option available to you for Runpod is to install a subtensor node by compiling from source, as described below. **Note that we have not tested any subtensor installation steps on Runpod.**
 :::
 
 ## Install basic packages
@@ -17,7 +18,7 @@ We have not tested subtensor node installation scripts on any cloud service. In 
 Install the basic requirements by running the below commands on a Linux terminal.
 
 ```bash title="Linux"
-sudo apt-get update 
+sudo apt-get update
 sudo apt install -y build-essential clang curl git make libssl-dev llvm libudev-dev protobuf-compiler pkg-config
 ```
 
@@ -46,7 +47,7 @@ rustup toolchain install nightly
 rustup target add --toolchain nightly wasm32-unknown-unknown
 ```
 
-## Compile subtensor code 
+## Compile subtensor code
 
 Next, to compile the subtensor source code, follow the below steps:
 
@@ -55,6 +56,7 @@ Next, to compile the subtensor source code, follow the below steps:
 ```bash
 git clone https://github.com/opentensor/subtensor.git
 ```
+
 2. Change to the Subtensor directory:
 
 ```bash
@@ -70,7 +72,7 @@ git checkout main
 4. Remove any previous chain state:
 
 ```bash
-rm -rf /var/lib/subtensor 
+rm -rf /var/lib/subtensor
 ```
 
 5. Install Subtensor by compiling with Cargo:
@@ -83,13 +85,13 @@ cargo build -p node-subtensor --profile=production --features=metadata-hash
 
 You can now run the public subtensor node either as a lite node or as an archive node. See below:
 
-### Lite node on mainchain 
+### Lite node on mainchain
 
 To run a lite node connected to the mainchain, execute the below command (note the `--sync=warp` flag which runs the subtensor node in lite mode):
 
 ```bash title="With --sync=warp setting, for lite node"
-./target/production/node-subtensor --chain ./chainspecs/raw_spec_finney.json --base-path /var/lib/subtensor --sync=warp --port 30333 --max-runtime-instances 32 --rpc-max-response-size 2048 --rpc-cors all --rpc-port 9944 --bootnodes /dns/bootnode.finney.chain.opentensor.ai/tcp/30333/ws/p2p/12D3KooWRwbMb85RWnT8DSXSYMWQtuDwh4LJzndoRrTDotTR5gDC --no-mdns --prometheus-external --rpc-external
-``` 
+./target/production/node-subtensor --chain ./chainspecs/raw_spec_finney.json --base-path /var/lib/subtensor --sync=warp --port 30333 --max-runtime-instances 32 --database paritydb --db-cache 4096 --trie-cache-size 2048 --rpc-max-response-size 2048 --rpc-cors all --rpc-port 9944 --bootnodes /dns/bootnode.finney.chain.opentensor.ai/tcp/30333/ws/p2p/12D3KooWRwbMb85RWnT8DSXSYMWQtuDwh4LJzndoRrTDotTR5gDC --no-mdns --rpc-external
+```
 
 ### Archive node on mainchain
 
@@ -97,15 +99,15 @@ To run an archive node connected to the mainchain, execute the below command (no
 
 ```bash title="With --sync=full and --pruning archive setting, for archive node"
 ./target/production/node-subtensor --chain ./chainspecs/raw_spec_finney.json --base-path /var/lib/subtensor --sync=full --pruning archive --port 30333 --max-runtime-instances 32 --rpc-max-response-size 2048 --rpc-cors all --rpc-port 9944 --bootnodes /dns/bootnode.finney.chain.opentensor.ai/tcp/30333/ws/p2p/12D3KooWRwbMb85RWnT8DSXSYMWQtuDwh4LJzndoRrTDotTR5gDC --no-mdns --prometheus-external --rpc-external
-``` 
+```
 
-### Lite node on testchain 
+### Lite node on testchain
 
 To run a lite node connected to the testchain, execute the below command:
 
 ```bash title="With bootnodes set to testnet and --sync=warp setting, for lite node."
-./target/production/node-subtensor --chain ./chainspecs/raw_spec_testfinney.json --base-path /var/lib/subtensor --sync=warp --port 30333 --max-runtime-instances 32 --rpc-max-response-size 2048 --rpc-cors all --rpc-port 9944 --bootnodes /dns/bootnode.test.finney.opentensor.ai/tcp/30333/ws/p2p/12D3KooWPM4mLcKJGtyVtkggqdG84zWrd7Rij6PGQDoijh1X86Vr --no-mdns --prometheus-external --rpc-external
-``` 
+./target/production/node-subtensor --chain ./chainspecs/raw_spec_testfinney.json --base-path /var/lib/subtensor --sync=warp --port 30333 --max-runtime-instances 32 --database paritydb --db-cache 4096 --trie-cache-size 2048 --rpc-max-response-size 2048 --rpc-cors all --rpc-port 9944 --bootnodes /dns/bootnode.test.finney.opentensor.ai/tcp/30333/ws/p2p/12D3KooWPM4mLcKJGtyVtkggqdG84zWrd7Rij6PGQDoijh1X86Vr --no-mdns --rpc-external
+```
 
 ### Archive node on testchain
 
@@ -113,4 +115,4 @@ To run an archive node connected to the testchain, execute the below command:
 
 ```bash title="With bootnodes set to testnet and --sync=full and --pruning archive setting, for archive node"
 ./target/production/node-subtensor --chain ./chainspecs/raw_spec_testfinney.json --base-path /var/lib/subtensor --sync=full --pruning archive --port 30333 --max-runtime-instances 32 --rpc-max-response-size 2048 --rpc-cors all --rpc-port 9944 --bootnodes /dns/bootnode.test.finney.opentensor.ai/tcp/30333/ws/p2p/12D3KooWPM4mLcKJGtyVtkggqdG84zWrd7Rij6PGQDoijh1X86Vr --no-mdns --prometheus-external --rpc-external
-``` 
+```
