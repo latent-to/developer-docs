@@ -13,14 +13,17 @@ Liquidity positions can be complicated and potentially confusing, as their behav
 - When liquidity is exited from an existing LP by removing (deleting) the position.
 
 ## Setup
+
 ### Deploy a Bittensor (Subtensor) blockchain locally.
 
 See: [Deploy a Local Bittensor Blockchain Instance](../local-build/deploy)
 
-Or try the easy way, by running: 
+Or try the easy way, by running:
+
 ```bash
 docker run --rm --name test_local_chain_ -p 9944:9944 -p 9945:9945 ghcr.io/opentensor/subtensor-localnet:devnet-ready
 ```
+
 ### Create a subnet
 
 Create a subnet managed by the Alice wallet.
@@ -34,12 +37,11 @@ btcli subnet create \
 --network ws://127.0.0.1:9945
 ```
 
-<!-- 
+<!--
 To keep the subnet price stable, let's first stake a ubnch of liquidity in. this will result in a strangely high price because no other subnets have liquidity, but at least the price will be relatively stable.
 
 btcli stake add  --netuid 3  --network ws://127.0.0.1:9945 --wallet.name alice  --partial --tolerance 0.5 --amount 10000
  -->
-
 
 ### Start emissions
 
@@ -59,7 +61,7 @@ Decrypting...
 ```
 
 :::tip
-After some time has passed, you'll be able to confirm that emissions are flowing by inspecting your subnet's token economy. You'll see a non-zero amount in the *Emissions* column, indicating, even if no mining activity is occuring, the subnet creator key accumulates emissions.
+After some time has passed, you'll be able to confirm that emissions are flowing by inspecting your subnet's token economy. You'll see a non-zero amount in the _Emissions_ column, indicating, even if no mining activity is occuring, the subnet creator key accumulates emissions.
 
 If you have only started one subnet, you'll see that it's emissions are always exactly 1 $\tau$.
 
@@ -82,9 +84,10 @@ btcli sudo set --netuid 2 \
 --parameter user_liquidity_enabled \
 --value True \
 --wallet.name sn-creator \
---network ws://127.0.0.1:9945 
+--network ws://127.0.0.1:9945
 
 ```
+
 ```console
 ✅ Hyperparameter user_liquidity_enabled changed to True
 
@@ -93,80 +96,82 @@ btcli sudo set --netuid 2 \
 
  HYPERPARAMETER                    VALUE                  NORMALIZED
  ────────────────────────────────────────────────────────────────────────
- 
+
  (all the hyperparameters...)
 
    user_liquidity_enabled          True                   True
  ────────────────────────────────────────────────────────────────────────
 ```
+
 :::tip
 Confirm the subnet configuration with the following command, checking that `user_liquidity_enabled` is `True`.
+
 ```
 btcli subnet hyperparameters --netuid 2 --network ws://127.0.0.1:9945
 ```
+
 :::
 
-
 ### Create and fund a liquidity manager wallet
-
 
 Additionally, in order to manage liquidity on a subnet, a user use a hotkey that has some stake on the subnet. Therefore you must register and stake some liquidity into the hotkey. This alpha liquidity will be used for the alpha component when you add liquidity to a position, when creating or modifying it.
 
 1. Create the wallet
-	```shell
-	btcli w create --wallet.name liquidity-manager --hotkey lp-hotkey
-	```
+   ```shell
+   btcli w create --wallet.name liquidity-manager --hotkey lp-hotkey
+   ```
 2. Transfer funds from the Alice account
-	```
-	btcli wallet transfer \
-	--amount 1001 \
-	--wallet.name alice \
-	--destination "5F7LNFEmsngMV2yaA41WPeYuQmVGcesu5TPJizPDpSUHviVr" \ # Coldkey public key for your liquidity-manager wallet
-	--network ws://127.0.0.1:9945
-	```
+   ```
+   btcli wallet transfer \
+   --amount 1001 \
+   --wallet.name alice \
+   --destination "5F7LNFEmsngMV2yaA41WPeYuQmVGcesu5TPJizPDpSUHviVr" \ # Coldkey public key for your liquidity-manager wallet
+   --network ws://127.0.0.1:9945
+   ```
 3. Check your balance in the dashboard
-	```shell
-	btcli view dashboard \
-	--wallet.name liquidity-manager \
-	--network ws://127.0.0.1:9945	
-	```
+
+   ```shell
+   btcli view dashboard \
+   --wallet.name liquidity-manager \
+   --network ws://127.0.0.1:9945
+   ```
 
 4. Register your liquidity-manager's hotkey.
 
+   This is the hotkey that will contain alpha stake related to the position. When you add alpha liquidity to the position, it will come from this hotkey, and when you exit it from the position, it will be credited to this hotkey.
 
-	This is the hotkey will contain alpha stake related to the position. When you add alpha liquidity to the position, it will come from this hotkey, and when you exit it from the position, it will credit to this hotkey.
+   You can either use your wallet's name for the hotkey (as below), or specify the hotkey's ss58 address in interactive mode. If you need to find your hotkey's ss58, use `btcli wallet list`.
 
-	You can either use your wallet's name for the hotkey (as below), or specify the hotkey's ss58 address in interactive mode. 	If you need to find your hotkey's ss58, use `btcli wallet list`.
+   :::tip
+   On a local blockchain running in fastblocks mode, you will likely need to use the `--period` flag to give you a long enough window before your registration request will expire.
+   :::
 
-	:::tip
-	On a local blockchain running in fastblocks mode, you will likely need to use the `--period` flag to give you a long enough window before your registration request will expire.
-	:::
+   ```shell
+   btcli subnet register \
+   --wallet.name liquidity-manager \
+   --wallet.hotkey hotsauce \
+   --period 20 \
+   --network ws://127.0.0.1:9945
+   ```
 
-	```shell
-	btcli subnet register \
-	--wallet.name liquidity-manager \
-	--wallet.hotkey hotsauce \
-	--period 20 \
-	--network ws://127.0.0.1:9945
-	```
-	```console
-	  Register to netuid: 2
-	                                                         Network: custom
+   ```console
+     Register to netuid: 2
+                                                            Network: custom
 
-	 Netuid ┃ Symbol ┃ Cost (Τ) ┃                      Hotkey                      ┃                     Coldkey
-	━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-	   2    │   β    │ τ 0.0913 │ 5DJepbhrkAVdf5L3kXLMvjHu8TBB62AAGN8U4LjTtQYoKG9R │ 5F7LNFEmsngMV2yaA41WPeYuQmVGcesu5TPJizPDpSUHviVr
-	────────┼────────┼──────────┼──────────────────────────────────────────────────┼──────────────────────────────────────────────────
-	        │        │          │                                                  │
-	Your balance is: 1,001.0000 τ
-	The cost to register by recycle is 0.0913 τ
-	Do you want to continue? [y/n] (n): y
-	Enter your password:
-	Decrypting...
-	Balance:
-	  1,001.0000 τ ➡ 1,000.9087 τ
-	✅ Registered on netuid 2 with UID 1
-	```
+    Netuid ┃ Symbol ┃ Cost (Τ) ┃                      Hotkey                      ┃                     Coldkey
+   ━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      2    │   β    │ τ 0.0913 │ 5DJepbhrkAVdf5L3kXLMvjHu8TBB62AAGN8U4LjTtQYoKG9R │ 5F7LNFEmsngMV2yaA41WPeYuQmVGcesu5TPJizPDpSUHviVr
+   ────────┼────────┼──────────┼──────────────────────────────────────────────────┼──────────────────────────────────────────────────
+           │        │          │                                                  │
+   Your balance is: 1,001.0000 τ
+   The cost to register by recycle is 0.0913 τ
+   Do you want to continue? [y/n] (n): y
+   Enter your password:
+   Decrypting...
+   Balance:
+     1,001.0000 τ ➡ 1,000.9087 τ
+   ✅ Registered on netuid 2 with UID 1
+   ```
 
 ## Creating liquidity positions
 
@@ -174,20 +179,18 @@ The token input when creating a LP depends on whether the current token price is
 
 To observe the token input behavior of liquidity positions, let's create attempt to create 3 LPs, such that the current price is below, within, and above, the positions' respective price windows.
 
-
 If we attempt to create an LP with high window, i.e. with its low price above the current token price, or if we attempt to create one with a window that spans the current price, it will fail. That is because the token composition for a LP with a high window is entirely alpha, and for a LP with a window that spans the current price, it is mixed TAO and alpha. Therefore, to create the LP requires some alpha to be staked into the hotkey, and currently the hotkey has no stake.
-
 
 However, if we attempt to create a LP with a low window relative to the current price, i.e. with its high price below the current price, it will succeed, because the LP is composed entirely of TAO.
 
 See [Liquidity Positions: Dynamic token composition](./#dynamic-token-composition).
-
 
 ### Check the price
 
 Always check the token price prior to creating LPs so you can predict their behavior.
 
 To easily view token prices on your local chain, as well as your TAO balance and alpha stakes, use the BTCLI dashboard:
+
 ```
 btcli view dashboard \
 --wallet.name liquidity-manager \
@@ -248,10 +251,10 @@ Error: Subtensor returned `InsufficientBalance(Module)` error. This means: `The 
 
 However, the following position can be created, because its high price is below the current token price.
 
-
 ```shell
 btcli liquidity add  --netuid 2 --network ws://127.0.0.1:9945 --wallet.name liquidity-manager
 ```
+
 ```console
 Enter the amount of liquidity: 10
 Enter liquidity position low price: .5
@@ -270,10 +273,10 @@ LiquidityPosition has been successfully added.
 
 View the position by running:
 
-
 ```shell
 btcli liquidity list  --netuid 2 --network ws://127.0.0.1:9945 --wallet.name liquidity-manager
 ```
+
 ```console
 
                 Liquidity Positions of liquidity-manager wallet in SN #2
@@ -286,11 +289,10 @@ btcli liquidity list  --netuid 2 --network ws://127.0.0.1:9945 --wallet.name liq
 
 ```
 
-### Add alpha to the liquidity manager hotkey 
+### Add alpha to the liquidity manager hotkey
 
 Next, stake into your hotkey so you'll be able to create those other LPs.
 
-	
 :::note notes
 Use `--partial` to make things easier; this option allows you to specify a large staking amount, and an amount will be staked up to your tolerance threshold.
 
@@ -302,7 +304,7 @@ btcli stake add --netuid 2 \
 --hotkey hotsauce --amount 10 \
 --wallet.name liquidity-manager \
 --partial \
---network ws://127.0.0.1:9945 
+--network ws://127.0.0.1:9945
 ```
 
 ```console
@@ -367,11 +369,14 @@ If you now view your dashboard, you'll see that your TAO balance has reduced by 
 Now let's try again to create the positions that previously we could not.
 
 #### High window position
+
 ```shell
 
 btcli liquidity add  --netuid 2 --network ws://127.0.0.1:9945 --wallet.name liquidity-manager --hotkey hotsauce --liquidity 10 --price-low 1.1 --price-high 1.3
 ```
+
 #### Spanning window position
+
 ```shell
 btcli liquidity add  --netuid 2 --network ws://127.0.0.1:9945 --wallet.name liquidity-manager --hotkey hotsauce --liquidity 10 --price-low .5 --price-high 1.5
 ```
@@ -401,15 +406,14 @@ btcli liquidity list  --netuid 2 --network ws://127.0.0.1:9945 --wallet.name liq
 ```
 
 ##
+
 Now let's see what happens when we stake and unstake within the trading window of liquidity positions.
 
 Create a validator coldkey if you don't have one, (See [Provision Wallets for Local Deploy](../local-build/provision-wallets) and [Mine and Validate (Locally): Register](../local-build/mine-validate)) then transfer a small amount of TAO to it from the Alice wallet.
 
 Then register a hotkey for it on subnet 2.
 
-
 Now, let's stake to it from the Alice wallet.
-
 
 ```
 btcli stake add --netuid 2 \
@@ -473,11 +477,9 @@ Subnet: 2 Stake:
   420.9182 β ➡ 457.4970 β
 ```
 
-
 So now, examining the liquidity positions, we can see that some small amount of fees have accumulated to the LP whose window spans the current price, but not the others.
 
 Note that the fees have accumulated to `Fee TAO`, but not to `Fee Alpha`.
-
 
 ```shell
  btcli liquidity list  --netuid 2 --network ws://127.0.0.1:9945 --wallet.name liquidity-manager
@@ -495,12 +497,11 @@ Note that the fees have accumulated to `Fee TAO`, but not to `Fee Alpha`.
 
 Now let's unstake and see what happens
 
-
 ```shell
 btcli stake remove --netuid 2 \
 --partial \
 --wallet.name alice \
---network ws://127.0.0.1:9945 
+--network ws://127.0.0.1:9945
 ```
 
 ```console
@@ -598,6 +599,7 @@ You can find the required LP ID with `btcli liquidity list`, as seen above.
 ```shell
 btcli liquidity remove --netuid 2 --network ws://127.0.0.1:9945 --wallet.name liquidity-manager
 ```
+
 ```console
 Enter the liquidity position ID: 5
 Enter the SS58 of the hotkey to use for this transaction.: 5DJepbhrkAVdf5L3kXLMvjHu8TBB62AAGN8U4LjTtQYoKG9R
