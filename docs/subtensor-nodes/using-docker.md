@@ -1,109 +1,120 @@
 ---
 title: "Using Docker"
 ---
+
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Using Docker
 
 To run a subtensor node with Docker, follow the below steps.
 
-:::danger Not tested on cloud 
-We have not tested subtensor node installation scripts on any cloud service. In addition, if you are using Runpod cloud service, then note that this service is already [containerized](https://docs.runpod.io/pods/overview). Hence, the only option available to you for Runpod is to install a subtensor node by [compiling from source](using-source.md). **Note that we have not tested any subtensor installation steps on Runpod.** 
+:::danger Not tested on cloud
+We have not tested subtensor node installation scripts on any cloud service. In addition, if you are using Runpod cloud service, then note that this service is already [containerized](https://docs.runpod.io/pods/overview). Hence, the only option available to you for Runpod is to install a subtensor node by [compiling from source](using-source.md). **Note that we have not tested any subtensor installation steps on Runpod.**
 :::
 
 If you are already running a subtensor node using Docker, then go directly to [Step 5 Prepare to Run ](#step-5-prepare-to-run). The below steps 1 through 4 are for first time users only.
 
-## Step 1: Install git
+## Prerequisites
 
-Ensure that `git` is installed on your machine. Refer to the [GitHub documentation](https://docs.github.com/en/get-started) for installation instructions.
+Before you begin, make sure you have installed the following on your machine:
 
-## Step 2: Install Docker
+- Install [Git](https://git-scm.com/downloads)
+- [Docker](https://docs.docker.com/desktop/use-desktop/)
 
-Follow Docker's [official installation guides](https://docs.docker.com/engine/install/) and install Docker.
+The Bittensor SDK and Bittensor CLI are required to interact with the local blockchain instance.
 
-:::tip Run Docker first
-Before proceeding, make sure that Docker is running.
-:::
+## Step 1: Clone the subtensor repo
 
-## Step 3: Clone the subtensor repo
-
-Clone the subtensor repository:
+Clone the subtensor repository and navigate into the Subtensor directory:
 
 ```bash
 git clone https://github.com/opentensor/subtensor.git
-```
-
-## Step 4: Go into subtensor directory
-
-Navigate into the Subtensor directory:
-
-```bash
 cd subtensor
 ```
 
-## Step 5: Switch to `main` branch
+:::tip Always Pull the Latest Changes
 
-Execute the below commands in this order:
+Before running the subtensor node, always ensure that you're working with the latest version of the repository. To do this, run the following command in the `subtensor` directory to fetch and merge the most recent updates:
 
-Switch to the `main` branch:
-
-```bash
-git checkout main
-```
-
-Pull the latest `main` branch contents:
-
-```bash
+```sh
 git pull
 ```
 
-## Step 6: Stop and clean Docker environment
+:::
 
-Stop any currently running Docker containers and clean up the Docker environment:
+## Step 2: Clean Docker environment
+
+Next, stop any currently running Docker containers and clean up the Docker environment using the following command:
 
 ```bash
 docker compose down --volumes && docker system prune -a --volumes -f
 
 ```
 
-## Linux post-installation steps for Docker Engine
+:::warning Linux post-installation steps for Docker Engine
+Please follow Docker's [official documentation](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user) to perform standard Linux post-installation steps for Docker Engine
 
-Please follow Docker's [official documentation](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user ) to perform standard Linux post-installation steps for Docker Engine
-
-:::tip 
 Adding a user to the `docker` group is only necessary on Linux, where `sudo` privileges are required to run Docker commands. It is unnecessary on macOS.
 :::
 
+## Step 3: Run the subtensor node
 
-## Run a Lite Node on Mainchain
+Now you can run the subtensor nodes for either mainchain or testchain using any of available options.
 
-To run a lite node connected to the Bittensor mainchain, execute the below command.
+### Using lite nodes
 
+A lite node which primarily syncs with the only blocks that have been finalized, and not the entire blockchain. Run a lite node using the command corresponding to your target chain:
+
+<Tabs queryString="subtensor-node" groupId="subtensor-node">
+<TabItem value="mainchain" label="On mainchain">
+To run a lite node connected to the Bittensor mainchain, run the following command:
 ```bash
 ./scripts/run/subtensor.sh -e docker --network mainnet --node-type lite
 ```
 
-## Run an Archive Node on Mainchain
-
-To run an archive node connected to the Bittensor mainchain, execute the below command.
-
-```bash
-./scripts/run/subtensor.sh -e docker --network mainnet --node-type archive
-```
-
-## Run a Lite Node on Testchain
-
-To run a lite node connected to the Bittensor testchain, execute the below command.
+</TabItem>
+<TabItem value="testchain" label="on testchain">
+To run a lite node connected to the Bittensor testchain, run the following command:
 
 ```bash
 ./scripts/run/subtensor.sh -e docker --network testnet --node-type lite
 ```
 
-## Run an Archive Node on Testchain
+</TabItem>
+</Tabs>
 
-To run an archive node connected to the Bittensor testchain, execute the below command.
+The command pulls the Subtensor Docker image and starts the container.
+
+:::warning Docker Resource Allocation
+Ensure Docker is configured with sufficient CPU and memory resources to meet the system requirements for running a subtensor node. Inadequate allocation may prevent the node from starting correctly.
+
+We recommend allocating at least 20 GB of RAM. You can adjust these settings in Docker Desktop under **Settings** > **Resources**.
+:::
+
+### Using archive nodes
+
+An archive node downloads and validates all the Bittensor blockchain blocks from inception up to the most recent block. Run an archive node using the command corresponding to your target chain:
+
+<Tabs queryString="subtensor-node" groupId="subtensor-node">
+<TabItem value="mainchain" label="On mainchain">
+To run an archive node connected to the Bittensor mainchain, run the following command:
+
+```bash
+./scripts/run/subtensor.sh -e docker --network mainnet --node-type archive
+```
+
+</TabItem>
+<TabItem value="testchain" label="on testchain">
+To run an archive node connected to the Bittensor testchain, run the following command:
 
 ```bash
 ./scripts/run/subtensor.sh -e docker --network testnet --node-type archive
 ```
+
+</TabItem>
+</Tabs>
+
+The command pulls the Subtensor Docker image and starts the container.
