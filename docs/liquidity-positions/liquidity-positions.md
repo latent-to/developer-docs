@@ -99,7 +99,6 @@ Fees are not distributed automatically per tempo like emissions. Instead, fees a
 - **When removing a position entirely**: All accumulated fees are collected along with your position's tokens.
   [See source code](https://github.com/opentensor/subtensor/blob/master/pallets/swap/src/pallet/mod.rs#L520-L535)
 
-and are only distributed to your wallet when you perform a position operation. This means your position's token composition and liquidity remain unchanged by fee accumulation - only the fee tracking variables are updated [See source code](https://github.com/opentensor/subtensor/blob/master/pallets/swap/src/position.rs#L110-L128).
 
 This means you must actively manage your positions to claim your earned fees - they remain locked in the position until you perform a position operation (modify or remove).
 
