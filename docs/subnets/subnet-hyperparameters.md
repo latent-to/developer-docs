@@ -34,35 +34,39 @@ Using the specified network test from config
 
  HYPERPARAMETER                    VALUE                  NORMALIZED
  ────────────────────────────────────────────────────────────────────────
-   rho                             10                     10
-   kappa                           32767                  0.4999923705
-   immunity_period                 5000                   5000
-   min_allowed_weights             1                      1
-   max_weights_limit               65535                  65535
-   tempo                           99                     99
-   min_difficulty                  10000000               5.421010862e-13
-   max_difficulty                  18446744073709551615   1
-   weights_version                 0                      0
-   weights_rate_limit              100                    100
-   adjustment_interval             360                    360
    activity_cutoff                 5000                   5000
-   registration_allowed            True                   True
-   target_regs_per_interval        1                      1
-   min_burn                        500000                 τ 0.0005
-   max_burn                        100000000000           τ 100.0000
-   bonds_moving_avg                900000                 4.878909776e-14
-   max_regs_per_block              1                      1
-   serving_rate_limit              50                     50
-   max_validators                  64                     64
-   adjustment_alpha                58000                  3.1441863e-15
-   difficulty                      10000000               5.421010862e-13
-   commit_reveal_period            1                      1
-   commit_reveal_weights_enabled   False                  False
+   adjustment_alpha                17893341751498265066   0.97
+   adjustment_interval             360                    360
    alpha_high                      58982                  0.9000076295
    alpha_low                       45875                  0.7000076295
+   alpha_sigmoid_steepness         0.0                    0
+   bonds_moving_avg                900000                 4.878909776e-14
+   bonds_reset_enabled             False                  False
+   commit_reveal_period            1                      1
+   commit_reveal_weights_enabled   False                  False
+   difficulty                      18446744073709551615   1
+   immunity_period                 5000                   5000
+   kappa                           32767                  0.4999923705
    liquid_alpha_enabled            False                  False
-   yuma3_enabled                   False                  False
-   alpha_sigmoid_steepness         1000                   0.0152590219
+   max_burn                        100000000000           100.0000 τ
+   max_difficulty                  18446744073709551615   1
+   max_regs_per_block              1                      1
+   max_validators                  64                     64
+   max_weight_limit                65535                  1
+   min_allowed_weights             1                      1
+   min_burn                        500000                 0.0005 τ
+   min_difficulty                  18446744073709551615   1
+   registration_allowed            True                   True
+   rho                             10                     10
+   serving_rate_limit              50                     50
+   subnet_is_active                True                   True
+   target_regs_per_interval        1                      1
+   tempo                           360                    360
+   transfers_enabled               True                   True
+   user_liquidity_enabled          True                   True
+   weights_rate_limit              100                    100
+   weights_version                 0                      0
+   yuma_version                    2                      2
  ────────────────────────────────────────────────────────────────────────
 ```
 
@@ -113,7 +117,7 @@ The number of blocks for the stake to become inactive for the purpose of epoch i
 
 **`btcli` setter**: `btcli sudo set --param adjustment_alpha`
 
-**Setter extrinsic**: `sudo_set_activity_cutoff`
+**Setter extrinsic**: `sudo_set_adjustment_alpha`
 
 **Permissions required to set**: Subnet Creator
 
@@ -151,16 +155,15 @@ The number of blocks for the stake to become inactive for the purpose of epoch i
 **Description**:
 `AlphaSigmoidSteepness` determines how the consensus mechanism assigns an alpha value for a given miner-validator pair based on voting alignment. Lower steepness values result in moderate alpha values, while higher steepness values push alpha values closer to the defined `alpha_low` or `alpha_high` values.
 
-
 ### BondsMovingAverage
 
 **Type**:
 
 **Default**:
 
-**`btcli` setter**: bonds_moving_avg
+**`btcli` setter**: `btcli sudo set --param bonds_moving_avg`
 
-**`btcli` setter**: `btcli sudo set --param sudo_set_bonds_moving_average`
+**`btcli` setter**: `sudo_set_bonds_moving_average`
 
 **Permissions required to set**: Subnet Creator
 
@@ -189,6 +192,22 @@ The magnitude of the penalty subtracted from weights for exceeding consensus, fo
 
 See [Yuma Consensus: Penalizing out-of-consensus bonds](../yuma-consensus#penalizing-out-of-consensus-bonds).
 
+### BondsResetEnabled
+
+**Type**: Bool
+
+**Default**: False
+
+**`btcli` setter**: `btcli sudo set --param bonds_reset_enabled`
+
+**Setter extrinsic**: `sudo_set_bonds_reset_enabled`
+
+**Permissions required to set**: Subnet creator
+
+**Description**:
+
+Determines whether or not bonds are reset-enabled.
+
 ### CommitRevealPeriod
 
 **Type**: u16
@@ -215,7 +234,7 @@ See [Commit Reveal](./commit-reveal)
 
 **Default**: false
 
-**`btcli` setter**: yes
+**`btcli` setter**: `btcli sudo set --param commit_reveal_weights_enabled`
 
 **Setter extrinsic**: `sudo_set_commit_reveal_weights_enabled`
 
@@ -231,7 +250,7 @@ Enables [Commit Reveal](./commit-reveal)
 
 **Default**: 10000000
 
-**`btcli` setter**: none
+**`btcli` setter**: `btcli sudo set --param difficulty`
 
 **Setter extrinsic**: `sudo_set_difficulty`
 
@@ -249,7 +268,7 @@ Current dynamically computed value for the proof-of-work (POW) requirement for P
 
 **Default**: 5000
 
-**`btcli` setter**: yes
+**`btcli` setter**: `btcli sudo set --param immunity_period`
 
 **Setter extrinsic**: `sudo_set_immunity_period`
 
@@ -265,7 +284,7 @@ The number of blocks after registration when a miner is protected from deregistr
 
 **Default**: 32767 ( or approximately 0.5 normalized )
 
-**`btcli` setter**: yes
+**`btcli` setter**: `btcli sudo set --param kappa`
 
 **Setter extrinsic**: `sudo_set_kappa`
 
@@ -331,9 +350,9 @@ The maximum of the dynamic range for TAO cost of burn registration on the subnet
 
 **Default**: 18446744073709551615 normalized to 1
 
-**`btcli` setter**: `btcli sudo set --param min_difficulty`
+**`btcli` setter**: `btcli sudo set --param max_difficulty`
 
-**Setter extrinsic**:
+**Setter extrinsic**: `sudo_set_max_difficulty`
 
 **Permissions required to set**: Subnet creator
 
@@ -474,7 +493,7 @@ Rate limit for network registrations expressed in blocks
 
 **Default**: 10
 
-**`btcli` setter**: yes
+**`btcli` setter**: `btcli sudo set --param rho`
 
 **Setter extrinsic**: `sudo_set_rho`
 
@@ -492,7 +511,7 @@ Deprecated.
 
 **Default**: 50
 
-**`btcli` setter**:
+**`btcli` setter**: `btcli sudo set --param serving_rate_limit`
 
 **Setter extrinsic**: `sudo_set_serving_rate_limit`
 
@@ -501,6 +520,21 @@ Deprecated.
 **Description**:
 
 Rate limit for calling `serve_axon` and `serve_prometheus` extrinsics used by miners.
+
+### SubnetIsActive
+
+**Type**: Bool
+
+**Default**: False
+
+**`btcli` setter**: `btcli subnets start`
+
+**Setter extrinsic**: nil
+
+**Permissions required to set**: Subnet creator
+
+**Description**:
+Indicates whether or not the subnet's emissions have started.
 
 ### TargetRegistrationsPerInterval
 
@@ -541,7 +575,7 @@ See [Emission](../emissions.md)
 
 **Default**: True
 
-**`btcli` setter**: none
+**`btcli` setter**: btcli sudo set --param transfers_enabled`
 
 **Setter extrinsic**: `sudo_set_toggle_transfer`
 
@@ -550,6 +584,22 @@ See [Emission](../emissions.md)
 **Description**:
 
 Allows/disallows transfer of stake between coldkeys.
+
+### UserLiquidityEnabled
+
+**Type**: Bool
+
+**Default**: False
+
+**`btcli` setter**: `btcli sudo set --param user_liquidity_enabled`
+
+**Setter extrinsic**: `toggle_user_liquidity`
+
+**Permissions required to set**: Subnet creator
+
+**Description**:
+
+Determines whether or not the user liquidity feature is enabled on the subnet.
 
 ### WeightsVersion
 
@@ -577,7 +627,7 @@ If the version key specified in `set_weights` extrinsic is lower than this syste
 
 **`btcli` setter**: `btcli sudo set --param weights_rate_limit`
 
-**Setter extrinsic**:
+**Setter extrinsic**: `sudo_set_weights_set_rate_limit`
 
 **Permissions required to set**: Root
 
@@ -585,13 +635,13 @@ If the version key specified in `set_weights` extrinsic is lower than this syste
 
 How long, in blocks, a validator must wait between weight commits on a subnet.
 
-### Yuma3On
+### YumaVersion
 
 **Type**: Bool
 
 **Default**: False
 
-**`btcli` setter**: `btcli sudo set --param yuma3_enabled`
+**`btcli` setter**: `btcli sudo set --param yuma_version`
 
 **Setter extrinsic**: `sudo_set_yuma3_enabled`
 
@@ -599,7 +649,7 @@ How long, in blocks, a validator must wait between weight commits on a subnet.
 
 **Description**:
 
-Determines if the Yuma Consensus 3 mechanism is applied to the subnet.
+Toggles the consensus mechanism used by the subnet between Yuma Consensus v2 and v3.
 
 ## Global/Root State Variables
 
