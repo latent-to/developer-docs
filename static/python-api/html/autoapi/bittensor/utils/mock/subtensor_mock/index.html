@@ -175,6 +175,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../btlogging/index.html">bittensor.utils.btlogging</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../formatting/index.html">bittensor.utils.formatting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../liquidity/index.html">bittensor.utils.liquidity</a></li>
 <li class="toctree-l4 current active"><a class="reference internal" href="../index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../registration/index.html">bittensor.utils.registration</a></li>
@@ -690,9 +691,13 @@ e.g. We mock <cite>Subtensor.query_subtensor</cite> instead of all query methods
 <li><p><strong>network</strong> – The network name or type to connect to.</p></li>
 <li><p><strong>config</strong> – Configuration object for the AsyncSubtensor instance.</p></li>
 <li><p><strong>log_verbose</strong> – Enables or disables verbose logging.</p></li>
-<li><p><strong>fallback_endpoints</strong> – List of fallback endpoints to use if default or provided network is not available. Defaults to <cite>None</cite>.</p></li>
+<li><p><strong>fallback_endpoints</strong> – List of fallback endpoints to use if default or provided network is not available.
+Defaults to <cite>None</cite>.</p></li>
 <li><p><strong>retry_forever</strong> – Whether to retry forever on connection errors. Defaults to <cite>False</cite>.</p></li>
 <li><p><strong>_mock</strong> – Whether this is a mock instance. Mainly just for use in testing.</p></li>
+<li><p><strong>archive_endpoints</strong> – Similar to fallback_endpoints, but specifically only archive nodes. Will be used in cases
+where you are requesting a block that is too old for your current (presumably lite) node. Defaults to
+<cite>None</cite></p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -874,7 +879,7 @@ and be rejected. You can think of it as an expiration date for the transaction.<
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.utils.mock.subtensor_mock.MockSubtensor.get_balance">
 <span class="sig-name descname"><span class="pre">get_balance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/utils/mock/subtensor_mock.html#MockSubtensor.get_balance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.mock.subtensor_mock.MockSubtensor.get_balance" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the balance for given coldkey.</p>
+<dd><p>Retrieves the balance for given coldkey. Always in TAO.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -883,7 +888,7 @@ and be rejected. You can think of it as an expiration date for the transaction.<
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Balance object.</p>
+<dd class="field-even"><p>Balance object in TAO.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../../balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance">bittensor.utils.balance.Balance</a></p>

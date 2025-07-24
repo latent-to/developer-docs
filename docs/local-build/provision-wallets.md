@@ -56,7 +56,7 @@ You will need wallets for the different personas, i.e., subnet owner, subnet val
 To create a wallet, run the following command in your terminal:
 
 ```bash
-btcli wallet new_coldkey \
+btcli wallet create \
 --wallet.name WALLET_NAME \
 --hotkey WALLET_HOTKEY \
 --network ws://127.0.0.1:9945

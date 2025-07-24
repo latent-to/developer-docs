@@ -175,6 +175,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/btlogging/index.html">bittensor.utils.btlogging</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/formatting/index.html">bittensor.utils.formatting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/registration/index.html">bittensor.utils.registration</a></li>
@@ -405,7 +406,9 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.adjustment_interval"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.adjustment_interval</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.alpha_high"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.alpha_high</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.alpha_low"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.alpha_low</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.alpha_sigmoid_steepness"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.alpha_sigmoid_steepness</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.bonds_moving_avg"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.bonds_moving_avg</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.bonds_reset_enabled"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.bonds_reset_enabled</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.commit_reveal_period"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.commit_reveal_period</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.commit_reveal_weights_enabled"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.commit_reveal_weights_enabled</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.difficulty"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.difficulty</span></code></a></li>
@@ -423,10 +426,14 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.registration_allowed"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.registration_allowed</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.rho"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.rho</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.serving_rate_limit"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.serving_rate_limit</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.subnet_is_active"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.subnet_is_active</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.target_regs_per_interval"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.target_regs_per_interval</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.tempo"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.tempo</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.transfers_enabled"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.transfers_enabled</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.user_liquidity_enabled"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.user_liquidity_enabled</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.weights_rate_limit"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.weights_rate_limit</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.weights_version"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.weights_version</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.yuma_version"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.yuma_version</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -492,6 +499,12 @@
 <li><p><strong>alpha_high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – High value of alpha.</p></li>
 <li><p><strong>alpha_low</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Low value of alpha.</p></li>
 <li><p><strong>liquid_alpha_enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Flag indicating if liquid alpha is enabled.</p></li>
+<li><p><strong>alpha_sigmoid_steepness</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
+<li><p><strong>yuma_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Version of yuma.</p></li>
+<li><p><strong>subnet_is_active</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Indicates if subnet is active after START CALL.</p></li>
+<li><p><strong>transfers_enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Flag indicating if transfers are enabled.</p></li>
+<li><p><strong>bonds_reset_enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Flag indicating if bonds are reset enabled.</p></li>
+<li><p><strong>user_liquidity_enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Flag indicating if user liquidity is enabled.</p></li>
 </ul>
 </dd>
 </dl>
@@ -521,8 +534,18 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.alpha_sigmoid_steepness">
+<span class="sig-name descname"><span class="pre">alpha_sigmoid_steepness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.alpha_sigmoid_steepness" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.bonds_moving_avg">
 <span class="sig-name descname"><span class="pre">bonds_moving_avg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.bonds_moving_avg" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.bonds_reset_enabled">
+<span class="sig-name descname"><span class="pre">bonds_reset_enabled</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.bonds_reset_enabled" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -611,6 +634,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.subnet_is_active">
+<span class="sig-name descname"><span class="pre">subnet_is_active</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.subnet_is_active" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.target_regs_per_interval">
 <span class="sig-name descname"><span class="pre">target_regs_per_interval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.target_regs_per_interval" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
@@ -621,6 +649,16 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.transfers_enabled">
+<span class="sig-name descname"><span class="pre">transfers_enabled</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.transfers_enabled" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.user_liquidity_enabled">
+<span class="sig-name descname"><span class="pre">user_liquidity_enabled</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.user_liquidity_enabled" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.weights_rate_limit">
 <span class="sig-name descname"><span class="pre">weights_rate_limit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.weights_rate_limit" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
@@ -628,6 +666,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.weights_version">
 <span class="sig-name descname"><span class="pre">weights_version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.weights_version" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.yuma_version">
+<span class="sig-name descname"><span class="pre">yuma_version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.yuma_version" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -689,7 +732,9 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.adjustment_interval"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.adjustment_interval</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.alpha_high"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.alpha_high</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.alpha_low"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.alpha_low</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.alpha_sigmoid_steepness"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.alpha_sigmoid_steepness</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.bonds_moving_avg"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.bonds_moving_avg</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.bonds_reset_enabled"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.bonds_reset_enabled</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.commit_reveal_period"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.commit_reveal_period</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.commit_reveal_weights_enabled"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.commit_reveal_weights_enabled</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.difficulty"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.difficulty</span></code></a></li>
@@ -707,10 +752,14 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.registration_allowed"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.registration_allowed</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.rho"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.rho</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.serving_rate_limit"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.serving_rate_limit</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.subnet_is_active"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.subnet_is_active</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.target_regs_per_interval"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.target_regs_per_interval</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.tempo"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.tempo</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.transfers_enabled"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.transfers_enabled</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.user_liquidity_enabled"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.user_liquidity_enabled</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.weights_rate_limit"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.weights_rate_limit</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.weights_version"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.weights_version</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.subnet_hyperparameters.SubnetHyperparameters.yuma_version"><code class="docutils literal notranslate"><span class="pre">SubnetHyperparameters.yuma_version</span></code></a></li>
 </ul>
 </li>
 </ul>

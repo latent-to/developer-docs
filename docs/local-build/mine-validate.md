@@ -13,7 +13,7 @@ This page continues the tutorial series on local Bittensor development. In this 
 - [Provision wallets for the sn-creator, miner, and validator users for this tutorial.](./provision-wallets)
 - [Create a Subnet on your local chain](./create-subnet)
 
-## Register the Miner and Validator
+## Register
 
 Register the subnet miner and validator with the following commands:
 

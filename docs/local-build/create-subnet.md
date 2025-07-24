@@ -121,6 +121,35 @@ btcli subnet list \
         │             │             │             │              │ (6931.03%)  │              │             │
 ```
 
+## Start emissions on your subnet
+
+To activate your subnet, beginning emissions and allowing staking, run:
+
+```
+btcli subnet start --netuid 2 \
+--wallet.name sn-creator \
+--network ws://127.0.0.1:9945
+```
+
+## Troubleshooting
+
+### Insufficient funds
+
+The coldkey signing the `subnet create` transaction must have a sufficient $\tau$ balance to cover the burn cost of subnet creation, so called because the funds cannot be recovered.
+
+```console
+Subnet burn cost: τ 1,000.0000
+Your balance of: τ 0.0000 is not enough to burn τ 1,000.0000 to register a subnet.
+```
+
+To fix this, transfer TAO from the Alice account to cover this transaction and try again. For more information, see [Transfer TAO to wallets](./provision-wallets.md#transfer-tao-to-wallets)
+
+### Network Rate Limit Error
+
+If you see a network rate limit error, you may need to adjust the `SubtensorInitialNetworkRateLimit` chain state parameter.
+
+See [Clone and tweak the Subtensor source](./deploy#clone-and-tweak-the-subtensor-source)
+
 ## Troubleshooting
 
 ### Insufficient funds

@@ -83,13 +83,22 @@ const sidebars = {
     },
     {
       type: "category",
+      label: "Liquidity Positions (Uniswap)",
+      collapsible: true,
+      collapsed: true,
+      items: [              
+        'liquidity-positions/liquidity-positions',
+        'liquidity-positions/managing-liquidity-positions'
+      ],
+    },
+    {
+      type: "category",
       label: "Managing Subnets",
       collapsible: true,
       collapsed: true,
       items: [
         "subnets/metagraph",
-        "subnets/create-a-subnet",
-        'liquidity-provider',
+        "subnets/create-a-subnet",        
         "subnets/subnet-creators-btcli-guide",
         "subnets/subnet-hyperparameters",
         "subnets/working-with-subnets",
