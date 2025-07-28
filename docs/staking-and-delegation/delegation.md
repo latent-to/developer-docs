@@ -15,7 +15,7 @@ See also:
 - See also [Validators: Acquiring stake](../validators/index.md#acquiring-stake).
 
 :::tip tips
-Validators/delegates can configure their take. The default value is 18%. See [Setting your delegate take](#setting-your-delegate-take).
+Validators/delegates can configure their take. The default value is 18%. See [`btcli sudo set-take`](../btcli#btcli-sudo-set-take).
 
 Minimum required stake for nominators is 0.1 TAO.
 :::
