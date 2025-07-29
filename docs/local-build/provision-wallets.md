@@ -48,10 +48,12 @@ The following should be returned in the console:
 
 ## Provision wallets
 
-You will need wallets for the different personas, i.e., subnet owner, subnet validator and subnet miner, in the subnet.
+To proceed with this tutorial, you’ll need to create separate wallets for each role on the Bittensor blockchain. Specifically, create three wallets: one each for the subnet owner, validator, and miner.
 
-- The subnet owner wallet creates and controls the subnet.
-- The validator and miner will be registered to the subnet created by the owner. This ensures that the validator and miner can run the respective validator and miner scripts.
+- The subnet owner wallet creates and controls the subnet—`sn-creator`.
+- The validator and miner wallets will be registered on the created subnet—`test-validator` and `test-miner`.
+
+Using separate wallets for each role ensures they can independently run their respective processes and scripts.
 
 To create a wallet, run the following command in your terminal:
 
@@ -80,3 +82,15 @@ Replace `DESTINATION_ADDRESS` with the wallet address you want to send the TAO t
 :::info
 Run the `btcli wallets list` command and carefully check the ss58 address of the destination coldkey that you want to fund.
 :::
+
+To confirm your wallet balances, run the following command in your terminal:
+
+```sh
+btcli wallet balance --wallet.name WALLET_NAME --network ws://127.0.0.1:9945
+```
+
+## Next steps
+
+Now that you have created the necessary wallets and funded them with TAO, you can proceed to create a subnet on the local chain. This will enable you to register validators and miners, configure subnet parameters, and begin participating in the network’s consensus and emissions processes.
+
+To begin, see [Create a subnet locally](create-subnet.md).

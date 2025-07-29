@@ -53,13 +53,13 @@ Below are examples of how to run the container using each mode:
 - Fast blocks: Fast block mode reduces block processing time to _250ms per block_, enabling rapid chain progression. It allows faster feedback cycles for operations such as staking, subnet creation, and registration, making them ideal for local testing scenarios. To run the container in fast block mode, run the following command in your terminal:
 
   ```bash
-  docker run --name test_local_chain_ -p 9944:9944 -p 9945:9945 ghcr.io/opentensor/subtensor-localnet:devnet-ready
+  docker run --name local_chain -p 9944:9944 -p 9945:9945 ghcr.io/opentensor/subtensor-localnet:devnet-ready
   ```
 
 - Non-fast blocks: Non-fast block mode uses the default _12-second block time_, aligning with subtensor block intervals. While this mode utilizes the default block processing time, it also incorporates some enhancements—for example, subnets become eligible to start one minute after creation. To run the container in non-fast block mode, run the following command in your terminal:
 
   ```bash
-  docker run --name test_local_chain_ -p 9944:9944 -p 9945:9945 ghcr.io/opentensor/subtensor-localnet:devnet-ready False
+  docker run --name local_chain -p 9944:9944 -p 9945:9945 ghcr.io/opentensor/subtensor-localnet:devnet-ready False
   ```
 
 :::info

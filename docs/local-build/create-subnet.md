@@ -108,3 +108,7 @@ Your balance of: τ 0.0000 is not enough to burn τ 1,000.0000 to register a sub
 ```
 
 To fix this, transfer TAO from the Alice account to cover this transaction and try again. For more information, see [Transfer TAO to wallets](./provision-wallets.md#transfer-tao-to-wallets).
+
+## Next steps
+
+With emissions now active on your subnet, you can begin registering and running miners and validators to participate in the network.
