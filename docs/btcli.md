@@ -217,6 +217,7 @@ aliases: w, wallets
 - `set-identity`: Create or update the on-chain identity of a coldkey or a hotkey on the Bittensor network.
 - `get-identity`: Shows the identity details of a user's coldkey or hotkey.
 - `sign`: Allows users to sign a message with the provided wallet or wallet hotkey.
+- `verify`: Verify a message signature using the signer's public key or SS58 address.
 
 ### `btcli wallet list`
 
@@ -522,7 +523,7 @@ The command creates a new coldkey and hotkey. It provides an option for mnemonic
 **Example:**
 
 ```
-btcli wallet create --n_words 21
+btcli wallet create --n-words 21
 ```
 
 Note: This command is for new users setting up their wallet for the first time, or for those who wish to completely renew their wallet keys. It ensures a fresh start with new keys for secure and effective participation in the Bittensor network.
@@ -540,7 +541,7 @@ btcli wallet create [OPTIONS]
 | `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`               | TEXT    | Name of the wallet.                                                                  |
 | `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                   | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
 | `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey` | TEXT    | Hotkey of the wallet                                                                 |
-| `--n-words`, `--n_words`                                                  | INTEGER | The number of words used in the mnemonic.                                            |
+| `--n-words`                                                               | INTEGER | The number of words used in the mnemonic.                                            |
 | `--use-password`/`--no-use-password `,                                    |         | Set this to `True` to protect the generated Bittensor key with a password.           |
 | `--uri`                                                                   | TEXT    | Create wallet from uri (e.g. 'Alice', 'Bob', 'Charlie')                              |
 | `--overwrite`/`--no-overwrite`                                            |         | Overwrite the existing wallet file with the new one.                                 |
@@ -758,7 +759,7 @@ The command displays the information in a table format showing:
 
 **Example:**
 
-```
+```sh
 btcli wallet get_identity --key &lt;s58_address&gt;
 ```
 
@@ -798,11 +799,11 @@ Using the provided wallet (coldkey), the command generates a signature for a giv
 
 **Example:**
 
-```
+```sh
 btcli wallet sign --wallet-name default --message '{"something": "here", "timestamp": 1719908486}'
 ```
 
-```
+```sh
 btcli wallet sign --wallet-name default --wallet-hotkey hotkey --message '{"something": "here", "timestamp": 1719908486}'
 ```
 
@@ -825,6 +826,42 @@ btcli wallet sign [OPTIONS]
 | `--verbose`                                                               |      | Enable verbose output.                                                                               |
 | `--json-output`, `--json-out`                                             |      | Outputs the result of the command as JSON.                                                           |
 | `--help`                                                                  |      | Show this message and exit.                                                                          |
+
+### `btcli wallet verify`
+
+Verify a message signature using the signer's public key or SS58 address. This command allows you to verify that a message was signed by the owner of a specific address.
+
+**Usage:**
+
+Provide the original message, the signature (in hex format), and either the SS58 address or public key of the signer to verify the signature.
+
+**Example:**
+
+```sh
+btcli wallet verify --message "Hello world" --signature "0xabc123..." --address "5GrwvaEF..."
+```
+
+```sh
+btcli wallet verify -m "Test message" -s "0xdef456..." -p "0x1234abcd..."
+```
+
+**Usage**:
+
+```console
+btcli wallet verify [OPTIONS]
+```
+
+**Options**:
+
+| Option                                 | Type | Description                                                     |
+| -------------------------------------- | ---- | --------------------------------------------------------------- |
+| `--message`                            | TEXT | The message that was signed. [default: None]                    |
+| `--signature`, `-s`                    | TEXT | The signature to verify. (hex format) [default: None]           |
+| `--address`, `--public-key` `-a`, `-p` | TEXT | SS58 address or public key (hex) of the signer. [default: None] |
+| `--quiet`                              |      | Display only critical information on the console.               |
+| `--verbose`                            |      | Enable verbose output.                                          |
+| `--json-output`, `--json-out`          |      | Outputs the result of the command as JSON.                      |
+| `--help`                               |      | Show this message and exit.                                     |
 
 ## `btcli stake`
 
@@ -2003,7 +2040,7 @@ btcli subnets show [OPTIONS]
 
 Shows the historical price of a subnet for the past 24 hours.
 
-This command displays the historical price of a subnet for the past 24 hours.
+This command displays the historical price of a subnet for the past 4 hours.
 If the `--all` flag is used, the command will display the price for all subnets in html format.
 If the `--html` flag is used, the command will display the price in an HTML chart.
 If the `--log-scale` flag is used, the command will display the price in log scale.
