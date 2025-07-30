@@ -35,6 +35,7 @@ const sidebars = {
       collapsed: true,
       items: [
         "learn/introduction",
+        "fees",
         "questions-and-answers",
         "subnets/understanding-subnets",
         "learn/neurons",
