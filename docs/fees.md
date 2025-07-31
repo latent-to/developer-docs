@@ -8,7 +8,7 @@ This page describes the blockchain transaction fees charged by Bittensor.
 
 Many extrinsic transactions that change the state of the blockchain are subject to a flat fee of approximately 0.0013 $\tau$.
 
-Staking and unstaking operations incur weight-based fees as well as **amount-based fees** of 0.05% of the transacted liquidity.
+Staking and unstaking operations incur weight-based fees as well as amount-based fees of 0.05% of the transacted liquidity.
 
 Reading the state of the chain is always free.
 
