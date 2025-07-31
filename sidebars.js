@@ -42,6 +42,7 @@ const sidebars = {
         "emissions",
         "yuma-consensus",
         "subnets/yc3-blog",
+        "fees",
       ],
     },
     {

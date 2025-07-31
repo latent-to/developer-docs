@@ -6,6 +6,10 @@ title: "Staker's Guide to `BTCLI`"
 
 This page prepares the reader for managing TAO and alpha stake using `btcli` in a secure manner.
 
+:::note Transaction Fees
+Staking and unstaking operations incur transaction fees. See [Transaction Fees in Bittensor](../fees.md) for details.
+:::
+
 For general coverage of `btcli` security and usage considerations across persona, see: [Bittensor CLI: Permissions Guide](../btcli-permissions)
 
 ## Intro

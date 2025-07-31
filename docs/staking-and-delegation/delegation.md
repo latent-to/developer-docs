@@ -9,6 +9,10 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 TAO holders can **stake** any amount of the liquidity they hold to a validator. Also known as **delegation**, staking supports validators, because their total stake in the subnet, including stake delegated to them by others, determines their consensus power and their share of emissions. After the validator/delegate extracts their **take** the remaining emissions are credited back to the stakers/delegators in proportion to their stake with that validator.
 
+:::note Transaction Fees
+Staking and unstaking operations incur transaction fees. See [Transaction Fees in Bittensor](../fees.md) for details.
+:::
+
 See also:
 
 - [Staking with Polkadot JS](./staking-polkadot-js.md).
