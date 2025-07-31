@@ -35,7 +35,6 @@ const sidebars = {
       collapsed: true,
       items: [
         "learn/introduction",
-        "fees",
         "questions-and-answers",
         "subnets/understanding-subnets",
         "learn/neurons",
@@ -43,6 +42,7 @@ const sidebars = {
         "emissions",
         "yuma-consensus",
         "subnets/yc3-blog",
+        "fees",
       ],
     },
     {
