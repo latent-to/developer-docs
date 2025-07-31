@@ -18,11 +18,14 @@ Reading the state of the chain is always free.
 Many extrinsics in Bittensor are subject to **weight-based fees**. In Polkadot-based chains like Subtensor (Bittensor's layer 1 blockchain), [weight](https://docs.polkadot.com/polkadot-protocol/glossary/#weight) is a measure of compute time.
 
 **Fee Details**: 
-- Current rate: `Perbill::from_parts(500_000)` = 500,000 / 1,000,000,000 = **0.05%** of transaction weight
-- **Planned reduction**: The coefficient will be reduced to `Perbill::from_parts(50_000)` = **0.005%** (10x reduction)
+- Current rate: `Perbill::from_parts(500_000)` = 500,000 / 1,000,000,000 = 0.05% of transaction weight
 - **Payment source**: Free balance of the transaction sender
 - **Denomination**: TAO
 - **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
+
+:::tip Planned reduction
+It is currently planned that the fee coefficient will be reduced to $0.005%$ (10x reduction).
+:::
 
 ### Staking Operations
 - [`add_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L591)
