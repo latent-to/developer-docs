@@ -8,18 +8,18 @@ This page describes the blockchain transaction fees charged by Bittensor.
 
 Many extrinsic transactions that change the state of the blockchain are subject to **weight-based fees** (0.05% of transaction weight), as detailed below.
 
-Staking and unstaking operations incur weight-based fees as well as **amount-based fees** of 0.05% the transacted liquidity.
+Staking and unstaking operations incur weight-based fees as well as **amount-based fees** of 0.05% of the transacted liquidity.
 
 Reading the state of the chain is always free.
 
 
 ## Weight-Based Transaction Fees
 
-Many extrinsics in Bittensor are subject to **weight-based fees**. In Polkadot-based chains like Subtensor (Bittensor's level 1 blockchain), [weight](https://docs.polkadot.com/polkadot-protocol/glossary/#weight) is a measure of compute time.
+Many extrinsics in Bittensor are subject to **weight-based fees**. In Polkadot-based chains like Subtensor (Bittensor's layer 1 blockchain), [weight](https://docs.polkadot.com/polkadot-protocol/glossary/#weight) is a measure of compute time.
 
 **Fee Details**: 
 - Current rate: `Perbill::from_parts(500_000)` = 500,000 / 1,000,000,000 = **0.05%** of transaction weight
-- **Planned reduction**: The coefficient will be reduced to `Perbill::from_parts(50_000)` = **0.005%** (10x reduction):
+- **Planned reduction**: The coefficient will be reduced to `Perbill::from_parts(50_000)` = **0.005%** (10x reduction)
 - **Payment source**: Free balance of the transaction sender
 - **Denomination**: TAO
 - **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
@@ -81,15 +81,15 @@ Many extrinsics in Bittensor are subject to **weight-based fees**. In Polkadot-b
 
 </details>
 
-## Swap fees for stake and unstake operations
+## Swap Fees for Stake and Unstake Operations
 
 In addition to the weight-based fee above, staking and unstaking operations are subject to fees based on a percentage of the quantity of transacted liquidity.
 
 **Fee Details:**
-- **Rate**: 0.05%.
-- **For staking**: Fee paid in **TAO** from the staking amount.
-- **For unstaking**: Fee paid in **Alpha** from the unstaking amount.
-- **Fee distribution**: Added to global fee counters per subnet.
+- **Rate**: 0.05%
+- **For staking**: Fee paid in **TAO** from the staking amount
+- **For unstaking**: Fee paid in **Alpha** from the unstaking amount
+- **Fee distribution**: Added to global fee counters per subnet
 
 ### Example
 ```shell
@@ -120,7 +120,7 @@ Amount to stake (TAO τ): 100
 - [Fee value](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/mod.rs#L68-L76)
 - [Fee calculation and distribution](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/impls.rs#L596-L639)
 
-## Fee-free extrinsics
+## Fee-Free Extrinsics
 
 The following extrinsics are free.
 
@@ -133,6 +133,6 @@ The following extrinsics are free.
 - [`batch_reveal_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L337) - Batch reveal committed weights
 
 ### Administrative & Operational:
-- Sudo and admin extrinsics.
-- Governance-related functions.
+- Sudo and admin extrinsics
+- Governance-related functions
 
