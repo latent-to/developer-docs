@@ -15,7 +15,7 @@ Reading the state of the chain is always free.
 
 ## Weight-Based Transaction Fees
 
-Many extrinsics in Bittensor are subject to **weight-based fees**. In Polkadot-based chains like Subtensor (Bittensor's layer 1 blockchain), [weight](https://docs.polkadot.com/polkadot-protocol/glossary/#weight) is a measure of compute time.
+Many extrinsics in Bittensor are subject to a flat **weight-based fee**. In Polkadot-based chains like Subtensor (Bittensor's layer 1 blockchain), [weight](https://docs.polkadot.com/polkadot-protocol/glossary/#weight) is a measure of compute time.
 
 **Fee Details**: 
 - **Current rate**:  $\approx0.0013 \tau$
