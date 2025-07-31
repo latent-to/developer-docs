@@ -6,6 +6,10 @@ title: "Understanding Pricing and Anticipating Slippage"
 
 Each Bittensor subnet operates as a *constant product AMM*, meaning that it will accept trades that conserve the product of the quantities of the two tokens in reserve, TAO and alpha. To calulate the price in one token of batch of the other token that a buyer wishes to acquire&mdash;alpha if they are staking, or TAO if they are unstaking&mdash;the algorithm assumes that the transaction does not change this product, so the product of TAO and alpha is the same before and after.
 
+:::note Transaction Fees
+Staking and unstaking operations incur transaction fees in addition to slippage. See [Transaction Fees in Bittensor](../fees.md) for details.
+:::
+
 When staking, the product K of TAO in reserve and alpha in reserve is the same before and after the transaction, so the initial product must be equal to the product after the cost in TAO is added to the reserve, and the stake is removed from the reserve and placed in the staked hotkey:
 
 $$

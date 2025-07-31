@@ -6,6 +6,10 @@ title: "Validator's Guide to `BTCLI`"
 
 Validators evaluate miner performance, and post their evaluations to the blockchain. This page discusses considerations specific to validators when using `btcli`.
 
+:::note Transaction Fees
+Certain validator operations incur transaction fees. See [Transaction Fees in Bittensor](../fees.md) for details.
+:::
+
 For general coverage of `btcli` permissions and requirements, see: [Bittensor CLI: Permissions Guide](../btcli-permissions)
 
 See also: [Coldkey and Hotkey Workstation Security](../getting-started/coldkey-hotkey-security).
