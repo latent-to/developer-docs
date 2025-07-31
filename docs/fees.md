@@ -6,7 +6,7 @@ title: "Transaction Fees in Bittensor"
 
 This page describes the blockchain transaction fees charged by Bittensor. 
 
-Many extrinsic transactions that change the state of the blockchain are subject to **weight-based fees** (0.05% of transaction weight), as detailed below.
+Many extrinsic transactions that change the state of the blockchain are subject to a flat fee of approximately 0.0013 $\tau$.
 
 Staking and unstaking operations incur weight-based fees as well as **amount-based fees** of 0.05% of the transacted liquidity.
 
@@ -18,7 +18,7 @@ Reading the state of the chain is always free.
 Many extrinsics in Bittensor are subject to **weight-based fees**. In Polkadot-based chains like Subtensor (Bittensor's layer 1 blockchain), [weight](https://docs.polkadot.com/polkadot-protocol/glossary/#weight) is a measure of compute time.
 
 **Fee Details**: 
-- Current rate: `Perbill::from_parts(500_000)` = 500,000 / 1,000,000,000 = 0.05% of transaction weight
+- **Current rate**:  $\approx0.0013 \tau$
 - **Payment source**: Free balance of the transaction sender
 - **Denomination**: TAO
 - **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
