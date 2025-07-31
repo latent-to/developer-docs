@@ -92,7 +92,6 @@ In addition to the weight-based fee above, staking and unstaking operations are 
 - **Rate**: 0.05%
 - **For staking**: Fee paid in **TAO** from the staking amount
 - **For unstaking**: Fee paid in **Alpha** from the unstaking amount
-- **Fee distribution**: Added to global fee counters per subnet
 
 ### Example
 ```shell
