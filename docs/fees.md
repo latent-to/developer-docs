@@ -24,7 +24,7 @@ Many extrinsics in Bittensor are subject to **weight-based fees**. In Polkadot-b
 - **Denomination**: TAO
 - **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
 
-### Staking Operations:
+### Staking Operations
 - [`add_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L591)
 - [`remove_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L635)
 - [`add_stake_limit`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1793)
@@ -37,25 +37,25 @@ Many extrinsics in Bittensor are subject to **weight-based fees**. In Polkadot-b
 - [`unstake_all`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1581)
 - [`unstake_all_alpha`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1614)
 
-### Wallet and Identity Management:
+### Wallet and Identity Management:\
 - [`set_identity`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1471)
 - [`set_subnet_identity`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1513)
 - [`associate_evm_key`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2001)
 - [`try_associate_hotkey`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1938)
 - [`schedule_swap_coldkey`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1333)
 
-### Subnet Management:
+### Subnet Management
 - [`set_children`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1287)
 - [`set_childkey_take`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1021)
 - [`schedule_dissolve_network`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1408)
 - [`start_call`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1963)
 - [`update_symbol`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2163)
 
-### Token Operations:
+### Token Operations
 - [`recycle_alpha`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2027)
 - [`burn_alpha`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2052)
 
-### Governance:
+### Governance
 - [`adjust_senate`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L921)
 
 <details>
@@ -124,7 +124,7 @@ Amount to stake (TAO τ): 100
 
 The following extrinsics are free.
 
-### Weight Setting & Commit-Reveal:
+### Weight Setting & Commit-Reveal
 - [`set_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L83) - Setting validator weights
 - [`commit_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L158) - Commit weight hash
 - [`batch_commit_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L192) - Batch commit weight hashes
@@ -132,7 +132,7 @@ The following extrinsics are free.
 - [`commit_crv3_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L285) - Commit CRv3 encrypted weights
 - [`batch_reveal_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L337) - Batch reveal committed weights
 
-### Administrative & Operational:
+### Administrative & Operational
 - Sudo and admin extrinsics
 - Governance-related functions
 
