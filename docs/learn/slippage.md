@@ -1,4 +1,5 @@
 ---
+<<<<<<< HEAD
 title: "Understanding Slippage"
 ---
 
@@ -23,18 +24,48 @@ $$
 $$
 
 Equal:
+=======
+title: "Understanding Pricing and Anticipating Slippage"
+---
+
+# Understanding Pricing and Anticipating Slippage
+
+Each Bittensor subnet operates as a *constant product AMM*, meaning that it will accept trades that conserve the product of the quantities of the two tokens in reserve, TAO and alpha. To calulate the price in one token of batch of the other token that a buyer wishes to acquire&mdash;alpha if they are staking, or TAO if they are unstaking&mdash;the algorithm assumes that the transaction does not change this product, so the product of TAO and alpha is the same before and after.
+
+:::note Transaction Fees
+Staking and unstaking operations incur transaction fees in addition to slippage. See [Transaction Fees in Bittensor](../fees.md) for details.
+:::
+
+When staking, the product K of TAO in reserve and alpha in reserve is the same before and after the transaction, so the initial product must be equal to the product after the cost in TAO is added to the reserve, and the stake is removed from the reserve and placed in the staked hotkey:
+
+$$
+\tau_{\mathrm{in}} \,\alpha_{\mathrm{in}} = k
+$$
+$$
+(\tau_{\mathrm{in}} + \text{cost}) \bigl(\alpha_{\mathrm{in}} - \text{stake}\bigr) = k
+$$
+>>>>>>> 03cd42255 (wip)
 $$
 (\tau_{\mathrm{in}} + \text{cost}) \bigl(\alpha_{\mathrm{in}} - \text{stake}\bigr) 
   = \tau_{\mathrm{in}} \,\alpha_{\mathrm{in}}
 $$
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 03cd42255 (wip)
 This means that if we choose to stake in a certain amount of TAO (if we specify the cost), then the yielded stake (the quantity of alpha to be removed from reserve and granted to the staked hotkey) is:
 
 $$
 \text{Stake} = \alpha_{\text{in}} - \frac{\tau_{\text{in}} \alpha_{\text{in}}} {\tau_{\text{in}} + \text{cost}}
+<<<<<<< HEAD
 $$
 
 ## Slippage Example
+=======
+
+$$
+>>>>>>> 03cd42255 (wip)
 
 For example, suppose that a subnet has 100 alpha in reserve and 10 TAO, and we want to stake in 5 TAO.
 
@@ -44,6 +75,10 @@ With slippage, the yielded alpha stake will be:
 
 $$
 \text{Stake} = 100 - \frac{ 10 * 100} {10 + 5}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 03cd42255 (wip)
 $$
 
 or 33.333 alpha sent to the hotkey. So in this case, the slippage is the difference between the ideal expectation of 50 and the actual swap value of 33.33333:
@@ -54,6 +89,7 @@ $$
 This slippage is 50% of the actual swap value, which is extremely high, because we chose small values for the available liquidity. In general, slippage is high when available liquidity is limited compared to the magnitude of the transaction, since the transaction itself is changing the price significantly.
 
 :::tip
+<<<<<<< HEAD
 `btcli` shows the slippage of staking and unstaking operations, so you don't need to calculate it yourself. 
 :::
 
@@ -372,3 +408,8 @@ except Exception as e:
 **EVM Precompile Implementation:**
 - [Solidity Interface](https://github.com/opentensor/subtensor/blob/main/precompiles/src/solidity/stakingV2.sol#L198-L225) - EVM interface for slippage protection
 - [Rust Implementation](https://github.com/opentensor/subtensor/blob/main/precompiles/src/staking.rs#L320-L340)
+=======
+`btcli` shows the slippage of staking and unstaking operations, so you don't need to calculate it yourself. See [Stake into a node](#stake-into-a-node).
+:::
+
+>>>>>>> 03cd42255 (wip)
