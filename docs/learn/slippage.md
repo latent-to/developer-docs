@@ -8,41 +8,71 @@ title: "Understanding Slippage"
 
 When staking and unstaking in Bittensor, *slippage* refers to a difference between the quantity of tokens actually received, and the amount that would be expected based on a static price. This difference is due to the change in price due to the transaction itself.
 
-## Introduction
-
-When staking and unstaking in Bittensor, *slippage* refers to a difference between the quantity of tokens actually received, and the amount that would be expected based on a static price. This difference is due to the change in price due to the transaction itself.
-
 Each Bittensor subnet operates as a *constant product AMM*, meaning that it will accept trades that conserve the product of the quantities of the two tokens in reserve, TAO and alpha. To calulate the price in one token of batch of the other token that a buyer wishes to acquire&mdash;alpha if they are staking, or TAO if they are unstaking&mdash;the algorithm assumes that the transaction does not change this product, so the product of TAO and alpha is the same before and after.
+<details>
+  <summary><strong>See how it's calculated!</strong></summary>
 
-When staking, the product K of TAO in reserve and alpha in reserve is the same before and after the transaction, so the initial product must be equal to the product after the cost in TAO is added to the reserve, and the stake is removed from the reserve and placed in the staked hotkey.
+    When staking, the product K of TAO in reserve and alpha in reserve is the same before and after the transaction, so the initial product must be equal to the product after the cost in TAO is added to the reserve, and the stake is removed from the reserve and placed in the staked hotkey.
 
-Before:
-$$
-\tau_{\mathrm{in}} \,\alpha_{\mathrm{in}} = k
-$$
+    Before:
+    $$
+    \tau_{\mathrm{in}} \,\alpha_{\mathrm{in}} = k
+    $$
 
-After:
-$$
-(\tau_{\mathrm{in}} + \text{cost}) \bigl(\alpha_{\mathrm{in}} - \text{stake}\bigr) = k
-$$
+    After:
+    $$
+    (\tau_{\mathrm{in}} + \text{cost}) \bigl(\alpha_{\mathrm{in}} - \text{stake}\bigr) = k
+    $$
 
-Equal:
+    Equal:
 
-$$
-(\tau_{\mathrm{in}} + \text{cost}) \bigl(\alpha_{\mathrm{in}} - \text{stake}\bigr) 
-  = \tau_{\mathrm{in}} \,\alpha_{\mathrm{in}}
-$$
+    $$
+    (\tau_{\mathrm{in}} + \text{cost}) \bigl(\alpha_{\mathrm{in}} - \text{stake}\bigr) 
+      = \tau_{\mathrm{in}} \,\alpha_{\mathrm{in}}
+    $$
 
 
-This means that if we choose to stake in a certain amount of TAO (if we specify the cost), then the yielded stake (the quantity of alpha to be removed from reserve and granted to the staked hotkey) is:
+    This means that if we choose to stake in a certain amount of TAO (if we specify the cost), then the yielded stake (the quantity of alpha to be removed from reserve and granted to the staked hotkey) is:
 
-$$
-\text{Stake} = \alpha_{\text{in}} - \frac{\tau_{\text{in}} \alpha_{\text{in}}} {\tau_{\text{in}} + \text{cost}}
-$$
+    $$
+    \text{Stake} = \alpha_{\text{in}} - \frac{\tau_{\text{in}} \alpha_{\text{in}}} {\tau_{\text{in}} + \text{cost}}
+    $$
+</details>
+
+## Slippage Protection and Modes
+
+Bittensor provides three distinct protection modes to give users control over how their transactions handle slippage in staking and unstaking transaction:
+
+### Three Modes
+
+#### Safe Mode (Default)
+- Transaction is **rejected** if slippage exceeds the specified tolerance
+- Provides maximum protection against unfavorable price movements
+- "Fill or kill" behavior - either execute at acceptable price or not at all
+
+#### Partial Mode
+- Transaction executes **up to the slippage threshold**
+- If full amount would exceed tolerance, stakes only the portion within limits
+- Ensures some execution while respecting price boundaries
+
+#### Unsafe Mode
+- **Ignores slippage entirely**
+- Transaction executes regardless of price impact
+- Fastest execution but no protection against adverse price movements
+
+### Quick Example by Mode
+
+Consider a hypothetical example, attempting to stake 1000 TAO when slippage would be 8% for the full amount, with tolerance set to 5%:
+
+| Mode | Outcome  |
+|----------------------|------|
+|Safe |Transaction rejected entirely (8% > 5% tolerance)|
+|Partial |Stakes ~625 TAO (amount that fits within 5% tolerance)  |
+|Unsafe |Stakes full 1000 TAO regardless of 8% slippage|
 
 ## Slippage Example
 
-:::warning
+:::info
 **Simplified Example**: The following example uses simplified calculations for illustration. Bittensor's actual AMM uses complex Uniswap V3-style mathematics with concentrated liquidity and tick-based pricing.
 :::
 
@@ -77,38 +107,6 @@ price significantly.
 **Real Calculation**: Bittensor's SDK provides accurate slippage calculations using the actual AMM implementation. The `tao_to_alpha_with_slippage()` and `alpha_to_tao_with_slippage()` methods use the real chain state and AMM mathematics.
 :::
 
-
-
-## Slippage Protection and Modes
-
-Bittensor provides three distinct protection modes to give users control over how their transactions handle slippage in staking and unstaking transaction:
-
-### Three Modes
-
-#### Safe Mode (Default)
-- Transaction is **rejected** if slippage exceeds the specified tolerance
-- Provides maximum protection against unfavorable price movements
-- "Fill or kill" behavior - either execute at acceptable price or not at all
-
-#### Partial Mode
-- Transaction executes **up to the slippage threshold**
-- If full amount would exceed tolerance, stakes only the portion within limits
-- Ensures some execution while respecting price boundaries
-
-#### Unsafe Mode
-- **Ignores slippage entirely**
-- Transaction executes regardless of price impact
-- Fastest execution but no protection against adverse price movements
-
-### Slippage Example Across Modes
-
-Consider staking 1000 TAO when slippage would be 8% for the full amount, with tolerance set to 5%:
-| Mode | Outcome  |
-|----------------------|------|
-|Safe |Transaction rejected entirely (8% > 5% tolerance)|
-|Partial |Stakes ~625 TAO (amount that fits within 5% tolerance)  |
-|Unsafe |Stakes full 1000 TAO regardless of 8% slippage|
-
 ## Managing Slippage with BTCLI
 
 The `btcli stake` interface provides parameters to control slippage protection modes.
@@ -116,41 +114,6 @@ The `btcli stake` interface provides parameters to control slippage protection m
 :::tip
 `btcli` shows the slippage of staking and unstaking operations, so you don't need to calculate it yourself. 
 :::
-
-
-## Slippage Protection and Modes
-
-Bittensor provides three distinct protection modes to give users control over how their transactions handle slippage in staking and unstaking transaction:
-
-### Three Modes
-
-#### Safe Mode (Default)
-- Transaction is **rejected** if slippage exceeds the specified tolerance
-- Provides maximum protection against unfavorable price movements
-- "Fill or kill" behavior - either execute at acceptable price or not at all
-
-#### Partial Mode
-- Transaction executes **up to the slippage threshold**
-- If full amount would exceed tolerance, stakes only the portion within limits
-- Ensures some execution while respecting price boundaries
-
-#### Unsafe Mode
-- **Ignores slippage entirely**
-- Transaction executes regardless of price impact
-- Fastest execution but no protection against adverse price movements
-
-### Slippage Example Across Modes
-
-Consider staking 1000 TAO when slippage would be 8% for the full amount, with tolerance set to 5%:
-| Mode | Outcome  |
-|----------------------|------|
-|Safe |Transaction rejected entirely (8% > 5% tolerance)|
-|Partial |Stakes ~625 TAO (amount that fits within 5% tolerance)  |
-|Unsafe |Stakes full 1000 TAO regardless of 8% slippage|
-
-## Managing Slippage with BTCLI
-
-The `btcli stake` interface provides parameters to control slippage protection modes.
 
 ### Mode Selection
 
@@ -363,38 +326,6 @@ Slippage comparison for different amounts:
   - 100.0 TAO → ‎4,165.502978352ξ‎ alpha (SDK: 48.98%, Traditional: 0.4922%)
 
 ```
-## Best Practices
-
-1. **Set Reasonable Tolerances**: Use 0.5-5% for most operations
-2. **Monitor Liquidity**: Check pool liquidity before large transactions
-3. **Use Partial Execution**: Enable for large amounts to ensure some execution
-4. **Test Small Amounts**: Start with small transactions to understand slippage
-5. **Check Current Prices**: Verify market conditions before executing
-
-## Error Handling
-
-**Common Error Messages:**
-- `"Price exceeded tolerance limit"`: Increase tolerance or enable partial execution
-- `"Slippage is too high"`: Reduce transaction size or increase tolerance
-- `"Insufficient liquidity"`: Try smaller amounts or different timing
-
-**Troubleshooting:**
-```python
-try:
-    success = subtensor.add_stake(
-        wallet=wallet,
-        amount=bt.Balance.from_tao(100),
-        safe_staking=True,
-        rate_tolerance=0.05
-    )
-except Exception as e:
-    if "SlippageTooHigh" in str(e):
-        # Increase tolerance or reduce amount
-        pass
-    elif "InsufficientLiquidity" in str(e):
-        # Try smaller amount or wait for better conditions
-        pass
-```
 
 ## Code References
 
@@ -435,8 +366,7 @@ except Exception as e:
 - [Rust Implementation](https://github.com/opentensor/subtensor/blob/main/precompiles/src/staking.rs#L320-L340)
 
 
-
-## Slippage Protection
+## Managing Slippage
 
 ### Mode Selection
 
