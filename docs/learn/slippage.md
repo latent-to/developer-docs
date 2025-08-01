@@ -265,11 +265,6 @@ print(f"  - Slippage amount: {slippage_amount}")
 slippage_percentage = subnet_info.tao_to_alpha_with_slippage(tao_amount, percentage=True)
 print(f"  - SDK slippage percentage: {slippage_percentage:.2%}")
 
-# Method 3: Calculate traditional slippage percentage (relative to received amount)
-# Use Balance.rao property to get raw values for calculation
-traditional_percentage = (slippage_amount.rao / alpha_received.rao) * 100
-print(f"  - Traditional slippage percentage: {traditional_percentage:.4f}%")
-
 # Calculate slippage for unstaking 100 alpha
 # Create alpha amount with correct netuid to avoid deprecation warnings
 alpha_amount = bt.Balance.from_tao(100).set_unit(14)  # Set to subnet 14
@@ -284,10 +279,6 @@ print(f"  - Slippage amount: {slippage_amount}")
 slippage_percentage = subnet_info.alpha_to_tao_with_slippage(alpha_amount, percentage=True)
 print(f"  - SDK slippage percentage: {slippage_percentage:.2%}")
 
-# Method 3: Calculate traditional slippage percentage (relative to received amount)
-# Use Balance.rao property to get raw values for calculation
-traditional_percentage = (slippage_amount.rao / tao_received.rao) * 100
-print(f"  - Traditional slippage percentage: {traditional_percentage:.4f}%")
 
 # Compare different amounts to see how slippage changes
 print(f"\nSlippage comparison for different amounts:")
@@ -295,35 +286,32 @@ amounts = [1.0, 10.0, 50.0, 100.0]
 for amount in amounts:
     alpha_received, slippage_amount = subnet_info.tao_to_alpha_with_slippage(amount)
     slippage_pct = subnet_info.tao_to_alpha_with_slippage(amount, percentage=True)
-    # Use Balance.rao property to get raw values for calculation
-    traditional_pct = (slippage_amount.rao / alpha_received.rao) * 100
-    print(f"  - {amount} TAO → {alpha_received} alpha (SDK: {slippage_pct:.2%}, Traditional: {traditional_pct:.4f}%)")
+    
+    print(f"  - {amount} TAO → {alpha_received} alpha (SDK: {slippage_pct:.2%})")
 ```
 ```console
 Subnet 14 Information:
-  - Alpha in: ‎852,213.419039698ξ‎
-  - Alpha out: ‎1,143,515.702624673ξ‎
-  - TAO in: τ20,358.835906940
-  - Price: τ0.023889112
+  - Alpha in: 860,246.413494392ξ
+  - Alpha out: 1,144,782.291355171ξ
+  - TAO in: τ20,380.434968652
+  - Price: τ0.023691121
   - Emission: τ0.000000000
 
 Calculating slippage for staking 10.0 TAO:
-  - Alpha received: ‎418.390831432ξ‎
-  - Slippage amount: ‎0.209910193ξ‎
-  - SDK slippage percentage: 5.01%
-  - Traditional slippage percentage: 0.0502%
+  - Alpha received: 421.887230369ξ
+  - Slippage amount: 0.211833663ξ
+  - SDK slippage percentage: 5.02%
 
-Calculating slippage for unstaking ‎100.000000000ξ‎ alpha:
-  - TAO received: τ2.388656034
-  - Slippage amount: τ0.000255166
-  - SDK slippage percentage: 1.07%
-  - Traditional slippage percentage: 0.0107%
+Calculating slippage for unstaking 100.000000000ξ alpha:
+  - TAO received: τ2.368863827
+  - Slippage amount: τ0.000248271
+  - SDK slippage percentage: 1.05%
 
 Slippage comparison for different amounts:
-  - 1.0 TAO → ‎41.857577976ξ‎ alpha (SDK: 0.60%, Traditional: 0.0060%)
-  - 10.0 TAO → ‎418.390831432ξ‎ alpha (SDK: 5.01%, Traditional: 0.0502%)
-  - 50.0 TAO → ‎2,087.854062147ξ‎ alpha (SDK: 24.60%, Traditional: 0.2466%)
-  - 100.0 TAO → ‎4,165.502978352ξ‎ alpha (SDK: 48.98%, Traditional: 0.4922%)
+  - 1.0 TAO → 42.207352663ξ alpha (SDK: 0.61%)
+  - 10.0 TAO → 421.887230369ξ alpha (SDK: 5.02%)
+  - 50.0 TAO → 2,105.306164099ξ alpha (SDK: 24.59%)
+  - 100.0 TAO → 4,200.332731269ξ alpha (SDK: 48.94%)
 
 ```
 
