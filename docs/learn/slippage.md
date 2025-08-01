@@ -8,6 +8,10 @@ title: "Understanding Slippage"
 
 When staking and unstaking in Bittensor, *slippage* refers to a difference between the quantity of tokens actually received, and the amount that would be expected based on a static price. This difference is due to the change in price due to the transaction itself.
 
+## Introduction
+
+When staking and unstaking in Bittensor, *slippage* refers to a difference between the quantity of tokens actually received, and the amount that would be expected based on a static price. This difference is due to the change in price due to the transaction itself.
+
 Each Bittensor subnet operates as a *constant product AMM*, meaning that it will accept trades that conserve the product of the quantities of the two tokens in reserve, TAO and alpha. To calulate the price in one token of batch of the other token that a buyer wishes to acquire&mdash;alpha if they are staking, or TAO if they are unstaking&mdash;the algorithm assumes that the transaction does not change this product, so the product of TAO and alpha is the same before and after.
 
 When staking, the product K of TAO in reserve and alpha in reserve is the same before and after the transaction, so the initial product must be equal to the product after the cost in TAO is added to the reserve, and the stake is removed from the reserve and placed in the staked hotkey.
@@ -38,26 +42,81 @@ $$
 
 ## Slippage Example
 
+:::warning
+**Simplified Example**: The following example uses simplified calculations for illustration. Bittensor's actual AMM uses complex Uniswap V3-style mathematics with concentrated liquidity and tick-based pricing.
+:::
+
 For example, suppose that a subnet has 100 alpha in reserve and 10 TAO, and we want to stake in 5 TAO.
 
 The price at this moment is 10 TAO / 100 alpha, or 10 alpha per TAO, so if we stake 5 TAO, we would expect 50 alpha, without taking slippage into account.
 
-With slippage, the yielded alpha stake will be:
+With slippage, the actual alpha received will be less than 50 due to the price impact of the transaction. The exact amount depends on the current liquidity distribution across price ticks and the specific AMM mathematics.
+
+In general, slippage is high when:
+- Available liquidity is limited compared to the transaction size
+- The transaction moves the price significantly across multiple ticks
+- Liquidity is concentrated in narrow price ranges
 
 $$
 \text{Stake} = 100 - \frac{ 10 * 100} {10 + 5}
 $$
 
 or 33.333 alpha sent to the hotkey. So in this case, the slippage is the difference between the ideal expectation of 50 and the actual swap value of 33.33333:
+
 $$
 16.667 = 50 - 33.333
 $$
 
-This slippage is 50% of the actual swap value, which is extremely high, because we chose small values for the available liquidity. In general, slippage is high when available liquidity is limited compared to the magnitude of the transaction, since the transaction itself is changing the price significantly.
+This slippage is 50% of the actual swap value, which is extremely high, 
+because we chose small values for the available liquidity. In general, 
+slippage is high when available liquidity is limited compared to the 
+magnitude of the transaction, since the transaction itself is changing the 
+price significantly.
+
+:::note
+**Real Calculation**: Bittensor's SDK provides accurate slippage calculations using the actual AMM implementation. The `tao_to_alpha_with_slippage()` and `alpha_to_tao_with_slippage()` methods use the real chain state and AMM mathematics.
+:::
+
+
+
+## Slippage Protection and Modes
+
+Bittensor provides three distinct protection modes to give users control over how their transactions handle slippage in staking and unstaking transaction:
+
+### Three Modes
+
+#### Safe Mode (Default)
+- Transaction is **rejected** if slippage exceeds the specified tolerance
+- Provides maximum protection against unfavorable price movements
+- "Fill or kill" behavior - either execute at acceptable price or not at all
+
+#### Partial Mode
+- Transaction executes **up to the slippage threshold**
+- If full amount would exceed tolerance, stakes only the portion within limits
+- Ensures some execution while respecting price boundaries
+
+#### Unsafe Mode
+- **Ignores slippage entirely**
+- Transaction executes regardless of price impact
+- Fastest execution but no protection against adverse price movements
+
+### Slippage Example Across Modes
+
+Consider staking 1000 TAO when slippage would be 8% for the full amount, with tolerance set to 5%:
+| Mode | Outcome  |
+|----------------------|------|
+|Safe |Transaction rejected entirely (8% > 5% tolerance)|
+|Partial |Stakes ~625 TAO (amount that fits within 5% tolerance)  |
+|Unsafe |Stakes full 1000 TAO regardless of 8% slippage|
+
+## Managing Slippage with BTCLI
+
+The `btcli stake` interface provides parameters to control slippage protection modes.
 
 :::tip
 `btcli` shows the slippage of staking and unstaking operations, so you don't need to calculate it yourself. 
 :::
+
 
 ## Slippage Protection and Modes
 
@@ -379,208 +438,128 @@ except Exception as e:
 
 ## Slippage Protection
 
-Bittensor provides comprehensive slippage protection mechanisms to help users avoid unfavorable trades. These protections work at multiple levels: CLI interface, SDK methods, and blockchain-level validation.
+### Mode Selection
 
-### BTICLI Slippage Protection
 
-The `btcli` command-line interface provides several parameters for slippage protection. For complete CLI reference documentation, see [btcli Reference](../btcli/overview.md).
+The following apply to `btcli stake add` and `btcli stake remove`.
 
-#### Rate Tolerance Parameter
+:::tip
+Other stake commands (`stake swap`, `stake move`, `stake transfer`) do not have slippage protection, since they do not involve balance changes.
+:::
+
+**Rate Tolerance:**
 ```bash
 --slippage, --slippage-tolerance, --tolerance, --rate-tolerance FLOAT
 ```
-<!-- todo source code reference in blockchain /subtensor -->
 - **Default**: 0.005 (0.5%)
 - **Range**: 0.0 to 1.0 (0% to 100%)
-- **Purpose**: Sets the maximum allowed price change ratio for transactions
+- **Purpose**: Sets the maximum allowed price change ratio
 
-#### Safe Staking/Unstaking Mode
+Enable/disable slippage protection (including partial protection).
+
+:::warning
+In `--unsafe` mode, transactions are very vulnerable, including [sandwich attacks](#sandwich-attacks).
+
+It is not recommended to stake/unstake on main net ("finney") in `--unsafe` mode.
+:::
+
 ```bash
 --safe-staking/--no-safe-staking, --safe/--unsafe
 ```
-- **Default**: Enabled
-- **Purpose**: Enables price safety checks to protect against fluctuating prices
 
-#### Partial Execution
+Enable/disable partial staking. Ignored in `--unsafe` mode.
+
 ```bash
---allow-partial-stake/--no-allow-partial-stake, --partial/--no-partial
-```
-- **Default**: Disabled
-- **Purpose**: Allows partial execution when full amount would exceed tolerance
 
-#### Example CLI Commands
-
-**Safe staking with 10% tolerance:**
-```bash
-btcli stake add --amount 100 --netuid 1 --safe --tolerance 0.1 --no-partial
+--allow-partial-stake/--no-allow-partial-stake, --partial/--no-partial 
 ```
 
-**Allow partial stake if rates change:**
+### Examples
+
+**Safe Mode (reject if slippage exceeds limit):**
 ```bash
-btcli stake add --amount 300 --safe --partial --tolerance 0.1
+btcli stake add --amount 100 --netuid 1 --safe --tolerance 0.05 --no-partial
 ```
 
-**Unsafe staking (no protection):**
+**Partial Mode (execute what fits within limit):**
+```bash
+btcli stake add --amount 1000 --netuid 1 --safe --partial --tolerance 0.05
+```
+
+**Unsafe Mode (ignore slippage):**
 ```bash
 btcli stake add --amount 300 --netuid 1 --unsafe
 ```
 
-**Safe unstaking with protection:**
-```bash
-btcli stake remove --amount 100 --netuid 1 --safe --tolerance 0.1
-```
+## Managing Slippage with SDK
 
-**Note**: Only `btcli stake add` and `btcli stake remove` support slippage protection. Other stake commands (`stake swap`, `stake move`, `stake transfer`) do not have slippage protection parameters.
+The Bittensor SDK `add_stake` and `remove_stake` commands provides slippage through method parameters. The SDK automatically translates your mode selection to the appropriate blockchain extrinsics.
+                   
+See: [Source code](https://github.com/opentensor/bittensor/blob/master/bittensor/core/extrinsics/staking.py#L113-146)
 
-### SDK Slippage Protection
-
-The Bittensor SDK provides **built-in slippage protection** through method parameters. The SDK methods automatically handle the translation between basic and protected blockchain extrinsics.
-
-#### SDK Protection Parameters
+### Parameters
 
 **`safe_staking`** (bool):
 - **Default**: False
-- **Purpose**: Enables price safety checks and calls protected extrinsics
+- **Purpose**: Enables/disables slippage protection
+
+**`allow_partial_stake`** (bool):
+- **Default**: False
+- **Purpose**: Enables partial execution mode
 
 **`rate_tolerance`** (float):
 - **Default**: 0.005 (0.5%)
 - **Range**: 0.0 to 1.0
-- **Purpose**: Maximum allowed price change ratio
+- **Purpose**: Maximum allowed slippage value before transaction is rejected (with `--partial` disabled), or limited (with `--partial` enabled).
 
-**`allow_partial_stake`** (bool):
-- **Default**: False
-- **Purpose**: Allows partial execution when full amount exceeds tolerance
+### Examples
 
-#### SDK Method Examples
-
-**Adding stake with protection:**
+**Safe Mode (reject if slippage exceeds limit):**
 ```python
 import bittensor as bt
 
 subtensor = bt.Subtensor()
 wallet = bt.Wallet("my_wallet")
 
-# Safe staking with 5% tolerance
 success = subtensor.add_stake(
     wallet=wallet,
     hotkey_ss58="5F...",
     netuid=1,
     amount=bt.Balance.from_tao(100),
-    safe_staking=True,
-    rate_tolerance=0.05,
-    allow_partial_stake=False
+    safe_staking=True,           # Enable protection
+    rate_tolerance=0.05,         # 5% tolerance
+    allow_partial_stake=False    # Reject if exceeds tolerance
 )
 ```
 
-**Removing stake with protection:**
+**Partial Mode (execute what fits within limit):**
 ```python
-# Safe unstaking with 3% tolerance
-success = subtensor.unstake(
+success = subtensor.add_stake(
     wallet=wallet,
     hotkey_ss58="5F...",
     netuid=1,
-    amount=bt.Balance.from_tao(50),
-    safe_staking=True,
-    rate_tolerance=0.03,
-    allow_partial_stake=True
+    amount=bt.Balance.from_tao(1000),
+    safe_staking=True,           # Enable protection
+    rate_tolerance=0.05,         # 5% tolerance
+    allow_partial_stake=True     # Execute partial amount within tolerance
 )
 ```
 
-**Moving stake between subnets:**
+**Unsafe Mode (ignore slippage):**
 ```python
-# Safe stake movement with protection
-success = subtensor.swap_stake(
+success = subtensor.add_stake(
     wallet=wallet,
     hotkey_ss58="5F...",
-    origin_netuid=1,
-    destination_netuid=2,
+    netuid=1,
     amount=bt.Balance.from_tao(100),
-    safe_staking=True,
-    rate_tolerance=0.05,
-    allow_partial_stake=False
+    safe_staking=False          # Disable protection entirely
 )
-```
-
-#### How SDK Protection Works
-
-The SDK automatically translates parameters to the appropriate blockchain calls:
-
-**When `safe_staking=True`:**
-- Calls `add_stake_limit` extrinsic (protected)
-- Calculates price limits with tolerance
-- Enables partial execution if specified
-
-**When `safe_staking=False`:**
-- Calls `add_stake` extrinsic (basic)
-- No slippage protection
-
-**Source**: [`bittensor/bittensor/core/extrinsics/staking.py:120-140`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/extrinsics/staking.py#L120-L140)
-
-### Blockchain-Level Implementation
-
-The CLI and SDK both translate to **protected blockchain extrinsics** when slippage protection is enabled:
-
-#### Protected vs Basic Extrinsics
-
-**Basic Extrinsics (no protection):**
-- `add_stake` - Regular staking
-- `remove_stake` - Regular unstaking  
-- `swap_stake` - Regular stake movement
-
-**Protected Extrinsics (with slippage limits):**
-- `add_stake_limit` - Staking with price limit
-- `remove_stake_limit` - Unstaking with price limit
-- `swap_stake_limit` - Stake movement with price limit
-
-#### How Protection Works
-
-**Price Limit Calculation:**
-```rust
-// From subtensor/pallets/subtensor/src/staking/add_stake.rs:75-95
-pub fn do_add_stake_limit(
-    origin: T::RuntimeOrigin,
-    hotkey: T::AccountId,
-    netuid: NetUid,
-    stake_to_be_added: u64,
-    limit_price: u64,        // ← Price limit in RAO per Alpha
-    allow_partial: bool,     // ← Allow partial execution
-) -> dispatch::DispatchResult {
-    // Calculate maximum amount that can be executed at limit price
-    let max_amount = Self::get_max_amount_add(netuid, limit_price)?;
-    let mut possible_stake = stake_to_be_added;
-    if possible_stake > max_amount {
-        possible_stake = max_amount;  // ← Partial execution
-    }
-    
-    // Execute the transaction with slippage protection
-    Self::stake_into_subnet(&hotkey, &coldkey, netuid, possible_stake, limit_price, true)
-}
-```
-
-**Partial Execution Logic:**
-- **When `allow_partial = false`**: Transaction fails if full amount can't be executed
-- **When `allow_partial = true`**: Executes whatever amount fits within the price limit
-
-#### EVM Precompile Support
-
-Slippage protection is also available through EVM precompiles:
-
-```solidity
-// From subtensor/precompiles/src/solidity/stakingV2.sol:198-225
-function addStakeLimit(
-    bytes32 hotkey,
-    uint256 amount,
-    uint256 limit_price,
-    bool allow_partial,
-    uint256 netuid
-) external payable;
 ```
 
 ## Calculating Slippage
 
-The SDK provides methods to calculate slippage before executing transactions:
+The SDK provides methods to calculate slippage before executing transactions.
 
-### Complete Slippage Calculation Example
 ```python
 import bittensor as bt
 
@@ -611,11 +590,13 @@ slippage_percentage = subnet_info.tao_to_alpha_with_slippage(tao_amount, percent
 print(f"  - SDK slippage percentage: {slippage_percentage:.2%}")
 
 # Method 3: Calculate traditional slippage percentage (relative to received amount)
-traditional_percentage = (float(slippage_amount) / float(alpha_received)) * 100
+# Use Balance.rao property to get raw values for calculation
+traditional_percentage = (slippage_amount.rao / alpha_received.rao) * 100
 print(f"  - Traditional slippage percentage: {traditional_percentage:.4f}%")
 
 # Calculate slippage for unstaking 100 alpha
-alpha_amount = 100.0
+# Create alpha amount with correct netuid to avoid deprecation warnings
+alpha_amount = bt.Balance.from_tao(100).set_unit(14)  # Set to subnet 14
 print(f"\nCalculating slippage for unstaking {alpha_amount} alpha:")
 
 # Method 1: Get TAO received and slippage amount
@@ -628,7 +609,8 @@ slippage_percentage = subnet_info.alpha_to_tao_with_slippage(alpha_amount, perce
 print(f"  - SDK slippage percentage: {slippage_percentage:.2%}")
 
 # Method 3: Calculate traditional slippage percentage (relative to received amount)
-traditional_percentage = (float(slippage_amount) / float(tao_received)) * 100
+# Use Balance.rao property to get raw values for calculation
+traditional_percentage = (slippage_amount.rao / tao_received.rao) * 100
 print(f"  - Traditional slippage percentage: {traditional_percentage:.4f}%")
 
 # Compare different amounts to see how slippage changes
@@ -637,63 +619,37 @@ amounts = [1.0, 10.0, 50.0, 100.0]
 for amount in amounts:
     alpha_received, slippage_amount = subnet_info.tao_to_alpha_with_slippage(amount)
     slippage_pct = subnet_info.tao_to_alpha_with_slippage(amount, percentage=True)
-    traditional_pct = (float(slippage_amount) / float(alpha_received)) * 100
-    print(f"  - {amount} TAO → {alpha_received:.2f} alpha (SDK: {slippage_pct:.2%}, Traditional: {traditional_pct:.4f}%)")
+    # Use Balance.rao property to get raw values for calculation
+    traditional_pct = (slippage_amount.rao / alpha_received.rao) * 100
+    print(f"  - {amount} TAO → {alpha_received} alpha (SDK: {slippage_pct:.2%}, Traditional: {traditional_pct:.4f}%)")
 ```
+```console
+Subnet 14 Information:
+  - Alpha in: ‎852,213.419039698ξ‎
+  - Alpha out: ‎1,143,515.702624673ξ‎
+  - TAO in: τ20,358.835906940
+  - Price: τ0.023889112
+  - Emission: τ0.000000000
 
-#### Individual Method Examples
+Calculating slippage for staking 10.0 TAO:
+  - Alpha received: ‎418.390831432ξ‎
+  - Slippage amount: ‎0.209910193ξ‎
+  - SDK slippage percentage: 5.01%
+  - Traditional slippage percentage: 0.0502%
 
-**`tao_to_alpha_with_slippage()` - Calculate slippage for staking:**
-```python
-import bittensor as bt
+Calculating slippage for unstaking ‎100.000000000ξ‎ alpha:
+  - TAO received: τ2.388656034
+  - Slippage amount: τ0.000255166
+  - SDK slippage percentage: 1.07%
+  - Traditional slippage percentage: 0.0107%
 
-subtensor = bt.Subtensor()
-subnet_info = subtensor.subnet(netuid=14)
+Slippage comparison for different amounts:
+  - 1.0 TAO → ‎41.857577976ξ‎ alpha (SDK: 0.60%, Traditional: 0.0060%)
+  - 10.0 TAO → ‎418.390831432ξ‎ alpha (SDK: 5.01%, Traditional: 0.0502%)
+  - 50.0 TAO → ‎2,087.854062147ξ‎ alpha (SDK: 24.60%, Traditional: 0.2466%)
+  - 100.0 TAO → ‎4,165.502978352ξ‎ alpha (SDK: 48.98%, Traditional: 0.4922%)
 
-# Calculate slippage for staking 10 TAO
-tao_amount = 10.0
-alpha_received, slippage_amount = subnet_info.tao_to_alpha_with_slippage(tao_amount)
-slippage_percentage = subnet_info.tao_to_alpha_with_slippage(tao_amount, percentage=True)
-
-print(f"Staking {tao_amount} TAO:")
-print(f"  Alpha received: {alpha_received}")
-print(f"  Slippage: {slippage_amount}")
-print(f"  SDK percentage: {slippage_percentage:.2%}")
-print(f"  Traditional percentage: {(float(slippage_amount) / float(alpha_received)) * 100:.4f}%")
 ```
-
-**`alpha_to_tao_with_slippage()` - Calculate slippage for unstaking:**
-```python
-import bittensor as bt
-
-subtensor = bt.Subtensor()
-subnet_info = subtensor.subnet(netuid=14)
-
-# Calculate slippage for unstaking 100 alpha
-alpha_amount = 100.0
-tao_received, slippage_amount = subnet_info.alpha_to_tao_with_slippage(alpha_amount)
-slippage_percentage = subnet_info.alpha_to_tao_with_slippage(alpha_amount, percentage=True)
-
-print(f"Unstaking {alpha_amount} alpha:")
-print(f"  TAO received: {tao_received}")
-print(f"  Slippage: {slippage_amount}")
-print(f"  SDK percentage: {slippage_percentage:.2%}")
-print(f"  Traditional percentage: {(float(slippage_amount) / float(tao_received)) * 100:.4f}%")
-
-# Verify the percentage calculation manually
-manual_percentage = (slippage_amount / tao_received) * 100
-print(f"  Manual calculation: {manual_percentage:.4f}%")
-print(f"  SDK calculation: {slippage_percentage:.4f}%")
-```
-
-:::note
-**Percentage Calculation**: The `percentage=True` parameter calculates slippage as a percentage of the total transaction value: `100 * slippage / (slippage + received_amount)`. This represents the proportion of slippage relative to the entire transaction, not just the received amount.
-
-**Source**: [`bittensor/bittensor/core/chain_data/dynamic_info.py:175-185`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/chain_data/dynamic_info.py#L175-L185)
-
-For the traditional slippage percentage (relative to received amount), use: `100 * slippage_amount / received_amount`.
-:::
-
 ## Best Practices
 
 1. **Set Reasonable Tolerances**: Use 0.5-5% for most operations
@@ -741,26 +697,114 @@ except Exception as e:
 - [`bittensor.core.subtensor.Subtensor.swap_stake()`](pathname:///python-api/html/autoapi/bittensor/core/subtensor/index.html) - Stake movement with protection
 
 ### SDK Calculation Methods
-- [`bittensor.core.chain_data.dynamic_info.DynamicInfo.tao_to_alpha_with_slippage()`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/chain_data/dynamic_info.py#L130-L185) - Staking slippage calculation
-- [`bittensor.core.chain_data.dynamic_info.DynamicInfo.alpha_to_tao_with_slippage()`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/chain_data/dynamic_info.py#L187-L238) - Unstaking slippage calculation
+- [`bittensor.core.chain_data.dynamic_info.DynamicInfo.tao_to_alpha_with_slippage()`](https://github.com/opentensor/bittensor/blob/master/bittensor/core/chain_data/dynamic_info.py#L130-L185) - Staking slippage calculation
+- [`bittensor.core.chain_data.dynamic_info.DynamicInfo.alpha_to_tao_with_slippage()`](https://github.com/opentensor/bittensor/blob/master/bittensor/core/chain_data/dynamic_info.py#L187-L238) - Unstaking slippage calculation
 
-### Implementation References
-
-**CLI Implementation:**
-- [`btcli/bittensor_cli/src/commands/stake/add.py`](https://github.com/opentensor/btcli/blob/main/bittensor_cli/src/commands/stake/add.py) - CLI staking with protection
-- [`btcli/bittensor_cli/src/commands/stake/remove.py`](https://github.com/opentensor/btcli/blob/main/bittensor_cli/src/commands/stake/remove.py) - CLI unstaking with protection
+### Blockchain References
 
 **Blockchain Implementation (Protected Extrinsics):**
-- [`subtensor/pallets/subtensor/src/staking/add_stake.rs:75-95`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/add_stake.rs#L75-L95) - `do_add_stake_limit` function
-- [`subtensor/pallets/subtensor/src/staking/remove_stake.rs:286-380`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L286-L380) - `do_remove_stake_limit` function
-- [`subtensor/pallets/subtensor/src/staking/move_stake.rs:268-317`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L268-L317) - `do_swap_stake_limit` function
+- [`do_add_stake_limit`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/add_stake.rs#L126-L180) - Protected staking function
+- [`do_remove_stake_limit`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L329-L390) - Protected unstaking function  
+- [`do_swap_stake_limit`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L175-L220) - Protected stake movement function
 
 **Blockchain Implementation (Basic Extrinsics):**
-- [`subtensor/pallets/subtensor/src/staking/add_stake.rs:25-70`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/add_stake.rs#L25-L70) - `do_add_stake` function
-- [`subtensor/pallets/subtensor/src/staking/remove_stake.rs:25-285`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L25-L285) - `do_remove_stake` function
-- [`subtensor/pallets/subtensor/src/staking/move_stake.rs:25-267`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L25-L267) - `do_swap_stake` function
+- [`do_add_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/add_stake.rs#L39-L75) - Basic staking function
+- [`do_remove_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L38-L75) - Basic unstaking function
+- [`do_swap_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L175-L220) - Basic stake movement function
+
+**AMM Implementation:**
+- [`SwapInterface`](https://github.com/opentensor/subtensor/blob/main/pallets/swap-interface/src/lib.rs) - Core AMM interface
+- [`Swap Pallet`](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/impls.rs) - Uniswap V3-style AMM implementation
+- [`do_swap`](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/impls.rs#L421-L460) - Core swap function with complex AMM mathematics
+- [`stake_into_subnet`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/stake_utils.rs#L820-L860) - Staking function that uses AMM swap
+
+**Transaction Pool & MEV-Related Implementation:**
+- [Transaction Pool API](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1857-L1872) - Where mempool validation happens
+- [Priority Calculation](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1796-L1813) - How MEV bots can gain priority
+- [Transaction Validation](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L2115-L2137) - Where stake amounts determine priority
 
 **EVM Precompile Implementation:**
-- [`subtensor/precompiles/src/solidity/stakingV2.sol:198-225`](https://github.com/opentensor/subtensor/blob/main/precompiles/src/solidity/stakingV2.sol#L198-L225) - Solidity interface
-- [`subtensor/precompiles/src/staking.rs:320-340`](https://github.com/opentensor/subtensor/blob/main/precompiles/src/staking.rs#L320-L340) - Rust precompile implementation
->>>>>>> fe04126b5 (wip)
+- [`subtensor/precompiles/src/solidity/stakingV2.sol:198-225`](https://github.com/opentensor/subtensor/blob/main/precompiles/src/solidity/stakingV2.sol#L198-L225)
+- [`subtensor/precompiles/src/staking.rs:320-340`](https://github.com/opentensor/subtensor/blob/main/precompiles/src/staking.rs#L320-L340)
+
+## Sandwich Attack Protection
+
+**Maximal Extractable Value (MEV)** represents profits that can be extracted by reordering, including, or excluding transactions within blocks. In AMM systems like Bittensor's subnets, the most common MEV attack is the **sandwich attack**, where bots exploit the predictable slippage from large transactions.
+
+### Understanding Sandwich Attacks
+
+Sandwich attacks exploit the fact that pending transactions are visible in the **mempool** before execution, allowing attackers to predict and profit from price movements.
+
+#### How Sandwich Attacks Work
+
+1. **Mempool Monitoring**: MEV bots continuously scan the mempool for large pending transactions
+2. **Front-Running**: Bots submit higher-priority transactions that execute before the victim's transaction
+3. **Rate Limiting Protection**: Bittensor's rate limiting prevents staking and unstaking in the same block, forcing bots to wait for subsequent blocks
+4. **Delayed Profit Extraction**: The victim's transaction causes slippage that the bot captures in later blocks
+
+#### Sandwich Attack Example
+
+Let's examine a concrete example using Bittensor's AMM mechanics:
+
+**Initial State:**
+- Subnet X has 1000 alpha in reserve, 100 TAO in reserve
+- Current price: 0.1 TAO per alpha
+- Alice wants to stake 50 TAO (a large transaction)
+
+**Step 1: MEV Bot Observes Alice's Transaction**
+```
+Mempool: [Alice: "stake 50 TAO in subnet X"]
+MEV Bot calculates: "Alice will cause significant slippage, I can profit"
+```
+
+**Step 2: MEV Bot Front-Runs Alice**
+```
+MEV Bot submits: "stake 10 TAO in subnet X" with HIGHER PRIORITY
+
+Execution order will be:
+1. MEV Bot stakes 10 TAO (higher priority)
+2. Alice stakes 50 TAO (original priority)  
+3. MEV Bot must wait for next block due to rate limiting
+4. MEV Bot unstakes equivalent alpha (on subsequent block)
+```
+
+**Step 3: Block Execution Sequence**
+
+```
+Block N - Before any transactions:
+- Pool: 1000 alpha, 100 TAO
+- Price: 0.1 TAO per alpha
+
+Block N - Transaction 1 - MEV Bot stakes 10 TAO:
+- Alpha received = 852,312.67 - (852,312.67 × 20,360.56)/(20,360.56 + 10) = 418.40 alpha
+- Pool state: 851,894.27 alpha, 20,370.56 TAO
+- New price: 0.023912 TAO per alpha
+
+Block N - Transaction 2 - Alice stakes 50 TAO:
+- Alpha received = 851,894.27 - (851,894.27 × 20,370.56)/(20,370.56 + 50) = 2,085.87 alpha  
+- Pool state: 849,808.39 alpha, 20,420.56 TAO
+- New price: 0.024030 TAO per alpha
+
+Block N+1 - Transaction 3 - MEV Bot unstakes 418.40 alpha (rate limiting enforced):
+- TAO received = 20,420.56 - (849,808.39 × 20,420.56)/(849,808.39 + 418.40) = 10.05 TAO
+- MEV Bot profit: 10.05 - 10 = 0.05 TAO (0.5% return)
+```
+
+**The Victim:**
+- Alice expected ~2,092 alpha at 0.023889 TAO per alpha
+- Alice actually received 2,085.87 alpha (0.3% slippage)
+- **Surprisingly, Alice actually benefited slightly from the MEV bot's presence**
+- This demonstrates how rate limiting and realistic pool sizes provide strong protection
+
+**The MEV Bot's Profit Strategy:**
+- Bot bought 418.40 alpha for 10 TAO when price was 0.023889 TAO per alpha  
+- Alice's large transaction pushed the price up to 0.024030 TAO per alpha
+- Bot must wait for the next block due to rate limiting (cannot stake and unstake in same block)
+- Bot can now sell their 418.40 alpha at this inflated price for 10.05 TAO
+- **This price spike caused by Alice is the entire source of profit**
+- Without Alice's transaction, there would be no profitable price movement to exploit
+- **Rate limiting combined with realistic pool sizes makes this attack much less profitable**
+
+**Source**: [Subtensor transaction pool implementation](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1857-L1872)
+
+>>>>>>> 1754aa097 (wip)
