@@ -458,6 +458,16 @@ A compact representation of public keys corresponding to the wallet's coldkey an
 
 **See also:** [Working with Keys](./working-with-keys.md), [Wallets](./getting-started/wallets.md)
 
+### Slippage
+
+In the context of an automated market maker (AMM), slippage is the impact on the token yield of a trade of the change in price due to the trade transaction itself.
+
+In Bittensor, each subnet's alpha token is traded on a constant product AMM. When you stake TAO to receive alpha (or unstake alpha to receive TAO), your transaction changes the token price, resulting in receiving less than the current market rate X the quantity of the token you are inputting.
+
+Larger transactions cause more slippage. Bittensor provides slippage protection through tolerance limits and partial execution options.
+
+**See:** [Understanding Pricing and Anticipating Slippage](./learn/slippage.md)
+
 ### Senate
 
 A group of elected delegates formed from the top K delegate hotkeys, responsible for approving or disapproving proposals made by the Triumvirate.

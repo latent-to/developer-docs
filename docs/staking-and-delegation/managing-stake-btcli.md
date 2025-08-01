@@ -15,7 +15,7 @@ Staking and unstaking operations incur transaction fees for the underlying block
 See also:
 
 - [Staking/delegation overview](./delegation)
-- [Understanding pricing and anticipating slippage](../dynamic-tao/staking-unstaking-dtao)
+- [Understanding pricing and anticipating slippage](../learn/slippage)
 
 :::tip
 Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.0005 TAO.
@@ -169,7 +169,7 @@ After selecting a validator to delegate stake to, you'll see your wallet balance
 Amount to stake (TAO τ): 5
 ```
 
-You'll then see the details of the trade, including [slippage](../dynamic-tao/staking-unstaking-dtao), and be asked to confirm execution.
+You'll then see the details of the trade, including [slippage](../learn/slippage), and be asked to confirm execution.
 
 ```console
                                                         Staking to:
