@@ -4,7 +4,9 @@ title: "Understanding Slippage: Sandwich Attacks"
 
 # Understanding Sandwich Attacks
 
-## What Are Sandwich Attacks?
+## Introduction
+
+In short, a sandwich attack is when the attacker profits at the target's expense by making a large transaction and then making the reverse transaction, just before and after the target makes a transaction. For example, if the target is about to stake into a subnet, the attacker can stake in directly before and unstake immediately after the target's stake operation is executed. The attacker profits, in this case by 'buying low and selling high', with the target's stake operation making the difference. The target gets a worse deal than they expected, for example by buying at a slightly worse price and losing more to slippage.
 
 **Maximal Extractable Value (MEV)** represents profits that can be extracted by reordering, including, or excluding transactions within blocks. In AMM systems like Bittensor's subnets, the most common MEV attack is the **sandwich attack**, where bots exploit the predictable slippage from large transactions.
 
@@ -17,11 +19,11 @@ title: "Understanding Slippage: Sandwich Attacks"
 
 ## Quick Protection Guide
 
-**The simplest way to protect against sandwich attacks:**
-
+User slippage protection:
 1. **Pre-calculate your slippage** using Bittensor's SDK
 2. **Set your tolerance slightly only slightly higher** than the expected slippage
 3. **Disable partial staking** - if you get sandwiched, the transaction will be rejected
+
 
 ```python
 import bittensor as bt
