@@ -42,6 +42,7 @@ const sidebars = {
         "emissions",
         "yuma-consensus",
         "subnets/yc3-blog",
+        "fees",
       ],
     },
     {
@@ -53,7 +54,6 @@ const sidebars = {
       items: [
         "staking-and-delegation/delegation",
         "staking-and-delegation/stakers-btcli-guide",
-        "dynamic-tao/staking-unstaking-dtao",
         "staking-and-delegation/managing-stake-btcli",
         "staking-and-delegation/managing-stake-sdk",
         "staking-and-delegation/staking-polkadot-js",
