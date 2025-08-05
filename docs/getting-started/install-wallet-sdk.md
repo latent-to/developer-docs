@@ -2,6 +2,12 @@
 title: "Install Wallet SDK"
 ---
 
+---
+
+:::warning Install from Verified Sources
+Always double-check the package name and origin before installation. Use links and commands directly from our docs or GitHub releases to avoid malicious lookalikes.
+:::
+
 # Install Wallet SDK
 
 The Bittensor Wallet SDK is a Python interface for a powerful Rust-based Bittensor wallet functionality. You do not need to know Rust to use this Wallet SDK. However, if you want to contribute to the Rust components of this Wallet SDK, the Rust source is located in the `src` directory of [btwallet](https://github.com/opentensor/btwallet) repo.
@@ -150,7 +156,7 @@ IMPORTANT: Store this mnemonic in a secure (preferable offline place), as anyone
 
 ```
 
-The above will create a wallet with "my_wallet_name". 
+The above will create a wallet with "my_wallet_name".
 
 **3. Use your own config**
 
