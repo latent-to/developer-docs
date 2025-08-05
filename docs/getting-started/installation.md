@@ -9,6 +9,12 @@ import TabItem from '@theme/TabItem';
 
 Before you can start developing, you must install Bittensor SDK and then create Bittensor wallet.
 
+---
+
+:::warning Install from Verified Sources
+Always double-check the package name and origin before installation. Use links and commands directly from our docs or GitHub releases to avoid malicious lookalikes.
+:::
+
 ## Supported Python versions
 
 - bittensor (SDK): Python 3.9-3.13 (reference: https://github.com/opentensor/bittensor/blob/master/pyproject.toml#L14)

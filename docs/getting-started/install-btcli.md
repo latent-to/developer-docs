@@ -9,6 +9,12 @@ import TabItem from '@theme/TabItem';
 
 This page contains installation details for `btcli`, the Bittensor CLI.
 
+---
+
+:::warning Install from Verified Sources
+Always double-check the package name and origin before installation. Use links and commands directly from our docs or GitHub releases to avoid malicious lookalikes.
+:::
+
 ## Prerequisite
 
 To install `btcli`, you must have Python version 3.9-3.12. See config file on [GitHub](https://github.com/opentensor/btcli/blob/main/pyproject.toml#L57-L60).
