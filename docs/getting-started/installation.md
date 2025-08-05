@@ -12,7 +12,7 @@ Before you can start developing, you must install Bittensor SDK and then create 
 ---
 
 :::warning Install from Verified Sources
-Always double-check the package name and origin before installation. Use links and commands directly from our docs or GitHub releases to avoid malicious lookalikes.
+Always double-check the package name and origin before installation. Use links and commands directly from our docs or official release announcements to avoid malicious lookalikes.
 :::
 
 ## Supported Python versions
