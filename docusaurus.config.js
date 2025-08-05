@@ -161,6 +161,14 @@ const config = {
     ({
       // Replace with your project's social card
       image: "img/bittensor-dev-docs-social-card.png",
+      announcementBar: {
+        id: "package_source",
+        content:
+          "<strong> ⚠️ For security, only use links and commands directly from our docs or official release announcements to avoid malicious lookalikes.</strong>",
+        backgroundColor: "#FFF4E5",
+        textColor: "#4A2F00",
+        isCloseable: true,
+      },
       docs: {
         sidebar: {
           autoCollapseCategories: true,
