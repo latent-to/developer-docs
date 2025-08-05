@@ -5,7 +5,7 @@ title: "Install Wallet SDK"
 ---
 
 :::warning Install from Verified Sources
-Always double-check the package name and origin before installation. Use links and commands directly from our docs or GitHub releases to avoid malicious lookalikes.
+Always double-check the package name and origin before installation. Use links and commands directly from our docs or official release announcements to avoid malicious lookalikes.
 :::
 
 # Install Wallet SDK
