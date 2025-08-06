@@ -37,30 +37,54 @@ Each Bittensor subnet operates as a *constant product AMM*, meaning that it will
     $$
     \text{Stake} = \alpha_{\text{in}} - \frac{\tau_{\text{in}} \alpha_{\text{in}}} {\tau_{\text{in}} + \text{cost}}
     $$
+    
+    For example, suppose that a subnet has 100 alpha in reserve and 10 TAO, and we want to stake in 5 TAO.
+
+    The price at this moment is 10 TAO / 100 alpha, or 10 alpha per TAO, so if we stake 5 TAO, we would expect 50 alpha, without taking slippage into account.
+
+    With slippage, the actual alpha received will be less than 50 due to the price impact of the transaction. 
+
+    $$
+    \text{Stake} = 100 - \frac{ 10 * 100} {10 + 5}
+    $$
+
+    or 33.333 alpha sent to the hotkey. So in this case, the slippage is the difference between the ideal expectation of 50 and the actual swap value of 33.33333:
+
+    $$
+    16.667 = 50 - 33.333
+    $$
+
+    This slippage is 50% of the actual swap value, which is extremely high, 
+    because we chose small values for the available liquidity. In general, 
+    slippage is high when available liquidity is limited compared to the 
+    magnitude of the transaction, since the transaction itself is changing the 
+    price significantly.
+
 </details>
 
-## Slippage Protection and Modes
+## Slippage Protection Modes
 
-Bittensor provides three distinct protection modes to give users control over how their transactions handle slippage in staking and unstaking transaction:
+Bittensor provides three modes to give users control over how their transactions handle slippage in staking and unstaking transaction:
 
 ### Three Modes
 
 #### Safe Mode (Default)
-- Transaction is **rejected** if slippage exceeds the specified tolerance
-- Provides maximum protection against unfavorable price movements
-- "Fill or kill" behavior - either execute at acceptable price or not at all
+In this mode, the transaction is **rejected** if slippage exceeds the specified tolerance
+Because the transaction either execute at acceptable price or not at all, this mode provides maximum protection against unfavorable price movements.
 
 #### Partial Mode
-- Transaction executes **up to the slippage threshold**
-- If full amount would exceed tolerance, stakes only the portion within limits
-- Ensures some execution while respecting price boundaries
+
+In this mode, the transaction executes **up to the slippage threshold**. If the full amount would exceed tolerance, only the portion up to the limit is swapped.
+
+This mode ensures some trade execution even if the price and slippage are unfavorable.
 
 #### Unsafe Mode
-- **Ignores slippage entirely**
-- Transaction executes regardless of price impact
-- Fastest execution but no protection against adverse price movements
 
-### Quick Example by Mode
+This mode **ignores slippage entirely**. The transaction executes regardless of price impact, offering the fastest execution but no protection against adverse price movements.
+
+This mode is generally convenient for development and testing, but inadvisable with real-value liquidity, i.e. on main network ("finney").
+
+### Example by Mode
 
 Consider a hypothetical example, attempting to stake 1000 TAO when slippage would be 8% for the full amount, with tolerance set to 5%:
 
@@ -70,42 +94,6 @@ Consider a hypothetical example, attempting to stake 1000 TAO when slippage woul
 |Partial |Stakes ~625 TAO (amount that fits within 5% tolerance)  |
 |Unsafe |Stakes full 1000 TAO regardless of 8% slippage|
 
-## Slippage Example
-
-:::info
-**Simplified Example**: The following example uses simplified calculations for illustration. Bittensor's actual AMM uses complex Uniswap V3-style mathematics with concentrated liquidity and tick-based pricing.
-:::
-
-For example, suppose that a subnet has 100 alpha in reserve and 10 TAO, and we want to stake in 5 TAO.
-
-The price at this moment is 10 TAO / 100 alpha, or 10 alpha per TAO, so if we stake 5 TAO, we would expect 50 alpha, without taking slippage into account.
-
-With slippage, the actual alpha received will be less than 50 due to the price impact of the transaction. The exact amount depends on the current liquidity distribution across price ticks and the specific AMM mathematics.
-
-In general, slippage is high when:
-- Available liquidity is limited compared to the transaction size
-- The transaction moves the price significantly across multiple ticks
-- Liquidity is concentrated in narrow price ranges
-
-$$
-\text{Stake} = 100 - \frac{ 10 * 100} {10 + 5}
-$$
-
-or 33.333 alpha sent to the hotkey. So in this case, the slippage is the difference between the ideal expectation of 50 and the actual swap value of 33.33333:
-
-$$
-16.667 = 50 - 33.333
-$$
-
-This slippage is 50% of the actual swap value, which is extremely high, 
-because we chose small values for the available liquidity. In general, 
-slippage is high when available liquidity is limited compared to the 
-magnitude of the transaction, since the transaction itself is changing the 
-price significantly.
-
-:::note
-**Real Calculation**: Bittensor's SDK provides accurate slippage calculations using the actual AMM implementation. The `tao_to_alpha_with_slippage()` and `alpha_to_tao_with_slippage()` methods use the real chain state and AMM mathematics.
-:::
 
 ## Managing Slippage with BTCLI
 
@@ -122,14 +110,6 @@ The following apply to `btcli stake add` and `btcli stake remove`.
 :::tip
 Other stake commands (`stake swap`, `stake move`, `stake transfer`) do not have slippage protection, since they do not involve balance changes.
 :::
-
-**Rate Tolerance:**
-```bash
---slippage, --slippage-tolerance, --tolerance, --rate-tolerance FLOAT
-```
-- **Default**: 0.005 (0.5%)
-- **Range**: 0.0 to 1.0 (0% to 100%)
-- **Purpose**: Sets the maximum allowed price change ratio
 
 Enable/disable slippage protection (including partial protection).
 
@@ -149,6 +129,14 @@ Enable/disable partial staking. Ignored in `--unsafe` mode.
 
 --allow-partial-stake/--no-allow-partial-stake, --partial/--no-partial 
 ```
+### Tolerance Rate
+
+```bash
+--slippage, --slippage-tolerance, --tolerance, --rate-tolerance FLOAT
+```
+- **Default**: 0.005 (0.5%)
+- **Range**: 0.0 to 1.0 (0% to 100%)
+- **Purpose**: Sets the maximum allowed price change ratio
 
 ### Examples
 
