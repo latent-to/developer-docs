@@ -8,7 +8,7 @@ This page covers creating a subnet on a locally deployed Subtensor blockchain, w
 
 For creating a subnet on Bittensor test and main network, see [Create a Subnet](../subnets/create-a-subnet).
 
-## Prerequisites:
+## Prerequisites
 
 Before continuing with the rest of this tutorial, make sure you've completed the following:
 
