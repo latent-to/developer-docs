@@ -208,10 +208,14 @@ aliases: w, wallets
 **Commands**:
 
 - `list`: Displays all the wallets and their corresponding hotkeys that are located in the wallet path specified in the config.
+- `associate_hotkey`: Associate a hotkey with a wallet(coldkey).
 - `swap-hotkey`: Swap hotkeys of a given wallet on the blockchain.
+- `swap-coldkey`: Schedule a coldkey swap for a wallet.
+- `swap-check`: Check the status of scheduled coldkey swaps.
 - `regen-coldkey`: Regenerate a coldkey for a wallet on the Bittensor blockchain network.
 - `regen-coldkeypub`: Regenerates the public part of a coldkey (`coldkeypub.txt`) for a wallet.
 - `regen-hotkey`: Regenerates a hotkey for a wallet.
+- `regen-hotkeypub`: Regenerates the public part of a hotkey (`hotkeypub.txt`) for a wallet.
 - `new-hotkey`: Create a new hotkey for a wallet.
 - `new-coldkey`: Create a new coldkey.
 - `create`: Create a complete wallet by setting up both coldkey and hotkeys.
@@ -252,6 +256,42 @@ btcli wallet list [OPTIONS]
 | `--quiet`                                               |      | Display only critical information on the console.                                    |
 | `--verbose`                                             |      | Enable verbose output.                                                               |
 | `--help`                                                |      | Show this message and exit.                                                          |
+
+### `btcli wallet associate-hotkey`
+
+This command is used to associate a hotkey with a wallet(coldkey).
+
+**Example**
+
+```sh
+btcli wallet associate-hotkey --hotkey-name hotkey_name
+```
+
+```sh
+btcli wallet associate-hotkey --hotkey-ss58 5DkQ4...
+```
+
+**Usage:**
+
+```sh
+btcli w associate-hotkey [OPTIONS]
+
+alias: associate_hotkey
+```
+
+**Options**
+
+| Option                                                                      | Type | Description                                                                          |
+| --------------------------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------ |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT | Name of the wallet.                                                                  |
+| `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                     | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT | Hotkey name or SS58 address of the hotkey.                                           |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT | The subtensor network to connect to. Default: finney.                                |
+| `--quiet`                                                                   |      | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |      | Enable verbose output.                                                               |
+| `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`         |      | Enable or disable interactive prompts.                                               |
+| `--help`                                                                    |      | Show this message and exit.                                                          |
+|                                                                             |
 
 ### `btcli wallet swap-hotkey`
 
@@ -297,6 +337,100 @@ alias: swap_hotkey
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`         |         | Enable or disable interactive prompts.                                               |
 | `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
 | `--help`                                                                    |         | Show this message and exit.                                                          |
+|                                                                             |
+
+### `btcli wallet swap-coldkey`
+
+This command allows you to schedule a coldkey swap for a wallet. You can either provide a new wallet name, or SS58 address.
+
+**Example**
+
+```sh
+btcli wallet swap-coldkey --new-wallet my_new_wallet
+```
+
+```sh
+btcli wallet swap-coldkey --new-coldkey-ss58 5Dk...X3q
+```
+
+**Usage:**
+
+```sh
+btcli wallet swap-coldkey [OPTIONS]
+
+alias: swap_coldkey
+```
+
+**Options**
+
+| Option                                                                      | Type | Description                                                                          |
+| --------------------------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------ |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT | Name of the wallet.                                                                  |
+| `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                     | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT | Hotkey of the wallet                                                                 |
+| `--new-coldkey`, `--new-coldkey-ss58`, `--new-wallet`, `--new`              | TEXT | SS58 address of the new coldkey that will replace the current one.                   |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT | The subtensor network to connect to. Default: finney.                                |
+| `--quiet`                                                                   |      | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |      | Enable verbose output.                                                               |
+| `--force`, `--force-swap`, `-f`                                             |      | Force the swap even if the new coldkey is already scheduled for a swap.              |
+| `--help`                                                                    |      | Show this message and exit.                                                          |
+|                                                                             |
+
+### `btcli wallet swap-check`
+
+This command checks the status of scheduled coldkey swaps. It can be used in one of three ways:
+
+- Show all pending swaps using the `--all` flag.
+- Check status of a specific wallet's swap or SS58 address.
+- Check detailed swap status with block number using the `--block` flag.
+
+**Example**
+
+Show all pending swaps:
+
+```sh
+btcli wallet swap-check --all
+```
+
+Check specific wallet's swap:
+
+```sh
+  btcli wallet swap-check --wallet-name my_wallet
+```
+
+Check swap using SS58 address:
+
+```sh
+ btcli wallet swap-check --ss58 5DkQ4...
+```
+
+Check swap details with block number:
+
+```sh
+  btcli wallet swap-check --wallet-name my_wallet --block 12345
+```
+
+**Usage:**
+
+```sh
+btcli wallet swap-check [OPTIONS]
+
+alias: swap_check
+```
+
+**Options**
+| Option | Type | Description |
+| --------------------------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------ |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name` | TEXT | Name of the wallet. |
+| `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path` | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey` | TEXT | Hotkey of the wallet |
+| `--block` | INTEGER | Block number where the swap was scheduled. |
+| `--all` | | Show all pending coldkey swaps |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT | The subtensor network to connect to. Default: finney. |
+| `--quiet` | | Display only critical information on the console. |
+| `--verbose` | | Enable verbose output. |
+| `--help` | | Show this message and exit. |
+| |
 
 ### `btcli wallet regen-coldkey`
 
@@ -425,6 +559,46 @@ alias: regen_hotkey
 | `--json`, `-j`                                                            | TEXT | Path to a JSON file containing the encrypted key backup.                             |
 | `--json-password`,                                                        | TEXT | Password to decrypt the JSON file.key.                                               |
 | `--use-password`/`--no-use-password`,                                     |      | Set this to `True` to protect the generated Bittensor key with a password.           |
+| `--overwrite`/`--no-overwrite`                                            |      | Overwrite the existing wallet file with the new one.                                 |
+| `--quiet`                                                                 |      | Display only critical information on the console.                                    |
+| `--verbose`                                                               |      | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                             |      | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                  |      | Show this message and exit.                                                          |
+
+### `btcli wallet regen-hotkeypub`
+
+This command regenerates the public part of a hotkey (hotkeypub.txt) for a wallet. Use this command when you need to move machine for subnet mining. Use the public key or SS58 address from your hotkeypub.txt that you have on another machine to regenerate the hotkeypub.txt on this new machine.
+
+**Usage**
+The command requires either a public key in hexadecimal format or an `SS58` address from the existing `hotkeypub.txt` from old machine to regenerate the coldkeypub on the new machine.
+
+**Example:**
+
+```sh
+btcli wallet regen-hotkeypub --ss58_address 5DkQ4...
+```
+
+**Usage**
+
+```sh
+btcli wallet regen-hotkeypub [OPTIONS]
+
+alias: regen_hotkeypub
+```
+
+:::info
+This command is particularly useful for users who need to regenerate their hotkeypub, perhaps due to file corruption or loss. You will need either ss58 address or public hex key from your old `hotkeypub.txt` for the wallet. It is a recovery-focused utility that ensures continued access to your wallet functionalities.  
+:::
+
+**Options**
+
+| Option                                                                    | Type | Description                                                                          |
+| ------------------------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------ |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`               | TEXT | Name of the wallet.                                                                  |
+| `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                   | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey` | TEXT | Hotkey of the wallet                                                                 |
+| `--public-key-hex`,                                                       | TEXT | The public key in hex format.                                                        |
+| `--ss58`, `--ss58-address`,                                               | TEXT | The SS58 address of the coldkey.                                                     |
 | `--overwrite`/`--no-overwrite`                                            |      | Overwrite the existing wallet file with the new one.                                 |
 | `--quiet`                                                                 |      | Display only critical information on the console.                                    |
 | `--verbose`                                                               |      | Enable verbose output.                                                               |
@@ -1735,7 +1909,7 @@ aliases: subnet, s
 - `register`: Register a neuron (a subnet validator or a subnet miner) in the specified subnet by recycling some TAO.
 - `metagraph`: Displays detailed information about a...
 - `show`: Displays detailed information about a subnet including participants and their state.
-- `price`: Shows the historical price of a subnet for the past 24 hours.
+- `price`: Shows the historical price of a subnet for the past 4 hours.
 - `check-start`: Checks if a subnet's emission schedule can be started.
 - `set-identity`: Get the identity information for a subnet.
 - `get-identity`: Set or update the identity information for a subnet.
@@ -2042,13 +2216,14 @@ btcli subnets show [OPTIONS]
 
 ### `btcli subnets price`
 
-Shows the historical price of a subnet for the past 24 hours.
+Shows the historical price of a subnet for the past 4 hours.
 
 This command displays the historical price of a subnet for the past 4 hours.
-If the `--all` flag is used, the command will display the price for all subnets in html format.
-If the `--html` flag is used, the command will display the price in an HTML chart.
-If the `--log-scale` flag is used, the command will display the price in log scale.
-If no html flag is used, the command will display the price in the cli.
+
+- If the `--all` flag is used, the command will display the price for all subnets in html format.
+- If the `--html` flag is used, the command will display the price in an HTML chart.
+- If the `--log-scale` flag is used, the command will display the price in log scale.
+- If no html flag is used, the command will display the price in the cli.
 
 **Example:**
 
@@ -2083,6 +2258,7 @@ btcli subnets price [OPTIONS]
 | `--interval-hours`, `--interval`                                            | INTEGER | The number of hours to show the historical price for.                                           |
 | `--all-netuids`, `--all`                                                    |         | Show the price for all subnets.                                                                 |
 | `--log-scale`, `--log`                                                      |         | Show the price in log scale.                                                                    |
+| `--current`                                                                 |         | Show only the current data, and no historical data.                                             |
 | `--html`                                                                    |         | Display the table as HTML in the browser.                                                       |
 | `--quiet`                                                                   |         | Display only critical information on the console.                                               |
 | `--verbose`                                                                 |         | Enable verbose output.                                                                          |
