@@ -55,7 +55,7 @@ const sidebars = {
         "staking-and-delegation/delegation",
         "staking-and-delegation/stakers-btcli-guide",
         "learn/slippage",
-        "learn/sandwiches",
+        "learn/price-protection",
         "staking-and-delegation/managing-stake-btcli",
         "staking-and-delegation/managing-stake-sdk",
         "staking-and-delegation/staking-polkadot-js",
