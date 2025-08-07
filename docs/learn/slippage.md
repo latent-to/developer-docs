@@ -104,17 +104,3 @@ print(f"TAO received: {tao_received}")
 print(f"Slippage amount: {slippage_amount}")
 print(f"Ideal (no slippage): {ideal_tao}")
 ```
-
-## Understanding Slippage Impact
-
-The magnitude of slippage depends on several factors:
-
-- **Transaction size relative to liquidity**: Larger transactions cause more price impact
-- **Current market conditions**: Low liquidity periods increase slippage
-- **Subnet activity**: High trading volume can affect available liquidity
-
-## Next Steps
-
-- **[Understanding Price Protection](./price-protection.md)**: Learn about Bittensor's protection mechanisms against adverse price movements
-- **[Managing Stakes with BTCLI](../staking-and-delegation/managing-stake-btcli.md)**: Practical guide to staking operations
-- **[Managing Stakes with SDK](../staking-and-delegation/managing-stake-sdk.md)**: Programmatic staking examples
