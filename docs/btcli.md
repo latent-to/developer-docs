@@ -90,17 +90,18 @@ btcli config set [OPTIONS]
 
 **Options**:
 
-| Option                                                                                                    | Type | Description                                                                                                                                                         |
-| --------------------------------------------------------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                                               | TEXT | Name of the wallet.                                                                                                                                                 |
-| `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                                                   | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                                                |
-| `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`                                 | TEXT | Hotkey of the wallet                                                                                                                                                |
-| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint`                               | TEXT | The subtensor network to connect to. Default: finney.                                                                                                               |
-| `--cache`, `--cache`/`--no-cache`, `--no_cache`                                                           |      | Disable caching of some commands. This will disable the `--reuse-last` and `--html` flags on commands such as `subnets metagraph`, `stake show` and `subnets list`. |
-| `--safe-staking`, `--safe`/`--no-safe-staking`, `--unsafe`                                                |      | Enable or disable safe staking mode.                                                                                                                                |
-| `--allow-partial-stake`, `--partial`, `--allow`/`--no-allow-partial-stake`, `--no-partial`, `--not-allow` |      | Allow or prevent partial stakes                                                                                                                                     |
-| `--dashboard-path`, `--dashboard_path`, `--dash_path`, `--dash.path`                                      | TEXT | Path to save the dashboard HTML file. For example: `~/.bittensor/dashboard`.                                                                                        |
-| `--help`                                                                                                  |      | Show this message and exit.                                                                                                                                         |
+| Option                                                                                                    | Type  | Description                                                                                                                                                         |
+| --------------------------------------------------------------------------------------------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                                               | TEXT  | Name of the wallet.                                                                                                                                                 |
+| `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                                                   | TEXT  | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                                                |
+| `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`                                 | TEXT  | Hotkey of the wallet                                                                                                                                                |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint`                               | TEXT  | The subtensor network to connect to. Default: finney.                                                                                                               |
+| `--cache`, `--cache`/`--no-cache`, `--no_cache`                                                           |       | Disable caching of some commands. This will disable the `--reuse-last` and `--html` flags on commands such as `subnets metagraph`, `stake show` and `subnets list`. |
+| `--tolerance`                                                                                             | FLOAT | Set the rate tolerance percentage for transactions (e.g. 0.1 for 0.1%)                                                                                              |
+| `--safe-staking`, `--safe`/`--no-safe-staking`, `--unsafe`                                                |       | Enable or disable safe staking mode.                                                                                                                                |
+| `--allow-partial-stake`, `--partial`, `--allow`/`--no-allow-partial-stake`, `--no-partial`, `--not-allow` |       | Allow or prevent partial stakes                                                                                                                                     |
+| `--dashboard-path`, `--dashboard_path`, `--dash_path`, `--dash.path`                                      | TEXT  | Path to save the dashboard HTML file. For example: `~/.bittensor/dashboard`.                                                                                        |
+| `--help`                                                                                                  |       | Show this message and exit.                                                                                                                                         |
 
 ### `btcli config get`
 
@@ -149,6 +150,7 @@ btcli config clear [OPTIONS]
 | `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`                                 | TEXT | Hotkey of the wallet                                                                                                                                                |
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint`                               | TEXT | The subtensor network to connect to. Default: finney.                                                                                                               |
 | `--cache`                                                                                                 |      | Disable caching of some commands. This will disable the `--reuse-last` and `--html` flags on commands such as `subnets metagraph`, `stake show` and `subnets list`. |
+| `--tolerance`                                                                                             |      |                                                                                                                                                                     |
 | `--safe-staking`, `--safe`/`--no-safe-staking`, `--unsafe`                                                |      | Enable or disable safe staking mode.                                                                                                                                |
 | `--allow-partial-stake`, `--partial`, `--allow`/`--no-allow-partial-stake`, `--no-partial`, `--not-allow` |      | Allow or prevent partial stakes                                                                                                                                     |
 | `--all`                                                                                                   |      | Clears the entire config.                                                                                                                                           |
@@ -1114,8 +1116,8 @@ Common Examples:
    ```
 
 Safe Staking Parameters:--safe: Enables rate tolerance checks
---tolerance: Maximum % rate change allowed (0.05 = 5%)
---partial: Complete partial stake if rates exceed tolerance
+`--tolerance`: Maximum % rate change allowed (0.05 = 5%)
+`--partial`: Complete partial stake if rates exceed tolerance
 
 **Usage**:
 
@@ -1138,6 +1140,7 @@ btcli stake add [OPTIONS]
 | `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                                                   | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                      |
 | `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`                                 | TEXT    | Hotkey of the wallet                                                                                                                      |
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint`                               | TEXT    | The subtensor network to connect to. Default: finney.                                                                                     |
+| `--tolerance`, `--rate-tolerance`                                                                         | FLOAT   | Set the rate tolerance percentage for transactions (e.g. 0.1 for 0.1%)                                                                    |
 | `--safe-staking`, `--safe`/`--no-safe-staking`, `--unsafe`                                                |         | Enable or disable safe staking mode.                                                                                                      |
 | `--allow-partial-stake`, `--partial`, `--allow`/`--no-allow-partial-stake`, `--no-partial`, `--not-allow` |         | Allow or prevent partial stakes                                                                                                           |
 | `--period`, `-era`                                                                                        | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                             |
@@ -1191,9 +1194,9 @@ Common Examples:
    ```
 
 Safe Staking Parameters:
---safe: Enables rate tolerance checks during unstaking
---tolerance: Max allowed rate change (0.05 = 5%)
---partial: Complete partial unstake if rates exceed tolerance
+`--safe`: Enables rate tolerance checks during unstaking
+`--tolerance`: Max allowed rate change (0.05 = 5%)
+`--partial`: Complete partial unstake if rates exceed tolerance
 
 **Usage**:
 
@@ -1218,6 +1221,7 @@ btcli stake remove [OPTIONS]
 | `--include-hotkeys`, `-in`                                                                                | TEXT    | Specifies hotkeys by name or ss58 address to unstake from. For example, `-in hk1,hk2`                                                         |
 | `--exclude-hotkeys`, `-ex`                                                                                | TEXT    | Specifies hotkeys by name or ss58 address to not to unstake from (use this option only with `--all-hotkeys`) i.e. `--all-hotkeys -ex hk3,hk4` |
 | `--all-hotkeys`/ `--no-all-hotkeys`                                                                       |         | When set, this command unstakes from all hotkeys associated with the wallet. Do not use if specifying hotkeys in `--include-hotkeys`.         |
+| `--tolerance`, `--rate-tolerance`                                                                         | FLOAT   | Set the rate tolerance percentage for transactions (e.g. 0.1 for 0.1%)                                                                        |
 | `--safe-staking`, `--safe`/`--no-safe-staking`, `--unsafe`                                                |         | Enable or disable safe staking mode.                                                                                                          |
 | `--allow-partial-stake`, `--partial`, `--allow`/`--no-allow-partial-stake`, `--no-partial`, `--not-allow` |         | Allow or prevent partial stakes                                                                                                               |
 | `--period`, `-era`                                                                                        | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                                 |
