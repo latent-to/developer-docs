@@ -165,8 +165,11 @@ To protect against sandwich attacks:
 3. **Use Safe Mode** - if you get sandwiched, the transaction will be rejected
 4. **Disable partial execution** - prevents attackers from partially filling your order at bad prices
 
-## Price Protection Simulator
+## Price Protection Simulation
 
+The following script runs through several different stake and unstake operations with different price protection modes, to demonstrate the different behaviors contingent on price.
+
+Prerequisite: [Create a subnet on a local blockchain](../local-build/create-subnet)
 
 ```python
 import bittensor as bt
@@ -481,15 +484,6 @@ if __name__ == "__main__":
     demonstrate_protection_modes()
 ```
 
-## Best Practices
-
-1. **Use Safe Mode by default** for mainnet transactions
-2. **Set reasonable tolerances**: 0.5-5% for most operations  
-3. **Calculate expected market conditions** before setting tolerance
-4. **Disable partial execution** for maximum sandwich attack protection
-5. **Monitor for rejections** - they might indicate attack attempts
-6. **Test with small amounts** first to understand price behavior
-
 ## Code References
 
 ### BTCLI Commands
@@ -504,9 +498,3 @@ if __name__ == "__main__":
 ### Blockchain Implementation
 - [`do_add_stake_limit`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/add_stake.rs#L126-L180) - Protected staking
 - [`do_remove_stake_limit`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L329-L390) - Protected unstaking
-
-## Next Steps
-
-- **[Understanding Slippage](./slippage.md)**: Learn about AMM price impact calculations
-- **[Managing Stakes with BTCLI](../staking-and-delegation/managing-stake-btcli.md)**: Practical staking guide
-- **[Managing Stakes with SDK](../staking-and-delegation/managing-stake-sdk.md)**: Programmatic examples
