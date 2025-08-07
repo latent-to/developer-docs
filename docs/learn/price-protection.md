@@ -1,27 +1,13 @@
 ---
-title: "Understanding Price Protection"
+title: "Understanding Price Protection when Managing Stake"
 ---
 
-# Understanding Price Protection
+# Understanding Price Protection when Managing Stake
 
-## Introduction
-
-Bittensor provides sophisticated price protection mechanisms to safeguard users against adverse price movements during staking and unstaking operations. Unlike traditional slippage protection that focuses on AMM price impact, Bittensor's price protection defends against price changes that occur between transaction submission and execution.
-
-This protection is especially important in preventing **sandwich attacks**, where malicious actors front-run and back-run victim transactions to extract profit at the victim's expense.
-
-## How Price Protection Works
-
-When you enable price protection in Bittensor, the system sets a **price floor** (for unstaking) or **price ceiling** (for staking) based on the current market price and your specified tolerance:
-
-- **For staking**: `max_acceptable_price = current_price × (1 + rate_tolerance)`
-- **For unstaking**: `min_acceptable_price = current_price × (1 - rate_tolerance)`
-
-If market conditions or attacks push the price beyond these limits, the transaction is either rejected or partially executed depending on your chosen protection mode.
 
 ## Price Protection Modes
 
-Bittensor provides three modes to give users control over how their transactions handle adverse price movements:
+Bittensor clients (BTCLI and the SDK) provides three modes to give users control over how their transactions handle adverse price movements: Safe, Partial, and Unsafe.
 
 ### Safe Mode (Default)
 
@@ -55,6 +41,110 @@ Consider attempting to unstake 1000 alpha when market conditions would cause a 5
 | Partial | Unstakes ~400 alpha (amount that fits within 2% tolerance) |
 | Unsafe | Unstakes full 1000 alpha regardless of 5% price drop |
 
+
+## Managing Price Protection with BTCLI
+
+The `btcli stake` interface provides parameters to control price protection modes.
+
+### Mode Selection
+
+**Enable/disable price protection:**
+```bash
+--safe-staking/--no-safe-staking, --safe/--unsafe
+```
+
+**Enable/disable partial execution (ignored in unsafe mode):**
+```bash
+--allow-partial-stake/--no-allow-partial-stake, --partial/--no-partial 
+```
+
+**Set price tolerance:**
+```bash
+--tolerance, --rate-tolerance FLOAT
+```
+- **Default**: 0.005 (0.5%)
+- **Range**: 0.0 to 1.0 (0% to 100%)
+- **Purpose**: Maximum allowed price change from current price
+
+### BTCLI Examples
+
+**Safe Mode (reject if price moves beyond tolerance):**
+```bash
+btcli stake add --amount 100 --netuid 1 --safe --tolerance 0.02 --no-partial
+```
+
+**Partial Mode (execute what fits within tolerance):**
+```bash
+btcli stake add --amount 1000 --netuid 1 --safe --partial --tolerance 0.02
+```
+
+**Unsafe Mode (ignore price protection):**
+```bash
+btcli stake add --amount 300 --netuid 1 --unsafe
+```
+
+## Managing Price Protection with SDK
+
+The Bittensor SDK provides price protection through method parameters:
+
+### Parameters
+
+**`safe_staking`** (bool):
+- **Default**: False
+- **Purpose**: Enables/disables price protection
+
+**`allow_partial_stake`** (bool):
+- **Default**: False  
+- **Purpose**: Enables partial execution mode
+
+**`rate_tolerance`** (float):
+- **Default**: 0.005 (0.5%)
+- **Range**: 0.0 to 1.0
+- **Purpose**: Maximum allowed price change from current price
+
+### SDK Examples
+
+**Safe Mode (reject if price moves beyond tolerance):**
+```python
+import bittensor as bt
+
+subtensor = bt.Subtensor()
+wallet = bt.Wallet("my_wallet")
+
+success = subtensor.add_stake(
+    wallet=wallet,
+    hotkey_ss58="5F...",
+    netuid=1,
+    amount=bt.Balance.from_tao(100),
+    safe_staking=True,           # Enable protection
+    rate_tolerance=0.02,         # 2% price tolerance
+    allow_partial_stake=False    # Reject if exceeds tolerance
+)
+```
+
+**Partial Mode (execute what fits within tolerance):**
+```python
+success = subtensor.add_stake(
+    wallet=wallet,
+    hotkey_ss58="5F...",
+    netuid=1,
+    amount=bt.Balance.from_tao(1000),
+    safe_staking=True,           # Enable protection
+    rate_tolerance=0.02,         # 2% price tolerance
+    allow_partial_stake=True     # Execute partial amount within tolerance
+)
+```
+
+**Unsafe Mode (ignore price protection):**
+```python
+success = subtensor.add_stake(
+    wallet=wallet,
+    hotkey_ss58="5F...",
+    netuid=1,
+    amount=bt.Balance.from_tao(100),
+    safe_staking=False          # Disable protection entirely
+)
+```
 ## Sandwich Attack Protection
 
 ### What Are Sandwich Attacks?
@@ -75,7 +165,8 @@ To protect against sandwich attacks:
 3. **Use Safe Mode** - if you get sandwiched, the transaction will be rejected
 4. **Disable partial execution** - prevents attackers from partially filling your order at bad prices
 
-### Protection Example
+## Price Protection Simulator
+
 
 ```python
 import bittensor as bt
@@ -390,135 +481,6 @@ if __name__ == "__main__":
     demonstrate_protection_modes()
 ```
 
-## Managing Price Protection with BTCLI
-
-The `btcli stake` interface provides parameters to control price protection modes.
-
-### Mode Selection
-
-**Enable/disable price protection:**
-```bash
---safe-staking/--no-safe-staking, --safe/--unsafe
-```
-
-**Enable/disable partial execution (ignored in unsafe mode):**
-```bash
---allow-partial-stake/--no-allow-partial-stake, --partial/--no-partial 
-```
-
-**Set price tolerance:**
-```bash
---tolerance, --rate-tolerance FLOAT
-```
-- **Default**: 0.005 (0.5%)
-- **Range**: 0.0 to 1.0 (0% to 100%)
-- **Purpose**: Maximum allowed price change from current price
-
-### BTCLI Examples
-
-**Safe Mode (reject if price moves beyond tolerance):**
-```bash
-btcli stake add --amount 100 --netuid 1 --safe --tolerance 0.02 --no-partial
-```
-
-**Partial Mode (execute what fits within tolerance):**
-```bash
-btcli stake add --amount 1000 --netuid 1 --safe --partial --tolerance 0.02
-```
-
-**Unsafe Mode (ignore price protection):**
-```bash
-btcli stake add --amount 300 --netuid 1 --unsafe
-```
-
-## Managing Price Protection with SDK
-
-The Bittensor SDK provides price protection through method parameters:
-
-### Parameters
-
-**`safe_staking`** (bool):
-- **Default**: False
-- **Purpose**: Enables/disables price protection
-
-**`allow_partial_stake`** (bool):
-- **Default**: False  
-- **Purpose**: Enables partial execution mode
-
-**`rate_tolerance`** (float):
-- **Default**: 0.005 (0.5%)
-- **Range**: 0.0 to 1.0
-- **Purpose**: Maximum allowed price change from current price
-
-### SDK Examples
-
-**Safe Mode (reject if price moves beyond tolerance):**
-```python
-import bittensor as bt
-
-subtensor = bt.Subtensor()
-wallet = bt.Wallet("my_wallet")
-
-success = subtensor.add_stake(
-    wallet=wallet,
-    hotkey_ss58="5F...",
-    netuid=1,
-    amount=bt.Balance.from_tao(100),
-    safe_staking=True,           # Enable protection
-    rate_tolerance=0.02,         # 2% price tolerance
-    allow_partial_stake=False    # Reject if exceeds tolerance
-)
-```
-
-**Partial Mode (execute what fits within tolerance):**
-```python
-success = subtensor.add_stake(
-    wallet=wallet,
-    hotkey_ss58="5F...",
-    netuid=1,
-    amount=bt.Balance.from_tao(1000),
-    safe_staking=True,           # Enable protection
-    rate_tolerance=0.02,         # 2% price tolerance
-    allow_partial_stake=True     # Execute partial amount within tolerance
-)
-```
-
-**Unsafe Mode (ignore price protection):**
-```python
-success = subtensor.add_stake(
-    wallet=wallet,
-    hotkey_ss58="5F...",
-    netuid=1,
-    amount=bt.Balance.from_tao(100),
-    safe_staking=False          # Disable protection entirely
-)
-```
-
-## Understanding the Difference: Price Protection vs. Slippage
-
-It's important to understand that Bittensor's **price protection** is different from traditional **AMM slippage**:
-
-| Aspect | Price Protection (Bittensor) | AMM Slippage (Traditional) |
-|--------|-----------------------------|-----------------------------|
-| **What it protects against** | Price movements during execution | Price impact of the transaction itself |
-| **Calculation basis** | Current market price ± tolerance | Transaction size vs. liquidity pool |
-| **Primary use case** | Sandwich attack protection | Large trade optimization |
-| **When it triggers** | Price changes beyond tolerance | Transaction size causes significant impact |
-
-### Example of the Difference
-
-```python
-# AMM Slippage calculation (what the SDK shows)
-slippage_pct = subnet_info.alpha_to_tao_with_slippage(100.0, percentage=True)
-print(f"AMM slippage: {slippage_pct:.2%}")  # e.g., "15.67%"
-
-# Price protection tolerance (what the extrinsic uses)
-tolerance = 0.02  # 2% price movement tolerance
-print(f"Price protection: {tolerance:.2%}")  # "2.00%"
-```
-
-The AMM slippage might be 15.67% due to the transaction's market impact, but the price protection tolerance of 2% protects against price movements caused by other factors (like sandwich attacks) beyond the expected market impact.
-
 ## Best Practices
 
 1. **Use Safe Mode by default** for mainnet transactions
@@ -527,29 +489,6 @@ The AMM slippage might be 15.67% due to the transaction's market impact, but the
 4. **Disable partial execution** for maximum sandwich attack protection
 5. **Monitor for rejections** - they might indicate attack attempts
 6. **Test with small amounts** first to understand price behavior
-
-## Error Handling
-
-**Common scenarios and responses:**
-
-```python
-try:
-    success = subtensor.add_stake(
-        wallet=wallet,
-        amount=bt.Balance.from_tao(100),
-        safe_staking=True,
-        rate_tolerance=0.02,
-        allow_partial_stake=False
-    )
-except Exception as e:
-    if "Price exceeded tolerance limit" in str(e):
-        print("Price moved beyond tolerance - possible sandwich attack detected")
-        # Could retry with higher tolerance or wait for better conditions
-    elif "Insufficient liquidity" in str(e):
-        print("Not enough liquidity - try smaller amount")
-    else:
-        print(f"Other error: {e}")
-```
 
 ## Code References
 
