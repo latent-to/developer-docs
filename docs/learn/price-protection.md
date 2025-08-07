@@ -4,26 +4,29 @@ title: "Understanding Price Protection when Managing Stake"
 
 # Understanding Price Protection when Managing Stake
 
-
 ## Price Protection Modes
 
 Bittensor clients (BTCLI and the SDK) provides three modes to give users control over how their transactions handle adverse price movements: Safe, Partial, and Unsafe.
 
+Other users' transactions affect the token price, even during the lifetime of your transaction. Subnet token prices can change rapidly, with significat consequences for the token yield of transactions. These effects can be exploited by "sandwich attacks", or can result in loss of liquidity due to organic price volatility.
+
+It is therefore important to carefully manage price protection when staking and unstaking real value liquidity, i.e. on main net ("finney").
+
 ### Safe Mode (Default)
 
-In this mode, the transaction is **rejected entirely** if the price moves beyond the specified tolerance.
+In this mode, the transaction is **rejected entirely** if executing it would push the final market price beyond the specified tolerance from the price when you submitted the transaction.
 
-Because the transaction either executes at an acceptable price or not at all, this mode provides maximum protection against unfavorable price movements and sandwich attacks.
+This mode provides protection against price volatility, extreme market movements, and sandwich attacks by preventing transactions that would push the final price beyond the specified tolerance.
 
-**Example**: You set a 2% tolerance for unstaking. If the price drops more than 2% from when you submitted the transaction, the entire transaction is rejected.
+**Example**: You set a 2% tolerance for unstaking. If executing your transaction would push the final price more than 2% below the price when you submitted the transaction, the entire transaction is rejected.
 
 ### Partial Mode
 
-In this mode, the transaction executes **the maximum amount that keeps the price within tolerance**. If the full amount would push the price beyond the tolerance, only a portion is executed.
+In this mode, the transaction executes **the maximum amount that can be executed while keeping the final price within tolerance** of the original submission price. If the full amount would cause the market price to exceed the tolerance range, only a portion is executed.
 
-This mode ensures some transaction execution even if market conditions or attacks would make the full transaction unfavorable.
+This mode ensures some transaction execution even if market conditions would make the full transaction exceed price tolerance limits.
 
-**Example**: You try to unstake 1000 alpha with 2% tolerance. If executing the full amount would drop the price by 5%, the system might only unstake 400 alpha to stay within the 2% limit.
+**Example**: You try to unstake 1000 alpha with 2% tolerance. If executing the full amount would push the final market price beyond 2% of the original price, the system calculates and executes only the maximum amount (e.g., 400 alpha) that stays within the 2% limit.
 
 ### Unsafe Mode
 
@@ -33,13 +36,13 @@ This mode is generally convenient for development and testing, but inadvisable w
 
 ### Example Comparison by Mode
 
-Consider attempting to unstake 1000 alpha when market conditions would cause a 5% price drop, with tolerance set to 2%:
+Consider attempting to unstake 1000 alpha when executing the full transaction would push the market price 5% below the original price, with tolerance set to 2%:
 
 | Mode | Outcome |
 |------|---------|
-| Safe | Transaction rejected entirely (5% > 2% tolerance) |
-| Partial | Unstakes ~400 alpha (amount that fits within 2% tolerance) |
-| Unsafe | Unstakes full 1000 alpha regardless of 5% price drop |
+| Safe | Transaction rejected entirely (5% price movement > 2% tolerance) |
+| Partial | Unstakes ~400 alpha (maximum amount that keeps final price within 2% tolerance) |
+| Unsafe | Unstakes full 1000 alpha regardless of 5% price impact |
 
 
 ## Managing Price Protection with BTCLI
@@ -64,7 +67,7 @@ The `btcli stake` interface provides parameters to control price protection mode
 ```
 - **Default**: 0.005 (0.5%)
 - **Range**: 0.0 to 1.0 (0% to 100%)
-- **Purpose**: Maximum allowed price change from current price
+- **Purpose**: Maximum allowed final price deviation from submission price
 
 ### BTCLI Examples
 
@@ -100,7 +103,7 @@ The Bittensor SDK provides price protection through method parameters:
 **`rate_tolerance`** (float):
 - **Default**: 0.005 (0.5%)
 - **Range**: 0.0 to 1.0
-- **Purpose**: Maximum allowed price change from current price
+- **Purpose**: Maximum allowed final price deviation from submission price
 
 ### SDK Examples
 
@@ -145,25 +148,6 @@ success = subtensor.add_stake(
     safe_staking=False          # Disable protection entirely
 )
 ```
-## Sandwich Attack Protection
-
-### What Are Sandwich Attacks?
-
-A sandwich attack is when an attacker profits at a victim's expense by making transactions just before and after the victim's transaction:
-
-1. **Mempool Monitoring**: MEV bots scan for large pending transactions
-2. **Front-Running**: Bots submit higher-priority transactions that execute first
-3. **Price Manipulation**: The front-run transaction moves the price unfavorably for the victim
-4. **Back-Running**: After the victim's transaction, the attacker reverses their position for profit
-
-### Protection Strategy
-
-To protect against sandwich attacks:
-
-1. **Calculate expected price impact** using Bittensor's SDK
-2. **Set tolerance slightly higher** than normal market conditions would require
-3. **Use Safe Mode** - if you get sandwiched, the transaction will be rejected
-4. **Disable partial execution** - prevents attackers from partially filling your order at bad prices
 
 ## Price Protection Simulation
 
