@@ -191,7 +191,7 @@ def display_balances_and_stakes(subtensor, wallet, target_hotkey, netuid, label)
 
 def show_current_price_and_protection(subtensor, netuid, tolerance, label):
     """Show current subnet price and calculate protection thresholds."""
-    print(f"\n💰 {label} Price Analysis:")
+    print(f"\n{label} Price Analysis:")
     subnet_info = subtensor.subnet(netuid=netuid)
     current_price = subnet_info.price
     print(f"Current price: {current_price}")
