@@ -1,8 +1,8 @@
 ---
-title: "Understanding Price Protection when Managing Stake"
+title: "Understand Price Protection"
 ---
 
-# Understanding Price Protection when Managing Stake
+# Understand Price Protection
 
 ## Price Protection Modes
 
