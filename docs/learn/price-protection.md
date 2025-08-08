@@ -12,19 +12,21 @@ Other users' transactions can affect the token price, even while your transactio
 
 It is therefore important to carefully manage price protection when staking and unstaking real value liquidity, i.e. on mainnet ("finney").
 
-### Safe Mode (Default)
+### Strict Safe Mode (Default)
 
 In this mode, the transaction is **rejected entirely** if executing it would push the final market price beyond the specified tolerance from the price when you submitted the transaction.
 
-This mode provides protection against price volatility, extreme market movements, and sandwich attacks by preventing transactions that would push the execution price beyond the specified tolerance.
+This mode provides maximum protection against price volatility, market movements, and sandwich attacks by preventing transactions that would push the execution price beyond the specified tolerance. This is preferable when you want to guarantee a transaction price, and are willing to accept transaction failure if you cannot get that price.
 
 **Example**: You set a 2% tolerance for unstaking. If executing your transaction would push the final price more than 2% below the price when you submitted the transaction, the entire transaction is rejected.
 
-### Partial Mode
+### Partial Safe Mode
 
 In this mode, the transaction executes **the maximum amount that can be executed while keeping the execution price within the defined tolerance** of the original submission price. If the full amount would cause the market price to exceed the tolerance range, only a portion would be executed.
 
 This mode ensures a partial transaction execution even if market conditions would make the full transaction exceed price tolerance limits.
+
+This is preferable if you want a guarantee of some transaction, and are willing to accept variation in price, which can result in loss of liquidity of up to the tolerance threshold.
 
 **Example**: You try to unstake 1000 alpha with 2% tolerance. If executing the full amount would push the final market price beyond 2% of the original price, the system calculates and executes only the maximum amount (e.g., 400 alpha) that stays within the 2% limit.
 
@@ -40,8 +42,8 @@ Consider attempting to unstake 1000 alpha when executing the full transaction wo
 
 | Mode | Outcome |
 |------|---------|
-| Safe | Transaction rejected entirely (5% price movement > 2% tolerance) |
-| Partial | Unstakes ~400 alpha (maximum amount that keeps final price within 2% tolerance) |
+| Strict Safe | Transaction rejected entirely (5% price movement > 2% tolerance) |
+| Partial Safe | Unstakes ~400 alpha (maximum amount that keeps final price within 2% tolerance) |
 | Unsafe | Unstakes full 1000 alpha regardless of 5% price impact |
 
 
@@ -49,35 +51,42 @@ Consider attempting to unstake 1000 alpha when executing the full transaction wo
 
 The `btcli stake` interface provides parameters to control price protection modes.
 
-### Mode Selection
+**Enable/disable price protection (strict or partial):**
 
-**Enable/disable price protection:**
+True by default. Enables price protection, which is strict by default.
+
 ```bash
 --safe-staking/--no-safe-staking, --safe/--unsafe
 ```
 
 **Enable/disable partial execution (ignored in unsafe mode):**
+
+If price protection (`--safe-staking`) is enabled, determines whether protection is strict or partial.
+
 ```bash
 --allow-partial-stake/--no-allow-partial-stake, --partial/--no-partial 
 ```
 
 **Set price tolerance:**
+
+If in **partial safe** staking mode, determines the threshold of price variation tolerated in the transaction.
 ```bash
 --tolerance, --rate-tolerance FLOAT
 ```
+
 - **Default**: 0.005 (0.5%)
 - **Range**: 0.0 to 1.0 (0% to 100%)
 - **Purpose**: Maximum allowed final price deviation from submission price
 
 ### BTCLI Examples
 
-**Safe Mode (reject if price moves beyond tolerance):**
+**Strict Safe Mode (reject if price moves beyond tolerance):**
 ```bash
 # note that --safe is unnecessary as it is enabled by default
 btcli stake add --amount 100 --netuid 1 --safe --tolerance 0.02 --no-partial
 ```
 
-**Partial Mode (execute what fits within tolerance):**
+**Partial Safe Mode (execute what fits within tolerance):**
 ```bash
 # note that --safe is unnecessary as it is enabled by default
 btcli stake add --amount 1000 --netuid 1 --safe --partial --tolerance 0.02
@@ -94,8 +103,13 @@ The Bittensor SDK provides price protection through method parameters:
 
 ### Parameters
 
+:::warning
+Unlike the `btcli`, the SDK's default behavior is *Unsafe* mode.
+You must explicitly configure price protection when using the SDK's staking/unstaking functionality.
+:::
+
 **`safe_staking`** (bool):
-- **Default**: True
+- **Default**: False
 - **Purpose**: Enables price protection
 
 **`allow_partial_stake`** (bool):
@@ -149,7 +163,7 @@ success = subtensor.add_stake(
     hotkey_ss58="5F...",
     netuid=1,
     amount=bt.Balance.from_tao(100),
-    safe_staking=False          # Disable protection entirely
+    safe_staking=False          # Disable protection; Unnecessary as this is the default setting
 )
 ```
 
@@ -480,18 +494,3 @@ def demonstrate_protection_modes():
 if __name__ == "__main__":
     demonstrate_protection_modes()
 ```
-
-## Code References
-
-### BTCLI Commands
-- [`btcli stake add`](../btcli/btcli-playground.md#stake-add) - Staking with price protection
-- [`btcli stake remove`](../btcli/btcli-playground.md#stake-remove) - Unstaking with price protection
-
-### SDK Methods
-- [`subtensor.add_stake()`](pathname:///python-api/html/autoapi/bittensor/core/subtensor/index.html) - Staking with protection
-- [`subtensor.unstake()`](pathname:///python-api/html/autoapi/bittensor/core/subtensor/index.html) - Unstaking with protection
-- [`subtensor.swap_stake()`](pathname:///python-api/html/autoapi/bittensor/core/subtensor/index.html) - Stake movement with protection
-
-### Blockchain Implementation
-- [`do_add_stake_limit`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/add_stake.rs#L126-L180) - Protected staking
-- [`do_remove_stake_limit`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L329-L390) - Protected unstaking
