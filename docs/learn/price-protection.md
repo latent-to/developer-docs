@@ -10,21 +10,21 @@ Bittensor clients (BTCLI and the SDK) provides three modes to give users control
 
 Other users' transactions can affect the token price, even while your transaction is pending. Subnet token prices may change rapidly, with significant consequences affecting your execution price and increasing slippage. These effects can be exploited by "sandwich attacks", or can result in loss of liquidity due to organic price volatility.
 
-It is therefore important to carefully manage price protection when staking and unstaking real value liquidity, i.e. on main net ("finney").
+It is therefore important to carefully manage price protection when staking and unstaking real value liquidity, i.e. on mainnet ("finney").
 
 ### Safe Mode (Default)
 
 In this mode, the transaction is **rejected entirely** if executing it would push the final market price beyond the specified tolerance from the price when you submitted the transaction.
 
-This mode provides protection against price volatility, extreme market movements, and sandwich attacks by preventing transactions that would push the final price beyond the specified tolerance.
+This mode provides protection against price volatility, extreme market movements, and sandwich attacks by preventing transactions that would push the execution price beyond the specified tolerance.
 
 **Example**: You set a 2% tolerance for unstaking. If executing your transaction would push the final price more than 2% below the price when you submitted the transaction, the entire transaction is rejected.
 
 ### Partial Mode
 
-In this mode, the transaction executes **the maximum amount that can be executed while keeping the final price within tolerance** of the original submission price. If the full amount would cause the market price to exceed the tolerance range, only a portion is executed.
+In this mode, the transaction executes **the maximum amount that can be executed while keeping the execution price within the defined tolerance** of the original submission price. If the full amount would cause the market price to exceed the tolerance range, only a portion would be executed.
 
-This mode ensures some transaction execution even if market conditions would make the full transaction exceed price tolerance limits.
+This mode ensures a partial transaction execution even if market conditions would make the full transaction exceed price tolerance limits.
 
 **Example**: You try to unstake 1000 alpha with 2% tolerance. If executing the full amount would push the final market price beyond 2% of the original price, the system calculates and executes only the maximum amount (e.g., 400 alpha) that stays within the 2% limit.
 
@@ -32,7 +32,7 @@ This mode ensures some transaction execution even if market conditions would mak
 
 This mode **ignores price protection entirely**. The transaction executes regardless of price movements, offering the fastest execution but no protection against adverse price changes or sandwich attacks.
 
-This mode is generally convenient for development and testing, but inadvisable with real-value liquidity on main network ("finney").
+This mode is generally convenient for development and testing, but inadvisable with real-value liquidity on mainnet ("finney").
 
 ### Example Comparison by Mode
 
@@ -73,6 +73,7 @@ The `btcli stake` interface provides parameters to control price protection mode
 
 **Safe Mode (reject if price moves beyond tolerance):**
 ```bash
+# note that --safe is unnecessary as it is enabled by default
 btcli stake add --amount 100 --netuid 1 --safe --tolerance 0.02 --no-partial
 ```
 
