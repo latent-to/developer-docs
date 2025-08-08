@@ -79,6 +79,7 @@ btcli stake add --amount 100 --netuid 1 --safe --tolerance 0.02 --no-partial
 
 **Partial Mode (execute what fits within tolerance):**
 ```bash
+# note that --safe is unnecessary as it is enabled by default
 btcli stake add --amount 1000 --netuid 1 --safe --partial --tolerance 0.02
 ```
 
