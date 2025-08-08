@@ -8,7 +8,7 @@ title: "Understand Price Protection"
 
 Bittensor clients (BTCLI and the SDK) provides three modes to give users control over how their transactions handle adverse price movements: Safe, Partial, and Unsafe.
 
-Other users' transactions affect the token price, even during the lifetime of your transaction. Subnet token prices can change rapidly, with significat consequences for the token yield of transactions. These effects can be exploited by "sandwich attacks", or can result in loss of liquidity due to organic price volatility.
+Other users' transactions can affect the token price, even while your transaction is pending. Subnet token prices may change rapidly, with significant consequences affecting your execution price and increasing slippage. These effects can be exploited by "sandwich attacks", or can result in loss of liquidity due to organic price volatility.
 
 It is therefore important to carefully manage price protection when staking and unstaking real value liquidity, i.e. on main net ("finney").
 
