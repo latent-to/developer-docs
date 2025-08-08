@@ -93,8 +93,8 @@ The Bittensor SDK provides price protection through method parameters:
 ### Parameters
 
 **`safe_staking`** (bool):
-- **Default**: False
-- **Purpose**: Enables/disables price protection
+- **Default**: True
+- **Purpose**: Enables price protection
 
 **`allow_partial_stake`** (bool):
 - **Default**: False  
@@ -107,7 +107,9 @@ The Bittensor SDK provides price protection through method parameters:
 
 ### SDK Examples
 
-**Safe Mode (reject if price moves beyond tolerance):**
+See [Price Protection Simulation](#price-protection-simulation) for an extended example.
+
+#### Safe Mode (reject if price moves beyond tolerance)
 ```python
 import bittensor as bt
 
@@ -125,7 +127,7 @@ success = subtensor.add_stake(
 )
 ```
 
-**Partial Mode (execute what fits within tolerance):**
+#### Partial Mode (execute what fits within tolerance)
 ```python
 success = subtensor.add_stake(
     wallet=wallet,
@@ -138,7 +140,7 @@ success = subtensor.add_stake(
 )
 ```
 
-**Unsafe Mode (ignore price protection):**
+#### Unsafe Mode (ignore price protection)
 ```python
 success = subtensor.add_stake(
     wallet=wallet,
@@ -153,7 +155,16 @@ success = subtensor.add_stake(
 
 The following script runs through several different stake and unstake operations with different price protection modes, to demonstrate the different behaviors contingent on price.
 
-Prerequisite: [Create a subnet on a local blockchain](../local-build/create-subnet)
+Prerequisites:
+- [Run a Local Bittensor Blockchain Instance](../local-build/deploy)
+- [Create a subnet on a local blockchain](../local-build/create-subnet)
+
+:::tip troubleshooting tip
+If you see `Custom error: 14` you may need to start emissions on your subnet with 
+```shell
+btcli s start
+```
+:::
 
 ```python
 import bittensor as bt
