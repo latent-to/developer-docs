@@ -30,7 +30,8 @@ To register the hotkey, run the following command in your terminal, replacing `N
 ```bash
 btcli subnets register --netuid NETUID \
 --wallet-name WALLET_NAME \
---hotkey WALLET_HOTKEY
+--hotkey WALLET_HOTKEY \
+--network ws://127.0.0.1:9945
 ```
 
 You will be prompted to confirm the registration fee and enter your wallet password to authorize the transaction.
@@ -47,7 +48,7 @@ Using the specified network local from config
 
  Netuid ┃ Symbol ┃ Cost (Τ) ┃                      Hotkey                      ┃                     Coldkey
 ━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   2    │   γ    │ τ 0.0985 │ 5FErfAJc3Wf32TVLQTtM....TRTrgMF4sjYWfq49oMCxXxqS │ 5Gxhv5iZGBvvR6YJeEdLmvZ7hS....dHc43fLqMVkhki7j4
+   2    │   β    │ τ 0.0985 │ 5FErfAJc3Wf32TVLQTtM....TRTrgMF4sjYWfq49oMCxXxqS │ 5Gxhv5iZGBvvR6YJeEdLmvZ7hS....dHc43fLqMVkhki7j4
 ────────┼────────┼──────────┼──────────────────────────────────────────────────┼──────────────────────────────────────────────────
         │        │          │                                                  │
 Your balance is: 99,999.9000 τ
@@ -64,6 +65,48 @@ Balance:
 
 Repeat the registration process for both the miner and validator hotkeys.
 
+To confirm the registration of your hotkeys in the subnet, run the following command in your terminal:
+
+```sh
+btcli subnet show --netuid NETUID --network ws://127.0.0.1:9945
+```
+
+The command returns detailed information about a subnet including its registered neurons and their state.
+
+<details>
+<summary><strong>Show Sample Output</strong></summary>
+
+```console
+
+Warning: Verify your local subtensor is running on port 9944.                                                                                                                     subtensor_interface.py:89
+
+
+
+                                                     Subnet 2: New subnet
+                                                     Network: local
+
+ UID ┃ Stake (β) ┃ Alpha (β) ┃ Tao (τ) ┃ Dividends ┃ Incentive ┃ Emissions (β) ┃ Hotkey ┃ Coldkey ┃ Identity
+━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━
+  0  │    5.04 β │    5.04 β │  τ 0.00 │ 0.000000  │ 0.000000  │  9.017303 β   │ 5DFZTw │ 5Dc1Qu  │ (*Owner controlled)
+  1  │    0.00 β │    1.00 β │  τ 0.00 │ 0.000000  │ 0.000000  │  0.000000 β   │ 5FErfA │ 5GxHV5  │ ~
+  2  │    0.00 β │    1.00 β │  τ 0.00 │ 0.000000  │ 0.000000  │  0.000000 β   │ 5Ft364 │ 5GuuKE  │ ~
+─────┼───────────┼───────────┼─────────┼───────────┼───────────┼───────────────┼────────┼─────────┼─────────────────────
+     │    5.04 β │    5.04 β │  0.00 β │   0.000   │           │  9.017303 β   │        │         │
+
+
+Subnet 1: apex
+  Owner: 5Dc1Qujw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM
+  Rate: 1.0056 τ/β
+  Emission: τ 0.0000
+  TAO Pool: τ 1.10k
+  Alpha Pool: 1.10 β
+  Tempo: 8/10
+  Registration cost (recycled): τ 0.0845
+
+```
+
+</details>
+
 ## 2. Acquire validator permit
 
 To qualify as a validator on a subnet, a registered node must have a validator permit. This permit allows nodes to submit miner evaluations and set weights on a subnet. For more information, see [validator permits]
@@ -74,7 +117,8 @@ To get validator permits on the demo subnet, you need to stake sufficient TAO to
 btcli stake add --netuid NETUID \
 --wallet-name WALLET_NAME \
 --hotkey WALLET_HOTKEY \
---partial
+--partial \
+--network ws://127.0.0.1:9945
 ```
 
 Replace `NETUID`, `WALLET_NAME`, and `WALLET_HOTKEY` with the target subnet ID, the name of the wallet, and the associated hotkey, respectively.
@@ -85,7 +129,7 @@ Once you've staked enough TAO to the validator hotkey, the validator becomes eli
 <TabItem value="btcli" label="Using BTCLI">
 Run the following command in the terminal:
 ```bash
-btcli wallet overview --wallet.name WALLET_NAME 
+btcli wallet overview --wallet.name WALLET_NAME --network ws://127.0.0.1:9945
 ```
 Replace the `WALLET_NAME` with the name of the validator wallet.
 
@@ -99,7 +143,7 @@ Using the specified network local from config
 
                                                                         test-validator : 5Gxhv5iZGBvvR6YJeEd...bE6FdHc43fLqMVkhki7j4
                                                                                                  Network: local
-Subnet: 2: New subnett β
+Subnet: 2: New subnet β
 
   COLDKEY          HOTKEY           UID      ACTIVE     STAKE(β)         RANK        TRUST    CONSENSUS    INCENTIVE    DIVIDENDS   EMISSION(…       VTRUST   VPE…   UPDAT…   AXON                HOTKEY_SS58
  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -107,11 +151,12 @@ Subnet: 2: New subnett β
  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
                                     1                   287.57 β       0.0000       0.0000       0.0000       0.0000       0.0000    ρ38841066       0.0000
 
+                                                                       Wallet free balance: 99,994.3638 τ
 ```
 
 </details>
 
-If the validator wallet has a validator permit, an asterisk (`*`) will appear under the `VPERMIT` column for the corresponding subnet in the response table.
+If the validator wallet has a validator permit, an asterisk (`*`) is shown under the `VPERMIT` column for the corresponding subnet in the response table.
 
 </TabItem>
 <TabItem value="python SDK" label="Using Bittensor SDK">
@@ -130,9 +175,54 @@ The command outputs `True` or `False` depending on whether the validator hotkey 
 </TabItem>
 </Tabs>
 
----
+:::info Validator Permits on Localnet Subnets
+On localnet subnets, competition for permits is typically minimal. After staking TAO to the validator hotkey, the neuron should become eligible for a validator permit. If it does not yet have one, wait until the end of the subnet’s tempo.
+:::
 
-### Troubleshoot
+## 3. Pull the `subnet-template` repo
+
+The `subnet-template` repo contains the core logic for the subnet miner and validator. It features a simple `dummy` protocol where miners multiply input values by 2, while validators evaluate responses and update network weights based on performance.
+
+To begin, clone the subnet-template GitHub repository and navigate into its directory:
+
+```sh
+git clone https://github.com/opentensor/subnet-template.git
+cd subnet-template
+```
+
+## 4. Run the miner and validator
+
+After getting the validator permits, you can now run the validator alongside the miner to begin participating in the subnet.
+
+Begin by starting the miner process to produce and submit work to the subnet. Then, run the validator process to evaluate miner outputs and set weights for the network.
+
+### Start the miner process
+
+To start the miner, run the following Python script in the `subnet-template` directory:
+
+```sh
+python validator.py \
+  --wallet.name WALLET_NAME \
+  --wallet.hotkey HOTKEY \
+  --netuid NETUID \
+  --subtensor.network local
+```
+
+The script launches an Axon server on port `8901`, which the miner uses to receive incoming requests from validators.
+
+### Start the validator process
+
+To start the validator process, run the following Python script in the `subnet-template` directory:
+
+```sh
+python validator.py \
+  --wallet.name WALLET_NAME \
+  --wallet.hotkey HOTKEY \
+  --netuid NETUID \
+  --subtensor.network local
+```
+
+## Troubleshoot
 
 #### Insufficient funds
 
