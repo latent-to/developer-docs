@@ -21,6 +21,7 @@ Many extrinsics in Bittensor are subject to a flat **weight-based fee**. In Polk
 - **Payment source**: Free balance of the transaction sender
 - **Denomination**: TAO
 - **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
+    See: [Recycling and Burning](./glossary#recycling-and-burning)
 
 :::tip Planned reduction
 It is currently planned that the fee coefficient will be reduced to $0.005%$ (10x reduction).
