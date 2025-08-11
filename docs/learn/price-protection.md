@@ -6,7 +6,7 @@ title: "Understand Price Protection"
 
 ## Price Protection Modes
 
-Bittensor clients (BTCLI and the SDK) provides three modes to give users control over how their transactions handle adverse price movements: Safe, Partial, and Unsafe.
+Bittensor clients (BTCLI and the SDK) provides three modes to give users control over how their transactions handle adverse price movements: Strict, Partial, and Unsafe.
 
 Other users' transactions can affect the token price, even while your transaction is pending. Subnet token prices may change rapidly, with significant consequences affecting your execution price and increasing slippage. These effects can be exploited by "sandwich attacks", or can result in loss of liquidity due to organic price volatility.
 
@@ -14,7 +14,7 @@ It is therefore important to carefully manage price protection when staking and 
 
 ### Strict Safe Mode (Default)
 
-In this mode, the transaction is **rejected entirely** if executing it would push the final market price beyond the specified tolerance from the price when you submitted the transaction.
+In this mode, the transaction is **rejected entirely** if executing it would push the final market price beyond the tolerance threshold from the price when you submitted the transaction. Tolerance threshold can be specified but is 5% by default.
 
 This mode provides maximum protection against price volatility, market movements, and sandwich attacks by preventing transactions that would push the execution price beyond the specified tolerance. This is preferable when you want to guarantee a transaction price, and are willing to accept transaction failure if you cannot get that price.
 
@@ -89,7 +89,7 @@ btcli stake add --amount 100 --netuid 1 --safe --tolerance 0.02 --no-partial
 **Partial Safe Mode (execute what fits within tolerance):**
 ```bash
 # note that --safe is unnecessary as it is enabled by default
-btcli stake add --amount 1000 --netuid 1 --safe --partial --tolerance 0.02
+btcli stake add --amount 1000 --netuid 1 --safe --tolerance 0.02 --partial
 ```
 
 **Unsafe Mode (ignore price protection):**
