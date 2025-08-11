@@ -482,7 +482,6 @@ Locked TAO is neither recycled nor burned, but held unspent in special storage, 
 - Alpha recycling: [`pallets/subtensor/src/staking/recycle_alpha.rs:58-60`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/recycle_alpha.rs#L58-60)
 - Subnet locking: [`pallets/subtensor/src/subnets/subnet.rs:155-160`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/subnet.rs#L155-160)
 
-**See also:** [Emissions](./emissions.md), [Subnet Miners](./miners/), [Subnet Validators](./validators/)
 
 ### Regenerating a Key
 
