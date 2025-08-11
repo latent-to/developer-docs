@@ -453,9 +453,9 @@ When tokens are **recycled**, they are subtracted from the chain's record of tok
 
 Tokens can also be temporarily **locked** out of circulation.
 
-#### Token Removal Mechanisms in Bittensor
+#### Recycling in Bittensor
 
-Tokens are removed from circulation through several mechanisms:
+Tokens are recycled in several cases in Bittensor operations:
 
 - **All transaction fees are recycled**: When transaction fees are collected, they are deducted from `TotalIssuance`, effectively recycling them back into the system for future emission. See [Transaction Fees in Bittensor](./fees)
 - **Neuron Registration fees**: When a user registers a hotkey on a subnet to participate as a miner or validator, they are charged a registration fee in TAO. Alpha tokens worth the current swap value of the fee are taken from the subnet's alpha liquidity pool and recycled.
