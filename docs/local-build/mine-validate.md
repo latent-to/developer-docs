@@ -94,13 +94,13 @@ Warning: Verify your local subtensor is running on port 9944.                   
      │    5.04 β │    5.04 β │  0.00 β │   0.000   │           │  9.017303 β   │        │         │
 
 
-Subnet 1: apex
-  Owner: 5Dc1Qujw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM
+Subnet 2: New subnet
+  Owner: 5Dc1Qu2pDfWuDzt3c5wJV2LxRXAmVqZYsAib72e59H3vnRVn
   Rate: 1.0056 τ/β
   Emission: τ 0.0000
   TAO Pool: τ 1.10k
   Alpha Pool: 1.10 β
-  Tempo: 8/10
+  Tempo: 8/360
   Registration cost (recycled): τ 0.0845
 
 ```
@@ -201,10 +201,11 @@ Begin by starting the miner process to produce and submit work to the subnet. Th
 To start the miner, run the following Python script in the `subnet-template` directory:
 
 ```sh
-python validator.py \
+python miner.py \
   --wallet.name WALLET_NAME \
   --wallet.hotkey HOTKEY \
   --netuid NETUID \
+  --axon.port 8901 \
   --subtensor.network local
 ```
 
@@ -222,96 +223,61 @@ python validator.py \
   --subtensor.network local
 ```
 
+This script begins the process of sending inputs to the miners and setting weights based on miner responses.
+
+:::info miner and validator logs
+Use the `--logging.info` flag to print miner and validator log messages directly to the console. This helps you monitor activity in real time without checking log files.
+:::
+
+## 5. Check your emissions
+
+After weights have been successfully set on the subnet, you can check the updated emissions distribution at the end of the subnet's [tempo](../glossary.md#tempo).
+
+To check the subnet's emissions, run the following command in the terminal:
+
+```sh
+btcli subnet show --netuid NETUID --network ws://127.0.0.1:9945
+```
+
+The command returns detailed information about a subnet, including its registered neurons, their current state, and updated emission earnings.
+
+<details>
+<summary><strong>Show Sample Output</strong></summary>
+
+```console
+
+Using the specified network local from config
+Warning: Verify your local subtensor is running on port 9944.                                                                                                                     subtensor_interface.py:89
+
+
+
+                                                  Subnet 2: New subnet
+                                                     Network: local
+
+ UID ┃ Stake (β) ┃ Alpha (β) ┃ Tao (τ) ┃ Dividends ┃ Incentive ┃ Emissions (β) ┃ Hotkey ┃ Coldkey ┃ Identity
+━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━
+  0  │  109.80 β │  109.80 β │  τ 0.00 │ 0.000000  │ 0.000000  │  0.000000 β   │ 5DFZTw │ 5Dc1Qu  │ (*Owner controlled)
+  1  │  354.68 β │  354.68 β │  τ 0.00 │ 1.000000  │ 0.000000  │ 148.010826 β  │ 5FErfA │ 5Gxhv5  │ Test validator
+  2  │  148.01 β │  148.01 β │  τ 0.00 │ 0.000000  │ 1.000000  │ 148.010826 β  │ 5GRLEv │ 5EnNgi  │ Test miner
+─────┼───────────┼───────────┼─────────┼───────────┼───────────┼───────────────┼────────┼─────────┼─────────────────────
+     │  612.49 β │  612.49 β │  0.00 β │   1.000   │           │  296.0217 β   │        │         │
+
+
+Subnet 2: New subnet
+  Owner: 5Dc1Qu2pDfWuDzt3c5wJV2LxRXAmVqZYsAib72e59H3vnRVn
+  Rate: 1.0054 τ/β
+  Emission: τ 0.0000
+  TAO Pool: τ 1.62k
+  Alpha Pool: 1.61k β
+  Tempo: 23/360
+  Registration cost (recycled): τ 0.1000
+
+```
+
+Note the increase in the miner neuron's `Incentive` column and the validator neuron's `Dividend` column as well as the `Emissions` on both neurons.
+
+</details>
+
+For more information on a subnet's emission distribution, see [Emissions](../emissions.md).
+
 ## Troubleshoot
-
-#### Insufficient funds
-
-If you have not added TAO to your validator wallet, you'll see an error like the following:
-
-```console
-Insufficient balance τ 0.0000 to register neuron. Current recycle is τ 1.0000 TAO
-```
-
-Transfer funds from the Alice account to cover it and try again. Consult `btcli w list` and carefully check the ss58 address of the destination coldkey (in this case, the one with the name `validator`).
-
-```shell
-btcli wallet transfer \
---amount 11 \
---wallet.name alice \
---destination "5EEy34..." \
---network ws://127.0.0.1:9945
-```
-
-### Successful registration
-
-Repeat the above steps to successfully register your miner and validator once they are funded
-
-```console
-netuid: 2
-
-
-                                                   Register to netuid: 2
-                                                      Network: custom
-
- Netu… ┃ Sym… ┃ Cost (… ┃                     Hotkey                     ┃                     Coldkey
-━━━━━━━╇━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   2   │  β   │ τ 1.00… │ 5CffqSVhydFJHBSbbgfVLAVkoNBTsv3wLj2Tsh1cr2kfa… │ 5EEy34R4gfXe5SG62nz1nDuh3KAovRLpKLm4ccSv7qkNhn…
-───────┼──────┼─────────┼────────────────────────────────────────────────┼─────────────────────────────────────────────────
-       │      │         │                                                │
-Your balance is: τ 11.0000
-The cost to register by recycle is τ 1.0000
-Do you want to continue? [y/n] (n): y
-Enter your password:
-Decrypting...
-Balance:
-  τ 11.0000 ➡ τ 10.0000
-✅ Registered on netuid 2 with UID 1
-▰▱▱▱▱▱▱ 📡 Recycling TAO for Registration...
-```
-
-### Check your registration
-
-Confirm your registration on the subnet with the following command:
-
-```shell
-btcli wallet overview --wallet.name validator --network ws://127.0.0.1:9945
-
-btcli wallet overview --wallet.name miner --network ws://127.0.0.1:9945
-
-```
-
-```console
-                                                        Wallet
-
-                             validator : 5EEy34R4gfXe5SG62nz1nDuh3KAovRLpKLm4ccSv7qkNhnqw
-                                                   Network: custom
-Subnet: 2: awesome-first-subnet β
-
-  COLDKEY   HOTKEY    UID   AC…   STA…   RANK   TRU…   CON…   INC…   DIV…   EMI…   VTR…   …   U…   AXON       HOTKE…
- ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  valida…   default   1     Tr…   0.00   0.00   0.00   0.00   0.00   0.00   0.0…   0.00       51   none       5Cffq…
- ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-                      1           0.0…   0.0…   0.0…   0.0…   0.0…   0.0…     ρ0   0.0…
-
-
-                                                Wallet balance: τ10.0
-
-                                                        Wallet
-
-                               miner : 5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV
-                                                   Network: custom
-Subnet: 2: awesome-first-subnet β
-
-  COLDKEY   HOTKEY    UID   AC…   STA…   RANK   TRU…   CON…   INC…   DIV…   EMI…   VTR…   …   U…   AXON       HOTKE…
- ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  miner     default   2     Tr…   0.00   0.00   0.00   0.00   0.00   0.00   0.0…   0.00       22   none       5Capz…
- ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-                      1           0.0…   0.0…   0.0…   0.0…   0.0…   0.0…     ρ0   0.0…
-
-
-                                                Wallet balance: τ10.0
-```
-
-```shell
-python3 neurons/miner.py netuid=2 -chain_endpoint=ws://127.0.0.1:9945 wallet_name=miner wallet_hotkey=default
-```
