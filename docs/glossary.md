@@ -470,12 +470,6 @@ Subnet-specific alpha tokens are burned in several contexts:
 - **Root subnet alpha burning**: Subnet Zero (Root Subnet) ALPHA tokens are burned under specific economic conditions to maintain system stability.
 
 
-**Source Code References**:
-- Transaction fee recycling: [`runtime/src/lib.rs:489-490`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L489-490)
-- Alpha recycling: [`pallets/subtensor/src/staking/recycle_alpha.rs:58-60`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/recycle_alpha.rs#L58-60)
-- Subnet locking: [`pallets/subtensor/src/subnets/subnet.rs:155-160`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/subnet.rs#L155-160)
-
-
 ### Regenerating a Key
 
 The process of recreating a lost or deleted coldkey or hotkey using the associated mnemonic.
