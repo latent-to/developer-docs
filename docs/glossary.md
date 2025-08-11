@@ -436,12 +436,12 @@ Where:
 
 ### Recycling, burning, and locking
 
-"Recycling TAO" means that this TAO is put back into the Bittensor emissions system. Instead of minting new TAO this recycled TAO that is in the recycle bin will be used again in the new emissions.
+"Recycling TAO" means that this TAO is put back into the emission pool. Instead of minting new TAO this recycled TAO will be distributed again later.
 
 This happens in two cases:
 
-- When you register either as a subnet validator or a subnet miner and get a `UID` in return, the registration cost TAO you pay is recycled.
-- Emissions are recycled for those subnets that have registration turned off or paused.
+- When you register either as a subnet validator or a subnet miner and get a `UID` in return, the resulting ALPHA from the registration's swap is recycled.
+- When the registrations for a subnet are disabled, the TAO emissions for this subnet are recycled.
 
 When TAO is burned it is permanently removed from circulation, reducing total supply.
 
@@ -471,7 +471,7 @@ A compact representation of public keys corresponding to the wallet's coldkey an
 
 ### Slippage
 
-In the context of an automated market maker (AMM), slippage is the impact on the token yield of a trade of the change in price due to the trade transaction itself.
+In the context of an automated market maker (AMM), slippage is the impact on the tokens acquired in a trade due to the change in price from the trade transaction itself.
 
 In Bittensor, each subnet's alpha token is traded on a constant product AMM. When you stake TAO to receive alpha (or unstake alpha to receive TAO), your transaction changes the token price, resulting in receiving less than the current market rate X the quantity of the token you are inputting.
 
@@ -531,7 +531,7 @@ $$
 
 ### Staking
 
-The process of attaching TAO to a validator hotkey, i.e., locking TAO to a subnet validator's hotkey to increase their total stake and increase their consensus power and share of subnet emissions.
+The process of attaching TAO to a validator hotkey, i.e., locking TAO to a subnet validator's hotkey to increase their total stake and increase their consensus power and share of dividends.
 
 **See also:** [Managing Stake with btcli](./staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](./staking-and-delegation/managing-stake-sdk.md), [Delegation](./staking-and-delegation/delegation.md)
 
