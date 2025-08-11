@@ -467,6 +467,8 @@ Subnet-specific alpha tokens are burned in several contexts:
 
 - **Creator emissions burning**: Alpha emissions for mining on a subnet are automatically burned if they are emitted to the hotkey with creator permissions on the subnet. This allows validators to burn some or all of the subnet's emissions to prevent token inflation (by weighting the subnet creator hotkey).
 - **Extrinsic transaction**: Alpha can be burned on demand using the `burn_alpha` Subtensor extrinsic. Unlike recycling, burning does not reduce `SubnetAlphaOut`.
+- **Root Subnet automated burning**: Subnet Zero (Root Subnet) alpha tokens are burned under specific economic conditions to maintain system stability.
+
 
 ### Regenerating a Key
 
@@ -479,6 +481,10 @@ The process of recreating a lost or deleted coldkey or hotkey using the associat
 The process of registering keys with a subnet and purchasing a UID slot.
 
 **See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/), [Working with Subnets](./subnets/working-with-subnets.md)
+
+### Root Subnet/Subnet Zero
+
+Subnet Zero a.k.a. the root subnet is a special subnet. No miners can register on subnet zero, and no validation work is performed. However validators can register, and $\tau$-holders can stake to those validators, as with any other subnet. This offers a mechanism for $\tau$-holders to stake $\tau$ into validators in a subnet-agnostic way. This works because the weight of a validator in a subnet includes both their share of that subnet's $\alpha$ and their share of staked TAO in Subnet Zero.
 
 ## S
 
