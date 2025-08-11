@@ -241,6 +241,16 @@ A system that drives the behavior of subnet miners and governs consensus among s
 
 **See also:** [Anatomy of Incentive Mechanism](./learn/anatomy-of-incentive-mechanism.md), [Understanding Subnets](./subnets/understanding-subnets.md)
 
+### Issuance
+
+The total amount of TAO circulating in the Bittensor network. Includes TAO that is help in wallets and subnet liquidity pools, as well as TAO that is locked as subnet registration fees.
+
+This can be viewed on Bittensor explorers such as [TAO.app](https://tao.app) and [TAOstats](https://taostats.io).
+
+To query it directly from the change, see: [Subtensor Storage Query Example: Total Issuance](/subtensor-nodes/subtensor-storage-query-examples#totalissuance)
+
+See also: [Recycling, burning, and locking](#recycling-burning-and-locking)
+
 ## L
 
 ### Lite Node
@@ -436,16 +446,42 @@ Where:
 
 ### Recycling, burning, and locking
 
-"Recycling TAO" means that this TAO is put back into the emission pool. Instead of minting new TAO this recycled TAO will be distributed again later.
 
-This happens in two cases:
+Tokens (TAO and subnet-specific alpha) can be 'removed from circulation' in several ways, meaning these tokens exist in neither wallet nor liquidity pool, and cannot be transacted.
 
-- When you register either as a subnet validator or a subnet miner and get a `UID` in return, the resulting ALPHA from the registration's swap is recycled.
-- When the registrations for a subnet are disabled, the TAO emissions for this subnet are recycled.
+When tokens are **recycled**, they are subtracted from the chain's record of token issuance (`TotalIssuance`), so effectively the same quantity of tokens can be emitted again. In contrast, when tokens are **burned** they exist in no wallet and no pool and can no longer be transacted; however they are still included in the record of token issuance, so they will not be re-emitted, and in effect will forever remain as a quantity of *missing* tokens, a difference between issuance and the effective quantity in circulation.
 
-When TAO is burned it is permanently removed from circulation, reducing total supply.
+Tokens can also be temporarily **locked** out of circulation.
 
-Locked TAO is neither recycled nor burned, but held unspent, without the ability to move it until it is unlocked. The cost for subnet registration is locked and returned if the subnet is deregistered.
+#### Token Removal Mechanisms in Bittensor
+
+Tokens are removed from circulation through several mechanisms:
+
+- **All transaction fees are recycled**: When transaction fees are collected, they are deducted from `TotalIssuance`, effectively recycling them back into the system for future emission. See [Transaction Fees in Bittensor](./fees)
+- **Neuron Registration fees**: When a user registers a hotkey on a subnet to participate as a miner or validator, they are charged a registration fee in TAO. Alpha tokens worth the current swap value of the fee are taken from the subnet's alpha liquidity pool and recycled.
+- **Alpha recycling via extrinsic**: Users can manually recycle alpha tokens using the `recycle_alpha` extrinsic, which reduces both the user's stake and the subnet's `SubnetAlphaOut` tracker.
+
+#### Burning in Bittensor
+
+Subnet-specific alpha tokens are burned in several contexts:
+
+- **Creator emissions burning**: Alpha emissions for mining on a subnet are automatically burned if they are emitted to the hotkey with creator permissions on the subnet. This allows validators to burn some or all of the subnet's emissions to prevent token inflation (by weighting the subnet creator hotkey).
+- **Manual alpha burning**: Alpha can be burned on demand using the `burn_alpha` Subtensor extrinsic. Unlike recycling, burning does not reduce `SubnetAlphaOut`.
+- **Root subnet alpha burning**: Subnet Zero (Root Subnet) ALPHA tokens are burned under specific economic conditions to maintain system stability.
+
+#### Locking in Bittensor
+
+Locked TAO is neither recycled nor burned, but held unspent in special storage, without the ability to move it until it is unlocked:
+
+- **Subnet registration locking**: The cost for subnet registration is locked in `SubnetLocked` storage and returned to the subnet owner if the subnet is deregistered.
+- **Total locked tracking**: The system tracks total locked TAO across all subnets via `get_total_subnet_locked()`.
+
+
+**Source Code References**:
+- Transaction fee recycling: [`runtime/src/lib.rs:489-490`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L489-490)
+- Alpha recycling: [`pallets/subtensor/src/staking/recycle_alpha.rs:58-60`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/recycle_alpha.rs#L58-60)
+- Token burning: [`pallets/subtensor/src/utils/misc.rs:273-275`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/misc.rs#L273-275)
+- Subnet locking: [`pallets/subtensor/src/subnets/subnet.rs:155-160`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/subnet.rs#L155-160)
 
 **See also:** [Emissions](./emissions.md), [Subnet Miners](./miners/), [Subnet Validators](./validators/)
 
