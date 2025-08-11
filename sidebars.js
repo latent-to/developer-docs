@@ -40,6 +40,7 @@ const sidebars = {
         "learn/neurons",
         "learn/anatomy-of-incentive-mechanism",
         "emissions",
+        "learn/ema",
         "yuma-consensus",
         "subnets/yc3-blog",
         "fees",

@@ -177,13 +177,34 @@ Every block, currency is injected into each subnet in Bittensor, and every tempo
 
 Emission is this process of generating and allocating currency to participants. The amount allocated to a given participant over some duration of time is also often referred to as 'their emissions' for the period.
 
-**See also:** [Emissions](./emissions.md)
+Emissions are protected from manipulation through [Exponential Moving Average (EMA)](#exponential-moving-average-ema) mechanisms that smooth both validator-miner bond evolution and subnet price effects.
+
+**See also:** [Emissions](./emissions.md), [Exponential Moving Average (EMA)](#exponential-moving-average-ema)
 
 ### Encrypting the Hotkey
 
 An optional security measure for the hotkey.
 
 **See also:** [Coldkey-Hotkey Security](./getting-started/coldkey-hotkey-security.md), [Working with Keys](./working-with-keys.md)
+
+### Exponential Moving Average (EMA)
+
+A weighted moving average that prioritizes recent observations while exponentially decreasing the weight of older data points. In Bittensor, EMA is used in two critical stability mechanisms:
+
+1. **Validator-Miner Bond Smoothing**: Smooths the evolution of bonds between validators and miners over time, rewarding early discovery while preventing abrupt manipulation attempts. Has two modes:
+   - **Basic Mode**: Single α ≈ 0.1 (~7-22 blocks for significant changes)
+   - **Liquid Alpha Mode**: Dynamic α range 0.7-0.9 based on consensus alignment (~1-13 blocks depending on consensus)
+
+2. **Subnet Price Emission Smoothing**: Protects emissions from price manipulation by extremely slowly incorporating price changes into emission calculations (α ≈ 0.000003, ~30 days for 50% adjustment)
+
+**Formula**: `EMA(t) = α × Current_Value + (1 - α) × EMA(t-1)`
+
+**Key Properties**: 
+- Lower α = slower adaptation, higher stability
+- Higher α = faster adaptation, lower stability
+- Bittensor prioritizes stability with conservative α values
+
+**See also:** [Understanding Exponential Moving Averages](./learn/ema.md), [Consensus-based Weights](./subnets/consensus-based-weights.md), [Validator-Miner Bonds](#validator-miner-bonds), [Emission](#emission)
 
 ### External Wallet
 
@@ -748,7 +769,7 @@ Where:
 
 ### Validator-Miner Bonds
 
-Bonds represent the "investment" a validator has made in evaluating a specific miner. This bonding mechanism is integral to the Yuma Consensus' design intent of incentivizing high-quality performance by miners, and honest evaluation by validators.
+Bonds represent the "investment" a validator has made in evaluating a specific miner. This bonding mechanism uses [Exponential Moving Average (EMA)](#exponential-moving-average-ema) to smooth bond evolution over time, integral to the Yuma Consensus' design intent of incentivizing high-quality performance by miners, and honest evaluation by validators.
 
 **Bond Formation Process:**
 
@@ -771,10 +792,10 @@ Where:
 - $\beta$ is the bonds penalty factor (configurable hyperparameter)
 
 **3. Exponential Moving Average (EMA) Bonds:**
-Instant bonds are smoothed over time using EMA to prevent abrupt changes:
+Instant bonds are smoothed over time using [EMA](#exponential-moving-average-ema) to prevent abrupt changes:
 $$B_{ij}^{(t)} = \alpha \Delta B_{ij} + (1-\alpha)B_{ij}^{(t-1)}$$
 
-Where $\alpha$ is the EMA smoothing factor.
+Where $\alpha$ is the EMA smoothing factor (see [Exponential Moving Average](#exponential-moving-average-ema) for details).
 
 **Bond Mechanics and Design:**
 
@@ -790,9 +811,9 @@ Where $\alpha$ is the EMA smoothing factor.
 - Bonds are stored as sparse matrices in blockchain state
 
 **Bond Decay:**
-- Bonds decay over time based on the `bonds_moving_avg` parameter
-- Higher decay rates make bonds more responsive to recent performance
-- Lower decay rates allow bonds to persist longer
+- Bonds decay over time using [EMA](#exponential-moving-average-ema) with the `bonds_moving_avg` parameter
+- Higher decay rates (larger α) make bonds more responsive to recent performance
+- Lower decay rates (smaller α) allow bonds to persist longer
 
 **Economic Alignment:**
 - Bonds create long-term relationships between validators and miners
