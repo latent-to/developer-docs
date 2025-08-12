@@ -89,7 +89,7 @@ Warning: Verify your local subtensor is running on port 9944.                   
 ━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━
   0  │    5.04 β │    5.04 β │  τ 0.00 │ 0.000000  │ 0.000000  │  9.017303 β   │ 5DFZTw │ 5Dc1Qu  │ (*Owner controlled)
   1  │    0.00 β │    1.00 β │  τ 0.00 │ 0.000000  │ 0.000000  │  0.000000 β   │ 5FErfA │ 5GxHV5  │ ~
-  2  │    0.00 β │    1.00 β │  τ 0.00 │ 0.000000  │ 0.000000  │  0.000000 β   │ 5Ft364 │ 5GuuKE  │ ~
+  2  │    0.00 β │    1.00 β │  τ 0.00 │ 0.000000  │ 0.000000  │  0.000000 β   │ 5GRLEv │ 5EnNgi  │ ~
 ─────┼───────────┼───────────┼─────────┼───────────┼───────────┼───────────────┼────────┼─────────┼─────────────────────
      │    5.04 β │    5.04 β │  0.00 β │   0.000   │           │  9.017303 β   │        │         │
 
@@ -226,7 +226,7 @@ python validator.py \
 This script begins the process of sending inputs to the miners and setting weights based on miner responses.
 
 :::info miner and validator logs
-Use the `--logging.info` flag to print miner and validator log messages directly to the console. This helps you monitor activity in real time without checking log files.
+Use the `--logging.info` flag to print miner and validator log messages directly to the console. This helps you monitor activity in real time.
 :::
 
 ## 5. Check your emissions
@@ -280,4 +280,58 @@ Note the increase in the miner neuron's `Incentive` column and the validator neu
 
 For more information on a subnet's emission distribution, see [Emissions](../emissions.md).
 
-## Troubleshoot
+## Troubleshooting errors
+
+This section discusses errors that could arise while running the validator or miner, and provides steps to diagnose and resolve them.
+
+**Insufficient funds**
+
+The coldkey signing the `btcli subnet register` transaction must have a sufficient $\tau$ balance to cover the recycling cost of the registration.
+
+<details>
+<summary><strong>Show sample error</strong></summary>
+
+```console
+Insufficient balance 0.0000 τ to register neuron. Current recycle is 0.0970 τ TAO.
+```
+
+</details>
+
+**Unregistered miner or validator**:
+This occurs when you attempt to run a miner or validator on a subnet where it is not registered.
+
+<details>
+<summary><strong>Show sample error</strong></summary>
+
+```console
+Your miner: Wallet (Name: 'test-miner', Hotkey: 'test-miner', Path: '~/.bittensor/wallets/') is not registered to chain connection: Network: local, Chain: ws://127.0.0.1:9944 
+Run 'btcli register' and try again.
+```
+
+</details>
+
+**`NeuronNoValidatorPermit`**
+
+This means that the neuron is attempting to set weights without a validator permit. Try fix this, you must stake sufficient TAO to the validator hotkey and wait till the end of the subnet's tempo.
+
+<details>
+<summary><strong>Show sample error</strong></summary>
+
+```console
+Failed set weights. Error: Subtensor returned `NeuronNoValidatorPermit(Module)` error. This means: `The caller is attempting to set non-self weights without being a permitted validator. | Please consult https://docs.bittensor.com/errors/subtensor#neuronnovalidatorpermit`.
+```
+
+</details>
+
+**`WeightVecLengthIsLow`**:
+
+This error occurs when the validator attempts to set weights for fewer elements than allowed. It often happens when all neurons in the subnet are unresponsive, causing the validator to try setting zero weights for each of them.
+
+<details>
+<summary><strong>Show sample error</strong></summary>
+
+```console
+Error: Subtensor returned `WeightVecLengthIsLow(Module)` error. This means: `The dispatch is attempting to set weights on chain with fewer elements than are allowed. | Please consult https://docs.bittensor.com/errors/subtensor#weightveclengthislow`.
+```
+
+</details>
