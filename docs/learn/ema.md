@@ -8,7 +8,7 @@ The exponential moving average (EMA) is a [mathematical technique](https://en.wi
 The EMA of a changing value at a given time is determined by weighted average of the current value and the EMA at the last time step. The parameter factor, or 'smoothing factor' is called $\alpha$.
 
 $$
-\mathrm{EMA}(t) = \alpha \times \mathrm{current} + (1 - \alpha) \times \mathrm{EMA}(t-1)
+\mathrm{EMA}^{(t)} = \alpha \times \mathrm{current} + (1 - \alpha) \times \mathrm{EMA}^{(t-1)}
 $$
 
 The alpha parameter controls how quickly the EMA responds to changes:
