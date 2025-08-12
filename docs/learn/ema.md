@@ -1,8 +1,9 @@
-# Understanding Exponential Moving Averages in Bittensor
+---
+title: "Exponential Moving Averages (EMAs)in Bittensor"
+---
+# Exponential Moving Averages (EMAs) in Bittensor
 
-The exponential moving average (EMA) is a [mathematical technique](https://en.wikipedia.org/wiki/Exponential_smoothing) for tracking a dynamic quantity, such as a token price, over time.
-
-Specifically, EMA is a weighted moving average that exponentially decreases the weight of older data point. This extracts a signal reflecting where the value has spent *most* of its time *most recently*, stabilizing or 'smoothing' the constant noise of rapid, largely random fluctuations.
+The exponential moving average (EMA) is a [mathematical technique](https://en.wikipedia.org/wiki/Exponential_smoothing) for tracking a dynamic quantity, such as a token price, over time. Specifically, EMA is a weighted moving average that exponentially decreases the weight of older data point. This extracts a signal reflecting where the value has spent *most* of its time *most recently*, stabilizing or 'smoothing' the constant noise of rapid, largely random fluctuations.
 
 The EMA of a changing value at a given time is determined by weighted average of the current value and the EMA at the last time step. The parameter factor, or 'smoothing factor' is called $\alpha$.
 
