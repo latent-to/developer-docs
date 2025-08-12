@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -338,11 +337,12 @@
 <span></span><span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="kn">from</span> <span class="nn">bittensor.core.errors</span> <span class="kn">import</span> <span class="n">StakeError</span><span class="p">,</span> <span class="n">NotRegisteredError</span>
-<span class="kn">from</span> <span class="nn">bittensor.utils</span> <span class="kn">import</span> <span class="n">unlock_key</span>
+<span class="kn">from</span> <span class="nn">async_substrate_interface.errors</span> <span class="kn">import</span> <span class="n">SubstrateRequestException</span>
+
+<span class="kn">from</span> <span class="nn">bittensor.core.extrinsics.utils</span> <span class="kn">import</span> <span class="n">get_old_stakes</span>
+<span class="kn">from</span> <span class="nn">bittensor.utils</span> <span class="kn">import</span> <span class="n">unlock_key</span><span class="p">,</span> <span class="n">format_error_message</span>
 <span class="kn">from</span> <span class="nn">bittensor.utils.balance</span> <span class="kn">import</span> <span class="n">Balance</span>
 <span class="kn">from</span> <span class="nn">bittensor.utils.btlogging</span> <span class="kn">import</span> <span class="n">logging</span>
-<span class="kn">from</span> <span class="nn">bittensor.core.extrinsics.utils</span> <span class="kn">import</span> <span class="n">get_old_stakes</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">bittensor_wallet</span> <span class="kn">import</span> <span class="n">Wallet</span>
@@ -360,25 +360,40 @@
     <span class="n">amount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Balance</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">safe_staking</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">allow_partial_stake</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">rate_tolerance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Adds the specified amount of stake to passed hotkey `uid`.</span>
+<span class="sd">    Adds a stake from the specified wallet to the neuron identified by the SS58 address of its hotkey in specified subnet.</span>
+<span class="sd">    Staking is a fundamental process in the Bittensor network that enables neurons to participate actively and earn incentives.</span>
 
 <span class="sd">    Arguments:</span>
-<span class="sd">        subtensor: the initialized SubtensorInterface object to use</span>
+<span class="sd">        subtensor: Subtensor instance with the connection to the chain.</span>
 <span class="sd">        wallet: Bittensor wallet object.</span>
 <span class="sd">        old_balance: the balance prior to the staking</span>
-<span class="sd">        hotkey_ss58: The `ss58` address of the hotkey account to stake to defaults to the wallet&#39;s hotkey.</span>
-<span class="sd">        netuid: The netuid of the stake to be added</span>
-<span class="sd">        amount: Amount to stake as Bittensor balance, `None` if staking all.</span>
+<span class="sd">        hotkey_ss58: The `ss58` address of the hotkey account to stake to default to the wallet&#39;s hotkey. If not</span>
+<span class="sd">            specified, the wallet&#39;s hotkey will be used. Defaults to ``None``.</span>
+<span class="sd">        netuid: The unique identifier of the subnet to which the neuron belongs.</span>
+<span class="sd">        amount: Amount to stake as Bittensor balance in TAO always, `None` if staking all. Defaults is ``None``.</span>
 <span class="sd">        wait_for_inclusion: If set, waits for the extrinsic to enter a block before returning `True`, or returns</span>
-<span class="sd">            `False` if the extrinsic fails to enter the block within the timeout.</span>
+<span class="sd">            `False` if the extrinsic fails to enter the block within the timeout.  Defaults to ``True``.</span>
 <span class="sd">        wait_for_finalization: If set, waits for the extrinsic to be finalized on the chain before returning `True`,</span>
-<span class="sd">            or returns `False` if the extrinsic fails to be finalized within the timeout.</span>
+<span class="sd">            or returns `False` if the extrinsic fails to be finalized within the timeout. Defaults to ``False``.</span>
+<span class="sd">        safe_staking: If True, enables price safety checks. Default is ``False``.</span>
+<span class="sd">        allow_partial_stake: If True, allows partial unstaking if price tolerance exceeded. Default is ``False``.</span>
+<span class="sd">        rate_tolerance: Maximum allowed price increase percentage (0.005 = 0.5%). Default is ``0.005``.</span>
+<span class="sd">        period: The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction. Defaults to ``None``.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        success: Flag is `True` if extrinsic was finalized or included in the block. If we did not wait for</span>
 <span class="sd">                      finalization/inclusion, the response is `True`.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        SubstrateRequestException: Raised if the extrinsic fails to be included in the block within the timeout.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Decrypt keys,</span>
@@ -418,7 +433,6 @@
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">staking_balance</span> <span class="o">=</span> <span class="n">amount</span>
-    <span class="n">staking_balance</span><span class="o">.</span><span class="n">set_unit</span><span class="p">(</span><span class="n">netuid</span><span class="p">)</span>
 
     <span class="c1"># Leave existential balance to keep key alive.</span>
     <span class="k">if</span> <span class="n">staking_balance</span> <span class="o">&gt;</span> <span class="n">old_balance</span> <span class="o">-</span> <span class="n">existential_deposit</span><span class="p">:</span>
@@ -436,28 +450,61 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;:satellite: [magenta]Staking to:[/magenta] &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;[blue]netuid: </span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">, amount: </span><span class="si">{</span><span class="n">staking_balance</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;on </span><span class="si">{</span><span class="n">subtensor</span><span class="o">.</span><span class="n">network</span><span class="si">}</span><span class="s2">[/blue] [magenta]...[/magenta]&quot;</span>
-        <span class="p">)</span>
+        <span class="n">call_params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;hotkey&quot;</span><span class="p">:</span> <span class="n">hotkey_ss58</span><span class="p">,</span>
+            <span class="s2">&quot;netuid&quot;</span><span class="p">:</span> <span class="n">netuid</span><span class="p">,</span>
+            <span class="s2">&quot;amount_staked&quot;</span><span class="p">:</span> <span class="n">staking_balance</span><span class="o">.</span><span class="n">rao</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">safe_staking</span><span class="p">:</span>
+            <span class="n">pool</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">subnet</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="n">netuid</span><span class="p">)</span>
+            <span class="n">base_price</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">price</span><span class="o">.</span><span class="n">tao</span>
+
+            <span class="k">if</span> <span class="n">pool</span><span class="o">.</span><span class="n">netuid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">price_with_tolerance</span> <span class="o">=</span> <span class="n">base_price</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">price_with_tolerance</span> <span class="o">=</span> <span class="n">base_price</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">rate_tolerance</span><span class="p">)</span>
+
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;:satellite: [magenta]Safe Staking to:[/magenta] &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;[blue]netuid: [green]</span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">[/green], amount: [green]</span><span class="si">{</span><span class="n">staking_balance</span><span class="si">}</span><span class="s2">[/green], &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;tolerance percentage: [green]</span><span class="si">{</span><span class="n">rate_tolerance</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%[/green], &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;price limit: [green]</span><span class="si">{</span><span class="n">price_with_tolerance</span><span class="si">}</span><span class="s2">[/green], &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;original price: [green]</span><span class="si">{</span><span class="n">base_price</span><span class="si">}</span><span class="s2">[/green], &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;with partial stake: [green]</span><span class="si">{</span><span class="n">allow_partial_stake</span><span class="si">}</span><span class="s2">[/green] &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;on [blue]</span><span class="si">{</span><span class="n">subtensor</span><span class="o">.</span><span class="n">network</span><span class="si">}</span><span class="s2">[/blue][/magenta]...[/magenta]&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">limit_price</span> <span class="o">=</span> <span class="n">Balance</span><span class="o">.</span><span class="n">from_tao</span><span class="p">(</span><span class="n">price_with_tolerance</span><span class="p">)</span><span class="o">.</span><span class="n">rao</span>
+            <span class="n">call_params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;limit_price&quot;</span><span class="p">:</span> <span class="n">limit_price</span><span class="p">,</span>
+                    <span class="s2">&quot;allow_partial&quot;</span><span class="p">:</span> <span class="n">allow_partial_stake</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+            <span class="n">call_function</span> <span class="o">=</span> <span class="s2">&quot;add_stake_limit&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;:satellite: [magenta]Staking to:[/magenta] &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;[blue]netuid: [green]</span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">[/green], amount: [green]</span><span class="si">{</span><span class="n">staking_balance</span><span class="si">}</span><span class="s2">[/green] &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;on [blue]</span><span class="si">{</span><span class="n">subtensor</span><span class="o">.</span><span class="n">network</span><span class="si">}</span><span class="s2">[/blue][magenta]...[/magenta]&quot;</span>
+            <span class="p">)</span>
+            <span class="n">call_function</span> <span class="o">=</span> <span class="s2">&quot;add_stake&quot;</span>
+
         <span class="n">call</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">compose_call</span><span class="p">(</span>
             <span class="n">call_module</span><span class="o">=</span><span class="s2">&quot;SubtensorModule&quot;</span><span class="p">,</span>
-            <span class="n">call_function</span><span class="o">=</span><span class="s2">&quot;add_stake&quot;</span><span class="p">,</span>
-            <span class="n">call_params</span><span class="o">=</span><span class="p">{</span>
-                <span class="s2">&quot;hotkey&quot;</span><span class="p">:</span> <span class="n">hotkey_ss58</span><span class="p">,</span>
-                <span class="s2">&quot;amount_staked&quot;</span><span class="p">:</span> <span class="n">staking_balance</span><span class="o">.</span><span class="n">rao</span><span class="p">,</span>
-                <span class="s2">&quot;netuid&quot;</span><span class="p">:</span> <span class="n">netuid</span><span class="p">,</span>
-            <span class="p">},</span>
+            <span class="n">call_function</span><span class="o">=</span><span class="n">call_function</span><span class="p">,</span>
+            <span class="n">call_params</span><span class="o">=</span><span class="n">call_params</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">staking_response</span><span class="p">,</span> <span class="n">err_msg</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">sign_and_send_extrinsic</span><span class="p">(</span>
-            <span class="n">call</span><span class="p">,</span>
-            <span class="n">wallet</span><span class="p">,</span>
-            <span class="n">wait_for_inclusion</span><span class="p">,</span>
-            <span class="n">wait_for_finalization</span><span class="p">,</span>
+            <span class="n">call</span><span class="o">=</span><span class="n">call</span><span class="p">,</span>
+            <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
+            <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
+            <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
             <span class="n">nonce_key</span><span class="o">=</span><span class="s2">&quot;coldkeypub&quot;</span><span class="p">,</span>
             <span class="n">sign_with</span><span class="o">=</span><span class="s2">&quot;coldkey&quot;</span><span class="p">,</span>
             <span class="n">use_nonce</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">staking_response</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>  <span class="c1"># If we successfully staked.</span>
             <span class="c1"># We only wait here if we expect finalization.</span>
@@ -467,8 +514,8 @@
             <span class="n">logging</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s2">&quot;:white_heavy_check_mark: [green]Finalized[/green]&quot;</span><span class="p">)</span>
 
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;:satellite: [magenta]Checking Balance on:[/magenta] [blue]</span><span class="si">{</span><span class="n">subtensor</span><span class="o">.</span><span class="n">network</span><span class="si">}</span><span class="s2">[/blue] &quot;</span>
-                <span class="s2">&quot;[magenta]...[/magenta]&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;:satellite: [magenta]Checking Balance on:[/magenta] &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;[blue]</span><span class="si">{</span><span class="n">subtensor</span><span class="o">.</span><span class="n">network</span><span class="si">}</span><span class="s2">[/blue] [magenta]...[/magenta]&quot;</span>
             <span class="p">)</span>
             <span class="n">new_block_hash</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">get_chain_head</span><span class="p">()</span>
             <span class="n">new_balance</span><span class="p">,</span> <span class="n">new_stake</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
@@ -491,18 +538,18 @@
             <span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;:cross_mark: [red]Failed: </span><span class="si">{</span><span class="n">err_msg</span><span class="si">}</span><span class="s2">.[/red]&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">safe_staking</span> <span class="ow">and</span> <span class="s2">&quot;Custom error: 8&quot;</span> <span class="ow">in</span> <span class="n">err_msg</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="s2">&quot;:cross_mark: [red]Failed[/red]: Price exceeded tolerance limit. Either increase price tolerance or enable partial staking.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;:cross_mark: [red]Failed: </span><span class="si">{</span><span class="n">err_msg</span><span class="si">}</span><span class="s2">.[/red]&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">except</span> <span class="n">NotRegisteredError</span><span class="p">:</span>
+    <span class="k">except</span> <span class="n">SubstrateRequestException</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-            <span class="s2">&quot;:cross_mark: [red]Hotkey: </span><span class="si">{}</span><span class="s2"> is not registered.[/red]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">wallet</span><span class="o">.</span><span class="n">hotkey_str</span>
-            <span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;:cross_mark: [red]Add Stake Error: </span><span class="si">{</span><span class="n">format_error_message</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="si">}</span><span class="s2">[/red]&quot;</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">except</span> <span class="n">StakeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;:cross_mark: [red]Stake Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">[/red]&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
 
@@ -518,8 +565,9 @@
     <span class="n">amounts</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Balance</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds stake to each ``hotkey_ss58`` in the list, using each amount, from a common coldkey.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds a stake to each ``hotkey_ss58`` in the list, using each amount, from a common coldkey.</span>
 
 <span class="sd">    Arguments:</span>
 <span class="sd">        subtensor: The initialized SubtensorInterface object.</span>
@@ -532,6 +580,9 @@
 <span class="sd">            if the extrinsic fails to enter the block within the timeout.</span>
 <span class="sd">        wait_for_finalization: If set, waits for the extrinsic to be finalized on the chain before returning `True`, or</span>
 <span class="sd">            returns `False` if the extrinsic fails to be finalized within the timeout.</span>
+<span class="sd">        period: The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        success: `True` if extrinsic was finalized or included in the block. `True` if any wallet was staked. If we did</span>
@@ -643,32 +694,19 @@
                     <span class="s2">&quot;netuid&quot;</span><span class="p">:</span> <span class="n">netuid</span><span class="p">,</span>
                 <span class="p">},</span>
             <span class="p">)</span>
-            <span class="n">staking_response</span><span class="p">,</span> <span class="n">err_msg</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">sign_and_send_extrinsic</span><span class="p">(</span>
-                <span class="n">call</span><span class="p">,</span>
-                <span class="n">wallet</span><span class="p">,</span>
-                <span class="n">wait_for_inclusion</span><span class="p">,</span>
-                <span class="n">wait_for_finalization</span><span class="p">,</span>
+            <span class="n">success</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">sign_and_send_extrinsic</span><span class="p">(</span>
+                <span class="n">call</span><span class="o">=</span><span class="n">call</span><span class="p">,</span>
+                <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
+                <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
+                <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
                 <span class="n">nonce_key</span><span class="o">=</span><span class="s2">&quot;coldkeypub&quot;</span><span class="p">,</span>
                 <span class="n">sign_with</span><span class="o">=</span><span class="s2">&quot;coldkey&quot;</span><span class="p">,</span>
                 <span class="n">use_nonce</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
             <span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">staking_response</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>  <span class="c1"># If we successfully staked.</span>
+            <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>  <span class="c1"># If we successfully staked.</span>
                 <span class="c1"># We only wait here if we expect finalization.</span>
-
-                <span class="k">if</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">hotkey_ss58s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="c1"># Wait for tx rate limit.</span>
-                    <span class="n">tx_query</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
-                        <span class="n">module</span><span class="o">=</span><span class="s2">&quot;SubtensorModule&quot;</span><span class="p">,</span> <span class="n">storage_function</span><span class="o">=</span><span class="s2">&quot;TxRateLimit&quot;</span>
-                    <span class="p">)</span>
-                    <span class="n">tx_rate_limit_blocks</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tx_query</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">tx_rate_limit_blocks</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;:hourglass: [yellow]Waiting for tx rate limit: [white]</span><span class="si">{</span><span class="n">tx_rate_limit_blocks</span><span class="si">}</span><span class="s2">[/white] &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;blocks[/yellow]&quot;</span>
-                        <span class="p">)</span>
-                        <span class="c1"># 12 seconds per block</span>
-                        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">tx_rate_limit_blocks</span> <span class="o">*</span> <span class="mi">12</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">wait_for_finalization</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">wait_for_inclusion</span><span class="p">:</span>
                     <span class="n">old_balance</span> <span class="o">-=</span> <span class="n">staking_balance</span>
@@ -707,16 +745,13 @@
                     <span class="k">break</span>
 
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;:cross_mark: [red]Failed: </span><span class="si">{</span><span class="n">err_msg</span><span class="si">}</span><span class="s2">.[/red]&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;:cross_mark: [red]Failed: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">.[/red]&quot;</span><span class="p">)</span>
                 <span class="k">continue</span>
 
-        <span class="k">except</span> <span class="n">NotRegisteredError</span><span class="p">:</span>
+        <span class="k">except</span> <span class="n">SubstrateRequestException</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;:cross_mark: [red]Hotkey: </span><span class="si">{</span><span class="n">hotkey_ss58</span><span class="si">}</span><span class="s2"> is not registered.[/red]&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;:cross_mark: [red]Add Stake Multiple error: </span><span class="si">{</span><span class="n">format_error_message</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="si">}</span><span class="s2">[/red]&quot;</span>
             <span class="p">)</span>
-            <span class="k">continue</span>
-        <span class="k">except</span> <span class="n">StakeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;:cross_mark: [red]Stake Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">[/red]&quot;</span><span class="p">)</span>
             <span class="k">continue</span>
 
     <span class="k">if</span> <span class="n">successful_stakes</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>

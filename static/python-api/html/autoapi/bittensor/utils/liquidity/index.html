@@ -48,7 +48,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/utils/liquidity/index';</script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="bittensor.utils.mock" href="../mock/index.html" />
+    <link rel="next" title="bittensor.utils.networking" href="../networking/index.html" />
     <link rel="prev" title="bittensor.utils.formatting" href="../formatting/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -176,7 +176,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4 current active"><a class="current reference internal" href="#">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../subnets/index.html">bittensor.utils.subnets</a></li>
@@ -494,7 +493,7 @@ provisioning and fee distribution.</p>
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.utils.liquidity.LiquidityPosition">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.utils.liquidity.</span></span><span class="sig-name descname"><span class="pre">LiquidityPosition</span></span><a class="headerlink" href="#bittensor.utils.liquidity.LiquidityPosition" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.utils.liquidity.</span></span><span class="sig-name descname"><span class="pre">LiquidityPosition</span></span><a class="reference internal" href="../../../../_modules/bittensor/utils/liquidity.html#LiquidityPosition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.liquidity.LiquidityPosition" title="Link to this definition">#</a></dt>
 <dd><dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.liquidity.LiquidityPosition.fees_alpha">
 <span class="sig-name descname"><span class="pre">fees_alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a></em><a class="headerlink" href="#bittensor.utils.liquidity.LiquidityPosition.fees_alpha" title="Link to this definition">#</a></dt>
@@ -532,7 +531,7 @@ provisioning and fee distribution.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.utils.liquidity.LiquidityPosition.to_token_amounts">
-<span class="sig-name descname"><span class="pre">to_token_amounts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_subnet_price</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.liquidity.LiquidityPosition.to_token_amounts" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">to_token_amounts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_subnet_price</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/liquidity.html#LiquidityPosition.to_token_amounts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.liquidity.LiquidityPosition.to_token_amounts" title="Link to this definition">#</a></dt>
 <dd><p>Convert a position to token amounts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -568,7 +567,7 @@ Amount of TAO in liquidity</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.liquidity.calculate_fees">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.liquidity.</span></span><span class="sig-name descname"><span class="pre">calculate_fees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_fees_tao</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_fees_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tao_fees_below_low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tao_fees_above_high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_fees_below_low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_fees_above_high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.liquidity.calculate_fees" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.liquidity.</span></span><span class="sig-name descname"><span class="pre">calculate_fees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_fees_tao</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_fees_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tao_fees_below_low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tao_fees_above_high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_fees_below_low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_fees_above_high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/liquidity.html#calculate_fees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.liquidity.calculate_fees" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -590,7 +589,7 @@ Amount of TAO in liquidity</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.liquidity.get_fees">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.liquidity.</span></span><span class="sig-name descname"><span class="pre">get_fees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_tick</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quote</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_fees_tao</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_fees_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">above</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.liquidity.get_fees" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.liquidity.</span></span><span class="sig-name descname"><span class="pre">get_fees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_tick</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quote</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_fees_tao</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_fees_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">above</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/liquidity.html#get_fees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.liquidity.get_fees" title="Link to this definition">#</a></dt>
 <dd><p>Returns the liquidity fee.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -612,7 +611,7 @@ Amount of TAO in liquidity</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.liquidity.get_fees_in_range">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.liquidity.</span></span><span class="sig-name descname"><span class="pre">get_fees_in_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quote</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_fees_tao</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_fees_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fees_below_low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fees_above_high</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.liquidity.get_fees_in_range" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.liquidity.</span></span><span class="sig-name descname"><span class="pre">get_fees_in_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quote</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_fees_tao</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_fees_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fees_below_low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fees_above_high</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/liquidity.html#get_fees_in_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.liquidity.get_fees_in_range" title="Link to this definition">#</a></dt>
 <dd><p>Returns the liquidity fee value in a range.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -632,7 +631,7 @@ Amount of TAO in liquidity</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.liquidity.price_to_tick">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.liquidity.</span></span><span class="sig-name descname"><span class="pre">price_to_tick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">price</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.liquidity.price_to_tick" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.liquidity.</span></span><span class="sig-name descname"><span class="pre">price_to_tick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">price</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/liquidity.html#price_to_tick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.liquidity.price_to_tick" title="Link to this definition">#</a></dt>
 <dd><p>Converts a float price to the nearest Uniswap V3 tick index.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -646,7 +645,7 @@ Amount of TAO in liquidity</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.liquidity.tick_to_price">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.liquidity.</span></span><span class="sig-name descname"><span class="pre">tick_to_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tick</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.liquidity.tick_to_price" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.liquidity.</span></span><span class="sig-name descname"><span class="pre">tick_to_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tick</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/liquidity.html#tick_to_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.liquidity.tick_to_price" title="Link to this definition">#</a></dt>
 <dd><p>Convert an integer Uniswap V3 tick index to float price.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -682,11 +681,11 @@ Amount of TAO in liquidity</p>
       </div>
     </a>
     <a class="right-next"
-       href="../mock/index.html"
+       href="../networking/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">bittensor.utils.mock</p>
+        <p class="prev-next-title">bittensor.utils.networking</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

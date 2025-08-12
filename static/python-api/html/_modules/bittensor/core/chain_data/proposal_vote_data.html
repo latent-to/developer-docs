@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -335,30 +334,38 @@
                 <article class="bd-article">
                   
   <h1>Source code for bittensor.core.chain_data.proposal_vote_data</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">bittensor.core.chain_data.utils</span> <span class="kn">import</span> <span class="n">decode_account_id</span>
+<span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="kn">from</span> <span class="nn">bittensor.core.chain_data.info_base</span> <span class="kn">import</span> <span class="n">InfoBase</span>
+<span class="kn">from</span> <span class="nn">bittensor.core.chain_data.utils</span> <span class="kn">import</span> <span class="n">decode_account_id</span>
 
 
-<span class="c1"># Senate / Proposal data</span>
 <div class="viewcode-block" id="ProposalVoteData">
 <a class="viewcode-back" href="../../../../autoapi/bittensor/core/chain_data/proposal_vote_data/index.html#bittensor.core.chain_data.proposal_vote_data.ProposalVoteData">[docs]</a>
-<span class="k">class</span> <span class="nc">ProposalVoteData</span><span class="p">:</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">ProposalVoteData</span><span class="p">(</span><span class="n">InfoBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Senate / Proposal data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">index</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">threshold</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">ayes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">nays</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">end</span><span class="p">:</span> <span class="nb">int</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proposal_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">proposal_dict</span><span class="p">[</span><span class="s2">&quot;index&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">proposal_dict</span><span class="p">[</span><span class="s2">&quot;threshold&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ayes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode_ss58_tuples</span><span class="p">(</span><span class="n">proposal_dict</span><span class="p">[</span><span class="s2">&quot;ayes&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nays</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode_ss58_tuples</span><span class="p">(</span><span class="n">proposal_dict</span><span class="p">[</span><span class="s2">&quot;nays&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">proposal_dict</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">decode_ss58_tuples</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Decodes a tuple of ss58 addresses formatted as bytes tuples.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">decode_account_id</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">))]</span></div>
+<div class="viewcode-block" id="ProposalVoteData.from_dict">
+<a class="viewcode-back" href="../../../../autoapi/bittensor/core/chain_data/proposal_vote_data/index.html#bittensor.core.chain_data.proposal_vote_data.ProposalVoteData.from_dict">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">proposal_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ProposalVoteData&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">ayes</span><span class="o">=</span><span class="p">[</span><span class="n">decode_account_id</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">proposal_dict</span><span class="p">[</span><span class="s2">&quot;ayes&quot;</span><span class="p">]],</span>
+            <span class="n">end</span><span class="o">=</span><span class="n">proposal_dict</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">],</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">proposal_dict</span><span class="p">[</span><span class="s2">&quot;index&quot;</span><span class="p">],</span>
+            <span class="n">nays</span><span class="o">=</span><span class="p">[</span><span class="n">decode_account_id</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">proposal_dict</span><span class="p">[</span><span class="s2">&quot;nays&quot;</span><span class="p">]],</span>
+            <span class="n">threshold</span><span class="o">=</span><span class="n">proposal_dict</span><span class="p">[</span><span class="s2">&quot;threshold&quot;</span><span class="p">],</span>
+        <span class="p">)</span></div>
+</div>
 
 </pre></div>
 

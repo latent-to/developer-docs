@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -569,7 +568,7 @@
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;cannot schedule new futures after shutdown&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">_shutdown</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                    <span class="s2">&quot;cannot schedule new futures after &quot;</span> <span class="s2">&quot;interpreter shutdown&quot;</span>
+                    <span class="s2">&quot;cannot schedule new futures after interpreter shutdown&quot;</span>
                 <span class="p">)</span>
 
             <span class="n">priority</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;priority&quot;</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">))</span>
@@ -620,7 +619,7 @@
     <span class="k">def</span> <span class="nf">_initializer_failed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_lock</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_broken</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="s2">&quot;A thread initializer failed, the thread pool &quot;</span> <span class="s2">&quot;is not usable anymore&quot;</span>
+                <span class="s2">&quot;A thread initializer failed, the thread pool is not usable anymore&quot;</span>
             <span class="p">)</span>
             <span class="c1"># Drain work queue and mark pending futures failed</span>
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>

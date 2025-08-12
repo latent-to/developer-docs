@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -336,18 +335,17 @@
                   
   <h1>Source code for bittensor.core.extrinsics.asyncex.serving</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">asyncio</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="kn">from</span> <span class="nn">bittensor.core.errors</span> <span class="kn">import</span> <span class="n">MetadataError</span>
 <span class="kn">from</span> <span class="nn">bittensor.core.settings</span> <span class="kn">import</span> <span class="n">version_as_int</span>
+<span class="kn">from</span> <span class="nn">bittensor.core.types</span> <span class="kn">import</span> <span class="n">AxonServeCallParams</span>
 <span class="kn">from</span> <span class="nn">bittensor.utils</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">format_error_message</span><span class="p">,</span>
     <span class="n">networking</span> <span class="k">as</span> <span class="n">net</span><span class="p">,</span>
     <span class="n">unlock_key</span><span class="p">,</span>
     <span class="n">Certificate</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">bittensor.utils.btlogging</span> <span class="kn">import</span> <span class="n">logging</span>
-<span class="kn">from</span> <span class="nn">bittensor.core.types</span> <span class="kn">import</span> <span class="n">AxonServeCallParams</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">bittensor.core.axon</span> <span class="kn">import</span> <span class="n">Axon</span>
@@ -363,7 +361,8 @@
     <span class="n">call_params</span><span class="p">:</span> <span class="s2">&quot;AxonServeCallParams&quot;</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]]:</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Internal method to submit a serve axon transaction to the Bittensor blockchain. This method creates and submits a</span>
 <span class="sd">        transaction, enabling a neuron&#39;s ``Axon`` to serve requests on the network.</span>
@@ -374,9 +373,12 @@
 <span class="sd">        call_params (bittensor.core.types.AxonServeCallParams): Parameters required for the serve axon call.</span>
 <span class="sd">        wait_for_inclusion (bool): Waits for the transaction to be included in a block.</span>
 <span class="sd">        wait_for_finalization (bool): Waits for the transaction to be finalized on the blockchain.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        tuple[bool, Optional[str]]: A tuple containing a success flag and an optional error message.</span>
+<span class="sd">        tuple[bool, str]: A tuple containing a success flag and an optional error message.</span>
 
 <span class="sd">    This function is crucial for initializing and announcing a neuron&#39;s ``Axon`` service on the network, enhancing the</span>
 <span class="sd">        decentralized computation capabilities of Bittensor.</span>
@@ -392,21 +394,15 @@
         <span class="n">call_function</span><span class="o">=</span><span class="n">call_function</span><span class="p">,</span>
         <span class="n">call_params</span><span class="o">=</span><span class="n">call_params</span><span class="o">.</span><span class="n">dict</span><span class="p">(),</span>
     <span class="p">)</span>
-    <span class="n">extrinsic</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">create_signed_extrinsic</span><span class="p">(</span>
-        <span class="n">call</span><span class="o">=</span><span class="n">call</span><span class="p">,</span> <span class="n">keypair</span><span class="o">=</span><span class="n">wallet</span><span class="o">.</span><span class="n">hotkey</span>
-    <span class="p">)</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">submit_extrinsic</span><span class="p">(</span>
-        <span class="n">extrinsic</span><span class="o">=</span><span class="n">extrinsic</span><span class="p">,</span>
+    <span class="n">success</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">sign_and_send_extrinsic</span><span class="p">(</span>
+        <span class="n">call</span><span class="o">=</span><span class="n">call</span><span class="p">,</span>
+        <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
         <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
         <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+        <span class="n">sign_with</span><span class="o">=</span><span class="s2">&quot;hotkey&quot;</span><span class="p">,</span>
+        <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="k">if</span> <span class="n">wait_for_inclusion</span> <span class="ow">or</span> <span class="n">wait_for_finalization</span><span class="p">:</span>
-        <span class="k">if</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">is_success</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span>
-
-        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">error_message</span>
-
-    <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span></div>
+    <span class="k">return</span> <span class="n">success</span><span class="p">,</span> <span class="n">message</span></div>
 
 
 
@@ -424,6 +420,7 @@
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">certificate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Certificate</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Subscribes a Bittensor endpoint to the subtensor chain.</span>
 
@@ -442,6 +439,9 @@
 <span class="sd">            ``True``, or returns ``False`` if the extrinsic fails to be finalized within the timeout.</span>
 <span class="sd">        certificate (bittensor.utils.Certificate): Certificate to use for TLS. If ``None``, no TLS will be used.</span>
 <span class="sd">            Defaults to ``None``.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        success (bool): Flag is ``True`` if extrinsic was finalized or included in the block. If we did not wait for</span>
@@ -474,32 +474,32 @@
     <span class="n">neuron_up_to_date</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">neuron</span><span class="o">.</span><span class="n">is_null</span> <span class="ow">and</span> <span class="n">params</span> <span class="o">==</span> <span class="n">neuron</span>
     <span class="k">if</span> <span class="n">neuron_up_to_date</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Axon already served on: AxonInfo(</span><span class="si">{</span><span class="n">wallet</span><span class="o">.</span><span class="n">hotkey</span><span class="o">.</span><span class="n">ss58_address</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">) &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Axon already served on: [blue]AxonInfo(</span><span class="si">{</span><span class="n">wallet</span><span class="o">.</span><span class="n">hotkey</span><span class="o">.</span><span class="n">ss58_address</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">)[/blue]&quot;</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Serving axon with: AxonInfo(</span><span class="si">{</span><span class="n">wallet</span><span class="o">.</span><span class="n">hotkey</span><span class="o">.</span><span class="n">ss58_address</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">) -&gt; </span><span class="si">{</span><span class="n">subtensor</span><span class="o">.</span><span class="n">network</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Serving axon with: [blue]AxonInfo(</span><span class="si">{</span><span class="n">wallet</span><span class="o">.</span><span class="n">hotkey</span><span class="o">.</span><span class="n">ss58_address</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">)[/blue] -&gt; &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;[green]</span><span class="si">{</span><span class="n">subtensor</span><span class="o">.</span><span class="n">network</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">[/green]&quot;</span>
     <span class="p">)</span>
-    <span class="n">success</span><span class="p">,</span> <span class="n">error_message</span> <span class="o">=</span> <span class="k">await</span> <span class="n">do_serve_axon</span><span class="p">(</span>
+    <span class="n">success</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="n">do_serve_axon</span><span class="p">(</span>
         <span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">,</span>
         <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
         <span class="n">call_params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
         <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
         <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
+        <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">wait_for_inclusion</span> <span class="ow">or</span> <span class="n">wait_for_finalization</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Axon served with: AxonInfo(</span><span class="si">{</span><span class="n">wallet</span><span class="o">.</span><span class="n">hotkey</span><span class="o">.</span><span class="n">ss58_address</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">) on </span><span class="si">{</span><span class="n">subtensor</span><span class="o">.</span><span class="n">network</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="p">)</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed: </span><span class="si">{</span><span class="n">format_error_message</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+    <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Axon served with: [blue]AxonInfo(</span><span class="si">{</span><span class="n">wallet</span><span class="o">.</span><span class="n">hotkey</span><span class="o">.</span><span class="n">ss58_address</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">)[/blue] on &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;[green]</span><span class="si">{</span><span class="n">subtensor</span><span class="o">.</span><span class="n">network</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">[/green]&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
 
 
 
@@ -512,6 +512,7 @@
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">certificate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Certificate</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Serves the axon to the network.</span>
 
@@ -525,6 +526,9 @@
 <span class="sd">            ``True``, or returns ``False`` if the extrinsic fails to be finalized within the timeout.</span>
 <span class="sd">        certificate (bittensor.utils.Certificate): Certificate to use for TLS. If ``None``, no TLS will be used.</span>
 <span class="sd">            Defaults to ``None``.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        success (bool): Flag is ``True`` if extrinsic was finalized or included in the block. If we did not wait for</span>
@@ -562,6 +566,7 @@
         <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
         <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
         <span class="n">certificate</span><span class="o">=</span><span class="n">certificate</span><span class="p">,</span>
+        <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">serve_success</span></div>
 
@@ -574,9 +579,11 @@
     <span class="n">wallet</span><span class="p">:</span> <span class="s2">&quot;Wallet&quot;</span><span class="p">,</span>
     <span class="n">netuid</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">data_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">dict</span><span class="p">],</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">reset_bonds</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Publishes metadata on the Bittensor network using the specified wallet and network identifier.</span>
@@ -588,18 +595,22 @@
 <span class="sd">        data_type (str): The data type of the information being submitted. It should be one of the following:</span>
 <span class="sd">            ``&#39;Sha256&#39;``, ``&#39;Blake256&#39;``, ``&#39;Keccak256&#39;``, or ``&#39;Raw0-128&#39;``. This specifies the format or hashing</span>
 <span class="sd">            algorithm used for the data.</span>
-<span class="sd">        data (str): The actual metadata content to be published. This should be formatted or hashed according to the</span>
-<span class="sd">            ``type`` specified. (Note: max ``str`` length is 128 bytes)</span>
+<span class="sd">        data (Union[bytes, dict]): The actual metadata content to be published. This should be formatted or hashed</span>
+<span class="sd">            according to the ``type`` specified. (Note: max ``str`` length is 128 bytes for ``&#39;Raw0-128&#39;``.)</span>
 <span class="sd">        wait_for_inclusion (bool, optional): If ``True``, the function will wait for the extrinsic to be included in a</span>
 <span class="sd">            block before returning. Defaults to ``False``.</span>
 <span class="sd">        wait_for_finalization (bool, optional): If ``True``, the function will wait for the extrinsic to be finalized</span>
 <span class="sd">            on the chain before returning. Defaults to ``True``.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
+<span class="sd">        reset_bonds (bool): If `True`, the function will reset the bonds for the neuron. Defaults to `False`.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: ``True`` if the metadata was successfully published (and finalized if specified). ``False`` otherwise.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        MetadataError: If there is an error in submitting the extrinsic or if the response from the blockchain indicates</span>
+<span class="sd">        MetadataError: If there is an error in submitting the extrinsic, or if the response from the blockchain indicates</span>
 <span class="sd">            failure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -607,31 +618,32 @@
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">unlock</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span>
 
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">[{</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">}]</span>
+    <span class="k">if</span> <span class="n">reset_bonds</span><span class="p">:</span>
+        <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;ResetBondsFlag&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">})</span>
+
     <span class="k">async</span> <span class="k">with</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span> <span class="k">as</span> <span class="n">substrate</span><span class="p">:</span>
         <span class="n">call</span> <span class="o">=</span> <span class="k">await</span> <span class="n">substrate</span><span class="o">.</span><span class="n">compose_call</span><span class="p">(</span>
             <span class="n">call_module</span><span class="o">=</span><span class="s2">&quot;Commitments&quot;</span><span class="p">,</span>
             <span class="n">call_function</span><span class="o">=</span><span class="s2">&quot;set_commitment&quot;</span><span class="p">,</span>
             <span class="n">call_params</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;netuid&quot;</span><span class="p">:</span> <span class="n">netuid</span><span class="p">,</span>
-                <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;fields&quot;</span><span class="p">:</span> <span class="p">[[{</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">}]]},</span>
+                <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;fields&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">fields</span><span class="p">]},</span>
             <span class="p">},</span>
         <span class="p">)</span>
 
-        <span class="n">extrinsic</span> <span class="o">=</span> <span class="k">await</span> <span class="n">substrate</span><span class="o">.</span><span class="n">create_signed_extrinsic</span><span class="p">(</span>
-            <span class="n">call</span><span class="o">=</span><span class="n">call</span><span class="p">,</span> <span class="n">keypair</span><span class="o">=</span><span class="n">wallet</span><span class="o">.</span><span class="n">hotkey</span>
-        <span class="p">)</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">substrate</span><span class="o">.</span><span class="n">submit_extrinsic</span><span class="p">(</span>
-            <span class="n">extrinsic</span><span class="o">=</span><span class="n">extrinsic</span><span class="p">,</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">sign_and_send_extrinsic</span><span class="p">(</span>
+            <span class="n">call</span><span class="o">=</span><span class="n">call</span><span class="p">,</span>
+            <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
+            <span class="n">sign_with</span><span class="o">=</span><span class="s2">&quot;hotkey&quot;</span><span class="p">,</span>
             <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
             <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+            <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="c1"># We only wait here if we expect finalization.</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">wait_for_finalization</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">wait_for_inclusion</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
 
-        <span class="k">if</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">is_success</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">raise</span> <span class="n">MetadataError</span><span class="p">(</span><span class="n">format_error_message</span><span class="p">(</span><span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">error_message</span><span class="p">))</span></div>
+        <span class="k">raise</span> <span class="n">MetadataError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 
 
@@ -644,7 +656,7 @@
     <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">block_hash</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">reuse_block</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fetches metadata from the blockchain for a given hotkey and netuid.&quot;&quot;&quot;</span>
     <span class="k">async</span> <span class="k">with</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="p">:</span>
         <span class="n">block_hash</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">determine_block_hash</span><span class="p">(</span>
@@ -658,6 +670,28 @@
             <span class="n">reuse_block_hash</span><span class="o">=</span><span class="n">reuse_block</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="k">return</span> <span class="n">commit_data</span></div>
+
+
+
+<div class="viewcode-block" id="get_last_bonds_reset">
+<a class="viewcode-back" href="../../../../../autoapi/bittensor/core/extrinsics/asyncex/serving/index.html#bittensor.core.extrinsics.asyncex.serving.get_last_bonds_reset">[docs]</a>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_last_bonds_reset</span><span class="p">(</span>
+    <span class="n">subtensor</span><span class="p">:</span> <span class="s2">&quot;AsyncSubtensor&quot;</span><span class="p">,</span>
+    <span class="n">netuid</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">hotkey</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">block_hash</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">reuse_block</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fetches the last bonds reset triggered at commitment from the blockchain for a given hotkey and netuid.&quot;&quot;&quot;</span>
+    <span class="n">block_hash</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">determine_block_hash</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">block_hash</span><span class="p">,</span> <span class="n">reuse_block</span><span class="p">)</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+        <span class="n">module</span><span class="o">=</span><span class="s2">&quot;Commitments&quot;</span><span class="p">,</span>
+        <span class="n">storage_function</span><span class="o">=</span><span class="s2">&quot;LastBondsReset&quot;</span><span class="p">,</span>
+        <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="n">netuid</span><span class="p">,</span> <span class="n">hotkey</span><span class="p">],</span>
+        <span class="n">block_hash</span><span class="o">=</span><span class="n">block_hash</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">block</span></div>
 
 </pre></div>
 

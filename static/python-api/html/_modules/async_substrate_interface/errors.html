@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -358,6 +357,16 @@
             <span class="s2">&quot;Exported method Metadata_metadata_at_version is not found. This indicates the block is quite old, and is&quot;</span>
             <span class="s2">&quot;not supported by async-substrate-interface. If you need this, we recommend using the legacy &quot;</span>
             <span class="s2">&quot;substrate-interface (https://github.com/JAMdotTech/py-polkadot-sdk).&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">StateDiscardedError</span><span class="p">(</span><span class="n">SubstrateRequestException</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_hash</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">block_hash</span> <span class="o">=</span> <span class="n">block_hash</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;State discarded for </span><span class="si">{</span><span class="n">block_hash</span><span class="si">}</span><span class="s2">. This indicates the block is too old, and you should instead &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;make this request using an archive node.&quot;</span>
         <span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 

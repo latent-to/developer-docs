@@ -176,7 +176,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -401,8 +400,10 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_block"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo.commit_block</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_hex"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo.commit_hex</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.from_vec_u8"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo.from_vec_u8()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.from_vec_u8_v2"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo.from_vec_u8_v2()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.reveal_round"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo.reveal_round</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.ss58"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo.ss58</span></code></a></li>
 </ul>
@@ -442,12 +443,18 @@
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The SS58 address of the committer</p></li>
-<li><p><strong>commit_hex</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The serialized weight commit data as hex string</p></li>
-<li><p><strong>reveal_round</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The round number for reveal</p></li>
+<li><p><strong>ss58</strong> – The SS58 address of the committer</p></li>
+<li><p><strong>commit_block</strong> – The block number of the commitment.</p></li>
+<li><p><strong>commit_hex</strong> – The serialized weight commit data as hex string</p></li>
+<li><p><strong>reveal_round</strong> – The round number for reveal</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_block">
+<span class="sig-name descname"><span class="pre">commit_block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_block" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_hex">
 <span class="sig-name descname"><span class="pre">commit_hex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_hex" title="Link to this definition">#</a></dt>
@@ -460,6 +467,28 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a>) – Tuple containing ((AccountId,), (commit_data,), round_number)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new instance with the decoded data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo" title="bittensor.core.chain_data.weight_commit_info.WeightCommitInfo">WeightCommitInfo</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used when querying a block or block hash where storage functions <cite>CRV3WeightCommitsV2</cite> does
+not exist in Subtensor module.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.from_vec_u8_v2">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_vec_u8_v2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.from_vec_u8_v2" title="Link to this definition">#</a></dt>
+<dd><p>Creates a WeightCommitInfo instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a>) – Tuple containing ((AccountId,), (commit_block, ) (commit_data,), round_number)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A new instance with the decoded data</p>
@@ -534,8 +563,10 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_block"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo.commit_block</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_hex"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo.commit_hex</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.from_vec_u8"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo.from_vec_u8()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.from_vec_u8_v2"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo.from_vec_u8_v2()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.reveal_round"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo.reveal_round</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.ss58"><code class="docutils literal notranslate"><span class="pre">WeightCommitInfo.ss58</span></code></a></li>
 </ul>
