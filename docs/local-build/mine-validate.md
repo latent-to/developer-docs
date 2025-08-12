@@ -21,7 +21,7 @@ Before continuing with the rest of this tutorial, make sure you've completed the
 
 This guide uses Opentensor's [_subnet template_](https://github.com/opentensor/subnet-template/tree/main) repo. The repo provides a minimal implementation for building a custom subnet on the Bittensor network and includes the core logic for the miner and validator.
 
-## 1. Register the hotkeys
+## 1. Register the neuron hotkeys
 
 To participate in a subnet, you must first register a hotkey on it. This registration assigns the wallet a unique identifier (UID), which is required to interact with and receive emissions from the subnet.
 
