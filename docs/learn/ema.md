@@ -39,17 +39,11 @@ This use of EMA smoothing protects the network's economic model from price manip
 - **Halving Period**: 201,600 blocks (~4 weeks)
 
 **How It Works**:
-The price EMA uses a sophisticated dynamic alpha calculation:
-```
-$\alpha$ = base_alpha × (blocks_since_start) / (blocks_since_start + halving_blocks)
-```
+The price EMA uses a sophisticated dynamic alpha calculation to ensures that new subnets have even slower price adaptation than mature ones.
 
-This ensures new subnets have even slower price adaptation than mature ones.
-
-**Benefits**:
-- **Attack Resistance**: Prevents pump-and-dump schemes from manipulating emissions
-- **Market Stability**: Filters out short-term price volatility
-- **Fair Distribution**: Ensures emission advantages must be sustained over long periods
+$$
+\alpha = \frac{ \mathrm{base\_alpha} \times  \mathrm{blocks\_since\_start}}{\mathrm{blocks\_since\_start} + \mathrm{halving\_blocks}}
+$$
 
 See:
 - [Yuma Consensus/Coinbase emission source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L223)
@@ -72,4 +66,4 @@ This smoothing function ensures that relationships between validators and miners
 - **Individual Alpha**: Each validator-miner pair gets its own $\alpha$ value
 - **Response Time**: 1-13 blocks depending on consensus alignment (~12 seconds to 2.6 minutes)
 
-See [Liquid Alpha/Consensus-Based Weights](./subnets/consensus-based-weights)
+See [Liquid Alpha/Consensus-Based Weights](../subnets/consensus-based-weights)
