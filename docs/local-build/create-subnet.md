@@ -51,9 +51,15 @@ If you see a network rate limit error, you may need to adjust the `SubtensorInit
 
 See [Clone and tweak the Subtensor source](./deploy#clone-and-tweak-the-subtensor-source)
 
-### Burn cost
+### Subnet creation cost
 
-The burn cost for subnet creation is dynamic; it lowers gradually and doubles every time a subnet is created.
+The cost for subnet creation is dynamic; it lowers gradually and doubles every time a subnet is created.
+
+:::info
+Note that this is labeled "burn cost", even though technically the cost of subnet creation is *recycled*, rather than *burned*.
+
+See: [Glossary: Recycling and Burning](../glossary#recycling-and-burning)
+:::
 
 :::tip try it live
 

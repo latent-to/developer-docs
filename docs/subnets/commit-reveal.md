@@ -23,7 +23,7 @@ The [Immunity Period](../glossary.md#immunity-period) is the interval (measured 
 When creating a new subnet, ensure that the miner immunity period is larger than the commit reveal interval. When updating the immunity period or commit reveal interval hyperparameters for a subnet, use the following formula:
 
 ```
-new_immunity_period = (new_commit_reveal_interval - old_commit_reveal_interval) + old_immunity_period
+new_immunity_period = (new_commit_reveal_period x tempo - old_commit_reveal_period x tempo) + old_immunity_period
 ```
 
 See [Subnet Hyperparameters](./subnet-hyperparameters.md).
@@ -36,7 +36,11 @@ When commit reveal is enabled, it works as follows:
 
 2. Instead of publishing weights openly, an encrypted copy of these weights is committed to the blockchain, using an internal method called [`commit_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/commit_weights/index.html).
 
-3. A waiting interval, specified as a number of blocks, elapses. Subnet owners configure this interval with the subnet hyperparameter `commit_reveal_weights_interval`.
+3. A waiting interval, specified as a number of tempos, elapses. Subnet owners configure this interval with the subnet hyperparameter `commit_reveal_period`.
+
+:::tip Tempo is a hyperparameter
+The subnet's tempo is a hyperparameter. Subnet owners cannot modify this parameter, which defaults to `360` blocks.
+:::
 
 4. After this interval has elapsed, the unencrypted weights are automatically revealed by the chain, using [Drand time-lock encryption](https://drand.love/docs/timelock-encryption/).
 
@@ -64,7 +68,7 @@ style={{width: 750}}
 As a subnet owner, set the below hyperparameters to use the commit reveal feature:
 
 1. `commit_reveal_weights_enabled` (boolean): Set this to `True` to activate the commit reveal feature for the subnet. Default value is `False`.
-2. `commit_reveal_weights_interval` (int): Set this to an integer number. This is the number of subnet tempos to elapse before revealing the weights by submitting them again to the blockchain, but now openly for everyone to see. Default value is `1`.
+2. `commit_reveal_period` (int): Set this to an integer number. This is the number of subnet tempos to elapse before revealing the weights by submitting them again to the blockchain, but now openly for everyone to see. Default value is `1`.
 
 See [Setting subnet hyperparameters](subnet-hyperparameters#setting-the-hyperparameters).
 
@@ -73,7 +77,7 @@ See [Commit Reveal and Immunity Period](#commit-reveal-and-immunity-period).
 :::
 
 
-Weights will be revealed immediately at the beginning of the tempo after the `commit_reveal_weights_interval`. For example, if `commit_reveal_weights_interval` value is set to `3`, then the reveal will occur at the beginning of the fourth tempo from the current tempo. The current tempo is counted as the first tempo. See the below diagram for this example: 
+Weights will be revealed immediately at the beginning of the tempo after the `commit_reveal_period`. For example, if `commit_reveal_period` value is set to `3`, then the reveal will occur at the beginning of the fourth tempo from the current tempo. The current tempo is counted as the first tempo. See the below diagram for this example: 
 
 <center>
 <ThemedImage

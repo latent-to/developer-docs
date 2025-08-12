@@ -4,7 +4,7 @@ title: "Glossary"
 
 # Glossary
 
-## A 
+## A
 
 ### Active UID
 
@@ -40,7 +40,7 @@ A digital wallet that holds the core ownership in the Bittensor network and serv
 
 ### Block
 
-A unit of data in the Bittensor blockchain, containing a collection of transactions and a unique identifier (block hash). A single block is processed every 12 seconds in the Bittensor blockchain. 
+A unit of data in the Bittensor blockchain, containing a collection of transactions and a unique identifier (block hash). A single block is processed every 12 seconds in the Bittensor blockchain.
 
 **See also:** [Subtensor API](./sdk/subtensor-api.md)
 
@@ -65,7 +65,9 @@ The commit reveal feature is designed to solve the weight-copying problem by giv
 **See also:** [Commit Reveal](./subnets/commit-reveal.md)
 
 ### Consensus Score
+
 <!-- To fix: immunity period -->
+
 The consensus score is calculated as the stake-weighted median of all weights assigned to a specific neuron by validators. This creates a consensus threshold that filters out outlier weights, ensuring that only weights near the median consensus are used in final rank calculations.
 
 **See also:** [Yuma Consensus](./yuma-consensus.md), [Consensus-Based Weights](./subnets/consensus-based-weights.md)
@@ -73,29 +75,34 @@ The consensus score is calculated as the stake-weighted median of all weights as
 #### Mathematical Definition:
 
 For each neuron $j$, the consensus score $C_j$ is calculated as:
+
 $$
 C_j = \text{weighted\_median}(\{w_{ij} \mid i \in \text{validators}\}, \{s_i \mid i \in \text{validators}\}, \kappa)
 $$
 
 Where:
+
 - $w_{ij}$ is the weight assigned by validator $i$ to neuron $j$
 - $s_i$ is the stake of validator $i$
 - $\kappa$ is the consensus majority ratio (typically 51%)
 - $\text{weighted\_median}$ is the stake-weighted median function
 
 Calculation Process:
+
 1. **Weight collection**: Gather all weights assigned to each neuron by validators
 2. **Stake weighting**: Apply stake weights to validator opinions
 3. **Median calculation**: Find stake-weighted median using κ parameter (typically 51%)
 4. **Threshold establishment**: Consensus score becomes clipping threshold for weights
 
 Properties and Interpretation:
+
 - **Range**: [0, 1] normalized values
 - **High Consensus**: Values close to 1 indicate strong validator agreement
 - **Low Consensus**: Values close to 0 indicate weak validator agreement
 - **Outlier Detection**: Weights below consensus score are clipped to 0
 
 Network Security Properties:
+
 - **Anti-Manipulation**: Consensus filtering prevents weight manipulation by outliers
 - **Stake-Weighted**: Higher stake validators have more influence in consensus
 - **Dynamic Threshold**: Consensus adapts to changing network conditions
@@ -104,24 +111,27 @@ Network Security Properties:
 #### Relationship to Other Metrics
 
 **Consensus vs Trust:**
+
 - **Consensus**: Stake-weighted median of weights (consensus threshold)
 - **Trust**: Ratio of final rank to pre-rank (consensus alignment impact)
 - **Relationship**: Consensus determines weight clipping, Trust measures the impact
 
 **Consensus vs Ranks:**
+
 - **Consensus**: Threshold for weight filtering
 - **Ranks**: Final performance scores after consensus filtering
 - **Relationship**: Consensus influences rank calculation through weight clipping
 
 **Consensus vs Validator Trust:**
+
 - **Consensus**: Per-neuron consensus thresholds
 - **Validator Trust**: Sum of clipped weights set by each validator
 - **Relationship**: Validator trust measures validator influence in consensus
 
-**Source**: 
+**Source**:
+
 - [`bittensor/bittensor/core/metagraph.py:360-372`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/metagraph.py#L360-372)
 - [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:595`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L595)
-
 
 ## D
 
@@ -137,15 +147,13 @@ The amount of TAO staked by the delegate themselves.
 
 **See also:** [Managing Stake with btcli](./staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](./staking-and-delegation/managing-stake-sdk.md)
 
-
-
 ### Delegation
 
 Also known as staking, delegating TAO to a validator (who is thereby the delegate), increases the validator's stake and secure a validator permit.
 
 **See also:** [Delegation](./staking-and-delegation/delegation.md), [Managing Stake with btcli](./staking-and-delegation/managing-stake-btcli.md)
 
-### Dendrite  
+### Dendrite
 
 A client instance used by subnet validators and subnet miners to transmit information to axons on subnet miners and subnet validators. Dendrites communicate with axons using the server-client (Axon-dendrite) protocol.
 
@@ -157,7 +165,7 @@ The process of removing a subnet miner or a subnet validator from the subnet due
 
 **See also:** [Miner Deregistration](./miners/#miner-deregistration), [Subnet Miners](./miners/)
 
-## E 
+## E
 
 ### EdDSA Cryptographic Keypairs
 
@@ -220,7 +228,7 @@ A development-only configuration that accelerates block production to 250ms inte
 
 **See also:** [Create a local instance](./local-build/deploy.md?local-chain=docker#2-run-the-container)
 
-## H 
+## H
 
 ### Hotkey
 
@@ -234,7 +242,7 @@ Authentication mechanism for delegates and nominators and for delegates particip
 
 **See also:** [Coldkey-Hotkey Security](./getting-started/coldkey-hotkey-security.md), [Working with Keys](./working-with-keys.md)
 
-## I 
+## I
 
 ### Immunity Period
 
@@ -254,7 +262,17 @@ A system that drives the behavior of subnet miners and governs consensus among s
 
 **See also:** [Anatomy of Incentive Mechanism](./learn/anatomy-of-incentive-mechanism.md), [Understanding Subnets](./subnets/understanding-subnets.md)
 
-## L 
+### Issuance
+
+The total amount of TAO circulating in the Bittensor network. Includes TAO that is help in wallets and subnet liquidity pools, as well as TAO that is locked as subnet registration fees.
+
+This can be viewed on Bittensor explorers such as [TAO.app](https://tao.app) and [TAOstats](https://taostats.io).
+
+To query it directly from the change, see: [Subtensor Storage Query Example: Total Issuance](/subtensor-nodes/subtensor-storage-query-examples#totalissuance)
+
+See also: [Recycling, burning, and locking](#recycling-burning-and-locking)
+
+## L
 
 ### Lite Node
 
@@ -280,7 +298,7 @@ In the context of machine learning, a mathematical function that measures the di
 
 **See also:** [Anatomy of Incentive Mechanism](./learn/anatomy-of-incentive-mechanism.md), [Understanding Subnets](./subnets/understanding-subnets.md)
 
-## M 
+## M
 
 ### Mainchain
 
@@ -306,7 +324,7 @@ A sequence of words used to regenerate keys, in case of loss, and restore coldke
 
 **See also:** [Handle Seed Phrase](./keys/handle-seed-phrase.md), [Working with Keys](./working-with-keys.md)
 
-## N 
+## N
 
 ### NaCl Format
 
@@ -328,8 +346,7 @@ Neurons participate in the network through axon servers (miners) and dendrite cl
 
 **See also:** [Understanding Neurons](./learn/neurons.md), [Subnet Validators](./validators/), [Subnet Miners](./miners/), [NeuronInfo class](pathname:///python-api/html/autoapi/bittensor/core/chain_data/neuron_info/index.html)
 
-
-## N 
+## N
 
 ### Nominate
 
@@ -349,7 +366,7 @@ A development-only configuration that adheres to Subtensor’s default 12-second
 
 **See also:** [Create a local instance](./local-build/deploy.md?local-chain=docker#2-run-the-container)
 
-## O 
+## O
 
 ### Objective Function
 
@@ -357,7 +374,7 @@ In the context of machine learning and subnet operations, this refers to the goa
 
 **See also:** [Anatomy of Incentive Mechanism](./learn/anatomy-of-incentive-mechanism.md), [Understanding Subnets](./subnets/understanding-subnets.md)
 
-## P 
+## P
 
 ### Private Key
 
@@ -389,7 +406,7 @@ A publicly accessible node in the Bittensor network that can be run as a lite no
 
 **See also:** [Subtensor Nodes](./subtensor-nodes/), [Managing Subtensor Connections](./sdk/managing-subtensor-connections.md)
 
-## R 
+## R
 
 ### RAO
 
@@ -403,28 +420,31 @@ This metagraph property represents the final aggregate judgment of a each miner,
 
 Ranks are calculated as the stake-weighted sum of consensus-clipped weights and directly determine emissions to miners.
 
-
 **See also:** [Emissions](./emissions.md), [Yuma Consensus](./yuma-consensus.md), [Subnet Metagraph](./subnets/metagraph)
 
 **Relationship to Other Metrics:**
+
 - **Ranks vs Consensus**: Ranks are calculated using consensus-clipped weights
 - **Ranks vs Trust**: Trust measures how much consensus clipping affected the rank
 - **Ranks vs Incentive**: Ranks are normalized to become incentive values
 - **Ranks vs Validator Trust**: Validator trust measures validator influence in consensus
 
 **Calculation Process:**
+
 1. **Pre-ranks**: Initial stake-weighted sum of all weights before consensus filtering
 2. **Consensus calculation**: Stake-weighted median of weights per neuron (consensus threshold)
 3. **Weight clipping**: Weights clipped at consensus threshold to remove outliers
 4. **Final ranks**: Stake-weighted sum of clipped weights (the rank value)
 
 **Properties and Interpretation:**
+
 - **Range**: [0, 1] normalized values after final normalization
 - **High Rank**: Values close to 1 indicate strong consensus-based performance
 - **Low Rank**: Values close to 0 indicate weak consensus-based performance
 - **Incentive Distribution**: Ranks directly determine incentive allocation to miner neurons
 
 **Network Security Properties:**
+
 - **Consensus-Based**: Ranks reflect network consensus rather than individual validator opinions
 - **Outlier Protection**: Consensus clipping prevents manipulation by outlier weights
 - **Stake-Weighted**: Higher stake validators have more influence in rank calculation
@@ -435,29 +455,41 @@ For each neuron $j$, the rank $R_j$ is calculated as:
 $$R_j = \sum_{i \in \text{validators}} S_i \cdot \overline{W_{ij}}$$
 
 Where:
+
 - $S_i$ is the stake of validator $i$
 - $\overline{W_{ij}}$ is the consensus-clipped weight from validator $i$ to neuron $j$
 - The sum is taken over all validators in the subnet
 
-**Source**: 
+**Source**:
+
 - [`bittensor/bittensor/core/metagraph.py:325-331`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/metagraph.py#L325-331)
 - [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:605`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L605)
 
+### Recycling and burning
 
-### Recycling, burning, and locking
+Tokens (TAO and subnet-specific alpha) can be 'removed from circulation', meaning these tokens exist in neither wallet nor liquidity pool, and cannot be transacted. This can happen in two ways:
 
-"Recycling TAO" means that this TAO is put back into the Bittensor emissions system. Instead of minting new TAO this recycled TAO that is in the recycle bin will be used again in the new emissions.
+- When tokens are **recycled**, they are subtracted from the chain's record of token issuance (`TotalIssuance`), so effectively the same quantity of tokens can be emitted again. 
 
-This happens in two cases:
+- In contrast, when tokens are **burned** they exist in no wallet and no pool and can no longer be transacted; however they are still included in the record of token issuance, so they will not be re-emitted, and in effect will forever remain as a quantity of *missing* tokens, a difference between issuance and the effective quantity in circulation.
 
-- When you register either as a subnet validator or a subnet miner and get a `UID` in return, the registration cost TAO you pay is recycled. 
-- Emissions are recycled for those subnets that have registration turned off or paused.
+#### Recycling
 
-When TAO is burned it is permanently removed from circulation, reducing total supply.
+Tokens are recycled in several cases in Bittensor operations:
 
-Locked TAO is neither recycled nor burned, but held unspent, without the ability to move it until it is unlocked. The cost for subnet registration is locked and returned if the subnet is deregistered.
+- **All transaction fees are recycled**: When transaction fees are collected, they are deducted from `TotalIssuance`, effectively recycling them back into the system for future emission. See [Transaction Fees in Bittensor](./fees)
+- **Subnet Creation fees**: When a new subnet is created, the cost is recycled, except for one TAO, which is used to initialize the subnet's TAO liquidity pool.
+- **Neuron Registration fees**: When a user registers a hotkey on a subnet to participate as a miner or validator, they are charged a registration fee in TAO. Alpha tokens worth the current swap value of the fee are taken from the subnet's alpha liquidity pool and recycled.
+- **Extrinsic transaction**: Users can manually recycle alpha tokens using the `recycle_alpha` extrinsic, which reduces both the user's stake and the subnet's `SubnetAlphaOut` tracker.
 
-**See also:** [Emissions](./emissions.md), [Subnet Miners](./miners/), [Subnet Validators](./validators/)
+#### Burning
+
+Subnet-specific alpha tokens are burned in several contexts:
+
+- **Creator emissions burning**: Alpha emissions for mining on a subnet are automatically burned if they are emitted to the hotkey with creator permissions on the subnet. This allows validators to burn some or all of the subnet's emissions to prevent token inflation (by weighting the subnet creator hotkey).
+- **Extrinsic transaction**: Alpha can be burned on demand using the `burn_alpha` Subtensor extrinsic. Unlike recycling, burning does not reduce `SubnetAlphaOut`.
+- **Root Subnet automated burning**: Subnet Zero (Root Subnet) alpha tokens are burned under specific economic conditions to maintain system stability.
+
 
 ### Regenerating a Key
 
@@ -471,13 +503,27 @@ The process of registering keys with a subnet and purchasing a UID slot.
 
 **See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/), [Working with Subnets](./subnets/working-with-subnets.md)
 
-## S 
+### Root Subnet/Subnet Zero
+
+Subnet Zero a.k.a. the root subnet is a special subnet. No miners can register on subnet zero, and no validation work is performed. However validators can register, and $\tau$-holders can stake to those validators, as with any other subnet. This offers a mechanism for $\tau$-holders to stake $\tau$ into validators in a subnet-agnostic way. This works because the weight of a validator in a subnet includes both their share of that subnet's $\alpha$ and their share of staked TAO in Subnet Zero.
+
+## S
 
 ### SS58 Encoded
 
 A compact representation of public keys corresponding to the wallet's coldkey and hotkey, used as wallet addresses for secure TAO transfers.
 
 **See also:** [Working with Keys](./working-with-keys.md), [Wallets](./getting-started/wallets.md)
+
+### Slippage
+
+In the context of an automated market maker (AMM), slippage is the impact on the tokens acquired in a trade due to the change in price from the trade transaction itself.
+
+In Bittensor, each subnet's alpha token is traded on a constant product AMM. When you stake TAO to receive alpha (or unstake alpha to receive TAO), your transaction changes the token price, resulting in receiving less than the current market rate X the quantity of the token you are inputting.
+
+Larger transactions cause more slippage. Bittensor provides slippage protection through tolerance limits and partial execution options.
+
+**See:** [Understanding Pricing and Anticipating Slippage](./learn/slippage.md)
 
 ### Senate
 
@@ -487,13 +533,11 @@ A group of elected delegates formed from the top K delegate hotkeys, responsible
 
 ### Stake
 
-The amount of currency tokens delegated to a validator UID in a subnet. Includes both self-stake (from the validator's own cold-key) and stake delegated from others. 
+The amount of currency tokens delegated to a validator UID in a subnet. Includes both self-stake (from the validator's own cold-key) and stake delegated from others.
 
 Stake determines a validator's weight in consensus as well as their emissions.
 
 **See also:** [Managing Stake with btcli](./staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](./staking-and-delegation/managing-stake-sdk.md), [Delegation](./staking-and-delegation/delegation.md)
-
-
 
 ### Stake Weight
 
@@ -501,9 +545,9 @@ The computed total stake value for a validator that determines their consensus p
 
 **See also:** [TAO Weight](#tao-weight), [Understanding Subnets](./subnets/understanding-subnets.md)
 
-
 **Mathematical Definition:**
 For a validator with alpha stake $\alpha$ and TAO stake $\tau$, the stake weight $W$ is calculated as:
+
 $$
 W = {\alpha + \tau \ \times w_{\tau}}
 $$
@@ -511,16 +555,19 @@ $$
 Where $w_{\tau}$ is the global TAO weight parameter (currently 0.18)
 
 A validator's relative influence in a subnet is calculated as:
+
 $$
 \text{Relative Stake Weight} = \frac{\text{Stake Weight}_i}{\sum_{v \in \text{validators}} \text{Stake Weight}_v}
 $$
 
 **Consensus Power:**
+
 - **Weight Setting**: Higher stake weight means more influence when setting weights
 - **Validator Permits**: Stake weight determines eligibility for validator permits
 - **Bond Formation**: Stake weight influences bond calculations and retention
 
 **Validator Emissions:**
+
 - **Relative Distribution**: Higher stake weight -> higher emission share
 
 **Code References:**
@@ -528,10 +575,9 @@ $$
 - **Yuma Consensus**: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:530`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L530)
 - **Validator dividend distribution**: [`subtensor/pallets/subtensor/src/coinbase/run_coinbase.rs:165`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/run_coinbase.rs#L165)
 
-
 ### Staking
 
-The process of attaching TAO to a hotkey, i.e., locking TAO to a hotkey, to participate as a subnet validator, and to secure a validator permit.
+The process of attaching TAO to a validator hotkey, i.e., locking TAO to a subnet validator's hotkey to increase their total stake and increase their consensus power and share of dividends.
 
 **See also:** [Managing Stake with btcli](./staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](./staking-and-delegation/managing-stake-sdk.md), [Delegation](./staking-and-delegation/delegation.md)
 
@@ -549,7 +595,7 @@ The framework that governs the behavior of subnet miners and ensures consensus a
 
 ### Subnet Miner
 
-The task-performing entity within a Bittensor subnet. A subnet miner is a type of node in a Bittensor subnet that is connected only to subnet validators. Subnet miners are isolated from the external world and communicate bidirectionally with subnet validators. A subnet miner is responsible for performing tasks given to them by the subnet validators in that subnet. 
+The task-performing entity within a Bittensor subnet. A subnet miner is a type of node in a Bittensor subnet that is connected only to subnet validators. Subnet miners are isolated from the external world and communicate bidirectionally with subnet validators. A subnet miner is responsible for performing tasks given to them by the subnet validators in that subnet.
 
 **See also:** [Subnet Miner Documentation](./miners/)
 
@@ -603,7 +649,7 @@ A data object used by subnet validators and subnet miners as the main vehicle to
 
 **See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/)
 
-## T 
+## T
 
 ### TAO ($\tau$)
 
@@ -616,9 +662,10 @@ The cryptocurrency of the Bittensor network, used to incentivize participation i
 A global parameter (currently set to 0.18) that determines the relative influence of TAO stake versus alpha stake when calculating a validator's total stake weight, a critical value that influence's a validator's consensus power and emissions.
 
 **See also:** [Stake Weight](#stake-weight)
+
 ### Tempo
 
-A 360-block period during which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo occurs every 4320 seconds or 72 minutes. 
+A 360-block period during which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo occurs every 4320 seconds or 72 minutes.
 
 **See also:** [Yuma Consensus](./yuma-consensus.md), [Emissions](./emissions.md)
 
@@ -640,31 +687,35 @@ In the Yuma Consensus algorithm, trust represents how much a miner's rank was af
 
 **See also:** [Yuma Consensus](./yuma-consensus.md), [Subnet Metagraph](./subnets/metagraph)
 
-
 **Mathematical Definition:**
 For each neuron $j$, the trust $T_j$ is calculated as:
+
 $$
 T_j = \frac{R_j}{P_j}
 $$
 
 Where:
+
 - $R_j$ is the final rank after consensus clipping
 - $P_j$ is the pre-rank before consensus clipping
 - The ratio indicates the proportion of original support that survived consensus filtering
 
 Interpretation:
+
 - **Range**: [0, 1] where 1.0 indicates perfect consensus alignment
 - **`Trust = 1.0`**: Neuron's rank unchanged by consensus (high consensus alignment)
 - **`Trust < 1.0`**: Neuron's rank reduced by consensus clipping (lower value means more reduction)
 - **`Trust = 0.0`**: Neuron's rank eliminated by consensus (no consensus support)
 
 Calculation Process:
+
 1. **Pre-ranks calculation**: $P_j = \sum_{i} S_i \cdot W_{ij}$ (stake-weighted sum of all weights)
 2. **Consensus filtering**: Weights clipped at consensus threshold to remove outliers
 3. **Final ranks calculation**: $R_j = \sum_{i} S_i \cdot \overline{W_{ij}}$ (stake-weighted sum of clipped weights)
 4. **Trust calculation**: $T_j = R_j / P_j$ (ratio of final to pre-rank)
 
 **Relationship to Other Metrics:**
+
 - **Trust vs Consensus**: Trust measures the impact of consensus filtering
 - **Trust vs Ranks**: Trust is the ratio of final rank to pre-rank
 - **Trust vs Validator Trust**: Trust is per-neuron, Validator Trust is per-validator
@@ -672,26 +723,21 @@ Calculation Process:
 
 **Metric Comparison Table**
 
-| Metric | Purpose | Calculation | Range | Interpretation |
-|--------|---------|-------------|-------|----------------|
-| **Consensus** | Consensus threshold | Stake-weighted median of weights per neuron | [0, 1] | Higher = stronger validator agreement |
-| **Ranks** | Performance scoring | Stake-weighted sum of clipped weights | [0, 1] | Higher = better performance after consensus |
-| **Trust** | Consensus alignment | Final rank / Pre-rank | [0, 1] | 1.0 = no clipping, < 1.0 = some clipping |
-| **Validator Trust** | Validator influence | Sum of clipped weights per validator | [0, 1] | Higher = more consensus-aligned validator |
+| Metric              | Purpose             | Calculation                                 | Range  | Interpretation                              |
+| ------------------- | ------------------- | ------------------------------------------- | ------ | ------------------------------------------- |
+| **Consensus**       | Consensus threshold | Stake-weighted median of weights per neuron | [0, 1] | Higher = stronger validator agreement       |
+| **Ranks**           | Performance scoring | Stake-weighted sum of clipped weights       | [0, 1] | Higher = better performance after consensus |
+| **Trust**           | Consensus alignment | Final rank / Pre-rank                       | [0, 1] | 1.0 = no clipping, < 1.0 = some clipping    |
+| **Validator Trust** | Validator influence | Sum of clipped weights per validator        | [0, 1] | Higher = more consensus-aligned validator   |
 
-**Source**: 
+**Source**:
+
 - [`bittensor/bittensor/core/metagraph.py:380-393`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/metagraph.py#L380-393)
 - [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:608`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L608)
 
-
-
-
-
 The relationship between these metrics creates a feedback loop: consensus determines weight clipping, which affects ranks and trust, which influences validator trust, which feeds back into future consensus calculations. This system ensures that the network rewards neurons with strong validator agreement while penalizing those with controversial or outlier weight assignments, creating a robust mechanism for maintaining network quality and security.
 
-
-
-## U 
+## U
 
 ### UID Slot
 
@@ -699,7 +745,13 @@ A position occupied by a subnet miner or subnet validator within a subnet, ident
 
 **See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/), [Working with Subnets](./subnets/working-with-subnets.md)
 
-## V 
+### Unstaking
+
+The process of detaching TAO from a validator hotkey.
+
+**See also:** [Staking/Delegation overview](./staking-and-delegation/delegation.md)
+
+## V
 
 ### Validator Permit
 
@@ -713,10 +765,9 @@ A list of subnet IDs (netuids) indicating which subnets a delegate is authorized
 
 **See also:** [Validator Permits](#validator-permit), [Delegation](./staking-and-delegation/delegation.md), [Validator Requirements](./validators/index.md#requirements-for-validation)
 
-
 ### Validator
 
-A type of node in a subnet that creates tasks, evaluates the performance of subnet miners and sets weights based on their output. A subnet validator is connected only to subnet miners and to the external world. Subnet validators receive inputs from the external world and communicate bidirectionally with subnet miners. 
+A type of node in a subnet that creates tasks, evaluates the performance of subnet miners and sets weights based on their output. A subnet validator is connected only to subnet miners and to the external world. Subnet validators receive inputs from the external world and communicate bidirectionally with subnet miners.
 
 **See also:** [Subnet Validators](./validators/), [Validators btcli Guide](./validators/validators-btcli-guide.md)
 
@@ -734,38 +785,43 @@ For each validator $i$, the validator trust $T_{vi}$ is calculated as:
 $$T_{vi} = \sum_{j \in \text{neurons}} \overline{W_{ij}}$$
 
 Where:
+
 - $\overline{W_{ij}}$ is the consensus-clipped weight from validator $i$ to neuron $j$
 - The sum is taken over all neurons in the subnet
 - Validator trust measures the total influence a validator has in consensus
 
 **Calculation Process:**
+
 1. **Weight setting**: Validators set weights to all neurons in the subnet
 2. **Consensus calculation**: Stake-weighted median of weights per neuron (consensus threshold)
 3. **Weight clipping**: Weights clipped at consensus threshold to remove outliers
 4. **Validator trust calculation**: Sum of all clipped weights set by each validator
 
 **Properties and Interpretation:**
+
 - **Range**: [0, 1] normalized values
 - **High Validator Trust**: Values close to 1 indicate strong consensus alignment
 - **Low Validator Trust**: Values close to 0 indicate outlier weight assignments
 - **Validator Influence**: Higher validator trust means more influence in consensus decisions
 
 **Network Security Properties:**
+
 - **Consensus Alignment**: Validator trust measures how well validators align with consensus
 - **Outlier Detection**: Low validator trust indicates potential manipulation attempts
 - **Validator Quality**: High validator trust indicates quality validation services
 - **Economic Incentives**: Validator trust influences validator rewards and bond retention
 
-**Source**: 
+**Source**:
+
 - [`bittensor/bittensor/core/metagraph.py:397-409`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/metagraph.py#L397-409)
 - [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:600`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L600)
 
 **Relationship to Other Metrics:**
+
 - **Validator Trust vs Trust**: Validator trust is per-validator, Trust is per-neuron
 - **Validator Trust vs Consensus**: Validator trust measures validator influence in consensus
 - **Validator Trust vs Ranks**: Validator trust influences rank calculation through consensus
 - **Validator Trust vs Bonds**: Validator trust affects bond retention and validator permits
-
 
 ### Validator-Miner Bonds
 
@@ -778,6 +834,7 @@ The instant bond $\Delta B_{ij}$ of validator $i$ to miner $j$ is calculated as:
 $$\Delta B_{ij} = \frac{S_i \cdot \widetilde{W_{ij}}}{\sum_{k \in \mathbb{V}} S_k \cdot \widetilde{W_{kj}}}$$
 
 Where:
+
 - $S_i$ is validator $i$'s stake
 - $\widetilde{W_{ij}}$ is the bond-weight (penalty-adjusted weight)
 - The denominator normalizes by the total bond-weight for miner $j$ across all validators
@@ -787,6 +844,7 @@ Bond-weights are penalized when validators overstate miner performance:
 $$\widetilde{W_{ij}} = (1-\beta)W_{ij} + \beta\overline{W_{ij}}$$
 
 Where:
+
 - $W_{ij}$ is the original weight set by validator $i$ for miner $j$
 - $\overline{W_{ij}}$ is the consensus-clipped weight
 - $\beta$ is the bonds penalty factor (configurable hyperparameter)
@@ -800,12 +858,14 @@ Where $\alpha$ is the EMA smoothing factor (see [Exponential Moving Average](#ex
 **Bond Mechanics and Design:**
 
 **Consensus Alignment:**
+
 - Validators who stay near consensus build stronger EMA bonds
 - Bonds are penalized when validators overstate miner performance
 - The EMA smooths out abrupt swings in validator behavior
 - Bonds incentivize consistent alignment with consensus
 
 **Bond Retention:**
+
 - Neurons retain bonds only if they keep validator permits
 - Bonds are cleared when neurons lose validator permits
 - Bonds are stored as sparse matrices in blockchain state
@@ -816,36 +876,43 @@ Where $\alpha$ is the EMA smoothing factor (see [Exponential Moving Average](#ex
 - Lower decay rates (smaller α) allow bonds to persist longer
 
 **Economic Alignment:**
+
 - Bonds create long-term relationships between validators and miners
 - Validators are incentivized to discover and support promising miners early
 - Bond strength reflects validator confidence in miner performance
 
 **Dynamic Adjustment:**
+
 - Bonds adapt to changing network conditions and consensus
 - EMA smoothing prevents exploitation of rapid bond changes
 - Bonds provide stability while allowing for network evolution
 
 **Retrieval:**
+
 - Bonds can be queried via the `bonds()` method in the Subtensor API
 - Metagraph includes bonds matrix accessible via `metagraph.B` property
 - Bonds are included in neuron information structures
 
 **Related hyperparameters:**
+
 - `bonds_penalty`: Controls penalty for out-of-consensus weights (0-65535)
 - `bonds_moving_avg`: Controls bond decay rate (typically 900,000)
 - `liquid_alpha_enabled`: Enables dynamic alpha adjustment for bonds
 
 **Validator Permits:**
+
 - Bonds are retained only by neurons with validator permits
 - Loss of validator permit clears all bonds for that neuron
 - Bonds align with permit retention for economic security
 
 **Emission Distribution:**
+
 - Bonds directly determine validator emission shares
 - Strong bonds lead to higher validator rewards
 - Bonds create market-based incentive alignment
 
 **Code References:**
+
 - [Bond calculation in epoch execution]https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs:631)
 - [EMA bond computation]https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/math.rs:1475)
 - [Bonds API method]https://github.com/opentensor/subtensor/blob/main/bittensor/core/async_subtensor.py:931)
@@ -861,8 +928,7 @@ Effectively, this represents the fee percentage that validators charge delegator
 
 **See also:** [Emissions](./emissions.md)
 
-
-## W 
+## W
 
 ### Wallet Address
 
@@ -890,10 +956,10 @@ The ranking weight vectors for each subnet are transmitted to the blockchain, wh
 
 **See also:** [Consensus-Based Weights](./subnets/consensus-based-weights.md), [Yuma Consensus](./yuma-consensus.md)
 
-## Y 
+## Y
 
 ### Yuma Consensus
 
-The consensus mechanism in the Bittensor blockchain that computes emissions to participants. 
+The consensus mechanism in the Bittensor blockchain that computes emissions to participants.
 
 **See also:** [Yuma Consensus](./yuma-consensus.md)

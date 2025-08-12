@@ -54,9 +54,11 @@ const sidebars = {
       link: { type: "doc", id: "staking-and-delegation/delegation" },
       items: [
         "staking-and-delegation/delegation",
-        "staking-and-delegation/stakers-btcli-guide",
+        "staking-and-delegation/stakers-btcli-guide",        
         "staking-and-delegation/managing-stake-btcli",
         "staking-and-delegation/managing-stake-sdk",
+        "learn/price-protection",
+        "learn/slippage",
         "staking-and-delegation/staking-polkadot-js",
         "staking-and-delegation/using-ledger-hw-wallet",
       ],
