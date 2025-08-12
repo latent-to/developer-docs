@@ -56,7 +56,11 @@ This smoothing function ensures that relationships between validators and miners
 **Default Mode**: Single $\alpha$ for all validator-miner pairs
 - **Default $\alpha$**: ~0.1 (10%)
 - **Response Time**: 7-22 blocks for significant changes (~1-4 minutes)
-- **Formula**: `Bond_EMA(t) = 0.1 × New_Bond + 0.9 × Previous_Bond_EMA`
+- **Formula**
+	The EMA of the bond (BondEMA)of a validator i for a miner j, at time t, is the $\alpha$-weighted average of the instantaneous bond and the previous timestep's BondEMA:	
+	$$
+	BondEMA_{ij}^{(t)} = \alpha \times \, InstantBond_{ij} + (1-\alpha)\,BondEMA_{ij}^{(t-1)}
+	$$
 
 #### Advanced Bond EMA (Liquid Alpha Enabled)
 **Consensus-Based Mode**: Dynamic $\alpha$ per validator-miner pair based on consensus alignment
