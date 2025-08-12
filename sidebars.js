@@ -102,6 +102,7 @@ const sidebars = {
       items: [
         "subnets/metagraph",
         "subnets/create-a-subnet",        
+        "subnets/crowdloans",
         "subnets/subnet-creators-btcli-guide",
         "subnets/subnet-hyperparameters",
         "subnets/working-with-subnets",
