@@ -12,7 +12,6 @@ Staking and unstaking operations incur weight-based fees as well as amount-based
 
 Reading the state of the chain is always free.
 
-
 ## Weight-Based Transaction Fees
 
 Many extrinsics in Bittensor are subject to a flat **weight-based fee**. In Polkadot-based chains like Subtensor (Bittensor's layer 1 blockchain), [weight](https://docs.polkadot.com/polkadot-protocol/glossary/#weight) is a measure of compute time.
@@ -22,6 +21,7 @@ Many extrinsics in Bittensor are subject to a flat **weight-based fee**. In Polk
 - **Payment source**: Free balance of the transaction sender
 - **Denomination**: TAO
 - **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
+    See: [Recycling and Burning](./glossary#recycling-and-burning)
 
 :::tip Planned reduction
 It is currently planned that the fee coefficient will be reduced to $0.005%$ (10x reduction).
@@ -57,7 +57,7 @@ It is currently planned that the fee coefficient will be reduced to $0.005%$ (10
 - [`recycle_alpha`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2027)
 - [`burn_alpha`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2052)
 
-## Child Hotkey Management
+### Child Hotkey Management
 
 - [`set_children`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1287)
 - [`set_childkey_take`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1021)
