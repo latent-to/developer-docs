@@ -44,7 +44,7 @@ $$
 $$
 
 :::info
-The value for **base_alpha** in the above is currently ~0.00003 for Bittensor mainnet ("finney").
+The value for **base_alpha** in the above is currently ~0.0003 for Bittensor mainnet ("finney").
 :::
 
 See:
