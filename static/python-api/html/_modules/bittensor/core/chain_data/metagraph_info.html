@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -335,9 +334,12 @@
                 <article class="bd-article">
                   
   <h1>Source code for bittensor.core.chain_data.metagraph_info</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
+<span class="kn">from</span> <span class="nn">bittensor.core</span> <span class="kn">import</span> <span class="n">settings</span>
 <span class="kn">from</span> <span class="nn">bittensor.core.chain_data.axon_info</span> <span class="kn">import</span> <span class="n">AxonInfo</span>
 <span class="kn">from</span> <span class="nn">bittensor.core.chain_data.chain_identity</span> <span class="kn">import</span> <span class="n">ChainIdentity</span>
 <span class="kn">from</span> <span class="nn">bittensor.core.chain_data.info_base</span> <span class="kn">import</span> <span class="n">InfoBase</span>
@@ -347,9 +349,11 @@
 <span class="kn">from</span> <span class="nn">bittensor.utils.balance</span> <span class="kn">import</span> <span class="n">Balance</span><span class="p">,</span> <span class="n">fixed_to_float</span>
 
 
-<span class="c1"># to balance with unit (just shortcut)</span>
-<span class="k">def</span> <span class="nf">_tbwu</span><span class="p">(</span><span class="n">val</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">netuid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Balance</span><span class="p">:</span>
+<span class="c1"># to balance with unit (shortcut)</span>
+<span class="k">def</span> <span class="nf">_tbwu</span><span class="p">(</span><span class="n">val</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">netuid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Balance</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a Balance object from a value and unit.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="n">Balance</span><span class="o">.</span><span class="n">from_rao</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">netuid</span><span class="p">)</span>
 
 
@@ -360,10 +364,12 @@
 
 <div class="viewcode-block" id="process_nested">
 <a class="viewcode-back" href="../../../../autoapi/bittensor/core/chain_data/metagraph_info/index.html#bittensor.core.chain_data.metagraph_info.process_nested">[docs]</a>
-<span class="k">def</span> <span class="nf">process_nested</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">],</span> <span class="n">chr_transform</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">process_nested</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">],</span> <span class="n">chr_transform</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Processes nested data structures by applying a transformation function to their elements.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span>
                 <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">chr_transform</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
                 <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -372,7 +378,8 @@
             <span class="p">]</span>
         <span class="k">return</span> <span class="p">{}</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">chr_transform</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">chr_transform</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
 
 
 
@@ -390,8 +397,8 @@
     <span class="n">network_registered_at</span><span class="p">:</span> <span class="nb">int</span>
 
     <span class="c1"># Keys for owner.</span>
-    <span class="n">owner_hotkey</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># hotkey</span>
-    <span class="n">owner_coldkey</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># coldkey</span>
+    <span class="n">owner_hotkey</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>  <span class="c1"># hotkey</span>
+    <span class="n">owner_coldkey</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>  <span class="c1"># coldkey</span>
 
     <span class="c1"># Tempo terms.</span>
     <span class="n">block</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># block at call.</span>
@@ -480,6 +487,9 @@
         <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Balance</span><span class="p">]</span>
     <span class="p">]</span>  <span class="c1"># List of dividend payout in alpha via subnet.</span>
 
+    <span class="c1"># List of validators</span>
+    <span class="n">validators</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">decoded</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MetagraphInfo&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a MetagraphInfo object from decoded chain data.&quot;&quot;&quot;</span>
@@ -487,9 +497,20 @@
         <span class="n">_netuid</span> <span class="o">=</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;netuid&quot;</span><span class="p">]</span>
 
         <span class="c1"># Name and symbol</span>
-        <span class="n">decoded</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">()})</span>
-        <span class="n">decoded</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;symbol&quot;</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;symbol&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">()})</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;identities&quot;</span><span class="p">,</span> <span class="s2">&quot;identity&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">:=</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">):</span>
+            <span class="n">decoded</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()})</span>
+
+        <span class="k">if</span> <span class="n">symbol</span> <span class="o">:=</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;symbol&quot;</span><span class="p">):</span>
+            <span class="n">decoded</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;symbol&quot;</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()})</span>
+
+        <span class="n">ii_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;identity&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ii_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;identity&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;identities&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ii_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;identities&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ii_list</span><span class="p">:</span>
             <span class="n">raw_data</span> <span class="o">=</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
             <span class="n">processed</span> <span class="o">=</span> <span class="n">process_nested</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">_chr_str</span><span class="p">)</span>
             <span class="n">decoded</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">key</span><span class="p">:</span> <span class="n">processed</span><span class="p">})</span>
@@ -503,8 +524,16 @@
             <span class="n">identity</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
             <span class="n">network_registered_at</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;network_registered_at&quot;</span><span class="p">],</span>
             <span class="c1"># Keys for owner.</span>
-            <span class="n">owner_hotkey</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;owner_hotkey&quot;</span><span class="p">],</span>
-            <span class="n">owner_coldkey</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;owner_coldkey&quot;</span><span class="p">],</span>
+            <span class="n">owner_hotkey</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">decode_account_id</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;owner_hotkey&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;owner_hotkey&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">owner_coldkey</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">decode_account_id</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;owner_coldkey&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;owner_coldkey&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
             <span class="c1"># Tempo terms.</span>
             <span class="n">block</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;block&quot;</span><span class="p">],</span>
             <span class="n">tempo</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;tempo&quot;</span><span class="p">],</span>
@@ -521,15 +550,25 @@
             <span class="n">pending_alpha_emission</span><span class="o">=</span><span class="n">_tbwu</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;pending_alpha_emission&quot;</span><span class="p">],</span> <span class="n">_netuid</span><span class="p">),</span>
             <span class="n">pending_root_emission</span><span class="o">=</span><span class="n">_tbwu</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;pending_root_emission&quot;</span><span class="p">]),</span>
             <span class="n">subnet_volume</span><span class="o">=</span><span class="n">_tbwu</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;subnet_volume&quot;</span><span class="p">],</span> <span class="n">_netuid</span><span class="p">),</span>
-            <span class="n">moving_price</span><span class="o">=</span><span class="n">Balance</span><span class="o">.</span><span class="n">from_tao</span><span class="p">(</span>
-                <span class="n">fixed_to_float</span><span class="p">(</span><span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;moving_price&quot;</span><span class="p">),</span> <span class="mi">32</span><span class="p">)</span>
+            <span class="n">moving_price</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">Balance</span><span class="o">.</span><span class="n">from_tao</span><span class="p">(</span><span class="n">fixed_to_float</span><span class="p">(</span><span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;moving_price&quot;</span><span class="p">),</span> <span class="mi">32</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;moving_price&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
             <span class="p">),</span>
             <span class="c1"># Hparams for epoch</span>
             <span class="n">rho</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;rho&quot;</span><span class="p">],</span>
             <span class="n">kappa</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;kappa&quot;</span><span class="p">],</span>
             <span class="c1"># Validator params</span>
-            <span class="n">min_allowed_weights</span><span class="o">=</span><span class="n">u16tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;min_allowed_weights&quot;</span><span class="p">]),</span>
-            <span class="n">max_weights_limit</span><span class="o">=</span><span class="n">u16tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;max_weights_limit&quot;</span><span class="p">]),</span>
+            <span class="n">min_allowed_weights</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">u16tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;min_allowed_weights&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min_allowed_weights&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">max_weights_limit</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">u16tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;max_weights_limit&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;max_weights_limit&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
             <span class="n">weights_version</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;weights_version&quot;</span><span class="p">],</span>
             <span class="n">weights_rate_limit</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;weights_rate_limit&quot;</span><span class="p">],</span>
             <span class="n">activity_cutoff</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;activity_cutoff&quot;</span><span class="p">],</span>
@@ -538,15 +577,31 @@
             <span class="n">num_uids</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;num_uids&quot;</span><span class="p">],</span>
             <span class="n">max_uids</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;max_uids&quot;</span><span class="p">],</span>
             <span class="n">burn</span><span class="o">=</span><span class="n">_tbwu</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;burn&quot;</span><span class="p">]),</span>
-            <span class="n">difficulty</span><span class="o">=</span><span class="n">u64tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;difficulty&quot;</span><span class="p">]),</span>
+            <span class="n">difficulty</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">u64tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;difficulty&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;difficulty&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
             <span class="n">registration_allowed</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;registration_allowed&quot;</span><span class="p">],</span>
             <span class="n">pow_registration_allowed</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;pow_registration_allowed&quot;</span><span class="p">],</span>
             <span class="n">immunity_period</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;immunity_period&quot;</span><span class="p">],</span>
-            <span class="n">min_difficulty</span><span class="o">=</span><span class="n">u64tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;min_difficulty&quot;</span><span class="p">]),</span>
-            <span class="n">max_difficulty</span><span class="o">=</span><span class="n">u64tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;max_difficulty&quot;</span><span class="p">]),</span>
+            <span class="n">min_difficulty</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">u64tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;min_difficulty&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;min_difficulty&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">max_difficulty</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">u64tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;max_difficulty&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;max_difficulty&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
             <span class="n">min_burn</span><span class="o">=</span><span class="n">_tbwu</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;min_burn&quot;</span><span class="p">]),</span>
             <span class="n">max_burn</span><span class="o">=</span><span class="n">_tbwu</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;max_burn&quot;</span><span class="p">]),</span>
-            <span class="n">adjustment_alpha</span><span class="o">=</span><span class="n">u64tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;adjustment_alpha&quot;</span><span class="p">]),</span>
+            <span class="n">adjustment_alpha</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">u64tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;adjustment_alpha&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;adjustment_alpha&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
             <span class="n">adjustment_interval</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;adjustment_interval&quot;</span><span class="p">],</span>
             <span class="n">target_regs_per_interval</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;target_regs_per_interval&quot;</span><span class="p">],</span>
             <span class="n">max_regs_per_block</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;max_regs_per_block&quot;</span><span class="p">],</span>
@@ -556,37 +611,111 @@
             <span class="n">commit_reveal_period</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;commit_reveal_period&quot;</span><span class="p">],</span>
             <span class="c1"># Bonds</span>
             <span class="n">liquid_alpha_enabled</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;liquid_alpha_enabled&quot;</span><span class="p">],</span>
-            <span class="n">alpha_high</span><span class="o">=</span><span class="n">u16tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;alpha_high&quot;</span><span class="p">]),</span>
-            <span class="n">alpha_low</span><span class="o">=</span><span class="n">u16tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;alpha_low&quot;</span><span class="p">]),</span>
-            <span class="n">bonds_moving_avg</span><span class="o">=</span><span class="n">u64tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;bonds_moving_avg&quot;</span><span class="p">]),</span>
+            <span class="n">alpha_high</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">u16tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;alpha_high&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;alpha_high&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">alpha_low</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">u16tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;alpha_low&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;alpha_low&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">bonds_moving_avg</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">u64tf</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;bonds_moving_avg&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;bonds_moving_avg&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
             <span class="c1"># Metagraph info.</span>
-            <span class="n">hotkeys</span><span class="o">=</span><span class="p">[</span><span class="n">decode_account_id</span><span class="p">(</span><span class="n">ck</span><span class="p">)</span> <span class="k">for</span> <span class="n">ck</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;hotkeys&quot;</span><span class="p">,</span> <span class="p">[])],</span>
-            <span class="n">coldkeys</span><span class="o">=</span><span class="p">[</span><span class="n">decode_account_id</span><span class="p">(</span><span class="n">hk</span><span class="p">)</span> <span class="k">for</span> <span class="n">hk</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;coldkeys&quot;</span><span class="p">,</span> <span class="p">[])],</span>
+            <span class="n">hotkeys</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">decode_account_id</span><span class="p">(</span><span class="n">ck</span><span class="p">)</span> <span class="k">for</span> <span class="n">ck</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;hotkeys&quot;</span><span class="p">,</span> <span class="p">[])]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;hotkeys&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">coldkeys</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">decode_account_id</span><span class="p">(</span><span class="n">hk</span><span class="p">)</span> <span class="k">for</span> <span class="n">hk</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;coldkeys&quot;</span><span class="p">,</span> <span class="p">[])]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;coldkeys&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
             <span class="n">identities</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;identities&quot;</span><span class="p">],</span>
             <span class="n">axons</span><span class="o">=</span><span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;axons&quot;</span><span class="p">,</span> <span class="p">[]),</span>
             <span class="n">active</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;active&quot;</span><span class="p">],</span>
             <span class="n">validator_permit</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;validator_permit&quot;</span><span class="p">],</span>
-            <span class="n">pruning_score</span><span class="o">=</span><span class="p">[</span><span class="n">u16tf</span><span class="p">(</span><span class="n">ps</span><span class="p">)</span> <span class="k">for</span> <span class="n">ps</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pruning_score&quot;</span><span class="p">,</span> <span class="p">[])],</span>
+            <span class="n">pruning_score</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">u16tf</span><span class="p">(</span><span class="n">ps</span><span class="p">)</span> <span class="k">for</span> <span class="n">ps</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pruning_score&quot;</span><span class="p">,</span> <span class="p">[])]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pruning_score&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
             <span class="n">last_update</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;last_update&quot;</span><span class="p">],</span>
-            <span class="n">emission</span><span class="o">=</span><span class="p">[</span><span class="n">_tbwu</span><span class="p">(</span><span class="n">em</span><span class="p">,</span> <span class="n">_netuid</span><span class="p">)</span> <span class="k">for</span> <span class="n">em</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;emission&quot;</span><span class="p">,</span> <span class="p">[])],</span>
-            <span class="n">dividends</span><span class="o">=</span><span class="p">[</span><span class="n">u16tf</span><span class="p">(</span><span class="n">dv</span><span class="p">)</span> <span class="k">for</span> <span class="n">dv</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dividends&quot;</span><span class="p">,</span> <span class="p">[])],</span>
-            <span class="n">incentives</span><span class="o">=</span><span class="p">[</span><span class="n">u16tf</span><span class="p">(</span><span class="n">ic</span><span class="p">)</span> <span class="k">for</span> <span class="n">ic</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;incentives&quot;</span><span class="p">,</span> <span class="p">[])],</span>
-            <span class="n">consensus</span><span class="o">=</span><span class="p">[</span><span class="n">u16tf</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;consensus&quot;</span><span class="p">,</span> <span class="p">[])],</span>
-            <span class="n">trust</span><span class="o">=</span><span class="p">[</span><span class="n">u16tf</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span> <span class="k">for</span> <span class="n">tr</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;trust&quot;</span><span class="p">,</span> <span class="p">[])],</span>
-            <span class="n">rank</span><span class="o">=</span><span class="p">[</span><span class="n">u16tf</span><span class="p">(</span><span class="n">rk</span><span class="p">)</span> <span class="k">for</span> <span class="n">rk</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="p">[])],</span>
+            <span class="n">emission</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">_tbwu</span><span class="p">(</span><span class="n">em</span><span class="p">,</span> <span class="n">_netuid</span><span class="p">)</span> <span class="k">for</span> <span class="n">em</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;emission&quot;</span><span class="p">,</span> <span class="p">[])]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;emission&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">dividends</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">u16tf</span><span class="p">(</span><span class="n">dv</span><span class="p">)</span> <span class="k">for</span> <span class="n">dv</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dividends&quot;</span><span class="p">,</span> <span class="p">[])]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dividends&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">incentives</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">u16tf</span><span class="p">(</span><span class="n">ic</span><span class="p">)</span> <span class="k">for</span> <span class="n">ic</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;incentives&quot;</span><span class="p">,</span> <span class="p">[])]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;incentives&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">consensus</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">u16tf</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;consensus&quot;</span><span class="p">,</span> <span class="p">[])]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;consensus&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">trust</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">u16tf</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span> <span class="k">for</span> <span class="n">tr</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;trust&quot;</span><span class="p">,</span> <span class="p">[])]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;trust&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">rank</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">u16tf</span><span class="p">(</span><span class="n">rk</span><span class="p">)</span> <span class="k">for</span> <span class="n">rk</span> <span class="ow">in</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="p">[])]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rank&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
             <span class="n">block_at_registration</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;block_at_registration&quot;</span><span class="p">],</span>
-            <span class="n">alpha_stake</span><span class="o">=</span><span class="p">[</span><span class="n">_tbwu</span><span class="p">(</span><span class="n">ast</span><span class="p">,</span> <span class="n">_netuid</span><span class="p">)</span> <span class="k">for</span> <span class="n">ast</span> <span class="ow">in</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;alpha_stake&quot;</span><span class="p">]],</span>
-            <span class="n">tao_stake</span><span class="o">=</span><span class="p">[</span><span class="n">_tbwu</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span> <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;tao_stake&quot;</span><span class="p">]],</span>
-            <span class="n">total_stake</span><span class="o">=</span><span class="p">[</span><span class="n">_tbwu</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">_netuid</span><span class="p">)</span> <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;total_stake&quot;</span><span class="p">]],</span>
+            <span class="n">alpha_stake</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">_tbwu</span><span class="p">(</span><span class="n">ast</span><span class="p">,</span> <span class="n">_netuid</span><span class="p">)</span> <span class="k">for</span> <span class="n">ast</span> <span class="ow">in</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;alpha_stake&quot;</span><span class="p">]]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;alpha_stake&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">tao_stake</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">_tbwu</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span> <span class="o">*</span> <span class="n">settings</span><span class="o">.</span><span class="n">ROOT_TAO_STAKE_WEIGHT</span>
+                    <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;tao_stake&quot;</span><span class="p">]</span>
+                <span class="p">]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tao_stake&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">total_stake</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">_tbwu</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">_netuid</span><span class="p">)</span> <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;total_stake&quot;</span><span class="p">]]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;total_stake&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
             <span class="c1"># Dividend break down</span>
-            <span class="n">tao_dividends_per_hotkey</span><span class="o">=</span><span class="p">[</span>
-                <span class="p">(</span><span class="n">decode_account_id</span><span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">_tbwu</span><span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-                <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;tao_dividends_per_hotkey&quot;</span><span class="p">]</span>
-            <span class="p">],</span>
-            <span class="n">alpha_dividends_per_hotkey</span><span class="o">=</span><span class="p">[</span>
-                <span class="p">(</span><span class="n">decode_account_id</span><span class="p">(</span><span class="n">adphk</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">_tbwu</span><span class="p">(</span><span class="n">adphk</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">_netuid</span><span class="p">))</span>
-                <span class="k">for</span> <span class="n">adphk</span> <span class="ow">in</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;alpha_dividends_per_hotkey&quot;</span><span class="p">]</span>
-            <span class="p">],</span>
+            <span class="n">tao_dividends_per_hotkey</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="p">(</span><span class="n">decode_account_id</span><span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">_tbwu</span><span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+                    <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;tao_dividends_per_hotkey&quot;</span><span class="p">]</span>
+                <span class="p">]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tao_dividends_per_hotkey&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">alpha_dividends_per_hotkey</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="p">(</span><span class="n">decode_account_id</span><span class="p">(</span><span class="n">adphk</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">_tbwu</span><span class="p">(</span><span class="n">adphk</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">_netuid</span><span class="p">))</span>
+                    <span class="k">for</span> <span class="n">adphk</span> <span class="ow">in</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;alpha_dividends_per_hotkey&quot;</span><span class="p">]</span>
+                <span class="p">]</span>
+                <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;alpha_dividends_per_hotkey&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;validators&quot;</span><span class="p">]]</span>
+            <span class="k">if</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;validators&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -653,6 +782,92 @@
     <span class="n">tempo</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">weights_rate_limit</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">weights_version</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+
+<div class="viewcode-block" id="SelectiveMetagraphIndex">
+<a class="viewcode-back" href="../../../../autoapi/bittensor/core/chain_data/metagraph_info/index.html#bittensor.core.chain_data.metagraph_info.SelectiveMetagraphIndex">[docs]</a>
+<span class="k">class</span> <span class="nc">SelectiveMetagraphIndex</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">Netuid</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">Name</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">Symbol</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">Identity</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">NetworkRegisteredAt</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">OwnerHotkey</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">OwnerColdkey</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">Block</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">Tempo</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">LastStep</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">BlocksSinceLastStep</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">SubnetEmission</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">AlphaIn</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">AlphaOut</span> <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">TaoIn</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">AlphaOutEmission</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">AlphaInEmission</span> <span class="o">=</span> <span class="mi">16</span>
+    <span class="n">TaoInEmission</span> <span class="o">=</span> <span class="mi">17</span>
+    <span class="n">PendingAlphaEmission</span> <span class="o">=</span> <span class="mi">18</span>
+    <span class="n">PendingRootEmission</span> <span class="o">=</span> <span class="mi">19</span>
+    <span class="n">SubnetVolume</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">MovingPrice</span> <span class="o">=</span> <span class="mi">21</span>
+    <span class="n">Rho</span> <span class="o">=</span> <span class="mi">22</span>
+    <span class="n">Kappa</span> <span class="o">=</span> <span class="mi">23</span>
+    <span class="n">MinAllowedWeights</span> <span class="o">=</span> <span class="mi">24</span>
+    <span class="n">MaxWeightsLimit</span> <span class="o">=</span> <span class="mi">25</span>
+    <span class="n">WeightsVersion</span> <span class="o">=</span> <span class="mi">26</span>
+    <span class="n">WeightsRateLimit</span> <span class="o">=</span> <span class="mi">27</span>
+    <span class="n">ActivityCutoff</span> <span class="o">=</span> <span class="mi">28</span>
+    <span class="n">MaxValidators</span> <span class="o">=</span> <span class="mi">29</span>
+    <span class="n">NumUids</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">MaxUids</span> <span class="o">=</span> <span class="mi">31</span>
+    <span class="n">Burn</span> <span class="o">=</span> <span class="mi">32</span>
+    <span class="n">Difficulty</span> <span class="o">=</span> <span class="mi">33</span>
+    <span class="n">RegistrationAllowed</span> <span class="o">=</span> <span class="mi">34</span>
+    <span class="n">PowRegistrationAllowed</span> <span class="o">=</span> <span class="mi">35</span>
+    <span class="n">ImmunityPeriod</span> <span class="o">=</span> <span class="mi">36</span>
+    <span class="n">MinDifficulty</span> <span class="o">=</span> <span class="mi">37</span>
+    <span class="n">MaxDifficulty</span> <span class="o">=</span> <span class="mi">38</span>
+    <span class="n">MinBurn</span> <span class="o">=</span> <span class="mi">39</span>
+    <span class="n">MaxBurn</span> <span class="o">=</span> <span class="mi">40</span>
+    <span class="n">AdjustmentAlpha</span> <span class="o">=</span> <span class="mi">41</span>
+    <span class="n">AdjustmentInterval</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="n">TargetRegsPerInterval</span> <span class="o">=</span> <span class="mi">43</span>
+    <span class="n">MaxRegsPerBlock</span> <span class="o">=</span> <span class="mi">44</span>
+    <span class="n">ServingRateLimit</span> <span class="o">=</span> <span class="mi">45</span>
+    <span class="n">CommitRevealWeightsEnabled</span> <span class="o">=</span> <span class="mi">46</span>
+    <span class="n">CommitRevealPeriod</span> <span class="o">=</span> <span class="mi">47</span>
+    <span class="n">LiquidAlphaEnabled</span> <span class="o">=</span> <span class="mi">48</span>
+    <span class="n">AlphaHigh</span> <span class="o">=</span> <span class="mi">49</span>
+    <span class="n">AlphaLow</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">BondsMovingAvg</span> <span class="o">=</span> <span class="mi">51</span>
+    <span class="n">Hotkeys</span> <span class="o">=</span> <span class="mi">52</span>
+    <span class="n">Coldkeys</span> <span class="o">=</span> <span class="mi">53</span>
+    <span class="n">Identities</span> <span class="o">=</span> <span class="mi">54</span>
+    <span class="n">Axons</span> <span class="o">=</span> <span class="mi">55</span>
+    <span class="n">Active</span> <span class="o">=</span> <span class="mi">56</span>
+    <span class="n">ValidatorPermit</span> <span class="o">=</span> <span class="mi">57</span>
+    <span class="n">PruningScore</span> <span class="o">=</span> <span class="mi">58</span>
+    <span class="n">LastUpdate</span> <span class="o">=</span> <span class="mi">59</span>
+    <span class="n">Emission</span> <span class="o">=</span> <span class="mi">60</span>
+    <span class="n">Dividends</span> <span class="o">=</span> <span class="mi">61</span>
+    <span class="n">Incentives</span> <span class="o">=</span> <span class="mi">62</span>
+    <span class="n">Consensus</span> <span class="o">=</span> <span class="mi">63</span>
+    <span class="n">Trust</span> <span class="o">=</span> <span class="mi">64</span>
+    <span class="n">Rank</span> <span class="o">=</span> <span class="mi">65</span>
+    <span class="n">BlockAtRegistration</span> <span class="o">=</span> <span class="mi">66</span>
+    <span class="n">AlphaStake</span> <span class="o">=</span> <span class="mi">67</span>
+    <span class="n">TaoStake</span> <span class="o">=</span> <span class="mi">68</span>
+    <span class="n">TotalStake</span> <span class="o">=</span> <span class="mi">69</span>
+    <span class="n">TaoDividendsPerHotkey</span> <span class="o">=</span> <span class="mi">70</span>
+    <span class="n">AlphaDividendsPerHotkey</span> <span class="o">=</span> <span class="mi">71</span>
+    <span class="n">Validators</span> <span class="o">=</span> <span class="mi">72</span>
+
+<div class="viewcode-block" id="SelectiveMetagraphIndex.all_indices">
+<a class="viewcode-back" href="../../../../autoapi/bittensor/core/chain_data/metagraph_info/index.html#bittensor.core.chain_data.metagraph_info.SelectiveMetagraphIndex.all_indices">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">all_indices</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">member</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">SelectiveMetagraphIndex</span><span class="p">]</span></div>
+</div>
 
 </pre></div>
 

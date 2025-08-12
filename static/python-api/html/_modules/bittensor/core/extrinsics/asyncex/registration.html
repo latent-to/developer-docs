@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -347,7 +346,7 @@
 <span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="kn">from</span> <span class="nn">bittensor.utils</span> <span class="kn">import</span> <span class="n">unlock_key</span><span class="p">,</span> <span class="n">format_error_message</span>
+<span class="kn">from</span> <span class="nn">bittensor.utils</span> <span class="kn">import</span> <span class="n">unlock_key</span>
 <span class="kn">from</span> <span class="nn">bittensor.utils.btlogging</span> <span class="kn">import</span> <span class="n">logging</span>
 <span class="kn">from</span> <span class="nn">bittensor.utils.registration</span> <span class="kn">import</span> <span class="n">log_no_torch_error</span><span class="p">,</span> <span class="n">create_pow_async</span><span class="p">,</span> <span class="n">torch</span>
 
@@ -363,6 +362,7 @@
     <span class="n">wallet</span><span class="p">:</span> <span class="s2">&quot;Wallet&quot;</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Performs a burned register extrinsic call to the Subtensor chain.</span>
@@ -375,6 +375,9 @@
 <span class="sd">        wallet (bittensor_wallet.Wallet): The wallet to be registered.</span>
 <span class="sd">        wait_for_inclusion (bool): Whether to wait for the transaction to be included in a block. Default is False.</span>
 <span class="sd">        wait_for_finalization (bool): Whether to wait for the transaction to be finalized. Default is True.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Tuple[bool, Optional[str]]: A tuple containing a boolean indicating success or failure, and an optional error</span>
@@ -395,6 +398,7 @@
         <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
         <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
         <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+        <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
     <span class="p">)</span>
 
 
@@ -406,6 +410,7 @@
     <span class="n">netuid</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Registers the wallet to chain by recycling TAO.</span>
 
@@ -417,6 +422,9 @@
 <span class="sd">            returns ``False`` if the extrinsic fails to enter the block within the timeout.</span>
 <span class="sd">        wait_for_finalization (bool): If set, waits for the extrinsic to be finalized on the chain before returning</span>
 <span class="sd">            ``True``, or returns ``False`` if the extrinsic fails to be finalized within the timeout.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        success (bool): Flag is ``True`` if extrinsic was finalized or included in the block. If we did not wait for</span>
@@ -437,7 +445,7 @@
         <span class="sa">f</span><span class="s2">&quot;:satellite: [magenta]Checking Account on subnet[/magenta] [blue]</span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">[/blue][magenta] ...[/magenta]&quot;</span>
     <span class="p">)</span>
 
-    <span class="c1"># We could do this as_completed because we don&#39;t actually need old_balance and recycle</span>
+    <span class="c1"># We could do this as_completed because we don&#39;t need old_balance and recycle</span>
     <span class="c1"># if neuron is null, but the complexity isn&#39;t worth it considering the small performance</span>
     <span class="c1"># gains we&#39;d hypothetically receive in this situation</span>
     <span class="n">neuron</span><span class="p">,</span> <span class="n">old_balance</span><span class="p">,</span> <span class="n">recycle_amount</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
@@ -465,6 +473,7 @@
         <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
         <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
         <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+        <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
@@ -502,6 +511,7 @@
     <span class="n">pow_result</span><span class="p">:</span> <span class="s2">&quot;POWSolution&quot;</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Sends a (POW) register extrinsic to the chain.</span>
 
@@ -512,6 +522,9 @@
 <span class="sd">        pow_result (POWSolution): The PoW result to register.</span>
 <span class="sd">        wait_for_inclusion (bool): If ``True``, waits for the extrinsic to be included in a block. Default to `False`.</span>
 <span class="sd">        wait_for_finalization (bool): If ``True``, waits for the extrinsic to be finalized. Default to `True`.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        success (bool): ``True`` if the extrinsic was included in a block.</span>
@@ -536,6 +549,7 @@
         <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
         <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
         <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+        <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
     <span class="p">)</span>
 
 
@@ -555,6 +569,7 @@
     <span class="n">num_processes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">update_interval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">log_verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Registers the wallet to the chain.</span>
 
@@ -575,6 +590,9 @@
 <span class="sd">        num_processes: The number of processes to use to register.</span>
 <span class="sd">        update_interval: The number of nonces to solve between updates.</span>
 <span class="sd">        log_verbose: If `True`, the registration process will log more information.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        `True` if extrinsic was finalized or included in the block. If we did not wait for finalization/inclusion, the</span>
@@ -663,7 +681,7 @@
         <span class="c1"># pow successful, proceed to submit pow to chain for registration</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;:satellite: [magenta]Submitting POW...[/magenta]&quot;</span><span class="p">)</span>
-            <span class="c1"># check if pow result is still valid</span>
+            <span class="c1"># check if a pow result is still valid</span>
             <span class="k">while</span> <span class="ow">not</span> <span class="k">await</span> <span class="n">pow_result</span><span class="o">.</span><span class="n">is_stale_async</span><span class="p">(</span><span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">):</span>
                 <span class="n">result</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_do_pow_register</span><span class="p">(</span>
                     <span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">,</span>
@@ -672,6 +690,7 @@
                     <span class="n">pow_result</span><span class="o">=</span><span class="n">pow_result</span><span class="p">,</span>
                     <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
                     <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+                    <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
                 <span class="p">)</span>
 
                 <span class="n">success</span><span class="p">,</span> <span class="n">err_msg</span> <span class="o">=</span> <span class="n">result</span>
@@ -731,6 +750,7 @@
     <span class="n">wallet</span><span class="p">:</span> <span class="s2">&quot;Wallet&quot;</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registers a new subnetwork on the Bittensor blockchain asynchronously.</span>
@@ -740,6 +760,9 @@
 <span class="sd">        wallet (Wallet): The wallet to be used for subnet registration.</span>
 <span class="sd">        wait_for_inclusion (bool): If set, waits for the extrinsic to enter a block before returning true.</span>
 <span class="sd">        wait_for_finalization (bool): If set, waits for the extrinsic to be finalized on the chain before returning true.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: True if the subnet registration was successful, False otherwise.</span>
@@ -762,29 +785,25 @@
         <span class="p">},</span>
     <span class="p">)</span>
 
-    <span class="n">extrinsic</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">create_signed_extrinsic</span><span class="p">(</span>
-        <span class="n">call</span><span class="o">=</span><span class="n">call</span><span class="p">,</span> <span class="n">keypair</span><span class="o">=</span><span class="n">wallet</span><span class="o">.</span><span class="n">coldkey</span>
-    <span class="p">)</span>
-
-    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">submit_extrinsic</span><span class="p">(</span>
-        <span class="n">extrinsic</span><span class="p">,</span>
+    <span class="n">success</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">sign_and_send_extrinsic</span><span class="p">(</span>
+        <span class="n">call</span><span class="o">=</span><span class="n">call</span><span class="p">,</span>
+        <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
         <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
         <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+        <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">wait_for_finalization</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">wait_for_inclusion</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">is_success</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Failed to register subnet: </span><span class="si">{</span><span class="n">format_error_message</span><span class="p">(</span><span class="k">await</span><span class="w"> </span><span class="n">response</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">success</span><span class="p">(</span>
+            <span class="s2">&quot;:white_heavy_check_mark: [green]Successfully registered subnet[/green]&quot;</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="n">logging</span><span class="o">.</span><span class="n">success</span><span class="p">(</span>
-        <span class="s2">&quot;:white_heavy_check_mark: [green]Successfully registered subnet[/green]&quot;</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="kc">True</span></div>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to register subnet: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
 
 
 
@@ -798,11 +817,13 @@
     <span class="n">github_repo</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">subnet_contact</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">subnet_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">logo_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">discord</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">additional</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set the identity information for a given subnet.</span>
@@ -815,11 +836,15 @@
 <span class="sd">        github_repo (str): URL of the GitHub repository related to the subnet.</span>
 <span class="sd">        subnet_contact (str): Subnet&#39;s contact information, e.g., email or contact link.</span>
 <span class="sd">        subnet_url (str): The URL of the subnet&#39;s primary web portal.</span>
+<span class="sd">        logo_url (str): The URL of the logo&#39;s primary web portal.</span>
 <span class="sd">        discord (str): Discord server or contact for the subnet.</span>
 <span class="sd">        description (str): A textual description of the subnet.</span>
 <span class="sd">        additional (str): Any additional metadata or information related to the subnet.</span>
 <span class="sd">        wait_for_inclusion (bool): Whether to wait for the extrinsic inclusion in a block (default: False).</span>
 <span class="sd">        wait_for_finalization (bool): Whether to wait for the extrinsic finalization in a block (default: True).</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        tuple[bool, str]: A tuple where the first element indicates success or failure (True/False), and the second</span>
@@ -840,33 +865,34 @@
             <span class="s2">&quot;github_repo&quot;</span><span class="p">:</span> <span class="n">github_repo</span><span class="p">,</span>
             <span class="s2">&quot;subnet_contact&quot;</span><span class="p">:</span> <span class="n">subnet_contact</span><span class="p">,</span>
             <span class="s2">&quot;subnet_url&quot;</span><span class="p">:</span> <span class="n">subnet_url</span><span class="p">,</span>
+            <span class="s2">&quot;logo_url&quot;</span><span class="p">:</span> <span class="n">logo_url</span><span class="p">,</span>
             <span class="s2">&quot;discord&quot;</span><span class="p">:</span> <span class="n">discord</span><span class="p">,</span>
             <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
             <span class="s2">&quot;additional&quot;</span><span class="p">:</span> <span class="n">additional</span><span class="p">,</span>
         <span class="p">},</span>
     <span class="p">)</span>
 
-    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">submit_extrinsic</span><span class="p">(</span>
+    <span class="n">success</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">sign_and_send_extrinsic</span><span class="p">(</span>
         <span class="n">call</span><span class="o">=</span><span class="n">call</span><span class="p">,</span>
         <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
         <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
         <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+        <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">wait_for_finalization</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">wait_for_inclusion</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Identities for subnet </span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2"> are sent to the chain.&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">message</span>
 
-    <span class="k">if</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">is_success</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">success</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;:white_heavy_check_mark: [green]Identities for subnet[/green] [blue]</span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">[/blue] [green]are set.[/green]&quot;</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Identities for subnet </span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2"> are set.&quot;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">error_message</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">error_message</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;:cross_mark: Failed to set identity for subnet [blue]</span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">[/blue]: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Failed to set identity for subnet </span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;:cross_mark: Failed to set identity for subnet [blue]</span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">[/blue]: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Failed to set identity for subnet </span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 </pre></div>
 

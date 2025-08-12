@@ -176,7 +176,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -433,6 +432,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_commitment"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_commitment()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_current_block"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_current_block()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_current_weight_commit_info"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_current_weight_commit_info()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_current_weight_commit_info_v2"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_current_weight_commit_info_v2()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_delegate_by_hotkey"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_delegate_by_hotkey()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_delegate_identities"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_delegate_identities()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_delegate_take"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_delegate_take()</span></code></a></li>
@@ -462,6 +462,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_info_for_coldkey"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_stake_info_for_coldkey</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_movement_fee"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_stake_movement_fee()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_operations_fee"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_stake_operations_fee()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_weight"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_stake_weight()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_burn_cost"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_subnet_burn_cost()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_hyperparameters"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_subnet_hyperparameters()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_info"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_subnet_info()</span></code></a></li>
@@ -630,7 +631,7 @@ import asyncio</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.add_liquidity">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_liquidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">liquidity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price_low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price_high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.add_liquidity" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_liquidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">liquidity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price_low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price_high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.add_liquidity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.add_liquidity" title="Link to this definition">#</a></dt>
 <dd><p>Adds liquidity to the specified price range.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -758,10 +759,8 @@ subnet, or None if the query fails.</p>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Get all subnets at current block:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">subnets</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">all_subnets</span><span class="p">()</span>
-</pre></div>
-</div>
+<p># Get all subnets at current block
+subnets = await subtensor.all_subnets()</p>
 </div>
 </dd></dl>
 
@@ -773,7 +772,7 @@ subnet, or None if the query fails.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.blocks_since_last_step">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">blocks_since_last_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.blocks_since_last_step" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">blocks_since_last_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.blocks_since_last_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.blocks_since_last_step" title="Link to this definition">#</a></dt>
 <dd><p>Queries the blockchain to determine how many blocks have passed since the last epoch step for a specific
 subnet.</p>
 <dl class="field-list simple">
@@ -795,14 +794,10 @@ block.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Get blocks since last step for subnet 1:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">blocks</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">blocks_since_last_step</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Get blocks since last step at specific block:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">blocks</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">blocks_since_last_step</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Get blocks since last step for subnet 1
+blocks = await subtensor.blocks_since_last_step(netuid=1)</p>
+<p># Get blocks since last step at specific block
+blocks = await subtensor.blocks_since_last_step(netuid=1, block=1000000)</p>
 </div>
 </dd></dl>
 
@@ -826,14 +821,10 @@ block.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Get blocks since last update for UID 5 in subnet 1:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">blocks</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">blocks_since_last_update</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Check if neuron needs updating:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">blocks_since_update</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">blocks_since_last_update</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Get blocks since last update for UID 5 in subnet 1
+blocks = await subtensor.blocks_since_last_update(netuid=1, uid=5)</p>
+<p># Check if neuron needs updating
+blocks_since_update = await subtensor.blocks_since_last_update(netuid=1, uid=10)</p>
 </div>
 </dd></dl>
 
@@ -862,10 +853,8 @@ by subnet miners, and honest evaluation by subnet validators.</p>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Get bonds for subnet 1 at block 1000000:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bonds</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">bonds</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Get bonds for subnet 1 at block 1000000
+bonds = await subtensor.bonds(netuid=1, block=1000000)</p>
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
@@ -916,14 +905,12 @@ collection.</p>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">subtensor</span> <span class="o">=</span> <span class="n">AsyncSubtensor</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="s2">&quot;finney&quot;</span><span class="p">)</span>
-<span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-
-<span class="n">balance</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_balance</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="s2">&quot;5F...&quot;</span><span class="p">)</span>
-
-<span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre></div>
-</div>
+<p>subtensor = AsyncSubtensor(network=”finney”)
+await subtensor.initialize()</p>
+<p># Use the subtensor…
+balance = await subtensor.get_balance(address=”5F…”)</p>
+<p># Close when done
+await subtensor.close()</p>
 </div>
 </dd></dl>
 
@@ -953,14 +940,10 @@ can think of it as an expiration date for the transaction.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Commit some data to subnet 1:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">success</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">wallet</span><span class="o">=</span><span class="n">my_wallet</span><span class="p">,</span> <span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">&quot;Hello Bittensor!&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Commit with custom period:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">success</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">wallet</span><span class="o">=</span><span class="n">my_wallet</span><span class="p">,</span> <span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">&quot;Model update v2.0&quot;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Commit some data to subnet 1
+success = await subtensor.commit(wallet=my_wallet, netuid=1, data=”Hello Bittensor!”)</p>
+<p># Commit with custom period
+success = await subtensor.commit(wallet=my_wallet, netuid=1, data=”Model update v2.0”, period=100)</p>
 </div>
 <p>Note: See &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p>
 </dd></dl>
@@ -989,14 +972,10 @@ access only to stale weights. Copying stale weights should result in subnet vali
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Check if commit-reveal is enabled for subnet 1:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">enabled</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">commit_reveal_enabled</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Check at specific block:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">enabled</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">commit_reveal_enabled</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Check if commit-reveal is enabled for subnet 1
+enabled = await subtensor.commit_reveal_enabled(netuid=1)</p>
+<p># Check at specific block
+enabled = await subtensor.commit_reveal_enabled(netuid=1, block=1000000)</p>
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
@@ -1069,18 +1048,12 @@ for blockchain queries.</p>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Get hash for specific block:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">block_hash</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">determine_block_hash</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Use provided block hash:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">hash</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">determine_block_hash</span><span class="p">(</span><span class="n">block_hash</span><span class="o">=</span><span class="s2">&quot;0x1234...&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Reuse last block hash:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">hash</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">determine_block_hash</span><span class="p">(</span><span class="n">reuse_block</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Get hash for specific block
+block_hash = await subtensor.determine_block_hash(block=1000000)</p>
+<p># Use provided block hash
+hash = await subtensor.determine_block_hash(block_hash=”0x1234…”)</p>
+<p># Reuse last block hash
+hash = await subtensor.determine_block_hash(reuse_block=True)</p>
 </div>
 </dd></dl>
 
@@ -1113,14 +1086,10 @@ reuse_block.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Get difficulty for subnet 1:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">difficulty</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">difficulty</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Get difficulty at specific block:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">difficulty</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">difficulty</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Get difficulty for subnet 1
+difficulty = await subtensor.difficulty(netuid=1)</p>
+<p># Get difficulty at specific block
+difficulty = await subtensor.difficulty(netuid=1, block=1000000)</p>
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
@@ -1152,14 +1121,10 @@ or block.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Check if hotkey exists:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">exists</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">does_hotkey_exist</span><span class="p">(</span><span class="n">hotkey_ss58</span><span class="o">=</span><span class="s2">&quot;5F...&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Check at specific block:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">exists</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">does_hotkey_exist</span><span class="p">(</span><span class="n">hotkey_ss58</span><span class="o">=</span><span class="s2">&quot;5F...&quot;</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Check if hotkey exists
+exists = await subtensor.does_hotkey_exist(hotkey_ss58=”5F…”)</p>
+<p># Check at specific block
+exists = await subtensor.does_hotkey_exist(hotkey_ss58=”5F…”, block=1000000)</p>
 </div>
 </dd></dl>
 
@@ -1190,26 +1155,28 @@ dictionary (for named parameters).</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define parameter types</span>
-<span class="n">call_def</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;amount&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;u64&quot;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;coldkey_ss58&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;str&quot;</span><span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span>
-
-<span class="c1"># Encode parameters as a dictionary</span>
-<span class="n">params_dict</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1000000</span><span class="p">,</span>
-    <span class="s2">&quot;coldkey_ss58&quot;</span><span class="p">:</span> <span class="s2">&quot;5F...&quot;</span>
-<span class="p">}</span>
-<span class="n">encoded</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">encode_params</span><span class="p">(</span><span class="n">call_definition</span><span class="o">=</span><span class="n">call_def</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params_dict</span><span class="p">)</span>
-
-<span class="c1"># Or encode as a list (positional)</span>
-<span class="n">params_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000000</span><span class="p">,</span> <span class="s2">&quot;5F...&quot;</span><span class="p">]</span>
-<span class="n">encoded</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">encode_params</span><span class="p">(</span><span class="n">call_definition</span><span class="o">=</span><span class="n">call_def</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params_list</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Define parameter types
+call_def = {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“params”: [</dt><dd><p>{“name”: “amount”, “type”: “u64”},
+{“name”: “coldkey_ss58”, “type”: “str”}</p>
+</dd>
+</dl>
+<p>]</p>
+</div></blockquote>
+<p>}</p>
+<p># Encode parameters as a dictionary
+params_dict = {</p>
+<blockquote>
+<div><p>“amount”: 1000000,
+“coldkey_ss58”: “5F…”</p>
+</div></blockquote>
+<p>}
+encoded = await subtensor.encode_params(call_definition=call_def, params=params_dict)</p>
+<p># Or encode as a list (positional)
+params_list = [1000000, “5F…”]
+encoded = await subtensor.encode_params(call_definition=call_def, params=params_list)</p>
 </div>
 </dd></dl>
 
@@ -1262,14 +1229,13 @@ Default is None.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get all commitments for subnet 1</span>
-<span class="n">commitments</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_all_commitments</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="c1"># Iterate over all commitments</span>
-<span class="k">for</span> <span class="n">hotkey</span><span class="p">,</span> <span class="n">commitment</span> <span class="ow">in</span> <span class="n">commitments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hotkey </span><span class="si">{</span><span class="n">hotkey</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">commitment</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Get all commitments for subnet 1
+commitments = await subtensor.get_all_commitments(netuid=1)</p>
+<p># Iterate over all commitments
+for hotkey, commitment in commitments.items():</p>
+<blockquote>
+<div><p>print(f”Hotkey {hotkey}: {commitment}”)</p>
+</div></blockquote>
 </div>
 </dd></dl>
 
@@ -1302,7 +1268,7 @@ block or reuse_block</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_all_neuron_certificates">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_neuron_certificates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_all_neuron_certificates" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_neuron_certificates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_all_neuron_certificates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_all_neuron_certificates" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the TLS certificates for neurons within a specified subnet (netuid) of the Bittensor network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1326,7 +1292,7 @@ reuse_block.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_all_revealed_commitments">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_revealed_commitments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_all_revealed_commitments" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_revealed_commitments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_all_revealed_commitments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_all_revealed_commitments" title="Link to this definition">#</a></dt>
 <dd><p>Returns all revealed commitments for a given netuid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1344,15 +1310,13 @@ reuse_block.</p></li>
 <dd class="field-odd"><p>result</p>
 </dd>
 </dl>
-<dl>
-<dt>Example of result:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY&quot;</span><span class="p">:</span> <span class="p">(</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;Alice message 1&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">152</span><span class="p">,</span> <span class="s2">&quot;Alice message 2&quot;</span><span class="p">)</span> <span class="p">),</span>
-    <span class="s2">&quot;5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty&quot;</span><span class="p">:</span> <span class="p">(</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;Bob message 1&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">147</span><span class="p">,</span> <span class="s2">&quot;Bob message 2&quot;</span><span class="p">)</span> <span class="p">),</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</dd>
-</dl>
+<p>Example of result:
+{</p>
+<blockquote>
+<div><p>“5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY”: ( (12, “Alice message 1”), (152, “Alice message 2”) ),
+“5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty”: ( (12, “Bob message 1”), (147, “Bob message 2”) ),</p>
+</div></blockquote>
+<p>}</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1378,17 +1342,15 @@ parameters.</p>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get all subnet information</span>
-<span class="n">subnets</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_all_subnets_info</span><span class="p">()</span>
-
-<span class="c1"># Get at specific block</span>
-<span class="n">subnets</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_all_subnets_info</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
-
-<span class="c1"># Iterate over subnet information</span>
-<span class="k">for</span> <span class="n">subnet</span> <span class="ow">in</span> <span class="n">subnets</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Subnet </span><span class="si">{</span><span class="n">subnet</span><span class="o">.</span><span class="n">netuid</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">subnet</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Get all subnet information
+subnets = await subtensor.get_all_subnets_info()</p>
+<p># Get at specific block
+subnets = await subtensor.get_all_subnets_info(block=1000000)</p>
+<p># Iterate over subnet information
+for subnet in subnets:</p>
+<blockquote>
+<div><p>print(f”Subnet {subnet.netuid}: {subnet.name}”)</p>
+</div></blockquote>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1425,15 +1387,11 @@ balance represents the amount of TAO tokens held by the specified address.</p>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Get balance for an address:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">balance</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_balance</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="s2">&quot;5F...&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Balance: </span><span class="si">{</span><span class="n">balance</span><span class="o">.</span><span class="n">tao</span><span class="si">}</span><span class="s2"> TAO&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Get balance at specific block:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">balance</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_balance</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="s2">&quot;5F...&quot;</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Get balance for an address
+balance = await subtensor.get_balance(address=”5F…”)
+print(f”Balance: {balance.tao} TAO”)</p>
+<p># Get balance at specific block
+balance = await subtensor.get_balance(address=”5F…”, block=1000000)</p>
 </div>
 </dd></dl>
 
@@ -1462,10 +1420,8 @@ times.</p>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Get balances for multiple addresses:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">balances</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_balances</span><span class="p">(</span><span class="s2">&quot;5F...&quot;</span><span class="p">,</span> <span class="s2">&quot;5G...&quot;</span><span class="p">,</span> <span class="s2">&quot;5H...&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Get balances for multiple addresses
+balances = await subtensor.get_balances(“5F…”, “5G…”, “5H…”)</p>
 </div>
 </dd></dl>
 
@@ -1544,7 +1500,7 @@ success, children, error = await subtensor.get_children(hotkey=”5F…”, netu
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_children_pending">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_children_pending</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_children_pending" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_children_pending</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_children_pending"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_children_pending" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the pending children of a given hotkey and netuid.</p>
 <p>This method queries the SubtensorModule’s PendingChildKeys storage function to get children that are pending
 approval or in a cooldown period. These are children that have been proposed but not yet finalized.</p>
@@ -1597,13 +1553,13 @@ Default is None.</p></li>
 <p># Get commitment for UID 5 in subnet 1
 commitment = await subtensor.get_commitment(netuid=1, uid=5)
 print(f”Commitment: {commitment}”)</p>
-<p># Get commitment at specific block</p>
-<dl class="simple">
-<dt>commitment = await subtensor.get_commitment(</dt><dd><p>netuid=1,
+<p># Get commitment at specific block
+commitment = await subtensor.get_commitment(</p>
+<blockquote>
+<div><p>netuid=1,
 uid=5,
 block=1000000</p>
-</dd>
-</dl>
+</div></blockquote>
 <p>)</p>
 </div>
 </dd></dl>
@@ -1625,17 +1581,14 @@ the blockchain. It serves as a reference point for network activities and data s
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Get current block number:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">current_block</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_current_block</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Current block: </span><span class="si">{</span><span class="n">current_block</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Check if network has progressed past a milestone:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">block</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_current_block</span><span class="p">()</span>
-<span class="k">if</span> <span class="n">block</span> <span class="o">&gt;</span> <span class="mi">1000000</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Network has progressed past block 1M&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Get current block number
+current_block = await subtensor.get_current_block()
+print(f”Current block: {current_block}”)</p>
+<p>block = await subtensor.get_current_block()
+if block &gt; 1000000:</p>
+<blockquote>
+<div><p>print(“Network has progressed past block 1M”)</p>
+</div></blockquote>
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
@@ -1657,11 +1610,55 @@ the blockchain. It serves as a reference point for network activities and data s
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of commit details, where each entry is a dictionary with keys ‘who’, ‘serialized_commit’, and
-‘reveal_round’, or an empty list if no data is found.</p>
+<dd class="field-even"><p><ul class="simple">
+<li><dl class="simple">
+<dt>ss58_address: The address of the committer.</dt><dd><ul>
+<li><p>commit_message: The commit message.</p></li>
+<li><p>reveal_round: The round when the commitment was revealed.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>The list may be empty if there are no commits found.</p>
+</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
+<dd class="field-odd"><p>A list of commit details, where each item contains</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_current_weight_commit_info_v2">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_current_weight_commit_info_v2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_current_weight_commit_info_v2" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves CRV3 weight commit information for a specific subnet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The unique identifier of the subnet.</p></li>
+<li><p><strong>block</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The blockchain block number for the query. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>block_hash</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The hash of the block to retrieve the subnet unique identifiers from.</p></li>
+<li><p><strong>reuse_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to reuse the last-used block hash.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><dl class="simple">
+<dt>ss58_address: The address of the committer.</dt><dd><ul>
+<li><p>commit_block: The block number when the commitment was made.</p></li>
+<li><p>commit_message: The commit message.</p></li>
+<li><p>reveal_round: The round when the commitment was revealed.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>The list may be empty if there are no commits found.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of commit details, where each item contains</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1870,24 +1867,18 @@ reuse_block.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Get difficulty for subnet 1:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">difficulty</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_hyperparameter</span><span class="p">(</span><span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;Difficulty&quot;</span><span class="p">,</span> <span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Get tempo at a specific block:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tempo</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_hyperparameter</span><span class="p">(</span><span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;Tempo&quot;</span><span class="p">,</span> <span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Get immunity period using block hash:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">immunity</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_hyperparameter</span><span class="p">(</span><span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;ImmunityPeriod&quot;</span><span class="p">,</span> <span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">block_hash</span><span class="o">=</span><span class="s2">&quot;0x1234...&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Get difficulty for subnet 1
+difficulty = await subtensor.get_hyperparameter(param_name=”Difficulty”, netuid=1)</p>
+<p># Get tempo at a specific block
+tempo = await subtensor.get_hyperparameter(param_name=”Tempo”, netuid=1, block=1000000)</p>
+<p># Get immunity period using block hash
+immunity = await subtensor.get_hyperparameter(param_name=”ImmunityPeriod”, netuid=1, block_hash=”0x1234…”)</p>
 </div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_last_commitment_bonds_reset_block">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_last_commitment_bonds_reset_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_last_commitment_bonds_reset_block" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_last_commitment_bonds_reset_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_last_commitment_bonds_reset_block"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_last_commitment_bonds_reset_block" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the last block number when the bonds reset were triggered by publish_metadata for a specific neuron.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1907,7 +1898,7 @@ reuse_block.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_liquidity_list">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_liquidity_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_liquidity_list" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_liquidity_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_liquidity_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_liquidity_list" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves all liquidity positions for the given wallet on a specified subnet (netuid).
 Calculates associated fee rewards based on current global and tick-level fee data.</p>
 <dl class="field-list simple">
@@ -2075,7 +2066,7 @@ attributes within a particular subnet of the Bittensor ecosystem.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_next_epoch_start_block">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_next_epoch_start_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_next_epoch_start_block" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_next_epoch_start_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_next_epoch_start_block"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_next_epoch_start_block" title="Link to this definition">#</a></dt>
 <dd><p>Calculates the first block number of the next epoch for the given subnet.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">block</span></code> is not provided, the current chain block will be used. Epochs are determined based on the subnet’s
 tempo (i.e., blocks per epoch). The result is the block number at which the next epoch will begin.</p>
@@ -2103,7 +2094,7 @@ tempo (i.e., blocks per epoch). The result is the block number at which the next
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_owned_hotkeys">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_owned_hotkeys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coldkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_owned_hotkeys" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_owned_hotkeys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coldkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_owned_hotkeys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_owned_hotkeys" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves all hotkeys owned by a specific coldkey address.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2125,7 +2116,7 @@ tempo (i.e., blocks per epoch). The result is the block number at which the next
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_parents">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_parents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_parents" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_parents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_parents" title="Link to this definition">#</a></dt>
 <dd><p>This method retrieves the parent of a given hotkey and netuid. It queries the SubtensorModule’s ParentKeys
 storage function to get the children and formats them before returning as a tuple.</p>
 <dl class="field-list simple">
@@ -2149,7 +2140,7 @@ storage function to get the children and formats them before returning as a tupl
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_revealed_commitment">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_revealed_commitment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_revealed_commitment" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_revealed_commitment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_revealed_commitment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_revealed_commitment" title="Link to this definition">#</a></dt>
 <dd><p>Returns uid related revealed commitment for a given netuid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2175,7 +2166,7 @@ storage function to get the children and formats them before returning as a tupl
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_revealed_commitment_by_hotkey">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_revealed_commitment_by_hotkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey_ss58_address</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_revealed_commitment_by_hotkey" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_revealed_commitment_by_hotkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey_ss58_address</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_revealed_commitment_by_hotkey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_revealed_commitment_by_hotkey" title="Link to this definition">#</a></dt>
 <dd><p>Returns hotkey related revealed commitment for a given netuid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2223,7 +2214,7 @@ or reuse_block</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_stake_add_fee">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_stake_add_fee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coldkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_add_fee" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_stake_add_fee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coldkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_stake_add_fee"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_add_fee" title="Link to this definition">#</a></dt>
 <dd><p>Calculates the fee for adding new stake to a hotkey.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2321,7 +2312,7 @@ or block_hash.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_stake_movement_fee">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_stake_movement_fee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_coldkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_coldkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_movement_fee" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_stake_movement_fee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_coldkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_coldkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_stake_movement_fee"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_movement_fee" title="Link to this definition">#</a></dt>
 <dd><p>Calculates the fee for moving stake between hotkeys/subnets/coldkeys.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2347,7 +2338,7 @@ or block_hash.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_stake_operations_fee">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_stake_operations_fee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_operations_fee" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_stake_operations_fee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_stake_operations_fee"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_operations_fee" title="Link to this definition">#</a></dt>
 <dd><p>Returns fee for any stake operation in specified subnet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2364,6 +2355,30 @@ or block_hash.</p></li>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The calculated stake fee as a Balance object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_stake_weight">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_stake_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_weight" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the stake weight for all hotkeys in a given subnet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Netuid of subnet.</p></li>
+<li><p><strong>block</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Block number at which to perform the calculation.</p></li>
+<li><p><strong>block_hash</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The hash of the blockchain block number for the query. Do not specify if also specifying block
+or reuse_block.</p></li>
+<li><p><strong>reuse_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to reuse for this query the last-used block. Do not specify if also specifying block
+or block_hash.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of stake weights for all hotkeys in the specified subnet.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2423,7 +2438,7 @@ they interact with the network’s consensus and incentive mechanisms.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_info">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_subnet_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_info" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_subnet_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_subnet_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_info" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves detailed information about subnet within the Bittensor network.
 This function provides comprehensive data on subnet, including its characteristics and operational parameters.</p>
 <dl class="field-list simple">
@@ -2449,7 +2464,7 @@ different subnets, and their unique features.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_owner_hotkey">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_subnet_owner_hotkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_owner_hotkey" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_subnet_owner_hotkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_subnet_owner_hotkey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_owner_hotkey" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the hotkey of the subnet owner for a given network UID.</p>
 <p>This function queries the subtensor network to fetch the hotkey of the owner of a subnet specified by its
 netuid. If no data is found or the query fails, the function returns None.</p>
@@ -2471,7 +2486,7 @@ netuid. If no data is found or the query fails, the function returns None.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_price">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_subnet_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_price" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_subnet_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_subnet_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_price" title="Link to this definition">#</a></dt>
 <dd><p>Gets the current Alpha price in TAO for all subnets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2494,7 +2509,7 @@ or reuse_block</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_prices">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_subnet_prices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_prices" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_subnet_prices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_subnet_prices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_prices" title="Link to this definition">#</a></dt>
 <dd><p>Gets the current Alpha price in TAO for a specified subnet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2538,7 +2553,7 @@ or reuse_block</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_validator_permits">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_subnet_validator_permits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_validator_permits" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_subnet_validator_permits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_subnet_validator_permits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_validator_permits" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the list of validator permits for a given subnet as boolean values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2581,7 +2596,7 @@ its diversity and scale.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_timestamp">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_timestamp" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_timestamp" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the datetime timestamp for a given block.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2627,7 +2642,7 @@ decentralized infrastructure.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_transfer_fee">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_transfer_fee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_transfer_fee"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_transfer_fee" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_transfer_fee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_alive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_transfer_fee"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_transfer_fee" title="Link to this definition">#</a></dt>
 <dd><p>Calculates the transaction fee for transferring tokens from a wallet to a specified destination address. This
 function simulates the transfer to estimate the associated cost, taking into account the current network
 conditions and transaction complexity.</p>
@@ -2638,6 +2653,8 @@ conditions and transaction complexity.</p>
 <li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The <code class="docutils literal notranslate"><span class="pre">SS58</span></code> address of the destination account.</p></li>
 <li><p><strong>value</strong> (<a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a>) – The amount of tokens to be transferred, specified as a Balance object, or in Tao (float) or Rao
 (int) units.</p></li>
+<li><p><strong>keep_alive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the transfer fee should be calculated based on keeping the wallet alive (existential
+deposit) or not.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -2683,7 +2700,7 @@ governance activities on a particular subnet.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_unstake_fee">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_unstake_fee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coldkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_unstake_fee" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_unstake_fee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coldkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_unstake_fee"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_unstake_fee" title="Link to this definition">#</a></dt>
 <dd><p>Calculates the fee for unstaking from a hotkey.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2774,23 +2791,19 @@ AsyncSubtensor instance before making any queries.</p>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Initialize the connection:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">subtensor</span> <span class="o">=</span> <span class="n">AsyncSubtensor</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="s2">&quot;finney&quot;</span><span class="p">)</span>
-<span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-
-<span class="n">balance</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_balance</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="s2">&quot;5F...&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Or chain the initialization:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">subtensor</span> <span class="o">=</span> <span class="k">await</span> <span class="n">AsyncSubtensor</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="s2">&quot;finney&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-</pre></div>
-</div>
+<p>subtensor = AsyncSubtensor(network=”finney”)</p>
+<p># Initialize the connection
+await subtensor.initialize()</p>
+<p># Now you can make queries
+balance = await subtensor.get_balance(address=”5F…”)</p>
+<p># Or chain the initialization
+subtensor = await AsyncSubtensor(network=”finney”).initialize()</p>
 </div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.is_fast_blocks">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_fast_blocks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.is_fast_blocks" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_fast_blocks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.is_fast_blocks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.is_fast_blocks" title="Link to this definition">#</a></dt>
 <dd><p>Returns True if the node is running with fast blocks. False if not.</p>
 </dd></dl>
 
@@ -2899,7 +2912,7 @@ and incentive distribution based on its registration status.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.is_subnet_active">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_subnet_active</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.is_subnet_active" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_subnet_active</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_hash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse_block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.is_subnet_active"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.is_subnet_active" title="Link to this definition">#</a></dt>
 <dd><p>Verify if subnet with provided netuid is active.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -3022,7 +3035,7 @@ decentralized architecture, particularly in relation to neuron interconnectivity
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.modify_liquidity">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">modify_liquidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">liquidity_delta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.modify_liquidity" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">modify_liquidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">liquidity_delta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.modify_liquidity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.modify_liquidity" title="Link to this definition">#</a></dt>
 <dd><p>Modifies liquidity in liquidity position by adding or removing liquidity from it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -3053,32 +3066,30 @@ You can think of it as an expiration date for the transaction.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">bittensor</span> <span class="k">as</span> <span class="nn">bt</span>
-
-<span class="n">subtensor</span> <span class="o">=</span> <span class="n">bt</span><span class="o">.</span><span class="n">AsyncSubtensor</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">)</span>
-<span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-
-<span class="n">my_wallet</span> <span class="o">=</span> <span class="n">bt</span><span class="o">.</span><span class="n">Wallet</span><span class="p">()</span>
-
-<span class="c1"># if `liquidity_delta` is negative</span>
-<span class="n">my_liquidity_delta</span> <span class="o">=</span> <span class="n">Balance</span><span class="o">.</span><span class="n">from_tao</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span>
-<span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">modify_liquidity</span><span class="p">(</span>
-    <span class="n">wallet</span><span class="o">=</span><span class="n">my_wallet</span><span class="p">,</span>
-    <span class="n">netuid</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span>
-    <span class="n">position_id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">liquidity_delta</span><span class="o">=</span><span class="n">my_liquidity_delta</span>
-<span class="p">)</span>
-
-<span class="c1"># if `liquidity_delta` is positive</span>
-<span class="n">my_liquidity_delta</span> <span class="o">=</span> <span class="n">Balance</span><span class="o">.</span><span class="n">from_tao</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>
-<span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">modify_liquidity</span><span class="p">(</span>
-    <span class="n">wallet</span><span class="o">=</span><span class="n">my_wallet</span><span class="p">,</span>
-    <span class="n">netuid</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span>
-    <span class="n">position_id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">liquidity_delta</span><span class="o">=</span><span class="n">my_liquidity_delta</span>
-<span class="p">)</span>
-</pre></div>
-</div>
+<p>import bittensor as bt</p>
+<p>subtensor = bt.AsyncSubtensor(network=”local”)
+await subtensor.initialize()</p>
+<p>my_wallet = bt.Wallet()</p>
+<p># if <cite>liquidity_delta</cite> is negative
+my_liquidity_delta = Balance.from_tao(100) * -1
+await subtensor.modify_liquidity(</p>
+<blockquote>
+<div><p>wallet=my_wallet,
+netuid=123,
+position_id=2,
+liquidity_delta=my_liquidity_delta</p>
+</div></blockquote>
+<p>)</p>
+<p># if <cite>liquidity_delta</cite> is positive
+my_liquidity_delta = Balance.from_tao(120)
+await subtensor.modify_liquidity(</p>
+<blockquote>
+<div><p>wallet=my_wallet,
+netuid=123,
+position_id=2,
+liquidity_delta=my_liquidity_delta</p>
+</div></blockquote>
+<p>)</p>
 </div>
 <dl class="simple">
 <dt>Note: Modifying is allowed even when user liquidity is enabled in specified subnet. Call <cite>toggle_user_liquidity</cite></dt><dd><p>to enable/disable user liquidity.</p>
@@ -3223,21 +3234,21 @@ block or reuse_block.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Get existential deposit constant:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">existential_deposit</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">query_constant</span><span class="p">(</span>
-    <span class="n">module_name</span><span class="o">=</span><span class="s2">&quot;Balances&quot;</span><span class="p">,</span>
-    <span class="n">constant_name</span><span class="o">=</span><span class="s2">&quot;ExistentialDeposit&quot;</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>Get constant at specific block:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">constant</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">query_constant</span><span class="p">(</span>
-    <span class="n">module_name</span><span class="o">=</span><span class="s2">&quot;SubtensorModule&quot;</span><span class="p">,</span>
-    <span class="n">constant_name</span><span class="o">=</span><span class="s2">&quot;SomeConstant&quot;</span><span class="p">,</span>
-    <span class="n">block</span><span class="o">=</span><span class="mi">1000000</span>
-<span class="p">)</span>
-</pre></div>
-</div>
+<p># Get existential deposit constant
+existential_deposit = await subtensor.query_constant(</p>
+<blockquote>
+<div><p>module_name=”Balances”,
+constant_name=”ExistentialDeposit”</p>
+</div></blockquote>
+<p>)</p>
+<p># Get constant at specific block
+constant = await subtensor.query_constant(</p>
+<blockquote>
+<div><p>module_name=”SubtensorModule”,
+constant_name=”SomeConstant”,
+block=1000000</p>
+</div></blockquote>
+<p>)</p>
 </div>
 </dd></dl>
 
@@ -3268,8 +3279,10 @@ address).</p></li>
 network-specific details, providing insights into the neuron’s role and status within the Bittensor network.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>See the <a class="reference external" href="https://docs.bittensor.com/reference/btcli">Bittensor CLI documentation</a> for supported identity
-parameters.</p>
+<dl class="simple">
+<dt>See the <a href="#id1"><span class="problematic" id="id2">``</span></a>Bittensor CLI documentation &lt;<a class="reference external" href="https://docs.bittensor.com/reference/btcli">https://docs.bittensor.com/reference/btcli</a>&gt;``_ for supported identity</dt><dd><p>parameters.</p>
+</dd>
+</dl>
 </div>
 </dd></dl>
 
@@ -3303,14 +3316,10 @@ reuse_block.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Query bonds for subnet 1:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bonds</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">query_map</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="s2">&quot;SubtensorModule&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Bonds&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-</pre></div>
-</div>
-<p>Query weights at specific block:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">query_map</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="s2">&quot;SubtensorModule&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Weights&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">block</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
-</pre></div>
-</div>
+<p># Query bonds for subnet 1
+bonds = await subtensor.query_map(module=”SubtensorModule”, name=”Bonds”, params=[1])</p>
+<p># Query weights at specific block
+weights = await subtensor.query_map(module=”SubtensorModule”, name=”Weights”, params=[1], block=1000000)</p>
 </div>
 </dd></dl>
 
@@ -3519,7 +3528,7 @@ and be rejected. You can think of it as an expiration date for the transaction.<
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.remove_liquidity">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remove_liquidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.remove_liquidity" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remove_liquidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.remove_liquidity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.remove_liquidity" title="Link to this definition">#</a></dt>
 <dd><p>Remove liquidity and credit balances back to wallet’s hotkey stake.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -3628,7 +3637,7 @@ and be rejected. You can think of it as an expiration date for the transaction.<
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.root_set_pending_childkey_cooldown">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root_set_pending_childkey_cooldown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cooldown</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.root_set_pending_childkey_cooldown" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root_set_pending_childkey_cooldown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cooldown</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.root_set_pending_childkey_cooldown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.root_set_pending_childkey_cooldown" title="Link to this definition">#</a></dt>
 <dd><p>Sets the pending childkey cooldown.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -3716,7 +3725,7 @@ contributing to the collective intelligence of Bittensor.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.set_children">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_children</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">children</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.set_children" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_children</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">children</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.set_children"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.set_children" title="Link to this definition">#</a></dt>
 <dd><p>Allows a coldkey to set children-keys.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -3768,7 +3777,7 @@ and be rejected. You can think of it as an expiration date for the transaction.<
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.set_delegate_take">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_delegate_take</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">take</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.set_delegate_take" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_delegate_take</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">take</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.set_delegate_take"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.set_delegate_take" title="Link to this definition">#</a></dt>
 <dd><p>Sets the delegate ‘take’ percentage for a neuron identified by its hotkey.
 The ‘take’ represents the percentage of rewards that the delegate claims from its nominators’ stakes.</p>
 <dl class="field-list simple">
@@ -3815,7 +3824,7 @@ rewards among neurons and their nominators.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.set_reveal_commitment">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_reveal_commitment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks_until_reveal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">360</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.set_reveal_commitment" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_reveal_commitment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks_until_reveal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">360</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.set_reveal_commitment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.set_reveal_commitment" title="Link to this definition">#</a></dt>
 <dd><p>Commits arbitrary data to the Bittensor network by publishing metadata.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -3956,7 +3965,7 @@ and be rejected. You can think of it as an expiration date for the transaction.<
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.start_call">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.start_call" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.start_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.start_call" title="Link to this definition">#</a></dt>
 <dd><p>Submits a start_call extrinsic to the blockchain, to trigger the start call process for a subnet (used to start
 a new subnet’s emission mechanism).</p>
 <dl class="field-list simple">
@@ -4164,7 +4173,7 @@ would increase by rate_tolerance.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.toggle_user_liquidity">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">toggle_user_liquidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.toggle_user_liquidity" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">toggle_user_liquidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.toggle_user_liquidity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.toggle_user_liquidity" title="Link to this definition">#</a></dt>
 <dd><p>Allow to toggle user liquidity for specified subnet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -4202,7 +4211,7 @@ can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Source wallet for the transfer.</p></li>
 <li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Destination address for the transfer.</p></li>
-<li><p><strong>amount</strong> (<a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a>) – Number of tokens to transfer.</p></li>
+<li><p><strong>amount</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a><em>]</em>) – Number of tokens to transfer. <cite>None</cite> is transferring all.</p></li>
 <li><p><strong>transfer_all</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Flag to transfer all tokens. Default is <cite>False</cite>.</p></li>
 <li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Waits for the transaction to be included in a block. Defaults to <cite>True</cite>.</p></li>
 <li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Waits for the transaction to be finalized on the blockchain. Defaults to <cite>False</cite>.</p></li>
@@ -4316,7 +4325,7 @@ potential reward accruals.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.unstake_all">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unstake_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.005</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.unstake_all" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unstake_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.005</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.unstake_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.unstake_all" title="Link to this definition">#</a></dt>
 <dd><p>Unstakes all TAO/Alpha associated with a hotkey from the specified subnets on the Bittensor network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -4344,10 +4353,11 @@ can think of it as an expiration date for the transaction. Default is <cite>None
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>To unstake all stakes in all subnets safely, use default <cite>rate_tolerance</cite> or pass your value:
-.. code-block:: python</p>
-<blockquote>
-<div><p>import bittensor as bt</p>
+<dl class="simple">
+<dt># If you would like to unstake all stakes in all subnets safely, use default <cite>rate_tolerance</cite> or pass your</dt><dd><p>value:</p>
+</dd>
+</dl>
+<p>import bittensor as bt</p>
 <p>subtensor = bt.AsyncSubtensor()
 wallet = bt.Wallet(“my_wallet”)
 netuid = 14
@@ -4363,9 +4373,9 @@ netuid=stake.netuid,</p>
 <p>)
 print(result)</p>
 </dd>
+<dt># If you would like to unstake all stakes in all subnets unsafely, use <cite>rate_tolerance=None</cite>:</dt><dd><p>import bittensor as bt</p>
+</dd>
 </dl>
-<p># If you would like to unstake all stakes in all subnets unsafely, use <cite>rate_tolerance=None</cite>:
-import bittensor as bt</p>
 <p>subtensor = bt.AsyncSubtensor()
 wallet = bt.Wallet(“my_wallet”)
 netuid = 14
@@ -4383,7 +4393,6 @@ rate_tolerance=None,</p>
 print(result)</p>
 </dd>
 </dl>
-</div></blockquote>
 </div>
 </dd></dl>
 
@@ -4600,6 +4609,7 @@ Mainly useful for when you don’t want to run <cite>await subtensor.initialize(
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_commitment"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_commitment()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_current_block"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_current_block()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_current_weight_commit_info"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_current_weight_commit_info()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_current_weight_commit_info_v2"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_current_weight_commit_info_v2()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_delegate_by_hotkey"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_delegate_by_hotkey()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_delegate_identities"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_delegate_identities()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_delegate_take"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_delegate_take()</span></code></a></li>
@@ -4629,6 +4639,7 @@ Mainly useful for when you don’t want to run <cite>await subtensor.initialize(
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_info_for_coldkey"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_stake_info_for_coldkey</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_movement_fee"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_stake_movement_fee()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_operations_fee"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_stake_operations_fee()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_stake_weight"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_stake_weight()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_burn_cost"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_subnet_burn_cost()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_hyperparameters"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_subnet_hyperparameters()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_subnet_info"><code class="docutils literal notranslate"><span class="pre">AsyncSubtensor.get_subnet_info()</span></code></a></li>

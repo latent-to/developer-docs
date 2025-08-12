@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>bittensor.utils.version &#8212; Bittensor SDK Docs  documentation</title>
+    <title>bittensor.core.timelock &#8212; Bittensor SDK Docs  documentation</title>
   
   
   
@@ -44,7 +44,7 @@
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/bittensor/utils/version';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/bittensor/core/timelock';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -264,7 +263,7 @@
       
       
       
-      <li><a href="https://github.com/opentensor/btcli/issues/new?title=Issue%20on%20page%20%2F_modules/bittensor/utils/version.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/opentensor/btcli/issues/new?title=Issue%20on%20page%20%2F_modules/bittensor/core/timelock.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -334,136 +333,200 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1>Source code for bittensor.utils.version</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+  <h1>Source code for bittensor.core.timelock</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module provides functionality for TimeLock Encryption (TLE), a mechanism that encrypts data such that it can</span>
+<span class="sd">only be decrypted after a specific amount of time (expressed in the form  of Drand rounds). It includes functions</span>
+<span class="sd">for encryption, decryption, and handling the decryption process by waiting for the reveal round. The logic is based on</span>
+<span class="sd">Drand QuickNet.</span>
 
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">packaging.version</span> <span class="kn">import</span> <span class="n">Version</span>
+<span class="sd">Main Functions:</span>
+<span class="sd">    - encrypt: Encrypts data and returns the encrypted data along with the reveal round.</span>
+<span class="sd">    - decrypt: Decrypts the provided encrypted data when the reveal round is reached.</span>
+<span class="sd">    - wait_reveal_and_decrypt: Waits for the reveal round and decrypts the encrypted data.</span>
 
-<span class="kn">from</span> <span class="nn">bittensor.core.settings</span> <span class="kn">import</span> <span class="n">__version__</span><span class="p">,</span> <span class="n">PIPADDRESS</span>
-<span class="kn">from</span> <span class="nn">bittensor.utils.btlogging</span> <span class="kn">import</span> <span class="n">logging</span>
+<span class="sd">Usage Example:</span>
+<span class="sd">    ```python</span>
+<span class="sd">    from bittensor import timelock</span>
+<span class="sd">    data = &quot;From Cortex to Bittensor&quot;</span>
+<span class="sd">    encrypted_data, reveal_round = timelock.encrypt(data, n_blocks=5)</span>
+<span class="sd">    decrypted_data = timelock.wait_reveal_and_decrypt(encrypted_data)</span>
+<span class="sd">    ```</span>
 
-<span class="n">VERSION_CHECK_THRESHOLD</span> <span class="o">=</span> <span class="mi">86400</span>
+<span class="sd">Usage Example with custom data:</span>
+<span class="sd">    ```python</span>
+<span class="sd">    import pickle</span>
+<span class="sd">    from dataclasses import dataclass</span>
 
-
-<div class="viewcode-block" id="VersionCheckError">
-<a class="viewcode-back" href="../../../autoapi/bittensor/utils/version/index.html#bittensor.utils.VersionCheckError">[docs]</a>
-<span class="k">class</span> <span class="nc">VersionCheckError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception raised for errors in the version check process.&quot;&quot;&quot;</span></div>
-
-
-
-<span class="k">def</span> <span class="nf">_get_version_file_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;.bittensor&quot;</span> <span class="o">/</span> <span class="s2">&quot;.last_known_version&quot;</span>
-
-
-<span class="k">def</span> <span class="nf">_get_version_from_file</span><span class="p">(</span><span class="n">version_file</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">mtime</span> <span class="o">=</span> <span class="n">version_file</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_mtime</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found version file, last modified: </span><span class="si">{</span><span class="n">mtime</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">diff</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">mtime</span>
-
-        <span class="k">if</span> <span class="n">diff</span> <span class="o">&gt;=</span> <span class="n">VERSION_CHECK_THRESHOLD</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version file expired&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="k">return</span> <span class="n">version_file</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
-    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;No bittensor version file found&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
-    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Failed to read version file&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
+<span class="sd">    from bittensor import timelock</span>
 
 
-<span class="k">def</span> <span class="nf">_get_version_from_pypi</span><span class="p">(</span><span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checking latest Bittensor version at: </span><span class="si">{</span><span class="n">PIPADDRESS</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">PIPADDRESS</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
-        <span class="n">latest_version</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">latest_version</span>
-    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Failed to get latest version from pypi&quot;</span><span class="p">)</span>
-        <span class="k">raise</span>
+<span class="sd">    @dataclass</span>
+<span class="sd">    class Person:</span>
+<span class="sd">        name: str</span>
+<span class="sd">        age: int</span>
+
+<span class="sd">    # get instance of your data</span>
+<span class="sd">    x_person = Person(&quot;X Lynch&quot;, 123)</span>
+
+<span class="sd">    # get bytes of your instance</span>
+<span class="sd">    byte_data = pickle.dumps(x_person)</span>
+
+<span class="sd">    # get TLE encoded bytes</span>
+<span class="sd">    encrypted, reveal_round = timelock.encrypt(byte_data, 1)</span>
+
+<span class="sd">    # wait when reveal round appears in Drand QuickNet and get decrypted data</span>
+<span class="sd">    decrypted = timelock.wait_reveal_and_decrypt(encrypted_data=encrypted)</span>
+
+<span class="sd">    # convert bytes into your instance back</span>
+<span class="sd">    x_person_2 = pickle.loads(decrypted)</span>
+
+<span class="sd">    # make sure initial and decoded instances are the same</span>
+<span class="sd">    assert x_person == x_person_2</span>
+<span class="sd">    ```</span>
+
+<span class="sd">Note:</span>
+<span class="sd">For handling fast-block nodes, set the `block_time` parameter to 0.25 seconds during encryption.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">bittensor_drand</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">encrypt</span> <span class="k">as</span> <span class="n">_btr_encrypt</span><span class="p">,</span>
+    <span class="n">decrypt</span> <span class="k">as</span> <span class="n">_btr_decrypt</span><span class="p">,</span>
+    <span class="n">get_latest_round</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">TLE_ENCRYPTED_DATA_SUFFIX</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;AES_GCM_&quot;</span>
 
 
-<div class="viewcode-block" id="get_and_save_latest_version">
-<a class="viewcode-back" href="../../../autoapi/bittensor/utils/version/index.html#bittensor.utils.get_and_save_latest_version">[docs]</a>
-<span class="k">def</span> <span class="nf">get_and_save_latest_version</span><span class="p">(</span><span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Retrieves and saves the latest version of Bittensor.</span>
+<div class="viewcode-block" id="encrypt">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/timelock/index.html#bittensor.core.timelock.encrypt">[docs]</a>
+<span class="k">def</span> <span class="nf">encrypt</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">n_blocks</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">block_time</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">12.0</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encrypts data using TimeLock Encryption</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        timeout (int): The timeout for the request to PyPI in seconds. Default is ``15``.</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        data: Any bytes data to be encrypted.</span>
+<span class="sd">        n_blocks: Number of blocks to encrypt.</span>
+<span class="sd">        block_time: Time in seconds for each block. Default is `12.0` seconds.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        str: The latest version of Bittensor.</span>
+<span class="sd">        tuple: A tuple containing the encrypted data and reveal TimeLock reveal round.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        PyValueError: If failed to encrypt data.</span>
+
+<span class="sd">    Usage:</span>
+<span class="sd">        data = &quot;From Cortex to Bittensor&quot;</span>
+
+<span class="sd">        # default usage</span>
+<span class="sd">        encrypted_data, reveal_round = encrypt(data, 10)</span>
+
+<span class="sd">        # passing block_time for fast-blocks node</span>
+<span class="sd">        encrypted_data, reveal_round = encrypt(data, 15, block_time=0.25)</span>
+
+<span class="sd">        encrypted_data, reveal_round = encrypt(data, 5)</span>
+
+
+<span class="sd">    Note:</span>
+<span class="sd">        For using this function with fast-blocks node you need to set block_time to 0.25 seconds.</span>
+<span class="sd">        data, round = encrypt(data, n_blocks, block_time=0.25)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">version_file</span> <span class="o">=</span> <span class="n">_get_version_file_path</span><span class="p">()</span>
-
-    <span class="k">if</span> <span class="n">last_known_version</span> <span class="o">:=</span> <span class="n">_get_version_from_file</span><span class="p">(</span><span class="n">version_file</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">last_known_version</span>
-
-    <span class="n">latest_version</span> <span class="o">=</span> <span class="n">_get_version_from_pypi</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">version_file</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">latest_version</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Failed to save latest version to file&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">latest_version</span></div>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">_btr_encrypt</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_blocks</span><span class="p">,</span> <span class="n">block_time</span><span class="p">)</span></div>
 
 
 
-<div class="viewcode-block" id="check_version">
-<a class="viewcode-back" href="../../../autoapi/bittensor/utils/version/index.html#bittensor.utils.check_version">[docs]</a>
-<span class="k">def</span> <span class="nf">check_version</span><span class="p">(</span><span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">):</span>
+<div class="viewcode-block" id="decrypt">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/timelock/index.html#bittensor.core.timelock.decrypt">[docs]</a>
+<span class="k">def</span> <span class="nf">decrypt</span><span class="p">(</span>
+    <span class="n">encrypted_data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">no_errors</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">return_str</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decrypts encrypted data using TimeLock Decryption</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        encrypted_data: Encrypted data to be decrypted.</span>
+<span class="sd">        no_errors: If True, no errors will be raised during decryption.</span>
+<span class="sd">        return_str: convert decrypted data to string if `True`. Default is `False`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        decrypted_data: Decrypted data, when reveled round is reached.</span>
+
+<span class="sd">    Usage:</span>
+<span class="sd">        # default usage</span>
+<span class="sd">        decrypted_data = decrypt(encrypted_data)</span>
+
+<span class="sd">        # passing no_errors=False for raising errors during decryption</span>
+<span class="sd">        decrypted_data = decrypt(encrypted_data, no_errors=False)</span>
+
+<span class="sd">        # passing return_str=True for returning decrypted data as string</span>
+<span class="sd">        decrypted_data = decrypt(encrypted_data, return_str=True)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">_btr_decrypt</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">,</span> <span class="n">no_errors</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">return_str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="wait_reveal_and_decrypt">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/timelock/index.html#bittensor.core.timelock.wait_reveal_and_decrypt">[docs]</a>
+<span class="k">def</span> <span class="nf">wait_reveal_and_decrypt</span><span class="p">(</span>
+    <span class="n">encrypted_data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
+    <span class="n">reveal_round</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">no_errors</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">return_str</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Check if the current version of Bittensor is up-to-date with the latest version on PyPi.</span>
-<span class="sd">    Raises a VersionCheckError if the version check fails.</span>
+<span class="sd">    Waits for reveal round and decrypts data using TimeLock Decryption.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        timeout (int): The timeout for the request to PyPI in seconds. Default is ``15``.</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        encrypted_data: Encrypted data to be decrypted.</span>
+<span class="sd">        reveal_round: Reveal round to wait for. If None, will be parsed from encrypted data.</span>
+<span class="sd">        no_errors: If True, no errors will be raised during decryption.</span>
+<span class="sd">        return_str: convert decrypted data to string if `True`. Default is `False`.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        struct.error: If failed to parse reveal round from encrypted data.</span>
+<span class="sd">        TypeError: If reveal_round is None or wrong type.</span>
+<span class="sd">        IndexError: If provided encrypted_data does not contain reveal round.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bytes: Decrypted data.</span>
+
+<span class="sd">    Usage:</span>
+<span class="sd">        import bittensor as bt</span>
+<span class="sd">        encrypted, reveal_round = bt.timelock.encrypt(&quot;Cortex is power&quot;, 3)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">reveal_round</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">reveal_round</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span>
+                <span class="s2">&quot;&lt;Q&quot;</span><span class="p">,</span> <span class="n">encrypted_data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">TLE_ENCRYPTED_DATA_SUFFIX</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Failed to parse reveal round from encrypted data.&quot;</span><span class="p">)</span>
 
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">latest_version</span> <span class="o">=</span> <span class="n">get_and_save_latest_version</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">get_latest_round</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">reveal_round</span><span class="p">:</span>
+        <span class="c1"># sleep Drand QuickNet period time (3 sec)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">Version</span><span class="p">(</span><span class="n">latest_version</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Version</span><span class="p">(</span><span class="n">__version__</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\u001b</span><span class="s2">[33mBittensor Version: Current </span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">/Latest </span><span class="si">{</span><span class="n">latest_version</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;Please update to the latest version at your earliest convenience. &quot;</span>
-                <span class="s2">&quot;Run the following command to upgrade:</span><span class="se">\n\n\u001b</span><span class="s2">[0mpython -m pip install --upgrade bittensor&quot;</span>
-            <span class="p">)</span>
-        <span class="k">pass</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">VersionCheckError</span><span class="p">(</span><span class="s2">&quot;Version check failed&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span></div>
+    <span class="k">return</span> <span class="n">decrypt</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">,</span> <span class="n">no_errors</span><span class="p">,</span> <span class="n">return_str</span><span class="p">)</span></div>
 
 
 
-<div class="viewcode-block" id="version_checking">
-<a class="viewcode-back" href="../../../autoapi/bittensor/utils/version/index.html#bittensor.utils.version_checking">[docs]</a>
-<span class="k">def</span> <span class="nf">version_checking</span><span class="p">(</span><span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deprecated, kept for backwards compatibility. Use check_version() instead.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        timeout (int): The timeout for calling :func:``check_version`` function. Default is ``15``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
-
-    <span class="n">warn</span><span class="p">(</span>
-        <span class="s2">&quot;version_checking() is deprecated, please use check_version() instead&quot;</span><span class="p">,</span>
-        <span class="ne">DeprecationWarning</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">check_version</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">VersionCheckError</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Version check failed&quot;</span><span class="p">)</span></div>
-
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;decrypt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;encrypt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;get_latest_round&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;wait_reveal_and_decrypt&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 </pre></div>
 
                 </article>
