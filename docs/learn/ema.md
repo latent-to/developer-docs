@@ -10,7 +10,6 @@ $$
 \mathrm{EMA}(t) = \alpha \times \mathrm{current} + (1 - \alpha) \times \mathrm{EMA}(t-1)
 $$
 
-
 The alpha parameter controls how quickly the EMA responds to changes:
 
 - **Small $\alpha$ (e.g., 0.01)**: Very slow response, high stability, takes many periods for significant changes
@@ -33,17 +32,16 @@ Bittensor uses EMAs to smooth two critical dynamical values during the emission 
 
 This use of EMA smoothing protects the network's economic model from price manipulation by making emissions extremely slow to respond to price changes.
 
-**Key Parameters**:
-- **$\alpha$**: Dynamic, typically ~0.000003 (ultra-conservative)
-- **Response Time**: ~30 days for 50% adjustment, ~3.5 months for 90% adjustment
-- **Halving Period**: 201,600 blocks (~4 weeks)
-
 **How It Works**:
 The price EMA uses a sophisticated dynamic alpha calculation to ensures that new subnets have even slower price adaptation than mature ones.
 
 $$
 \alpha = \frac{ \mathrm{base\_alpha} \times  \mathrm{blocks\_since\_start}}{\mathrm{blocks\_since\_start} + \mathrm{halving\_blocks}}
 $$
+
+:::info
+The value for **base_alpha** in the above is currently ~0.00003 for Bittensor mainnet ("finney").
+:::
 
 See:
 - [Yuma Consensus/Coinbase emission source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L223)
