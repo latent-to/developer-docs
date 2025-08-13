@@ -98,11 +98,13 @@ A subnet neuron (miner or validator) at a UID (in that subnet) has `immunity_per
 **Implementation Details:**
 
 Immunity status is calculated dynamically using the formula `is_immune = (current_block - registered_at) < immunity_period`, where:
+
 - `current_block` is the current blockchain block number
 - `registered_at` is the block number when the neuron was registered
 - `immunity_period` is the configured protection period for the subnet (default: 4096 blocks ≈ 13.7 hours)
 
 **Code References:**
+
 - [`subtensor/pallets/subtensor/src/utils/misc.rs:442-448`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/misc.rs#L442-448) - Immunity status calculation
 - [`subtensor/pallets/subtensor/src/subnets/registration.rs:409-485`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/registration.rs#L409-485) - Pruning algorithm with immunity priority
 
@@ -151,11 +153,10 @@ import bittensor as bt
 subnet = bt.metagraph(1)
 wallet = bt.wallet( name = 'my_coldkey', hotkey = 'my_validator_hotkey' )
 my_uid = subnet.hotkeys.index( wallet.hotkey.ss58_address )
-print(f'Validator permit: {subnet.validator_permit(my_uid)}')
+print(f'Validator permit: {subnet.validator_permit[my_uid]}')
 ```
 
-## Validator Permits 
-
+## Validator Permits
 
 Validator permits control which neurons can participate in validation activities within a subnet. The system operates on a stake-weighted basis, ensuring that only high-stake, trusted neurons can influence consensus.
 
@@ -184,13 +185,11 @@ To obtain a validator permit, a neuron must meet these criteria:
 - **Top K Ranking**: Be among the top K neurons by stake weight
 - **Active Status**: Maintain active participation in the subnet
 
-
 ### Code References
 
 - Validator permit calculation: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:520-523`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L520-523)
 - Top-K selection algorithm: [`subtensor/pallets/subtensor/src/epoch/math.rs:250-260`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/math.rs#L250-260)
 - Access control: [`subtensor/pallets/subtensor/src/subnets/weights.rs:745-748`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/weights.rs#L745-748)
-
 
 ## Inspecting UIDs
 
@@ -202,24 +201,24 @@ btcli wallet overview --netuid
 
 After providing your wallet name at the prompt, you will see output like:
 
-| Parameter   | Example value      | Description                                                                |
-| :---------- | :----------------- | :------------------------------------------------------------------------- |
-| COLDKEY     | my_coldkey         | The name of the coldkey associated with your slot.                         |
-| HOTKEY      | my_first_hotkey    | The name of the hotkey associated with your slot.                          |
-| UID         | 5                  | The index of the uid out of available uids.                                |
-| ACTIVE      | True               | Whether or not the uid is considered active.                               |
-| STAKE(τ)    | 71.296             | The amount of stake in this wallet.                                        |
-| RANK        | 0.0629             | This miner's absolute ranking according to validators on the network.      |
-| TRUST       | 0.2629             | This miner's trust as a proportion of validators on the network.           |
-| CONSENSUS   | 0.89               | This validator's aggregate consensus score.                                |
-| INCENTIVE   | 0.029              | This miner's incentive, TAO emission, is attained via mining.              |
-| DIVIDENDS   | 0.001              | This validator's dividends, TAO emission, are attained via validating.     |
-| EMISSION    | 29_340_153         | This miner's total emission in RAO (10^(-9) TAO) per block.                |
-| VTRUST      | 0.96936            | This validator's trust score as a validator.                               |
-| VPERMIT     | \*                 | Whether this miner is considered active for validating on this subnetwork. |
-| UPDATED     | 43                 | Blocks since this miner set weights on the chain.                          |
-| AXON        | 131.186.56.85:8091 | The entrypoint advertised by this miner on the bittensor blockchain.       |
-| HOTKEY_SS58 | 5F4tQyWr...        | The ss58-encoded address of the miner's hotkey.                            |
+| Parameter   | Example value      | Description                                                                            |
+| :---------- | :----------------- | :------------------------------------------------------------------------------------- |
+| COLDKEY     | my_coldkey         | The name of the coldkey associated with your slot.                                     |
+| HOTKEY      | my_first_hotkey    | The name of the hotkey associated with your slot.                                      |
+| UID         | 5                  | Unique identifier of the neuron.                                                       |
+| ACTIVE      | True               | Whether or not the uid is considered active.                                           |
+| STAKE(τ)    | 71.296             | The amount of stake in this wallet.                                                    |
+| RANK        | 0.0629             | This miner's absolute ranking according to validators on the network.                  |
+| TRUST       | 0.2629             | This miner's trust score as a proportion of validators on the network.                 |
+| CONSENSUS   | 0.89               | The consensus score of the neuron.                                                     |
+| INCENTIVE   | 0.029              | Thencentive score representing the miner's incentive alignment.                        |
+| DIVIDENDS   | 0.001              | The dividends earned by the neuron for validating on the subnet.                       |
+| EMISSION    | 29_340_153         | The emission in RAO (p) received by the neuron.                                        |
+| VTRUST      | 0.96936            | The validator trust score indicating the network's trust in the neuron as a validator. |
+| VPERMIT     | \*                 | Whether this neuron is considered eligible for validating on this subnetwork.          |
+| UPDATED     | 43                 | Blocks since the neuron set weights on the chain.                                      |
+| AXON        | 131.186.56.85:8091 | The entrypoint advertised by this miner on the bittensor blockchain.                   |
+| HOTKEY_SS58 | 5F4tQyWr...        | The ss58-encoded address of the miner's hotkey.                                        |
 
 ### Meaning of ACTIVE
 

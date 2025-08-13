@@ -44,6 +44,12 @@ A unit of data in the Bittensor blockchain, containing a collection of transacti
 
 **See also:** [Subtensor API](./sdk/subtensor-api.md)
 
+### Burn cost
+
+This refers to the required amount of TAO to be recycled when creating a new subnet, i.e., cost of registering a new subnet.
+
+**See also:** [Burn cost](./subnets/create-a-subnet.md#burn-cost)
+
 ## C
 
 ### Coldkey
@@ -465,6 +471,7 @@ Where:
 - [`bittensor/bittensor/core/metagraph.py:325-331`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/metagraph.py#L325-331)
 - [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:605`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L605)
 
+
 ### Recycling and burning
 
 Tokens (TAO and subnet-specific alpha) can be 'removed from circulation', meaning these tokens exist in neither wallet nor liquidity pool, and cannot be transacted. This can happen in two ways:
@@ -473,14 +480,17 @@ Tokens (TAO and subnet-specific alpha) can be 'removed from circulation', meanin
 
 - In contrast, when tokens are **burned** they exist in no wallet and no pool and can no longer be transacted; however they are still included in the record of token issuance, so they will not be re-emitted, and in effect will forever remain as a quantity of *missing* tokens, a difference between issuance and the effective quantity in circulation.
 
+
 #### Recycling
 
 Tokens are recycled in several cases in Bittensor operations:
+
 
 - **All transaction fees are recycled**: When transaction fees are collected, they are deducted from `TotalIssuance`, effectively recycling them back into the system for future emission. See [Transaction Fees in Bittensor](./fees)
 - **Subnet Creation fees**: When a new subnet is created, the cost is recycled, except for one TAO, which is used to initialize the subnet's TAO liquidity pool.
 - **Neuron Registration fees**: When a user registers a hotkey on a subnet to participate as a miner or validator, they are charged a registration fee in TAO. Alpha tokens worth the current swap value of the fee are taken from the subnet's alpha liquidity pool and recycled.
 - **Extrinsic transaction**: Users can manually recycle alpha tokens using the `recycle_alpha` extrinsic, which reduces both the user's stake and the subnet's `SubnetAlphaOut` tracker.
+
 
 #### Burning
 
@@ -502,6 +512,7 @@ The process of recreating a lost or deleted coldkey or hotkey using the associat
 The process of registering keys with a subnet and purchasing a UID slot.
 
 **See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/), [Working with Subnets](./subnets/working-with-subnets.md)
+
 
 ### Root Subnet/Subnet Zero
 
@@ -744,7 +755,6 @@ The relationship between these metrics creates a feedback loop: consensus determ
 A position occupied by a subnet miner or subnet validator within a subnet, identified by a unique UID. The UID is assigned to a hotkey when it is registered in a subnet, allowing the hotkey to participate as a subnet validator or subnet miner.
 
 **See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/), [Working with Subnets](./subnets/working-with-subnets.md)
-
 ### Unstaking
 
 The process of detaching TAO from a validator hotkey.
@@ -871,6 +881,7 @@ Where $\alpha$ is the EMA smoothing factor (see [Exponential Moving Average](#ex
 - Bonds are stored as sparse matrices in blockchain state
 
 **Bond Decay:**
+
 - Bonds decay over time using [EMA](#exponential-moving-average-ema) with the `bonds_moving_avg` parameter
 - Higher decay rates (larger α) make bonds more responsive to recent performance
 - Lower decay rates (smaller α) allow bonds to persist longer
