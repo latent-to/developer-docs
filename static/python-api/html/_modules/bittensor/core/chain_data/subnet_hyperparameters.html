@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -336,7 +335,7 @@
                   
   <h1>Source code for bittensor.core.chain_data.subnet_hyperparameters</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-
+<span class="kn">from</span> <span class="nn">bittensor.utils.balance</span> <span class="kn">import</span> <span class="n">fixed_to_float</span>
 <span class="kn">from</span> <span class="nn">bittensor.core.chain_data.info_base</span> <span class="kn">import</span> <span class="n">InfoBase</span>
 
 
@@ -375,6 +374,12 @@
 <span class="sd">        alpha_high (int): High value of alpha.</span>
 <span class="sd">        alpha_low (int): Low value of alpha.</span>
 <span class="sd">        liquid_alpha_enabled (bool): Flag indicating if liquid alpha is enabled.</span>
+<span class="sd">        alpha_sigmoid_steepness (float):</span>
+<span class="sd">        yuma_version (int): Version of yuma.</span>
+<span class="sd">        subnet_is_active (bool): Indicates if subnet is active after START CALL.</span>
+<span class="sd">        transfers_enabled (bool): Flag indicating if transfers are enabled.</span>
+<span class="sd">        bonds_reset_enabled (bool): Flag indicating if bonds are reset enabled.</span>
+<span class="sd">        user_liquidity_enabled (bool): Flag indicating if user liquidity is enabled.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">rho</span><span class="p">:</span> <span class="nb">int</span>
@@ -404,6 +409,12 @@
     <span class="n">alpha_high</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">alpha_low</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">liquid_alpha_enabled</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">alpha_sigmoid_steepness</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">yuma_version</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">subnet_is_active</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">transfers_enabled</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">bonds_reset_enabled</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">user_liquidity_enabled</span><span class="p">:</span> <span class="nb">bool</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">decoded</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;SubnetHyperparameters&quot;</span><span class="p">:</span>
@@ -414,7 +425,11 @@
             <span class="n">adjustment_interval</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;adjustment_interval&quot;</span><span class="p">],</span>
             <span class="n">alpha_high</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;alpha_high&quot;</span><span class="p">],</span>
             <span class="n">alpha_low</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;alpha_low&quot;</span><span class="p">],</span>
+            <span class="n">alpha_sigmoid_steepness</span><span class="o">=</span><span class="n">fixed_to_float</span><span class="p">(</span>
+                <span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;alpha_sigmoid_steepness&quot;</span><span class="p">],</span> <span class="n">frac_bits</span><span class="o">=</span><span class="mi">32</span>
+            <span class="p">),</span>
             <span class="n">bonds_moving_avg</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;bonds_moving_avg&quot;</span><span class="p">],</span>
+            <span class="n">bonds_reset_enabled</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;bonds_reset_enabled&quot;</span><span class="p">],</span>
             <span class="n">commit_reveal_weights_enabled</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;commit_reveal_weights_enabled&quot;</span><span class="p">],</span>
             <span class="n">commit_reveal_period</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;commit_reveal_period&quot;</span><span class="p">],</span>
             <span class="n">difficulty</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;difficulty&quot;</span><span class="p">],</span>
@@ -432,10 +447,14 @@
             <span class="n">registration_allowed</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;registration_allowed&quot;</span><span class="p">],</span>
             <span class="n">rho</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;rho&quot;</span><span class="p">],</span>
             <span class="n">serving_rate_limit</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;serving_rate_limit&quot;</span><span class="p">],</span>
+            <span class="n">subnet_is_active</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;subnet_is_active&quot;</span><span class="p">],</span>
             <span class="n">target_regs_per_interval</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;target_regs_per_interval&quot;</span><span class="p">],</span>
             <span class="n">tempo</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;tempo&quot;</span><span class="p">],</span>
+            <span class="n">transfers_enabled</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;transfers_enabled&quot;</span><span class="p">],</span>
+            <span class="n">user_liquidity_enabled</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;user_liquidity_enabled&quot;</span><span class="p">],</span>
             <span class="n">weights_rate_limit</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;weights_rate_limit&quot;</span><span class="p">],</span>
             <span class="n">weights_version</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;weights_version&quot;</span><span class="p">],</span>
+            <span class="n">yuma_version</span><span class="o">=</span><span class="n">decoded</span><span class="p">[</span><span class="s2">&quot;yuma_version&quot;</span><span class="p">],</span>
         <span class="p">)</span></div>
 
 </pre></div>

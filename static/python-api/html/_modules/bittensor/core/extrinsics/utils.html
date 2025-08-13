@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -339,98 +338,11 @@
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="kn">from</span> <span class="nn">async_substrate_interface.errors</span> <span class="kn">import</span> <span class="n">SubstrateRequestException</span>
-
-<span class="kn">from</span> <span class="nn">bittensor.utils</span> <span class="kn">import</span> <span class="n">format_error_message</span>
 <span class="kn">from</span> <span class="nn">bittensor.utils.balance</span> <span class="kn">import</span> <span class="n">Balance</span>
-<span class="kn">from</span> <span class="nn">bittensor.utils.btlogging</span> <span class="kn">import</span> <span class="n">logging</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">bittensor_wallet</span> <span class="kn">import</span> <span class="n">Wallet</span>
-    <span class="kn">from</span> <span class="nn">bittensor.core.async_subtensor</span> <span class="kn">import</span> <span class="n">AsyncSubtensor</span>
-    <span class="kn">from</span> <span class="nn">async_substrate_interface</span> <span class="kn">import</span> <span class="p">(</span>
-        <span class="n">AsyncExtrinsicReceipt</span><span class="p">,</span>
-        <span class="n">ExtrinsicReceipt</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="kn">from</span> <span class="nn">bittensor.core.subtensor</span> <span class="kn">import</span> <span class="n">Subtensor</span>
     <span class="kn">from</span> <span class="nn">bittensor.core.chain_data</span> <span class="kn">import</span> <span class="n">StakeInfo</span>
-    <span class="kn">from</span> <span class="nn">scalecodec.types</span> <span class="kn">import</span> <span class="n">GenericExtrinsic</span>
-
-
-<span class="k">def</span> <span class="nf">submit_extrinsic</span><span class="p">(</span>
-    <span class="n">subtensor</span><span class="p">:</span> <span class="s2">&quot;Subtensor&quot;</span><span class="p">,</span>
-    <span class="n">extrinsic</span><span class="p">:</span> <span class="s2">&quot;GenericExtrinsic&quot;</span><span class="p">,</span>
-    <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ExtrinsicReceipt&quot;</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Submits an extrinsic to the substrate blockchain and handles potential exceptions.</span>
-
-<span class="sd">    This function attempts to submit an extrinsic to the substrate blockchain with specified options</span>
-<span class="sd">    for waiting for inclusion in a block and/or finalization. If an exception occurs during submission,</span>
-<span class="sd">    it logs the error and re-raises the exception.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        subtensor: The Subtensor instance used to interact with the blockchain.</span>
-<span class="sd">        extrinsic (scalecodec.types.GenericExtrinsic): The extrinsic to be submitted to the blockchain.</span>
-<span class="sd">        wait_for_inclusion (bool): Whether to wait for the extrinsic to be included in a block.</span>
-<span class="sd">        wait_for_finalization (bool): Whether to wait for the extrinsic to be finalized on the blockchain.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        response: The response from the substrate after submitting the extrinsic.</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        SubstrateRequestException: If the submission of the extrinsic fails, the error is logged and re-raised.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">submit_extrinsic</span><span class="p">(</span>
-            <span class="n">extrinsic</span><span class="p">,</span>
-            <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
-            <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="k">except</span> <span class="n">SubstrateRequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">format_error_message</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-        <span class="c1"># Re-raise the exception for retrying of the extrinsic call. If we remove the retry logic,</span>
-        <span class="c1"># the raise will need to be removed.</span>
-        <span class="k">raise</span>
-
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">async_submit_extrinsic</span><span class="p">(</span>
-    <span class="n">subtensor</span><span class="p">:</span> <span class="s2">&quot;AsyncSubtensor&quot;</span><span class="p">,</span>
-    <span class="n">extrinsic</span><span class="p">:</span> <span class="s2">&quot;GenericExtrinsic&quot;</span><span class="p">,</span>
-    <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;AsyncExtrinsicReceipt&quot;</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Submits an extrinsic to the substrate blockchain and handles potential exceptions.</span>
-
-<span class="sd">    This function attempts to submit an extrinsic to the substrate blockchain with specified options</span>
-<span class="sd">    for waiting for inclusion in a block and/or finalization. If an exception occurs during submission,</span>
-<span class="sd">    it logs the error and re-raises the exception.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        subtensor: The AsyncSubtensor instance used to interact with the blockchain.</span>
-<span class="sd">        extrinsic: The extrinsic to be submitted to the blockchain.</span>
-<span class="sd">        wait_for_inclusion: Whether to wait for the extrinsic to be included in a block.</span>
-<span class="sd">        wait_for_finalization: Whether to wait for the extrinsic to be finalized on the blockchain.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        response: The response from the substrate after submitting the extrinsic.</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        SubstrateRequestException: If the submission of the extrinsic fails, the error is logged and re-raised.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">submit_extrinsic</span><span class="p">(</span>
-            <span class="n">extrinsic</span><span class="p">,</span>
-            <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
-            <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="k">except</span> <span class="n">SubstrateRequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">format_error_message</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-        <span class="c1"># Re-raise the exception for retrying of the extrinsic call. If we remove the retry logic,</span>
-        <span class="c1"># the raise will need to be removed.</span>
-        <span class="k">raise</span>
 
 
 <div class="viewcode-block" id="get_old_stakes">
@@ -440,19 +352,19 @@
     <span class="n">hotkey_ss58s</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">netuids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
     <span class="n">all_stakes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;StakeInfo&quot;</span><span class="p">],</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Balance</span><span class="p">]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Balance&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieve the previous staking balances for a wallet&#39;s hotkeys across given netuids.</span>
 
-<span class="sd">    This function searches through the provided staking data to find the stake amounts</span>
-<span class="sd">    for the specified hotkeys and netuids associated with the wallet&#39;s coldkey. If no match</span>
-<span class="sd">    is found for a particular hotkey and netuid combination, a default balance of zero is returned.</span>
+<span class="sd">    This function searches through the provided staking data to find the stake amounts for the specified hotkeys and</span>
+<span class="sd">    netuids associated with the wallet&#39;s coldkey. If no match is found for a particular hotkey and netuid combination,</span>
+<span class="sd">    a default balance of zero is returned.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        wallet (Wallet): The wallet containing the coldkey to compare with stake data.</span>
-<span class="sd">        hotkey_ss58s (list[str]): List of hotkey SS58 addresses for which stakes are retrieved.</span>
-<span class="sd">        netuids (list[int]): List of network unique identifiers (netuids) corresponding to the hotkeys.</span>
-<span class="sd">        all_stakes (list[StakeInfo]): A collection of all staking information to search through.</span>
+<span class="sd">        wallet: The wallet containing the coldkey to compare with stake data.</span>
+<span class="sd">        hotkey_ss58s: List of hotkey SS58 addresses for which stakes are retrieved.</span>
+<span class="sd">        netuids: List of network unique identifiers (netuids) corresponding to the hotkeys.</span>
+<span class="sd">        all_stakes: A collection of all staking information to search through.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        list[Balance]: A list of Balances, each representing the stake for a given hotkey and netuid.</span>

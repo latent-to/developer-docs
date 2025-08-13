@@ -11,7 +11,7 @@ TAO holders can **stake** any amount of the liquidity they hold to a validator. 
 See also:
 
 - [Staking/delegation overview](./delegation)
-- [Understanding pricing and anticipating slippage](../dynamic-tao/staking-unstaking-dtao)
+- [Understanding pricing and anticipating slippage](../learn/slippage)
 
 :::tip
 Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.0005 TAO.

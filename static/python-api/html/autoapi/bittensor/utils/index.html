@@ -176,7 +176,6 @@
 <li class="toctree-l4"><a class="reference internal" href="easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="subnets/index.html">bittensor.utils.subnets</a></li>
@@ -416,11 +415,13 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.VersionCheckError"><code class="docutils literal notranslate"><span class="pre">VersionCheckError</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.check_version"><code class="docutils literal notranslate"><span class="pre">check_version</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.decode_hex_identity_dict"><code class="docutils literal notranslate"><span class="pre">decode_hex_identity_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.deprecated_message"><code class="docutils literal notranslate"><span class="pre">deprecated_message()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.determine_chain_endpoint_and_network"><code class="docutils literal notranslate"><span class="pre">determine_chain_endpoint_and_network()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.float_to_u64"><code class="docutils literal notranslate"><span class="pre">float_to_u64()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.format_error_message"><code class="docutils literal notranslate"><span class="pre">format_error_message()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_explorer_url_for_network"><code class="docutils literal notranslate"><span class="pre">get_explorer_url_for_network()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_hash"><code class="docutils literal notranslate"><span class="pre">get_hash()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_transfer_fn_params"><code class="docutils literal notranslate"><span class="pre">get_transfer_fn_params()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.hex_to_bytes"><code class="docutils literal notranslate"><span class="pre">hex_to_bytes</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.is_valid_bittensor_address_or_public_key"><code class="docutils literal notranslate"><span class="pre">is_valid_bittensor_address_or_public_key()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.is_valid_ss58_address"><code class="docutils literal notranslate"><span class="pre">is_valid_ss58_address()</span></code></a></li>
@@ -461,7 +462,6 @@
 <li class="toctree-l1"><a class="reference internal" href="easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l1"><a class="reference internal" href="formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l1"><a class="reference internal" href="networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="subnets/index.html">bittensor.utils.subnets</a></li>
@@ -536,20 +536,26 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.decode_hex_identity_dict" title="bittensor.utils.decode_hex_identity_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode_hex_identity_dict</span></code></a>(info_dictionary)</p></td>
 <td><p>Decodes a dictionary of hexadecimal identities.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.determine_chain_endpoint_and_network" title="bittensor.utils.determine_chain_endpoint_and_network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">determine_chain_endpoint_and_network</span></code></a>(network)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.deprecated_message" title="bittensor.utils.deprecated_message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deprecated_message</span></code></a>(message)</p></td>
+<td><p>Shows a deprecation warning message with the given message.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.determine_chain_endpoint_and_network" title="bittensor.utils.determine_chain_endpoint_and_network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">determine_chain_endpoint_and_network</span></code></a>(network)</p></td>
 <td><p>Determines the chain endpoint and network from the passed network or chain_endpoint.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.float_to_u64" title="bittensor.utils.float_to_u64"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float_to_u64</span></code></a>(value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.float_to_u64" title="bittensor.utils.float_to_u64"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float_to_u64</span></code></a>(value)</p></td>
 <td><p>Converts a float to a u64 int</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.format_error_message" title="bittensor.utils.format_error_message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format_error_message</span></code></a>(error_message)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.format_error_message" title="bittensor.utils.format_error_message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format_error_message</span></code></a>(error_message)</p></td>
 <td><p>Formats an error message from the Subtensor error information for use in extrinsics.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.get_explorer_url_for_network" title="bittensor.utils.get_explorer_url_for_network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_explorer_url_for_network</span></code></a>(network, block_hash, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.get_explorer_url_for_network" title="bittensor.utils.get_explorer_url_for_network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_explorer_url_for_network</span></code></a>(network, block_hash, ...)</p></td>
 <td><p>Returns the explorer url for the given block hash and network.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.get_hash" title="bittensor.utils.get_hash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_hash</span></code></a>(content[, encoding])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.get_hash" title="bittensor.utils.get_hash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_hash</span></code></a>(content[, encoding])</p></td>
 <td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.get_transfer_fn_params" title="bittensor.utils.get_transfer_fn_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_transfer_fn_params</span></code></a>(amount, destination, keep_alive)</p></td>
+<td><p>Helper function to get the transfer call function and call params, depending on the value and keep_alive flag</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.is_valid_bittensor_address_or_public_key" title="bittensor.utils.is_valid_bittensor_address_or_public_key"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_valid_bittensor_address_or_public_key</span></code></a>(address)</p></td>
 <td><p>Checks if the given address is a valid destination address.</p></td>
@@ -638,12 +644,12 @@ errors defaults to ‘strict’.</p>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.utils.VersionCheckError">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">VersionCheckError</span></span><a class="reference internal" href="../../../_modules/bittensor/utils/version.html#VersionCheckError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.VersionCheckError" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">VersionCheckError</span></span><a class="headerlink" href="#bittensor.utils.VersionCheckError" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.utils.check_version">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">check_version</span></span><a class="reference internal" href="../../../_modules/bittensor/utils/version.html#check_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.check_version" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">check_version</span></span><a class="headerlink" href="#bittensor.utils.check_version" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -656,6 +662,20 @@ errors defaults to ‘strict’.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.utils.deprecated_message">
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">deprecated_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.deprecated_message" title="Link to this definition">#</a></dt>
+<dd><p>Shows a deprecation warning message with the given message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -684,7 +704,7 @@ errors defaults to ‘strict’.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.float_to_u64">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">float_to_u64</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.float_to_u64" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">float_to_u64</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bittensor/utils.html#float_to_u64"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.float_to_u64" title="Link to this definition">#</a></dt>
 <dd><p>Converts a float to a u64 int</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -740,6 +760,30 @@ Or None if the network is not known.</p>
 <dt class="sig sig-object py" id="bittensor.utils.get_hash">
 <span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">get_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bittensor/utils.html#get_hash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.get_hash" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.utils.get_transfer_fn_params">
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">get_transfer_fn_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_alive</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.get_transfer_fn_params" title="Link to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>Helper function to get the transfer call function and call params, depending on the value and keep_alive flag</dt><dd><p>provided</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>amount</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>balance.Balance</em></a><em>]</em>) – the amount of Tao to transfer. <cite>None</cite> if transferring all.</p></li>
+<li><p><strong>destination</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – the destination SS58 of the transfer</p></li>
+<li><p><strong>keep_alive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – whether to enforce a retention of the existential deposit in the account after transfer.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[call function, call params]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a>]]]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.utils.hex_to_bytes">
@@ -913,7 +957,7 @@ false-y values are ‘n’, ‘no’, ‘f’, ‘false’, ‘off’, and ‘0�
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.utils.version_checking">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">version_checking</span></span><a class="reference internal" href="../../../_modules/bittensor/utils/version.html#version_checking"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.version_checking" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">version_checking</span></span><a class="headerlink" href="#bittensor.utils.version_checking" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -983,11 +1027,13 @@ false-y values are ‘n’, ‘no’, ‘f’, ‘false’, ‘off’, and ‘0�
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.VersionCheckError"><code class="docutils literal notranslate"><span class="pre">VersionCheckError</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.check_version"><code class="docutils literal notranslate"><span class="pre">check_version</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.decode_hex_identity_dict"><code class="docutils literal notranslate"><span class="pre">decode_hex_identity_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.deprecated_message"><code class="docutils literal notranslate"><span class="pre">deprecated_message()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.determine_chain_endpoint_and_network"><code class="docutils literal notranslate"><span class="pre">determine_chain_endpoint_and_network()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.float_to_u64"><code class="docutils literal notranslate"><span class="pre">float_to_u64()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.format_error_message"><code class="docutils literal notranslate"><span class="pre">format_error_message()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_explorer_url_for_network"><code class="docutils literal notranslate"><span class="pre">get_explorer_url_for_network()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_hash"><code class="docutils literal notranslate"><span class="pre">get_hash()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_transfer_fn_params"><code class="docutils literal notranslate"><span class="pre">get_transfer_fn_params()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.hex_to_bytes"><code class="docutils literal notranslate"><span class="pre">hex_to_bytes</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.is_valid_bittensor_address_or_public_key"><code class="docutils literal notranslate"><span class="pre">is_valid_bittensor_address_or_public_key()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.is_valid_ss58_address"><code class="docutils literal notranslate"><span class="pre">is_valid_ss58_address()</span></code></a></li>

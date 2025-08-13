@@ -63,6 +63,17 @@ A list of all subnets in your local subtensor instance is returned:
         │             │             │             │              │ (6931.03%)  │              │             │
 ```
 
+
+### Subnet creation cost
+
+The cost for subnet creation is dynamic; it lowers gradually and doubles every time a subnet is created.
+
+:::info
+Note that this is labeled "burn cost", even though technically the cost of subnet creation is *recycled*, rather than *burned*.
+
+See: [Glossary: Recycling and Burning](../glossary#recycling-and-burning)
+:::
+
 ## Start emissions on the subnet
 
 To activate your subnet, beginning emissions and allowing staking, run:

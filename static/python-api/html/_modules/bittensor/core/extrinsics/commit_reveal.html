@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -339,13 +338,13 @@
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">bittensor_commit_reveal</span> <span class="kn">import</span> <span class="n">get_encrypted_commit</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">bittensor_drand</span> <span class="kn">import</span> <span class="n">get_encrypted_commit</span>
 <span class="kn">from</span> <span class="nn">numpy.typing</span> <span class="kn">import</span> <span class="n">NDArray</span>
 
 <span class="kn">from</span> <span class="nn">bittensor.core.settings</span> <span class="kn">import</span> <span class="n">version_as_int</span>
 <span class="kn">from</span> <span class="nn">bittensor.utils.btlogging</span> <span class="kn">import</span> <span class="n">logging</span>
-<span class="kn">from</span> <span class="nn">bittensor.utils.weight_utils</span> <span class="kn">import</span> <span class="n">convert_weights_and_uids_for_emit</span>
+<span class="kn">from</span> <span class="nn">bittensor.utils.weight_utils</span> <span class="kn">import</span> <span class="n">convert_and_normalize_weights_and_uids</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">bittensor_wallet</span> <span class="kn">import</span> <span class="n">Wallet</span>
@@ -361,23 +360,27 @@
     <span class="n">reveal_round</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Executes the commit-reveal phase 3 for a given netuid and commit, and optionally waits for extrinsic inclusion or</span>
+<span class="sd">    Executes commit-reveal phase 3 for a given netuid and commit, and optionally waits for extrinsic inclusion or</span>
 <span class="sd">        finalization.</span>
 
 <span class="sd">    Arguments:</span>
 <span class="sd">        subtensor: An instance of the Subtensor class.</span>
 <span class="sd">        wallet: Wallet An instance of the Wallet class containing the user&#39;s keypair.</span>
 <span class="sd">        netuid: int The network unique identifier.</span>
-<span class="sd">        commit  bytes The commit data in bytes format.</span>
+<span class="sd">        commit: bytes The commit data in bytes format.</span>
 <span class="sd">        reveal_round: int The round number for the reveal phase.</span>
 <span class="sd">        wait_for_inclusion: bool, optional Flag indicating whether to wait for the extrinsic to be included in a block.</span>
 <span class="sd">        wait_for_finalization: bool, optional Flag indicating whether to wait for the extrinsic to be finalized.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        A tuple where the first element is a boolean indicating success or failure, and the second element is an</span>
-<span class="sd">            optional string containing error message if any.</span>
+<span class="sd">        A tuple where the first element is a boolean indicating success or failure, and the second element is a string</span>
+<span class="sd">            containing an error message if any.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;Committing weights hash [blue]</span><span class="si">{</span><span class="n">commit</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">[/blue] for subnet #[blue]</span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">[/blue] with &quot;</span>
@@ -394,7 +397,12 @@
         <span class="p">},</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">sign_and_send_extrinsic</span><span class="p">(</span>
-        <span class="n">call</span><span class="p">,</span> <span class="n">wallet</span><span class="p">,</span> <span class="n">wait_for_inclusion</span><span class="p">,</span> <span class="n">wait_for_finalization</span><span class="p">,</span> <span class="n">sign_with</span><span class="o">=</span><span class="s2">&quot;hotkey&quot;</span>
+        <span class="n">call</span><span class="o">=</span><span class="n">call</span><span class="p">,</span>
+        <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
+        <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
+        <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+        <span class="n">sign_with</span><span class="o">=</span><span class="s2">&quot;hotkey&quot;</span><span class="p">,</span>
+        <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
     <span class="p">)</span>
 
 
@@ -409,9 +417,11 @@
     <span class="n">version_key</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">version_as_int</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">block_time</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">12.0</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Commits and reveals weights for given subtensor and wallet with provided uids and weights.</span>
+<span class="sd">    Commits and reveals weights for a given subtensor and wallet with provided uids and weights.</span>
 
 <span class="sd">    Arguments:</span>
 <span class="sd">        subtensor: The Subtensor instance.</span>
@@ -422,20 +432,17 @@
 <span class="sd">        version_key: The version key to use for committing and revealing. Default is version_as_int.</span>
 <span class="sd">        wait_for_inclusion: Whether to wait for the inclusion of the transaction. Default is False.</span>
 <span class="sd">        wait_for_finalization: Whether to wait for the finalization of the transaction. Default is False.</span>
+<span class="sd">        block_time (float): The number of seconds for block duration. Default is 12.0 seconds.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted.</span>
+<span class="sd">            If the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        tuple[bool, str]: A tuple where the first element is a boolean indicating success or failure, and the second</span>
 <span class="sd">            element is a message associated with the result</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="c1"># Convert uids and weights</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">uids</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="n">uids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">uids</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-
-        <span class="c1"># Reformat and normalize.</span>
-        <span class="n">uids</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">convert_weights_and_uids_for_emit</span><span class="p">(</span><span class="n">uids</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+        <span class="n">uids</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">convert_and_normalize_weights_and_uids</span><span class="p">(</span><span class="n">uids</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
 
         <span class="n">current_block</span> <span class="o">=</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_current_block</span><span class="p">()</span>
         <span class="n">subnet_hyperparameters</span> <span class="o">=</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_subnet_hyperparameters</span><span class="p">(</span>
@@ -453,6 +460,7 @@
             <span class="n">current_block</span><span class="o">=</span><span class="n">current_block</span><span class="p">,</span>
             <span class="n">netuid</span><span class="o">=</span><span class="n">netuid</span><span class="p">,</span>
             <span class="n">subnet_reveal_period_epochs</span><span class="o">=</span><span class="n">subnet_reveal_period_epochs</span><span class="p">,</span>
+            <span class="n">block_time</span><span class="o">=</span><span class="n">block_time</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="n">success</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="n">_do_commit_reveal_v3</span><span class="p">(</span>
@@ -463,6 +471,7 @@
             <span class="n">reveal_round</span><span class="o">=</span><span class="n">reveal_round</span><span class="p">,</span>
             <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
             <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+            <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>

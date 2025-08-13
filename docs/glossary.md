@@ -191,13 +191,34 @@ Every block, currency is injected into each subnet in Bittensor, and every tempo
 
 Emission is this process of generating and allocating currency to participants. The amount allocated to a given participant over some duration of time is also often referred to as 'their emissions' for the period.
 
-**See also:** [Emissions](./emissions.md)
+Emissions are protected from manipulation through [Exponential Moving Average (EMA)](#exponential-moving-average-ema) mechanisms that smooth both validator-miner bond evolution and subnet price effects.
+
+**See also:** [Emissions](./emissions.md), [Exponential Moving Average (EMA)](#exponential-moving-average-ema)
 
 ### Encrypting the Hotkey
 
 An optional security measure for the hotkey.
 
 **See also:** [Coldkey-Hotkey Security](./getting-started/coldkey-hotkey-security.md), [Working with Keys](./working-with-keys.md)
+
+### Exponential Moving Average (EMA)
+
+A weighted moving average that prioritizes recent observations while exponentially decreasing the weight of older data points. In Bittensor, EMA is used in two critical stability mechanisms:
+
+1. **Validator-Miner Bond Smoothing**: Smooths the evolution of bonds between validators and miners over time, rewarding early discovery while preventing abrupt manipulation attempts. Has two modes:
+   - **Basic Mode**: Single α ≈ 0.1 (~7-22 blocks for significant changes)
+   - **Liquid Alpha Mode**: Dynamic α range 0.7-0.9 based on consensus alignment (~1-13 blocks depending on consensus)
+
+2. **Subnet Price Emission Smoothing**: Protects emissions from price manipulation by extremely slowly incorporating price changes into emission calculations (α ≈ 0.000003, ~30 days for 50% adjustment)
+
+**Formula**: `EMA(t) = α × Current_Value + (1 - α) × EMA(t-1)`
+
+**Key Properties**: 
+- Lower α = slower adaptation, higher stability
+- Higher α = faster adaptation, lower stability
+- Bittensor prioritizes stability with conservative α values
+
+**See also:** [Understanding Exponential Moving Averages](./learn/ema.md), [Consensus-based Weights](./subnets/consensus-based-weights.md), [Validator-Miner Bonds](#validator-miner-bonds), [Emission](#emission)
 
 ### External Wallet
 
@@ -246,6 +267,16 @@ A portion of the TAO emission received by the subnet miners when they provide va
 A system that drives the behavior of subnet miners and governs consensus among subnet validators in a Bittensor subnet. Each subnet has its own incentive mechanism, which should be designed carefully to promote desired behaviors and penalize undesired ones.
 
 **See also:** [Anatomy of Incentive Mechanism](./learn/anatomy-of-incentive-mechanism.md), [Understanding Subnets](./subnets/understanding-subnets.md)
+
+### Issuance
+
+The total amount of TAO circulating in the Bittensor network. Includes TAO that is help in wallets and subnet liquidity pools, as well as TAO that is locked as subnet registration fees.
+
+This can be viewed on Bittensor explorers such as [TAO.app](https://tao.app) and [TAOstats](https://taostats.io).
+
+To query it directly from the change, see: [Subtensor Storage Query Example: Total Issuance](/subtensor-nodes/subtensor-storage-query-examples#totalissuance)
+
+See also: [Recycling, burning, and locking](#recycling-burning-and-locking)
 
 ## L
 
@@ -440,20 +471,35 @@ Where:
 - [`bittensor/bittensor/core/metagraph.py:325-331`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/metagraph.py#L325-331)
 - [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:605`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L605)
 
-### Recycling, burning, and locking
 
-"Recycling TAO" means that this TAO is put back into the Bittensor emissions system. Instead of minting new TAO this recycled TAO that is in the recycle bin will be used again in the new emissions.
+### Recycling and burning
 
-This happens in two cases:
+Tokens (TAO and subnet-specific alpha) can be 'removed from circulation', meaning these tokens exist in neither wallet nor liquidity pool, and cannot be transacted. This can happen in two ways:
 
-- When you register either as a subnet validator or a subnet miner and get a `UID` in return, the registration cost TAO you pay is recycled.
-- Emissions are recycled for those subnets that have registration turned off or paused.
+- When tokens are **recycled**, they are subtracted from the chain's record of token issuance (`TotalIssuance`), so effectively the same quantity of tokens can be emitted again. 
 
-When TAO is burned it is permanently removed from circulation, reducing total supply.
+- In contrast, when tokens are **burned** they exist in no wallet and no pool and can no longer be transacted; however they are still included in the record of token issuance, so they will not be re-emitted, and in effect will forever remain as a quantity of *missing* tokens, a difference between issuance and the effective quantity in circulation.
 
-Locked TAO is neither recycled nor burned, but held unspent, without the ability to move it until it is unlocked. The cost for subnet registration is locked and returned if the subnet is deregistered.
 
-**See also:** [Emissions](./emissions.md), [Subnet Miners](./miners/), [Subnet Validators](./validators/)
+#### Recycling
+
+Tokens are recycled in several cases in Bittensor operations:
+
+
+- **All transaction fees are recycled**: When transaction fees are collected, they are deducted from `TotalIssuance`, effectively recycling them back into the system for future emission. See [Transaction Fees in Bittensor](./fees)
+- **Subnet Creation fees**: When a new subnet is created, the cost is recycled, except for one TAO, which is used to initialize the subnet's TAO liquidity pool.
+- **Neuron Registration fees**: When a user registers a hotkey on a subnet to participate as a miner or validator, they are charged a registration fee in TAO. Alpha tokens worth the current swap value of the fee are taken from the subnet's alpha liquidity pool and recycled.
+- **Extrinsic transaction**: Users can manually recycle alpha tokens using the `recycle_alpha` extrinsic, which reduces both the user's stake and the subnet's `SubnetAlphaOut` tracker.
+
+
+#### Burning
+
+Subnet-specific alpha tokens are burned in several contexts:
+
+- **Creator emissions burning**: Alpha emissions for mining on a subnet are automatically burned if they are emitted to the hotkey with creator permissions on the subnet. This allows validators to burn some or all of the subnet's emissions to prevent token inflation (by weighting the subnet creator hotkey).
+- **Extrinsic transaction**: Alpha can be burned on demand using the `burn_alpha` Subtensor extrinsic. Unlike recycling, burning does not reduce `SubnetAlphaOut`.
+- **Root Subnet automated burning**: Subnet Zero (Root Subnet) alpha tokens are burned under specific economic conditions to maintain system stability.
+
 
 ### Regenerating a Key
 
@@ -467,6 +513,11 @@ The process of registering keys with a subnet and purchasing a UID slot.
 
 **See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/), [Working with Subnets](./subnets/working-with-subnets.md)
 
+
+### Root Subnet/Subnet Zero
+
+Subnet Zero a.k.a. the root subnet is a special subnet. No miners can register on subnet zero, and no validation work is performed. However validators can register, and $\tau$-holders can stake to those validators, as with any other subnet. This offers a mechanism for $\tau$-holders to stake $\tau$ into validators in a subnet-agnostic way. This works because the weight of a validator in a subnet includes both their share of that subnet's $\alpha$ and their share of staked TAO in Subnet Zero.
+
 ## S
 
 ### SS58 Encoded
@@ -474,6 +525,16 @@ The process of registering keys with a subnet and purchasing a UID slot.
 A compact representation of public keys corresponding to the wallet's coldkey and hotkey, used as wallet addresses for secure TAO transfers.
 
 **See also:** [Working with Keys](./working-with-keys.md), [Wallets](./getting-started/wallets.md)
+
+### Slippage
+
+In the context of an automated market maker (AMM), slippage is the impact on the tokens acquired in a trade due to the change in price from the trade transaction itself.
+
+In Bittensor, each subnet's alpha token is traded on a constant product AMM. When you stake TAO to receive alpha (or unstake alpha to receive TAO), your transaction changes the token price, resulting in receiving less than the current market rate X the quantity of the token you are inputting.
+
+Larger transactions cause more slippage. Bittensor provides slippage protection through tolerance limits and partial execution options.
+
+**See:** [Understanding Pricing and Anticipating Slippage](./learn/slippage.md)
 
 ### Senate
 
@@ -527,7 +588,7 @@ $$
 
 ### Staking
 
-The process of attaching TAO to a hotkey, i.e., locking TAO to a hotkey, to participate as a subnet validator, and to secure a validator permit.
+The process of attaching TAO to a validator hotkey, i.e., locking TAO to a subnet validator's hotkey to increase their total stake and increase their consensus power and share of dividends.
 
 **See also:** [Managing Stake with btcli](./staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](./staking-and-delegation/managing-stake-sdk.md), [Delegation](./staking-and-delegation/delegation.md)
 
@@ -694,6 +755,11 @@ The relationship between these metrics creates a feedback loop: consensus determ
 A position occupied by a subnet miner or subnet validator within a subnet, identified by a unique UID. The UID is assigned to a hotkey when it is registered in a subnet, allowing the hotkey to participate as a subnet validator or subnet miner.
 
 **See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/), [Working with Subnets](./subnets/working-with-subnets.md)
+### Unstaking
+
+The process of detaching TAO from a validator hotkey.
+
+**See also:** [Staking/Delegation overview](./staking-and-delegation/delegation.md)
 
 ## V
 
@@ -769,7 +835,7 @@ Where:
 
 ### Validator-Miner Bonds
 
-Bonds represent the "investment" a validator has made in evaluating a specific miner. This bonding mechanism is integral to the Yuma Consensus' design intent of incentivizing high-quality performance by miners, and honest evaluation by validators.
+Bonds represent the "investment" a validator has made in evaluating a specific miner. This bonding mechanism uses [Exponential Moving Average (EMA)](#exponential-moving-average-ema) to smooth bond evolution over time, integral to the Yuma Consensus' design intent of incentivizing high-quality performance by miners, and honest evaluation by validators.
 
 **Bond Formation Process:**
 
@@ -794,10 +860,10 @@ Where:
 - $\beta$ is the bonds penalty factor (configurable hyperparameter)
 
 **3. Exponential Moving Average (EMA) Bonds:**
-Instant bonds are smoothed over time using EMA to prevent abrupt changes:
+Instant bonds are smoothed over time using [EMA](#exponential-moving-average-ema) to prevent abrupt changes:
 $$B_{ij}^{(t)} = \alpha \Delta B_{ij} + (1-\alpha)B_{ij}^{(t-1)}$$
 
-Where $\alpha$ is the EMA smoothing factor.
+Where $\alpha$ is the EMA smoothing factor (see [Exponential Moving Average](#exponential-moving-average-ema) for details).
 
 **Bond Mechanics and Design:**
 
@@ -816,9 +882,9 @@ Where $\alpha$ is the EMA smoothing factor.
 
 **Bond Decay:**
 
-- Bonds decay over time based on the `bonds_moving_avg` parameter
-- Higher decay rates make bonds more responsive to recent performance
-- Lower decay rates allow bonds to persist longer
+- Bonds decay over time using [EMA](#exponential-moving-average-ema) with the `bonds_moving_avg` parameter
+- Higher decay rates (larger α) make bonds more responsive to recent performance
+- Lower decay rates (smaller α) allow bonds to persist longer
 
 **Economic Alignment:**
 
