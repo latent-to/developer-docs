@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -336,7 +335,7 @@
                   
   <h1>Source code for bittensor.core.extrinsics.asyncex.move_stake</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">asyncio</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">bittensor.utils.balance</span> <span class="kn">import</span> <span class="n">Balance</span>
 <span class="kn">from</span> <span class="nn">bittensor.utils.btlogging</span> <span class="kn">import</span> <span class="n">logging</span>
@@ -355,6 +354,7 @@
     <span class="n">origin_netuid</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">destination_netuid</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Balance</span><span class="p">,</span> <span class="n">Balance</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gets the current stake balances for both origin and destination addresses in their respective subnets.&quot;&quot;&quot;</span>
     <span class="n">block_hash</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">get_chain_head</span><span class="p">()</span>
     <span class="n">stake_in_origin</span><span class="p">,</span> <span class="n">stake_in_destination</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
         <span class="n">subtensor</span><span class="o">.</span><span class="n">get_stake</span><span class="p">(</span>
@@ -385,6 +385,7 @@
     <span class="n">amount</span><span class="p">:</span> <span class="n">Balance</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transfers stake from one coldkey to another in the Bittensor network.</span>
@@ -399,6 +400,9 @@
 <span class="sd">        amount (Balance): The amount of stake to transfer as a `Balance` object.</span>
 <span class="sd">        wait_for_inclusion (bool): If True, waits for transaction inclusion in a block. Defaults to `True`.</span>
 <span class="sd">        wait_for_finalization (bool): If True, waits for transaction finalization. Defaults to `False`.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: True if the transfer was successful, False otherwise.</span>
@@ -416,7 +420,7 @@
 
     <span class="c1"># Check sufficient stake</span>
     <span class="n">stake_in_origin</span><span class="p">,</span> <span class="n">stake_in_destination</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_get_stake_in_origin_and_dest</span><span class="p">(</span>
-        <span class="n">subtensor</span><span class="p">,</span>
+        <span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">,</span>
         <span class="n">origin_hotkey_ss58</span><span class="o">=</span><span class="n">hotkey_ss58</span><span class="p">,</span>
         <span class="n">destination_hotkey_ss58</span><span class="o">=</span><span class="n">hotkey_ss58</span><span class="p">,</span>
         <span class="n">origin_coldkey_ss58</span><span class="o">=</span><span class="n">wallet</span><span class="o">.</span><span class="n">coldkeypub</span><span class="o">.</span><span class="n">ss58_address</span><span class="p">,</span>
@@ -455,6 +459,7 @@
             <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
             <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
             <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+            <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
@@ -465,7 +470,7 @@
 
             <span class="c1"># Get updated stakes</span>
             <span class="n">origin_stake</span><span class="p">,</span> <span class="n">dest_stake</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_get_stake_in_origin_and_dest</span><span class="p">(</span>
-                <span class="n">subtensor</span><span class="p">,</span>
+                <span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">,</span>
                 <span class="n">origin_hotkey_ss58</span><span class="o">=</span><span class="n">hotkey_ss58</span><span class="p">,</span>
                 <span class="n">destination_hotkey_ss58</span><span class="o">=</span><span class="n">hotkey_ss58</span><span class="p">,</span>
                 <span class="n">origin_coldkey_ss58</span><span class="o">=</span><span class="n">wallet</span><span class="o">.</span><span class="n">coldkeypub</span><span class="o">.</span><span class="n">ss58_address</span><span class="p">,</span>
@@ -502,6 +507,10 @@
     <span class="n">amount</span><span class="p">:</span> <span class="n">Balance</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">safe_staking</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">allow_partial_stake</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">rate_tolerance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Swaps stake from one subnet to another for a given hotkey in the Bittensor network.</span>
@@ -515,6 +524,12 @@
 <span class="sd">        amount (Balance): The amount of stake to swap as a `Balance` object.</span>
 <span class="sd">        wait_for_inclusion (bool): If True, waits for transaction inclusion in a block. Defaults to True.</span>
 <span class="sd">        wait_for_finalization (bool): If True, waits for transaction finalization. Defaults to False.</span>
+<span class="sd">        safe_staking (bool): If true, enables price safety checks to protect against price impact.</span>
+<span class="sd">        allow_partial_stake (bool): If true, allows partial stake swaps when the full amount would exceed the price tolerance.</span>
+<span class="sd">        rate_tolerance (float): Maximum allowed increase in a price ratio (0.005 = 0.5%).</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: True if the swap was successful, False otherwise.</span>
@@ -531,7 +546,7 @@
 
     <span class="c1"># Check sufficient stake</span>
     <span class="n">stake_in_origin</span><span class="p">,</span> <span class="n">stake_in_destination</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_get_stake_in_origin_and_dest</span><span class="p">(</span>
-        <span class="n">subtensor</span><span class="p">,</span>
+        <span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">,</span>
         <span class="n">origin_hotkey_ss58</span><span class="o">=</span><span class="n">hotkey_ss58</span><span class="p">,</span>
         <span class="n">destination_hotkey_ss58</span><span class="o">=</span><span class="n">hotkey_ss58</span><span class="p">,</span>
         <span class="n">origin_coldkey_ss58</span><span class="o">=</span><span class="n">wallet</span><span class="o">.</span><span class="n">coldkeypub</span><span class="o">.</span><span class="n">ss58_address</span><span class="p">,</span>
@@ -547,20 +562,47 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Swapping stake for hotkey [blue]</span><span class="si">{</span><span class="n">hotkey_ss58</span><span class="si">}</span><span class="s2">[/blue]</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Amount: [green]</span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2">[/green] from netuid [yellow]</span><span class="si">{</span><span class="n">origin_netuid</span><span class="si">}</span><span class="s2">[/yellow] to netuid &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;[yellow]</span><span class="si">{</span><span class="n">destination_netuid</span><span class="si">}</span><span class="s2">[/yellow]&quot;</span>
-        <span class="p">)</span>
+        <span class="n">call_params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;hotkey&quot;</span><span class="p">:</span> <span class="n">hotkey_ss58</span><span class="p">,</span>
+            <span class="s2">&quot;origin_netuid&quot;</span><span class="p">:</span> <span class="n">origin_netuid</span><span class="p">,</span>
+            <span class="s2">&quot;destination_netuid&quot;</span><span class="p">:</span> <span class="n">destination_netuid</span><span class="p">,</span>
+            <span class="s2">&quot;alpha_amount&quot;</span><span class="p">:</span> <span class="n">amount</span><span class="o">.</span><span class="n">rao</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">safe_staking</span><span class="p">:</span>
+            <span class="n">origin_pool</span><span class="p">,</span> <span class="n">destination_pool</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+                <span class="n">subtensor</span><span class="o">.</span><span class="n">subnet</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="n">origin_netuid</span><span class="p">),</span>
+                <span class="n">subtensor</span><span class="o">.</span><span class="n">subnet</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="n">destination_netuid</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="n">swap_rate_ratio</span> <span class="o">=</span> <span class="n">origin_pool</span><span class="o">.</span><span class="n">price</span><span class="o">.</span><span class="n">rao</span> <span class="o">/</span> <span class="n">destination_pool</span><span class="o">.</span><span class="n">price</span><span class="o">.</span><span class="n">rao</span>
+            <span class="n">swap_rate_ratio_with_tolerance</span> <span class="o">=</span> <span class="n">swap_rate_ratio</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">rate_tolerance</span><span class="p">)</span>
+
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Swapping stake with safety for hotkey [blue]</span><span class="si">{</span><span class="n">hotkey_ss58</span><span class="si">}</span><span class="s2">[/blue]</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Amount: [green]</span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2">[/green] from netuid [green]</span><span class="si">{</span><span class="n">origin_netuid</span><span class="si">}</span><span class="s2">[/green] to netuid &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;[green]</span><span class="si">{</span><span class="n">destination_netuid</span><span class="si">}</span><span class="s2">[/green]</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Current price ratio: [green]</span><span class="si">{</span><span class="n">swap_rate_ratio</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">[/green], &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Ratio with tolerance: [green]</span><span class="si">{</span><span class="n">swap_rate_ratio_with_tolerance</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">[/green]&quot;</span>
+            <span class="p">)</span>
+            <span class="n">call_params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;limit_price&quot;</span><span class="p">:</span> <span class="n">swap_rate_ratio_with_tolerance</span><span class="p">,</span>
+                    <span class="s2">&quot;allow_partial&quot;</span><span class="p">:</span> <span class="n">allow_partial_stake</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+            <span class="n">call_function</span> <span class="o">=</span> <span class="s2">&quot;swap_stake_limit&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Swapping stake for hotkey [blue]</span><span class="si">{</span><span class="n">hotkey_ss58</span><span class="si">}</span><span class="s2">[/blue]</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Amount: [green]</span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2">[/green] from netuid [green]</span><span class="si">{</span><span class="n">origin_netuid</span><span class="si">}</span><span class="s2">[/green] to netuid &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;[green]</span><span class="si">{</span><span class="n">destination_netuid</span><span class="si">}</span><span class="s2">[/green]&quot;</span>
+            <span class="p">)</span>
+            <span class="n">call_function</span> <span class="o">=</span> <span class="s2">&quot;swap_stake&quot;</span>
+
         <span class="n">call</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">compose_call</span><span class="p">(</span>
             <span class="n">call_module</span><span class="o">=</span><span class="s2">&quot;SubtensorModule&quot;</span><span class="p">,</span>
-            <span class="n">call_function</span><span class="o">=</span><span class="s2">&quot;swap_stake&quot;</span><span class="p">,</span>
-            <span class="n">call_params</span><span class="o">=</span><span class="p">{</span>
-                <span class="s2">&quot;hotkey&quot;</span><span class="p">:</span> <span class="n">hotkey_ss58</span><span class="p">,</span>
-                <span class="s2">&quot;origin_netuid&quot;</span><span class="p">:</span> <span class="n">origin_netuid</span><span class="p">,</span>
-                <span class="s2">&quot;destination_netuid&quot;</span><span class="p">:</span> <span class="n">destination_netuid</span><span class="p">,</span>
-                <span class="s2">&quot;alpha_amount&quot;</span><span class="p">:</span> <span class="n">amount</span><span class="o">.</span><span class="n">rao</span><span class="p">,</span>
-            <span class="p">},</span>
+            <span class="n">call_function</span><span class="o">=</span><span class="n">call_function</span><span class="p">,</span>
+            <span class="n">call_params</span><span class="o">=</span><span class="n">call_params</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="n">success</span><span class="p">,</span> <span class="n">err_msg</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">sign_and_send_extrinsic</span><span class="p">(</span>
@@ -568,6 +610,7 @@
             <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
             <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
             <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+            <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
@@ -595,7 +638,12 @@
 
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;:cross_mark: [red]Failed[/red]: </span><span class="si">{</span><span class="n">err_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">safe_staking</span> <span class="ow">and</span> <span class="s2">&quot;Custom error: 8&quot;</span> <span class="ow">in</span> <span class="n">err_msg</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="s2">&quot;:cross_mark: [red]Failed[/red]: Price ratio exceeded tolerance limit. Either increase price tolerance or enable partial staking.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;:cross_mark: [red]Failed[/red]: </span><span class="si">{</span><span class="n">err_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -616,6 +664,7 @@
     <span class="n">amount</span><span class="p">:</span> <span class="n">Balance</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Moves stake from one hotkey to another within subnets in the Bittensor network.</span>
@@ -630,6 +679,9 @@
 <span class="sd">        amount (Balance): The amount of stake to move as a `Balance` object.</span>
 <span class="sd">        wait_for_inclusion (bool): If True, waits for transaction inclusion in a block. Defaults to True.</span>
 <span class="sd">        wait_for_finalization (bool): If True, waits for transaction finalization. Defaults to False.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: True if the move was successful, False otherwise.</span>
@@ -638,7 +690,7 @@
 
     <span class="c1"># Check sufficient stake</span>
     <span class="n">stake_in_origin</span><span class="p">,</span> <span class="n">stake_in_destination</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_get_stake_in_origin_and_dest</span><span class="p">(</span>
-        <span class="n">subtensor</span><span class="p">,</span>
+        <span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">,</span>
         <span class="n">origin_hotkey_ss58</span><span class="o">=</span><span class="n">origin_hotkey</span><span class="p">,</span>
         <span class="n">destination_hotkey_ss58</span><span class="o">=</span><span class="n">destination_hotkey</span><span class="p">,</span>
         <span class="n">origin_coldkey_ss58</span><span class="o">=</span><span class="n">wallet</span><span class="o">.</span><span class="n">coldkeypub</span><span class="o">.</span><span class="n">ss58_address</span><span class="p">,</span>
@@ -676,6 +728,7 @@
             <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
             <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
             <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+            <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
@@ -686,7 +739,7 @@
 
             <span class="c1"># Get updated stakes</span>
             <span class="n">origin_stake</span><span class="p">,</span> <span class="n">dest_stake</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_get_stake_in_origin_and_dest</span><span class="p">(</span>
-                <span class="n">subtensor</span><span class="p">,</span>
+                <span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">,</span>
                 <span class="n">origin_hotkey_ss58</span><span class="o">=</span><span class="n">origin_hotkey</span><span class="p">,</span>
                 <span class="n">destination_hotkey_ss58</span><span class="o">=</span><span class="n">destination_hotkey</span><span class="p">,</span>
                 <span class="n">origin_coldkey_ss58</span><span class="o">=</span><span class="n">wallet</span><span class="o">.</span><span class="n">coldkeypub</span><span class="o">.</span><span class="n">ss58_address</span><span class="p">,</span>

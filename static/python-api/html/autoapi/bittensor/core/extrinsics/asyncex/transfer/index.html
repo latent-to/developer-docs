@@ -176,7 +176,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -439,7 +438,8 @@
 <li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>) – initialized AsyncSubtensor object used for transfer</p></li>
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object to make transfer from.</p></li>
 <li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Destination public key address (ss58_address or ed25519) of recipient.</p></li>
-<li><p><strong>amount</strong> (<a class="reference internal" href="../../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a>) – Amount to stake as Bittensor balance.</p></li>
+<li><p><strong>amount</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a><em>]</em>) – Amount to stake as Bittensor balance. <cite>None</cite> if
+transferring all.</p></li>
 <li><p><strong>transfer_all</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to transfer all funds from this wallet to the destination address.</p></li>
 <li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If set, waits for the extrinsic to enter a block before returning <cite>True</cite>, or returns
 <cite>False</cite> if the extrinsic fails to enter the block within the timeout.</p></li>

@@ -176,7 +176,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -406,6 +405,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_all_revealed_commitments"><code class="docutils literal notranslate"><span class="pre">Commitments.get_all_revealed_commitments</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_commitment"><code class="docutils literal notranslate"><span class="pre">Commitments.get_commitment</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_current_weight_commit_info"><code class="docutils literal notranslate"><span class="pre">Commitments.get_current_weight_commit_info</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_current_weight_commit_info_v2"><code class="docutils literal notranslate"><span class="pre">Commitments.get_current_weight_commit_info_v2</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_last_commitment_bonds_reset_block"><code class="docutils literal notranslate"><span class="pre">Commitments.get_last_commitment_bonds_reset_block</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_revealed_commitment"><code class="docutils literal notranslate"><span class="pre">Commitments.get_revealed_commitment</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_revealed_commitment_by_hotkey"><code class="docutils literal notranslate"><span class="pre">Commitments.get_revealed_commitment_by_hotkey</span></code></a></li>
@@ -443,7 +443,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.subtensor_api.commitments.Commitments">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.subtensor_api.commitments.</span></span><span class="sig-name descname"><span class="pre">Commitments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.subtensor_api.commitments.Commitments" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.subtensor_api.commitments.</span></span><span class="sig-name descname"><span class="pre">Commitments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/core/subtensor_api/commitments.html#Commitments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.subtensor_api.commitments.Commitments" title="Link to this definition">#</a></dt>
 <dd><p>Class for managing any commitment operations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -473,6 +473,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.subtensor_api.commitments.Commitments.get_current_weight_commit_info">
 <span class="sig-name descname"><span class="pre">get_current_weight_commit_info</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.commitments.Commitments.get_current_weight_commit_info" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.subtensor_api.commitments.Commitments.get_current_weight_commit_info_v2">
+<span class="sig-name descname"><span class="pre">get_current_weight_commit_info_v2</span></span><a class="headerlink" href="#bittensor.core.subtensor_api.commitments.Commitments.get_current_weight_commit_info_v2" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -559,6 +564,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_all_revealed_commitments"><code class="docutils literal notranslate"><span class="pre">Commitments.get_all_revealed_commitments</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_commitment"><code class="docutils literal notranslate"><span class="pre">Commitments.get_commitment</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_current_weight_commit_info"><code class="docutils literal notranslate"><span class="pre">Commitments.get_current_weight_commit_info</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_current_weight_commit_info_v2"><code class="docutils literal notranslate"><span class="pre">Commitments.get_current_weight_commit_info_v2</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_last_commitment_bonds_reset_block"><code class="docutils literal notranslate"><span class="pre">Commitments.get_last_commitment_bonds_reset_block</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_revealed_commitment"><code class="docutils literal notranslate"><span class="pre">Commitments.get_revealed_commitment</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor_api.commitments.Commitments.get_revealed_commitment_by_hotkey"><code class="docutils literal notranslate"><span class="pre">Commitments.get_revealed_commitment_by_hotkey</span></code></a></li>

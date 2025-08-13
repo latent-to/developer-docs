@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -599,7 +598,6 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;process_weights_for_netuid()&quot;</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;weights: </span><span class="si">{</span><span class="n">weights</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;netuid </span><span class="si">{</span><span class="n">netuid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;subtensor: </span><span class="si">{</span><span class="n">subtensor</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;metagraph: </span><span class="si">{</span><span class="n">metagraph</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -607,6 +605,51 @@
     <span class="c1"># Get latest metagraph from chain if metagraph is None.</span>
     <span class="k">if</span> <span class="n">metagraph</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">metagraph</span> <span class="o">=</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">metagraph</span><span class="p">(</span><span class="n">netuid</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">process_weights</span><span class="p">(</span>
+        <span class="n">uids</span><span class="o">=</span><span class="n">uids</span><span class="p">,</span>
+        <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span>
+        <span class="n">num_neurons</span><span class="o">=</span><span class="n">metagraph</span><span class="o">.</span><span class="n">n</span><span class="p">,</span>
+        <span class="n">min_allowed_weights</span><span class="o">=</span><span class="n">subtensor</span><span class="o">.</span><span class="n">min_allowed_weights</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="n">netuid</span><span class="p">),</span>
+        <span class="n">max_weight_limit</span><span class="o">=</span><span class="n">subtensor</span><span class="o">.</span><span class="n">max_weight_limit</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="n">netuid</span><span class="p">),</span>
+        <span class="n">exclude_quantile</span><span class="o">=</span><span class="n">exclude_quantile</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="process_weights">
+<a class="viewcode-back" href="../../../autoapi/bittensor/utils/weight_utils/index.html#bittensor.utils.weight_utils.process_weights">[docs]</a>
+<span class="k">def</span> <span class="nf">process_weights</span><span class="p">(</span>
+    <span class="n">uids</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">],</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">],</span>
+    <span class="n">weights</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">],</span> <span class="s2">&quot;torch.Tensor&quot;</span><span class="p">],</span>
+    <span class="n">num_neurons</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">min_allowed_weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">max_weight_limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">exclude_quantile</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span>
+    <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;torch.Tensor&quot;</span><span class="p">,</span> <span class="s2">&quot;torch.FloatTensor&quot;</span><span class="p">],</span>
+    <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">]],</span>
+<span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Processes weight tensors for a given weights and UID arrays and hyperparams, applying constraints</span>
+<span class="sd">    and normalization based on the subtensor and metagraph data. This function can handle both NumPy arrays and PyTorch</span>
+<span class="sd">    tensors.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uids (Union[NDArray[np.int64], &quot;torch.Tensor&quot;]): Array of unique identifiers of the neurons.</span>
+<span class="sd">        weights (Union[NDArray[np.float32], &quot;torch.Tensor&quot;]): Array of weights associated with the user IDs.</span>
+<span class="sd">        num_neurons (int): The number of neurons in the network.</span>
+<span class="sd">        min_allowed_weights (Optional[int]): Subnet hyperparam Minimum number of allowed weights.</span>
+<span class="sd">        max_weight_limit (Optional[float]): Subnet hyperparam Maximum weight limit.</span>
+<span class="sd">        exclude_quantile (int): Quantile threshold for excluding lower weights. Defaults to ``0``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Union[tuple[&quot;torch.Tensor&quot;, &quot;torch.FloatTensor&quot;], tuple[NDArray[np.int64], NDArray[np.float32]]]: tuple</span>
+<span class="sd">            containing the array of user IDs and the corresponding normalized weights. The data type of the return</span>
+<span class="sd">            matches the type of the input weights (NumPy or PyTorch).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;process_weights()&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;weights: </span><span class="si">{</span><span class="n">weights</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="c1"># Cast weights to floats.</span>
     <span class="k">if</span> <span class="n">use_torch</span><span class="p">():</span>
@@ -619,8 +662,6 @@
     <span class="c1"># Network configuration parameters from an subtensor.</span>
     <span class="c1"># These parameters determine the range of acceptable weights for each neuron.</span>
     <span class="n">quantile</span> <span class="o">=</span> <span class="n">exclude_quantile</span> <span class="o">/</span> <span class="n">U16_MAX</span>
-    <span class="n">min_allowed_weights</span> <span class="o">=</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">min_allowed_weights</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="n">netuid</span><span class="p">)</span>
-    <span class="n">max_weight_limit</span> <span class="o">=</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">max_weight_limit</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="n">netuid</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;quantile: </span><span class="si">{</span><span class="n">quantile</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;min_allowed_weights: </span><span class="si">{</span><span class="n">min_allowed_weights</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;max_weight_limit: </span><span class="si">{</span><span class="n">max_weight_limit</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -634,12 +675,12 @@
     <span class="n">non_zero_weight_uids</span> <span class="o">=</span> <span class="n">uids</span><span class="p">[</span><span class="n">non_zero_weight_idx</span><span class="p">]</span>
     <span class="n">non_zero_weights</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="n">non_zero_weight_idx</span><span class="p">]</span>
     <span class="n">nzw_size</span> <span class="o">=</span> <span class="n">non_zero_weights</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span> <span class="k">if</span> <span class="n">use_torch</span><span class="p">()</span> <span class="k">else</span> <span class="n">non_zero_weights</span><span class="o">.</span><span class="n">size</span>
-    <span class="k">if</span> <span class="n">nzw_size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">metagraph</span><span class="o">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="n">min_allowed_weights</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">nzw_size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">num_neurons</span> <span class="o">&lt;</span> <span class="n">min_allowed_weights</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No non-zero weights returning all ones.&quot;</span><span class="p">)</span>
         <span class="n">final_weights</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">metagraph</span><span class="o">.</span><span class="n">n</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">metagraph</span><span class="o">.</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="n">metagraph</span><span class="o">.</span><span class="n">n</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_neurons</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">num_neurons</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_neurons</span>
             <span class="k">if</span> <span class="n">use_torch</span><span class="p">()</span>
-            <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">metagraph</span><span class="o">.</span><span class="n">n</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span> <span class="o">/</span> <span class="n">metagraph</span><span class="o">.</span><span class="n">n</span>
+            <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_neurons</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_neurons</span>
         <span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;final_weights: </span><span class="si">{</span><span class="n">final_weights</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">final_weights_count</span> <span class="o">=</span> <span class="p">(</span>
@@ -657,11 +698,11 @@
         <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
             <span class="s2">&quot;No non-zero weights less then min allowed weight, returning all ones.&quot;</span>
         <span class="p">)</span>
-        <span class="c1"># ( const ): Should this be np.zeros( ( metagraph.n ) ) to reset everyone to build up weight?</span>
+        <span class="c1"># ( const ): Should this be np.zeros( ( num_neurons ) ) to reset everyone to build up weight?</span>
         <span class="n">weights</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">metagraph</span><span class="o">.</span><span class="n">n</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">metagraph</span><span class="o">.</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-5</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_neurons</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">num_neurons</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-5</span>
             <span class="k">if</span> <span class="n">use_torch</span><span class="p">()</span>
-            <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">metagraph</span><span class="o">.</span><span class="n">n</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-5</span>
+            <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_neurons</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-5</span>
         <span class="p">)</span>  <span class="c1"># creating minimum even non-zero weights</span>
         <span class="n">weights</span><span class="p">[</span><span class="n">non_zero_weight_idx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">non_zero_weights</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;final_weights: </span><span class="si">{</span><span class="n">weights</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -758,6 +799,51 @@
     <span class="n">commit_hash</span> <span class="o">=</span> <span class="s2">&quot;0x&quot;</span> <span class="o">+</span> <span class="n">blake2b_hash</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="n">commit_hash</span></div>
+
+
+
+<div class="viewcode-block" id="convert_uids_and_weights">
+<a class="viewcode-back" href="../../../autoapi/bittensor/utils/weight_utils/index.html#bittensor.utils.weight_utils.convert_uids_and_weights">[docs]</a>
+<span class="k">def</span> <span class="nf">convert_uids_and_weights</span><span class="p">(</span>
+    <span class="n">uids</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">],</span> <span class="nb">list</span><span class="p">],</span>
+    <span class="n">weights</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">],</span> <span class="nb">list</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts netuids and weights to numpy arrays if they are not already.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        uids (Union[NDArray[np.int64], list]): The uint64 uids of destination neurons.</span>
+<span class="sd">        weights (Union[NDArray[np.float32], list]): The weights to set. These must be floated.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[ndarray, ndarray]: Bytes converted netuids and weights.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">uids</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">uids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">uids</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">uids</span><span class="p">,</span> <span class="n">weights</span></div>
+
+
+
+<div class="viewcode-block" id="convert_and_normalize_weights_and_uids">
+<a class="viewcode-back" href="../../../autoapi/bittensor/utils/weight_utils/index.html#bittensor.utils.weight_utils.convert_and_normalize_weights_and_uids">[docs]</a>
+<span class="k">def</span> <span class="nf">convert_and_normalize_weights_and_uids</span><span class="p">(</span>
+    <span class="n">uids</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">],</span> <span class="s2">&quot;torch.LongTensor&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span>
+    <span class="n">weights</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">],</span> <span class="s2">&quot;torch.FloatTensor&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts weights and uids to numpy arrays if they are not already.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        uids (Union[NDArray[np.int64], torch.LongTensor, list]): The ``uint64`` uids of destination neurons.</span>
+<span class="sd">        weights (Union[NDArray[np.float32], torch.FloatTensor, list]): The weights to set. These must be ``float`` s</span>
+<span class="sd">            and correspond to the passed ``uid`` s.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        weight_uids, weight_vals: Bytes converted weights and uids</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Reformat and normalize and return</span>
+    <span class="k">return</span> <span class="n">convert_weights_and_uids_for_emit</span><span class="p">(</span><span class="o">*</span><span class="n">convert_uids_and_weights</span><span class="p">(</span><span class="n">uids</span><span class="p">,</span> <span class="n">weights</span><span class="p">))</span></div>
 
 </pre></div>
 

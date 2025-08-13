@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -336,6 +335,7 @@
                   
   <h1>Source code for bittensor.utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">ast</span>
+<span class="kn">import</span> <span class="nn">decimal</span>
 <span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
@@ -357,6 +357,8 @@
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">bittensor_wallet</span> <span class="kn">import</span> <span class="n">Wallet</span>
+
+<span class="n">BT_DOCS_LINK</span> <span class="o">=</span> <span class="s2">&quot;https://docs.bittensor.com&quot;</span>
 
 
 <span class="c1"># redundant aliases</span>
@@ -390,8 +392,9 @@
 
 
 
-<span class="k">def</span> <span class="nf">_decode_hex_identity_dict</span><span class="p">(</span><span class="n">info_dictionary</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-    <span class="c1"># TODO why does this exist alongside `decode_hex_identity_dict`?</span>
+<div class="viewcode-block" id="decode_hex_identity_dict">
+<a class="viewcode-back" href="../../autoapi/bittensor/utils/index.html#bittensor.utils.decode_hex_identity_dict">[docs]</a>
+<span class="k">def</span> <span class="nf">decode_hex_identity_dict</span><span class="p">(</span><span class="n">info_dictionary</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Decodes a dictionary of hexadecimal identities.&quot;&quot;&quot;</span>
     <span class="n">decoded_info</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">info_dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -407,7 +410,8 @@
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not decode: </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">decoded_info</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
-    <span class="k">return</span> <span class="n">decoded_info</span>
+    <span class="k">return</span> <span class="n">decoded_info</span></div>
+
 
 
 <div class="viewcode-block" id="ss58_to_vec_u8">
@@ -524,6 +528,20 @@
 
 
 
+<div class="viewcode-block" id="float_to_u64">
+<a class="viewcode-back" href="../../autoapi/bittensor/utils/index.html#bittensor.utils.float_to_u64">[docs]</a>
+<span class="k">def</span> <span class="nf">float_to_u64</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts a float to a u64 int&quot;&quot;&quot;</span>
+
+    <span class="n">value</span> <span class="o">=</span> <span class="n">decimal</span><span class="o">.</span><span class="n">Decimal</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input value must be between 0 and 1&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span> <span class="o">*</span> <span class="n">U64_MAX</span><span class="p">)</span></div>
+
+
+
 <div class="viewcode-block" id="get_hash">
 <a class="viewcode-back" href="../../autoapi/bittensor/utils/index.html#bittensor.utils.get_hash">[docs]</a>
 <span class="k">def</span> <span class="nf">get_hash</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">):</span>
@@ -571,6 +589,7 @@
                 <span class="k">pass</span>
         <span class="k">if</span> <span class="n">new_error_message</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">return_val</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">error_message</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+
             <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Subtensor returned: </span><span class="si">{</span><span class="n">return_val</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">error_message</span> <span class="o">=</span> <span class="n">new_error_message</span>
@@ -588,7 +607,9 @@
 
             <span class="c1"># subtensor custom error marker</span>
             <span class="k">if</span> <span class="n">err_data</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Custom error:&quot;</span><span class="p">):</span>
-                <span class="n">err_description</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">err_data</span><span class="si">}</span><span class="s2"> | Please consult https://docs.bittensor.com/subtensor-nodes/subtensor-error-messages&quot;</span>
+                <span class="n">err_description</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">err_data</span><span class="si">}</span><span class="s2"> | Please consult </span><span class="si">{</span><span class="n">BT_DOCS_LINK</span><span class="si">}</span><span class="s2">/errors/custom&quot;</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">err_description</span> <span class="o">=</span> <span class="n">err_data</span>
 
@@ -600,7 +621,20 @@
             <span class="n">err_type</span> <span class="o">=</span> <span class="n">error_message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">err_type</span><span class="p">)</span>
             <span class="n">err_name</span> <span class="o">=</span> <span class="n">error_message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">err_name</span><span class="p">)</span>
             <span class="n">err_docs</span> <span class="o">=</span> <span class="n">error_message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;docs&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">err_description</span><span class="p">])</span>
-            <span class="n">err_description</span> <span class="o">=</span> <span class="n">err_docs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">err_docs</span> <span class="k">else</span> <span class="n">err_description</span>
+            <span class="n">err_description</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">err_docs</span><span class="p">)</span>
+            <span class="n">err_description</span> <span class="o">+=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot; | Please consult </span><span class="si">{</span><span class="n">BT_DOCS_LINK</span><span class="si">}</span><span class="s2">/errors/subtensor#</span><span class="si">{</span><span class="n">err_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">error_message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">error_message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">):</span>
+            <span class="n">err_type</span> <span class="o">=</span> <span class="n">error_message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> <span class="n">err_name</span><span class="p">)</span>
+            <span class="n">err_name</span> <span class="o">=</span> <span class="s2">&quot;Custom type&quot;</span>
+            <span class="n">err_description</span> <span class="o">=</span> <span class="n">error_message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="n">err_description</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;String representation of real error_message: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Subtensor returned `</span><span class="si">{</span><span class="n">err_name</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">err_type</span><span class="si">}</span><span class="s2">)` error. This means: `</span><span class="si">{</span><span class="n">err_description</span><span class="si">}</span><span class="s2">`.&quot;</span></div>
 
@@ -687,64 +721,6 @@
 
 
 
-<div class="viewcode-block" id="decode_hex_identity_dict">
-<a class="viewcode-back" href="../../autoapi/bittensor/utils/index.html#bittensor.utils.decode_hex_identity_dict">[docs]</a>
-<span class="k">def</span> <span class="nf">decode_hex_identity_dict</span><span class="p">(</span><span class="n">info_dictionary</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Decodes hex-encoded strings in a dictionary.</span>
-
-<span class="sd">    This function traverses the given dictionary, identifies hex-encoded strings, and decodes them into readable</span>
-<span class="sd">        strings. It handles nested dictionaries and lists within the dictionary.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        info_dictionary (dict): The dictionary containing hex-encoded strings to decode.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        dict: The dictionary with decoded strings.</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        input_dict = {</span>
-<span class="sd">        ...     &quot;name&quot;: {&quot;value&quot;: &quot;0x6a6f686e&quot;},</span>
-<span class="sd">        ...     &quot;additional&quot;: [</span>
-<span class="sd">        ...         [{&quot;data&quot;: &quot;0x64617461&quot;}]</span>
-<span class="sd">        ...     ]</span>
-<span class="sd">        ... }</span>
-<span class="sd">        decode_hex_identity_dict(input_dict)</span>
-<span class="sd">        {&#39;name&#39;: &#39;john&#39;, &#39;additional&#39;: [(&#39;data&#39;, &#39;data&#39;)]}</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">get_decoded</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Decodes a hex-encoded string.&quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not decode: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">info_dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="n">item</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;0x&quot;</span><span class="p">):</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">info_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_decoded</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not decode: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">info_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;additional&quot;</span><span class="p">:</span>
-            <span class="n">additional</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
-                <span class="n">additional</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="nb">tuple</span><span class="p">(</span>
-                        <span class="n">get_decoded</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">sub_item</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
-                        <span class="k">for</span> <span class="n">sub_item</span> <span class="ow">in</span> <span class="n">item</span>
-                    <span class="p">)</span>
-                <span class="p">)</span>
-            <span class="n">info_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">additional</span>
-
-    <span class="k">return</span> <span class="n">info_dictionary</span></div>
-
-
-
 <div class="viewcode-block" id="validate_chain_endpoint">
 <a class="viewcode-back" href="../../autoapi/bittensor/utils/index.html#bittensor.utils.validate_chain_endpoint">[docs]</a>
 <span class="k">def</span> <span class="nf">validate_chain_endpoint</span><span class="p">(</span><span class="n">endpoint_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
@@ -764,13 +740,25 @@
 
 <div class="viewcode-block" id="unlock_key">
 <a class="viewcode-back" href="../../autoapi/bittensor/utils/index.html#bittensor.utils.unlock_key">[docs]</a>
-<span class="k">def</span> <span class="nf">unlock_key</span><span class="p">(</span><span class="n">wallet</span><span class="p">:</span> <span class="s2">&quot;Wallet&quot;</span><span class="p">,</span> <span class="n">unlock_type</span><span class="o">=</span><span class="s2">&quot;coldkey&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;UnlockStatus&quot;</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">unlock_key</span><span class="p">(</span>
+    <span class="n">wallet</span><span class="p">:</span> <span class="s2">&quot;Wallet&quot;</span><span class="p">,</span>
+    <span class="n">unlock_type</span><span class="o">=</span><span class="s2">&quot;coldkey&quot;</span><span class="p">,</span>
+    <span class="n">raise_error</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;UnlockStatus&quot;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Attempts to decrypt a wallet&#39;s coldkey or hotkey</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        wallet: a Wallet object</span>
 <span class="sd">        unlock_type: the key type, &#39;coldkey&#39; or &#39;hotkey&#39;</span>
-<span class="sd">    Returns: UnlockStatus for success status of unlock, with error message if unsuccessful</span>
+<span class="sd">        raise_error: if False, will return (False, error msg), if True will raise the otherwise-caught exception.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        UnlockStatus for success status of unlock, with error message if unsuccessful</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        bittensor_wallet.errors.PasswordError: incorrect password</span>
+<span class="sd">        bittensor_wallet.errors.KeyFileError: keyfile is corrupt, non-writable, or non-readable, or non-existent</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">unlock_type</span> <span class="o">==</span> <span class="s2">&quot;coldkey&quot;</span><span class="p">:</span>
         <span class="n">unlocker</span> <span class="o">=</span> <span class="s2">&quot;unlock_coldkey&quot;</span>
@@ -784,9 +772,15 @@
         <span class="nb">getattr</span><span class="p">(</span><span class="n">wallet</span><span class="p">,</span> <span class="n">unlocker</span><span class="p">)()</span>
         <span class="k">return</span> <span class="n">UnlockStatus</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">PasswordError</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">raise_error</span><span class="p">:</span>
+            <span class="k">raise</span>
+
         <span class="n">err_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The password used to decrypt your </span><span class="si">{</span><span class="n">unlock_type</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> keyfile is invalid.&quot;</span>
         <span class="k">return</span> <span class="n">UnlockStatus</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">err_msg</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">KeyFileError</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">raise_error</span><span class="p">:</span>
+            <span class="k">raise</span>
+
         <span class="n">err_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">unlock_type</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> keyfile is corrupt, non-writable, or non-readable, or non-existent.&quot;</span>
         <span class="k">return</span> <span class="n">UnlockStatus</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">err_msg</span><span class="p">)</span></div>
 
