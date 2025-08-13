@@ -109,7 +109,7 @@ Subnet 2: New subnet
 
 ## 2. Acquire validator permit
 
-To qualify as a validator on a subnet, a registered node must have a validator permit. This permit allows nodes to submit miner evaluations and set weights on a subnet. For more information, see [validator permits]
+To qualify as a validator on a subnet, a registered node must have a validator permit. This permit allows nodes to submit miner evaluations and set weights on a subnet. For more information, see [validator permits](../validators/index.md#requirements-for-validation).
 
 To get validator permits on the demo subnet, you need to stake sufficient TAO to the validator hotkey. To do this, run the following command in the terminal:
 
@@ -297,7 +297,8 @@ Insufficient balance 0.0000 τ to register neuron. Current recycle is 0.0970 τ 
 
 </details>
 
-**Unregistered miner or validator**:
+**Unregistered miner or validator**
+
 This occurs when you attempt to run a miner or validator on a subnet where it is not registered.
 
 <details>
@@ -323,7 +324,7 @@ Failed set weights. Error: Subtensor returned `NeuronNoValidatorPermit(Module)` 
 
 </details>
 
-**`WeightVecLengthIsLow`**:
+**`WeightVecLengthIsLow`**
 
 This error occurs when the validator attempts to set weights for fewer elements than allowed. It often happens when all neurons in the subnet are unresponsive, causing the validator to try setting zero weights for each of them.
 

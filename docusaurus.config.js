@@ -190,7 +190,7 @@ const config = {
           alt: "Bittensor",
           src: "img/logo.svg",
           srcDark: "img/logo-dark-mode.svg",
-          href: "https://learnbittensor.org",
+          href: "https://docs.learnbittensor.org",
           style: {
             objectFit: "contain",
             width: 21,
