@@ -3,8 +3,7 @@ title: "Crowdloans"
 ---
 
 - ## What is a subnet crowdloan?
-  - Problem it solves
-  - How it differs from traditional “token sale” funding
+  - Problem it solves (shared ownership of subnets)
   - High‑level flow
 
 - ## Who is this for?
@@ -31,6 +30,23 @@ title: "Crowdloans"
   - Setting the target account (optional) and the call
   - Using `subtensor::register_leased_network` as the call
   - Deposits, fees, and execution gas considerations
+
+### Practical tips (Polkadot‑JS, local dev)
+
+- Balances are in base units (not TAO). On the default runtime, the pallet enforces:
+  - `MinimumDeposit = 10_000_000_000` (10 TAO) and
+  - `AbsoluteMinimumContribution = 100_000_000` (0.1 TAO).
+  - Example values that satisfy checks: `deposit: 10_000_000_000`, `min_contribution: 100_000_000`, `cap: 1_000_000_000_000`.
+  - Verify your node’s exact constants in Polkadot‑JS: Developer → Chain state → Constants → `crowdloan`.
+
+- `end` must be strictly greater than the current block and within duration bounds:
+  - Check the current block at the top-left of the Polkadot‑JS UI (or the Blocks tab). On local chains with fast‑blocks enabled, this advances quickly.
+  - Choose an `end` sufficiently ahead (e.g., current + 100) and within `MinimumBlockDuration` and `MaximumBlockDuration` (see Constants).
+
+- Other creation checks to keep in mind:
+  - `cap > deposit` is required.
+  - The creator must have enough balance to pay `deposit`.
+  - Finalization later requires `now >= end` and `raised == cap`.
 
 - ## Contributing and managing your position
   - Contribute and partial‑cap handling
@@ -73,9 +89,7 @@ title: "Crowdloans"
   - Runtime parameters (e.g., refund limits)
   - Links to CLI/API examples and code
 
-- ## FAQ
-  - Common operational and economic questions
-  - Troubleshooting
+ 
 
 ### Intro draft
 
@@ -83,7 +97,7 @@ The crowdloan feature lets a group of people collectively fund the registration 
 
 At finalization, the system executes an on‑chain call—typically `subtensor::register_leased_network`—using the crowdloan’s funds. This registers the subnet and creates a dedicated proxy, `SubnetLeaseBeneficiary`, for the designated beneficiary. That proxy is authorized to operate the subnet (for example, configuring subnet parameters and other allowed controls) without having custody of contributor funds or emissions splits.
 
-While the lease is active, emissions flow to contributors pro‑rata based on their contributed share. If the crowdloan does not reach its cap by the end block, the creator can trigger refunds and dissolve the crowdloan. The call and target address specified at creation are immutable, ensuring that the purpose of the crowdloan cannot be changed mid‑campaign. This model makes subnet bootstrapping collaborative, transparent, and permissioned through a narrowly scoped proxy for safe, ongoing operations.
+While the lease is active, emissions flow to contributors pro‑rata based on their contributed share. If the crowdloan is not finalized after the end block, anyone can call refunds; once all contributors are refunded, the creator can dissolve the crowdloan. The call and target address specified at creation are immutable, ensuring that the purpose of the crowdloan cannot be changed mid‑campaign. This model makes subnet bootstrapping collaborative, transparent, and permissioned through a narrowly scoped proxy for safe, ongoing operations.
 
 - Strong defaults: immutable target and call, capped funding, clear end block
 - Shared upside: emissions distributed proportionally to contributions
@@ -320,6 +334,152 @@ Implications:
 - **Duration bounds**: Ensures campaigns are neither too short nor too long.
 - **Contribution floor**: Enforces a minimum "ticket size" for contributors.
 
+
+## FAQ
+
+### What problem do crowdloans solve?
+They enable shared funding and ownership of subnets so that no single sponsor must front the entire lock cost. Emissions are shared pro‑rata among contributors while a designated beneficiary operates the subnet via a scoped proxy.
+
+### How does the end‑to‑end flow work?
+Creator calls `create` with deposit, cap, end, and a `call` of `subtensor::register_leased_network`. Contributors fund until the cap is hit. After the end block, creator calls `finalize`; funds transfer and the stored call executes with creator origin. A subnet and a `SubnetLeaseBeneficiary` proxy are set up; contributor shares are recorded, leftover cap is refunded.
+
+### Where can I see the exact extrinsics and storage?
+See the cited code blocks in this article for `create`, `contribute`, `withdraw`, `finalize`, `refund`, `dissolve` and the storage maps `Crowdloans`, `Contributions`, `CurrentCrowdloanId`.
+
+### Can the purpose of a crowdloan be changed after it starts?
+No. The `call` and optional `target_address` are bound at creation and used at `finalize`. The pallet exposes `CurrentCrowdloanId` only during dispatch to the called extrinsic, preventing mid‑campaign repurposing.
+
+### Who can finalize a crowdloan and when?
+Only the creator, after the end block, and only if `raised == cap` and it hasn’t already been finalized.
+
+### What happens if the cap is not reached?
+Anyone can call `refund` to batch‑refund contributors (excluding the creator) up to `RefundContributorsLimit` per call. After all refunds, only the creator can `dissolve` to recover the deposit and clean storage.
+
+### How are emissions split during a lease?
+Owner rewards are split pro‑rata to contributors by their recorded `SubnetLeaseShares`; any remainder goes to the beneficiary. This runs automatically during coinbase distribution.
+
+### What permissions does the beneficiary proxy have?
+`ProxyType::SubnetLeaseBeneficiary` can invoke a curated set of calls (e.g., start subnet calls and selected admin‑utils setters like difficulty, weights, limits). It cannot perform unrestricted sudo.
+
+### Can the campaign parameters be updated mid‑flight?
+The creator can update `min_contribution`, `end`, and `cap` on a non‑finalized crowdloan, subject to checks (duration bounds, cap >= raised, etc.). The `call` and `target_address` are immutable.
+
+### What are the defaults for deposits, contribution minimums, and timing?
+Runtime defaults currently set minimum deposit, absolute minimum contribution, min/max block durations, refund batch size, and max contributors. See the Runtime parameters section for exact constants.
+
+### Is there a maximum number of contributors?
+Yes. `MaxContributors` limits unique contributors per crowdloan; contributions beyond that will be rejected.
+
+### How are leftover funds handled at lease creation?
+Any leftover cap (after paying registration + proxy cost) is refunded pro‑rata to contributors; the residual remainder goes to the beneficiary.
+
+### How do I track my expected emissions?
+Your share equals your contribution divided by total raised at `finalize`. Emissions are distributed to your coldkey during the lease according to that share.
+
+### Can a lease be terminated early?
+No. The beneficiary may terminate only after the optional `end_block` has passed; for perpetual leases there is no end block.
+
+### What if the preimage call is missing at finalize?
+`finalize` errors with `CallUnavailable` and drops the preimage reference for that call, per the pallet’s error handling. Ensure the `call` was stored as a preimage at `create` time.
+
+
+## Tutorial: Launch a subnet via crowdloan (local dev with Polkadot‑JS)
+
+This hands‑on guide mirrors production flow and uses Polkadot‑JS to submit each extrinsic from distinct wallets.
+
+### 0) Setup
+
+- Prepare accounts: `creator` (opens and finalizes), `beneficiary` (operates subnet), `contrib1`, `contrib2`.
+- Fund them with dev TAO.
+- Connect Polkadot‑JS to your local node (e.g., `ws://127.0.0.1:9944`).
+
+Notes for local dev:
+- All amounts are base units. Typical defaults: `MinimumDeposit = 10_000_000_000` (10 TAO), `AbsoluteMinimumContribution = 100_000_000` (0.1 TAO).
+- Inspect your runtime constants in Polkadot‑JS: Developer → Chain state → Constants → `crowdloan`.
+- `end` must be strictly greater than the current block (see top‑left block counter in Polkadot‑JS) and within `MinimumBlockDuration`/`MaximumBlockDuration`. With fast‑blocks, pick a sufficiently ahead block (e.g., current + 100).
+
+### 1) Create the crowdloan (creator)
+
+Polkadot‑JS: Developer → Extrinsics
+- Using account: `creator`
+- Call: `crowdloan.create(deposit, min_contribution, cap, end, call, target_address)`
+  - deposit: e.g., `10_000_000_000`
+  - min_contribution: e.g., `100_000_000`
+  - cap: e.g., `1_000_000_000_000` (must be > deposit)
+  - end: current block + 100 (adjust for duration bounds)
+  - call (Option<Call>): set to `subtensor.register_leased_network(emissions_share, end_block)`
+    - emissions_share: e.g., `30` (Percent)
+    - end_block: Some(current + 500) for a fixed term, or None for perpetual
+  - target_address: None
+- Submit and sign.
+
+Expected resposne:
+```
+system.ExtrinsicSuccess
+balances.Withdraw
+system.NewAccount
+balances.Endowed
+balances.Transfer
+crowdloan.Created
+balances.Deposit
+transactionPayment.TransactionFeePaid
+extrinsic event
+```
+### 2) Contribute (each contributor)
+
+Repeat for `creator` (optional), `contrib1`, `contrib2` before `end`:
+- Using account: contributor wallet
+- Call: `crowdloan.contribute(crowdloan_id, amount)`
+- Submit and sign.
+
+Notes:
+- Amounts below `min_contribution` are rejected.
+- If a contribution would exceed `cap`, it’s clipped to the remaining amount.
+- You can verify state via Storage: `crowdloan.Crowdloans(id)` and `crowdloan.Contributions(id, account)`.
+
+### 3) Finalize (creator)
+
+After `end` passes and `raised == cap`:
+- Using account: `creator`
+- Call: `crowdloan.finalize(crowdloan_id)`
+- Submit and sign.
+
+On success:
+- If `target_address` was set, funds are transferred to it.
+- The nested `subtensor.register_leased_network` is dispatched with creator origin; the lease is created and proxy added.
+
+### 4) Verify the leased subnet
+
+Storage checks (Developer → Chain state → Storage):
+- `subtensor.SubnetLeases(lease_id)` → shows `beneficiary`, `emissions_share`, `end_block`, `netuid`, `cost`.
+- `subtensor.SubnetUidToLeaseId(netuid)` → maps subnet to lease id.
+- `subtensor.SubnetLeaseShares(lease_id, contributor)` → contributor pro‑rata shares.
+- Proxy (runtime dependent): proxy mappings reflect `SubnetLeaseBeneficiary` authorization for the `beneficiary`.
+
+### 5) Optional: Observe dividends
+
+Owner emissions are periodically split among contributors (by share) and the beneficiary. On dev, advance blocks; if it’s not the distribution block or liquidity is insufficient, dividends accumulate for later distribution.
+
+### 6) Alternative path: Refund and dissolve (if cap not reached)
+
+- Anyone signed: `crowdloan.refund(crowdloan_id)` repeatedly until all contributors (excluding creator) are refunded (batched up to `RefundContributorsLimit`).
+- Creator: `crowdloan.dissolve(crowdloan_id)` when only the creator’s deposit remains. This cleans storage and returns the deposit.
+
+### 7) Useful adjustments (creator)
+
+Before finalization:
+- `crowdloan.update_min_contribution(crowdloan_id, new_min)` → must be ≥ `AbsoluteMinimumContribution`.
+- `crowdloan.update_end(crowdloan_id, new_end)` → must satisfy duration bounds and be > current block.
+- `crowdloan.update_cap(crowdloan_id, new_cap)` → must be ≥ `raised`.
+
+### 8) Optional: Withdraw
+
+Before finalization:
+- Any contributor can `crowdloan.withdraw(crowdloan_id)` to recover their contribution.
+- The creator can only withdraw amounts above the kept deposit; the deposit itself remains until refund/dissolve.
+
+
+
 ---Below-is-CRUFT-to-delete-only-when-article-is-finished
 # source to use and link to
 from https://academy.binance.com/en/glossary/polkadot-crowdloan:
@@ -356,7 +516,7 @@ If the crowdloan fails to reach the cap, the creator can decide to refund all co
 
 - `withdraw`: Withdraw a contribution from an active (not yet finalized or dissolved) crowdloan. Only contributions over the deposit can be withdrawn by the creator.
 
-- `refund`: Try to refund all contributors (excluding the creator) up to the limit defined by a runtime parameter *RefundContributorsLimit* (currently set to 5). If the limit is reached, the call will stop and the crowdloan will be marked as partially refunded. It may be needed to dispatch this call multiple times to refund all contributors.
+- `refund`: Try to refund all contributors (excluding the creator) up to the limit defined by runtime parameter `RefundContributorsLimit` (currently set to 50 in the default runtime). If the limit is reached, the call will stop and the crowdloan will be marked as partially refunded. It may be needed to dispatch this call multiple times to refund all contributors.
 
 The following functions are only callable by the creator of the crowdloan:
 

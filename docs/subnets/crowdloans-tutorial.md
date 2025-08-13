@@ -224,11 +224,27 @@ Notes:
 
 ## (Optional) Observe dividends distribution
 
-Owner emissions are periodically split among contributors and the beneficiary:
-- Distribution happens automatically via the coinbase logic. On a dev chain, you may need to advance blocks and ensure the lease dividends distribution interval has elapsed.
-- Balances credited go to each contributor’s coldkey and the beneficiary’s coldkey. You can observe changes by querying balances over time.
+Owner emissions are periodically split among contributors and the beneficiary, but only when all of these are true:
+- The subnet is leased and active (lease has not ended).
+- A coinbase cycle paid an owner cut to the subnet owner for the given `netuid`.
+- Current block is an exact multiple of `LeaseDividendsDistributionInterval` (check in Constants).
+- There is sufficient liquidity to unstake the contributors’ cut from the subnet at or above the minimum swap price.
 
-Note: If there is insufficient liquidity or it’s not the correct distribution block, dividends are accumulated and distributed later.
+What the code does (high level):
+- Compute contributors’ share in alpha: `contributors_alpha = ceil(emissions_share% × owner_cut_alpha)` and add any `AccumulatedLeaseDividends`.
+- If not at the distribution block or insufficient liquidity, set/accumulate `AccumulatedLeaseDividends(lease_id)` and exit.
+- Otherwise, unstake `contributors_alpha` to TAO, then distribute TAO pro‑rata using `SubnetLeaseShares(lease_id, contributor)`; the leftover TAO goes to the beneficiary.
+
+Alpha vs TAO:
+- Emissions accrue in Alpha (subnet share units). On distribution, the contributors’ alpha is unstaked/swapped to TAO using the subnet pool; if swap/unstake cannot proceed (liquidity/price), the alpha is accumulated for later.
+
+How to debug when nothing moves:
+- Ensure `subtensorModule.subnetUidToLeaseId(netuid)` is Some and `subtensorModule.subnetLeases(lease_id)` has `end_block` unset or in the future.
+- Check `subtensorModule.accumulatedLeaseDividends(lease_id)`; if growing, you’re not at the interval or liquidity is insufficient.
+- Verify interval constant: Developer → Chain state → Constants → look for `LeaseDividendsDistributionInterval`.
+- Ensure the subnet pool has liquidity (initial TAO was locked at creation; more stake/liquidity improves distribution).
+
+Balances credited go to each contributor’s coldkey and the beneficiary’s coldkey. You can observe changes by querying balances over time.
 
 ## Alternative path: Refund and dissolve
 
