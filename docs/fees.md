@@ -93,9 +93,9 @@ It is currently planned that the fee coefficient will be reduced to $0.005%$ (10
 
 </details>
 
-## Smart Fee Payments (Alpha Fallback)
+## Alpha Fallback
 
-For extrinsics that assume swapping Alpha for TAO, if the sender's TAO balance cannot cover the weight-based transaction fee, the chain will fall back to charging the fee in Alpha. If both TAO and Alpha balances are insufficient to cover the anticipated fee, the transaction fails validation and will not be included in the mempool. When fees are paid in Alpha, the TAO fee is converted to Alpha using the current Alpha price with no slippage. See [PR #1921](https://github.com/opentensor/subtensor/pull/1921).
+For extrinsics that charge fees by swapping Alpha for TAO, if the sender's TAO balance cannot cover the weight-based transaction fee, the chain will fall back to charging the fee in Alpha. If both TAO and Alpha balances are insufficient to cover the anticipated fee, the transaction fails validation and will not be included in the mempool. When fees are paid in Alpha, the TAO fee is converted to Alpha using the current Alpha price with no slippage.
 
 ### Affected extrinsics
 
