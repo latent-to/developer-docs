@@ -194,7 +194,11 @@ cd subnet-template
 
 After getting the validator permits, you can now run the validator alongside the miner to begin participating in the subnet.
 
-Begin by starting the miner process to produce and submit work to the subnet. Then, run the validator process to evaluate miner outputs and set weights for the network.
+Begin by starting the miner process to produce and submit work to the subnet. Then, run the validator process on a different terminal tab to evaluate miner outputs and set weights for the network.
+
+:::info
+To ensure proper operation, run the miner and validator processes concurrently, each in a separate terminal tab or session.
+:::
 
 ### Start the miner process
 
