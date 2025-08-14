@@ -49,23 +49,13 @@ We will create a campaign whose purpose is to register a leased subnet on finali
    - min_contribution: e.g., `100_000_000`
    - cap: e.g., `2_000_000_000_000` (1000 TAO)
    - end: pick a block height in the near future (e.g., current + 100)
-   - call (optional): expand this field and select the nested call module `subtensor`, call `register_leased_network`
+   - call: expand this field and select the nested call module `subtensor`, call `register_leased_network`
      - emissions_share (Percent): e.g., `30`
      - end_block: pick Some and set the lease end (e.g., current + 500). For a perpetual lease, choose None.
    - target_address: leave as None (the lease logic will internally move funds as needed).
 
 Important:
 - Set `cap` higher than the projected subnet lock cost plus proxy deposit (and a small fee buffer). On most dev setups the baseline lock cost is 1,000 TAO (1_000_000_000_000 RAO). If `cap` equals the lock cost exactly, the lease coldkey may lack enough to pay proxy deposits and finalize can fail with insufficient balance.
-- Quick checks in Polkadot‑JS:
-```javascript
-// Lower bound for lock cost (min lock)
-(await api.query.subtensor.networkMinLockCost()).toHuman()
-// If available in your build, current computed lock cost
-(await api.call.subtensorApi.getNetworkLockCost?.())?.toHuman?.()
-// Proxy deposit components
-(await api.consts.proxy.proxyDepositBase).toHuman()
-(await api.consts.proxy.proxyDepositFactor).toHuman()
-```
 
 5. Click Submit Transaction and sign with `creator`.
 
@@ -147,7 +137,6 @@ extrinsic event
 
 ```
 
-
 Notes:
 - Finalizing before the contribution period ends fails with `ContributionPeriodNotEnded`. This keeps the window open so others can contribute until `end`.
 
@@ -161,27 +150,8 @@ Open Developer → Chain state → Storage, module `subtensor` and check:
 Also verify a proxy was added for the beneficiary:
 - Module `proxy` → query `Proxies(lease_coldkey)` (if available in your UI) to see the `SubnetLeaseBeneficiary` delegate.
 
-## Operate the leased subnet (via proxy)
+## Start the leased subnet (via proxy)
 
-The beneficiary (i.e., the finalizing creator) operates the subnet by acting as a proxy for the `lease.coldkey` using proxy type `SubnetLeaseBeneficiary`.
-
-Steps in Polkadot‑JS (Developer → Extrinsics):
-- Using account: your beneficiary (the crowdloan creator that finalized)
-- Toggle “Use a proxy for this call”
-  - Proxied account: paste the `lease.coldkey` from `subtensorModule.subnetLeases(lease_id)`
-  - Proxy type: `SubnetLeaseBeneficiary`
-- Pick an allowed call, for example:
-  - `subtensorModule.start_call { ... }`
-  - or a network parameter via `adminUtils` such as `sudo_set_min_difficulty`, `sudo_set_network_registration_allowed`, etc.
-- Fill arguments → Submit and sign.
-
-Notes:
-- If you submit without the proxy toggle, you’ll see errors like “wallet doesn’t own the subnet.” Always proxy through the `lease.coldkey` with type `SubnetLeaseBeneficiary`.
-- If `subtensorModule.subnetUidToLeaseId(netuid)` returns None, the subnet was not created via leasing; operate it using `subtensorModule.subnetOwner(netuid)` instead.
-
-### Alternative: submit via explicit proxy.proxy extrinsic
-
-If the “Use a proxy for this call” toggle does not appear, submit the proxy call directly:
 
 1) Build the inner call (to get its encoding) [optional]
 - Developer → Extrinsics → pick the inner call you want (e.g., `subtensorModule.start_call`) and fill its arguments.
@@ -200,29 +170,10 @@ Tips:
 - Add the `lease.coldkey` to your Address book so it’s selectable in the UI.
 - Verify the proxy exists on‑chain before submitting: `proxy.Proxies(lease_coldkey)` should show your beneficiary with type `SubnetLeaseBeneficiary`.
 
-### Interpreting SubnetLeaseShares (fixed‑point)
+##  Observe dividends distribution
 
-`SubnetLeaseShares` values are stored as `U64F64` fixed‑point numbers. Polkadot‑JS often renders them as `{ bits: <u128> }`. Convert to a human percent by dividing by 2^64.
+Emissions accrue in Alpha (subnet share units). On distribution, the contributors’ alpha is unstaked/swapped to TAO using the subnet pool; if swap/unstake cannot proceed (liquidity/price), the alpha is accumulated for later.
 
-Example (Developer → JavaScript):
-```javascript
-// bits is a BigInt from the on-chain value, e.g. 18354510353341003857n
-function u64f64ToPercent(bitsBig) {
-  const scale = 1n << 64n; // 2^64
-  const bps = (bitsBig * 10_000n) / scale; // basis points (1/100 of a percent)
-  return Number(bps) / 100; // percent with 2 decimals
-}
-
-const val = await api.query.subtensorModule.subnetLeaseShares(leaseId, contributor);
-const bits = BigInt(val.toJSON().bits);
-console.log(u64f64ToPercent(bits), '%');
-```
-
-Notes:
-- Shares are stored for contributors excluding the beneficiary. If only the beneficiary funded, `SubnetLeaseShares` may be empty; all dividends go to the beneficiary.
-- The beneficiary’s effective share is the leftover after summing all stored contributor shares.
-
-## (Optional) Observe dividends distribution
 
 Owner emissions are periodically split among contributors and the beneficiary, but only when all of these are true:
 - The subnet is leased and active (lease has not ended).
@@ -230,19 +181,6 @@ Owner emissions are periodically split among contributors and the beneficiary, b
 - Current block is an exact multiple of `LeaseDividendsDistributionInterval` (check in Constants).
 - There is sufficient liquidity to unstake the contributors’ cut from the subnet at or above the minimum swap price.
 
-What the code does (high level):
-- Compute contributors’ share in alpha: `contributors_alpha = ceil(emissions_share% × owner_cut_alpha)` and add any `AccumulatedLeaseDividends`.
-- If not at the distribution block or insufficient liquidity, set/accumulate `AccumulatedLeaseDividends(lease_id)` and exit.
-- Otherwise, unstake `contributors_alpha` to TAO, then distribute TAO pro‑rata using `SubnetLeaseShares(lease_id, contributor)`; the leftover TAO goes to the beneficiary.
-
-Alpha vs TAO:
-- Emissions accrue in Alpha (subnet share units). On distribution, the contributors’ alpha is unstaked/swapped to TAO using the subnet pool; if swap/unstake cannot proceed (liquidity/price), the alpha is accumulated for later.
-
-How to debug when nothing moves:
-- Ensure `subtensorModule.subnetUidToLeaseId(netuid)` is Some and `subtensorModule.subnetLeases(lease_id)` has `end_block` unset or in the future.
-- Check `subtensorModule.accumulatedLeaseDividends(lease_id)`; if growing, you’re not at the interval or liquidity is insufficient.
-- Verify interval constant: Developer → Chain state → Constants → look for `LeaseDividendsDistributionInterval`.
-- Ensure the subnet pool has liquidity (initial TAO was locked at creation; more stake/liquidity improves distribution).
 
 Balances credited go to each contributor’s coldkey and the beneficiary’s coldkey. You can observe changes by querying balances over time.
 
@@ -251,6 +189,13 @@ Balances credited go to each contributor’s coldkey and the beneficiary’s col
 If the cap is not reached by `end`:
 1. Anyone can call `crowdloan.refund(crowdloan_id)` repeatedly until all contributors (except the creator) are refunded (batched per call).
 2. After refunds complete (only the creator’s deposit remains), the `creator` can call `crowdloan.dissolve(crowdloan_id)` to clean up and recover the deposit.
+
+
+### Optional: Withdraw
+
+Before finalization:
+- Any contributor can `crowdloan.withdraw(crowdloan_id)` to recover their contribution.
+- The creator can only withdraw amounts above the kept deposit; the deposit itself remains until refund/dissolve.
 
 ## Troubleshooting
 
@@ -262,11 +207,5 @@ If the cap is not reached by `end`:
   - Ensure the nested call was supplied during `create`. The pallet stores it as a preimage; if unavailable, it errors and drops the reference.
 - Refund does nothing
   - Refunds only after `end` and only for non‑finalized campaigns. It processes up to `RefundContributorsLimit` contributors per call.
-
-## What you learned
-
-- How to create and fund a crowdloan whose purpose is to register a leased subnet.
-- How to finalize and verify the subnet lease, contributor shares, and beneficiary proxy.
-- How to recover funds via refund/dissolve if the campaign does not reach its cap.
 
 
