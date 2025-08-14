@@ -232,7 +232,7 @@ Polkadot‑JS: Developer → Extrinsics
   - min_contribution: e.g., `100_000_000`
   - cap: e.g., `1_000_000_000_000` (must be > deposit)
   - end: current block + 100 (adjust for duration bounds)
-  - call (Option<Call>): set to `subtensor.register_leased_network(emissions_share, end_block)`
+  - call: set to `subtensor.register_leased_network(emissions_share, end_block)`
     - emissions_share: e.g., `30` (Percent)
     - end_block: Some(current + 500) for a fixed term, or None for perpetual
   - target_address: None

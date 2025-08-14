@@ -51,8 +51,8 @@ We will create a campaign whose purpose is to register a leased subnet on finali
    - end: pick a block height in the near future (e.g., current + 100)
    - call (optional): expand this field and select the nested call module `subtensor`, call `register_leased_network`
      - emissions_share (Percent): e.g., `30`
-     - end_block (Option<BlockNumber>): pick Some and set the lease end (e.g., current + 500). For a perpetual lease, choose None.
-   - target_address (Option<AccountId>): leave as None (the lease logic will internally move funds as needed).
+     - end_block: pick Some and set the lease end (e.g., current + 500). For a perpetual lease, choose None.
+   - target_address: leave as None (the lease logic will internally move funds as needed).
 
 Important:
 - Set `cap` higher than the projected subnet lock cost plus proxy deposit (and a small fee buffer). On most dev setups the baseline lock cost is 1,000 TAO (1_000_000_000_000 RAO). If `cap` equals the lock cost exactly, the lease coldkey may lack enough to pay proxy deposits and finalize can fail with insufficient balance.
