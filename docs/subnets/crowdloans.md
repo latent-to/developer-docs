@@ -16,7 +16,7 @@ While the lease is active, emissions flow to contributors pro‑rata based on th
 - Safe operations: a dedicated proxy to manage the subnet within defined permissions
 
 
-
+See also [Create a Subnet with a Crowdloan](./crowdloans-tutorial)
 
 ## Lifecycle and extrinsics
 

@@ -6,6 +6,8 @@ title: "Create a Subnet with a Crowdloan"
 
 This hands‑on tutorial walks through creating a subnet via the crowdloan pallet on a locally deployed Bittensor chain, using the Polkadot‑JS web app to submit extrinsics. It follows the same instructional style as the multisig tutorial: step‑by‑step, with concrete UI actions.
 
+See also [Crowdloans Overview](./crowdloans)
+
 ## Summary
 
 - Create: `crowdloan.create(deposit, min_contribution, cap, end, call, target_address)`
