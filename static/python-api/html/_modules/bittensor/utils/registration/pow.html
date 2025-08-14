@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -354,8 +353,6 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">Crypto.Hash</span> <span class="kn">import</span> <span class="n">keccak</span>
-<span class="kn">from</span> <span class="nn">rich</span> <span class="kn">import</span> <span class="n">console</span> <span class="k">as</span> <span class="n">rich_console</span><span class="p">,</span> <span class="n">status</span> <span class="k">as</span> <span class="n">rich_status</span>
-<span class="kn">from</span> <span class="nn">rich.console</span> <span class="kn">import</span> <span class="n">Console</span>
 
 <span class="kn">from</span> <span class="nn">bittensor.utils.btlogging</span> <span class="kn">import</span> <span class="n">logging</span>
 <span class="kn">from</span> <span class="nn">bittensor.utils.formatting</span> <span class="kn">import</span> <span class="n">get_human_readable</span><span class="p">,</span> <span class="n">millify</span>
@@ -898,16 +895,61 @@
 
 
 
+<div class="viewcode-block" id="Status">
+<a class="viewcode-back" href="../../../../autoapi/bittensor/utils/registration/pow/index.html#bittensor.utils.Status">[docs]</a>
+<span class="k">class</span> <span class="nc">Status</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="n">status</span>
+
+<div class="viewcode-block" id="Status.start">
+<a class="viewcode-back" href="../../../../autoapi/bittensor/utils/registration/pow/index.html#bittensor.utils.Status.start">[docs]</a>
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Status.stop">
+<a class="viewcode-back" href="../../../../autoapi/bittensor/utils/registration/pow/index.html#bittensor.utils.Status.stop">[docs]</a>
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Status.update">
+<a class="viewcode-back" href="../../../../autoapi/bittensor/utils/registration/pow/index.html#bittensor.utils.Status.update">[docs]</a>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="n">status</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Console">
+<a class="viewcode-back" href="../../../../autoapi/bittensor/utils/registration/pow/index.html#bittensor.utils.Console">[docs]</a>
+<span class="k">class</span> <span class="nc">Console</span><span class="p">:</span>
+<div class="viewcode-block" id="Console.status">
+<a class="viewcode-back" href="../../../../autoapi/bittensor/utils/registration/pow/index.html#bittensor.utils.Console.status">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Status</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Console.log">
+<a class="viewcode-back" href="../../../../autoapi/bittensor/utils/registration/pow/index.html#bittensor.utils.Console.log">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+</div>
+
+
+
 <div class="viewcode-block" id="RegistrationStatisticsLogger">
 <a class="viewcode-back" href="../../../../autoapi/bittensor/utils/registration/pow/index.html#bittensor.utils.RegistrationStatisticsLogger">[docs]</a>
 <span class="k">class</span> <span class="nc">RegistrationStatisticsLogger</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Logs statistics for a registration.&quot;&quot;&quot;</span>
 
-    <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">rich_status</span><span class="o">.</span><span class="n">Status</span><span class="p">]</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Status&quot;</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">console</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">rich_console</span><span class="o">.</span><span class="n">Console</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">console</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Console&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">output_in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">console</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>

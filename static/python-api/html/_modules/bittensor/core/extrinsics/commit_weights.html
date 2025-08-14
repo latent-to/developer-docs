@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -339,7 +338,6 @@
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">bittensor.utils</span> <span class="kn">import</span> <span class="n">format_error_message</span>
 <span class="kn">from</span> <span class="nn">bittensor.utils.btlogging</span> <span class="kn">import</span> <span class="n">logging</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
@@ -354,7 +352,8 @@
     <span class="n">commit_hash</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Internal method to send a transaction to the Bittensor blockchain, committing the hash of a neuron&#39;s weights.</span>
 <span class="sd">    This method constructs and submits the transaction, handling retries and blockchain communication.</span>
@@ -366,9 +365,14 @@
 <span class="sd">        commit_hash (str): The hash of the neuron&#39;s weights to be committed.</span>
 <span class="sd">        wait_for_inclusion (bool): Waits for the transaction to be included in a block.</span>
 <span class="sd">        wait_for_finalization (bool): Waits for the transaction to be finalized on the blockchain.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        tuple[bool, Optional[str]]: A tuple containing a success flag and an optional error message.</span>
+<span class="sd">        tuple[bool, str]:</span>
+<span class="sd">            `True` if the weight commitment is successful, `False` otherwise.</span>
+<span class="sd">            `msg` is a string value describing the success or potential error.</span>
 
 <span class="sd">    This method ensures that the weight commitment is securely recorded on the Bittensor blockchain, providing a</span>
 <span class="sd">        verifiable record of the neuron&#39;s weight distribution at a specific point in time.</span>
@@ -382,11 +386,12 @@
         <span class="p">},</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">sign_and_send_extrinsic</span><span class="p">(</span>
-        <span class="n">call</span><span class="p">,</span>
-        <span class="n">wallet</span><span class="p">,</span>
-        <span class="n">wait_for_inclusion</span><span class="p">,</span>
-        <span class="n">wait_for_finalization</span><span class="p">,</span>
+        <span class="n">call</span><span class="o">=</span><span class="n">call</span><span class="p">,</span>
+        <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
+        <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
+        <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
         <span class="n">use_nonce</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
         <span class="n">sign_with</span><span class="o">=</span><span class="s2">&quot;hotkey&quot;</span><span class="p">,</span>
         <span class="n">nonce_key</span><span class="o">=</span><span class="s2">&quot;hotkey&quot;</span><span class="p">,</span>
     <span class="p">)</span>
@@ -401,6 +406,7 @@
     <span class="n">commit_hash</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Commits a hash of the neuron&#39;s weights to the Bittensor blockchain using the provided wallet.</span>
@@ -413,10 +419,14 @@
 <span class="sd">        commit_hash (str): The hash of the neuron&#39;s weights to be committed.</span>
 <span class="sd">        wait_for_inclusion (bool): Waits for the transaction to be included in a block.</span>
 <span class="sd">        wait_for_finalization (bool): Waits for the transaction to be finalized on the blockchain.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        tuple[bool, str]: ``True`` if the weight commitment is successful, False otherwise. And `msg`, a string</span>
-<span class="sd">        value describing the success or potential error.</span>
+<span class="sd">        tuple[bool, str]:</span>
+<span class="sd">            `True` if the weight commitment is successful, `False` otherwise.</span>
+<span class="sd">            `msg` is a string value describing the success or potential error.</span>
 
 <span class="sd">    This function provides a user-friendly interface for committing weights to the Bittensor blockchain, ensuring proper</span>
 <span class="sd">        error handling and user interaction when required.</span>
@@ -429,6 +439,7 @@
         <span class="n">commit_hash</span><span class="o">=</span><span class="n">commit_hash</span><span class="p">,</span>
         <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
         <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+        <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
@@ -451,7 +462,8 @@
     <span class="n">version_key</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]]:</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Internal method to send a transaction to the Bittensor blockchain, revealing the weights for a specific subnet.</span>
 <span class="sd">    This method constructs and submits the transaction, handling retries and blockchain communication.</span>
@@ -466,9 +478,14 @@
 <span class="sd">        version_key (int): Version key for compatibility with the network.</span>
 <span class="sd">        wait_for_inclusion (bool): Waits for the transaction to be included in a block.</span>
 <span class="sd">        wait_for_finalization (bool): Waits for the transaction to be finalized on the blockchain.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        tuple[bool, Optional[str]]: A tuple containing a success flag and an optional error message.</span>
+<span class="sd">        tuple[bool, str]:</span>
+<span class="sd">            `True` if the weight commitment is successful, `False` otherwise.</span>
+<span class="sd">            `msg` is a string value describing the success or potential error.</span>
 
 <span class="sd">    This method ensures that the weight revelation is securely recorded on the Bittensor blockchain, providing</span>
 <span class="sd">        transparency and accountability for the neuron&#39;s weight distribution.</span>
@@ -486,11 +503,12 @@
         <span class="p">},</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">sign_and_send_extrinsic</span><span class="p">(</span>
-        <span class="n">call</span><span class="p">,</span>
-        <span class="n">wallet</span><span class="p">,</span>
-        <span class="n">wait_for_inclusion</span><span class="p">,</span>
-        <span class="n">wait_for_finalization</span><span class="p">,</span>
+        <span class="n">call</span><span class="o">=</span><span class="n">call</span><span class="p">,</span>
+        <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
+        <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
+        <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
         <span class="n">use_nonce</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
         <span class="n">sign_with</span><span class="o">=</span><span class="s2">&quot;hotkey&quot;</span><span class="p">,</span>
         <span class="n">nonce_key</span><span class="o">=</span><span class="s2">&quot;hotkey&quot;</span><span class="p">,</span>
     <span class="p">)</span>
@@ -508,6 +526,7 @@
     <span class="n">version_key</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">wait_for_inclusion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">wait_for_finalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reveals the weights for a specific subnet on the Bittensor blockchain using the provided wallet.</span>
@@ -523,10 +542,14 @@
 <span class="sd">        version_key (int): Version key for compatibility with the network.</span>
 <span class="sd">        wait_for_inclusion (bool): Waits for the transaction to be included in a block.</span>
 <span class="sd">        wait_for_finalization (bool): Waits for the transaction to be finalized on the blockchain.</span>
+<span class="sd">        period (Optional[int]): The number of blocks during which the transaction will remain valid after it&#39;s submitted. If</span>
+<span class="sd">            the transaction is not included in a block within that number of blocks, it will expire and be rejected.</span>
+<span class="sd">            You can think of it as an expiration date for the transaction.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        tuple[bool, str]: ``True`` if the weight revelation is successful, False otherwise. And `msg`, a string value</span>
-<span class="sd">            describing the success or potential error.</span>
+<span class="sd">        tuple[bool, str]:</span>
+<span class="sd">            `True` if the weight commitment is successful, `False` otherwise.</span>
+<span class="sd">            `msg` is a string value describing the success or potential error.</span>
 
 <span class="sd">    This function provides a user-friendly interface for revealing weights on the Bittensor blockchain, ensuring proper</span>
 <span class="sd">        error handling and user interaction when required.</span>
@@ -542,6 +565,7 @@
         <span class="n">version_key</span><span class="o">=</span><span class="n">version_key</span><span class="p">,</span>
         <span class="n">wait_for_inclusion</span><span class="o">=</span><span class="n">wait_for_inclusion</span><span class="p">,</span>
         <span class="n">wait_for_finalization</span><span class="o">=</span><span class="n">wait_for_finalization</span><span class="p">,</span>
+        <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
@@ -549,7 +573,7 @@
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">success_message</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">success_message</span>
 
-    <span class="n">error_message</span> <span class="o">=</span> <span class="n">format_error_message</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
+    <span class="n">error_message</span> <span class="o">=</span> <span class="n">error_message</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to reveal weights: </span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">error_message</span></div>
 

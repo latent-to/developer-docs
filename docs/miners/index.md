@@ -74,7 +74,6 @@ Deregistration only occurs on subnets where all 256 UID slots are occupied. If a
 
 Each tempo, the '[neuron](../learn/neurons)' (miner _or_ validator node) with the lowest 'pruning score' (based solely on emissions), and that is no longer within its [immunity period](../subnets/subnet-hyperparameters.md#immunityperiod), risks being replaced by a newly registered neuron, who takes over that UID.
 
-
 :::info Deregistration is based on emissions
 The subnet does not distinguish between miners and validators for the purpose of deregistration. The chain only looks at emissions (represented as 'pruning score'). Whenever a new registration occurs in the subnet, the neuron with the lowest emissions will get deregistered.
 :::
@@ -88,12 +87,13 @@ A subnet neuron (miner or validator) at a UID (in that subnet) has `immunity_per
 **Implementation Details:**
 
 Immunity status is calculated dynamically using the formula `is_immune = (current_block - registered_at) < immunity_period`, where:
+
 - `current_block` is the current blockchain block number
 - `registered_at` is the block number when the neuron was registered
 - `immunity_period` is the configured protection period for the subnet (default: 4096 blocks ≈ 13.7 hours)
 
-
 **Code References:**
+
 - [`subtensor/pallets/subtensor/src/utils/misc.rs:442-448`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/misc.rs#L442-448) - Immunity status calculation
 - [`subtensor/pallets/subtensor/src/subnets/registration.rs:409-485`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/registration.rs#L409-485) - Pruning algorithm with immunity priority
 
@@ -153,24 +153,24 @@ btcli wallet overview --netuid
 
 After providing your wallet name when prompted, you will see output such as:
 
-| Parameter   | Example value      | Description                                                                 |
-| :---------- | :----------------- | :-------------------------------------------------------------------------- |
-| COLDKEY     | my_coldkey         | The name of the coldkey associated with your slot.                          |
-| HOTKEY      | my_first_hotkey    | The name of the hotkey associated with your slot.                           |
-| UID         | 5                  | The index of the uid out of available uids.                                 |
-| ACTIVE      | True               | The validator has set weights within the subnet's activity_cutoff           |
-| STAKE(τ)    | 71.296             | The amount of stake in this wallet.                                         |
-| RANK        | 0.0629             | This miner's absolute ranking according to validators on the network.       |
-| TRUST       | 0.2629             | This miner's trust as a proportion of validators on the network.            |
-| CONSENSUS   | 0.89               | This validator's aggregate consensus score.                                 |
-| INCENTIVE   | 0.029              | This miner's incentive, TAO emission, is attained via mining.               |
-| DIVIDENDS   | 0.001              | This validator's dividends, TAO emission, are attained via validating.      |
-| EMISSION    | 29_340_153         | This miner's total emission in RAO (10^(-9) TAO) per block.                 |
-| VTRUST      | 0.96936            | This validator's trust score as a validator.                                |
-| VPERMIT     | \*                 | For validators: The uid is considered active for validating on this subnet. |
-| UPDATED     | 43                 | Blocks since this miner set weights on the chain.                           |
-| AXON        | 131.186.56.85:8091 | The entrypoint advertised by this miner on the bittensor blockchain.        |
-| HOTKEY_SS58 | 5F4tQyWr...        | The ss58-encoded address of the miner's hotkey.                             |
+| Parameter   | Example value      | Description                                                                            |
+| :---------- | :----------------- | :------------------------------------------------------------------------------------- |
+| COLDKEY     | my_coldkey         | The name of the coldkey associated with your slot.                                     |
+| HOTKEY      | my_first_hotkey    | The name of the hotkey associated with your slot.                                      |
+| UID         | 5                  | Unique identifier of the neuron.                                                       |
+| ACTIVE      | True               | Whether or not the uid is considered active.                                           |
+| STAKE(τ)    | 71.296             | The amount of stake in this wallet.                                                    |
+| RANK        | 0.0629             | This miner's absolute ranking according to validators on the network.                  |
+| TRUST       | 0.2629             | This miner's trust score as a proportion of validators on the network.                 |
+| CONSENSUS   | 0.89               | The consensus score of the neuron.                                                     |
+| INCENTIVE   | 0.029              | Thencentive score representing the miner's incentive alignment.                        |
+| DIVIDENDS   | 0.001              | The dividends earned by the neuron for validating on the subnet.                       |
+| EMISSION    | 29_340_153         | The emission in RAO (p) received by the neuron.                                        |
+| VTRUST      | 0.96936            | The validator trust score indicating the network's trust in the neuron as a validator. |
+| VPERMIT     | \*                 | Whether this neuron is considered eligible for validating on this subnetwork.          |
+| UPDATED     | 43                 | Blocks since the neuron set weights on the chain.                                      |
+| AXON        | 131.186.56.85:8091 | The entrypoint advertised by this miner on the bittensor blockchain.                   |
+| HOTKEY_SS58 | 5F4tQyWr...        | The ss58-encoded address of the miner's hotkey.                                        |
 
 ## Checking miner registration status
 

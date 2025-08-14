@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -353,6 +352,7 @@
 
 <span class="kn">from</span> <span class="nn">statemachine</span> <span class="kn">import</span> <span class="n">State</span><span class="p">,</span> <span class="n">StateMachine</span>
 
+<span class="kn">from</span> <span class="nn">bittensor.core.settings</span> <span class="kn">import</span> <span class="n">READ_ONLY</span>
 <span class="kn">from</span> <span class="nn">bittensor.core.config</span> <span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">from</span> <span class="nn">bittensor.utils.btlogging.console</span> <span class="kn">import</span> <span class="n">BittensorConsole</span>
 <span class="kn">from</span> <span class="nn">.defines</span> <span class="kn">import</span> <span class="p">(</span>
@@ -1063,9 +1063,12 @@
             <span class="n">default_logging_info</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;BT_LOGGING_INFO&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="kc">False</span>
             <span class="n">default_logging_trace</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;BT_LOGGING_TRACE&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="kc">False</span>
             <span class="n">default_logging_record_log</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;BT_LOGGING_RECORD_LOG&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="kc">False</span>
-            <span class="n">default_logging_logging_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span>
-                <span class="s2">&quot;BT_LOGGING_LOGGING_DIR&quot;</span>
-            <span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">,</span> <span class="s2">&quot;.bittensor&quot;</span><span class="p">,</span> <span class="s2">&quot;miners&quot;</span><span class="p">)</span>
+            <span class="n">default_logging_logging_dir</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="kc">None</span>
+                <span class="k">if</span> <span class="n">READ_ONLY</span>
+                <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;BT_LOGGING_LOGGING_DIR&quot;</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">,</span> <span class="s2">&quot;.bittensor&quot;</span><span class="p">,</span> <span class="s2">&quot;miners&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
                 <span class="s2">&quot;--&quot;</span> <span class="o">+</span> <span class="n">prefix_str</span> <span class="o">+</span> <span class="s2">&quot;logging.debug&quot;</span><span class="p">,</span>
                 <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>

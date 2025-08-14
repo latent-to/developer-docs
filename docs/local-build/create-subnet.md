@@ -8,12 +8,17 @@ This page covers creating a subnet on a locally deployed Subtensor blockchain, w
 
 For creating a subnet on Bittensor test and main network, see [Create a Subnet](../subnets/create-a-subnet).
 
-Prerequisites:
+## Prerequisites
+
+Before continuing with the rest of this tutorial, make sure you've completed the following:
 
 - [Deploy a Subtensor chain locally](./deploy)
-- [Provision wallets for the sn-creator, miner, and validator users for this tutorial.](./provision-wallets)
+- [Provision wallets for the subnet creator, miner, and validator users for this tutorial.](./provision-wallets)
+- Sufficient amount of TAO in your subnet creator wallet to cover the [burn cost](../glossary.md#burn-cost).
 
-## Create subnet
+## Create a subnet
+
+Now, let us create a new subnet on the local chain. To create a new subnet, run the following command in your terminal:
 
 ```shell
 btcli subnet create \
@@ -22,34 +27,42 @@ btcli subnet create \
 --network ws://127.0.0.1:9945
 ```
 
-### Trouble shoot
-
-#### Insufficient funds
-
-If you are following this tutorial for the first time, the `subnet create` command will faill with an insufficient balance error.
-
-The coldkey signing the `subnet create` transaction must have a sufficient $\tau$ balance to cover the burn cost of subnet creation, so called because the funds cannot be recovered.
+You will then be prompted to provide the wallet hotkey as well as configure the subnet as shown:
 
 ```console
 Subnet burn cost: τ 1,000.0000
-Your balance of: τ 0.0000 is not enough to burn τ 1,000.0000 to register a subnet.
+Your balance is: τ 1,001.0000
+Do you want to burn τ 1,000.0000 to register a subnet? [y/n]:y
+Enter your password:
+Decrypting...
+🌏  📡 Registering subnet..
 ```
 
-Transfer funds from the Alice account to cover it and try again. Consult `btcli w list` and carefully check the ss58 address of the destination coldkey (in this case, the one with the name `sn-creator`).
+To check on your newly created subnets, run the following command in your terminal:
 
 ```shell
-btcli wallet transfer \
---amount 1001 \
---wallet.name alice \
---destination "5C9xw4..." \
---network ws://127.0.0.1:9945
+btcli subnet list --network ws://127.0.0.1:9945
 ```
 
-#### Network Rate Limit Error
+A list of all subnets in your local subtensor instance is returned:
 
-If you see a network rate limit error, you may need to adjust the `SubtensorInitialNetworkRateLimit` chain state parameter.
+```console
+                                                         Subnets
+                                                     Network: custom
+        ┃             ┃ Price       ┃ Market Cap  ┃              ┃ P (τ_in,    ┃ Stake        ┃             ┃
+ Netuid ┃ Name        ┃ (τ_in/α_in) ┃ (α * Price) ┃ Emission (τ) ┃ α_in)       ┃ (α_out)      ┃ Supply (α)  ┃ Tempo (k/n)
+━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━
+   0    │ τ root      │ 1.0000 τ/Τ  │ τ 0.00      │ τ 0.0000     │ -, -        │ Τ 0.00       │ 0.00 Τ /21M │ -/-
+   2    │ β           │ 0.0000 τ/β  │ τ 1.00k     │ τ 0.0000     │ τ 1.00k,    │ 0.00 β       │ 1.00k β     │ 29/360
+        │ awesome-fi… │             │             │              │ 1.00k β     │              │ /21M        │
+   1    │ α apex      │ 0.0000 τ/α  │ τ 11.00     │ τ 0.0000     │ τ 10.00,    │ 1.00 α       │ 11.00 α     │ 29/100
+        │             │             │             │              │ 10.00 α     │              │ /21M        │
+────────┼─────────────┼─────────────┼─────────────┼──────────────┼─────────────┼──────────────┼─────────────┼─────────────
+   4    │             │ τ 1.0       │             │ τ 0.0        │ τ           │              │             │
+        │             │             │             │              │ 2.01k/29.00 │              │             │
+        │             │             │             │              │ (6931.03%)  │              │             │
+```
 
-See [Clone and tweak the Subtensor source](./deploy#clone-and-tweak-the-subtensor-source)
 
 ### Subnet creation cost
 
@@ -61,108 +74,21 @@ Note that this is labeled "burn cost", even though technically the cost of subne
 See: [Glossary: Recycling and Burning](../glossary#recycling-and-burning)
 :::
 
-:::tip try it live
+## Start emissions on the subnet
 
-Check the burn cost to create a subnet on Bittensor main network and test network:
+To activate your subnet, beginning emissions and allowing staking, run:
 
-<link rel="stylesheet" href="https://unpkg.com/@antonz/codapi@0.19.10/dist/snippet.css" />
-<codapi-settings url="https://bittensor-codex.com/v1">
-</codapi-settings>
-
-```shell
-btcli subnet burn-cost --network finney
 ```
-
-<codapi-snippet sandbox="python" editor="basic" init-delay="500">
-</codapi-snippet>
-
-```shell
-btcli subnet burn-cost --network test
-```
-
-<codapi-snippet sandbox="python" editor="basic" init-delay="500">
-</codapi-snippet>
-:::
-
-## Fund your subnet
-
-To remedy your liquidity shortfall, transfer $\tau$ from the Alice account and try again.
-
-1. First, get the ss58 address for the destination wallet for the transfer:
-    ```shell
-    btcli w list
-    ```
-    ```shell
-    ...
-    ── Coldkey sn-creator  ss58_address 5C9xw4gDyu11ocdpWrmhT1sbi4xEHCpzEMsyMA4jGfAZQofQ
-    └── Hotkey default  ss58_address 5GVsCAY6RuSuoAA1E77xsHJ9PjdZJjJrRkNFDxVtRKPnw7TR
-    ```
-1. Execute the transfer from `alice` to the sn-creator wallet
-
-    ```console
-    btcli wallet transfer \
-    --amount 1001 \
-    --wallet.name alice \
-    --destination "5GVsCAY6RuSuoAA1E77xsHJ9PjdZJjJrRkNFDxVtRKPnw7TR" \
-    --subtensor.chain_endpoint ws://127.0.0.1:9945
-    ```
-
-    ```shell
-    Do you want to transfer:
-    amount: τ 1,001.0000
-    from: alice : 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-    to: 5GVsCAY6RuSuoAA1E77xsHJ9PjdZJjJrRkNFDxVtRKPnw7TR
-    for fee: τ 0.0001 [y/n]: y
-    🌏  📡 Transferring...
-    ```
-
-
-## Success
-
-Create some subnets.
-
-For example:
-
-```shell
-btcli subnet create \
---subnet-name awesome-first-subnet \
+btcli subnet start --netuid NETUID \
 --wallet.name sn-creator \
 --network ws://127.0.0.1:9945
 ```
 
-```console
-Subnet burn cost: τ 1,000.0000
-Your balance is: τ 1,001.0000
-Do you want to burn τ 1,000.0000 to register a subnet? [y/n]:y
-Enter your password:
-Decrypting...
-🌏  📡 Registering subnet..
-```
+Replace `NETUID` with the netuid of the subnet you want to enable emissions on.
 
-```shell
- btcli subnet create \
---subnet-name awesome-second-subnet \
---wallet.name sn-creator \
---network ws://127.0.0.1:9945
-```
+After a while, you can confirm that the subnet's emissions have started by inspecting your subnet's token economy. You'll see a non-zero amount in the *Emission* column, indicating the subnet creator key accumulates emissions.
 
-```console
-Subnet burn cost: τ 1,999.9405
-▰▱▱▱▱▱▱ 📡Retrieving lock cost from custom...
-Your balance is: τ 2,003.0000
-Do you want to burn τ 1,999.9405 to register a subnet? [y/n]: Please enter Y or N
-Do you want to burn τ 1,999.9405 to register a subnet? [y/n]: y
-Enter your password:
-Decrypting...
-✅ Registered subnetwork with netuid: 3
-```
-
-1. List your subnets
-
-```shell
-btcli subnet list \
---network ws://127.0.0.1:9945
-```
+You can confirm the emissions by running the `btcli subnets list` command:
 
 ```console
                                                          Subnets
@@ -171,24 +97,29 @@ btcli subnet list \
  Netuid ┃ Name        ┃ (τ_in/α_in) ┃ (α * Price) ┃ Emission (τ) ┃ α_in)       ┃ (α_out)      ┃ Supply (α)  ┃ Tempo (k/n)
 ━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━
    0    │ τ root      │ 1.0000 τ/Τ  │ τ 0.00      │ τ 0.0000     │ -, -        │ Τ 0.00       │ 0.00 Τ /21M │ -/-
-   2    │ β           │ 1.0000 τ/β  │ τ 1.00k     │ τ 0.0000     │ τ 1.00k,    │ 0.00 β       │ 1.00k β     │ 29/360
+   2    │ β           │ 1.0000 τ/β  │ τ 1.81k     │ τ 1.0000     │ τ 1.00k,    │ 414.00 β     │ 1.81k β     │ 29/360
         │ awesome-fi… │             │             │              │ 1.00k β     │              │ /21M        │
-   3    │ γ           │ 1.0000 τ/γ  │ τ 1.00k     │ τ 0.0000     │ τ 1.00k,    │ 0.00 γ       │ 1.00k γ     │ 29/360
-        │ awesome-se… │             │             │              │ 1.00k γ     │              │ /21M        │
-   1    │ α apex      │ 1.0000 τ/α  │ τ 11.00     │ τ 0.0000     │ τ 10.00,    │ 1.00 α       │ 11.00 α     │ 29/100
+   1    │ α apex      │ 0.0000 τ/α  │ τ 11.00     │ τ 0.0000     │ τ 10.00,    │ 1.00 α       │ 11.00 α     │ 29/100
         │             │             │             │              │ 10.00 α     │              │ /21M        │
 ────────┼─────────────┼─────────────┼─────────────┼──────────────┼─────────────┼──────────────┼─────────────┼─────────────
-   4    │             │ τ 3.0       │             │ τ 0.0        │ τ           │              │             │
-        │             │             │             │              │ 2.01k/29.00 │              │             │
+   4    │             │ τ 1.0       │             │ τ 1.0        │ τ           │              │             │
+        │             │             │             │              │ 1.41k/562.00│              │             │
         │             │             │             │              │ (6931.03%)  │              │             │
 ```
 
-## Start emissions on your subnet
+## Troubleshooting
 
-To activate your subnet, beginning emissions and allowing staking, run:
+### Insufficient funds
 
+The coldkey signing the `subnet create` transaction must have a sufficient $\tau$ balance to cover the burn cost of subnet creation, so called because the funds cannot be recovered.
+
+```console
+Subnet burn cost: τ 1,000.0000
+Your balance of: τ 0.0000 is not enough to burn τ 1,000.0000 to register a subnet.
 ```
-btcli subnet start --netuid 2 \
---wallet.name sn-creator \
---network ws://127.0.0.1:9945 
-```
+
+To fix this, transfer TAO from the Alice account to cover this transaction and try again. For more information, see [Transfer TAO to wallets](./provision-wallets.md#transfer-tao-to-wallets).
+
+## Next steps
+
+With emissions now active on your subnet, you can begin registering and running miners and validators to participate in the network.

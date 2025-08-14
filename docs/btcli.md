@@ -686,7 +686,7 @@ btcli wallet transfer [OPTIONS]
 | `--destination`, `--dest`, `-d`                                             | TEXT    | Destination address (ss58) of the wallet (coldkey).                                  |
 | `--amount`, `-a`                                                            | FLOAT   | Amount (in TAO) to transfer.                                                         |
 | `--all`                                                                     |         | Transfer all available balance.                                                      |
-| `--all`, `-a`                                                               |         | Whether to display the balances for all the wallets.                                 |
+| `--all`                                                                     |         | Whether to display the balances for all the wallets.                                 |
 | `--period`, `-era`                                                          | INTEGER | Length (in blocks) for which the transaction should be valid.                        |
 | `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
 | `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |

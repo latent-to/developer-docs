@@ -89,9 +89,9 @@ const sidebars = {
       label: "Liquidity Positions (Uniswap)",
       collapsible: true,
       collapsed: true,
-      items: [              
-        'liquidity-positions/liquidity-positions',
-        'liquidity-positions/managing-liquidity-positions'
+      items: [
+        "liquidity-positions/liquidity-positions",
+        "liquidity-positions/managing-liquidity-positions",
       ],
     },
     {
@@ -109,7 +109,7 @@ const sidebars = {
         "subnets/walkthrough-prompting",
         "tutorials/basic-subnet-tutorials",
         "tutorials/ocr-subnet-tutorial",
-        "subnets/yuma3-migration-guide"
+        "subnets/yuma3-migration-guide",
       ],
     },
     {
@@ -182,7 +182,7 @@ const sidebars = {
         "local-build/deploy",
         "local-build/provision-wallets",
         "local-build/create-subnet",
-        // "local-build/mine-validate"
+        "local-build/mine-validate",
       ],
     },
 

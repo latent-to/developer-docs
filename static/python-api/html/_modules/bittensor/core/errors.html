@@ -175,7 +175,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/formatting/index.html">bittensor.utils.formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/mock/index.html">bittensor.utils.mock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -354,6 +353,21 @@
 <span class="n">ExtrinsicNotFound</span> <span class="o">=</span> <span class="n">ExtrinsicNotFound</span>
 
 
+<span class="k">class</span> <span class="nc">_ChainErrorMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="n">_exceptions</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+
+        <span class="n">mcs</span><span class="o">.</span><span class="n">_exceptions</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_exception_class</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">exception_name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">mcs</span><span class="o">.</span><span class="n">_exceptions</span><span class="p">[</span><span class="n">exception_name</span><span class="p">]</span>
+
+
 <div class="viewcode-block" id="MaxSuccessException">
 <a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.MaxSuccessException">[docs]</a>
 <span class="k">class</span> <span class="nc">MaxSuccessException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -370,8 +384,22 @@
 
 <div class="viewcode-block" id="ChainError">
 <a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.ChainError">[docs]</a>
-<span class="k">class</span> <span class="nc">ChainError</span><span class="p">(</span><span class="n">SubstrateRequestException</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base error for any chain related errors.&quot;&quot;&quot;</span></div>
+<span class="k">class</span> <span class="nc">ChainError</span><span class="p">(</span><span class="n">SubstrateRequestException</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">_ChainErrorMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base error for any chain related errors.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ChainError.from_error">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.ChainError.from_error">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_error</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">error_cls</span> <span class="o">=</span> <span class="n">_ChainErrorMeta</span><span class="o">.</span><span class="n">get_exception_class</span><span class="p">(</span>
+                <span class="n">error</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">error_cls</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">error</span><span class="p">[</span><span class="s2">&quot;docs&quot;</span><span class="p">]))</span></div>
+</div>
 
 
 
@@ -389,80 +417,219 @@
 
 
 
-<div class="viewcode-block" id="ChainQueryError">
-<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.ChainQueryError">[docs]</a>
-<span class="k">class</span> <span class="nc">ChainQueryError</span><span class="p">(</span><span class="n">ChainError</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error for any chain query related errors.&quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="DelegateTakeTooHigh">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.DelegateTakeTooHigh">[docs]</a>
+<span class="k">class</span> <span class="nc">DelegateTakeTooHigh</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Delegate take is too high.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
 
 
 
-<div class="viewcode-block" id="StakeError">
-<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.StakeError">[docs]</a>
-<span class="k">class</span> <span class="nc">StakeError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised when a stake transaction fails.&quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="DelegateTakeTooLow">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.DelegateTakeTooLow">[docs]</a>
+<span class="k">class</span> <span class="nc">DelegateTakeTooLow</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Delegate take is too low.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
 
 
 
-<div class="viewcode-block" id="UnstakeError">
-<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.UnstakeError">[docs]</a>
-<span class="k">class</span> <span class="nc">UnstakeError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised when an unstake transaction fails.&quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="DuplicateChild">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.DuplicateChild">[docs]</a>
+<span class="k">class</span> <span class="nc">DuplicateChild</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Duplicate child when setting children.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="HotKeyAccountNotExists">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.HotKeyAccountNotExists">[docs]</a>
+<span class="k">class</span> <span class="nc">HotKeyAccountNotExists</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The hotkey does not exist.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="IdentityError">
 <a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.IdentityError">[docs]</a>
 <span class="k">class</span> <span class="nc">IdentityError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised when an identity transaction fails.&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Error raised when an identity transaction fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
 
 
 
-<div class="viewcode-block" id="NominationError">
-<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.NominationError">[docs]</a>
-<span class="k">class</span> <span class="nc">NominationError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised when a nomination transaction fails.&quot;&quot;&quot;</span></div>
-
-
-
-<div class="viewcode-block" id="TakeError">
-<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.TakeError">[docs]</a>
-<span class="k">class</span> <span class="nc">TakeError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised when an increase / decrease take transaction fails.&quot;&quot;&quot;</span></div>
-
-
-
-<div class="viewcode-block" id="TransferError">
-<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.TransferError">[docs]</a>
-<span class="k">class</span> <span class="nc">TransferError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised when a transfer transaction fails.&quot;&quot;&quot;</span></div>
-
-
-
-<div class="viewcode-block" id="RegistrationError">
-<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.RegistrationError">[docs]</a>
-<span class="k">class</span> <span class="nc">RegistrationError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised when a neuron registration transaction fails.&quot;&quot;&quot;</span></div>
-
-
-
-<div class="viewcode-block" id="NotRegisteredError">
-<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.NotRegisteredError">[docs]</a>
-<span class="k">class</span> <span class="nc">NotRegisteredError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised when a neuron is not registered, and the transaction requires it to be.&quot;&quot;&quot;</span></div>
-
-
-
-<div class="viewcode-block" id="NotDelegateError">
-<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.NotDelegateError">[docs]</a>
-<span class="k">class</span> <span class="nc">NotDelegateError</span><span class="p">(</span><span class="n">StakeError</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised when a hotkey you are trying to stake to is not a delegate.&quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="InvalidChild">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.InvalidChild">[docs]</a>
+<span class="k">class</span> <span class="nc">InvalidChild</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attempting to set an invalid child for a hotkey on a network.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="MetadataError">
 <a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.MetadataError">[docs]</a>
 <span class="k">class</span> <span class="nc">MetadataError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised when metadata commitment transaction fails.&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Error raised when metadata commitment transaction fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="NominationError">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.NominationError">[docs]</a>
+<span class="k">class</span> <span class="nc">NominationError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Error raised when a nomination transaction fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="NonAssociatedColdKey">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.NonAssociatedColdKey">[docs]</a>
+<span class="k">class</span> <span class="nc">NonAssociatedColdKey</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Request to stake, unstake or subscribe is made by a coldkey that is not associated with the hotkey account.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="NotEnoughStakeToSetChildkeys">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.NotEnoughStakeToSetChildkeys">[docs]</a>
+<span class="k">class</span> <span class="nc">NotEnoughStakeToSetChildkeys</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The parent hotkey doesn&#39;t have enough own stake to set childkeys.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="NotRegisteredError">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.NotRegisteredError">[docs]</a>
+<span class="k">class</span> <span class="nc">NotRegisteredError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Error raised when a neuron is not registered, and the transaction requires it to be.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="ProportionOverflow">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.ProportionOverflow">[docs]</a>
+<span class="k">class</span> <span class="nc">ProportionOverflow</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Proportion overflow when setting children.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="RegistrationError">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.RegistrationError">[docs]</a>
+<span class="k">class</span> <span class="nc">RegistrationError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Error raised when a neuron registration transaction fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="RegistrationNotPermittedOnRootSubnet">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.RegistrationNotPermittedOnRootSubnet">[docs]</a>
+<span class="k">class</span> <span class="nc">RegistrationNotPermittedOnRootSubnet</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Operation is not permitted on the root subnet.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="StakeError">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.StakeError">[docs]</a>
+<span class="k">class</span> <span class="nc">StakeError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Error raised when a stake transaction fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="NotDelegateError">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.NotDelegateError">[docs]</a>
+<span class="k">class</span> <span class="nc">NotDelegateError</span><span class="p">(</span><span class="n">StakeError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Error raised when a hotkey you are trying to stake to is not a delegate.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="SubNetworkDoesNotExist">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.SubNetworkDoesNotExist">[docs]</a>
+<span class="k">class</span> <span class="nc">SubNetworkDoesNotExist</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The subnet does not exist.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="TakeError">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.TakeError">[docs]</a>
+<span class="k">class</span> <span class="nc">TakeError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Error raised when an increase / decrease take transaction fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="TransferError">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.TransferError">[docs]</a>
+<span class="k">class</span> <span class="nc">TransferError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Error raised when a transfer transaction fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="TooManyChildren">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.TooManyChildren">[docs]</a>
+<span class="k">class</span> <span class="nc">TooManyChildren</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Too many children MAX 5.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="TxRateLimitExceeded">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.TxRateLimitExceeded">[docs]</a>
+<span class="k">class</span> <span class="nc">TxRateLimitExceeded</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Default transaction rate limit exceeded.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="DelegateTxRateLimitExceeded">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.DelegateTxRateLimitExceeded">[docs]</a>
+<span class="k">class</span> <span class="nc">DelegateTxRateLimitExceeded</span><span class="p">(</span><span class="n">TxRateLimitExceeded</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A transactor exceeded the rate limit for delegate transaction.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="UnstakeError">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.UnstakeError">[docs]</a>
+<span class="k">class</span> <span class="nc">UnstakeError</span><span class="p">(</span><span class="n">ChainTransactionError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Error raised when an unstake transaction fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="ChainQueryError">
+<a class="viewcode-back" href="../../../autoapi/bittensor/core/errors/index.html#bittensor.core.errors.ChainQueryError">[docs]</a>
+<span class="k">class</span> <span class="nc">ChainQueryError</span><span class="p">(</span><span class="n">ChainError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Error for any chain query related errors.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
 
 
 
