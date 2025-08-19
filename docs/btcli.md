@@ -38,7 +38,8 @@ btcli [OPTIONS] COMMAND [ARGS]...
 - `subnets`: Subnets commands, alias: `s`, `subnet`
 - `weights`: Weights commands, aliases: `wt`, `weight`
 - `utils`
-- `view`
+- `view`: HTML view commands
+- `liquidity`: Liquidity commands, aliases: `l`
 
 ## `btcli config`
 
@@ -2322,6 +2323,131 @@ btcli utils convert [OPTIONS]
 | `--tao`  | FLOAT | Convert amount from Tao     |
 | `--help` |       | Show this message and exit. |
 
----
+## `btcli liquidity`
 
-Made with :heart: by The Openτensor Foundaτion
+**Usage:**
+
+```sh
+btcli liquidity [OPTIONS] COMMAND [ARGS]...
+
+alias: l
+```
+
+Options:
+
+`--help`: Show this message and exit.
+
+Commands:
+
+- `add`: Add liquidity to the swap (as a combination of TAO + Alpha).
+- `list`: Displays liquidity positions in given subnet.
+- `modify`: Modifies the liquidity position for the given subnet.
+- `remove`: Remove liquidity from the swap (as a combination of TAO + Alpha).
+
+### `btcli liquidity add`
+
+Add liquidity to the swap (as a combination of TAO + Alpha).
+
+**Usage:**
+
+```bash
+btcli liquidity add [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                            | Type    | Description                                                                          |
+| ---------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint`        | TEXT    | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                        | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                            | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`          | TEXT    | Hotkey of the wallet                                                                 |
+| `--netuid`                                                                         | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                   |
+| `--liquidity`                                                                      | FLOAT   | Amount of liquidity to add to the subnet.                                            |
+| `--price-low`, `--price_low`, `--liquidity-price-low`, `--liquidity_price_low`     | FLOAT   | Low price for the adding liquidity position.                                         |
+| `--price-high`, `--price_high`, `--liquidity-price-high`, `--liquidity_price_high` | FLOAT   | High price for the adding liquidity position.                                        |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                         |         | Enable or disable interactive prompts.                                               |
+| `--quiet`                                                                          |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                        |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                                      |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                           |         | Show this message and exit.                                                          |
+
+### `btcli liquidity list`
+
+Displays liquidity positions in given subnet.
+
+**Usage:**
+
+```bash
+btcli liquidity list [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT    | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                   |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+### `btcli liquidity modify`
+
+Modifies the liquidity position for the given subnet.
+
+**Usage:**
+
+```bash
+btcli liquidity modify [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT    | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                   |
+| `--position-id`, `--position_id`                                            | INTEGER | Position ID for modification or removing.                                            |
+| `--liquidity-delta`, `--liquidity_delta`                                    | FLOAT   | Liquidity amount for modification.                                                   |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+### `btcli liquidity remove`
+
+Remove liquidity from the swap (as a combination of TAO + Alpha).
+
+**Usage:**
+
+```bash
+btcli liquidity remove [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT    | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                   |
+| `--position-id`, `--position_id`                                            | INTEGER | Position ID for modification or removal.                                             |
+| `--all`, `--a`                                                              |         | Whether to remove all liquidity positions for given subnet.                          |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+---
