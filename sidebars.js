@@ -54,7 +54,7 @@ const sidebars = {
       link: { type: "doc", id: "staking-and-delegation/delegation" },
       items: [
         "staking-and-delegation/delegation",
-        "staking-and-delegation/stakers-btcli-guide",        
+        "staking-and-delegation/stakers-btcli-guide",
         "staking-and-delegation/managing-stake-btcli",
         "staking-and-delegation/managing-stake-sdk",
         "learn/price-protection",
@@ -120,8 +120,8 @@ const sidebars = {
       items: [
         "getting-started/install-btcli",
         "btcli/btcli-playground",
-        "btcli-permissions",
-        "btcli",
+        "btcli/btcli-permissions",
+        "btcli/btcli",
         "staking-and-delegation/managing-stake-btcli",
       ],
     },
@@ -163,11 +163,11 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "bittensor-networks",
-        "subnets/commit-reveal",
-        "subnets/consensus-based-weights",
-        "subnets/bt-logging-levels",
-        "utilities",
+        "concepts/bittensor-networks",
+        "concepts/commit-reveal",
+        "concepts/consensus-based-weights",
+        "concepts/bt-logging-levels",
+        "resources/utilities",
       ],
     },
 
@@ -273,7 +273,8 @@ const sidebars = {
         "errors-and-troubleshooting",
       ],
     },
-    "media-assets",
+
+    "resources/media-assets",
     "glossary",
   ],
 };

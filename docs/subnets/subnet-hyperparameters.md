@@ -226,7 +226,7 @@ Determines whether or not bonds are reset-enabled.
 
 How long, in blocks, the consensus weights for a subnet remain time-lock encrypted, preventing weight-copying.
 
-See [Commit Reveal](./commit-reveal)
+See [Commit Reveal](../concepts/commit-reveal)
 
 ### CommitRevealWeightsEnabled
 
@@ -242,7 +242,7 @@ See [Commit Reveal](./commit-reveal)
 
 **Description**:
 
-Enables [Commit Reveal](./commit-reveal)
+Enables [Commit Reveal](../concepts/commit-reveal)
 
 ### Difficulty
 
