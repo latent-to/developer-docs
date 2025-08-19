@@ -4,34 +4,25 @@ title: "Create a Subnet with a Crowdloan"
 
 # Create a Subnet with a Crowdloan
 
-This hands‑on tutorial walks through creating a subnet via the crowdloan pallet on a locally deployed Bittensor chain, using the Polkadot‑JS web app to submit extrinsics. It follows the same instructional style as the multisig tutorial: step‑by‑step, with concrete UI actions.
+This page describes creating a subnet via **crowdloan** on a locally deployed Bittensor chain. We will use the Polkadot‑JS web app to submit extrinsics.
 
 See also [Crowdloans Overview](./crowdloans)
 
-## Summary
+The following steps will take us through the lifecycle of a subnet creation crowdloan:
 
-- Create: `crowdloan.create(deposit, min_contribution, cap, end, call, target_address)`
-  - Use base units (e.g., 10 TAO = 10_000_000_000). Ensure `deposit ≥ MinimumDeposit`, `min_contribution ≥ AbsoluteMinimumContribution`, `cap > deposit`, and `end > current` within duration bounds.
-  - Set `call = Some(subtensor.registerLeasedNetwork(emissions_share, end_block))` to auto‑register the subnet on finalize.
-- Contribute: `crowdloan.contribute(crowdloan_id, amount)` from separate wallets until `raised == cap` (before `end`).
-- Finalize: after `end` and with full cap, the creator calls `crowdloan.finalize(crowdloan_id)` to dispatch the nested call and create the lease.
-- Verify: check `subtensor.SubnetLeases`, `SubnetLeaseShares`, `SubnetUidToLeaseId`, and beneficiary proxy.
-- Dividends: owner emissions periodically split pro‑rata to contributors and the beneficiary; accumulate if not the right block or insufficient liquidity.
-- Fallback: if cap not reached, call `crowdloan.refund` repeatedly (batched) then `crowdloan.dissolve` (creator only).
-- Get crowdloan_id: read from the `crowdloan.Created` event, `crowdloan.nextCrowdloanId` (last = next-1), or list keys via JS console.
+- First, we will **create** a crowdloan for a subnet. This is a special contract that will conditionally create the subnet if enough funds are raised (this threshold is called a crowdloan's **cap**).
+- Next, we will **contribute** enough funds for the crowdloan to reach its cap.
+- Next we must **finalize** the crowdloan, which executes the action wrapped inside the crowdloan&mdash;the creation of the subnet.
+- Finally, we will verify the successful creation of the subnet by starting its emissions and observing the flow of liquidity to validator and creator hotkeys.
+
 
 ## Prerequisites
 
 - A locally running subtensor development chain.
   - Start a local node (any standard Substrate dev node setup is fine). In Polkadot‑JS, we will connect to `ws://127.0.0.1:9944`.
 - Polkadot‑JS browser app and extension installed.
-- Test accounts funded with dev TAO:
-  - Creator (opens the crowdloan and later finalizes it)
-  - Beneficiary (will operate the subnet via proxy)
-  - One or more Contributors (fund the crowdloan)
+- An accessible 'Alice' wallet (see: [Provision Wallets for Local Deploy](../local-build/provision-wallets))
 
-Tips:
-- Keep three separate accounts handy: `creator`, `beneficiary`, `contrib1` (and optionally `contrib2`). Give them balances via faucet or sudo as appropriate on your dev chain.
 
 ## Connect Polkadot‑JS to your local chain
 

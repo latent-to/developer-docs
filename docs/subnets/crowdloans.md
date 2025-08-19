@@ -18,7 +18,7 @@ While the lease is active, emissions flow to contributors pro‑rata based on th
 
 See also [Create a Subnet with a Crowdloan](./crowdloans-tutorial)
 
-## Lifecycle and extrinsics
+## Crowdloan Lifecycle
 
 - **Create** a campaign with deposit, cap, end, min contribution, optional `call` and `target_address`. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L318-L326)
 
@@ -31,13 +31,6 @@ See also [Create a Subnet with a Crowdloan](./crowdloans-tutorial)
 - **Refund** loop refunds up to `RefundContributorsLimit` per call; may need multiple calls. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L637-L646)
 
 - **Dissolve** after refunds; creator's deposit is returned and storage cleaned up. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L711-L721)
-
-
-## Creating a subnet via crowdloan
-
-- Use `subtensor::register_leased_network` as the `call` when you `create` the crowdloan. On success, the call is executed with the creator's origin during `finalize`. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2107-L2114)
-
-- The leasing logic consumes the crowdloan, registers the subnet, creates a proxy for the beneficiary, records contributor shares, and refunds unspent cap pro‑rata. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/leasing.rs#L69-L157)
 
 
 ## Emissions distribution during a lease
@@ -67,45 +60,52 @@ Implications:
 ## FAQ
 
 ### What problem do crowdloans solve?
-They enable shared funding and ownership of subnets so that no single sponsor must front the entire lock cost. Emissions are shared pro‑rata among contributors while a designated beneficiary operates the subnet via a scoped proxy.
+Crowdloans enable shared funding and ownership of subnets so that no single sponsor must front the entire lock cost. Emissions are shared among contributors while a designated beneficiary operates the subnet via a scoped proxy.
 
 ### How does the end‑to‑end flow work?
+
 Creator calls `create` with deposit, cap, end, and a `call` of `subtensor::register_leased_network`. Contributors fund until the cap is hit. After the end block, creator calls `finalize`; funds transfer and the stored call executes with creator origin. A subnet and a `SubnetLeaseBeneficiary` proxy are set up; contributor shares are recorded, leftover cap is refunded.
 
-### Where can I see the exact extrinsics and storage?
-See the cited code blocks in this article for `create`, `contribute`, `withdraw`, `finalize`, `refund`, `dissolve` and the storage maps `Crowdloans`, `Contributions`, `CurrentCrowdloanId`.
 
 ### Can the purpose of a crowdloan be changed after it starts?
+
 No. The `call` and optional `target_address` are bound at creation and used at `finalize`. The pallet exposes `CurrentCrowdloanId` only during dispatch to the called extrinsic, preventing mid‑campaign repurposing.
 
 ### Who can finalize a crowdloan and when?
+
 Only the creator, after the end block, and only if `raised == cap` and it hasn’t already been finalized.
 
 ### What happens if the cap is not reached?
+
 Anyone can call `refund` to batch‑refund contributors (excluding the creator) up to `RefundContributorsLimit` per call. After all refunds, only the creator can `dissolve` to recover the deposit and clean storage.
 
 ### How are emissions split during a lease?
-Owner rewards are split pro‑rata to contributors by their recorded `SubnetLeaseShares`; any remainder goes to the beneficiary. This runs automatically during coinbase distribution.
+
+Owner rewards are split to contributors by their recorded `SubnetLeaseShares`; any remainder goes to the beneficiary. This runs automatically during coinbase distribution.
 
 ### What permissions does the beneficiary proxy have?
-`ProxyType::SubnetLeaseBeneficiary` can invoke a curated set of calls (e.g., start subnet calls and selected admin‑utils setters like difficulty, weights, limits). It cannot perform unrestricted sudo.
+
+They can invoke a curated set of calls (e.g., start subnet calls and selected admin‑utils setters like difficulty, weights, limits).
+<!-- TODO: investigate this and fill out the details -->
 
 ### Can the campaign parameters be updated mid‑flight?
+
 The creator can update `min_contribution`, `end`, and `cap` on a non‑finalized crowdloan, subject to checks (duration bounds, cap >= raised, etc.). The `call` and `target_address` are immutable.
 
-### What are the defaults for deposits, contribution minimums, and timing?
-Runtime defaults currently set minimum deposit, absolute minimum contribution, min/max block durations, refund batch size, and max contributors. See the Runtime parameters section for exact constants.
-
 ### Is there a maximum number of contributors?
+
 Yes. `MaxContributors` limits unique contributors per crowdloan; contributions beyond that will be rejected.
 
 ### How are leftover funds handled at lease creation?
-Any leftover cap (after paying registration + proxy cost) is refunded pro‑rata to contributors; the residual remainder goes to the beneficiary.
+
+Any leftover cap (after paying registration + proxy cost) is refunded to contributors; the residual remainder goes to the beneficiary.
 
 ### How do I track my expected emissions?
+
 Your share equals your contribution divided by total raised at `finalize`. Emissions are distributed to your coldkey during the lease according to that share.
 
 ### Can a lease be terminated early?
+
 No. The beneficiary may terminate only after the optional `end_block` has passed; for perpetual leases there is no end block.
 
 
