@@ -15,8 +15,6 @@ You can also explore Bittensor's many Subnets and find links to their websites a
 - **Discord**: [Join the Bittensor Discord Server](https://discord.com/invite/bittensor) - Connect with the community, ask questions, and stay updated
 
 
-
-
 ## Block Explorers
 
 - **[TAO.app](https://tao.app)** - Recommended (maintained by [Latent](https://latent.to/)). Includes [Savant](https://tao.app/savant), the chain explorer AI assistant.
@@ -26,8 +24,7 @@ You can also explore Bittensor's many Subnets and find links to their websites a
 ## Wallet Applications
 
 - **[Bittensor Wallet](https://bittensor.com/wallet)** - Recommended (maintained by OTF).
-- **Polkadot.js** - Multi-chain wallet with Bittensor support
-- **SubWallet** - User-friendly wallet for Substrate-based networks
+- **[Other Polkadot Wallets](https://polkadot.com/get-started/wallets/)** - Multi-chain wallets capable of interacting with Bittensor.
 
 ## Development Resources
 
