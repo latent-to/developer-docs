@@ -23,7 +23,7 @@ const sidebars = {
     "index",
     {
       type: "doc",
-      id: "bittensor-rel-notes",
+      id: "resources/bittensor-rel-notes",
       label: "Releases",
     },
     "btcli/btcli-playground",
@@ -35,15 +35,16 @@ const sidebars = {
       collapsed: true,
       items: [
         "learn/introduction",
-        "questions-and-answers",
+        "resources/questions-and-answers",
         "subnets/understanding-subnets",
         "learn/neurons",
         "learn/anatomy-of-incentive-mechanism",
-        "emissions",
+        "learn/emissions",
         "learn/ema",
-        "yuma-consensus",
-        "subnets/yc3-blog",
-        "fees",
+        "learn/yuma-consensus",
+        "learn/yc3-blog",
+        "learn/yuma3-migration-guide",
+        "learn/fees",
       ],
     },
     {
@@ -108,7 +109,6 @@ const sidebars = {
         "subnets/walkthrough-prompting",
         "tutorials/basic-subnet-tutorials",
         "tutorials/ocr-subnet-tutorial",
-        "subnets/yuma3-migration-guide",
       ],
     },
     {
@@ -133,10 +133,10 @@ const sidebars = {
       items: [
         "getting-started/installation",
         "sdk/env-vars",
-        "bt-api-ref",
+        "sdk/bt-api-ref",
         "sdk/subtensor-api",
         "getting-started/install-wallet-sdk",
-        "migration_guide",
+        "sdk/migration-guide",
         "subnets/asyncio",
         "sdk/managing-subtensor-connections",
       ],
@@ -148,18 +148,18 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "getting-started/wallets",
+        "keys/wallets",
         "keys/handle-seed-phrase",
-        "getting-started/coldkey-hotkey-security",
-        "working-with-keys",
+        "keys/coldkey-hotkey-security",
+        "keys/working-with-keys",
         "keys/multisig",
-        "subnets/schedule-coldkey-swap",
+        "keys/schedule-coldkey-swap",
       ],
     },
     {
       type: "category",
       label: "Tools and Special Features",
-      link: { type: "doc", id: "tools" },
+      link: { type: "doc", id: "concepts/tools" },
       collapsible: true,
       collapsed: true,
       items: [
@@ -249,7 +249,11 @@ const sidebars = {
       label: "Governance",
       collapsible: true,
       collapsed: true,
-      items: ["governance", "senate", "governance/senators-btcli-guide"],
+      items: [
+        "governance/governance",
+        "governance/senate",
+        "governance/senators-btcli-guide",
+      ],
     },
     {
       type: "category",
@@ -270,12 +274,12 @@ const sidebars = {
         "errors/index",
         "errors/custom",
         "errors/subtensor",
-        "errors-and-troubleshooting",
+        "errors/troubleshooting",
       ],
     },
 
     "resources/media-assets",
-    "glossary",
+    "resources/glossary",
   ],
 };
 

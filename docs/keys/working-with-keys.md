@@ -15,12 +15,12 @@ This page describes several different ways to instantiate your wallet keypairs i
 
 Recommended background reading:
 
-- For an introduction to the core concepts, see [wallets and keys in Bittensor](getting-started/wallets.md).
+- For an introduction to the core concepts, see [wallets and keys in Bittensor](./wallets.md).
 
-- For discussion of security considerations about working with Bittensor wallets, see [Coldkey and Hotkey Workstation Security](./getting-started/coldkey-hotkey-security).
+- For discussion of security considerations about working with Bittensor wallets, see [Coldkey and Hotkey Workstation Security](./coldkey-hotkey-security).
 
 :::tip
-The most critical operational goal when handling Bittensor wallets is to avoid losing or leaking your seed phrase. Make sure you [Handle your Seed Phrase/Mnemonic Securely](../keys/handle-seed-phrase).
+The most critical operational goal when handling Bittensor wallets is to avoid losing or leaking your seed phrase. Make sure you [Handle your Seed Phrase/Mnemonic Securely](./handle-seed-phrase).
 :::
 
 ## Creating a wallet with `btcli`
@@ -359,7 +359,7 @@ Use this option if your activities are limited to sending and receiving TAO and 
 :::
 
 1. The Wallet will first create a wallet account address in the form of a 48-hexadecimal character string that usually starts with `5`.
-2. Critically, the Wallet will display your [_seed phrase_](./getting-started/wallets#the-seed-phrase-aka-mnemonic), which you must carefully save.
+2. Critically, the Wallet will display your [_seed phrase_](./wallets#the-seed-phrase-aka-mnemonic), which you must carefully save.
 3. The Wallet will then prompt you for specific mnemonic words as a way of authentication.
 4. Next, you will assign a name and a password to your wallet account.
 5. Finally, to receive TAO from another party, you will give them your wallet account address from Step 1 (the 48-hexadecimal character string) as the destination address. Similarly, to send (transfer) TAO to another party, you will first ask them for their wallet address and send TAO to their wallet address. This way, you can create multiple wallet accounts, each with a different name and even a different password for each wallet account.
