@@ -39,13 +39,13 @@ btcli subnet register --network ws://127.0.0.1:9944
    - Click on **Submit Transaction** at the bottom right. This will open the **authorize transaction** window.
    - On this **authorize transaction** window, make sure the **sign and submit** toggle is ON and click on the **Sign and Submit** on the bottom right.
 
-## Staking V1 and V2.
+## Staking V1 and V2
 
-There are two versions of staking precompile implemenation, V1 and V2. The contract address for V1 is `0x0000000000000000000000000000000000000801`. The address for V2 is `0x0000000000000000000000000000000000000805`. The V1 is deprecated, just being kept for compatiable with old interface. The major difference between V1 and V2 is, the staking amount is fetched from the msg.value in V1. Then precompile transfer the token back to caller. It is misleading and confuses the solidity developers. In V2 implementation, all amount parameters are defined as parameter of transaction.
+There are two versions of staking precompile implemenation, V1 and V2. The contract address for V1 is `0x0000000000000000000000000000000000000801`. The address for V2 is `0x0000000000000000000000000000000000000805`.  V1 is deprecated, but is kept for backwards-compatibility. The major difference between V1 and V2 is that the staking amount is fetched from the `msg.value` in V1. Then precompile transfers the token back to the caller. It is misleading and confuses solidity developers. In the V2 implementation, all amount parameters are defined as parameter of transaction.
 
 ## Call the staking precompile from another smart contract (staking pool use case)
 
-In this interaction you will compile [`stakeV2.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stakeV2.sol), a smart contract Solidity code and execute it on the subtensor EVM. This `stakeV2.sol` will, in turn, call the staking precompile that is already deployed in the subtensor EVM.
+In this interaction you will compile [`stakeV2.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stakeV2.sol), a Solidity smart contract code, and execute it on the Subtensor EVM. This `stakeV2.sol` will, in turn, call the staking precompile that is already deployed on the Subtensor EVM.
 
 Before you proceed, familiarize yourself with the Solidity code of the [`stakeV2.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stakeV2.sol) smart contract.
 
@@ -67,7 +67,7 @@ Before you proceed, familiarize yourself with the Solidity code of the [`stakeV2
 
 In this tutorial, you will interact directly with the staking precompile by using its ABI, and use your Metamask wallet as the source of TAO to stake.
 
-1. Copy this below ABI from https://github.com/opentensor/subtensor/blob/main/precompiles/src/solidity/stakingV2.abi into Remix IDE as a new file.
+1. Copy the ABI from https://github.com/opentensor/subtensor/blob/main/precompiles/src/solidity/stakingV2.abi into Remix IDE as a new file.
 
 2. Copy staking precompile address `0x0000000000000000000000000000000000000805` to the **At Address** field in Remix IDE, and click **At Address** button.
 
@@ -80,16 +80,11 @@ In this tutorial, you will interact directly with the staking precompile by usin
    3. Toggle **include option** OFF for the second parameter.
    4. Click the **+** button and find the new stake record.
 
-## Questions about Call the staking precompile from another smart contract.
+## Notes: Calling the staking precompile from another smart contract
 
-1. which one is the coldkey?
-   Since the precompile can't get the orginal caller, the precompile takes the contract's address as coldkey.
-2. is the token subtracted from contract or original caller if calling the addStake
-   The contract need to pay the token. so must guarantee the balance of contract is enough to call addStake.
-3. any security issue for the contract
-   Because the token for addStake is subtracted from contract. We must set the transaction as priviledged one.
-   like the example in [the link will be available after a PR merged in subtensor side]
-4. the unit of amount in addStake, removeStake
-   As the function parameter indicates, all these are aligned with the decimal of TAO
-5. If transfer token to contract in msg.value, and trigger the contract to call precompile. should the function in contract do the decimal convert.
-   Yes. the decimal in msg.value is 18. need conversion like `uint256 amount = msg.value / 1e9`
+   - The precompile takes the contract's address as the **coldkey**, since the precompile can't get the original caller.
+   - The **contract** (not the caller's coldkey) must have sufficient liquidity or the transaction will fail.
+   - The transaction must be *privileged* because the liquidity for `addStake` is subtracted from contract.
+   <!--   example in link will be available after a PR merged in subtensor side --> 
+   - As the function parameter indicates, `amount` in `addStake` and `removeStake` are specified in TAO $\tau$.
+   - That when transferring liquidity to the contract, `msg.value` is in denominations of 1/1e18 TAO $\tau$ . The staking precompile, however, expects RAO, 1/1e9 TAO $\tau$. You must convert before calling it: **uint256 amount = msg.value / 1e9**.
