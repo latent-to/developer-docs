@@ -19,7 +19,7 @@ You can also explore Bittensor's many Subnets and find links to their websites a
 
 ## Block Explorers
 
-- **[TAO.app](https://tao.app)** - Recommended (maintained by [Latent](https://latent.to/)). Includes [Savant](tao.app/savant), the chain explorer AI assistant.
+- **[TAO.app](https://tao.app)** - Recommended (maintained by [Latent](https://latent.to/)). Includes [Savant](https://tao.app/savant), the chain explorer AI assistant.
 - **[Taostats](https://taostats.io/)**
 - **[Taomarketcap](https://taomarketcap.com/)**
 
