@@ -18,8 +18,8 @@ Many extrinsics in Bittensor are subject to a flat **weight-based fee**. In Polk
 
 **Fee Details**: 
 - **Current rate**:  $\approx0.0013 \tau$
-- **Payment source**: Free balance of the transaction sender
-- **Denomination**: TAO
+- **Payment source**: Sender's TAO free balance by default. For specific extrinsics, if TAO is insufficient to cover fees, the chain will charge fees in Alpha instead (see "Smart Fee Payments (Alpha Fallback)" below).
+- **Denomination**: TAO by default. When fees are paid in Alpha, the TAO fee amount is converted to Alpha using the current Alpha price (no slippage).
 - **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
     See: [Recycling and Burning](./glossary#recycling-and-burning)
 
@@ -46,6 +46,11 @@ It is currently planned that the fee coefficient will be reduced to $0.005%$ (10
 - [`associate_evm_key`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2001)
 - [`try_associate_hotkey`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1938)
 - [`schedule_swap_coldkey`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1333)
+
+### Registration
+
+- [`register`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L895)
+- [`burned_register`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L930)
 
 ### Subnet Management
 
@@ -87,6 +92,32 @@ It is currently planned that the fee coefficient will be reduced to $0.005%$ (10
     **Source code reference:** [`runtime/src/lib.rs:448-463`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L448-L463)
 
 </details>
+
+## Alpha Fallback
+
+For extrinsics that charge fees by swapping Alpha for TAO, if the sender's TAO balance cannot cover the weight-based transaction fee, the chain will fall back to charging the fee in Alpha. If both TAO and Alpha balances are insufficient to cover the anticipated fee, the transaction fails validation and will not be included in the mempool. When fees are paid in Alpha, the TAO fee is converted to Alpha using the current Alpha price with no slippage.
+
+### Affected extrinsics
+
+- `remove_stake`
+- `remove_stake_limit`
+- `remove_stake_full_limit`
+- `unstake_all`
+- `unstake_all_alpha`
+- `move_stake`
+- `transfer_stake`
+- `swap_stake`
+- `swap_stake_limit`
+- `recycle_alpha`
+- `burn_alpha`
+
+### Complete unstaking handling
+
+For `remove_stake`, `remove_stake_limit`, `recycle_alpha`, and `burn_alpha`: after withdrawing Alpha fees, if the remaining Alpha balance is too small to keep as a dust balance, the transaction will consume and process the entire remaining Alpha balance in the same call.
+
+### Updated handling of `NotEnoughStakeToWithdraw`
+
+For `remove_stake`, `remove_stake_limit`, `recycle_alpha`, and `burn_alpha`: if the requested amount exceeds the available Alpha, the amount is capped at the available Alpha and the extrinsic succeeds (assuming no other errors).
 
 ## Swap Fees for Stake and Unstake Operations
 
