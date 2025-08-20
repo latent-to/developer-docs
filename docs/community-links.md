@@ -17,7 +17,7 @@ You can also explore Bittensor's many Subnets and find links to their websites a
 
 ## Block Explorers
 
-- **[TAO.app](https://tao.app)** - Recommended (maintained by [Latent](https://latent.to/)). Includes [Savant](https://tao.app/savant), the chain explorer AI assistant.
+- **[TAO.app](https://tao.app)** - Recommended (maintained by [Latent](https://latent.to/), the team behind these docs and core contributors to the Bittensor ecosystem). Includes [Savant](https://tao.app/savant), the chain explorer AI assistant.
 - **[Taostats](https://taostats.io/)**
 - **[Taomarketcap](https://taomarketcap.com/)**
 
@@ -28,8 +28,8 @@ You can also explore Bittensor's many Subnets and find links to their websites a
 
 ## Development Resources
 
-- **[Bittensor CLI](https://github.com/opentensor/btcli)** - Bittensor CLI
-- **[Bittensor Core](https://github.com/opentensor/bittensor)** - Bittensor Python SDK
-- **[Subtensor, Bittensor's substrate blockchain](https://github.com/opentensor/subtensor)**
+- **[BTCLI](https://github.com/opentensor/btcli)**: the Bittensor CLI
+- **[Bittensor SDK](https://github.com/opentensor/bittensor)**
+- **[Subtensor](https://github.com/opentensor/subtensor)**, Bittensor's substrate blockchain
 
 
