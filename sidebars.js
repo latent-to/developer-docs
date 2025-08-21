@@ -45,7 +45,6 @@ const sidebars = {
         "learn/yc3-blog",
         "learn/yuma3-migration-guide",
         "learn/fees",
-        "community-links",
       ],
     },
     {
@@ -278,9 +277,9 @@ const sidebars = {
         "errors/troubleshooting",
       ],
     },
-
-    "resources/media-assets",
     "resources/glossary",
+    "resources/community-links",
+    "resources/media-assets",
   ],
 };
 
