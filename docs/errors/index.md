@@ -7,6 +7,7 @@ title: "Subtensor Error Codes"
 This section documents the various types of errors that can arise from Subtensor, the blockchain underlying the Bittensor network.
 
 These errors can surface through different interfaces including the Bittensor CLI (`btcli`), the Bittensor Python SDK, or extrinsic transaction interfaces such as PolkadotJS.
+
 <!-- I'm assuming you can see these in polkadot? -->
 
 Subtensor errors can be categorized into three main types:
@@ -21,14 +22,14 @@ Most errors from the Bittensor network are returned in the following format:
 
 ```json
 {
-    "code": 1010,
-    "message": "Invalid Transaction",
-    "data": "Custom error: [Error Code]"
+  "code": 1010,
+  "message": "Invalid Transaction",
+  "data": "Custom error: [Error Code]"
 }
 ```
 
 ## Related
 
-- [Bittensor CLI](../btcli.md) - Command line interface documentation
-- [Bittensor Python SDK](../bt-api-ref.md) - Python SDK documentation
-- [Subtensor Nodes](../subtensor-nodes/index.md) - Information about running Subtensor nodes 
+- [Bittensor CLI](../btcli/btcli.md) - Command line interface documentation
+- [Bittensor Python SDK](../sdk/bt-api-ref.md) - Python SDK documentation
+- [Subtensor Nodes](../subtensor-nodes/index.md) - Information about running Subtensor nodes

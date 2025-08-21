@@ -17,7 +17,7 @@ The Bittensor SDK is a Python-based library that allows developers to interact p
 - Query and monitor network activity
 - Build applications on top of Bittensor’s decentralized AI infrastructure
 
-**Learn more in the [Bittensor SDK documentation](../bt-api-ref.md)** (link for illustration).
+**Learn more in the [Bittensor SDK documentation](../sdk/bt-api-ref.md)** (link for illustration).
 
 ---
 
@@ -45,4 +45,4 @@ Bittensor uses a dual-key wallet structure:
 - **Hotkey** for operational tasks like validation, mining, and day-to-day transactions
 
 Both keys are crucial for safeguarding and participating in the network.  
-**For a complete guide, see [Wallets & Keys](../getting-started/wallets)** and [Working with Keys](../working-with-keys).
+**For a complete guide, see [Wallets & Keys](../getting-started/wallets)** and [Working with Keys](../keys/working-with-keys).

@@ -4,7 +4,6 @@ title: "Dynamic TAO SDK Cheat Sheet"
 
 This page provides a quick reference for the core functionalities for the Bittensor Python SDK that have changed for [Dynamic TAO](./index.md), and some example scripts to demonstrate functionality such as [viewing exchange rates](#example-viewing-exchange-rates) and [staking and unstaking](#example-staking-and-unstaking) into subnets.
 
-
 Updates to the `subtensor` and `async_subtensor` modules and the `DynamicInfo` class provide new ways to view information related to new Dynamic TAO features, such as alpha token prices, token reserve amounts, and wallet balances. Functionality around staking and unstaking has been updated to reflect the new nature of staking/unstaking in Dynamic TAO.
 
 See [Dynamic TAO Overview](./index.md).
@@ -43,7 +42,6 @@ Or the following configuration for synchronous calls to Bittensor test network:
     sub = bt.Subtensor(network="test")
     ```
 
-
 ## The `DynamicInfo` object
 
 The state of a subnet, with all of the new attributes, is encapsulated in a `DynamicInfo` object. This is what is returned by the `subnet` and `all_subnets` methods.
@@ -75,10 +73,13 @@ class DynamicInfo:
     subnet_identity: Optional[SubnetIdentity]
 
 ```
+
 ## Viewing subnets
+
 Subnets evolve substantially in Dynamic TAO! Each subnet has its own currency, known as its alpha token, and an internal economy comprising a currency reserve of TAO, a reserve of its own alpha token, and a ledger of staked balances, to keep track of all of its stakers&mdash;those who have put TAO into its reserve in exchange for alpha.
 
 #### `all_subnets`
+
 ```python
 all_subnets(
     block_number: Optional[int] = None
@@ -91,88 +92,99 @@ Description: Fetches information about all subnets at a certain block height (or
 Returns: A list of DynamicInfo objects (detailed below).
 
 #### `subnet`
+
 ```python
 subnet(
-    netuid: int, 
+    netuid: int,
     block_number: Optional[int] = None
 ) -> DynamicInfo
 
 ```
+
 Fetches information about a single subnet identified by netuid.
 
 Returns a DynamicInfo object describing the subnet’s current state.
 
-
 #### `metagraph`
+
 ```python
 metagraph(
-    netuid: int, 
+    netuid: int,
     block: Optional[int] = None
 ) -> bittensor.Metagraph
 ```
 
-
 Returns the metagraph for a specified subnet netuid. The metagraph includes detailed data on the neurons in the subnet.
 
 ## Exchange rates
+
 You can query the DynamicInfo object for the exchange rates between TAO and alpha tokens.
 You can use `all_subnets` or `subnet` to get the DynamicInfo object.
 
 ```python
 subnet = sub.subnet(netuid=1)
 ```
+
 ### Calculate exhange rates
+
 #### `tao_to_alpha`
 
 ```python
 tao_to_alpha(self, tao: Union[Balance, float, int]) -> Balance:
 ```
-Description: Returns an 'ideal' estimate of how much Alpha a staker would receive at the current price, *ignoring slippage*.
+
+Description: Returns an 'ideal' estimate of how much Alpha a staker would receive at the current price, _ignoring slippage_.
 
 Parameters:
-    `tao`: Amount of TAO to stake.
+`tao`: Amount of TAO to stake.
 
 #### `alpha_to_tao`
+
 ```python
 alpha_to_tao(self, alpha: Union[Balance, float, int]) -> Balance:
 ```
-Description: Returns an 'ideal' estimate of how much TAO would be yielded by unstaking at the current price, *ignoring slippage*.
+
+Description: Returns an 'ideal' estimate of how much TAO would be yielded by unstaking at the current price, _ignoring slippage_.
 Parameters:
-    `alpha`: Amount of Alpha to unstake.
+`alpha`: Amount of Alpha to unstake.
 
 #### `tao_to_alpha_with_slippage`
+
 ```python
 tao_to_alpha_with_slippage(tao: Union[Balance, float, int], percentage: bool = False) -> Union[tuple[Balance, Balance], float]:
 ```
+
 Returns an estimate of how much Alpha would a staker receive if they stake their TAO using the current pool state.
 
 Parameters:
-    `tao`: Amount of TAO to stake.
-    `percentage`: If True, returns the percentage difference between the estimated amount and ideal amount as if there was no slippage.
+`tao`: Amount of TAO to stake.
+`percentage`: If True, returns the percentage difference between the estimated amount and ideal amount as if there was no slippage.
 
 Returns:
-    Tuple of balances where the first part is the amount of Alpha received, and the
-    second part (slippage) is the difference between the estimated amount and ideal
-    amount as if there was no slippage
-    OR
-    Percentage of the slippage as a float
+Tuple of balances where the first part is the amount of Alpha received, and the
+second part (slippage) is the difference between the estimated amount and ideal
+amount as if there was no slippage
+OR
+Percentage of the slippage as a float
 
 #### `alpha_to_tao_with_slippage`
+
 ```python
 alpha_to_tao_with_slippage(alpha: Union[Balance, float, int], percentage: bool = False) -> Union[tuple[Balance, Balance], float]:
 ```
+
 Returns an estimate of how much TAO would a staker receive if they unstake their alpha using the current pool state.
 
 Parameters:
-    `alpha`: Amount of Alpha to unstake.
-    `percentage`: If True, returns the percentage difference between the estimated amount and ideal amount as if there was no slippage.
+`alpha`: Amount of Alpha to unstake.
+`percentage`: If True, returns the percentage difference between the estimated amount and ideal amount as if there was no slippage.
 
 Returns:
-    Tuple of balances where the first part is the amount of TAO received, and the
-    second part (slippage) is the difference between the estimated amount and ideal
-    amount as if there was no slippage
-    OR
-    Percentage of the slippage as a float
+Tuple of balances where the first part is the amount of TAO received, and the
+second part (slippage) is the difference between the estimated amount and ideal
+amount as if there was no slippage
+OR
+Percentage of the slippage as a float
 
 ### Display current exchange rates
 
@@ -197,10 +209,11 @@ print("alpha_to_tao", subnet.alpha_to_tao(100))
 ## Managing stake
 
 #### `get_stake`
+
 ```python
 get_stake(
-    hotkey_ss58: str, 
-    coldkey_ss58: str, 
+    hotkey_ss58: str,
+    coldkey_ss58: str,
     netuid: int
 ) -> bittensor.Balance
 
@@ -208,36 +221,38 @@ get_stake(
 
 Description: Retrieves the staked balance for a given (hotkey, coldkey) pair on a specific subnet. Returns a `bittensor.Balance` object with the staked amount.
 Parameters:
+
 - hotkey_ss58: Hotkey SS58 address.
 - coldkey_ss58: Coldkey SS58 address (owner).
 - netuid: Unique ID of the subnet.
-
-
 
 #### `add_stake`
 
 ```python
 async add_stake(
-    wallet, 
-    hotkey: str, 
-    netuid: int, 
+    wallet,
+    hotkey: str,
+    netuid: int,
     tao_amount: Union[float, bittensor.Balance, int]
 )
 ```
+
 Description: Adds (stakes) an amount of TAO (tao_amount) to a specific subnet (netuid) under the provided hotkey.
 
 Parameters:
+
 - wallet: Your Bittensor wallet object.
 - hotkey: The SS58 address (hotkey) to be staked.
 - netuid: Unique ID of the subnet on which you want to stake.
 - tao_amount: Amount to stake, can be a float, integer, or bittensor.Balance object.
 
 #### `unstake`
+
 ```python
 unstake(
-    wallet, 
-    hotkey: str, 
-    netuid: int, 
+    wallet,
+    hotkey: str,
+    netuid: int,
     amount: Union[float, bittensor.Balance, int]
 )
 
@@ -246,16 +261,17 @@ unstake(
 Description: Unstakes amount of TAO from the specified hotkey on a given netuid.
 
 Parameters:
+
 - wallet: Your Bittensor wallet object.
 - hotkey: The SS58 address (hotkey) from which you want to remove stake.
 - netuid: Unique ID of the subnet.
 - amount: Amount to unstake.
 
-
 #### `get_balance`
+
 ```python
 get_balance(
-    address: str, 
+    address: str,
     block: Optional[int] = None
 ) -> bittensor.Balance
 
@@ -264,32 +280,38 @@ get_balance(
 Description: Returns the current (or specified block’s) coldkey TAO balance for an address.
 
 Parameters:
+
 - address: SS58 address to check.
 - block: Optional block number at which to fetch the balance. Uses the latest block if None.
 
-
 #### `get_current_block`
+
 ```python
 get_current_block() -> int
 
 ```
+
 Description: Returns the current chain block number.
+
 #### `wait_for_block`
+
 ```python
 wait_for_block(
 block: Optional[int] = None
 )
 
 ```
+
 Description: Waits for the next block to arrive or waits until a specified block number is reached if provided.
 
 Update: we have added proper nonce protection allowing you to run gather operations on stake/unstake/transfers, such as:
+
 ```python
 scatter_stake = await asyncio.gather(*[ sub.add_stake( hotkey, coldkey, netuid, amount ) for netuid in range(64) ] )
 ```
 
-
 ### Staking
+
 The following script incrementally stakes 3 TAO into several subnets over many blocks:
 
 ```python
@@ -308,11 +330,11 @@ while total_spend < 3:
     for netuid in to_buy:
         subnet = sub.subnet(netuid)
         print(f"slippage for subnet {netuid}", subnet.slippage(increment))
-        sub.add_stake( 
-            wallet = wallet, 
-            netuid = netuid, 
-            hotkey = subnet.owner_hotkey, 
-            tao_amount = increment, 
+        sub.add_stake(
+            wallet = wallet,
+            netuid = netuid,
+            hotkey = subnet.owner_hotkey,
+            tao_amount = increment,
         )
 
         current_stake = sub.get_stake(
@@ -325,6 +347,7 @@ while total_spend < 3:
         print (f'netuid {netuid} price {subnet.price} stake {current_stake}')
     sub.wait_for_block()
 ```
+
 ```console
 Enter your password:
 Decrypting...
@@ -345,6 +368,7 @@ netuid 5 price τ0.001784484 stake ε11.208213619
 ...
 
 ```
+
 ### Unstaking
 
 The below script will reverse the effects of the above, by incrementally unstaking alpha tokens from the list of subnets to yield TAO.
@@ -366,11 +390,11 @@ while total_sell < 3:
         subnet = sub.subnet(netuid)
         print(f"slippage for subnet {netuid}", subnet.alpha_slippage(increment))
 
-        sub.remove_stake( 
-            wallet = wallet, 
-            netuid = netuid, 
-            hotkey = subnet.owner_hotkey, 
-            amount = increment, 
+        sub.remove_stake(
+            wallet = wallet,
+            netuid = netuid,
+            hotkey = subnet.owner_hotkey,
+            amount = increment,
         )
         current_stake = sub.get_stake(
             coldkey_ss58 = wallet.coldkeypub.ss58_address,
@@ -382,6 +406,7 @@ while total_sell < 3:
         print (f'netuid {netuid} price {subnet.price} stake {current_stake}')
     sub.wait_for_block()
 ```
+
 ```console
 Enter your password:
 Decrypting...
@@ -410,23 +435,27 @@ netuid 5 price τ0.001785179 stake ε33.619312896
 You can register your hotkey on a subnet using the `burned_register` method. This is necessary for staking, mining or validating.
 
 #### `burned_register`
+
 ```python
 burned_register(
-    wallet, 
-    netuid: int, 
+    wallet,
+    netuid: int,
 ) -> bool
 ```
 
 Description: Registers a hotkey on a subnet.
 
 Parameters:
+
 - wallet: Your Bittensor wallet object.
 - netuid: Unique ID of the subnet.
 
 Returns:
+
 - bool: True if the registration was successful, False otherwise.
 
 Sample script:
+
 ```python
 import bittensor as bt
 logging = bt.logging
@@ -440,13 +469,13 @@ wallet.unlock_coldkey()
 reg = sub.burned_register(wallet=wallet, netuid=3)
 ```
 
-
 ### View registered subnets
 
 #### `get_netuids_for_hotkey`
+
 ```python
 get_netuids_for_hotkey(
-    hotkey: str, 
+    hotkey: str,
 ) -> list[int]
 
 ```
@@ -454,9 +483,11 @@ get_netuids_for_hotkey(
 Description: Returns the netuids in which a hotkey is registered.
 
 Parameters:
+
 - hotkey: SS58 address to check.
 
 Example usage:
+
 ```python
 import bittensor as bt
 sub = bt.Subtensor(network="test")
@@ -470,9 +501,9 @@ print(netuids)
 ```
 
 #### `btcli wallet overview`
+
 You can also use the `btcli` to check subnet registrations using `btcli wallet overview`.
 This displays the registrations to subnets by hotkeys controlled by the wallet:
-
 
 ```shell
  Wallet
@@ -505,14 +536,13 @@ Subnet: 119: vidac Ⲃ
 
 ```
 
-
 ## View a hotkey's emissions
 
 This script displays the last day's emissions for a specified hotkey on all subnets on which the hotkey is registered.
 
 This could be useful for a miner to see how much they've been extracting from the different subnets, if they've been mining on several.
 
-Be aware that daily emissions can fluctuate widely. See [Emissions](../emissions.md).
+Be aware that daily emissions can fluctuate widely. See [Emissions](../learn/emissions.md).
 
 ```python
 from bittensor.core.async_subtensor import AsyncSubtensor
@@ -534,7 +564,7 @@ async def main():
 
         all_sn_dynamic_info = {info.netuid: info for info in all_sn_dynamic_info_list}
         daily_blocks = (60 * 60 * 24) / BLOCKTIME  # Number of blocks per day
-        
+
 
         print(f"Hotkey: {HOTKEY}")
 
@@ -542,10 +572,10 @@ async def main():
         metagraphs = await asyncio.gather(*[ subtensor.metagraph(netuid=id) for id in NETUIDS])
         for id in NETUIDS:
             print(f"UID: {id}")
-            
+
             metagraph = metagraphs[id]
             tempo_multiplier = daily_blocks / metagraph.tempo
-            
+
             subnet_info = all_sn_dynamic_info.get(id)
 
             uid = metagraph.hotkeys.index(HOTKEY) if HOTKEY in metagraph.hotkeys else None

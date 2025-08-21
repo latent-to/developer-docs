@@ -97,7 +97,7 @@ The emission of TAO within each subnet is as follows:
 - 41% to validators
 - 41% to the miners
 
-See [Emissions](../emissions.md).
+See [Emissions](../learn/emissions.md).
 
 ### I don't want to create a subnet, can I just be a miner or a validator?
 

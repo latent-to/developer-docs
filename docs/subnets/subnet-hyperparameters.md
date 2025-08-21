@@ -567,7 +567,7 @@ Maximum number of neuron registrations allowed per interval. Interval is `Adjust
 **Description**:
 
 Length of subnet tempo in blocks.
-See [Emission](../emissions.md)
+See [Emission](../learn/emissions.md)
 
 ### ToggleTransfer
 

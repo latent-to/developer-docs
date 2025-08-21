@@ -9,7 +9,7 @@ Command line interface (CLI) for Bittensor. Uses the values in the configuration
 See [Getting Started](../getting-started/install-btcli.md) to install `btcli`.
 
 :::note Transaction Fees
-Many BTCLI operations incur transaction fees. See [Transaction Fees in Bittensor](../fees.md) for details.
+Many BTCLI operations incur transaction fees. See [Transaction Fees in Bittensor](../learn/fees.md) for details.
 :::
 
 Command line interface (CLI) for Bittensor. Uses the values in the configuration file. These values can be

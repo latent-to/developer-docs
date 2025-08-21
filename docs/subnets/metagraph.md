@@ -7,7 +7,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Subnet Metagraph
 
-This page documents the Bittensor subnet metagraph. 
+This page documents the Bittensor subnet metagraph.
 
 The **metagraph** is a core data structure in Bittensor that represents the complete state of a subnet at any given block. It contains comprehensive information about all neurons (miners and validators) participating in a subnet, their emissions, bonds, and trust, as well as subnet metrics.
 
@@ -16,9 +16,10 @@ The metagraph is implemented in the Bittensor blockchain (Subtensor) as a Rust d
 :::
 
 Related reading:
+
 - [Understanding Neurons](../learn/neurons.md)
 - [Subnet Hyperparameters](./subnet-hyperparameters.md)
-- [Bittensor CLI Reference](../btcli.md)
+- [Bittensor CLI Reference](../btcli/btcli.md)
 - [Metagraph Precompile](../evm-tutorials/metagraph-precompile.md)
 
 ## Accessing the Metagraph
@@ -45,7 +46,7 @@ btcli subnets metagraph --netuid 14 --network finney
  UID ┃ Stake (ξ) ┃ Alpha (ξ) ┃   Tao (τ) ┃ Dividends ┃ Incentive ┃ Emissions (ξ) ┃ Hotk… ┃ Coldkey ┃ Identity
 ━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━
  29  │ 271.67k ξ │ 254.83k ξ │  τ 16.84k │ 0.129183  │ 0.000000  │  19.122456 ξ  │ 5Cf4… │ 5CKhH8  │ Owner14 (*Owner)
-  3  │ 387.08k ξ │  61.46k ξ │ τ 325.62k │ 0.184314  │ 0.000000  │  27.280861 ξ  │ 5C59… │ 5GZSAg  │ 
+  3  │ 387.08k ξ │  61.46k ξ │ τ 325.62k │ 0.184314  │ 0.000000  │  27.280861 ξ  │ 5C59… │ 5GZSAg  │
 
 ...
 ```
@@ -68,8 +69,6 @@ m = Metagraph(netuid=14, network="finney", sync=True)
 m = Metagraph(netuid=14, network="finney", lite=False, sync=True)
 ```
 
-
-
 ### Smart Contract Access (Metagraph Precompile)
 
 For smart contract integration, you can access metagraph data through the **Metagraph Precompile** at address `0x0000000000000000000000000000000000000802`. This provides read-only access to individual neuron metrics and network information.
@@ -77,7 +76,6 @@ For smart contract integration, you can access metagraph data through the **Meta
 :::tip Smart Contract Integration
 For detailed smart contract examples and complete ABI, see the [Metagraph Precompile](../evm-tutorials/metagraph-precompile.md) documentation.
 :::
-
 
 ### RPC Functions
 
@@ -124,6 +122,7 @@ Metagraph files are saved to `~/.bittensor/metagraphs/network-{network}/netuid-{
 In the Bittensor Python SDK, the `Metagraph` class encapsulates the following information about a particular subnet.
 
 [Metagraph class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/metagraph/index.html)
+
 <!--  -->
 <details>
   <summary>Metagraph Properties</summary>
@@ -134,28 +133,28 @@ In the Bittensor Python SDK, the `Metagraph` class encapsulates the following in
 | `version`  | Bittensor version number |
 | `n`  | Total number of neurons registered on the subnet |
 | `block`  | Block number when the metagraph record was retrieved |
-| `total_stake`  | Total [stake weight](../glossary.md#stake-weight) (α + τ × 0.18) across all neurons | 
-| **Stake** / `S` | Total [stake weight](../glossary.md#stake-weight) (α + τ × 0.18) of each neuron, determining consensus power and emissions |
+| `total_stake`  | Total [stake weight](../resources/glossary.md#stake-weight) (α + τ × 0.18) across all neurons | 
+| **Stake** / `S` | Total [stake weight](../resources/glossary.md#stake-weight) (α + τ × 0.18) of each neuron, determining consensus power and emissions |
 | **Alpha Stake** / `AS` | Alpha token stake (α) for each neuron |
-| **Tao Stake** / `TS` | [TAO](../glossary.md#tao-τ) token stake (τ) for each neuron |
-| **Ranks** / `R` | Final performance scores after [consensus](../glossary.md#consensus-score) weight clipping - [stake-weighted](../glossary.md#stake-weight) sum of clipped weights that directly determine emissions to miners |
-| **Trust** / `T` | [Consensus alignment](../glossary.md#trust) ratio (final rank / pre-rank) - measures how much consensus clipping affected the rank, where 1.0 indicates perfect consensus alignment |
-| **Validator Trust** / `Tv` | [Validator trust](../glossary.md#validator-trust) - sum of clipped weights set by each validator, measuring validator influence in consensus |
-| **Consensus** / `C` | [Consensus score](../glossary.md#consensus-score) - stake-weighted median of weights per neuron, serving as consensus threshold for weight clipping |
-| **Incentive** / `I` | Normalized ranks representing [incentive](../glossary.md#incentives) allocation for miners based on performance |
-| **Emission** / `E` | Token [emission](../glossary.md#emission) amounts in [RAO](../glossary.md#rao) (10^-9 TAO) per block |
-| **Dividends** / `D` | [Bond](../glossary.md#validator-miner-bonds)-based rewards for validators from their investments in miners |
-| **Bonds** / `B` | Inter-neuronal [bond matrix](../glossary.md#validator-miner-bonds) representing validator investments in miners, used to calculate validator emissions |
-| **Weights** / `W` | [Weight matrix](../glossary.md#weight-matrix) (validator → miner assignments) formed from validator weight vectors, input for [Yuma Consensus](../glossary.md#yuma-consensus) |
-| `uids` |  Unique [UID](../glossary.md#uid-slot) identifiers for each neuron |
-| `hotkeys` |  Neuron [hotkey](../glossary.md#hotkey) addresses |
-| `coldkeys` |  Neuron [coldkey](../glossary.md#coldkey) addresses |
+| **Tao Stake** / `TS` | [TAO](../resources/glossary.md#tao-τ) token stake (τ) for each neuron |
+| **Ranks** / `R` | Final performance scores after [consensus](../resources/glossary.md#consensus-score) weight clipping - [stake-weighted](../resources/glossary.md#stake-weight) sum of clipped weights that directly determine emissions to miners |
+| **Trust** / `T` | [Consensus alignment](../resources/glossary.md#trust) ratio (final rank / pre-rank) - measures how much consensus clipping affected the rank, where 1.0 indicates perfect consensus alignment |
+| **Validator Trust** / `Tv` | [Validator trust](../resources/glossary.md#validator-trust) - sum of clipped weights set by each validator, measuring validator influence in consensus |
+| **Consensus** / `C` | [Consensus score](../resources/glossary.md#consensus-score) - stake-weighted median of weights per neuron, serving as consensus threshold for weight clipping |
+| **Incentive** / `I` | Normalized ranks representing [incentive](../resources/glossary.md#incentives) allocation for miners based on performance |
+| **Emission** / `E` | Token [emission](../resources/glossary.md#emission) amounts in [RAO](../resources/glossary.md#rao) (10^-9 TAO) per block |
+| **Dividends** / `D` | [Bond](../resources/glossary.md#validator-miner-bonds)-based rewards for validators from their investments in miners |
+| **Bonds** / `B` | Inter-neuronal [bond matrix](../resources/glossary.md#validator-miner-bonds) representing validator investments in miners, used to calculate validator emissions |
+| **Weights** / `W` | [Weight matrix](../resources/glossary.md#weight-matrix) (validator → miner assignments) formed from validator weight vectors, input for [Yuma Consensus](../resources/glossary.md#yuma-consensus) |
+| `uids` |  Unique [UID](../resources/glossary.md#uid-slot) identifiers for each neuron |
+| `hotkeys` |  Neuron [hotkey](../resources/glossary.md#hotkey) addresses |
+| `coldkeys` |  Neuron [coldkey](../resources/glossary.md#coldkey) addresses |
 | `addresses` |  Network IP addresses |
-| `axons` |  Network connection details for [axon](../glossary.md#axon) servers |
-| `neurons` |  Complete [neuron](../glossary.md#neuron) objects with all metadata |
+| `axons` |  Network connection details for [axon](../resources/glossary.md#axon) servers |
+| `neurons` |  Complete [neuron](../resources/glossary.md#neuron) objects with all metadata |
 | `active` |  Neuron activity status within the [`activity_cutoff`](./subnet-hyperparameters.md#activity_cutoff) window |
 | `last_update` |  Last update block numbers for staleness detection |
-| `validator_permit` |  Boolean array indicating whether each neuron has [validator permits](../glossary.md#validator-permit) to set weights and participate in consensus |
+| `validator_permit` |  Boolean array indicating whether each neuron has [validator permits](../resources/glossary.md#validator-permit) to set weights and participate in consensus |
 | `name` |  Subnet name |
 | `symbol` |  Subnet token symbol |
 | `network_registered_at` |  Registration block when subnet was created |
@@ -163,28 +162,26 @@ In the Bittensor Python SDK, the `Metagraph` class encapsulates the following in
 | `max_uids` |  Maximum allowed neurons (typically 256) |
 | `identities` |  List of chain identities |
 | `identity` |  Subnet identity information |
-| `pruning_score` |  List of pruning scores based on emissions, used for [deregistration](../glossary.md#deregistration) when subnet is full |
-| `block_at_registration` |  List of registration blocks for each neuron, used for [immunity period](../glossary.md#immunity-period) calculations |
-| `tao_dividends_per_hotkey` |  [TAO](../glossary.md#tao-τ) dividends by hotkey |
+| `pruning_score` |  List of pruning scores based on emissions, used for [deregistration](../resources/glossary.md#deregistration) when subnet is full |
+| `block_at_registration` |  List of registration blocks for each neuron, used for [immunity period](../resources/glossary.md#immunity-period) calculations |
+| `tao_dividends_per_hotkey` |  [TAO](../resources/glossary.md#tao-τ) dividends by hotkey |
 | `alpha_dividends_per_hotkey` |  Alpha dividends by hotkey |
 | `last_step` |  Last step block number |
-| `tempo` |  [Tempo](../glossary.md#tempo) - block interval for updates (360 blocks = 72 minutes) |
+| `tempo` |  [Tempo](../resources/glossary.md#tempo) - block interval for updates (360 blocks = 72 minutes) |
 | `blocks_since_last_step` |  Blocks since last step |
-| `owner_coldkey` |  Subnet owner [coldkey](../glossary.md#coldkey) |
-| `owner_hotkey` |  Subnet owner [hotkey](../glossary.md#hotkey) |
+| `owner_coldkey` |  Subnet owner [coldkey](../resources/glossary.md#coldkey) |
+| `owner_hotkey` |  Subnet owner [hotkey](../resources/glossary.md#hotkey) |
 | `hparams` |  Subnet [hyperparameters](./subnet-hyperparameters.md) (`MetagraphInfoParams`) |
 | `pool` |  Liquidity pool information (`MetagraphInfoPool`) |
 | `emissions` |  Emission configuration (`MetagraphInfoEmissions`) |
 </details>
-
-
-
 
 ### Neuron Info
 
 A neuron represents any registered participant on the subnet, whether a miner or a validator.
 
 See also:
+
 - [Understanding Neurons](../learn/neurons.md)
 - [NeuronInfo class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/chain_data/neuron_info/index.html#bittensor.core.chain_data.neuron_info.NeuronInfo)
 
@@ -192,31 +189,31 @@ See also:
   <summary>Neuron Info Properties</summary>
 | Name | Description |
 --|--
-`uid` | Unique [UID](../glossary.md#uid-slot) identifier for the neuron within the subnet
-`hotkey` | [Hotkey](../glossary.md#hotkey) address for network operations and signing
-`coldkey` | [Coldkey](../glossary.md#coldkey) address for secure storage and high-risk operations
-`stake` | Total [stake weight](../glossary.md#stake-weight) (α + τ × 0.18) determining consensus power and emissions
-`rank` | Final [performance rank](../glossary.md#rank) after consensus weight clipping, directly determining emissions
-`trust` | [Consensus alignment](../glossary.md#trust) ratio (final rank / pre-rank) measuring impact of consensus filtering
-`consensus` | [Consensus score](../glossary.md#consensus-score) - stake-weighted median of weights serving as clipping threshold
-`incentive` | Normalized [incentive](../glossary.md#incentives) score representing reward allocation for miners
-`emission` | Token [emission](../glossary.md#emission) rate in [RAO](../glossary.md#rao) per block
-`dividends` | [Bond](../glossary.md#validator-miner-bonds)-based dividend amount for validators
-`validator_trust` | [Validator trust](../glossary.md#validator-trust) measuring validator influence in consensus
+`uid` | Unique [UID](../resources/glossary.md#uid-slot) identifier for the neuron within the subnet
+`hotkey` | [Hotkey](../resources/glossary.md#hotkey) address for network operations and signing
+`coldkey` | [Coldkey](../resources/glossary.md#coldkey) address for secure storage and high-risk operations
+`stake` | Total [stake weight](../resources/glossary.md#stake-weight) (α + τ × 0.18) determining consensus power and emissions
+`rank` | Final [performance rank](../resources/glossary.md#rank) after consensus weight clipping, directly determining emissions
+`trust` | [Consensus alignment](../resources/glossary.md#trust) ratio (final rank / pre-rank) measuring impact of consensus filtering
+`consensus` | [Consensus score](../resources/glossary.md#consensus-score) - stake-weighted median of weights serving as clipping threshold
+`incentive` | Normalized [incentive](../resources/glossary.md#incentives) score representing reward allocation for miners
+`emission` | Token [emission](../resources/glossary.md#emission) rate in [RAO](../resources/glossary.md#rao) per block
+`dividends` | [Bond](../resources/glossary.md#validator-miner-bonds)-based dividend amount for validators
+`validator_trust` | [Validator trust](../resources/glossary.md#validator-trust) measuring validator influence in consensus
 `active` | Activity status within the [`activity_cutoff`](./subnet-hyperparameters.md#activity_cutoff) window
 `last_update` | Last update block number for staleness detection
-`validator_permit` | Boolean indicating [validator permit](../glossary.md#validator-permit) status for weight setting and consensus participation
-`weights` | [Weight vector](../glossary.md#weight-vector) assignments from this neuron to others
-`bonds` | [Bond](../glossary.md#validator-miner-bonds) investments from this neuron to others
-`axon_info` | Network connection details for the [axon](../glossary.md#axon) server
+`validator_permit` | Boolean indicating [validator permit](../resources/glossary.md#validator-permit) status for weight setting and consensus participation
+`weights` | [Weight vector](../resources/glossary.md#weight-vector) assignments from this neuron to others
+`bonds` | [Bond](../resources/glossary.md#validator-miner-bonds) investments from this neuron to others
+`axon_info` | Network connection details for the [axon](../resources/glossary.md#axon) server
   </details>
-
 
 ### Axons
 
 An axon represents a server run by a registered miner, capable of answering requests by validators.
 
 See also:
+
 - [Understanding Neurons](../learn/neurons.md)
 - [Axon class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/axon/index.html#module-bittensor.core.axon)
 - [Axon class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/axon/index.html#module-bittensor.core.axon)
@@ -224,16 +221,17 @@ See also:
 <details>
   <summary>Axon Properties</summary>
 
-| Name | Description |
---|--
-`hotkey`                 | Neuron [hotkey](../glossary.md#hotkey) address
-`coldkey`                | Neuron [coldkey](../glossary.md#coldkey) address
-`ip`                     | IP address for the [axon](../glossary.md#axon) server
-`port`                   | Port number for the axon server
-`ip_type`                | IP type (IPv4/IPv6)
-`version`                | Protocol version for axon-dendrite communication
-`placeholder1`           | Reserved field for future use
-`placeholder2`           | Reserved field for future use
+| Name           | Description                                                     |
+| -------------- | --------------------------------------------------------------- |
+| `hotkey`       | Neuron [hotkey](../resources/glossary.md#hotkey) address        |
+| `coldkey`      | Neuron [coldkey](../resources/glossary.md#coldkey) address      |
+| `ip`           | IP address for the [axon](../resources/glossary.md#axon) server |
+| `port`         | Port number for the axon server                                 |
+| `ip_type`      | IP type (IPv4/IPv6)                                             |
+| `version`      | Protocol version for axon-dendrite communication                |
+| `placeholder1` | Reserved field for future use                                   |
+| `placeholder2` | Reserved field for future use                                   |
+
 </details>
 
 ### MetagraphInfoParams
@@ -241,43 +239,45 @@ See also:
 Represents the hyperparameters of a subnet.
 
 See also:
+
 - [Subnet Hyperparameters](./subnet-hyperparameters)
 - [MetagraphInfoParams class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/chain_data/metagraph_info/index.html#bittensor.core.chain_data.metagraph_info.MetagraphInfoParams)
 
 <details>
   <summary>MetagraphInfoParams (Hyperparams) Properties</summary>
 
-| Name | Description |
----|----
-`activity_cutoff`        | Activity cutoff threshold
-`adjustment_alpha`     | Adjustment alpha parameter
-`adjustment_interval`    | Adjustment interval
-`alpha_high`           | Alpha high threshold
-`alpha_low`            | Alpha low threshold
-`bonds_moving_avg`       | Bonds moving average
-`burn`                 | Burn amount
-`commit_reveal_period`   | Commit reveal period
-`commit_reveal_weights_enabled`  | Commit reveal weights enabled
-`difficulty`             | Network difficulty
-`immunity_period`        | Immunity period
-`kappa`                | Kappa parameter
-`liquid_alpha_enabled`  | Liquid alpha enabled
-`max_burn`             | Maximum burn
-`max_difficulty`         | Maximum difficulty
-`max_regs_per_block`     | Max registrations per block
-`max_validators`         | Maximum validators
-`max_weights_limit`      | Maximum weights limit
-`min_allowed_weights`    | Minimum allowed weights
-`min_burn`             | Minimum burn
-`min_difficulty`         | Minimum difficulty
-`pow_registration_allowed`  | POW registration allowed
-`registration_allowed`  | Registration allowed
-`rho`                  | Rho parameter
-`serving_rate_limit`     | Serving rate limit
-`target_regs_per_interval`  | Target registrations per interval
-`tempo`                  | [Tempo](../glossary.md#tempo) - block interval for updates (360 blocks = 72 minutes)
-`weights_rate_limit`     | [Weights](../glossary.md#weight-vector) rate limit for submissions
-`weights_version`        | [Weights](../glossary.md#weight-vector) version for protocol compatibility
+| Name                            | Description                                                                                    |
+| ------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `activity_cutoff`               | Activity cutoff threshold                                                                      |
+| `adjustment_alpha`              | Adjustment alpha parameter                                                                     |
+| `adjustment_interval`           | Adjustment interval                                                                            |
+| `alpha_high`                    | Alpha high threshold                                                                           |
+| `alpha_low`                     | Alpha low threshold                                                                            |
+| `bonds_moving_avg`              | Bonds moving average                                                                           |
+| `burn`                          | Burn amount                                                                                    |
+| `commit_reveal_period`          | Commit reveal period                                                                           |
+| `commit_reveal_weights_enabled` | Commit reveal weights enabled                                                                  |
+| `difficulty`                    | Network difficulty                                                                             |
+| `immunity_period`               | Immunity period                                                                                |
+| `kappa`                         | Kappa parameter                                                                                |
+| `liquid_alpha_enabled`          | Liquid alpha enabled                                                                           |
+| `max_burn`                      | Maximum burn                                                                                   |
+| `max_difficulty`                | Maximum difficulty                                                                             |
+| `max_regs_per_block`            | Max registrations per block                                                                    |
+| `max_validators`                | Maximum validators                                                                             |
+| `max_weights_limit`             | Maximum weights limit                                                                          |
+| `min_allowed_weights`           | Minimum allowed weights                                                                        |
+| `min_burn`                      | Minimum burn                                                                                   |
+| `min_difficulty`                | Minimum difficulty                                                                             |
+| `pow_registration_allowed`      | POW registration allowed                                                                       |
+| `registration_allowed`          | Registration allowed                                                                           |
+| `rho`                           | Rho parameter                                                                                  |
+| `serving_rate_limit`            | Serving rate limit                                                                             |
+| `target_regs_per_interval`      | Target registrations per interval                                                              |
+| `tempo`                         | [Tempo](../resources/glossary.md#tempo) - block interval for updates (360 blocks = 72 minutes) |
+| `weights_rate_limit`            | [Weights](../resources/glossary.md#weight-vector) rate limit for submissions                   |
+| `weights_version`               | [Weights](../resources/glossary.md#weight-vector) version for protocol compatibility           |
+
 </details>
 
 ### MetagraphInfoPool
@@ -285,9 +285,9 @@ See also:
 Contains information about the subnet's liquidity pool
 
 See also:
+
 - [Understanding Subnets: Liquidity pools](./understanding-subnets#liquidity-pools).
 - [MetagraphInfoPool class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/chain_data/metagraph_info/index.html#bittensor.core.chain_data.metagraph_info.MetagraphInfoPool)
-
 
 <details>
   <summary>MetagraphInfoPool properties</summary>
@@ -305,23 +305,21 @@ See also:
 Contains detailed information about the subnet's emissions.
 
 See also:
-- [Emissions](../emissions).
-- [MetagraphInfoEmissions class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/chain_data/metagraph_info/index.html#bittensor.core.chain_data.metagraph_info.MetagraphInfoPool)
 
+- [Emissions](../learn/emissions).
+- [MetagraphInfoEmissions class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/chain_data/metagraph_info/index.html#bittensor.core.chain_data.metagraph_info.MetagraphInfoPool)
 
 <details>
   <summary>MetagraphInfoEmissions properties</summary>
 | Name | Description |
 --|--
-`alpha_out_emission`   | Alpha token outflow [emission](../glossary.md#emission) rate
-`alpha_in_emission`    | Alpha token inflow [emission](../glossary.md#emission) rate
-`subnet_emission`      | Subnet [emission](../glossary.md#emission) rate to participants
-`tao_in_emission`      | [TAO](../glossary.md#tao-τ) token inflow [emission](../glossary.md#emission) rate
-`pending_alpha_emission`  | Pending alpha token [emission](../glossary.md#emission) amount
-`pending_root_emission`   | Pending root network [emission](../glossary.md#emission) amount
+`alpha_out_emission`   | Alpha token outflow [emission](../resources/glossary.md#emission) rate
+`alpha_in_emission`    | Alpha token inflow [emission](../resources/glossary.md#emission) rate
+`subnet_emission`      | Subnet [emission](../resources/glossary.md#emission) rate to participants
+`tao_in_emission`      | [TAO](../resources/glossary.md#tao-τ) token inflow [emission](../resources/glossary.md#emission) rate
+`pending_alpha_emission`  | Pending alpha token [emission](../resources/glossary.md#emission) amount
+`pending_root_emission`   | Pending root network [emission](../resources/glossary.md#emission) amount
 </details>
-
-
 
 ## Python Code Examples
 
@@ -330,10 +328,10 @@ This section provides practical examples of working with the Bittensor metagraph
 Code examples can be found [here](https://github.com/latent-to/developer-docs/tree/main/static/code-examples/)
 
 **Prerequisites**:
+
 - Bittensor Python SDK installed (`pip install bittensor`)
 - Network connection to access Bittensor blockchain
 - Python 3.7+ environment
-
 
 ### Basic Metagraph Information
 
@@ -348,7 +346,7 @@ def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
     metagraph = Metagraph(netuid=1, network="finney", sync=True)
-    
+
     # Get basic metagraph metadata
     print("\n=== Basic Metagraph Metadata ===")
     print(f"Network: {metagraph.network}")
@@ -366,9 +364,8 @@ def main():
     print(f"Owner: {metagraph.owner_coldkey}")
 
 if __name__ == "__main__":
-    main() 
+    main()
 ```
-
 
 ### Neuron Metrics Analysis
 
@@ -383,7 +380,7 @@ def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
     metagraph = Metagraph(netuid=1, network="finney", sync=True)
-    
+
     # Get all neuron UIDs
     uids = metagraph.uids
     print(f"\nNeuron UIDs: {uids.tolist()}")
@@ -408,9 +405,8 @@ def main():
         print(f"  {i+1}. UID {uid}: {stake:.2f} τ")
 
 if __name__ == "__main__":
-    main() 
+    main()
 ```
-
 
 ### Performance and Ranking Analysis
 
@@ -425,7 +421,7 @@ def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
     metagraph = Metagraph(netuid=1, network="finney", sync=True)
-    
+
     # Get performance metrics
     ranks = metagraph.R  # Performance ranks
     trust = metagraph.T  # Trust scores
@@ -464,9 +460,8 @@ def main():
         print("\nNo validators found in this subnet.")
 
 if __name__ == "__main__":
-    main() 
+    main()
 ```
-
 
 ### Economic Analysis
 
@@ -481,7 +476,7 @@ def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
     metagraph = Metagraph(netuid=1, network="finney", sync=True)
-    
+
     # Get economic metrics
     incentives = metagraph.I  # Incentive scores
     emissions = metagraph.E  # Emission rates
@@ -511,9 +506,8 @@ def main():
     print(f"Dividend std dev: {dividends.std().item():.4f}")
 
 if __name__ == "__main__":
-    main() 
+    main()
 ```
-
 
 ### Network Connectivity Analysis
 
@@ -528,7 +522,7 @@ def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
     metagraph = Metagraph(netuid=1, network="finney", sync=True)
-    
+
     # Get network information
     axons = metagraph.axons
     uids = metagraph.uids
@@ -565,10 +559,8 @@ def main():
         print(f"  UID {uid}: IP={axon.ip}, Port={axon.port}, Hotkey={hotkey}")
 
 if __name__ == "__main__":
-    main() 
+    main()
 ```
-
-
 
 ### Weight Matrix Analysis
 
@@ -583,19 +575,19 @@ def main():
     # Initialize metagraph for subnet 1 with full sync (not lite)
     print("Initializing metagraph for subnet 1 (full sync)...")
     metagraph = Metagraph(netuid=1, network="finney", lite=False, sync=True)
-    
+
     uids = metagraph.uids
-    
+
     # Get weight matrix (requires lite=False)
     if not metagraph.lite and hasattr(metagraph, 'weights') and metagraph.weights.size > 0:
         weights = metagraph.W  # Weight matrix
-        
+
         print(f"\n=== Weight Matrix Analysis ===")
         print(f"Weight matrix shape: {weights.shape}")
         print(f"Total weights: {weights.sum().item():.4f}")
         print(f"Average weight: {weights.mean().item():.4f}")
         print(f"Max weight: {weights.max().item():.4f}")
-        
+
         # Find miners receiving most weights
         weight_received = weights.sum(axis=0)  # Sum of incoming weights
         top_receivers = weight_received.argsort()[::-1][:10]
@@ -604,7 +596,7 @@ def main():
             uid = uids[idx].item()
             total_weight = weight_received[idx].item()
             print(f"  {i+1}. UID {uid}: {total_weight:.4f}")
-        
+
         # Find validators sending most weights
         weight_sent = weights.sum(axis=1)  # Sum of outgoing weights
         top_senders = weight_sent.argsort()[::-1][:10]
@@ -613,7 +605,7 @@ def main():
             uid = uids[idx].item()
             total_weight = weight_sent[idx].item()
             print(f"  {i+1}. UID {uid}: {total_weight:.4f}")
-        
+
         # Find highest set weight
         max_weight_idx = weights.argmax()
         sender_idx = max_weight_idx // weights.shape[1]
@@ -625,7 +617,7 @@ def main():
         print("Weights not available. Make sure to use lite=False when initializing the metagraph.")
 
 if __name__ == "__main__":
-    main() 
+    main()
 ```
 
 ### Bond Analysis
@@ -641,18 +633,18 @@ def main():
     # Initialize metagraph for subnet 1 with full sync (not lite)
     print("Initializing metagraph for subnet 1 (full sync)...")
     metagraph = Metagraph(netuid=1, network="finney", lite=False, sync=True)
-    
+
     uids = metagraph.uids
-    
+
     # Get bond matrix (requires lite=False)
     if not metagraph.lite and hasattr(metagraph, 'bonds') and metagraph.bonds.size > 0:
         bonds = metagraph.B  # Bond matrix
-        
+
         print(f"\n=== Bond Matrix Analysis ===")
         print(f"Bond matrix shape: {bonds.shape}")
         print(f"Total bonds: {bonds.sum().item():.4f}")
         print(f"Average bond: {bonds.mean().item():.4f}")
-        
+
         # Find miners with most bonds
         bonds_received = bonds.sum(axis=0)  # Sum of incoming bonds
         top_bonded = bonds_received.argsort()[::-1][:10]
@@ -665,9 +657,8 @@ def main():
         print("Bonds not available. Make sure to use lite=False when initializing the metagraph.")
 
 if __name__ == "__main__":
-    main() 
+    main()
 ```
-
 
 ### Neuron Activity Analysis
 
@@ -682,7 +673,7 @@ def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
     metagraph = Metagraph(netuid=1, network="finney", sync=True)
-    
+
     # Get activity information
     active = metagraph.active  # Activity status
     last_update = metagraph.last_update  # Last update blocks
@@ -716,7 +707,7 @@ def main():
         print("\nNo validators found in this subnet.")
 
 if __name__ == "__main__":
-    main() 
+    main()
 ```
 
 ### Subnet Economics
@@ -732,7 +723,7 @@ def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
     metagraph = Metagraph(netuid=1, network="finney", sync=True)
-    
+
     # Get subnet hyperparameters
     hparams = metagraph.hparams
     print(f"\n=== Subnet Hyperparameters ===")
@@ -771,10 +762,8 @@ def main():
     print(f"  Pending root emission: {emissions.pending_root_emission}")
 
 if __name__ == "__main__":
-    main() 
+    main()
 ```
-
-
 
 ### Advanced Analysis Examples
 
@@ -790,7 +779,7 @@ def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
     metagraph = Metagraph(netuid=1, network="finney", sync=True)
-    
+
     # Get basic metrics
     stakes = metagraph.S
     ranks = metagraph.R
@@ -815,7 +804,7 @@ def main():
     # Network efficiency analysis (if weights are available)
     if not metagraph.lite and hasattr(metagraph, 'weights') and metagraph.weights.size > 0:
         weights = metagraph.W
-        
+
         print("\n=== Network Efficiency Analysis ===")
         # Calculate network efficiency (average path length)
         non_zero_weights = weights[weights > 0]
@@ -848,9 +837,8 @@ def main():
         print(f"Could not calculate stake concentration metrics: {e}")
 
 if __name__ == "__main__":
-    main() 
+    main()
 ```
-
 
 ### Async Usage
 
@@ -866,11 +854,11 @@ async def analyze_metagraph():
     # Create async metagraph
     print("Creating async metagraph...")
     metagraph = await async_metagraph(netuid=1, network="finney", lite=False)
-    
+
     # Perform analysis
     stakes = metagraph.S
     print(f"Total stake: {stakes.sum().item():.2f}")
-    
+
     # Sync to latest block
     print("Syncing to latest block...")
     await metagraph.sync()
@@ -882,7 +870,7 @@ async def main():
 
 if __name__ == "__main__":
     # Run async analysis
-    asyncio.run(main()) 
+    asyncio.run(main())
 ```
 
 ### Complete Neuron Information
@@ -898,10 +886,10 @@ def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
     metagraph = Metagraph(netuid=1, network="finney", sync=True)
-    
+
     # Get complete neuron information for first 5 neurons
     print("=== Complete Neuron Information (First 5 Neurons) ===")
-    
+
     for i in range(min(5, metagraph.n.item())):
         neuron = metagraph.neurons[i]
         print(f"\nNeuron {i}:")
@@ -924,19 +912,22 @@ def main():
         print(f"  ---")
 
 if __name__ == "__main__":
-    main() 
+    main()
 ```
 
 ## Source Code References
 
 ### Core Implementation
+
 - **Metagraph Class**: [`bittensor/bittensor/core/metagraph.py`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/metagraph.py)
 - **Chain Data**: [`bittensor/bittensor/core/chain_data/metagraph_info.py`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/chain_data/metagraph_info.py)
 - **Subtensor RPC**: [`subtensor/pallets/subtensor/src/rpc_info/metagraph.rs`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/rpc_info/metagraph.rs)
 
 ### Consensus Algorithm
+
 - **Yuma Consensus**: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs)
 - **Mathematical Operations**: [`subtensor/pallets/subtensor/src/epoch/math.rs`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/math.rs)
 
 ### Key Constants
+
 - **TAO Stake Weight**: [`bittensor/bittensor/core/settings.py:7`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/settings.py#L7) - `ROOT_TAO_STAKE_WEIGHT = 0.18`

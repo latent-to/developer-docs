@@ -10,7 +10,7 @@ title: "Glossary"
 
 A UID slot that is considered active within a specific subnet, allowing the associated hotkey to participate as a subnet validator or subnet miner.
 
-**See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/)
+**See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/)
 
 ### Archive Node
 
@@ -22,7 +22,7 @@ A type of public subtensor node that stores the entire blockchain history, allow
 
 A module in the Bittensor API that uses the FastAPI library to create and run API servers. Axons receive incoming Synapse objects. Typically, an Axon is the entry point advertised by a subnet miner on the Bittensor blockchain, allowing subnet validators to communicate with the miner.
 
-**See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/)
+**See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/)
 
 ## B
 
@@ -30,13 +30,13 @@ A module in the Bittensor API that uses the FastAPI library to create and run AP
 
 A two-tier legislative system comprising the Triumvirate and the Senate for proposal approval.
 
-**See also:** [Governance](../governance.md), [Senate](../senate.md)
+**See also:** [Governance](../governance/governance.md), [Senate](../governance/senate.md)
 
 ### Bittensor Wallet
 
 A digital wallet that holds the core ownership in the Bittensor network and serves as the user's identity technology underlying all operations.
 
-**See also:** [Wallets](../getting-started/wallets.md), [Working with Keys](../working-with-keys.md)
+**See also:** [Wallets](../keys/wallets.md), [Working with Keys](../keys/working-with-keys.md)
 
 ### Block
 
@@ -56,13 +56,13 @@ This refers to the required amount of TAO to be recycled when creating a new sub
 
 A component of a Bittensor wallet responsible for securely storing funds and performing high-risk operations such as transfers and staking. It is encrypted on the user's device. This is analogous to a private key.
 
-**See also:** [Coldkey-Hotkey Security](../getting-started/coldkey-hotkey-security.md), [Working with Keys](../working-with-keys.md)
+**See also:** [Coldkey-Hotkey Security](../keys/coldkey-hotkey-security.md), [Working with Keys](../keys/working-with-keys.md)
 
 ### Coldkey-hotkey pair
 
 A combination of two keys, a coldkey for secure storage and high-risk operations, and a hotkey for less secure operations and network interactions.
 
-**See also:** [Coldkey-Hotkey Security](../getting-started/coldkey-hotkey-security.md), [Working with Keys](../working-with-keys.md)
+**See also:** [Coldkey-Hotkey Security](../keys/coldkey-hotkey-security.md), [Working with Keys](../keys/working-with-keys.md)
 
 ### Commit Reveal
 
@@ -163,13 +163,13 @@ Also known as staking, delegating TAO to a validator (who is thereby the delegat
 
 A client instance used by subnet validators and subnet miners to transmit information to axons on subnet miners and subnet validators. Dendrites communicate with axons using the server-client (Axon-dendrite) protocol.
 
-**See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/)
+**See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/)
 
 ### Deregistration
 
 The process of removing a subnet miner or a subnet validator from the subnet due to poor performance.
 
-**See also:** [Miner Deregistration](../miners/#miner-deregistration), [Subnet Miners](./miners/)
+**See also:** [Miner Deregistration](../miners/#miner-deregistration), [Subnet Miners](../miners/)
 
 ## E
 
@@ -177,7 +177,7 @@ The process of removing a subnet miner or a subnet validator from the subnet due
 
 A cryptographic algorithm used to generate public and private key pairs for coldkeys and hotkeys in the Bittensor wallet.
 
-**See also:** [Working with Keys](../working-with-keys.md), [Coldkey-Hotkey Security](../getting-started/coldkey-hotkey-security.md)
+**See also:** [Working with Keys](../keys/working-with-keys.md), [Coldkey-Hotkey Security](../keys/coldkey-hotkey-security.md)
 
 ### Effective stake
 
@@ -193,13 +193,13 @@ Emission is this process of generating and allocating currency to participants. 
 
 Emissions are protected from manipulation through [Exponential Moving Average (EMA)](#exponential-moving-average-ema) mechanisms that smooth both validator-miner bond evolution and subnet price effects.
 
-**See also:** [Emissions](../emissions.md), [Exponential Moving Average (EMA)](#exponential-moving-average-ema)
+**See also:** [Emissions](../learn/emissions.md), [Exponential Moving Average (EMA)](#exponential-moving-average-ema)
 
 ### Encrypting the Hotkey
 
 An optional security measure for the hotkey.
 
-**See also:** [Coldkey-Hotkey Security](../getting-started/coldkey-hotkey-security.md), [Working with Keys](../working-with-keys.md)
+**See also:** [Coldkey-Hotkey Security](../keys/coldkey-hotkey-security.md), [Working with Keys](../keys/working-with-keys.md)
 
 ### Exponential Moving Average (EMA)
 
@@ -226,7 +226,7 @@ A weighted moving average that prioritizes recent observations while exponential
 
 A Bittensor wallet created through the Bittensor website or using a tool like [subkey](https://docs.substrate.io/reference/command-line-tools/subkey/), allowing users to use TAO without installing Bittensor.
 
-**See also:** [Wallets](../getting-started/wallets.md), [Installation](../getting-started/installation.md)
+**See also:** [Wallets](../keys/wallets.md), [Installation](../getting-started/installation.md)
 
 ## F
 
@@ -242,13 +242,13 @@ A development-only configuration that accelerates block production to 250ms inte
 
 A component of a Bittensor wallet responsible for less secure operations such as signing messages into the network, secure a UID slot in a subnet, running subnet miners and subnet validators in a subnet. It can be encrypted or unencrypted, but is unencrypted by default. The terms "account" and "hotkey" are used synonymously.
 
-**See also:** [Coldkey-Hotkey Security](../getting-started/coldkey-hotkey-security.md), [Working with Keys](../working-with-keys.md)
+**See also:** [Coldkey-Hotkey Security](../keys/coldkey-hotkey-security.md), [Working with Keys](../keys/working-with-keys.md)
 
 ### Hotkey-Coldkey Pair
 
 Authentication mechanism for delegates and nominators and for delegates participating in the Senate.
 
-**See also:** [Coldkey-Hotkey Security](../getting-started/coldkey-hotkey-security.md), [Working with Keys](../working-with-keys.md)
+**See also:** [Coldkey-Hotkey Security](../keys/coldkey-hotkey-security.md), [Working with Keys](../keys/working-with-keys.md)
 
 ## I
 
@@ -256,13 +256,13 @@ Authentication mechanism for delegates and nominators and for delegates particip
 
 A grace period granted to newly registered neurons during which they are protected from deregistration due to poor performance. The immunity period allows new miners and validators time to establish themselves and improve their performance before becoming eligible for pruning. The default period being is 4096 blocks (~13.7 hours), but can be configured by the subnet creator.
 
-**See also:** [Miner Deregistration](./miners/#miner-deregistration), [Validator Deregistration](../validators/index.md#validator-deregistration), [Subnet Hyperparameters](../subnets/subnet-hyperparameters.md#immunityperiod)
+**See also:** [Miner Deregistration](../miners/#miner-deregistration), [Validator Deregistration](../validators/index.md#validator-deregistration), [Subnet Hyperparameters](../subnets/subnet-hyperparameters.md#immunityperiod)
 
 ### Incentives
 
 A portion of the TAO emission received by the subnet miners when they provide valuable services and compete for UID slots in a subnet.
 
-**See also:** [Emissions](../emissions.md), [Anatomy of Incentive Mechanism](../learn/anatomy-of-incentive-mechanism.md)
+**See also:** [Emissions](../learn/emissions.md), [Anatomy of Incentive Mechanism](../learn/anatomy-of-incentive-mechanism.md)
 
 ### Incentive Mechanism
 
@@ -298,7 +298,7 @@ A private blockchain used for developing and testing subnet incentive mechanisms
 
 A Bittensor wallet created on the user's machine, requiring the installation of Bittensor.
 
-**See also:** [Wallets](../getting-started/wallets.md), [Installation](../getting-started/installation.md)
+**See also:** [Wallets](../keys/wallets.md), [Installation](../getting-started/installation.md)
 
 ### Loss Function
 
@@ -324,13 +324,13 @@ A data structure that contains comprehensive information about the current state
 
 The process of removing a poor-performing subnet miner from a UID slot, making room for a newly registered miner.
 
-**See also:** [Miner Deregistration](./miners/#miner-deregistration)
+**See also:** [Miner Deregistration](../miners/#miner-deregistration)
 
 ### Mnemonic
 
 A sequence of words used to regenerate keys, in case of loss, and restore coldkeys and hotkeys in the Bittensor wallet.
 
-**See also:** [Handle Seed Phrase](../keys/handle-seed-phrase.md), [Working with Keys](../working-with-keys.md)
+**See also:** [Handle Seed Phrase](../keys/handle-seed-phrase.md), [Working with Keys](../keys/working-with-keys.md)
 
 ## N
 
@@ -338,7 +338,7 @@ A sequence of words used to regenerate keys, in case of loss, and restore coldke
 
 A secure encryption format, using the [NaCl](https://nacl.cr.yp.to/) library, used for updating legacy Bittensor wallets to improve security.
 
-**See also:** [Working with Keys](../working-with-keys.md), [Coldkey-Hotkey Security](../getting-started/coldkey-hotkey-security.md)
+**See also:** [Working with Keys](../keys/working-with-keys.md), [Coldkey-Hotkey Security](../keys/coldkey-hotkey-security.md)
 
 ### Netuid
 
@@ -352,7 +352,7 @@ The basic computing node in a Bittensor subnet, representing a node in a neural 
 
 Neurons participate in the network through axon servers (miners) and dendrite clients (validators), exchanging synapse objects to perform subnet-specific tasks. Their performance is measured through metrics like rank, trust, consensus, and incentive scores, which determine emissions and validator permits.
 
-**See also:** [Understanding Neurons](../learn/neurons.md), [Subnet Validators](./validators/), [Subnet Miners](../miners/), [NeuronInfo class](pathname:///python-api/html/autoapi/bittensor/core/chain_data/neuron_info/index.html)
+**See also:** [Understanding Neurons](../learn/neurons.md), [Subnet Validators](../validators/), [Subnet Miners](../miners/), [NeuronInfo class](pathname:///python-api/html/autoapi/bittensor/core/chain_data/neuron_info/index.html)
 
 ## N
 
@@ -388,25 +388,25 @@ In the context of machine learning and subnet operations, this refers to the goa
 
 A private component of the cryptographic key pair, crucial for securing and authorizing transactions and operations within the Bittensor network.
 
-**See also:** [Working with Keys](../working-with-keys.md), [Coldkey-Hotkey Security](../getting-started/coldkey-hotkey-security.md)
+**See also:** [Working with Keys](../keys/working-with-keys.md), [Coldkey-Hotkey Security](../keys/coldkey-hotkey-security.md)
 
 ### Proposal
 
 A suggestion or plan put forward by the Triumvirate for the Senate to vote on.
 
-**See also:** [Governance](../governance.md), [Senate](../senate.md)
+**See also:** [Governance](../governance/governance.md), [Senate](../governance/senate.md)
 
 ### Proposal hash
 
 A unique identifier for a proposal used in the voting process.
 
-**See also:** [Governance](../governance.md), [Senate](../senate.md)
+**See also:** [Governance](../governance/governance.md), [Senate](../governance/senate.md)
 
 ### Public Key
 
 A cryptographic key that is publicly available and used for verifying signatures, encrypting messages, and identifying accounts in the Bittensor network. This is the publicly shareable part of the cryptographic key pair associated with both the coldkey and hotkey, allowing others to securely interact with the wallet.
 
-**See also:** [Working with Keys](../working-with-keys.md), [Coldkey-Hotkey Security](../getting-started/coldkey-hotkey-security.md)
+**See also:** [Working with Keys](../keys/working-with-keys.md), [Coldkey-Hotkey Security](../keys/coldkey-hotkey-security.md)
 
 ### Public Subtensor
 
@@ -420,7 +420,7 @@ A publicly accessible node in the Bittensor network that can be run as a lite no
 
 A denomination of TAO, representing one billionth (10<sup>-9</sup>) of a TAO.
 
-**See also:** [Emissions](../emissions.md)
+**See also:** [Emissions](../learn/emissions.md)
 
 ### Rank
 
@@ -428,7 +428,7 @@ This metagraph property represents the final aggregate judgment of a each miner,
 
 Ranks are calculated as the stake-weighted sum of consensus-clipped weights and directly determine emissions to miners.
 
-**See also:** [Emissions](../emissions.md), [Yuma Consensus](../learn/yuma-consensus.md), [Subnet Metagraph](../subnets/metagraph)
+**See also:** [Emissions](../learn/emissions.md), [Yuma Consensus](../learn/yuma-consensus.md), [Subnet Metagraph](../subnets/metagraph)
 
 **Relationship to Other Metrics:**
 
@@ -502,13 +502,13 @@ Subnet-specific alpha tokens are burned in several contexts:
 
 The process of recreating a lost or deleted coldkey or hotkey using the associated mnemonic.
 
-**See also:** [Handle Seed Phrase](../keys/handle-seed-phrase.md), [Working with Keys](../working-with-keys.md)
+**See also:** [Handle Seed Phrase](../keys/handle-seed-phrase.md), [Working with Keys](../keys/working-with-keys.md)
 
 ### Register
 
 The process of registering keys with a subnet and purchasing a UID slot.
 
-**See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/), [Working with Subnets](../subnets/working-with-subnets.md)
+**See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/), [Working with Subnets](../subnets/working-with-subnets.md)
 
 ### Root Subnet/Subnet Zero
 
@@ -520,7 +520,7 @@ Subnet Zero a.k.a. the root subnet is a special subnet. No miners can register o
 
 A compact representation of public keys corresponding to the wallet's coldkey and hotkey, used as wallet addresses for secure TAO transfers.
 
-**See also:** [Working with Keys](../working-with-keys.md), [Wallets](../getting-started/wallets.md)
+**See also:** [Working with Keys](../keys/working-with-keys.md), [Wallets](../keys/wallets.md)
 
 ### Slippage
 
@@ -536,7 +536,7 @@ Larger transactions cause more slippage. Bittensor provides slippage protection 
 
 A group of elected delegates formed from the top K delegate hotkeys, responsible for approving or disapproving proposals made by the Triumvirate.
 
-**See also:** [Senate](../senate.md), [Governance](../governance.md)
+**See also:** [Senate](../governance/senate.md), [Governance](../governance/governance.md)
 
 ### Stake
 
@@ -604,7 +604,7 @@ The framework that governs the behavior of subnet miners and ensures consensus a
 
 The task-performing entity within a Bittensor subnet. A subnet miner is a type of node in a Bittensor subnet that is connected only to subnet validators. Subnet miners are isolated from the external world and communicate bidirectionally with subnet validators. A subnet miner is responsible for performing tasks given to them by the subnet validators in that subnet.
 
-**See also:** [Subnet Miner Documentation](./miners/)
+**See also:** [Subnet Miner Documentation](../miners/)
 
 ### Subnet Creator
 
@@ -634,7 +634,7 @@ A key component of any incentive mechanism that defines the work the subnet mine
 
 The importance assigned to each subnet determined by relative price among subnets and used to determine the percentage emissions to subnets.
 
-**See also:** [Emissions](../emissions.md), [Consensus-Based Weights](../concepts/consensus-based-weights.md)
+**See also:** [Emissions](../learn/emissions.md), [Consensus-Based Weights](../concepts/consensus-based-weights.md)
 
 ### Subtensor
 
@@ -648,13 +648,13 @@ The Bittensor SDK offers the [`bittensor.core.subtensor`](pathname:///python-api
 
 A privileged key for administrative actions, replaced by governance protocol for enhanced security.
 
-**See also:** [Governance](../governance.md), [btcli Permissions](../btcli/btcli-permissions.md)
+**See also:** [Governance](../governance/governance.md), [btcli Permissions](../btcli/btcli-permissions.md)
 
 ### Synapse
 
 A data object used by subnet validators and subnet miners as the main vehicle to exchange information. Synapse objects are based on the BaseModel of the Pydantic data validation library.
 
-**See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/)
+**See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/)
 
 ## T
 
@@ -662,7 +662,7 @@ A data object used by subnet validators and subnet miners as the main vehicle to
 
 The cryptocurrency of the Bittensor network, used to incentivize participation in network activities (mining, validation, subnet creation and management). A single TAO is newly created (i.e., minted) every 12 seconds on the Bittensor blockchain.
 
-**See also:** [Emissions](../emissions.md), [Wallets](../getting-started/wallets.md)
+**See also:** [Emissions](../learn/emissions.md), [Wallets](../keys/wallets.md)
 
 ### TAO Weight
 
@@ -674,19 +674,19 @@ A global parameter (currently set to 0.18) that determines the relative influenc
 
 A 360-block period during which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo occurs every 4320 seconds or 72 minutes.
 
-**See also:** [Yuma Consensus](../learn/yuma-consensus.md), [Emissions](../emissions.md)
+**See also:** [Yuma Consensus](../learn/yuma-consensus.md), [Emissions](../learn/emissions.md)
 
 ### Transfer
 
 The process of sending TAO tokens from one wallet address to another in the Bittensor network.
 
-**See also:** [Wallets](../getting-started/wallets.md), [Working with Keys](../working-with-keys.md)
+**See also:** [Wallets](../keys/wallets.md), [Working with Keys](../keys/working-with-keys.md)
 
 ### Triumvirate
 
 A group of three Opentensor Foundation employees responsible for creating proposals.
 
-**See also:** [Governance](../governance.md), [Senate](../senate.md)
+**See also:** [Governance](../governance/governance.md), [Senate](../governance/senate.md)
 
 ### Trust
 
@@ -750,7 +750,7 @@ The relationship between these metrics creates a feedback loop: consensus determ
 
 A position occupied by a subnet miner or subnet validator within a subnet, identified by a unique UID. The UID is assigned to a hotkey when it is registered in a subnet, allowing the hotkey to participate as a subnet validator or subnet miner.
 
-**See also:** [Subnet Miners](./miners/), [Subnet Validators](./validators/), [Working with Subnets](../subnets/working-with-subnets.md)
+**See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/), [Working with Subnets](../subnets/working-with-subnets.md)
 
 ### Unstaking
 
@@ -926,7 +926,7 @@ Where $\alpha$ is the EMA smoothing factor (see [Exponential Moving Average](#ex
 - [Bonds API method]https://github.com/opentensor/subtensor/blob/main/bittensor/core/async_subtensor.py:931)
 - [Bonds storage definition]https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs:1560)
 
-**See also:** [Yuma Consensus](../learn/yuma-consensus), [Emissions](../emissions)
+**See also:** [Yuma Consensus](../learn/yuma-consensus), [Emissions](../learn/emissions)
 
 ### Validator Take %
 
@@ -934,7 +934,7 @@ The percentage of emissions a validator takes, of the portion that depends on de
 
 Effectively, this represents the fee percentage that validators charge delegators for validation services.
 
-**See also:** [Emissions](../emissions.md)
+**See also:** [Emissions](../learn/emissions.md)
 
 ## W
 
@@ -942,13 +942,13 @@ Effectively, this represents the fee percentage that validators charge delegator
 
 A unique identifier derived from the public key, used as a destination for sending and receiving TAO tokens in the Bittensor network.
 
-**See also:** [Wallets](../getting-started/wallets.md), [Working with Keys](../working-with-keys.md)
+**See also:** [Wallets](../keys/wallets.md), [Working with Keys](../keys/working-with-keys.md)
 
 ### Wallet Location
 
 The directory path where the generated Bittensor wallets are stored locally on the user's machine.
 
-**See also:** [Wallets](../getting-started/wallets.md), [Installation](../getting-started/installation.md)
+**See also:** [Wallets](../keys/wallets.md), [Installation](../getting-started/installation.md)
 
 ### Weight Matrix
 
