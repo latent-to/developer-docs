@@ -442,7 +442,7 @@ Miner and validator registering a hotkey uses a coldkey, has a TAO cost unless p
 
 Reading weights with `reveal` is permissionless.
 
-To set weights with `commit`, a validator must meet several requirements. See [Requirements for validation](./#requirements-for-validation).
+To set weights with `commit`, a validator must meet several requirements. See [Requirements for validation](#validator-permit).
 
 <details>
   <summary>`btcli weight`</summary>

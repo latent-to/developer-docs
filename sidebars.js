@@ -81,7 +81,7 @@ const sidebars = {
       link: { type: "doc", id: "validators/index" },
       items: [
         "validators/index",
-        "subnets/child-hotkeys",
+        "validators/child-hotkeys",
         "validators/validators-btcli-guide",
       ],
     },

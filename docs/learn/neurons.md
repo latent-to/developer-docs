@@ -60,7 +60,7 @@ Neuron performance is measured through multiple metrics:
 - **Validator Trust**: Consensus alignment measure for validators
   See: [Validator Trust](../resources/glossary/#validator-trust)
 - **Incentive**: Normalized reward allocation for miners
-  See: [Incentive](../resources/glossary/#incentive)
+  See: [Incentive](../resources/glossary/#incentives)
 
 ### Validator Permits and Access Control
 

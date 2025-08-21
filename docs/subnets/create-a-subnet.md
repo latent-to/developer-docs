@@ -58,7 +58,7 @@ The subnet and its participants will receive **no emissions** during the time th
 
 You must meet the same [requirements for validation](../validators#requirements-for-validation) as other validators in order to set weights in your own subnet.
 
-One option for subnet owners is to ask one of the root network (subnet 0) validators to parent your validator hotkey as a childkey of theirs. This will lend their stake to your validator, and can help you ensure that your validator maintains a sufficient stake to effectively participate in consensus as well as resist deregistration. See the [Child Hotkeys](./child-hotkeys) documentation for more detail.
+One option for subnet owners is to ask one of the root network (subnet 0) validators to parent your validator hotkey as a childkey of theirs. This will lend their stake to your validator, and can help you ensure that your validator maintains a sufficient stake to effectively participate in consensus as well as resist deregistration. See the [Child Hotkeys](../validators/child-hotkeys) documentation for more detail.
 
 ### Subnet creation rate limits
 
@@ -68,7 +68,7 @@ Subnet creations are limited to **one subnet creation per 7200 blocks** (approxi
 
 - [Install the most recent version of BTCLI](../getting-started/install-btcli).
 
-- [Create a wallet](../keys/wallets.md#creating-a-local-wallet).
+- [Create a wallet](../keys/working-with-keys#creating-a-wallet-with-btcli).
 
 - To create a subnet on test chain, your wallet must have sufficient test net TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network.
 - To create a subnet on main network (finney) requires a substantial investment of TAO, depending on current registration cost for new subnets.

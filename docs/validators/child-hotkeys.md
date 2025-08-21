@@ -226,7 +226,7 @@ A child hotkey's `take` is subnet-specific, i.e., a child hotkey can have one `t
 
 The child hotkey take rate is an attribute of the child hotkey and this take rate applies to all the parent hotkeys for which this hotkey is the child hotkey.
 
-The child hotkey can also set its delegate take separately from the child hotkey take. That is, a child hotkey can carry two separate take rates: the child hotkey take rate and the delegate take rate. For the delegate take rate, see [Set delegate take](../btcli/btcli.md#set-delegate-take).
+The child hotkey can also set its delegate take separately from the child hotkey take. That is, a child hotkey can carry two separate take rates: the child hotkey take rate and the delegate take rate. For the delegate take rate, see [Set delegate take](../btcli/btcli.md#btcli-sudo-set-take).
 
 ### Usage
 

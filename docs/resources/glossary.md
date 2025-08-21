@@ -276,9 +276,9 @@ The total amount of TAO circulating in the Bittensor network. Includes TAO that 
 
 This can be viewed on Bittensor explorers such as [TAO.app](https://tao.app) and [TAOstats](https://taostats.io).
 
-To query it directly from the change, see: [Subtensor Storage Query Example: Total Issuance](../subtensor-nodes/subtensor-storage-query-examples#totalissuance)
+To query it directly from the change, see: [Subtensor Storage Query Example: Total Issuance](../subtensor-nodes/subtensor-storage-query-examples.md#123-totalissuance)
 
-See also: [Recycling, burning, and locking](#recycling-burning-and-locking)
+See also: [Recycling, burning, and locking](#recycling-and-burning)
 
 ## L
 

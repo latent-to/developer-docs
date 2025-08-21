@@ -2,7 +2,7 @@
 title: "Dynamic TAO SDK Cheat Sheet"
 ---
 
-This page provides a quick reference for the core functionalities for the Bittensor Python SDK that have changed for [Dynamic TAO](./index.md), and some example scripts to demonstrate functionality such as [viewing exchange rates](#example-viewing-exchange-rates) and [staking and unstaking](#example-staking-and-unstaking) into subnets.
+This page provides a quick reference for the core functionalities for the Bittensor Python SDK that have changed for [Dynamic TAO](./index.md), and some example scripts to demonstrate functionality such as [viewing exchange rates](#display-current-exchange-rates) and [manage staking and unstaking](#managing-stake) into subnets.
 
 Updates to the `subtensor` and `async_subtensor` modules and the `DynamicInfo` class provide new ways to view information related to new Dynamic TAO features, such as alpha token prices, token reserve amounts, and wallet balances. Functionality around staking and unstaking has been updated to reflect the new nature of staking/unstaking in Dynamic TAO.
 

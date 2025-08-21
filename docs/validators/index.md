@@ -222,7 +222,7 @@ After providing your wallet name at the prompt, you will see output like:
 
 ### Meaning of ACTIVE
 
-In the above table, the `ACTIVE` row applies only to UIDs that are subnet validators. It shows whether the UID is actively setting weights within the [`activity_cutoff`](../subnets/subnet-hyperparameters#activity_cutoff) window. If the UID has not set weights on the blockchain for the `activity_cutoff` duration, then the Yuma Consensus will consider this subnet validator offline, i.e., turned off (`False`).
+In the above table, the `ACTIVE` row applies only to UIDs that are subnet validators. It shows whether the UID is actively setting weights within the [`activity_cutoff`](../subnets/subnet-hyperparameters#activitycutoff) window. If the UID has not set weights on the blockchain for the `activity_cutoff` duration, then the Yuma Consensus will consider this subnet validator offline, i.e., turned off (`False`).
 
 ## Checking the registration status
 

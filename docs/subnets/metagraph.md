@@ -136,7 +136,7 @@ In the Bittensor Python SDK, the `Metagraph` class encapsulates the following in
 | `total_stake`  | Total [stake weight](../resources/glossary.md#stake-weight) (α + τ × 0.18) across all neurons | 
 | **Stake** / `S` | Total [stake weight](../resources/glossary.md#stake-weight) (α + τ × 0.18) of each neuron, determining consensus power and emissions |
 | **Alpha Stake** / `AS` | Alpha token stake (α) for each neuron |
-| **Tao Stake** / `TS` | [TAO](../resources/glossary.md#tao-τ) token stake (τ) for each neuron |
+| **Tao Stake** / `TS` | [TAO](../resources/glossary.md#tao-tau) token stake (τ) for each neuron |
 | **Ranks** / `R` | Final performance scores after [consensus](../resources/glossary.md#consensus-score) weight clipping - [stake-weighted](../resources/glossary.md#stake-weight) sum of clipped weights that directly determine emissions to miners |
 | **Trust** / `T` | [Consensus alignment](../resources/glossary.md#trust) ratio (final rank / pre-rank) - measures how much consensus clipping affected the rank, where 1.0 indicates perfect consensus alignment |
 | **Validator Trust** / `Tv` | [Validator trust](../resources/glossary.md#validator-trust) - sum of clipped weights set by each validator, measuring validator influence in consensus |
@@ -152,7 +152,7 @@ In the Bittensor Python SDK, the `Metagraph` class encapsulates the following in
 | `addresses` |  Network IP addresses |
 | `axons` |  Network connection details for [axon](../resources/glossary.md#axon) servers |
 | `neurons` |  Complete [neuron](../resources/glossary.md#neuron) objects with all metadata |
-| `active` |  Neuron activity status within the [`activity_cutoff`](./subnet-hyperparameters.md#activity_cutoff) window |
+| `active` |  Neuron activity status within the [`activity_cutoff`](./subnet-hyperparameters.md#activitycutoff) window |
 | `last_update` |  Last update block numbers for staleness detection |
 | `validator_permit` |  Boolean array indicating whether each neuron has [validator permits](../resources/glossary.md#validator-permit) to set weights and participate in consensus |
 | `name` |  Subnet name |
@@ -164,7 +164,7 @@ In the Bittensor Python SDK, the `Metagraph` class encapsulates the following in
 | `identity` |  Subnet identity information |
 | `pruning_score` |  List of pruning scores based on emissions, used for [deregistration](../resources/glossary.md#deregistration) when subnet is full |
 | `block_at_registration` |  List of registration blocks for each neuron, used for [immunity period](../resources/glossary.md#immunity-period) calculations |
-| `tao_dividends_per_hotkey` |  [TAO](../resources/glossary.md#tao-τ) dividends by hotkey |
+| `tao_dividends_per_hotkey` |  [TAO](../resources/glossary.md#tao-tau) dividends by hotkey |
 | `alpha_dividends_per_hotkey` |  Alpha dividends by hotkey |
 | `last_step` |  Last step block number |
 | `tempo` |  [Tempo](../resources/glossary.md#tempo) - block interval for updates (360 blocks = 72 minutes) |
@@ -200,7 +200,7 @@ See also:
 `emission` | Token [emission](../resources/glossary.md#emission) rate in [RAO](../resources/glossary.md#rao) per block
 `dividends` | [Bond](../resources/glossary.md#validator-miner-bonds)-based dividend amount for validators
 `validator_trust` | [Validator trust](../resources/glossary.md#validator-trust) measuring validator influence in consensus
-`active` | Activity status within the [`activity_cutoff`](./subnet-hyperparameters.md#activity_cutoff) window
+`active` | Activity status within the [`activity_cutoff`](./subnet-hyperparameters.md#activitycutoff) window
 `last_update` | Last update block number for staleness detection
 `validator_permit` | Boolean indicating [validator permit](../resources/glossary.md#validator-permit) status for weight setting and consensus participation
 `weights` | [Weight vector](../resources/glossary.md#weight-vector) assignments from this neuron to others
@@ -316,7 +316,7 @@ See also:
 `alpha_out_emission`   | Alpha token outflow [emission](../resources/glossary.md#emission) rate
 `alpha_in_emission`    | Alpha token inflow [emission](../resources/glossary.md#emission) rate
 `subnet_emission`      | Subnet [emission](../resources/glossary.md#emission) rate to participants
-`tao_in_emission`      | [TAO](../resources/glossary.md#tao-τ) token inflow [emission](../resources/glossary.md#emission) rate
+`tao_in_emission`      | [TAO](../resources/glossary.md#tao-tau) token inflow [emission](../resources/glossary.md#emission) rate
 `pending_alpha_emission`  | Pending alpha token [emission](../resources/glossary.md#emission) amount
 `pending_root_emission`   | Pending root network [emission](../resources/glossary.md#emission) amount
 </details>

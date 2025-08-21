@@ -64,8 +64,6 @@ Run the `btcli subnet list` command with the Dynamic TAO-enabled `btcli` to view
    ...
 ```
 
-See: [Using Dynamic TAO](./index.md#using-dynamic-tao)
-
 ## Price/rate of alpha tokens
 
 ### Ideal price

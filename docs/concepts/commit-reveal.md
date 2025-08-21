@@ -68,7 +68,7 @@ As a subnet owner, set the below hyperparameters to use the commit reveal featur
 1. `commit_reveal_weights_enabled` (boolean): Set this to `True` to activate the commit reveal feature for the subnet. Default value is `False`.
 2. `commit_reveal_period` (int): Set this to an integer number. This is the number of subnet tempos to elapse before revealing the weights by submitting them again to the blockchain, but now openly for everyone to see. Default value is `1`.
 
-See [Setting subnet hyperparameters](../subnets/subnet-hyperparameters#setting-the-hyperparameters).
+See [Setting subnet hyperparameters](../subnets/subnet-hyperparameters.md#set-hyperparameters).
 
 :::danger Ensure that the commit reveal interval is less than your immunity period to avoid unintended miner de-registration!
 See [Commit Reveal and Immunity Period](#commit-reveal-and-immunity-period).
