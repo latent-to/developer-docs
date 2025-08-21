@@ -44,6 +44,7 @@ const sidebars = {
         "yuma-consensus",
         "subnets/yc3-blog",
         "fees",
+        "community-links",
       ],
     },
     {

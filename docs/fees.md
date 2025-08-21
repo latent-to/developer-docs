@@ -21,6 +21,7 @@ Reading the state of the chain is always free.
 - **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
     See: [Recycling and Burning](./glossary#recycling-and-burning)
 
+
 ### Staking Operations
 - [`add_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L591)
 - [`remove_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L635)
