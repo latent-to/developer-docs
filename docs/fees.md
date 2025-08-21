@@ -12,13 +12,11 @@ Staking and unstaking operations incur weight-based fees as well as amount-based
 
 Reading the state of the chain is always free.
 
-## Weight-Based Transaction Fees
-
-Many extrinsics in Bittensor are subject to a flat **weight-based fee**. In Polkadot-based chains like Subtensor (Bittensor's layer 1 blockchain), [weight](https://docs.polkadot.com/polkadot-protocol/glossary/#weight) is a measure of compute time.
+## Flat Transaction Fees
 
 **Fee Details**: 
 - **Current rate**:  $\approx0.00013 \tau$ (reduced from $\approx0.0013 \tau$)
-- **Payment source**: Sender's TAO free balance by default. For specific extrinsics, if TAO is insufficient to cover fees, the chain will charge fees in Alpha instead (see "Smart Fee Payments (Alpha Fallback)" below).
+- **Payment source**: Sender's TAO free balance by default. For specific extrinsics, if TAO is insufficient to cover fees, the chain will charge fees in Alpha instead (see [Alpha Fallback](#alpha-fallback))
 - **Denomination**: TAO by default. When fees are paid in Alpha, the TAO fee amount is converted to Alpha using the current Alpha price (no slippage).
 - **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
     See: [Recycling and Burning](./glossary#recycling-and-burning)
