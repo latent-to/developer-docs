@@ -20,7 +20,7 @@ This is not a secure code execution environment. This page is for practice/educa
 See:
 
 - [Handle your Seed Phrase/Mnemonic Securely](../keys/handle-seed-phrase)
-- [Coldkey and Hotkey Workstation Security](../getting-started/coldkey-hotkey-security)
+- [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
   :::
 
 ## Import wallets and check balances.

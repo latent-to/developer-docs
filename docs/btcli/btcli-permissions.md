@@ -8,16 +8,16 @@ This page details the requirements for all of the `btcli` commands.
 
 See also the `btcli` permissions guides for specific Bittensor personas:
 
-- [Staker's Guide to `BTCLI`](./staking-and-delegation/stakers-btcli-guide)
-- [Miner's Guide to `BTCLI`](./miners/miners-btcli-guide)
-- [Validator's Guide to `BTCLI`](./validators/validators-btcli-guide)
-- [Subnet Creator's Guide to `BTCLI`](./subnets/subnet-creators-btcli-guide)
-- [Senator's Guide to `BTCLI`](./governance/senators-btcli-guide)
+- [Staker's Guide to `BTCLI`](../staking-and-delegation/stakers-btcli-guide)
+- [Miner's Guide to `BTCLI`](../miners/miners-btcli-guide)
+- [Validator's Guide to `BTCLI`](../validators/validators-btcli-guide)
+- [Subnet Creator's Guide to `BTCLI`](../subnets/subnet-creators-btcli-guide)
+- [Senator's Guide to `BTCLI`](../governance/senators-btcli-guide)
 
 Other resources:
 
-- [Introduction to Wallets, Coldkeys and Hotkeys in Bittensor](./getting-started/wallets)
-- [Coldkey and Hotkey Workstation Security](./getting-started/coldkey-hotkey-security)
+- [Introduction to Wallets, Coldkeys and Hotkeys in Bittensor](../keys/wallets)
+- [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
 
 ## Bittensor work environments and security requirements
 
@@ -28,19 +28,19 @@ The workstations you use to do this work can be referred to as a permissionless 
 1. A **permissionless workstation** has only coldkey _public keys_ on it. Public keys are sufficient for viewing all information about a wallet, such as TAO and alpha stake balances. Information about wallets, subnets, miners, and validators can and should be viewed without initializing your private keys on a device, to avoid the security risk of compromising your keys.
 
    :::tip coldkey workstation security
-   See [Permissionless workstation](./getting-started/coldkey-hotkey-security#permissionless-workstation)
+   See [Permissionless workstation](../keys/coldkey-hotkey-security#permissionless-workstation)
    :::
 
 1. A **coldkey workstation** contains one or more coldkey private key in the `wallet_path`. For any coldkey associated with mainnet TAO, the coldkey workstation should be held to the highest possible security standards.
 
    :::tip coldkey workstation security
-   See [Coldkey workstation](./getting-started/coldkey-hotkey-security#coldkey-workstation)
+   See [Coldkey workstation](../keys/coldkey-hotkey-security#coldkey-workstation)
    :::
 
 1. **A hotkey workstation**—which is generally a server used for mining or validation—contains a hotkey private key in the `wallet_path` located in the `btcli config`, as well as a coldkey public key for the corresponding coldkey. Compromised hotkeys can damage your reputation if they are used to maliciously to submit inaccurate weights as a validator, or bad work as a miner. However, ownership of TAO or alpha stake can only be transferred with a coldkey, and a leaked hotkey can be swapped using the coldkey; therefore hotkey leaks are far less dangerous than coldkey leaks.
 
    :::tip hotkey workstation
-   See [Hotkey workstation security](./getting-started/coldkey-hotkey-security#hotkey-workstation)
+   See [Hotkey workstation security](../keys/coldkey-hotkey-security#hotkey-workstation)
    :::
 
 ## Requirements for `btcli` functions
@@ -49,7 +49,7 @@ The workstations you use to do this work can be referred to as a permissionless 
 
 Your coldkey is your primary, fully privileged key; important for all users. This key should be handled on a maximum security **coldkey workstation** only, to avoid catastrophic loss or malicious actions if compromised.
 
-See [Coldkey and Hotkey Workstation Security](../getting-started/coldkey-hotkey-security).
+See [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security).
 
 Required for:
 
@@ -85,11 +85,11 @@ Some operations require a TAO balance or alpha stake balance to execute.
 
 ### Validator Permit
 
-To set weights, a validator must meet several requirements. See [Requirements for validation](./validators/#requirements-for-validation).
+To set weights, a validator must meet several requirements. See [Requirements for validation](../validators/#requirements-for-validation).
 
 ### Senate requirements
 
-See [Senate: Requirements](./senate#requirements)
+See [Senate: Requirements](../governance/senate#requirements)
 
 ## `btcli` commands
 
@@ -102,7 +102,7 @@ The `btcli config ...` commands are used to configure `btcli`, including:
 
 These commands don't require any permissions to run. Rather, you run these commands on all `btcli` workstations to initialize them.
 
-See: [Coldkey and Hotkey Workstation Security](./getting-started/coldkey-hotkey-security)
+See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
 
 <details>
   <summary>btcli config</summary>
@@ -129,7 +129,7 @@ See: [Coldkey and Hotkey Workstation Security](./getting-started/coldkey-hotkey-
 The `wallet` command is required to provision keys to `btcli`, so it can access your wallet. This is essentially the equivalent of logging in/authentication. This is true for both coldkeys, which all users require, and hotkeys, which are required only by miners and validators as well as for advanced functions.
 
 :::tip mind your keys
-See: [Coldkey and Hotkey Workstation Security](./getting-started/coldkey-hotkey-security)
+See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
 :::
 
 #### Provisioning keys
@@ -288,7 +288,7 @@ See: [Coldkey and Hotkey Workstation Security](./getting-started/coldkey-hotkey-
 Read operations require public keys. Write operations (stake add, move, remove...) require a coldkey private key.
 
 :::tip mind your keys
-See: [Coldkey and Hotkey Workstation Security](./getting-started/coldkey-hotkey-security)
+See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
 :::
 
 <details>

@@ -70,7 +70,7 @@ The cost for subnet creation is dynamic; it lowers gradually and doubles every t
 :::info
 Note that this is labeled "burn cost", even though technically the cost of subnet creation is _recycled_, rather than _burned_.
 
-See: [Glossary: Recycling and Burning](../glossary#recycling-and-burning)
+See: [Glossary: Recycling and Burning](../resources/glossary#recycling-and-burning)
 :::
 
 ## Start emissions on the subnet

@@ -30,7 +30,6 @@ import { SiFuturelearn } from "react-icons/si";
 import { GoNumber } from "react-icons/go";
 import { VscFileMedia } from "react-icons/vsc";
 
-
 # Bittensor Documentation
 
 Bittensor is an open source platform where participants produce best-in-class digital commodities, including compute power, storage space, artificial intelligence (AI) inference and training, protein folding, financial markets prediction, and many more.
@@ -52,7 +51,7 @@ Browse the subnets and explore links to their code repositories on [TAO.app](htt
     <ResponsiveCard 
     icon={GiStarFormation}
     title='Bittensor frequently asked questions (FAQ)'
-    link='questions-and-answers'
+    link='resources/questions-and-answers'
     body='Everything you were afraid to ask about Bittensor.' />
     <ResponsiveCard
     icon={GoNumber}
@@ -72,17 +71,16 @@ Browse the subnets and explore links to their code repositories on [TAO.app](htt
     <ResponsiveCard
     icon={MdInstallDesktop}
     title='Guide to Bittensor tools'
-    link='tools'
+    link='concepts/tools'
     body='Opentensor Foundation maintains open source tools for the Bittensor ecosystem, including the Python SDK and `btcli`.' />      
     <CardSmall
     icon={VscFileMedia}
     title='Bittensor media assets'
-    link='media-assets'
+    link='resources/media-assets'
     body='Media assets' />
 </ResponsiveCards>
 
 ## Participate
-
 
 You can participate in an existing subnet as either a subnet validator or a subnet miner, or by staking your TAO to running validators.
 
@@ -90,7 +88,7 @@ You can participate in an existing subnet as either a subnet validator or a subn
     <ResponsiveCard
     icon={RiTeamLine}
     title='Staking and Delegation'
-    link='staking-and-delegation/delegation'
+    link='./staking-and-delegation/delegation'
     body='Get to know how staking and delegating in the Bittensor network.' />
     <ResponsiveCard 
     icon={MdOutlineChecklistRtl}
@@ -105,7 +103,7 @@ You can participate in an existing subnet as either a subnet validator or a subn
     <ResponsiveCard
     icon={BiMath}
     title='Emissions'
-    link='emissions'
+    link='learn/emissions'
     body='Learn how emissions are calculated.' />
     <ResponsiveCard
     icon={RiGovernmentLine}
@@ -115,7 +113,7 @@ You can participate in an existing subnet as either a subnet validator or a subn
     <ResponsiveCard
     icon={FaGalacticSenate}
     title='Senate'
-    link='senate'
+    link='governance/senate'
     body='Understand what Senate is, requirements to participate in a Senate and how voting works.' />
     
 </ResponsiveCards>
@@ -168,7 +166,7 @@ See [Legacy Bittensor 7.4.0 Documentation](pathname:///legacy-python-api/html/in
     <CardSmall
     icon={FaPython}
     title=''
-    link='bt-api-ref'
+    link='/sdk/bt-api-ref'
     body='Bittensor SDK' />
     <CardSmall
     icon={FaPython}

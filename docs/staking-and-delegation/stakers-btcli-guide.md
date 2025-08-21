@@ -10,7 +10,7 @@ This page prepares the reader for managing TAO and alpha stake using `btcli` in 
 Staking and unstaking operations incur transaction fees. See [Transaction Fees in Bittensor](../learn/fees.md) for details.
 :::
 
-For general coverage of `btcli` security and usage considerations across persona, see: [Bittensor CLI: Permissions Guide](../btcli-permissions)
+For general coverage of `btcli` security and usage considerations across persona, see: [Bittensor CLI: Permissions Guide](../btcli/btcli-permissions)
 
 ## Intro
 
@@ -20,7 +20,7 @@ Stakers must be familiar with operations related to managing the TAO and staked 
 
 Account balances are public information, and can be viewed _without_ using a coldkey, even in an insecure environment. However, any account operation that **changes the state** of the Bittensor chain, such as a balance transfer or staking operation, must be signed with your wallet's coldkey private key.
 
-Performing these functions requires using a **coldkey**, and hence must be performed in a [**highly secure environment**](../getting-started/coldkey-hotkey-security) for any wallet connected to real (mainnet) TAO balance. A leak of your coldkey can lead to a catastrophic loss of funds.
+Performing these functions requires using a **coldkey**, and hence must be performed in a [**highly secure environment**](../keys/coldkey-hotkey-security) for any wallet connected to real (mainnet) TAO balance. A leak of your coldkey can lead to a catastrophic loss of funds.
 
 Any operation can be practiced against Bittensor testnet using throw-away keys _not_ connected to your real TAO balances on mainnet.
 
@@ -31,9 +31,9 @@ Stakers only need a coldkey. Unless you plan to mine, validate, or participate i
 See:
 
 - [Staking/Delegation Overview](./delegation.md)
-- [Bittensor CLI: Permissions Guide](../btcli-permissions)
-- [Wallets, Coldkeys and Hotkeys in Bittensor](../getting-started/wallets)
-- [Coldkey and Hotkey Workstation Security](../getting-started/coldkey-hotkey-security)
+- [Bittensor CLI: Permissions Guide](../btcli/btcli-permissions)
+- [Wallets, Coldkeys and Hotkeys in Bittensor](../keys/wallets)
+- [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
 
 ## Requirements for wallet, balance and staking functions
 
@@ -63,4 +63,4 @@ See:
 
 If you suspect your coldkey may have been leaked, you can request to swap it out of your wallet, using an extrinsic blockchain transaction. This operation has a 5 day waiting period, during which your coldkey will be locked. The cost of this coldkey swap transaction is 0.1 TAO.
 
-See [Rotate/Swap your Coldkey](../subnets/schedule-coldkey-swap)
+See [Rotate/Swap your Coldkey](../keys/schedule-coldkey-swap)

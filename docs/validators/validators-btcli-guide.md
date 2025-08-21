@@ -10,14 +10,14 @@ Validators evaluate miner performance, and post their evaluations to the blockch
 Certain validator operations incur transaction fees. See [Transaction Fees in Bittensor](../learn/fees.md) for details.
 :::
 
-For general coverage of `btcli` permissions and requirements, see: [Bittensor CLI: Permissions Guide](../btcli-permissions)
+For general coverage of `btcli` permissions and requirements, see: [Bittensor CLI: Permissions Guide](../btcli/btcli-permissions)
 
-See also: [Coldkey and Hotkey Workstation Security](../getting-started/coldkey-hotkey-security).
+See also: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security).
 
 :::tip tips
 It is highly recommended to use a unique hotkey per subnet.
 
-Note that hotkeys are not encrypted by default, but can be password [optionally encrypted](../working-with-keys#encrypting-the-hotkey).
+Note that hotkeys are not encrypted by default, but can be password [optionally encrypted](../keys/working-with-keys#encrypting-the-hotkey).
 :::
 
 ## Requirements for validator functions
@@ -54,4 +54,4 @@ To set weights, a validator must meet several requirements. See [Requirements fo
 
 If you suspect your coldkey may have been leaked, you can request to swap it out of your wallet, using an extrinsic blockchain transaction. This operation has a 5 day waiting period, during which your coldkey will be locked. The cost of this coldkey swap transaction is 0.1 TAO.
 
-See [Rotate/Swap your Coldkey](../subnets/schedule-coldkey-swap)
+See [Rotate/Swap your Coldkey](../keys/schedule-coldkey-swap)

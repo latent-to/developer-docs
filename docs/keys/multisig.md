@@ -28,9 +28,9 @@ Coldkeys private keys and seed phrases for wallets with real (mainnet) TAO are *
 
 In a realistic scenario, using wallets with real (mainnet) TAO, it would be crucial to follow proper workstation security. This implies that each coldkey would be provisioned to its own secure coldkey workstation, as maintaining separate workstations for each coldkey is important for minimizing the risk that multiple of the keys are lost or leaked; storing or handling the keys together undermines the purpose of having multiple keys.
 
-See [Coldkey and Hotkey Workstation Security](../getting-started/coldkey-hotkey-security).
+See [Coldkey and Hotkey Workstation Security](./coldkey-hotkey-security).
 
-In the current *practice* scenario, using testnet TAO, we will forego full workstation security for ease, and handle all three keys on a single workstation, which can be an ordinary laptop rather than a secure workstation.
+In the current _practice_ scenario, using testnet TAO, we will forego full workstation security for ease, and handle all three keys on a single workstation, which can be an ordinary laptop rather than a secure workstation.
 
 ### Configure the target network in the Polkadot-JS web app.
 
@@ -38,7 +38,7 @@ In the current *practice* scenario, using testnet TAO, we will forego full works
 1. Click the blockchain selector tab in the upper lefthand corner of the web page, next to **Accounts**. This is set to **Polkadot** main chain by default.
 1. Scroll down and open **Development** at the bottom of the Chains menu, and paste the address for the Bittensor test chain into **custom endpoint**: `wss://test.finney.opentensor.ai:443`.
 
-	You should see the page update and display live information about Bittensor testnet.
+   You should see the page update and display live information about Bittensor testnet.
 
 ### Create and import 3 coldkey pairs ("accounts") in the Polkadot-JS browser extension
 
@@ -46,16 +46,18 @@ Each of our 3 signatories needs a wallet. Either create them or re-use available
 
 1. Use `btcli` to create three coldkeys/wallets, or use practice wallets you already have access to. Alternatively, you can create wallets in the Polkadot-JS browser extension.
 
-	See [Creating/Importing a Bittensor Wallet](../working-with-keys).
+   See [Creating/Importing a Bittensor Wallet](./working-with-keys).
 
 1. Load each key into the Polkadot-JS wallet browser extension:
-	1. Click to open the browser extension.
-	1. Click **+**, then select **Import account from pre-existing seed**.
-	1. Provide your seed phrase to regenerate your wallet's coldkey private key.
+
+   1. Click to open the browser extension.
+   1. Click **+**, then select **Import account from pre-existing seed**.
+   1. Provide your seed phrase to regenerate your wallet's coldkey private key.
 
 1. Configure your keys to use the custom network (Bittensor's test net). For each key/**account**:
-	1. Click the menu (three dots) to configure the account.
-	1. Open the network dropdown selector, and choose **Allow use on any chain**.
+
+   1. Click the menu (three dots) to configure the account.
+   1. Open the network dropdown selector, and choose **Allow use on any chain**.
 
 1. You may need to allow the PolkadotJS webapp to use specific wallets by clicking **connect** in the extension.
 
@@ -67,27 +69,28 @@ Each of our 3 signatories needs a wallet. Either create them or re-use available
 
 In this step, we'll create the multisig wallet, specifying the signatory wallets.
 
-1. Navigate to the [accounts page](https://polkadot.js.org/apps/#/accounts). 
+1. Navigate to the [accounts page](https://polkadot.js.org/apps/#/accounts).
 
 1. Click **+ Multisig**. In the **add multisig** modal:
-	1. Select from the available signatories, which must be in your address book (if they are not, add them from the Accounts/Address book tab).
-	1. Set the **threshold**.
-	1. Set a name.
-	1. Click **create**.
+
+   1. Select from the available signatories, which must be in your address book (if they are not, add them from the Accounts/Address book tab).
+   1. Set the **threshold**.
+   1. Set a name.
+   1. Click **create**.
 
 1. Use `btcli w regen_coldkeypub --wallet.name multisig` to add the wallet's public key to BTCLI.
 1. View its balance information with `btcli view dashboard --wallet.name multisig`.
 
 ## Transfer TAO to the multisig wallet.
 
-1. Find the multisig wallet's coldkey public key on the [accounts page](https://polkadot.js.org/apps/#/accounts), listed under **multisig**. Click on the wallet/account to open it's show modal, then click **Copy** by the account name and address/public key to copy it out. 
+1. Find the multisig wallet's coldkey public key on the [accounts page](https://polkadot.js.org/apps/#/accounts), listed under **multisig**. Click on the wallet/account to open it's show modal, then click **Copy** by the account name and address/public key to copy it out.
 1. Use BTCLI to transfer testnet TAO to the mutlisig wallet.
-	1. Run `btcli wallet transfer`.
-	1. Provide the multisig wallet's coldkey public key.
-	1. Specify the amount. It's recommended to do a small transfer first to confirm the address, even with testnet TAO.
+   1. Run `btcli wallet transfer`.
+   1. Provide the multisig wallet's coldkey public key.
+   1. Specify the amount. It's recommended to do a small transfer first to confirm the address, even with testnet TAO.
 1. To confirm the transfer, view the multisig wallet in the accounts page or the BTCLI dashboard. It should show the TAO from the transfer almost immediately.
 
-## Transfer TAO from the multisig 
+## Transfer TAO from the multisig
 
 Let's try executing a sensitive operation with the multisig wallet: transferring TAO. Choose any destination wallet that you control. It can be one of the signatories. Note this wallet's balance, so you can confirm the transaction's ultimate success by seeing the increase in that balance.
 
@@ -100,18 +103,18 @@ Note that the signatory that proposes a multisig action must make a deposit that
 1. In the Polkadot-JS web app, click the **Developer** tab and select Extrinsics, or navigate to the extrinsics page at [polkadot.js.org/apps/#/extrinsics](https://polkadot.js.org/apps/#/extrinsics).
 1. Under **using the selected account**, select the multisig wallet. Note that the multisig wallet's TAO balance is displayed.
 1. Under **submit the following extrinsic**:
-	1. Select the `balances` module (from the lefthand dropdown menu).
-	1. Select `transferKeepAlive`.
+   1. Select the `balances` module (from the lefthand dropdown menu).
+   1. Select `transferKeepAlive`.
 1. Under **Id: AccountId**, paste in the coldkey public key for the destination wallet.
 1. Under **value**, put the amount of TAO to transfer. This amount must be available in the multisig wallet.
-A wallet with a test TAO balance sufficient to pay the fee 
+   A wallet with a test TAO balance sufficient to pay the fee
 1. Copy out the **encoded call data**, which other signatories will need to sign the transaction.
 1. Copy out the **encoded call hash**, which other signatories will need to confirm the details of the transaction.
 1. Copy out the **link** under **encoding details**, which will allow other signatories to view the details of the transaction and confirm it against the encoded call hash.
 1. Click **Submit Transaction**.
 1. In the **authorize transaction** modal, select the signatory.
 
-	Note that this should be selected as a **multisig signatory**, not as a **proxy account**. You may need to toggle the **Use a proxy for this call** switch to **Don't use a proxy for this call**.
+   Note that this should be selected as a **multisig signatory**, not as a **proxy account**. You may need to toggle the **Use a proxy for this call** switch to **Don't use a proxy for this call**.
 
 1. Select **Multisig approval with hash (non-final approval)**, not **Multisig message with call (for final approval)**.
 1. Click **Sign and Submit**.
@@ -122,11 +125,11 @@ A wallet with a test TAO balance sufficient to pay the fee
 1. Find the multisig wallet, noting that it should now display a clickable element for **view pending approvals**. You can also click on the wallets three dot menu and select **Multisig approvals**.
 1. The approval modal will display the **encoded call hash**, allowing signatories to confirm the identity of the proposed transaction, but it does not display details about the call.
 
-	To view details of the call, visit the link provided under **encoding details** when creating the transaction proposal.
+   To view details of the call, visit the link provided under **encoding details** when creating the transaction proposal.
 
-	:::caution
-	Confirm that the **call hash** in the details link matches the **call hash** in the transaction you are approving. This is the only way to be certain you are approving the correct transaction.
-	:::
+   :::caution
+   Confirm that the **call hash** in the details link matches the **call hash** in the transaction you are approving. This is the only way to be certain you are approving the correct transaction.
+   :::
 
 1. Select the approving signatory, which cannot be the signatory who proposed the transaction.
 1. If you are the final approver, enter the **encoded call data**, which was provided when the transaction was created, and is displayed at the top of the page at the **encoding details** link.

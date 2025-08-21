@@ -65,7 +65,7 @@ After some time has passed, you'll be able to confirm that emissions are flowing
 
 If you have only started one subnet, you'll see that it's emissions are always exactly 1 $\tau$.
 
-See [Emissions](../emissions)
+See [Emissions](../learn/emissions)
 
 ```shell
  btcli view dashboard \

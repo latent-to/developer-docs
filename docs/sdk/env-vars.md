@@ -36,7 +36,7 @@ The Subtensor node (RPC endpoint) URL to connect to Bittensor (overrides the def
 
 The SDK uses `bittensor.core.settings.DEFAULT_ENDPOINT ` if the variable is not set.
 
-See [Bittensor Networks](../bittensor-networks)
+See [Bittensor Networks](../concepts/bittensor-networks)
 
 ### `BT_NETWORK`
 
@@ -114,10 +114,12 @@ Wallet name to use unless specified.
 The SDK uses `default` if the variable is not set,
 
 ### `BT_WALLET_HOTKEY`
+
 Hotkey name to use unless specified.
 The SDK uses `default` if the variable is not set,
 
 ### `BT_WALLET_PATH`
+
 The SDK uses `bittensor.core.settings.WALLETS_DIR` if the variable is not set.
 
 ## Testing

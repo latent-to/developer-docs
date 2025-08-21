@@ -45,4 +45,4 @@ Bittensor uses a dual-key wallet structure:
 - **Hotkey** for operational tasks like validation, mining, and day-to-day transactions
 
 Both keys are crucial for safeguarding and participating in the network.  
-**For a complete guide, see [Wallets & Keys](../getting-started/wallets)** and [Working with Keys](../keys/working-with-keys).
+**For a complete guide, see [Wallets & Keys](../keys/wallets)** and [Working with Keys](../keys/working-with-keys).

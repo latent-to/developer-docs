@@ -98,7 +98,7 @@ const config = {
           },
           {
             from: "/recycled-tao",
-            to: "/glossary",
+            to: "/resources/glossary",
           },
           {
             to: "/subnets/walkthrough-prompting",
@@ -113,15 +113,15 @@ const config = {
             from: "/subnet-pages",
           },
           {
-            to: "/subnets/schedule-coldkey-swap",
+            to: "/keys/schedule-coldkey-swap",
             from: "/schedule-key-swap",
           },
           {
-            to: "/subnets/schedule-coldkey-swap",
+            to: "/keys/schedule-coldkey-swap",
             from: "/subnets/schedule-key-swap",
           },
           {
-            to: "/bt-api-ref",
+            to: "/sdk/bt-api-ref",
             from: "/reference/bittensor-api-ref",
           },
           {
@@ -210,7 +210,7 @@ const config = {
           {
             position: "left",
             label: "Bittensor SDK Reference",
-            to: "bt-api-ref",
+            to: "sdk/bt-api-ref",
           },
           {
             position: "left",
@@ -229,7 +229,7 @@ const config = {
             className: "custom_algolia",
           },
           {
-            to: "bittensor-rel-notes",
+            to: "resources/bittensor-rel-notes",
             label: "Releases",
             position: "left",
           },

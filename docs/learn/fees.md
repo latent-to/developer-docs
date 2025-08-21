@@ -4,7 +4,7 @@ title: "Transaction Fees in Bittensor"
 
 # Transaction Fees in Bittensor
 
-This page describes the blockchain transaction fees charged by Bittensor. 
+This page describes the blockchain transaction fees charged by Bittensor.
 
 Many extrinsic transactions that change the state of the blockchain are subject to a flat fee of approximately 0.0013 $\tau$.
 
@@ -14,15 +14,16 @@ Reading the state of the chain is always free.
 
 ## Flat Transaction Fees
 
-**Fee Details**: 
-- **Current rate**:  $\approx0.00013 \tau$ (reduced from $\approx0.0013 \tau$)
+**Fee Details**:
+
+- **Current rate**: $\approx0.00013 \tau$ (reduced from $\approx0.0013 \tau$)
 - **Payment source**: Sender's TAO free balance by default. For specific extrinsics, if TAO is insufficient to cover fees, the chain will charge fees in Alpha instead (see [Alpha Fallback](#alpha-fallback))
 - **Denomination**: TAO by default. When fees are paid in Alpha, the TAO fee amount is converted to Alpha using the current Alpha price (no slippage).
-- **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
-    See: [Recycling and Burning](./glossary#recycling-and-burning)
-
+- **Impact on liquidity**: Fees are _recycled_ (deducted from `TotalIssuance`)
+  See: [Recycling and Burning](../resources/glossary#recycling-and-burning)
 
 ### Staking Operations
+
 - [`add_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L591)
 - [`remove_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L635)
 - [`add_stake_limit`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1793)
@@ -36,6 +37,7 @@ Reading the state of the chain is always free.
 - [`unstake_all_alpha`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1614)
 
 ### Wallet and Identity Management
+
 - [`set_identity`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1471)
 - [`set_subnet_identity`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1513)
 - [`associate_evm_key`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2001)
@@ -63,6 +65,7 @@ Reading the state of the chain is always free.
 - [`set_childkey_take`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1021)
 
 ### Governance
+
 - [`adjust_senate`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L921)
 
 <details>
@@ -119,14 +122,17 @@ For `remove_stake`, `remove_stake_limit`, `recycle_alpha`, and `burn_alpha`: if 
 In addition to the weight-based fee above, staking and unstaking operations are subject to fees based on a percentage of the quantity of transacted liquidity.
 
 **Fee Details:**
+
 - **Rate**: 0.05%
 - **For staking**: Fee paid in **TAO** from the staking amount
 - **For unstaking**: Fee paid in **Alpha** from the unstaking amount
 
 ### Example
+
 ```shell
-btcli stake add 
+btcli stake add
 ```
+
 ```console
 ...
 
@@ -147,8 +153,8 @@ Amount to stake (TAO τ): 100
 
 ```
 
+**Source code references:**
 
-**Source code references:** 
 - [Fee value](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/mod.rs#L68-L76)
 - [Fee calculation and distribution](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/impls.rs#L596-L639)
 
@@ -157,6 +163,7 @@ Amount to stake (TAO τ): 100
 The following extrinsics are free.
 
 ### Weight Setting & Commit-Reveal
+
 - [`set_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L83) - Setting validator weights
 - [`commit_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L158) - Commit weight hash
 - [`batch_commit_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L192) - Batch commit weight hashes
@@ -165,6 +172,6 @@ The following extrinsics are free.
 - [`batch_reveal_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L337) - Batch reveal committed weights
 
 ### Administrative & Operational
+
 - Sudo and admin extrinsics
 - Governance-related functions
-

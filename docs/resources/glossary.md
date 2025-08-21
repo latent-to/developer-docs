@@ -16,7 +16,7 @@ A UID slot that is considered active within a specific subnet, allowing the asso
 
 A type of public subtensor node that stores the entire blockchain history, allowing for full data access and querying capabilities.
 
-**See also:** [Subtensor Nodes](./subtensor-nodes/), [Managing Subtensor Connections](../sdk/managing-subtensor-connections.md)
+**See also:** [Subtensor Nodes](../subtensor-nodes/), [Managing Subtensor Connections](../sdk/managing-subtensor-connections.md)
 
 ### Axon
 
@@ -286,13 +286,13 @@ See also: [Recycling, burning, and locking](#recycling-burning-and-locking)
 
 A type of public subtensor node that stores limited blockchain data and relies on archive nodes for full historical data.
 
-**See also:** [Subtensor Nodes](./subtensor-nodes/), [Managing Subtensor Connections](../sdk/managing-subtensor-connections.md)
+**See also:** [Subtensor Nodes](../subtensor-nodes/), [Managing Subtensor Connections](../sdk/managing-subtensor-connections.md)
 
 ### Local Blockchain
 
 A private blockchain used for developing and testing subnet incentive mechanisms. A local blockchain is not public and is isolated from any Bittensor network.
 
-**See also:** [Local Build](./local-build/deploy), [Create a Subnet](../local-build/create-subnet.md)
+**See also:** [Local Build](../local-build/deploy), [Create a Subnet](../local-build/create-subnet.md)
 
 ### Local Wallet
 
@@ -485,7 +485,7 @@ Tokens (TAO and subnet-specific alpha) can be 'removed from circulation', meanin
 
 Tokens are recycled in several cases in Bittensor operations:
 
-- **All transaction fees are recycled**: When transaction fees are collected, they are deducted from `TotalIssuance`, effectively recycling them back into the system for future emission. See [Transaction Fees in Bittensor](../fees)
+- **All transaction fees are recycled**: When transaction fees are collected, they are deducted from `TotalIssuance`, effectively recycling them back into the system for future emission. See [Transaction Fees in Bittensor](../learn/fees)
 - **Subnet Creation fees**: When a new subnet is created, the cost is recycled, except for one TAO, which is used to initialize the subnet's TAO liquidity pool.
 - **Neuron Registration fees**: When a user registers a hotkey on a subnet to participate as a miner or validator, they are charged a registration fee in TAO. Alpha tokens worth the current swap value of the fee are taken from the subnet's alpha liquidity pool and recycled.
 - **Extrinsic transaction**: Users can manually recycle alpha tokens using the `recycle_alpha` extrinsic, which reduces both the user's stake and the subnet's `SubnetAlphaOut` tracker.
