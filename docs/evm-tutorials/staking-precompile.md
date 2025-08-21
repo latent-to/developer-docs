@@ -27,9 +27,8 @@ In this tutorial you will learn how to interact with staking precompile in two w
 
 ```sh
 btcli subnet create --network ws://127.0.0.1:9944
-btcli subnet register --network ws://127.0.0.1:9944    
+btcli subnet register --network ws://127.0.0.1:9944
 ```
-
 
 3. Save the delegate hotkey address. You will use this in the staking pool use case below.
 
@@ -40,13 +39,17 @@ btcli subnet register --network ws://127.0.0.1:9944
    - Click on **Submit Transaction** at the bottom right. This will open the **authorize transaction** window.
    - On this **authorize transaction** window, make sure the **sign and submit** toggle is ON and click on the **Sign and Submit** on the bottom right.
 
+## Staking V1 and V2
+
+There are two versions of staking precompile implemenation, V1 and V2. The contract address for V1 is `0x0000000000000000000000000000000000000801`. The address for V2 is `0x0000000000000000000000000000000000000805`.  V1 is deprecated, but is kept for backwards-compatibility. The major difference between V1 and V2 is that the staking amount is fetched from the `msg.value` in V1. Then precompile transfers the token back to the caller. It is misleading and confuses solidity developers. In the V2 implementation, all amount parameters are defined as parameter of transaction.
+
 ## Call the staking precompile from another smart contract (staking pool use case)
 
-In this interaction you will compile [`stake.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stake.sol), a smart contract Solidity code and execute it on the subtensor EVM. This `stake.sol` will, in turn, call the staking precompile that is already deployed in the subtensor EVM.
+In this interaction you will compile [`stakeV2.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stakeV2.sol), a Solidity smart contract code, and execute it on the Subtensor EVM. This `stakeV2.sol` will, in turn, call the staking precompile that is already deployed on the Subtensor EVM.
 
-Before you proceed, familiarize yourself with the Solidity code of the [`stake.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stake.sol) smart contract.
+Before you proceed, familiarize yourself with the Solidity code of the [`stakeV2.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stakeV2.sol) smart contract.
 
-1. Copy the text of [`stake.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stake.sol) contract to Remix IDE.
+1. Copy the text of [`stakeV2.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stakeV2.sol) contract to Remix IDE.
 
 2. You will now convert your delegate hotkey ss58 from the above [Setup EVM localnet, subnet and delegate](#setup-evm-localnet-subnet-and-delegate) step into its corresponding public key. Use the [ss58.org](https://ss58.org/) site to obtain the public key for your delegate hotkey ss58.
 
@@ -64,48 +67,11 @@ Before you proceed, familiarize yourself with the Solidity code of the [`stake.s
 
 In this tutorial, you will interact directly with the staking precompile by using its ABI, and use your Metamask wallet as the source of TAO to stake.
 
-1. Copy this below ABI of staking precompile contract into Remix IDE as a new file:
+1. Copy the ABI from https://github.com/opentensor/subtensor/blob/main/precompiles/src/solidity/stakingV2.abi into Remix IDE as a new file.
 
-   ```json
-   [
-     {
-       "inputs": [
-         {
-           "internalType": "bytes32",
-           "name": "hotkey",
-           "type": "bytes32"
-         }
-       ],
-       "name": "addStake",
-       "outputs": [],
-       "stateMutability": "payable",
-       "type": "function"
-     },
-     {
-       "inputs": [
-         {
-           "internalType": "bytes32",
-           "name": "hotkey",
-           "type": "bytes32"
-         },
-         {
-           "internalType": "uint256",
-           "name": "amount",
-           "type": "uint256"
-         }
-       ],
-       "name": "removeStake",
-       "outputs": [],
-       "stateMutability": "payable",
-       "type": "function"
-     }
-   ]
-   ```
-
-2. Copy staking precompile address `0x0000000000000000000000000000000000000801` to the **At Address** field in Remix IDE, and click **At Address** button.
+2. Copy staking precompile address `0x0000000000000000000000000000000000000805` to the **At Address** field in Remix IDE, and click **At Address** button.
 
 3. Remix IDE will find the precompile at the precompile address on the subtensor EVM and show it in the list of deployed contracts. Expand the contract, then expand the `addStake` method, and paste the public key of your delegate hotkey into the `hotkey` field. Then click **transact** and wait for the transaction to be completed.
-
 
 4. Follow these steps to see that the stake record is updated in [Polkadot JS app](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/chainstate):
 
@@ -114,3 +80,11 @@ In this tutorial, you will interact directly with the staking precompile by usin
    3. Toggle **include option** OFF for the second parameter.
    4. Click the **+** button and find the new stake record.
 
+## Notes: Calling the staking precompile from another smart contract
+
+   - The precompile takes the contract's address as the **coldkey**, since the precompile can't get the original caller.
+   - The **contract** (not the caller's coldkey) must have sufficient liquidity or the transaction will fail.
+   - The transaction must be *privileged* because the liquidity for `addStake` is subtracted from contract.
+   <!--   example in link will be available after a PR merged in subtensor side --> 
+   - As the function parameter indicates, `amount` in `addStake` and `removeStake` are specified in TAO $\tau$.
+   - That when transferring liquidity to the contract, `msg.value` is in denominations of 1/1e18 TAO $\tau$ . The staking precompile, however, expects RAO, 1/1e9 TAO $\tau$. You must convert before calling it: **uint256 amount = msg.value / 1e9**.

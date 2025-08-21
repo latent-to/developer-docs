@@ -12,20 +12,15 @@ Staking and unstaking operations incur weight-based fees as well as amount-based
 
 Reading the state of the chain is always free.
 
-## Weight-Based Transaction Fees
-
-Many extrinsics in Bittensor are subject to a flat **weight-based fee**. In Polkadot-based chains like Subtensor (Bittensor's layer 1 blockchain), [weight](https://docs.polkadot.com/polkadot-protocol/glossary/#weight) is a measure of compute time.
+## Flat Transaction Fees
 
 **Fee Details**: 
-- **Current rate**:  $\approx0.0013 \tau$
-- **Payment source**: Sender's TAO free balance by default. For specific extrinsics, if TAO is insufficient to cover fees, the chain will charge fees in Alpha instead (see "Smart Fee Payments (Alpha Fallback)" below).
+- **Current rate**:  $\approx0.00013 \tau$ (reduced from $\approx0.0013 \tau$)
+- **Payment source**: Sender's TAO free balance by default. For specific extrinsics, if TAO is insufficient to cover fees, the chain will charge fees in Alpha instead (see [Alpha Fallback](#alpha-fallback))
 - **Denomination**: TAO by default. When fees are paid in Alpha, the TAO fee amount is converted to Alpha using the current Alpha price (no slippage).
 - **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
     See: [Recycling and Burning](./glossary#recycling-and-burning)
 
-:::tip Planned reduction
-It is currently planned that the fee coefficient will be reduced to $0.005%$ (10x reduction).
-:::
 
 ### Staking Operations
 - [`add_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L591)
@@ -81,7 +76,7 @@ It is currently planned that the fee coefficient will be reduced to $0.005%$ (10
         fn polynomial() -> WeightToFeeCoefficients<Self::Balance> {
             let coefficient = WeightToFeeCoefficient {
                 coeff_integer: 0,
-                coeff_frac: Perbill::from_parts(500_000), // 0.05%
+                coeff_frac: Perbill::from_parts(50_000), // 0.005%
                 negative: false,
                 degree: 1,
             };
@@ -89,7 +84,7 @@ It is currently planned that the fee coefficient will be reduced to $0.005%$ (10
         }
     }
     ```
-    **Source code reference:** [`runtime/src/lib.rs:448-463`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L448-L463)
+    **Source code reference:** [`pallets/transaction-fee/src/lib.rs:44-56`](https://github.com/opentensor/subtensor/blob/main/pallets/transaction-fee/src/lib.rs#L44-L56)
 
 </details>
 
