@@ -114,7 +114,7 @@ For `remove_stake`, `remove_stake_limit`, `recycle_alpha`, and `burn_alpha`: if 
 
 ## Swap Fees for Stake and Unstake Operations
 
-In addition to the weight-based fee above, staking and unstaking operations are subject to fees based on a percentage of the quantity of transacted liquidity. Transfer, swap, and move incur these 0.05% fees when moving stake between different subnets. If the move happens within the same subnet, no additional fee is incurred, only the weight-based fee.
+In addition to the weight-based fee above, staking and unstaking operations are subject to fees based on a percentage of the quantity of transacted liquidity. When moving stake between subnets—whether through a transfer, swap, or move—a 0.05% fee is applied. If the move happens within the same subnet, no additional fee is incurred, only the weight-based fee.
 
 **Fee Details:**
 - **Rate**: 0.05%
