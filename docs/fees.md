@@ -12,7 +12,9 @@ Staking and unstaking operations incur weight-based fees as well as amount-based
 
 Reading the state of the chain is always free.
 
-## Flat Transaction Fees
+## Weight-Based Transaction Fees
+
+Many extrinsics in Bittensor are subject to **weight-based fee**. In Polkadot-based chains like Subtensor (Bittensor's layer 1 blockchain), [weight](https://docs.polkadot.com/polkadot-protocol/glossary/#weight) is a measure of compute time.
 
 **Fee Details**: 
 - **Current rate**:  $\approx0.00013 \tau$ (reduced from $\approx0.0013 \tau$)
@@ -20,7 +22,6 @@ Reading the state of the chain is always free.
 - **Denomination**: TAO by default. When fees are paid in Alpha, the TAO fee amount is converted to Alpha using the current Alpha price (no slippage).
 - **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
     See: [Recycling and Burning](./glossary#recycling-and-burning)
-
 
 ### Staking Operations
 - [`add_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L591)
