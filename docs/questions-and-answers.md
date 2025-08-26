@@ -60,7 +60,7 @@ At the same time, validators are also incentivized to do their best work, becaus
 
 The task of miners is different in each subnet. Some subnets provide AI services like specialized inference, training, or prediction. Other provide infrastructure as a service, including storage or compute.
 
-Browse tokenomic information about the subnets on [TAO.app](https://tao.app), and learn more about the projects and services they support on the [Learnbittensor.org subnet listings](learnbittensor.org/subnets).
+Browse tokenomic information about the subnets on [TAO.app](https://tao.app), and learn more about the projects and services they support on the [Learnbittensor.org subnet listings](https://learnbittensor.org/subnets).
 
 ### So where does the blockchain come in?
 
