@@ -15,10 +15,12 @@ In this section we present a high-level walkthrough of an example architecture f
 - Translating languages.
 - Solve mathematics problems, and more.
 
-This subnet is driven by large language models (LLMs). These LLMs search the internet and utilize specialized simulator modules to produce factually accurate and mathematically correct responses. 
+Our example subnet is driven by large language models (LLMs). These LLMs search the internet and utilize specialized simulator modules to produce factually accurate and mathematically correct responses. 
 
-:::tip Subnet 1 Explorer
-You can see the prompting subnet in action on the [TAO.app explorer (select Subnet 01: Text Prompting from the top menu)](https://tao.app). 
+:::tip Explore the subnets
+See:
+- Real-time subnet info on [tao.app](https://www.tao.app/explorer)
+- LearnBittensor's [Subnet listings](https://learnbittensor.org/subnets)
 :::
 
 ## Before you proceed
@@ -28,13 +30,13 @@ If you are new to Bittensor subnets and building blocks, read the following sect
 - [Bittensor Building Blocks](../learn/neurons).
 - [Anatomy of Incentive Mechanism](../learn/anatomy-of-incentive-mechanism).
 
-The below diagram shows a typical subnet with many subnet miners and subnet validators together executing the subnet incentive mechanism code. On the [TAO.app explorer (select Subnet 01: Text Prompting from the top menu)](https://tao.app) the **Metagraph** view for this Subnet 1: Prompting shows the performance details for each subnet miner and validator. 
+The below diagram shows a typical subnet with many subnet miners and subnet validators together executing the subnet incentive mechanism code. On the [TAO.app explorer](https://tao.app) the **Metagraph** view shows the performance details for each subnet miner and validator. 
 
 For easier understanding, in this document we will focus on how a **single** subnet validator interacts with **multiple** subnet miners in this subnet. 
 
 <center id="bittensor-img">
 <ThemedImage
-alt="1-Prompting Walkthrough"
+alt="Example Subnet Walkthrough"
 sources={{
     light: useBaseUrl('/img/docs/1-prompting-subnet-walkthrough.svg'),
     dark: useBaseUrl('/img/docs/dark-1-prompting-subnet-walkthrough.svg'),
@@ -43,13 +45,13 @@ style={{width: 600}}
 />
 </center>
 
-## Subnet 1 summary
+## Subnet Summary
 
-See the below diagram showing a high-level view of how this Prompting subnet works. 
+See the below diagram showing a high-level view of how this example subnet works. 
 
 <center>
 <ThemedImage
-alt="Prompting Subnet 1 Big Picture"
+alt="Example Subnet High-Level View"
 sources={{
     light: useBaseUrl('/img/docs/2-prompting-subnet-high-level.svg'),
     dark: useBaseUrl('/img/docs/dark-2-prompting-subnet-high-level.svg'),
@@ -77,7 +79,7 @@ In this subnet both the subnet validator and the subnet miners use large languag
 
 <center>
 <ThemedImage
-alt="Prompting Subnet 1 Big Picture"
+alt="Example Subnet"
 sources={{
     light: useBaseUrl('/img/docs/3-prompting-subnet1-key-innovation.svg'),
     dark: useBaseUrl('/img/docs/dark-3-prompting-subnet1-key-innovation.svg'),
@@ -90,7 +92,7 @@ The challenge generation works like this (see the above diagram):
 
 - The subnet validator generates a **prompt** consisting of a clearly stated question or a task description, for a given task type. 
 - The subnet validator also generates one or more **reference** answers to the above prompt. The subnet validator also provides the context to generate this reference answer.
-- A requirement for this prompting subnet is that the entire conversation should be human-like. To accomplish this, the subnet validator takes on a human persona and wraps the above prompt in the persona's style and tone. The introduction of such random persona's style and tone creates a lossy, corrupted, version of the original clear instruction. This corrupted prompt is called a **challenge**. 
+- A requirement for this example subnet is that the entire conversation should be human-like. To accomplish this, the subnet validator takes on a human persona and wraps the above prompt in the persona's style and tone. The introduction of such random persona's style and tone creates a lossy, corrupted, version of the original clear instruction. This corrupted prompt is called a **challenge**. 
 - The subnet validator prompts the subnet miners with this challenge. Note that the **reference** is not sent to the subnet miners.
 
 ## Score the subnet miner responses
@@ -98,7 +100,7 @@ The challenge generation works like this (see the above diagram):
 The responses from the subnet miners are compared to the reference answers by the subnet validator. The closer a subnet miner's response is to the reference answer, the higher is the subnet miner's score. 
 
 :::tip Measuring subnet miner's response
-This Prompting Subnet 1 presently uses a combination of string literal similarity and semantic similarity as the basis for measuring the closeness of a subnet miner's response to the reference answer. 
+This example subnet uses a combination of string literal similarity and semantic similarity as the basis for measuring the closeness of a subnet miner's response to the reference answer. 
 :::
 
 ## Key innovations in this subnet
@@ -123,7 +125,7 @@ To deliver to a user of this subnet an experience of a human-like conversation:
 
 
 :::tip Class HumanAgent
-See [class HumanAgent](https://github.com/opentensor/prompting/blob/main/prompting/agent.py#L30).
+See [class HumanAgent](https://github.com/opentensor/prompting/blob/main/prompting/agent.py#L30) for an example implementation.
 :::
 
 ### Prevent subnet miners from looking up the answers
@@ -136,7 +138,6 @@ The subnet validator composes a challenge based on whether the task is answering
 
 - Using multiple tasks in the prompts continuously benchmarks the capabilities of the subnet miners across a broad range of tasks that are challenging but are still common use-cases. 
 - Using multiple tasks, prompts can be routed to specialized subnet miners, thereby providing an effective mixture of experts system.
-- This approach also serves as a precursor to Bittensor's inter-subnet bridging mechanism that will enable Subnet 1 to interact with other subnets and access the useful work provided by these subnets. 
 - Finally, the subnet miners in this subnet must become adept at using tools and APIs in order to fulfill validation tasks. We are building an API layer for inter-subnet communication, which is a natural extension of 'agentic' models.
 
 :::tip Continuously improving performance
