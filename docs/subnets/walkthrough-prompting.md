@@ -15,17 +15,17 @@ In this section we present a high-level walkthrough of an example architecture f
 - Translating languages.
 - Solve mathematics problems, and more.
 
-This subnet is driven by large language models (LLMs). These LLMs search the internet and utilize specialized simulator modules to produce factually accurate and mathematically correct responses. 
+This example subnet is driven by large language models (LLMs). These LLMs search the internet and utilize specialized simulator modules to produce factually accurate and mathematically correct responses. 
 
-:::tip Subnet 1 Explorer
-You can see the prompting subnet in action on the [TAO.app explorer (select Subnet 01: Text Prompting from the top menu)](https://tao.app). 
+:::tip Explore the Subnets
+Browse tokenomic information about the subnets on [TAO.app](https://tao.app), and learn more about the projects and services they support on the [Learnbittensor.org subnet listings](https://learnbittensor.org/subnets).
 :::
 
-## Before you proceed
+**Prerequisites**
 
 If you are new to Bittensor subnets and building blocks, read the following sections before you proceed further:
 
-- [Bittensor Building Blocks](../learn/neurons).
+- [Understanding Neurons](../learn/neurons).
 - [Anatomy of Incentive Mechanism](../learn/anatomy-of-incentive-mechanism).
 
 The below diagram shows a typical subnet with many subnet miners and subnet validators together executing the subnet incentive mechanism code. On the [TAO.app explorer (select Subnet 01: Text Prompting from the top menu)](https://tao.app) the **Metagraph** view for this Subnet 1: Prompting shows the performance details for each subnet miner and validator. 
