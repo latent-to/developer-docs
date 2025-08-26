@@ -16,6 +16,10 @@ It unfolds in two stages:
 
 See the [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view) for a full explanation.
 
+See:
+- [Yuma Consensus](./yuma-consensus)
+- [Epoch Implementation](./navigating-subtensor/epoch.md) - Implementation details
+
 ### Injection
 
 The first stage of emissions is _injection of liquidity_ into the subnet pools. Liquidity is injected to each subnet in proportion to the price of its token compared to the price of other subnet tokens. This is designed to incentivize development on the most valuable subnets.

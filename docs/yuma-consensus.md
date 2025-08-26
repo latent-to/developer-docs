@@ -16,6 +16,7 @@ See:
 - [How Yuma Consensus 3 Makes Bittensor More Fair](./subnets/yc3-blog)
 - [Yuma Consensus 3 Migration Guide](./subnets/yuma3-migration-guide)
 - [Emissions](./emissions)
+- [Epoch Implementation](./navigating-subtensor/epoch.md) - Implementation details
 - [Subtensor Docs: Yuma Consensus](https://github.com/opentensor/subtensor/blob/main/docs/consensus.md)
 
 ## Clipping

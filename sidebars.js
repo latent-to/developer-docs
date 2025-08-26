@@ -202,6 +202,19 @@ const sidebars = {
     },
     {
       type: "category",
+      label: "Navigating Subtensor Codebase",
+      link: { type: "doc", id: "navigating-subtensor/index" },
+      collapsible: true,
+      collapsed: true,
+      items: [
+        "navigating-subtensor/emissions-coinbase",
+        "navigating-subtensor/epoch",
+        "navigating-subtensor/swap-stake",
+        "navigating-subtensor/function-reference",
+      ],
+    },
+    {
+      type: "category",
       label: "Bittensor EVM",
       link: { type: "doc", id: "evm-tutorials/index" },
       items: [
