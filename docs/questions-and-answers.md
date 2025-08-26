@@ -1,7 +1,8 @@
 ---
 title: "Frequently asked questions (FAQ)"
-hide_table_of_contents: false 
+hide_table_of_contents: false
 ---
+
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
@@ -50,7 +51,7 @@ Anyone with the funds and technical know-how can create a subnet, or participate
 
 ### How does competition work in a subnet?
 
-The work to be performed by miners is set by the subnet creator in the form of the subnet's incentive mechanism. The miners compete to best perform the task, submitting their work to the validators. 
+The work to be performed by miners is set by the subnet creator in the form of the subnet's incentive mechanism. The miners compete to best perform the task, submitting their work to the validators.
 
 The validators then rank the quality of the work done by the miners within the subnet. The aggregated scores of the validators determine the quantity of TAO emitted to each miner.
 
@@ -60,7 +61,7 @@ At the same time, validators are also incentivized to do their best work, becaus
 
 The task of miners is different in each subnet. Some subnets provide AI services like specialized inference, training, or prediction. Other provide infrastructure as a service, including storage or compute.
 
-Browse tokenomic information about the subnets on [TAO.app](https://tao.app), and learn more about the projects and services they support on the [Learnbittensor.org subnet listings](learnbittensor.org/subnets).
+Browse tokenomic information about the subnets on [TAO.app](https://tao.app), and learn more about the projects and services they support on the [Learnbittensor.org subnet listings](https://learnbittensor.org/subnets).
 
 ### So where does the blockchain come in?
 
@@ -68,7 +69,7 @@ The blockchain records all the key activity of the subnets in its ledger. It als
 
 ### Do subnets talk to each other?
 
-A new abstract base class, called `SubnetsAPI` is released in Bittensor `6.8.0` and your application can use this to enable cross subnet communication. Normally, however, if you are not using the `SubnetsAPI`, then the subtensor blockchain does not mix data from one subnet with another subnet data and a subnet does not communicate with another subnet. 
+A new abstract base class, called `SubnetsAPI` is released in Bittensor `6.8.0` and your application can use this to enable cross subnet communication. Normally, however, if you are not using the `SubnetsAPI`, then the subtensor blockchain does not mix data from one subnet with another subnet data and a subnet does not communicate with another subnet.
 
 :::tip See also
 See [Bittensor Subnets API](https://github.com/opentensor/bittensor/blob/master/README.md#bittensor-subnets-api).
@@ -86,7 +87,7 @@ In Bittensor, "mining", within subnets, has nothing to do with adding blocks to 
 
 Yes indeed. In Bittensor, the work of validating the blockchain is performed by the Opentensor Foundation on a Proof-of-Authority model.
 
-### What is the incentive to be a miner or a validator, or create a subnet? 
+### What is the incentive to be a miner or a validator, or create a subnet?
 
 Bittensor incentivizes participation through emission of TAO. Each day, 7200 TAO are emitted into the network (one TAO every 12 seconds).
 
@@ -102,14 +103,14 @@ See [Emissions](./emissions.md).
 
 Yes! Most participants will not create their own subnets, there are lots to choose from.
 
-See: 
+See:
 
 - [Validating in Bittensor](./validators/index.md)
 - [Mining in Bittensor](./miners/index.md).
 
 ### Is there a central place where I can see compute requirements for mining and validating for all subnets?
 
-Unfortunately no. Subnets are not run or managed by Opentensor Foundation, and the landscape of subnets is constantly evolving. 
+Unfortunately no. Subnets are not run or managed by Opentensor Foundation, and the landscape of subnets is constantly evolving.
 
 Browse the subnets at [TAO.app](https://tao.app), or on [Discord](https://discord.com/channels/799672011265015819/830068283314929684).
 
@@ -117,4 +118,4 @@ Browse the subnets at [TAO.app](https://tao.app), or on [Discord](https://discor
 
 You can keep trying forever, but your success depends on your performance. Mining and validating in a subnet is competitive. If a miner or validator is one of the three lowest in the subnet, it may be de-registered at the end of the tempo, and have to register again.
 
-See [miner deregistration](./miners/index.md#miner-deregistration). 
+See [miner deregistration](./miners/index.md#miner-deregistration).
