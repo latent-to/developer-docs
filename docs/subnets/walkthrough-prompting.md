@@ -1,13 +1,13 @@
 ---
-title: "Walkthrough of Subnet 1"
+title: "Walkthrough of Example Subnet"
 ---
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Walkthrough of Subnet 1
+# Walkthrough of Example Subnet
 
-In this section we present a high-level walkthrough of the [Subnet 1: Prompting](https://github.com/opentensor/prompting/tree/main). This subnet contains multiple incentive mechanisms which produce an internet-scale conversational intelligence. Below are a few examples of the intelligence produced by this subnet:
+In this section we present a high-level walkthrough of an example architecture for a subnet based on LLM inference. This architecture was originally based on [Subnet 1, Apex](https://github.com/opentensor/prompting/tree/main), although subnets rapidly evolve and that subnet now has a more complicated architecture. This subnet contains multiple incentive mechanisms which produce an internet-scale conversational intelligence. Below are a few examples of the intelligence produced by this subnet:
 
 - Answering questions.
 - Summarizing a given text.
