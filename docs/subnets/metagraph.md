@@ -325,7 +325,6 @@ See also:
 
 This section provides practical examples of working with the Bittensor metagraph using the Python SDK. Each example demonstrates different aspects of metagraph analysis and data extraction.
 
-Code examples can be found [here](https://github.com/latent-to/developer-docs/tree/main/static/code-examples/)
 
 **Prerequisites**:
 
