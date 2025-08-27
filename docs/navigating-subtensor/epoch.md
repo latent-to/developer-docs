@@ -1,10 +1,10 @@
 ---
-title: "Epoch Implementation"
+title: "Implementation of the Yuma Consensus Epoch"
 ---
 
-# Epoch Implementation
+# Implementation of the Yuma Consensus Epoch
 
-The epoch mechanism is the heart of Yuma Consensus in Bittensor, implementing the complex algorithm that processes validator weights and determines emissions for both miners and validators. This page provides a comprehensive examination of the `epoch()` function and its supporting logic.
+If Yuma Consensus is the heart of Bittensor, the epoch is the heartbeat, a regular pulse of calculations that processes validator weights and determines emissions for participants. This page takes a deep dive into how the code accomplishes its purpose.
 
 ## Overview
 

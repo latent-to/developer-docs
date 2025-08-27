@@ -6,23 +6,23 @@ title: "Emissions and Coinbase Implementation"
 
 This page provides a deep dive into the coinbase mechanism that drives TAO and alpha emissions across subnets. The `run_coinbase()` function is the heart of Bittensor's emission system, orchestrating the complex flow of value distribution throughout the network.
 
-## Overview
+The coinbase mechanism runs **each block**, and is responsible for:
 
-The coinbase mechanism runs every block and handles:
 1. **Injection**: Adding TAO and alpha liquidity to subnet pools
 2. **Accumulation**: Building up pending emissions over time
-3. **Extraction**: Distributing accumulated emissions to participants via epochs
+3. **Executing Subnet *Epochs***: triggering the cycle of the Yuma Consensus Epoch for each subnet.
 
 ## Core Function: `run_coinbase()`
 
-Located in `subtensor/pallets/subtensor/src/coinbase/run_coinbase.rs`, this function orchestrates the entire emission cycle.
+Located in [`run_coinbase.rs`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/run_coinbase.rs), this function orchestrates the entire emission cycle.
 
 ### Function Signature
 ```rust
+
 pub fn run_coinbase(block_emission: U96F32)
 ```
 
-The `block_emission` parameter represents the total TAO to be distributed across all subnets in the current block.
+The `block_emission` parameter represents the total TAO emissions to be distributed across all subnets in the current block.
 
 ## Implementation Flow
 
