@@ -38,9 +38,9 @@ Bittensor EVM smart contracts are executed solely on the **Bittensor blockchain,
 See:
 
 - [Examples and Precompiles](./examples.md)
-- [EVM on Testnet](./evm-testnet-with-metamask-wallet)
-- [EVM on Local Chain](./evm-localnet-with-metamask-wallet)
-- [EVM on Mainnet](./evm-mainnet-with-metamask-wallet)
+- [EVM on Testnet](./evm-testnet-with-metamask-wallet.md)
+- [EVM on Local Chain](./evm-localnet-with-metamask-wallet.md)
+- [EVM on Mainnet](./evm-mainnet-with-metamask-wallet.md)
 - [Opentensor Foundation Blogpost: EVM on Bittensor](https://blog.bittensor.com/evm-on-bittensor-draft-6f323e69aff7)
 
 ## EVM and Subtensor wallets on the Bittensor blockchian
@@ -52,7 +52,7 @@ The holder of a private key for an ss58 address based on the corresponding publi
 Similarly, creating an Ethereum wallet gives you control of the h160 private key for the corresponding public key.
 
 :::info
-You can easily [convert an h160 address to an ss58 address](./convert-h160-to-ss58), or vice versa, but this does _not_ yield the corresponding private key. This means that if you create a wallet in Bittensor, you will not be able to sign Ethereum contracts with it, nor versa.
+You can easily [convert an h160 address to an ss58 address](./convert-h160-to-ss58.md), or vice versa, but this does _not_ yield the corresponding private key. This means that if you create a wallet in Bittensor, you will not be able to sign Ethereum contracts with it, nor versa.
 :::
 
 Hence, in the context of Bittensor EVM we can distinguish between:
