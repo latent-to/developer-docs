@@ -4,24 +4,23 @@ title: "Implementation of the Yuma Consensus Epoch"
 
 # Implementation of the Yuma Consensus Epoch
 
-If Yuma Consensus is the heart of Bittensor, the epoch is the heartbeat, a regular pulse of calculations that processes validator weights and determines emissions for participants. This page takes a deep dive into how the code accomplishes its purpose.
+If [Yuma Consensus](../glossary.md#yuma-consensus) is the heart of Bittensor, the epoch is the heartbeat, a regular pulse of calculations that processes [validator](../glossary.md#validator) weights and determines [emissions](../glossary.md#emission) for participants. This page takes a deep dive into how the code accomplishes its purpose.
 
 ## Overview
 
 The epoch function processes:
-1. **Validator weights** submitted during the tempo period
-2. **Stake calculations** determining validator influence  
-3. **Consensus computation** through stake-weighted medians
-4. **Bond updates** via exponential moving averages
+1. **Validator weights** submitted during the [tempo](../glossary.md#tempo) period
+2. **[Stake](../glossary.md#stake) calculations** determining validator influence  
+3. **[Consensus](../glossary.md#consensus-score) computation** through stake-weighted medians
+4. **Bond updates** via [exponential moving averages](../glossary.md#exponential-moving-average-ema)
 5. **Emission allocation** to miners and validators
 
-The function returns emission tuples: `Vec<(T::AccountId, AlphaCurrency, AlphaCurrency)>` representing `(hotkey, miner_emission, validator_emission)`.
+The function returns emission tuples: `Vec<(T::AccountId, AlphaCurrency, AlphaCurrency)>` representing `([hotkey](../glossary.md#hotkey), miner_emission, validator_emission)`.
 
 ## Core Function: `epoch()`
 
-Located in `subtensor/pallets/subtensor/src/epoch/run_epoch.rs`, with two implementations:
+Located in [`run_epoch.rs`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs), with two implementations:
 - `epoch()` - Optimized sparse matrix version (production)
-- `epoch_dense()` - Dense matrix version (testing)
 
 ### Function Signature
 ```rust
@@ -58,7 +57,7 @@ let active: Vec<bool> = inactive.iter().map(|&b| !b).collect();
 ```
 
 **Activity Determination:**
-A neuron is considered inactive if:
+A [neuron](../glossary.md#neuron) is considered inactive if:
 ```
 last_update + activity_cutoff < current_block
 ```
@@ -98,7 +97,7 @@ let stake: Vec<I32F32> = vec_fixed64_to_fixed32(filtered_stake);
 **Stake Calculation:**
 The `get_stake_weights_for_network()` function combines:
 - **Alpha stake**: Subnet-specific token holdings
-- **TAO stake**: Root subnet holdings weighted by `tao_weight` (default: 18%)
+- **TAO stake**: [Root subnet](../glossary.md#root-subnetsubnet-zero) holdings weighted by `[tao_weight](../glossary.md#tao-weight)` (default: 18%)
 
 **Total stake** = alpha_stake + (tao_stake × tao_weight)
 
@@ -118,7 +117,7 @@ let new_validator_permits: Vec<bool> =
 ```
 
 **Validator Selection:**
-Only the top `max_allowed_validators` by stake receive validator permits, ensuring the highest-staked participants control consensus.
+Only the top `max_allowed_validators` by stake receive [validator permits](../glossary.md#validator-permit), ensuring the highest-staked participants control consensus.
 
 ### 4. Active Stake Calculation
 
@@ -168,7 +167,7 @@ weights = vec_mask_sparse_matrix(
 
 **Weight Filtering:**
 Weights are filtered to remove:
-- **Self-weights**: Prevent validators from voting for themselves (except subnet owner)
+- **Self-weights**: Prevent validators from voting for themselves (except [subnet creator](../glossary.md#subnet-creator))
 - **Outdated weights**: Weights set before target neuron's latest registration
 - **Non-validator weights**: Only permitted validators can influence consensus
 
@@ -211,7 +210,7 @@ if Self::get_commit_reveal_weights_enabled(netuid) {
 }
 ```
 
-**Commit-Reveal Logic:**
+**[Commit Reveal](../glossary.md#commit-reveal) Logic:**
 When enabled, validators must commit to weights before revealing them. Weights are masked if:
 - Validator has an active (non-expired) commit
 - Commit was made before target neuron's registration
@@ -268,11 +267,11 @@ inplace_normalize(&mut ranks);
 let incentive: Vec<I32F32> = ranks.clone();
 ```
 
-**Trust Calculation:**
-- **Validator trust**: Sum of a validator's clipped weights (measures alignment with consensus)
-- **Server trust**: Ratio of post-clip to pre-clip rank (measures consensus adherence)
+**[Trust](../glossary.md#trust) Calculation:**
+- **[Validator trust](../glossary.md#validator-trust)**: Sum of a validator's clipped weights (measures alignment with consensus)
+- **Server trust**: Ratio of post-clip to pre-clip [rank](../glossary.md#rank) (measures consensus adherence)
 
-**Rank → Incentive:**
+**Rank → [Incentive](../glossary.md#incentives):**
 Final normalized ranks become miner incentives, ensuring total incentives sum to 1.0.
 
 ### 9. Bond Processing
@@ -337,7 +336,7 @@ else {
 ```
 
 **Bond Dynamics:**
-- **Bonds**: Measure validator-miner relationships over time
+- **[Bonds](../glossary.md#validator-miner-bonds)**: Measure validator-miner relationships over time
 - **EMA Updates**: $B_{ij}^{(t)} = \alpha \Delta B_{ij} + (1-\alpha) B_{ij}^{(t-1)}$
 - **Dividends**: Validators earn based on bonds to high-incentive miners
 
@@ -403,7 +402,7 @@ let validator_emission: Vec<AlphaCurrency> = normalized_validator_emission
     .collect();
 ```
 
-**RAO Scaling:**
+**[RAO](../glossary.md#rao) Scaling:**
 Normalized emission proportions are scaled by the total RAO emission amount to get actual currency values.
 
 ### 12. State Updates
@@ -537,8 +536,8 @@ let hotkey_emission: Vec<(T::AccountId, AlphaCurrency, AlphaCurrency)> =
 
 The returned emission tuples feed into the broader emission distribution system, where:
 - **Miner emissions** go directly to mining hotkeys
-- **Validator emissions** are split between validators and their stakers
-- **Distribution logic** handles child keys, takes, and delegation
+- **Validator emissions** are split between validators and their [stakers](../glossary.md#staking)
+- **Distribution logic** handles child keys, takes, and [delegation](../glossary.md#delegation)
 
 ## Key Design Principles
 

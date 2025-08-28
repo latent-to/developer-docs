@@ -7,18 +7,24 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Emission
 
-Emission is the process by which the Bittensor network allocates TAO and alpha to participants, including miners, validators, stakers, and subnet creators.
+Emission is the economic heartbeat of Bittensor—the process that continuously distributes newly created [TAO](./glossary.md#tao-τ) and subnet-specific alpha tokens to network participants who contribute value through [mining](./glossary.md#subnet-miner), [validation](./glossary.md#validator), [staking](./glossary.md#staking), and [subnet creation](./glossary.md#subnet-creator).
 
-It unfolds in two stages:
+## Understanding the Two-Stage Process
 
-- Injection into subnets
-- Extraction by participants
+Bittensor's emission system operates through two coordinated stages that work together to ensure fair, market-driven distribution:
 
-See the [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view) for a full explanation.
+### Stage 1: Injection into Subnets
+Every [block](./glossary.md#block), new liquidity flows into [subnet](./glossary.md#subnet) pools based on market performance. [Subnets](./glossary.md#subnet) with higher-value alpha tokens attract more TAO, creating a competitive marketplace for innovation.
 
-See:
-- [Yuma Consensus](./yuma-consensus)
-- [Epoch Implementation](./navigating-subtensor/epoch.md) - Implementation details
+### Stage 2: Extraction by Participants  
+Every [tempo](./glossary.md#tempo) (360 blocks, ~72 minutes), accumulated rewards are distributed to participants through [Yuma Consensus](./glossary.md#yuma-consensus), which evaluates performance and determines who deserves what share.
+
+This two-stage approach creates stability while maintaining responsiveness—rewards accumulate gradually but are distributed based on demonstrated value creation.
+
+## Technical References
+- **Implementation Details**: [Coinbase Implementation](./navigating-subtensor/emissions-coinbase-improved.md)
+- **Consensus Mechanics**: [Yuma Consensus](./yuma-consensus.md)
+- **Mathematical Framework**: [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view)
 
 ### Injection
 
