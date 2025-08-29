@@ -22,7 +22,7 @@ Every [tempo](./glossary.md#tempo) (360 blocks, ~72 minutes), accumulated reward
 This two-stage approach creates stability while maintaining responsiveness—rewards accumulate gradually but are distributed based on demonstrated value creation.
 
 ## Technical References
-- **Implementation Details**: [Coinbase Implementation](./navigating-subtensor/emissions-coinbase-improved.md)
+- **Implementation Details**: [Coinbase Implementation](./navigating-subtensor/emissions-coinbase.md)
 - **Consensus Mechanics**: [Yuma Consensus](./yuma-consensus.md)
 - **Mathematical Framework**: [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view)
 
