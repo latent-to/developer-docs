@@ -297,7 +297,7 @@ if Yuma3On::<T>::get(netuid) {
     // Compute new bonds with liquid alpha
     ema_bonds = Self::compute_bonds_sparse(netuid, &weights_for_bonds, &bonds, &consensus);
     
-    // Normalize bonds and calculate dividends
+    // Normalize bonds and calculate validator emissions
     let mut ema_bonds_norm = ema_bonds.clone();
     inplace_col_normalize_sparse(&mut ema_bonds_norm, n);
     
@@ -338,7 +338,7 @@ else {
 **Bond Dynamics:**
 - **[Bonds](../glossary.md#validator-miner-bonds)**: Measure validator-miner relationships over time
 - **EMA Updates**: $B_{ij}^{(t)} = \alpha \Delta B_{ij} + (1-\alpha) B_{ij}^{(t-1)}$
-- **Dividends**: Validators earn based on bonds to high-incentive miners
+- **Validator Emissions**: Validators earn based on bonds to high-incentive miners
 
 ### 10. Emission Distribution
 
@@ -461,99 +461,3 @@ hotkeys
     })
     .collect()
 ```
-
-## Mathematical Foundation
-
-The epoch function implements several key mathematical operations:
-
-### Stake-Weighted Matrix Operations
-```rust
-// Preranks: r_j = Σ(i) w_ij * s_i  
-let preranks: Vec<I32F32> = matmul_sparse(&weights, &active_stake, n);
-
-// Consensus: weighted median of weights by stake
-let consensus: Vec<I32F32> = weighted_median_col_sparse(&active_stake, &weights, n, kappa);
-```
-
-### Bond EMA Updates
-For liquid alpha (Yuma3):
-```rust
-let alphas: Vec<Vec<I32F32>> = Self::compute_liquid_alpha_values_sparse(
-    netuid, &weights_for_bonds, &bonds, &consensus
-);
-let ema_bonds = mat_ema_alpha_sparse(&weights_for_bonds, &bonds, &alphas);
-```
-
-For original Yuma:
-```rust
-let alpha: I32F32 = Self::compute_disabled_liquid_alpha(netuid);
-let ema_bonds = mat_ema_sparse(&bonds_delta, &bonds, alpha);
-```
-
-### Dividend Calculation
-```rust
-// Yuma3: dividends = Σ(j) normalized_bonds_ij * incentive_j * active_stake_i
-dividends = vec_mul(&total_bonds_per_validator, &active_stake);
-
-// Original: dividends = Σ(j) bonds_ij * incentive_j  
-dividends = matmul_transpose_sparse(&ema_bonds, &incentive);
-```
-
-## Liquid Alpha vs Original Yuma
-
-### Liquid Alpha (Yuma3)
-- **Variable alpha**: Each validator-miner bond has its own EMA parameter
-- **Consensus-based**: Alpha values depend on alignment with consensus  
-- **Bond weighting**: Bonds influence dividend distribution
-- **Stake interaction**: Active stake affects final dividend calculation
-
-### Original Yuma
-- **Fixed alpha**: Single EMA parameter for all bonds
-- **Direct bonds**: Simpler bond → dividend mapping
-- **Column normalization**: Bonds sum to 1.0 per miner
-
-## Performance Optimizations
-
-### Sparse Matrix Operations
-The production implementation uses sparse matrices to handle:
-- **Memory efficiency**: Only store non-zero weights/bonds
-- **Computational speed**: Skip zero multiplications
-- **Scalability**: Handle large networks efficiently
-
-### Batch Processing
-- **Vector operations**: Process all neurons simultaneously
-- **In-place updates**: Minimize memory allocation
-- **Fixed-point math**: Avoid floating-point precision issues
-
-## Integration with Coinbase
-
-The epoch function is called from `drain_pending_emission()` during coinbase execution:
-
-```rust
-let hotkey_emission: Vec<(T::AccountId, AlphaCurrency, AlphaCurrency)> =
-    Self::epoch(netuid, pending_alpha.saturating_add(pending_swapped));
-```
-
-The returned emission tuples feed into the broader emission distribution system, where:
-- **Miner emissions** go directly to mining hotkeys
-- **Validator emissions** are split between validators and their [stakers](../glossary.md#staking)
-- **Distribution logic** handles child keys, takes, and [delegation](../glossary.md#delegation)
-
-## Key Design Principles
-
-### 1. Consensus Alignment
-Validators who align with stake-weighted consensus earn more through stronger bonds and higher trust scores.
-
-### 2. Activity Requirements  
-Only recently active participants influence consensus, preventing stale state from affecting current decisions.
-
-### 3. Stake-Weighted Influence
-Higher stake provides more consensus power, but is balanced by validator permit limits and consensus clipping.
-
-### 4. Gradual Bond Updates
-EMA smoothing prevents rapid manipulation while allowing adaptation to changing performance.
-
-### 5. Economic Incentive Alignment
-The mathematical design ensures validators benefit from accurately evaluating miners, while miners benefit from providing value.
-
-Understanding the epoch mechanism is essential for subnet developers and validator operators, as it determines how their contributions are evaluated and rewarded within the Bittensor network.

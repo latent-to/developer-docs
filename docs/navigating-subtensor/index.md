@@ -7,7 +7,7 @@ title: "Navigating the Subtensor Codebase"
 
 The heart of Bittensor is Subtensor, the L1 substrate blockchain that computes and records all transactions, as well as the internal tokenomic processes (Yuma Consensus and liquidity emission) that drive the system.
 
-This pages section is intended make the codebase more accessible by guiding the reader through the implementation of these critical functions in code.
+This section of the docs is designed make the codebase more accessible by guiding the reader through the implementation of these critical functions in code.
 
 We recommend reading our conceptual explainer docs before diving into the implementation details:
 
@@ -20,7 +20,7 @@ We recommend reading our conceptual explainer docs before diving into the implem
 This section covers the following implementation-focused topics:
 
 ### [Emissions and Coinbase](./emissions-coinbase.md)
-Deep dive into the coinbase mechanism that drives TAO and alpha emissions across subnets. Learn how `run_coinbase()` calculates and distributes emissions, manages liquidity pools, and coordinates the entire emission cycle.
+Deep dive into the coinbase mechanism that drives TAO and alpha emissions across subnets. Learn how `run_coinbase()` calculates and distributes emissions, manages liquidity pools, and orchestrates the emission cycles of the subnets within the overall network by triggering their epochs.
 
 **Key areas covered:**
 - Block emission calculation and distribution
@@ -28,6 +28,7 @@ Deep dive into the coinbase mechanism that drives TAO and alpha emissions across
 - Subnet price-based emission allocation
 - Pending emission accumulation and drainage
 - Owner cuts and root dividends
+- Triggering of the epoch
 
 ### [Epoch Mechanism](./epoch.md)
 Comprehensive exploration of the epoch function that implements Yuma Consensus. Understand how validator weights are processed, consensus is computed, and emissions are allocated to participants.
