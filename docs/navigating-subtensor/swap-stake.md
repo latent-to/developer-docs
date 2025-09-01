@@ -148,6 +148,15 @@ The `unstake_from_subnet` function:
 - Updates subnet reserves (Alpha increases, TAO decreases)
 - Returns the TAO amount received after fees
 
+## Price Protection
+
+The staking system includes price protection mechanisms to prevent excessive slippage during AMM operations. Each staking operation has a corresponding `_limit` variant that accepts price protection parameters:
+
+- `do_add_stake_limit()` - Staking with price protection
+- `do_remove_stake_limit()` - Unstaking with price protection  
+
+These functions accept `limit_price` and `allow_partial` parameters to control protection behavior. See [Price Protection Guide](../learn/price-protection.md) for detailed usage and examples.
+
 ## Error Handling
 
 ### Common Error Types
@@ -157,5 +166,7 @@ Error::<T>::SubnetNotExists              // Subnet doesn't exist
 Error::<T>::AmountTooLow                 // Below minimum stake + fees
 Error::<T>::NotEnoughBalanceToStake      // Insufficient TAO balance
 Error::<T>::NotEnoughStakeToWithdraw     // Insufficient Alpha stake
-Error::<T>::SwapError                    // AMM swap failed
+Error::<T>::SlippageTooHigh              // Price protection triggered (strict mode)
+Error::<T>::ZeroMaxStakeAmount           // No amount executable within price limit
+Error::<T>::InsufficientLiquidity        // AMM simulation failed
 ```
