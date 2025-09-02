@@ -137,15 +137,8 @@ UID | Hotkey | Stake | Sub-subnet 0 Weights | Sub-subnet 1 Weights | Sub-subnet 
 456  | 7DEF...| 800   | [0.2, 0.3, 0.2...] | [0.2, 0.3, 0.1...] | 0.03 τ               | 0.04 τ
 ```
 
-## API Changes
 
-New extrinsics and queries support sub-subnet operations:
-
-- `set_weights_sub_subnet(netuid, uids, weights, sub_subnet)`
-- `get_sub_subnet_incentives(netuid, sub_subnet)`
-- `get_sub_subnet_weights(netuid, sub_subnet)`
-
-### Backward Compatibility
+## Backward Compatibility
 
 - Existing subnets continue to work as sub-subnet 0
 - All existing API calls default to sub-subnet 0
