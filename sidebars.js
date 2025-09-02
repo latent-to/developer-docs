@@ -44,6 +44,19 @@ const sidebars = {
         "yuma-consensus",
         "subnets/yc3-blog",
         "fees",
+        {
+      type: "category",
+      label: "Navigating Subtensor Codebase",
+      link: { type: "doc", id: "navigating-subtensor/index" },
+      collapsible: true,
+      collapsed: true,
+      items: [
+        "navigating-subtensor/emissions-coinbase",
+        "navigating-subtensor/epoch",
+        "navigating-subtensor/swap-stake",
+        "navigating-subtensor/function-reference",
+      ],
+    },
         "community-links",
       ],
     },
@@ -200,19 +213,7 @@ const sidebars = {
         "subtensor-nodes/subtensor-storage-query-examples",
       ],
     },
-    {
-      type: "category",
-      label: "Navigating Subtensor Codebase",
-      link: { type: "doc", id: "navigating-subtensor/index" },
-      collapsible: true,
-      collapsed: true,
-      items: [
-        "navigating-subtensor/emissions-coinbase",
-        "navigating-subtensor/epoch",
-        "navigating-subtensor/swap-stake",
-        "navigating-subtensor/function-reference",
-      ],
-    },
+    
     {
       type: "category",
       label: "Bittensor EVM",
