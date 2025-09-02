@@ -7,23 +7,23 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Introducing Sub-Subnets
 
-The Sub-Subnets feature allows a subnet creator to apportion the subnet's emissions across multiple **sub-subnets**, each of which runs Yuma Consensus independently to evaluate the miners' performance on each of a number of distinct tasks. Each miner and validator receives emissions separately within each sub-subnet, so a miner's performance within one sub-subnet does not effect their rating in another, and their emissions for each epoch are summed across the sub-subnets.
+Historically, each subnet operates with a single **incentive mechanism**, a function that validators run to assign weights to miners based on the value of their work. The **Sub-Subnets** feature allows a subnet creator to apportion the subnet's emissions across multiple **sub-subnets**, each of which runs Yuma Consensus *independently* to evaluate the miners' performance on each of a number of distinct tasks. 
 
-This mechanism afford subnet creators a transparent, on-chain way to exercise fine-grained control over the work they are incentivizing, keeping miner effort focused on work that is most needed at a time.
+Each miner and validator receives emissions separately within each sub-subnet, so a miner's performance within one sub-subnet does not effect their rating in another, and their emissions for each epoch are summed across the sub-subnets. Sub-subnets don't change the total emissions to a subnet, but create a way for subnet crators to distribute those emissions to miners working on different tasks. This mechanism afford subnet creators a transparent, on-chain way to exercise fine-grained control over the work they are incentivizing, keeping miner effort focused on work that is most needed at a time.
 
-Historically, each subnet operates with a single incentive mechanism, a single function that validators run to assign weights to miners based on the value of their work. Sub-Subnets extend this by allowing subnet owners to divide their subnet's emissions across multiple incentive mechanisms (sub-subnets). Each sub-subnet has its own:
+Each sub-subnet has its own:
 
-- **Weight setting**: Validators set weights for each miners on the subnet's sub-subnets.
-- **Independent incentive tracking**: Each sub-subnet tracks miner performance separately
-- **Configurable emission distribution**: Subnet owners control what percentage of total emissions goes to each sub-subnet.
+- **Weight matrix**: Each validator sets weights for each miner on each of the subnet's sub-subnets.
+- **Independent emissions**: Since they depend on weights set by validators, a miner's emissions in each sub-subnet are independent.
+- **Configurable emission distribution**: Subnet creators control what percentage of total emissions goes to each sub-subnet.
 - **Transparent on-chain data**: All sub-subnet configurations and the flow of emissions are visible on-chain.
 
 :::info Key Insights
 
-1. **Same Validators, Same Stake**: All validators participate in all sub-subnets with identical stake weights
-2. **Same Miners**: All registered miners can participate in any or all sub-subnets
-3. **Owner-Controlled Proportions**: Subnet owners set emission distribution percentages
-4. **Separate Yuma Consensus**: Each sub-subnet runs its own consensus to determine miner rankings
+1. **Same Validators, Same Stake**: All validators participate in all sub-subnets with identical stake weights.
+2. **Same Miners**: All registered miners can participate in any or all sub-subnets.
+3. **Owner-Controlled Proportions**: The holder of the *subnet creator* key sets the emission distribution among sub-subnets.
+4. **Separate Yuma Consensus**: Each sub-subnet runs its own consensus to determine miner rankings.
 :::
 
 
@@ -62,276 +62,65 @@ Historically, each subnet operates with a single incentive mechanism, a single f
 **Automatic Participation:**
 - **No separate registration**: When you register for a subnet, you automatically participate in ALL its sub-subnets
 - **Same UID across all sub-subnets**: You use the same UID for all sub-subnets within a subnet
-- **Same stake weight**: Your stake weight is identical across all sub-subnets
 
 **Performance Tracking:**
-- **Independent scoring**: Your performance in sub-subnet 0 doesn't affect your rating in sub-subnet 1
-- **Separate incentive columns**: You'll see individual incentive amounts for each sub-subnet in metagraph data
-- **Cumulative emissions**: Your total emissions = sum of emissions from all sub-subnets you participate in
-- **Two-dimensional data**: Incentive data becomes `[uid][sub_subnet]` instead of just `[uid]`
+- **Independent scoring**: Your performance is independent in different subnets, e.g. sub-subnet 0 doesn't affect your rating in sub-subnet 1.
+- **Separate incentive columns**: You'll see individual incentive amounts for each sub-subnet in metagraph data.
+- **Cumulative emissions**: Your total emissions = sum of emissions from all sub-subnets where you participate.
 
-**Strategic Options:**
-
-**1. Specialization Strategy:**
-- Focus entirely on sub-subnets where you excel
-- Example: If you're great at text generation but poor at image classification, focus on the text generation sub-subnet
-- Risk: If that sub-subnet has low emission allocation, you'll earn less overall
-
-**2. Diversification Strategy:**
-- Participate in multiple sub-subnets to spread risk
-- Example: Moderate performance across all sub-subnets might yield higher total emissions than excellent performance in one low-allocation sub-subnet
-- Benefit: Reduces risk of earning zero if you perform poorly in your specialty
-
-**3. Collaboration Strategy:**
-- Partner with other miners to cover different sub-subnets on the same UID
-- Example: "I'll mine sub-subnet 3 (text), you mine sub-subnet 5 (images), we share the UID"
-- Benefit: Higher total emissions and reduced registration risk
-- Risk: Requires trust and coordination with your partner
-
-**Critical Considerations:**
-- **Emission dilution**: If you only participate in low-proportion sub-subnets, your total emissions will be capped
-- **Registration risk**: Poor performance across all sub-subnets increases your risk of being deregistered
-- **Competition dynamics**: Other miners might specialize, making generalist strategies less effective
-
-**What You'll See in Tools:**
-- **CLI tables**: Separate columns for each sub-subnet's incentives
-- **JSON output**: Structured data for scripting and analysis
-- **Dashboard views**: Performance tracking across all sub-subnets
-- **Hotkey-specific views**: See performance for all your miners across sub-subnets
-
-**Example Scenarios:**
-
-**Scenario 1: High-Performance Specialist**
-- Excels at sub-subnet 0 (60% emissions)
-- Poor at sub-subnet 1 (30% emissions) and sub-subnet 2 (10% emissions)
-- Strategy: Focus entirely on sub-subnet 0, ignore others
-- Result: High emissions from 60% allocation, zero from others
-
-**Scenario 2: Balanced Generalist**
-- Moderate performance across all sub-subnets
-- Strategy: Participate in all sub-subnets
-- Result: Steady emissions from all allocations, lower risk
-
-**Scenario 3: Collaborative Partnership**
-- Partner A: Excels at sub-subnet 0, poor at others
-- Partner B: Excels at sub-subnet 1, poor at others
-- Strategy: Share UID, each focuses on their specialty
-- Result: High total emissions, reduced individual risk
 
 ## What Should Validators Know?
 
-**Core Responsibilities:**
-- **Separate weight setting**: You must set weights independently for each sub-subnet using separate extrinsics
-- **Same stake weight**: Your stake weight is identical across all sub-subnets - no additional stake required
-- **Independent evaluation**: Each sub-subnet requires separate assessment according to its specific criteria
-- **Separate Yuma consensus**: Each sub-subnet runs its own consensus algorithm to determine final rankings
+### Core Changes
 
-**Technical Implementation:**
+- **Separate weight setting**: You must set weights independently for each sub-subnet.
+- **Independent evaluation**: Each sub-subnet requires separate assessment according to its specific criteria.
+- **Separate Yuma consensus**: Each sub-subnet runs its the consensus algorithm independently to determine rankings.
+- **Same stake weight**: Your stake weight is identical across all sub-subnets - no additional stake required.
 
-**New Extrinsics:**
-```python
-# Old way (still works for sub-subnet 0)
-subnet.set_weights(
-    netuid=subnet_id,
-    uids=[1, 2, 3, 4, 5],
-    weights=[0.3, 0.2, 0.2, 0.2, 0.1]
-    # Defaults to sub-subnet 0
-)
+### Operational Changes
 
-# New way (explicit sub-subnet parameter)
-subnet.set_weights_sub_subnet(
-    netuid=subnet_id,
-    uids=[1, 2, 3, 4, 5],
-    weights=[0.3, 0.2, 0.2, 0.2, 0.1],
-    sub_subnet=0  # Text generation sub-subnet
-)
-
-subnet.set_weights_sub_subnet(
-    netuid=subnet_id,
-    uids=[1, 2, 3, 4, 5],
-    weights=[0.1, 0.4, 0.3, 0.1, 0.1],
-    sub_subnet=1  # Image classification sub-subnet
-)
-```
-
-**Critical Operational Changes:**
 
 **1. Evaluation Workload:**
 - **Multiple assessments**: You must evaluate miners separately for each sub-subnet's tasks
 - **Different criteria**: Each sub-subnet may have distinct evaluation standards
-- **Increased complexity**: More weight-setting calls and evaluation logic
 
 **2. Data Structure Changes:**
 - **Two-dimensional weights**: Weight data becomes `[validator][uid][sub_subnet]`
 - **Separate incentive tracking**: Each sub-subnet tracks incentives independently
 - **Extended metagraph**: New columns for sub-subnet weights and incentives
 
-**3. API Changes:**
-- **New queries**: `get_sub_subnet_weights()`, `get_sub_subnet_incentives()`
-- **Backward compatibility**: Existing calls default to sub-subnet 0
-- **Metagraph extensions**: Additional data fields for sub-subnet information
+### API Changes
 
-**Strategic Considerations:**
+???
 
-**Participation Decisions:**
-- **All or nothing**: You participate in all sub-subnets with the same stake weight
-- **No selective participation**: Cannot choose to only validate certain sub-subnets
-- **Consistent standards**: Must maintain evaluation quality across all sub-subnets
 
-**Risk Management:**
-- **Validator abandonment**: If you "bail on" certain sub-subnets, remaining validators get disproportionate influence
-- **Owner manipulation**: Subnet owners can set extreme proportions and capture most emissions if they're the only active validator
-- **Community oversight**: Your weight-setting decisions are more visible and scrutinized
+### Best Practices
 
-**Best Practices:**
-
-**1. Consistent Evaluation:**
-- Maintain the same evaluation standards across all sub-subnets
-- Don't favor specific sub-subnets unless justified by performance
-- Document your evaluation criteria for transparency
-
-**2. Operational Efficiency:**
-- Develop scripts to set weights across multiple sub-subnets efficiently
-- Monitor performance across all sub-subnets to maintain quality
-- Use JSON output for data analysis and visualization
-
-**3. Community Engagement:**
-- Participate actively in all sub-subnets to prevent owner manipulation
-- Provide feedback to subnet owners on sub-subnet design
-- Maintain transparency in your weight-setting decisions
-
-**What You'll See in Tools:**
-- **Extended CLI tables**: Separate columns for each sub-subnet's weights and incentives
-- **New commands**: `btcli subnet sub-subnets` for detailed sub-subnet data
-- **JSON export**: Structured data for analysis and monitoring
-- **Dashboard views**: Performance tracking across all sub-subnets
-
-**Potential Issues to Watch:**
-- **Metagraph data**: Ensure sub-subnet information is included in metagraph calls (this was flagged as missing in Greg's PR)
-- **API consistency**: All tools (CLI, SDK, dashboards) must handle sub-subnets consistently
-- **Performance impact**: Additional weight-setting calls may increase operational overhead
+???
 
 ## What Should Subnet Creators/Developers Know?
 
-**Core Control and Responsibility:**
+### Core Changes
 - **Emission distribution**: You control what percentage of total emissions goes to each sub-subnet
 - **Incentive mechanism design**: You define the specific tasks and evaluation criteria for each sub-subnet
 - **Transparent configuration**: All sub-subnet settings are visible on-chain for community oversight
 - **Single subnet slot**: No need to register multiple subnets for multiple competitions
 
-**Technical Implementation:**
 
-**Emission Proportion Configuration:**
-```python
-# Subnet configuration - emission proportions must sum to 100%
-sub_subnets = {
-    0: {
-        "name": "Text Generation",
-        "emission_proportion": 0.60,  # 60% of total emissions
-        "description": "Evaluate text completion quality"
-    },
-    1: {
-        "name": "Image Classification", 
-        "emission_proportion": 0.30,  # 30% of total emissions
-        "description": "Evaluate image recognition accuracy"
-    },
-    2: {
-        "name": "Code Completion",
-        "emission_proportion": 0.10,  # 10% of total emissions
-        "description": "Evaluate code generation quality"
-    }
-}
-```
-
-**Hyperparameters and Configuration:**
+### Hyperparameters and Configuration
 - **Precision**: Use 64-bit integers for emission proportions to avoid chunky rounding with small percentages
 - **Validation**: Ensure proportions sum to 100% (or equivalent in your chosen representation)
 - **Flexibility**: Design for future expansion (the discussion mentioned potential for up to 16 sub-subnets)
 
-**Critical Design Considerations:**
+### Design Considerations and Best Practices
 
-**1. Balanced Distribution:**
-- **Avoid extreme allocations**: Don't set 1% to sub-subnet 0 and 99% to sub-subnet 1
-- **Justify proportions**: Ensure emission allocations make sense for your subnet's goals
-- **Community feedback**: Consider input from miners and validators on sub-subnet design
+???
 
-**2. Clear Task Differentiation:**
-- **Distinct criteria**: Each sub-subnet should have clearly different, measurable tasks
-- **Independent evaluation**: Validators should be able to assess performance separately for each sub-subnet
-- **Documentation**: Clearly explain what each sub-subnet evaluates and how
+### Implementating Sub-Subnets in your Subnet
 
-**3. Transparency Requirements:**
-- **On-chain visibility**: All configurations must be visible on-chain
-- **Clear communication**: Document your sub-subnet structure and rationale
-- **Community oversight**: Expect scrutiny of your emission distribution decisions
 
-**Implementation Steps:**
-
-**1. Design Phase:**
-- Define what different tasks/competitions you want to incentivize
-- Determine logical emission proportions based on importance/effort
-- Design evaluation criteria for each sub-subnet
-
-**2. Technical Setup:**
-- Configure emission proportions (must sum to 100%)
-- Update your incentive mechanism code to handle multiple sub-subnets
-- Ensure validators understand evaluation criteria for each sub-subnet
-
-**3. Community Engagement:**
-- Communicate your sub-subnet design to participants
-- Gather feedback from miners and validators
-- Document your rationale for emission distribution
-
-**Benefits Over Multiple Subnets:**
-
-**Historical Problem Solved:**
-- **Subnet 9 example**: Previously had to implement 60%/30%/10% split client-side with no on-chain transparency
-- **Multiple subnet slots**: Avoided occupying multiple subnet slots for multiple competitions
-- **Complex registration**: Eliminated confusion about which UID to register for which competition
-
-**New Advantages:**
-- **Single subnet slot**: Use one subnet slot instead of multiple
-- **Shared infrastructure**: Same validators and stake across all competitions
-- **Transparent attribution**: Clear on-chain visibility of which miners perform best in which competitions
-- **Simplified management**: One subnet to manage instead of multiple
-- **Better UX**: No need to "watch one hour presentation on how to configure sub-subnets"
-
-**Risk Management:**
-
-**Potential Abuse Scenarios:**
-- **Owner manipulation**: You could set extreme proportions (e.g., 1%/99%) and capture most emissions if you're the only active validator
-- **Validator abandonment**: If validators "bail on" certain sub-subnets, remaining validators get disproportionate influence
-
-**Mitigation Strategies:**
-- **Community oversight**: Expect "burn code" if you abuse the system
-- **Transparency**: All configurations are visible on-chain
-- **Documentation**: Clear communication about your sub-subnet design
-- **Balanced design**: Create fair, logical emission distributions
-
-**What You'll Need to Update:**
-
-**1. Incentive Mechanism Code:**
-- Handle multiple sub-subnet evaluations
-- Provide clear criteria for each sub-subnet
-- Ensure validators can assess performance separately
-
-**2. Documentation:**
-- Explain your sub-subnet structure
-- Document evaluation criteria for each sub-subnet
-- Provide guidance for miners and validators
-
-**3. Community Communication:**
-- Announce your sub-subnet design
-- Explain your rationale for emission distribution
-- Gather feedback from participants
-
-**Future Considerations:**
-- **Scalability**: Design for potential expansion to more sub-subnets
-- **Dynamic proportions**: Consider whether emission distributions should be adjustable
-- **Cross-sub-subnet incentives**: Potential mechanisms to reward participation across multiple sub-subnets
-
-## Economic Implications
-### Example: Multi-Task Subnet
+## Example: Multi-Task Subnet
 
 Consider a subnet focused on AI tasks that wants to evaluate three different capabilities:
 
@@ -344,13 +133,7 @@ Validators would:
 - Evaluate performance separately for each task type
 - Allow miners to specialize or participate in multiple sub-subnets
 
-### Emission Distribution
 
-Sub-subnets don't change the total emissions to a subnet. Instead, they redistribute those emissions based on:
-
-1. **Owner-defined proportions**: How much of total emissions each sub-subnet receives
-2. **Miner performance**: How well miners perform within each sub-subnet
-3. **Validator weights**: How validators score miners in each sub-subnet
 
 ### Example Calculation
 
