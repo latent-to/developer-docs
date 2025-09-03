@@ -18,7 +18,7 @@ Many extrinsics in Bittensor are subject to **weight-based fee**. In Polkadot-ba
 - **Payment source**: Sender's TAO free balance by default. For specific extrinsics, if TAO is insufficient to cover fees, the chain will charge fees in Alpha instead (see [Alpha Fallback](#alpha-fallback))
 - **Denomination**: TAO by default. When fees are paid in Alpha, the TAO fee amount is converted to Alpha using the current Alpha price (no slippage).
 - **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
-    See: [Recycling and Burning](./glossary#recycling-and-burning)
+    See: [Recycling and Burning](../resources/glossary#recycling-and-burning)
 
 ### Staking Operations
 

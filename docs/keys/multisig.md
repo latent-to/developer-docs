@@ -49,7 +49,7 @@ Each of our 3 signatories needs a wallet. Either create them or re-use available
 
 1. Use `btcli` to create three coldkeys/wallets, or use practice wallets you already have access to. Alternatively, you can create wallets in the Polkadot-JS browser extension.
 
-   See [Creating/Importing a Bittensor Wallet](../working-with-keys).
+   See [Creating/Importing a Bittensor Wallet](./working-with-keys).
 
 1. Load each wallet key into the Polkadot-JS wallet browser extension:
 
