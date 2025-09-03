@@ -9,7 +9,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 Historically, each subnet operates with a single **incentive mechanism**, a function that validators run to assign weights to miners based on the value of their work. The **Sub-Subnets** feature allows a subnet creator to apportion the subnet's emissions across multiple **sub-subnets**, each of which runs Yuma Consensus *independently* to evaluate the miners' performance on each of a number of distinct tasks. 
 
-Each miner receives emissions separately within each sub-subnet, so a miner's performance within one sub-subnet does not effect their rating in another, and their emissions for each epoch are summed across the sub-subnets. Validators receive dividends as a weighted sum of their performance across all sub-subnets - they cannot choose which sub-subnets to validate, and if they don't validate all sub-subnets, they receive proportionally reduced emissions. Sub-subnets don't change the total emissions to a subnet, but create a way for subnet creators to distribute those emissions to miners working on different tasks. This mechanism affords subnet creators a transparent, on-chain way to exercise fine-grained control over the work they are incentivizing, keeping miner effort focused on work that is most needed at a time.
+Each miner receives emissions separately within each sub-subnet, so a miner's performance within one sub-subnet does not affect their rating in another, and their emissions for each epoch are summed across the sub-subnets. Validators receive dividends as a weighted sum of their performance across all sub-subnets - they cannot choose which sub-subnets to validate, and if they don't validate all sub-subnets, they receive proportionally reduced emissions. Sub-subnets don't change the total emissions to a subnet, but create a way for subnet creators to distribute those emissions to miners working on different tasks. This mechanism affords subnet creators a transparent, on-chain way to exercise fine-grained control over the work they are incentivizing, keeping miner effort focused on work that is most needed at a time.
 
 Each sub-subnet has its own:
 
@@ -64,7 +64,7 @@ Each sub-subnet has its own:
 - **Independent evaluation**: Each sub-subnet requires separate assessment according to its specific criteria.
 - **Separate Yuma Consensus**: Each sub-subnet runs its consensus algorithm independently to determine rankings.
 - **Same stake weight**: Your stake weight is identical across all sub-subnets - no additional stake required.
-- **Weighted dividend calculation**: Your dividends are calculated as a weighted sum of your performance across all sub-subnets. If you don't validate all sub-subnets, you receive proportionally reduced emissions (e.g., if you validate 1 out of 8 sub-subnets, you receive 1/8 of your potential emissions).
+- **Weighted dividend calculation**: Your dividends are calculated as a weighted sum of your performance across all sub-subnets. If you don't validate on all sub-subnets, you receive proportionally reduced emissions (e.g., if you validate 1 out of 8 sub-subnets, you receive 1/8 of your potential emissions).
 
 ### Operational Changes
 
@@ -131,7 +131,7 @@ Validators would:
 
 ### Example Calculation
 
-For each subnet, the subnet creator keeps 18% of emissions, 41% is allocated to miners and 41% to validators and their stakers, unless the subnet creator has reduced their take. Of the 41% to miners and validators:
+For each subnet, the subnet creator keeps 18% of emissions, 41% is allocated to miners, and 41% to validators and their stakers, unless the subnet creator has reduced their take. Of the 41% that goes to miners and validators, here is an estimated emission distribution across three sub-subnets for each 100 $\tau$ earned on the subnet:
 - Sub-subnet 0 (60%): 100 $\tau$ *.41 * .6 = 24.6
 - Sub-subnet 1 (30%): 100 $\tau$ *.41 * .3 = 12.3
 - Sub-subnet 2 (10%): 100 $\tau$ *.41 * .1 = 4.1
