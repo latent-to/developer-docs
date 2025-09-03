@@ -16,7 +16,7 @@ See also:
 
 ## Intro
 
-Miners in Bittensor work to produce digital commondities. To securely serve these commodities to validators, miners use their registered hotkey to sign requests. Therefore, miners primarily rely on **hotkeys** for daily operations.
+Miners in Bittensor work to produce digital commodities. To securely serve these commodities to validators, miners use their registered hotkey to sign requests. Therefore, miners primarily rely on **hotkeys** for daily operations.
 
 The **coldkey** is only needed when you need to create or fund that hotkey, or if you want to stake additional TAO or pay the burn for registrations.
 
@@ -56,9 +56,9 @@ See [Coldkey and Hotkey Workstation Security](../getting-started/coldkey-hotkey-
 Miners will need coldkeys to manage their TAO and alpha currency, as well as hotkeys to serve requests. Ensure there is a clear boundary: The coldkey should **never** be on an environment with untrusted ML code from containers, frameworks, or libraries that might exfiltrate secrets.
 :::
 
-## `btcli` commandsfor miners:
+## `btcli` commands for miners:
 
-### Hotkey Managementd
+### Hotkey Management
 
 `btcli wallet new-hotkey` , `btcli wallet regen-hotkey`,  : Create and register a hotkey on a secure coldkey workstation  then transfer the hotkey file or mnemonic to the mining workstation. 
 
