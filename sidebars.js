@@ -55,7 +55,7 @@ const sidebars = {
       link: { type: "doc", id: "staking-and-delegation/delegation" },
       items: [
         "staking-and-delegation/delegation",
-        "staking-and-delegation/stakers-btcli-guide",        
+        "staking-and-delegation/stakers-btcli-guide",
         "staking-and-delegation/managing-stake-btcli",
         "staking-and-delegation/managing-stake-sdk",
         "learn/price-protection",
@@ -102,9 +102,15 @@ const sidebars = {
       collapsed: true,
       items: [
         "subnets/metagraph",
-        "subnets/create-a-subnet",        
-        "subnets/crowdloans",
-        "subnets/crowdloans-tutorial",
+        "subnets/create-a-subnet",
+        {
+          type: "category",
+          label: "Crowdloans",
+          collapsible: true,
+          collapsed: true,
+          link: { type: "doc", id: "subnets/crowdloans/index" },
+          items: ["subnets/crowdloans/crowdloans-tutorial"],
+        },
         "subnets/subnet-creators-btcli-guide",
         "subnets/subnet-hyperparameters",
         "subnets/working-with-subnets",
