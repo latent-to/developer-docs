@@ -54,7 +54,6 @@ const sidebars = {
         "navigating-subtensor/emissions-coinbase",
         "navigating-subtensor/epoch",
         "navigating-subtensor/swap-stake",
-        "navigating-subtensor/function-reference",
       ],
     },
         "community-links",

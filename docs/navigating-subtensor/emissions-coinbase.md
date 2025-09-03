@@ -129,19 +129,17 @@ for netuid_i in subnets_to_emit_to.iter() {
         ).unwrap_or(0)
     );
     
-    // Subsidy mechanism protects against manipulation
+
     let tao_in_ratio: U96F32 = default_tao_in_i.safe_div_or(
         U96F32::saturating_from_num(block_emission),
         U96F32::saturating_from_num(0.0),
     );
     
-    if price_i < tao_in_ratio {
-        // Subsidized operation: reduce TAO injection, buy alpha
+    if price_i < tao_in_ratio {    
         tao_in_i = price_i.saturating_mul(block_emission);
         alpha_in_i = alpha_emission_i;
         let difference_tao: U96F32 = default_tao_in_i.saturating_sub(tao_in_i);
-        
-        // Use excess TAO to purchase alpha, supporting the price
+            
         let buy_swap_result = Self::swap_tao_for_alpha(
             *netuid_i,
             tou64!(difference_tao).into(),
@@ -178,7 +176,7 @@ for netuid_i in subnets_to_emit_to.iter() {
         *total = total.saturating_add(alpha_in_i);
     });
     
-    // Inject Alpha out (reward pool)
+    // Inject Alpha outstanding
     let alpha_out_i = AlphaCurrency::from(
         tou64!(*alpha_out.get(netuid_i).unwrap_or(&asfloat!(0)))
     );
@@ -240,6 +238,17 @@ This mechanism ensures that developers who create valuable subnets receive ongoi
 
 ### 6. Calculating Root Emissions
 
+The [Root Subnet](../glossary.md#root-subnetsubnet-zero) emission system determines how much of each subnet's success flows back to general TAO holders:
+
+$$
+\text{root\_proportion} = \frac{\text{root\_tao} \times \text{tao\_weight}}{\text{root\_tao} \times \text{tao\_weight} + \text{alpha\_issuance}}
+$$
+
+Where:
+- `root_tao`: Total TAO [staked](../glossary.md#staking) in [Root Subnet](../glossary.md#root-subnetsubnet-zero)
+- `tao_weight`: Global parameter ([TAO Weight](../glossary.md#tao-weight)) determining TAO vs alpha influence
+- `alpha_issuance`: Total alpha tokens for this specific subnet
+
 
 ```rust
 for netuid_i in subnets_to_emit_to.iter() {
@@ -282,22 +291,15 @@ for netuid_i in subnets_to_emit_to.iter() {
 }
 ```
 
-**Cross-Subnet Value Sharing:**
-The [Root Subnet](../glossary.md#root-subnetsubnet-zero) emission system implements a mathematical formula that determines how much of each subnet's success flows back to general TAO holders:
-
-$$
-\text{root\_proportion} = \frac{\text{root\_tao} \times \text{tao\_weight}}{\text{root\_tao} \times \text{tao\_weight} + \text{alpha\_issuance}}
-$$
-
-Where:
-- `root_tao`: Total TAO [staked](../glossary.md#staking) in [Root Subnet](../glossary.md#root-subnetsubnet-zero)
-- `tao_weight`: Global parameter ([TAO Weight](../glossary.md#tao-weight)) determining TAO vs alpha influence
-- `alpha_issuance`: Total alpha tokens for this specific subnet
 
 
 ### 7. Epoch Execution
 
-This step bridges the coinbase's emission preparation with [Yuma Consensus](../glossary.md#yuma-consensus). When a subnet's [tempo](../glossary.md#tempo) interval completes, the coinbase triggers epoch execution to distribute accumulated emissions through the consensus mechanism.
+When each subnet's [tempo](../glossary.md#tempo) interval completes, the coinbase triggers execution of its Yuma Consensus *epoch*. Epochs execute when `(block_number + netuid + 1) % (tempo + 1) == 0`, creating a predictable, staggered schedule of epoch execution.
+
+The coinbase passes accumulated emissions to `drain_pending_emission()`, which executes the [full Yuma Consensus algorithm](./epoch.md) including validator weight processing, consensus calculation, bond updates, and final emission distribution to participants.
+
+For detailed implementation of the consensus mechanism, validator weight processing, and emission distribution, see [Epoch Implementation](./epoch.md).
 
 ```rust
 for &netuid in subnets.iter() {
@@ -319,22 +321,13 @@ for &netuid in subnets.iter() {
 }
 ```
 
-**Epoch Timing:** Epochs execute when `(block_number + netuid + 1) % (tempo + 1) == 0`, creating a predictable rhythm:
-- **359 blocks**: Coinbase accumulates emission pools across all subnets  
-- **1 block**: [Yuma Consensus](../glossary.md#yuma-consensus) distributes accumulated rewards
-- **[Commit Reveal](../glossary.md#commit-reveal)**: Processes matured weight commitments to prevent manipulation
-
-**Interface to Yuma Consensus:** The coinbase passes accumulated emissions to `drain_pending_emission()`, which executes the [full Yuma Consensus algorithm](./epoch.md) including validator weight processing, consensus calculation, bond updates, and final emission distribution to participants.
-
-For detailed implementation of the consensus mechanism, validator weight processing, and emission distribution, see [Epoch Implementation](./epoch.md).
 
 ### 8. EMA Price Update 
 
 **After** epoch execution completes, the system updates each subnet's moving price for future calculations:
 
 ```rust
-// --- 8. Update moving prices after using them in the emission calculation.
-// Only update price EMA for subnets that we emit to.
+
 for netuid_i in subnets_to_emit_to.iter() {
     // Update moving prices after using them above.
     Self::update_moving_price(*netuid_i);

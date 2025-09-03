@@ -50,15 +50,6 @@ Detailed examination of the staking and unstaking mechanisms, including the auto
 - Liquidity pool management
 - Slippage and price protection
 
-### [Function Reference & Architecture Guide](./function-reference.md)
-Comprehensive guide combining architectural insights with complete function documentation. Explains how the core systems interconnect and provides detailed reference for all key functions.
-
-**Key features:**
-- **Architecture explanation**: How `run_epoch` and `run_coinbase` relate despite separate files
-- **Complete function inventory**: All functions from core consensus and emission systems
-- **Integration patterns**: Data flow, timing coordination, and shared storage
-- **Real-world analogies**: Payroll system metaphor for understanding the relationship
-- **Development insights**: Why this architecture matters for debugging and feature development
 
 ## Code Organization
 
