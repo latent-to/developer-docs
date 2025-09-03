@@ -64,19 +64,22 @@ This ensures only recently active participants influence consensus.
 
 ### 2. Stake Processing and Validation
 
+First, get hotkeys mapped to stake-weights.
+
 ```rust
-// Get hotkey mappings
+
 let hotkeys: Vec<(u16, T::AccountId)> =
     <Keys<T> as IterableStorageDoubleMap<NetUid, u16, T::AccountId>>::iter_prefix(netuid)
         .collect();
 
-// Get stake weights
 let (total_stake, _alpha_stake, _tao_stake): (Vec<I64F64>, Vec<I64F64>, Vec<I64F64>) =
     Self::get_stake_weights_for_network(netuid);
 
 let min_stake = Self::get_stake_threshold();
+```
 
-// Filter stake below threshold
+Filter out hotkeys below minimum stake threshold.
+```rust
 let mut filtered_stake: Vec<I64F64> = total_stake
     .iter()
     .map(|&s| {
@@ -92,14 +95,36 @@ inplace_normalize_64(&mut filtered_stake);
 let stake: Vec<I32F32> = vec_fixed64_to_fixed32(filtered_stake);
 ```
 
-**Stake Calculation:**
+:::info Stake-Weight Calculation
+**Stake-Weight** = alpha_stake + (tao_stake × tao_weight)
+
 The `get_stake_weights_for_network()` function combines:
 - **Alpha stake**: Subnet-specific token holdings
 - **TAO stake**: [Root subnet](../glossary.md#root-subnetsubnet-zero) holdings weighted by `[tao_weight](../glossary.md#tao-weight)` (default: 18%)
+:::
 
-**Total stake** = alpha_stake + (tao_stake × tao_weight)
+
+Filter validator permit candidates for minimum stake-weight.
+
+```rust
+// Get the minimum stake required
+let min_stake = Self::get_stake_threshold();
+
+let mut filtered_stake: Vec<I64F64> = total_stake
+    .iter()
+    .map(|&s| {
+        if fixed64_to_u64(s) < min_stake {
+            return I64F64::from(0);
+        }
+        s
+    })
+    .collect();
+```
+
 
 ### 3. Validator Permit Management
+
+Validator permits are dynamically calculated every epoch based on stake distribution. This system ensures that only the most committed (highest-staked) participants can influence consensus.
 
 ```rust
 // Get current validator permits
@@ -114,8 +139,73 @@ let new_validator_permits: Vec<bool> =
     is_topk_nonzero(&stake, max_allowed_validators as usize);
 ```
 
-**Validator Selection:**
-Only the top `max_allowed_validators` by stake receive [validator permits](../glossary.md#validator-permit), ensuring the highest-staked participants control consensus.
+**Validator Selection Algorithm:**
+
+The `is_topk_nonzero()` function implements a filtering process:
+
+1. **Stake Filtering**: Only neurons with stake ≥ `stake_threshold` (minimum 1000 stake weight) are considered
+2. **Top-K Selection**: The top K neurons by stake weight receive validator permits (default: top 64)
+3. **Non-Zero Requirement**: Neurons with zero stake are automatically excluded
+4. **Stable Sorting**: Uses ascending stable sort to ensure deterministic selection when stakes are equal
+
+**Algorithm Details:**
+```rust
+pub fn is_topk_nonzero(vector: &[I32F32], k: usize) -> Vec<bool> {
+    let n: usize = vector.len();
+    let mut result: Vec<bool> = vector.iter().map(|&elem| elem != I32F32::from(0)).collect();
+    if n < k {
+        return result; // All non-zero elements get permits if total < k
+    }
+    let mut idxs: Vec<usize> = (0..n).collect();
+    idxs.sort_by_key(|&idx| &vector[idx]); // ascending stable sort
+    for &idx in idxs.iter().take(n.saturating_sub(k)) {
+        result[idx] = false; // Mark bottom (n-k) elements as false
+    }
+    result
+}
+```
+
+This ensures that exactly K neurons (or fewer if insufficient candidates) receive validator permits, with deterministic tie-breaking through stable sorting.
+
+**Permit Lifecycle:**
+
+```rust
+// Bonds are cleared when permits are lost
+new_validator_permits
+    .iter()
+    .zip(validator_permits)
+    .zip(ema_bonds)
+    .enumerate()
+    .for_each(|(i, ((new_permit, validator_permit), ema_bond))| {
+        if *new_permit {
+            // Retain bonds if permit is maintained
+            let new_bonds_row: Vec<(u16, u16)> = ema_bond
+                .iter()
+                .map(|(j, value)| (*j, fixed_proportion_to_u16(*value)))
+                .collect();
+            Bonds::<T>::insert(netuid, i as u16, new_bonds_row);
+        } else if validator_permit {
+            // Clear bonds if permit is lost
+            let new_empty_bonds_row: Vec<(u16, u16)> = vec![];
+            Bonds::<T>::insert(netuid, i as u16, new_empty_bonds_row);
+        }
+    });
+```
+
+**Key Features:**
+- **Dynamic Updates**: Permits are recalculated every epoch based on current stake distribution
+- **Bond Preservation**: Neurons retain their bonds only while holding validator permits
+- **Automatic Cleanup**: Bonds are cleared when permits are lost, preventing stale relationships
+- **Stake Threshold**: Minimum stake requirement (typically 1000 stake weight) filters out low-commitment participants
+
+**Related Documentation:**
+- For validator setup and requirements, see [Validating in Bittensor](../validators/index.md)
+- For detailed permit lifecycle management, see [Validator Permits section](../validators/index.md#validator-permits)
+
+**Code References:**
+- Validator permit calculation: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:520-537`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L520-537)
+- Top-K selection algorithm: [`subtensor/pallets/subtensor/src/epoch/math.rs:250-263`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/math.rs#L250-263)
+- Bond cleanup logic: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:903-921`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L903-921)
 
 ### 4. Active Stake Calculation
 
