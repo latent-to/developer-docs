@@ -113,6 +113,14 @@ For each subnet, the coinbase calculates three critical values that govern the s
 - Represents the subnet's emission budget for [incentives](../glossary.md#incentives) and validator emissions
 - Forms the reward pool that will be processed during [epochs](../glossary.md#tempo)
 
+#### Price Stabilization
+
+When a subnet's alpha price falls below its expected emission proportion, the a mechanism automatically intervenes to maintain market stability:
+1. **Price Support**: Reduces TAO injection to prevent further price depression
+2. **Market Making**: Uses the "saved" TAO to buy alpha from the pool, supporting the token price
+
+This creates a floor for alpha token prices while maintaining the market-driven allocation philosophy.
+
 ```rust
 for netuid_i in subnets_to_emit_to.iter() {
     let price_i = T::SwapInterface::current_alpha_price((*netuid_i).into());
@@ -154,17 +162,16 @@ for netuid_i in subnets_to_emit_to.iter() {
 }
 ```
 
-**Price Stabilization Through the Subsidy Mechanism:**
-When a subnet's alpha price falls below its expected emission proportion, the subsidy mechanism automatically intervenes to maintain market stability:
-1. **Price Support**: Reduces TAO injection to prevent further price depression
-2. **Market Making**: Uses the "saved" TAO to buy alpha from the pool, supporting the token price
-3. **Gaming Prevention**: Marks the subnet as subsidized to prevent double-counting
-
-This creates a floor for alpha token prices while maintaining the market-driven allocation philosophy.
-
 ### 4. Liquidity Pool Updates
 
 The coinbase updates each subnet's liquidity pools. 
+
+
+**Critical State Updates:**
+- **`SubnetAlphaIn`**: Alpha reserves backing the AMM, enabling liquid [staking](../glossary.md#staking) and unstaking operations.
+- **`SubnetAlphaOut`**: The emissions pool that [Yuma Consensus](../glossary.md#yuma-consensus) allocates to participants during epochs.
+- **`SubnetTAO`**: TAO reserves backing the AMM, providing price stability and liquidity for unstaking.
+- **`TotalIssuance`**: Global TAO supply (see [Issuance](../glossary.md#issuance)).
 
 ```rust
 for netuid_i in subnets_to_emit_to.iter() {
@@ -201,15 +208,12 @@ for netuid_i in subnets_to_emit_to.iter() {
 }
 ```
 
-**Critical State Updates:**
-- **`SubnetAlphaIn`**: Alpha reserves backing the AMM, enabling liquid [staking](../glossary.md#staking) and unstaking operations
-- **`SubnetAlphaOut`**: The reward pool that [Yuma Consensus](../glossary.md#yuma-consensus) will distribute to participants during epochs
-- **`SubnetTAO`**: TAO reserves backing the AMM, providing price stability and liquidity depth  
-- **`TotalIssuance`**: Global TAO supply tracking for monetary policy (see [Issuance](../glossary.md#issuance))
-
 ### 5. Subnet Creator Emissions
 
 Before distributing rewards to [subnet miners](../glossary.md#subnet-miner) and [validators](../glossary.md#validator), the system allocates a percentage to [subnet creators](../glossary.md#subnet-creator).
+
+[Subnet creators](../glossary.md#subnet-creator) receive 18% of alpha emissions by default, although they can reduce their cut. The subnet creator cut is calculated before other distributions to ensure creators receive emissions regardless of network performance. Subnet creator emissions accumulate in `PendingOwnerCut` until the next [epoch](../glossary.md#tempo).
+
 
 ```rust
 let cut_percent: U96F32 = Self::get_float_subnet_owner_cut(); // Default: ~18%
@@ -228,17 +232,10 @@ for netuid_i in subnets_to_emit_to.iter() {
 }
 ```
 
-**Creator Incentives:**
-- [Subnet creators](../glossary.md#subnet-creator) receive 18% of alpha emissions by default
-
-- The cut is calculated before other distributions to ensure creators receive emissions regardless of network performance
-- Accumulated in `PendingOwnerCut` for distribution during the next [epoch](../glossary.md#tempo)
-
-This mechanism ensures that developers who create valuable subnets receive ongoing emissions for their contributions to the network's protocol development.
 
 ### 6. Calculating Root Emissions
 
-The [Root Subnet](../glossary.md#root-subnetsubnet-zero) emission system determines how much of each subnet's success flows back to general TAO holders:
+The [Root Subnet](../glossary.md#root-subnetsubnet-zero) emission system determines how much of each subnet's emissions flows back to TAO holders that have staked into subnet zero, the root subnet.
 
 $$
 \text{root\_proportion} = \frac{\text{root\_tao} \times \text{tao\_weight}}{\text{root\_tao} \times \text{tao\_weight} + \text{alpha\_issuance}}
@@ -290,7 +287,6 @@ for netuid_i in subnets_to_emit_to.iter() {
     });
 }
 ```
-
 
 
 ### 7. Epoch Execution
