@@ -59,9 +59,9 @@ At the same time, validators are also incentivized to do their best work, becaus
 
 ### What exactly is the task of a subnet miner?
 
-The task of miners is different in each subnet. For example, subnet 1 produces LLM inference, and the miner task is to respond to a text prompt with a completion. Subnet 2 serves machine translation, and subnet 21 serves storage.
+The task of miners is different in each subnet. Some subnets provide AI services like specialized inference, training, or prediction. Other provide infrastructure as a service, including storage or compute.
 
-Browse the subnets on [TAO.app](https://tao.app)
+Browse tokenomic information about the subnets on [TAO.app](https://tao.app), and learn more about the projects and services they support on the [Learnbittensor.org subnet listings](https://learnbittensor.org/subnets).
 
 ### So where does the blockchain come in?
 
@@ -118,4 +118,4 @@ Browse the subnets at [TAO.app](https://tao.app), or on [Discord](https://discor
 
 You can keep trying forever, but your success depends on your performance. Mining and validating in a subnet is competitive. If a miner or validator is one of the three lowest in the subnet, it may be de-registered at the end of the tempo, and have to register again.
 
-See [miner deregistration](../miners/index.md#miner-deregistration).
+See [miner deregistration](./miners/index.md#miner-deregistration).

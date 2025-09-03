@@ -6,21 +6,19 @@ title: "Transaction Fees in Bittensor"
 
 This page describes the blockchain transaction fees charged by Bittensor.
 
-Many extrinsic transactions that change the state of the blockchain are subject to a flat fee of approximately 0.0013 $\tau$.
-
-Staking and unstaking operations incur weight-based fees as well as amount-based fees of 0.05% of the transacted liquidity.
+Many extrinsic transactions that change the state of the blockchain are subject to a small, weight-based fee. Staking and unstaking operations incur weight-based fees as well as amount-based fees of 0.05% of the transacted liquidity.
 
 Reading the state of the chain is always free.
 
-## Flat Transaction Fees
+## Weight-Based Transaction Fees
+
+Many extrinsics in Bittensor are subject to **weight-based fee**. In Polkadot-based chains like Subtensor (Bittensor's layer 1 blockchain), [weight](https://docs.polkadot.com/polkadot-protocol/glossary/#weight) is a measure of compute time.
 
 **Fee Details**:
-
-- **Current rate**: $\approx0.00013 \tau$ (reduced from $\approx0.0013 \tau$)
 - **Payment source**: Sender's TAO free balance by default. For specific extrinsics, if TAO is insufficient to cover fees, the chain will charge fees in Alpha instead (see [Alpha Fallback](#alpha-fallback))
 - **Denomination**: TAO by default. When fees are paid in Alpha, the TAO fee amount is converted to Alpha using the current Alpha price (no slippage).
-- **Impact on liquidity**: Fees are _recycled_ (deducted from `TotalIssuance`)
-  See: [Recycling and Burning](../resources/glossary#recycling-and-burning)
+- **Impact on liquidity**: Fees are *recycled* (deducted from `TotalIssuance`)
+    See: [Recycling and Burning](./glossary#recycling-and-burning)
 
 ### Staking Operations
 
@@ -119,7 +117,7 @@ For `remove_stake`, `remove_stake_limit`, `recycle_alpha`, and `burn_alpha`: if 
 
 ## Swap Fees for Stake and Unstake Operations
 
-In addition to the weight-based fee above, staking and unstaking operations are subject to fees based on a percentage of the quantity of transacted liquidity.
+In addition to the weight-based fee above, staking and unstaking operations are subject to fees based on a percentage of the quantity of transacted liquidity. When moving stake between subnets—whether through a transfer, swap, or move—a 0.05% fee is applied. If the move happens within the same subnet, no additional fee is incurred, only the weight-based fee.
 
 **Fee Details:**
 
