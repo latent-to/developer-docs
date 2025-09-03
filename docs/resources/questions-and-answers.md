@@ -118,4 +118,4 @@ Browse the subnets at [TAO.app](https://tao.app), or on [Discord](https://discor
 
 You can keep trying forever, but your success depends on your performance. Mining and validating in a subnet is competitive. If a miner or validator is one of the three lowest in the subnet, it may be de-registered at the end of the tempo, and have to register again.
 
-See [miner deregistration](./miners/index.md#miner-deregistration).
+See [miner deregistration](../miners/index.md#miner-deregistration).
