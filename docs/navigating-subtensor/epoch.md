@@ -4,11 +4,10 @@ title: "Implementation of the Yuma Consensus Epoch"
 
 # Implementation of the Yuma Consensus Epoch
 
-If [Yuma Consensus](../glossary.md#yuma-consensus) is the heart of Bittensor, the epoch is the heartbeat, a regular pulse of calculations that processes [validator](../glossary.md#validator) weights and determines [emissions](../glossary.md#emission) for participants. This page takes a deep dive into how the code accomplishes its purpose.
+If [Yuma Consensus (YC](../glossary.md#yuma-consensus) is the heart of Bittensor, the epoch is the heartbeat, a regular pulse of calculations that processes [validator](../glossary.md#validator) weights and determines [emissions](../glossary.md#emission) for participants. This page takes a deep dive into how the code accomplishes its purpose.
 
-## Overview
+The epoch function takes as its input the matrix values assigned to each miner by each validator, and performs stake-weighted consensus over them in order to derive the aggregated miner ratings and miner-validator bonds. Miners gain emissions (incentives) based on their aggregate ratings, and validators gain emissions (dividends) based on their bonds to highly rated miners.
 
-The epoch function processes:
 1. **Validator weights** submitted during the [tempo](../glossary.md#tempo) period
 2. **[Stake](../glossary.md#stake) calculations** determining validator influence  
 3. **[Consensus](../glossary.md#consensus-score) computation** through stake-weighted medians
@@ -19,8 +18,7 @@ The function returns emission tuples: `Vec<(T::AccountId, AlphaCurrency, AlphaCu
 
 ## Core Function: `epoch()`
 
-Located in [`run_epoch.rs`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs), with two implementations:
-- `epoch()` - Optimized sparse matrix version (production)
+Source code: [`run_epoch.rs`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs).
 
 ### Function Signature
 ```rust
