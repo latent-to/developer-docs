@@ -33,7 +33,7 @@ import { VscFileMedia } from "react-icons/vsc";
 
 ## Where can I get answers to my questions about Dynamic TAO?
 
-This [Dynamic TAO FAQ](./dynamic-tao/dtao-faq).
+This [Dynamic TAO FAQ](../dynamic-tao/dtao-faq).
 
 ### Is Bittensor a blockchain or an AI platform?
 
@@ -97,7 +97,7 @@ The emission of TAO within each subnet is as follows:
 - 41% to validators
 - 41% to the miners
 
-See [Emissions](./emissions.md).
+See [Emissions](../learn/emissions.md).
 
 ### I don't want to create a subnet, can I just be a miner or a validator?
 
@@ -105,8 +105,8 @@ Yes! Most participants will not create their own subnets, there are lots to choo
 
 See:
 
-- [Validating in Bittensor](./validators/index.md)
-- [Mining in Bittensor](./miners/index.md).
+- [Validating in Bittensor](../validators/index.md)
+- [Mining in Bittensor](../miners/index.md).
 
 ### Is there a central place where I can see compute requirements for mining and validating for all subnets?
 
@@ -118,4 +118,4 @@ Browse the subnets at [TAO.app](https://tao.app), or on [Discord](https://discor
 
 You can keep trying forever, but your success depends on your performance. Mining and validating in a subnet is competitive. If a miner or validator is one of the three lowest in the subnet, it may be de-registered at the end of the tempo, and have to register again.
 
-See [miner deregistration](./miners/index.md#miner-deregistration).
+See [miner deregistration](../miners/index.md#miner-deregistration).

@@ -7,11 +7,9 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Child Hotkeys
 
-This guide describes the **child hotkeys** feature and how to use it. With the child hotkeys, a subnet validator is no longer required to use the same delegate hotkey for every subnet they validate in. The subnet validator can use a separate **child hotkey** per subnet. The subnet validator does this by re-delegating a portion of their stake from their delegate hotkey to this separate child hotkey on a subnet. The originating delegate hotkey is called the **parent hotkey**. 
+This guide describes the **child hotkeys** feature and how to use it. With the child hotkeys, a subnet validator is no longer required to use the same delegate hotkey for every subnet they validate in. The subnet validator can use a separate **child hotkey** per subnet. The subnet validator does this by re-delegating a portion of their stake from their delegate hotkey to this separate child hotkey on a subnet. The originating delegate hotkey is called the **parent hotkey**.
 
 The owner of this child hotkey would then validate in the subnet on behalf of the parent hotkey. The child hotkey would receive a percentage `take` from the resulting dividends.
-
-
 
 <center>
 <ThemedImage
@@ -26,7 +24,7 @@ style={{width: 750}}
 
 <br />
 
-See the above diagram. Without the child hotkeys, a subnet validator's delegate hotkey would have to sign all the validation operations in all the subnets. This exposes the delegate hotkey in all the subnets. An attacker can get hold of the delegate hotkey from any one subnet in order to take over the validation operations with this hotkey, thereby crippling this subnet validator in all their subnets across the entire Bittensor network. 
+See the above diagram. Without the child hotkeys, a subnet validator's delegate hotkey would have to sign all the validation operations in all the subnets. This exposes the delegate hotkey in all the subnets. An attacker can get hold of the delegate hotkey from any one subnet in order to take over the validation operations with this hotkey, thereby crippling this subnet validator in all their subnets across the entire Bittensor network.
 
 <center>
 <ThemedImage
@@ -39,16 +37,15 @@ style={{width: 800}}
 />
 </center>
 
-
 See the above diagram. With the child hotkeys, if an attacker steals a child hotkey, then only those subnets are at risk where this child hotkey is used as the delegate hotkey.
 
-## Benefits of child hotkeys 
+## Benefits of child hotkeys
 
 - **Security for parent hotkeys**: Re-delegating stake to multiple child hotkeys enhances the security of the parent hotkey. Each child hotkey can validate on a specific subnet using a different machine. The child hotkey would sign the validation operations on behalf of the parent hotkey: There is no need to use the parent hotkey on any of these subnets. As a consequence, the exposure of the parent hotkey can be minimized. The parent hotkey can even be moved to a secure location until it is needed, for example, to revoke a child hotkey.
 - **Validators can easily scale up**: As Bittensor scales up towards hundreds of subnets, it is not practical for a single delegate to validate in every single subnet. With child hotkeys, a validator can easily make this feasible by re-delegating and offloading the validating operations to multiple child hotkeys.
 - **Increased bandwidth for a subnet owner**: A validator can also re-delegate to a subnet owner's hotkey. The subnet owner would then do the validation work on the subnet, in exchange for a percentage `take` from the resulting dividends. A subnet owner can increase their access bandwidth into their own subnet in this way.
 - A child hotkey and a parent hotkey need not be owned by the same entity.
-- A validator can re-delegate to a hotkey of any other validator on any subnet. After re-delegation, the hotkey that is the source of the stake is called **parent hotkey** and the hotkey that receives this re-delegated stake is called **child hotkey**. 
+- A validator can re-delegate to a hotkey of any other validator on any subnet. After re-delegation, the hotkey that is the source of the stake is called **parent hotkey** and the hotkey that receives this re-delegated stake is called **child hotkey**.
   :::tip "Child hotkey" and "parent hotkey" are terms of convenience
   The terms "child hotkey" and "parent hotkey" are only terms of convenience. There is nothing inherently different about a "child hotkey" that separates it from a "parent hotkey". Neither have any special attributes compared to a normal hotkey.
   :::
@@ -59,25 +56,26 @@ See the above diagram. With the child hotkeys, if an attacker steals a child hot
 
 The child hotkey features are as follows:
 
-- A hotkey must be registered on a subnet before it can be used as a parent hotkey. The hotkey can be registered on any subnet. 
+- A hotkey must be registered on a subnet before it can be used as a parent hotkey. The hotkey can be registered on any subnet.
 - A parent hotkey can have multiple child hotkeys. Similarly, a child hotkey can have more than one parent hotkey.
 - A child hotkey can exist as a registered hotkey in multiple netuids simultaneously.
-- **IMPORTANT**: For a given `netuid`, say, `netuid 5`, a single parent hotkey can have at most five (`5`) child hotkeys. Moreover, the same parent hotkey on a different `netuid 11` can have another set of `5` child hotkeys. Alternately, on this `netuid 11` the same parent hotkey can also have the same (`5`) child hotkeys that are in the netuid `5`.  
-- While setting the child hotkeys, the proportion field can have proportions that add to less than `1.0`. The proportion that was not assigned to the child hotkeys will remain with the parent hotkey. However, a proportion cannot be zero. A `0` proportion value will result in an error. Furthermore, in a given subnet, the sum of all proportions must not exceed `1.0`. 
+- **IMPORTANT**: For a given `netuid`, say, `netuid 5`, a single parent hotkey can have at most five (`5`) child hotkeys. Moreover, the same parent hotkey on a different `netuid 11` can have another set of `5` child hotkeys. Alternately, on this `netuid 11` the same parent hotkey can also have the same (`5`) child hotkeys that are in the netuid `5`.
+- While setting the child hotkeys, the proportion field can have proportions that add to less than `1.0`. The proportion that was not assigned to the child hotkeys will remain with the parent hotkey. However, a proportion cannot be zero. A `0` proportion value will result in an error. Furthermore, in a given subnet, the sum of all proportions must not exceed `1.0`.
 
 ## Rate limits
 
 The following rate limits apply for child hotkeys:
 
 - A child hotkey's take rate can only be adjusted once per 30 days.
-- One successful execution of `set_children` or `revoke_children` is allowed for every 720 blocks. 
+- One successful execution of `set_children` or `revoke_children` is allowed for every 720 blocks.
 
 ## Minimum stake
 
 The minimum stake you can redelegate to a child hotkey is as follows:
+
 - **Testnet**: 100 testnet TAO.
 - **Mainnet**: 1000 TAO.
-  
+
 ---
 
 ## Installing
@@ -100,20 +98,21 @@ btcli stake set_children --netuid <netuid> --children <a list of SS58 child hotk
 
 ### Parameters
 
-- `--netuid:` Integer. Should be a single integer value representing a current subnet's `netuid`. 
-  - Must be greater than `0` (`netuid 0` is not allowed). 
-  - Integer values greater than the value of current subnet limit, i.e., greater than the value of `subtensorModule.subnetLimit()`, will be rejected with an error message and the command will stop. 
+- `--netuid:` Integer. Should be a single integer value representing a current subnet's `netuid`.
+  - Must be greater than `0` (`netuid 0` is not allowed).
+  - Integer values greater than the value of current subnet limit, i.e., greater than the value of `subtensorModule.subnetLimit()`, will be rejected with an error message and the command will stop.
   - All child hotkeys used in this command must be already registered on this `netuid`.
-- `--children`: SS58. A comma-separated ordered list of SS58 hotkeys for child hotkeys. 
+- `--children`: SS58. A comma-separated ordered list of SS58 hotkeys for child hotkeys.
+
   - There should be a maximum of five, 5, SS58 hotkeys in this comma-separated list. If there are more than five hotkeys, the command will issue an error message and stop.
-  - The number of list elements should match the number of elements passed in the `--proportions` parameter. If the number of list elements do not match, the command will issue an error and stop. 
+  - The number of list elements should match the number of elements passed in the `--proportions` parameter. If the number of list elements do not match, the command will issue an error and stop.
   - All hotkeys used here must be already registered on the `netuid` used in this command.
 
-- `--proportions`: Floating. A comma-separated ordered list of floating values. Each proportion value of the parent hotkey's stake weight will be assigned to the corresponding child hotkey in the `--children` parameter. 
-  - Each floating value should be a number greater than zero and equal to or less than `1.0`. 
-  - If a value is zero, the corresponding child hotkey will be revoked. 
-  - If a value is greater than `1.0`, the command will issue an error message and stop. 
-  - All the proportions for a given `netuid` must sum to less than or equal to `1.0`. If the proportions sum to greater than `1.0`, the command will issue an error message and stop. 
+- `--proportions`: Floating. A comma-separated ordered list of floating values. Each proportion value of the parent hotkey's stake weight will be assigned to the corresponding child hotkey in the `--children` parameter.
+  - Each floating value should be a number greater than zero and equal to or less than `1.0`.
+  - If a value is zero, the corresponding child hotkey will be revoked.
+  - If a value is greater than `1.0`, the command will issue an error message and stop.
+  - All the proportions for a given `netuid` must sum to less than or equal to `1.0`. If the proportions sum to greater than `1.0`, the command will issue an error message and stop.
 - `--hotkey`: SS58. A single SS58 of the parent hotkey. This must be a delegate hotkey that is already registered in with any `netuid`. This `netuid` need not be the same `netuid` used in this command.
   - If this parent hotkey has zero stake, then the command will issue an error message and stop.
   - Note that this `--hotkey` parameter expects parent hotkey whereas the `--hotkey` parameter of the [Setting child hotkey take](#parameters-1) expects child hotkey.
@@ -145,17 +144,17 @@ btcli stake set_children \
 
 ## Adding a new child hotkey
 
-If a parent hotkey has, for example, three child hotkeys: child hotkey A, child hotkey B and child hotkey C, then to add a fourth child hotkey D, you must run `set_children` command again with the parent hotkey and all four child hotkeys A, B, C and D. 
+If a parent hotkey has, for example, three child hotkeys: child hotkey A, child hotkey B and child hotkey C, then to add a fourth child hotkey D, you must run `set_children` command again with the parent hotkey and all four child hotkeys A, B, C and D.
 
 ## Changing the proportions
 
-If a parent hotkey has, for example, three child hotkeys: 
-  - child hotkey A with `0.2` proportion.
-  - child hotkey B with `0.5` proportion.
-  - child hotkey C with `0.1` proportion.
+If a parent hotkey has, for example, three child hotkeys:
 
-Then to change the proportion of, for example, the child hotkey B from `0.5` to `0.3`, you must run `set_children` command again with the parent hotkey and all three child hotkeys A, B, and C set to `0.2`, `0.3` and `0.1` proportions. 
+- child hotkey A with `0.2` proportion.
+- child hotkey B with `0.5` proportion.
+- child hotkey C with `0.1` proportion.
 
+Then to change the proportion of, for example, the child hotkey B from `0.5` to `0.3`, you must run `set_children` command again with the parent hotkey and all three child hotkeys A, B, and C set to `0.2`, `0.3` and `0.1` proportions.
 
 ## Getting the child hotkeys
 
@@ -182,18 +181,18 @@ or
 ```bash
 btcli stake get_children
 ```
+
 and follow the prompts.
 
 ## Revoking the child hotkeys
 
-This command revokes **all** the child hotkeys for a given parent hotkey. 
+This command revokes **all** the child hotkeys for a given parent hotkey.
 
 :::danger Revoking a specific child hotkey is not allowed
 Currently it is not possible to revoke a specific child hotkey. However, if a parent hotkey has, for example, three child hotkeys: child hotkey A, child hotkey B and child hotkey C, then setting the parent hotkey again with only child hotkeys A and B will result in revoking the child hotkey C.
 :::
 
 ### Usage
-
 
 ```bash
 btcli stake revoke_children \
@@ -216,17 +215,18 @@ or
 ```bash
 btcli stake revoke_children
 ```
+
 and follow the prompts.
 
 ## Setting child hotkey take
 
-This command sets the take percentage of the child hotkey for a given `netuid`. The `take` can be between `0` (0%) and `0.18` (18%). 
+This command sets the take percentage of the child hotkey for a given `netuid`. The `take` can be between `0` (0%) and `0.18` (18%).
 
-A child hotkey's `take` is subnet-specific, i.e., a child hotkey can have one `take` in one `netuid` and a different `take` in another `netuid`. 
+A child hotkey's `take` is subnet-specific, i.e., a child hotkey can have one `take` in one `netuid` and a different `take` in another `netuid`.
 
-The child hotkey take rate is an attribute of the child hotkey and this take rate applies to all the parent hotkeys for which this hotkey is the child hotkey. 
+The child hotkey take rate is an attribute of the child hotkey and this take rate applies to all the parent hotkeys for which this hotkey is the child hotkey.
 
-The child hotkey can also set its delegate take separately from the child hotkey take. That is, a child hotkey can carry two separate take rates: the child hotkey take rate and the delegate take rate. For the delegate take rate, see [Set delegate take](../btcli.md#set-delegate-take).
+The child hotkey can also set its delegate take separately from the child hotkey take. That is, a child hotkey can carry two separate take rates: the child hotkey take rate and the delegate take rate. For the delegate take rate, see [Set delegate take](../btcli/btcli.md#btcli-sudo-set-take).
 
 ### Usage
 
@@ -242,7 +242,7 @@ btcli stake set_childkey_take \
 
 - `--hotkey`: SS58. A single SS58 of the child hotkey. Note that this `--hotkey` parameter expects child hotkey whereas the `--hotkey` parameter of the [Setting a child hotkey](#parameters) expects parent hotkey.
 - `--take`: Floating. A value between `0` (0%) and `0.18` (18%). Default value is `0`.
-- `--netuid`: Integer. The `netuid` in which this child hotkey's `take` is applicable. Note that a child hotkey's `take` is subnet-specific, i.e., a child hotkey can have one `take` in one `netuid` and a different `take` in another `netuid`. 
+- `--netuid`: Integer. The `netuid` in which this child hotkey's `take` is applicable. Note that a child hotkey's `take` is subnet-specific, i.e., a child hotkey can have one `take` in one `netuid` and a different `take` in another `netuid`.
 
 ### Example
 
@@ -266,7 +266,6 @@ btcli stake get_childkey_take \
   --hotkey <child hotkey> \
   --wallet.name <coldkey>
 ```
-
 
 ### Example
 

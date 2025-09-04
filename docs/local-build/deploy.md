@@ -159,7 +159,7 @@ This script handles compilation and starts the node in a development-ready state
 
 :::info Additional configurations
 
-By default, running the `localnet.sh` script builds the Subtensor binary, purges any existing chain state, and launches the local blockchain in [fast block mode](../glossary.md#fast-blocks). To run the local blockchain in [non-fast block mode](../glossary.md#non-fast-blocks), run the following command in your terminal:
+By default, running the `localnet.sh` script builds the Subtensor binary, purges any existing chain state, and launches the local blockchain in [fast block mode](../resources/glossary.md#fast-blocks). To run the local blockchain in [non-fast block mode](../resources/glossary.md#non-fast-blocks), run the following command in your terminal:
 
 ```bash
 ./scripts/localnet.sh False

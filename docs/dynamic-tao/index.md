@@ -32,7 +32,7 @@ See:
 
 - [Bittensor SDK release page](https://pypi.org/project/bittensor/)
 - [Bittensor CLI release page](https://pypi.org/project/bittensor-cli/)
-- [Upgrade the Bittensor SDK](../getting-started/installation.md#upgrade)
+- [Upgrade the Bittensor SDK](../getting-started/installation.md#upgrade-the-bittensor-sdk)
 
 ### Subnet tokens/liquidity pools
 

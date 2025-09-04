@@ -216,4 +216,4 @@ The Python interpreter output will look like below.
 
 ## Developer reference
 
-For a full developer reference of the Bittensor SDK, see the [Bittensor SDK section](../bt-api-ref.md).
+For a full developer reference of the Bittensor SDK, see the [Bittensor SDK section](../sdk/bt-api-ref.md).

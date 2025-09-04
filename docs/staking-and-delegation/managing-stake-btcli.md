@@ -9,7 +9,7 @@ This pages demonstrates usage of `btcli`, the Bittensor CLI, for managing stake.
 TAO holders can **stake** any amount of the liquidity they hold to a validator. Also known as **delegation**, staking supports validators, because their total stake in the subnet, including stake delegated to them by others, determines their consensus power and their share of emissions. After the validator/delegate extracts their **take** the remaining emissions are credited back to the stakers/delegators in proportion to their stake with that validator.
 
 :::note Transaction Fees
-Staking and unstaking operations incur transaction fees for the underlying blockchain transactions they trigger. See [Transaction Fees in Bittensor](../fees.md) for details.
+Staking and unstaking operations incur transaction fees for the underlying blockchain transactions they trigger. See [Transaction Fees in Bittensor](../learn/fees.md) for details.
 :::
 
 See also:
@@ -36,7 +36,6 @@ Test network tokens have no real value. Before managing liquidity on Bittensor m
 :::
 
 ## View TAO balance
-
 
 To stake, you'll first need some TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network. Alternatively, you can obtain some by completing the [BTCLI Live Coding Playground](../btcli/btcli-playground.md#transfer).
 

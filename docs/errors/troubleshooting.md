@@ -4,7 +4,7 @@ title: "Troubleshooting"
 
 # Troubleshooting
 
-This document presents helpful hints to troubleshoot the errors you may get while working in the Bittensor ecosystem. 
+This document presents helpful hints to troubleshoot the errors you may get while working in the Bittensor ecosystem.
 
 ## Priority is too low
 
@@ -15,7 +15,6 @@ Running a `btcli` command sometimes gives me the below error:
 ```
 
 **Likely cause and remedy**: This means that you are submitting the same, duplicate transaction that you have already submitted. For example, if you are running a script, it is trying to submit transactions too quickly, most likely. You just have to wait for a few minutes before you run the command again.
-
 
 ## SSLCertVerificationError
 
@@ -36,14 +35,14 @@ Go to the folder where Python is installed, e.g., in my case (Mac OS) it is inst
 
 **Remedy 2**: Run the below commands:
 
-- On macOS when not using any Python virtual environment: 
-    ```bash
-    brew reinstall openssl
-    ```
+- On macOS when not using any Python virtual environment:
+  ```bash
+  brew reinstall openssl
+  ```
 - On macOS when using a virtual environment:
-    ```bash
-    pip install urllib3 --force-reinstall
-    ```
+  ```bash
+  pip install urllib3 --force-reinstall
+  ```
 
 ## KeyFileError
 
@@ -55,8 +54,8 @@ KeyFileError: Keyfile at: /path/to/.bittensor/wallets/some-coldkey/hotkeys/someh
 
 See:
 
-- [Miner registration](./miners/index.md#miner-registration)
-- [Validator registration](./validators/index.md#validator-registration)
+- [Miner registration](../miners/index.md#miner-registration)
+- [Validator registration](../validators/index.md#validator-registration)
 
 ## Balances.transfer not found
 
@@ -64,8 +63,7 @@ See:
 ValueError: Call function 'Balances.transfer' not found
 ```
 
-**Likely cause and remedy**: You are working with an older version of Bittensor. Update your Bittensor to the latest version. See [Install Bittensor](./getting-started/installation.md).
-
+**Likely cause and remedy**: You are working with an older version of Bittensor. Update your Bittensor to the latest version. See [Install Bittensor](../getting-started/installation.md).
 
 ## Genesis mismatch
 
@@ -75,4 +73,4 @@ Reason: Genesis mismatch. Banned, disconnecting.
 
 These messages are mostly harmless and you can ignore them. Your lite node will sync properly. See the "best" block numbers in the terminal log. If these block numbers are closer or approaching the current block as seen on either [https://bittensor.com/scan](https://bittensor.com/scan) or [Polkadot JS](https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fentrypoint-finney.opentensor.ai%3A443#/explorer), then your local node is syncing properly.
 
-You get these error messages very often because one or the other Bittensor blockchain validator nodes is running an older version of Polkadot SDK. When it says, "Banned, disconnecting", it is saying the mismatched blockchain validator node is being disconnected. This usually is fine because you don't need to be connected to all the blockchain validator nodes. 
+You get these error messages very often because one or the other Bittensor blockchain validator nodes is running an older version of Polkadot SDK. When it says, "Banned, disconnecting", it is saying the mismatched blockchain validator node is being disconnected. This usually is fine because you don't need to be connected to all the blockchain validator nodes.
