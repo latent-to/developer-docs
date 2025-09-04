@@ -1,4 +1,3 @@
-
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
@@ -6,11 +5,11 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 This page describes the **commit reveal** feature: a configurable waiting period that elapses between a) when consensus weights set by subnet validators are first committed, and b) when they are revealed publicly and included in Yuma Consensus.
 
-This feature was designed to address the issue of *weight copying* by validators. 
+This feature was designed to address the issue of _weight copying_ by validators.
 
 ## Weight copying
 
-In each Bittensor subnet, each validator scores&mdash;or *'weights'*&mdash;each miner, producing what is referred to as a [weight vector](../glossary.md#weight-vector). The weight vectors for each validator in a subnet are combined into a weight matrix. This matrix determines emissions to miners in the subnet based on the consensus evaluation of their performance, according to [Yuma Consensus](../glossary.md#yuma-consensus).
+In each Bittensor subnet, each validator scores&mdash;or _'weights'_&mdash;each miner, producing what is referred to as a [weight vector](../resources/glossary.md#weight-vector). The weight vectors for each validator in a subnet are combined into a weight matrix. This matrix determines emissions to miners in the subnet based on the consensus evaluation of their performance, according to [Yuma Consensus](../resources/glossary.md#yuma-consensus).
 
 The weight matrix is public information, and must be, so that emissions in the Bittensor platform can be transparently fair. However, this transparency makes it possible for subnet validators to free-ride on the work of other validators by copying the latest consensus rather than independently evaluating subnet miners. This is unfair and potentially degrades the quality of validation work, undermining Bittensor's ability to incentivize the best miners and produce the best digital commodities overall.
 
@@ -18,7 +17,7 @@ The commit reveal feature is designed to solve the weight copying problem by giv
 
 ## Commit Reveal and Immunity Period
 
-The [Immunity Period](../glossary.md#immunity-period) is the interval (measured in blocks) during which a miner or validator newly registered on a subnet is 'immune' from deregistration due to performance. The duration of this period value should always be larger than the Commit Reveal interval, otherwise the immunity period will expire before a given miner's scores are available, and they may be deregistered without having their work counted.
+The [Immunity Period](../resources/glossary.md#immunity-period) is the interval (measured in blocks) during which a miner or validator newly registered on a subnet is 'immune' from deregistration due to performance. The duration of this period value should always be larger than the Commit Reveal interval, otherwise the immunity period will expire before a given miner's scores are available, and they may be deregistered without having their work counted.
 
 When creating a new subnet, ensure that the miner immunity period is larger than the commit reveal interval. When updating the immunity period or commit reveal interval hyperparameters for a subnet, use the following formula:
 
@@ -26,13 +25,13 @@ When creating a new subnet, ensure that the miner immunity period is larger than
 new_immunity_period = (new_commit_reveal_period x tempo - old_commit_reveal_period x tempo) + old_immunity_period
 ```
 
-See [Subnet Hyperparameters](./subnet-hyperparameters.md).
+See [Subnet Hyperparameters](../subnets/subnet-hyperparameters.md).
 
 ## Commit reveal in detail
 
-When commit reveal is enabled, it works as follows:  
+When commit reveal is enabled, it works as follows:
 
-1. A subnet validator sets the weights normally by using [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html). 
+1. A subnet validator sets the weights normally by using [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html).
 
 2. Instead of publishing weights openly, an encrypted copy of these weights is committed to the blockchain, using an internal method called [`commit_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/commit_weights/index.html).
 
@@ -62,7 +61,6 @@ style={{width: 750}}
 />
 </center>
 
-
 ## How to use the commit reveal feature
 
 As a subnet owner, set the below hyperparameters to use the commit reveal feature:
@@ -70,14 +68,13 @@ As a subnet owner, set the below hyperparameters to use the commit reveal featur
 1. `commit_reveal_weights_enabled` (boolean): Set this to `True` to activate the commit reveal feature for the subnet. Default value is `False`.
 2. `commit_reveal_period` (int): Set this to an integer number. This is the number of subnet tempos to elapse before revealing the weights by submitting them again to the blockchain, but now openly for everyone to see. Default value is `1`.
 
-See [Setting subnet hyperparameters](subnet-hyperparameters#setting-the-hyperparameters).
+See [Setting subnet hyperparameters](../subnets/subnet-hyperparameters.md#set-hyperparameters).
 
 :::danger Ensure that the commit reveal interval is less than your immunity period to avoid unintended miner de-registration!
 See [Commit Reveal and Immunity Period](#commit-reveal-and-immunity-period).
 :::
 
-
-Weights will be revealed immediately at the beginning of the tempo after the `commit_reveal_period`. For example, if `commit_reveal_period` value is set to `3`, then the reveal will occur at the beginning of the fourth tempo from the current tempo. The current tempo is counted as the first tempo. See the below diagram for this example: 
+Weights will be revealed immediately at the beginning of the tempo after the `commit_reveal_period`. For example, if `commit_reveal_period` value is set to `3`, then the reveal will occur at the beginning of the fourth tempo from the current tempo. The current tempo is counted as the first tempo. See the below diagram for this example:
 
 <center>
 <ThemedImage
@@ -92,10 +89,8 @@ style={{width: 750}}
 
 <br />
 
-
 ## Technical papers and blog
 
 - ACM CCS2024 Poster PDF [Solving the Free-rider Problem In Bittensor](pathname:///papers/ACM_CCS2024_Poster.pdf).
 - See [Weight Copying in Bittensor, a technical paper (PDF)](pathname:///papers/BT_Weight_Copier-29May2024.pdf).
 - Blog post, [Weight Copying in Bittensor](https://blog.bittensor.com/weight-copying-in-bittensor-422585ab8fa5).
-

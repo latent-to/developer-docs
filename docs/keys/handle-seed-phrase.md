@@ -13,7 +13,7 @@ There are two categories of security failure with a secret like a seed phrase/mn
 - To _lose_ the secret means no longer having access to it. This implies permanent, unrecoverable loss of the resources (TAO and alpha stake, subnet creator permissions on a subnet, etc.) controlled by a Bittensor coldkey private key.
 - To _leak_ the secret means accidentally giving someone else access to it. This may result in them stealing your resources, or further leaking it to others who may in turn act maliciously. If your secret is leaked, you can (and should) rotate it, i.e. perform a coldkey swap.
 
-  See: [Rotating your coldkey](../getting-started/coldkey-hotkey-security#rotating-your-coldkey)
+  See: [Rotating your coldkey](./coldkey-hotkey-security#rotating-your-coldkey)
 
 ## Do not leak your keys/seed phrase
 

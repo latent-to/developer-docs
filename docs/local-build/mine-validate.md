@@ -235,7 +235,7 @@ Use the `--logging.info` flag to print miner and validator log messages directly
 
 ## 5. Check your emissions
 
-After weights have been successfully set on the subnet, you can check the updated emissions distribution at the end of the subnet's [tempo](../glossary.md#tempo).
+After weights have been successfully set on the subnet, you can check the updated emissions distribution at the end of the subnet's [tempo](../resources/glossary.md#tempo).
 
 To check the subnet's emissions, run the following command in the terminal:
 
@@ -282,7 +282,7 @@ Note the increase in the miner neuron's `Incentive` column and the validator neu
 
 </details>
 
-For more information on a subnet's emission distribution, see [Emissions](../emissions.md).
+For more information on a subnet's emission distribution, see [Emissions](../learn/emissions.md).
 
 ## Troubleshooting errors
 

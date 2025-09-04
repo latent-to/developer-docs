@@ -7,7 +7,6 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Understanding Neurons
 
-
 The design of Bittensor subnets is inspired by the structure of a simple neural network, with each **neuron** being either a miner or validator. Each neuron is identified by a unique UID within its subnet and associated with a hotkey-coldkey pair for authentication and operations.
 
 :::tip Neuron requirements
@@ -19,7 +18,7 @@ See [minimum compute requirements](https://github.com/opentensor/bittensor-subne
 Neurons in a subnet operate within a server-client architecture:
 
 - **Axon (Server)**: Miners deploy Axon servers to receive and process data from validators
-- **Dendrite (Client)**: Validators use Dendrite clients to transmit data to miners  
+- **Dendrite (Client)**: Validators use Dendrite clients to transmit data to miners
 - **Synapse (Data Object)**: Encapsulates and structures data exchanged between neurons
 
 Additionally, the Metagraph serves as a global directory for managing subnet nodes, while the Subtensor connects neurons to the blockchain.
@@ -44,26 +43,29 @@ Additionally, the Metagraph serves as a global directory for managing subnet nod
 Neurons register with subnets through proof-of-work or burned registration methods, receiving a unique UID (User ID) within their subnet. The registration process follows an append-or-replace algorithm where new neurons either expand the subnet or replace existing low-performing neurons.
 
 See:
+
 - [Miner Registration](../miners/#miner-registration)
 - [Validator Registration](../validators/#validator-registration)
 
 ### Performance Metrics
 
 Neuron performance is measured through multiple metrics:
+
 - **Rank**: Final performance score after consensus weight clipping
-	See: [Rank](../glossary/#rank)
+  See: [Rank](../resources/glossary/#rank)
 - **Consensus**: Stake-weighted median of weights serving as clipping threshold
-	See: [Consensus score](../glossary/#consensus-score)
+  See: [Consensus score](../resources/glossary/#consensus-score)
 - **Trust**: Consensus alignment measure for miners
-	See: [Trust](../glossary/#trust)
+  See: [Trust](../resources/glossary/#trust)
 - **Validator Trust**: Consensus alignment measure for validators
-	See: [Validator Trust](../glossary/#validator-trust)
+  See: [Validator Trust](../resources/glossary/#validator-trust)
 - **Incentive**: Normalized reward allocation for miners
-	See: [Incentive](../glossary/#incentive)
+  See: [Incentive](../resources/glossary/#incentives)
 
 ### Validator Permits and Access Control
 
 Top K neurons by stake weight receive validator permits, allowing them to:
+
 - Set weights and participate in consensus
 - Form bonds to miners based on performance assessment
 - Contribute to active stake calculations
@@ -140,4 +142,4 @@ For example, in the [Text Prompting Subnet](https://github.com/macrocosm-os/prom
 
 The metagraph is a data structure that contains comprehensive information about current state of the subnet. When you inspect the metagraph of a subnet, you will find detailed information on all the nodes (neurons) in the subnet. A subnet validator should first sync with a subnet's metagraph to know all the subnet miners that are in the subnet. The metagraph can be inspected without participating in a subnet.
 
-See [The Subnet Metagraph](../../subnets/metagraph)
+See [The Subnet Metagraph](../subnets/metagraph)

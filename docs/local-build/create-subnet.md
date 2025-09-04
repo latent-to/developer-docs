@@ -14,7 +14,7 @@ Before continuing with the rest of this tutorial, make sure you've completed the
 
 - [Deploy a Subtensor chain locally](./deploy)
 - [Provision wallets for the subnet creator, miner, and validator users for this tutorial.](./provision-wallets)
-- Sufficient amount of TAO in your subnet creator wallet to cover the [burn cost](../glossary.md#burn-cost).
+- Sufficient amount of TAO in your subnet creator wallet to cover the [burn cost](../resources/glossary.md#burn-cost).
 
 ## Create a subnet
 
@@ -63,15 +63,14 @@ A list of all subnets in your local subtensor instance is returned:
         │             │             │             │              │ (6931.03%)  │              │             │
 ```
 
-
 ### Subnet creation cost
 
 The cost for subnet creation is dynamic; it lowers gradually and doubles every time a subnet is created.
 
 :::info
-Note that this is labeled "burn cost", even though technically the cost of subnet creation is *recycled*, rather than *burned*.
+Note that this is labeled "burn cost", even though technically the cost of subnet creation is _recycled_, rather than _burned_.
 
-See: [Glossary: Recycling and Burning](../glossary#recycling-and-burning)
+See: [Glossary: Recycling and Burning](../resources/glossary#recycling-and-burning)
 :::
 
 ## Start emissions on the subnet

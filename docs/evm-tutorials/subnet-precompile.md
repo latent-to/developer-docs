@@ -10,29 +10,24 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 This precompile allows you to interact with Bittensor subnets through EVM smart contracts, affording functionality for registering networks, viewing and setting network parameters, and querying network state.
 
 This page:
+
 - described the precompile's [available functions](#available-functions) on the precompile
-- demonstrates the precompile's usage with [example scripts](#example-script).
-
-
+- demonstrates the precompile's usage with [example scripts](#example-scripts).
 
 The subnet precompile is available at address `0x803` (2051 in decimal).
 
 View the [source on GitHub](https://github.com/opentensor/subtensor/blob/main/precompiles/src/subnet.rs)
-
-
-
 
 :::info permissions
 Subnet operations have distinct requirements!
 
 - Creating a subnet, i.e. [`registerNetwork`,](#registernetwork) requires a coldkey with sufficient TAO to cover the current burn cost.
 
-    See [burn cost for subnet creation](../local-build/create-subnet#burn-cost).
+  See [burn cost for subnet creation](../local-build/create-subnet#subnet-creation-cost).
 
 - Setting subnet hyperparameters requires the private key for the coldkey that owns the subnet (the one that created it, unless this has been transferred).
 
 :::
-
 
 ## Available Functions
 
@@ -45,28 +40,33 @@ The subnet precompile provides comprehensive functionality for subnet management
 Create/register a new subnet, without setting identity information.
 
 **Parameters:**
+
 - `hotkey` (bytes32): The hotkey (32 bytes) that will own the network
 
 **Returns:**
+
 - None (payable function)
 
 **Description:**
 Registers a new subnet on the Bittensor network. The caller becomes the subnet owner and can manage subnet parameters.
 
-#### `registerNetworkWithIdentity`  
+#### `registerNetworkWithIdentity`
+
 Registers a new subnet with detailed identity information.
 
 **Parameters:**
+
 - `hotkey` (bytes32): The hotkey that will own the network
 - `subnetName` (string): Name of the subnet (max 256 chars)
 - `githubRepo` (string): GitHub repository URL (max 1024 chars)
 - `subnetContact` (string): Contact information (max 1024 chars)
-- `subnetUrl` (string): Subnet website URL (max 1024 chars) 
+- `subnetUrl` (string): Subnet website URL (max 1024 chars)
 - `discord` (string): Discord server invite (max 256 chars)
 - `description` (string): Subnet description (max 1024 chars)
 - `additional` (string): Additional information (max 1024 chars)
 
 **Returns:**
+
 - None (payable function)
 
 **Description:**
@@ -75,384 +75,498 @@ Registers a new subnet with comprehensive identity metadata that helps users und
 ### Rate Limiting
 
 #### `getServingRateLimit`
+
 Gets the serving rate limit for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint64`: The serving rate limit value
 
 #### `setServingRateLimit`
+
 Sets the serving rate limit for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `servingRateLimit` (uint64): The new serving rate limit value
 
 **Returns:**
+
 - None (payable function)
 
 ### Difficulty Management
 
 #### `getMinDifficulty`
+
 Gets the minimum difficulty for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint64`: The minimum difficulty value
 
 #### `setMinDifficulty`
+
 Sets the minimum difficulty for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `minDifficulty` (uint64): The new minimum difficulty value
 
 **Returns:**
+
 - None (payable function)
 
 #### `getMaxDifficulty`
+
 Gets the maximum difficulty for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint64`: The maximum difficulty value
 
 #### `setMaxDifficulty`
+
 Sets the maximum difficulty for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `maxDifficulty` (uint64): The new maximum difficulty value
 
 **Returns:**
+
 - None (payable function)
 
 #### `getDifficulty`
+
 Gets the current difficulty for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint64`: The current difficulty value
 
 #### `setDifficulty`
+
 Sets the current difficulty for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `difficulty` (uint64): The new difficulty value
 
 **Returns:**
+
 - None (payable function)
 
 ### Weight Management
 
 #### `getWeightsVersionKey`
+
 Gets the weights version key for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint64`: The weights version key value
 
 #### `setWeightsVersionKey`
+
 Sets the weights version key for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `weightsVersionKey` (uint64): The new weights version key value
 
 **Returns:**
+
 - None (payable function)
 
 #### `getWeightsSetRateLimit`
+
 Gets the weights set rate limit for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint64`: The weights set rate limit value
 
 #### `setWeightsSetRateLimit` ⚠️ **DEPRECATED**
+
 Sets the weights set rate limit for a subnet. **This function is deprecated. Subnet owners cannot set weight setting rate limits.**
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `weightsSetRateLimit` (uint64): The weights set rate limit value (ignored)
 
 **Returns:**
+
 - None (payable function)
 
 **Description:**
 This function still exists for backward compatibility but performs no operation and returns successfully.
 
 #### `getMaxWeightLimit`
+
 Gets the maximum weight limit for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint16`: The maximum weight limit value
 
 #### `setMaxWeightLimit`
+
 Sets the maximum weight limit for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `maxWeightLimit` (uint16): The new maximum weight limit value
 
 **Returns:**
+
 - None (payable function)
 
 #### `getMinAllowedWeights`
+
 Gets the minimum allowed weights for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint16`: The minimum allowed weights value
 
 #### `setMinAllowedWeights`
+
 Sets the minimum allowed weights for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `minAllowedWeights` (uint16): The new minimum allowed weights value
 
 **Returns:**
+
 - None (payable function)
 
 ### Consensus Parameters
 
 #### `getAdjustmentAlpha`
+
 Gets the adjustment alpha parameter for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint64`: The adjustment alpha value
 
 #### `setAdjustmentAlpha`
+
 Sets the adjustment alpha parameter for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `adjustmentAlpha` (uint64): The new adjustment alpha value
 
 **Returns:**
+
 - None (payable function)
 
 #### `getKappa`
+
 Gets the kappa parameter for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint16`: The kappa value
 
 #### `setKappa`
+
 Sets the kappa parameter for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `kappa` (uint16): The new kappa value
 
 **Returns:**
+
 - None (payable function)
 
 #### `getRho`
+
 Gets the rho parameter for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint16`: The rho value
 
 #### `setRho`
+
 Sets the rho parameter for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `rho` (uint16): The new rho value
 
 **Returns:**
+
 - None (payable function)
 
 #### `getAlphaSigmoidSteepness`
+
 Gets the alpha sigmoid steepness parameter for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint16`: The alpha sigmoid steepness value
 
 #### `setAlphaSigmoidSteepness`
+
 Sets the alpha sigmoid steepness parameter for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `steepness` (uint16): The new alpha sigmoid steepness value
 
 **Returns:**
+
 - None (payable function)
 
 #### `getAlphaValues`
+
 Gets the alpha low and high values for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint16`: The alpha low value
 - `uint16`: The alpha high value
 
 #### `setAlphaValues`
+
 Sets the alpha low and high values for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `alphaLow` (uint16): The new alpha low value
 - `alphaHigh` (uint16): The new alpha high value
 
 **Returns:**
+
 - None (payable function)
 
 ### Network Activity
 
 #### `getImmunityPeriod`
+
 Gets the immunity period for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint16`: The immunity period value
 
 #### `setImmunityPeriod`
+
 Sets the immunity period for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `immunityPeriod` (uint16): The new immunity period value
 
 **Returns:**
+
 - None (payable function)
 
 #### `getActivityCutoff`
+
 Gets the activity cutoff for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint16`: The activity cutoff value
 
 #### `setActivityCutoff`
+
 Sets the activity cutoff for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `activityCutoff` (uint16): The new activity cutoff value
 
 **Returns:**
+
 - None (payable function)
 
 ### Registration Control
 
 #### `getNetworkRegistrationAllowed`
+
 Gets whether network registration is allowed for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `bool`: Whether network registration is allowed
 
 #### `setNetworkRegistrationAllowed`
+
 Sets whether network registration is allowed for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `registrationAllowed` (bool): Whether to allow network registration
 
 **Returns:**
+
 - None (payable function)
 
 #### `getNetworkPowRegistrationAllowed`
+
 Gets whether PoW registration is allowed for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `bool`: Whether PoW registration is allowed
 
 #### `setNetworkPowRegistrationAllowed`
+
 Sets whether PoW registration is allowed for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `registrationAllowed` (bool): Whether to allow PoW registration
 
 **Returns:**
+
 - None (payable function)
 
 ### Burn Management
 
 #### `getMinBurn`
+
 Gets the minimum burn amount for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint64`: The minimum burn amount
 
 #### `setMinBurn` ⚠️ **DEPRECATED**
+
 Sets the minimum burn amount for a subnet. **This function is deprecated. Subnet owners cannot set the minimum burn anymore.**
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `minBurn` (uint64): The minimum burn amount (ignored)
 
 **Returns:**
+
 - None (payable function)
 
 **Description:**
 This function still exists for backward compatibility but performs no operation and returns successfully.
 
 #### `getMaxBurn`
+
 Gets the maximum burn amount for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint64`: The maximum burn amount
 
 #### `setMaxBurn` ⚠️ **DEPRECATED**
+
 Sets the maximum burn amount for a subnet. **This function is deprecated. Subnet owners cannot set the maximum burn anymore.**
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `maxBurn` (uint64): The maximum burn amount (ignored)
 
 **Returns:**
+
 - None (payable function)
 
 **Description:**
@@ -461,117 +575,153 @@ This function still exists for backward compatibility but performs no operation 
 ### Bonds and Moving Averages
 
 #### `getBondsMovingAverage`
+
 Gets the bonds moving average for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint64`: The bonds moving average value
 
 #### `setBondsMovingAverage`
+
 Sets the bonds moving average for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `bondsMovingAverage` (uint64): The new bonds moving average value
 
 **Returns:**
+
 - None (payable function)
 
 ### Feature Toggles
 
 #### `getCommitRevealWeightsEnabled`
+
 Gets whether commit-reveal weights are enabled for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `bool`: Whether commit-reveal weights are enabled
 
 #### `setCommitRevealWeightsEnabled`
+
 Sets whether commit-reveal weights are enabled for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `enabled` (bool): Whether to enable commit-reveal weights
 
 **Returns:**
+
 - None (payable function)
 
 #### `getCommitRevealWeightsInterval`
+
 Gets the commit-reveal weights interval for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `uint64`: The commit-reveal weights interval value
 
 #### `setCommitRevealWeightsInterval`
+
 Sets the commit-reveal weights interval for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `interval` (uint64): The new commit-reveal weights interval value
 
 **Returns:**
+
 - None (payable function)
 
 #### `getLiquidAlphaEnabled`
+
 Gets whether liquid alpha is enabled for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `bool`: Whether liquid alpha is enabled
 
 #### `setLiquidAlphaEnabled`
+
 Sets whether liquid alpha is enabled for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `enabled` (bool): Whether to enable liquid alpha
 
 **Returns:**
+
 - None (payable function)
 
 #### `getYuma3Enabled`
+
 Gets whether Yuma3 consensus is enabled for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 
 **Returns:**
+
 - `bool`: Whether Yuma3 consensus is enabled
 
 #### `setYuma3Enabled`
+
 Sets whether Yuma3 consensus is enabled for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `enabled` (bool): Whether to enable Yuma3 consensus
 
 **Returns:**
+
 - None (payable function)
 
 ### Transfer Control
 
 #### `toggleTransfers`
+
 Toggles transfers on/off for a subnet.
 
 **Parameters:**
+
 - `netuid` (uint16): The subnetwork ID
 - `toggle` (bool): Whether to enable or disable transfers
 
 **Returns:**
+
 - None (payable function)
 
 ## Example Scripts
+
 [Example source on GitHub](https://github.com/opentensor/evm-bittensor/blob/main/examples/subnet.js)
+
 ### Javascript
+
 ```js
 const { ethers, assert } = require("ethers");
 const { ApiPromise, WsProvider, Keyring } = require("@polkadot/api");
@@ -867,8 +1017,8 @@ async function main() {
 }
 
 main().catch(console.error);
-
 ```
+
 ### Solidity
 
 [Example source on GitHub](https://github.com/opentensor/evm-bittensor/blob/main/solidity/subnet.sol)

@@ -10,7 +10,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 TAO holders can **stake** any amount of the liquidity they hold to a validator. Also known as **delegation**, staking supports validators, because their total stake in the subnet, including stake delegated to them by others, determines their consensus power and their share of emissions. After the validator/delegate extracts their **take** the remaining emissions are credited back to the stakers/delegators in proportion to their stake with that validator.
 
 :::note Transaction Fees
-Staking and unstaking operations incur transaction fees. See [Transaction Fees in Bittensor](../fees.md) for details.
+Staking and unstaking operations incur transaction fees. See [Transaction Fees in Bittensor](../learn/fees.md) for details.
 :::
 
 See also:
@@ -45,7 +45,7 @@ As a TAO holder, you will stake to a validator’s hotkey on a specific subnet. 
 3. These equivalent TAO units are then taken out of the TAO reserves of the subnet pool and are sent to the TAO holder’s coldkey.
 
 :::tip Stake is always expressed in alpha units
-In Dynamic TAO, except for the stake held in [the Root Subnet](#root-subnet-subnet-zero), the stake held by a hotkey in a subnet is always expressed in the subnet-specific $\alpha$ units. Root Subnet stake is expressed in $\tau$.
+In Dynamic TAO, except for the stake held in [the Root Subnet](../subnets/understanding-subnets.md#subnet-zero), the stake held by a hotkey in a subnet is always expressed in the subnet-specific $\alpha$ units. Root Subnet stake is expressed in $\tau$.
 :::
 
 :::tip Prereq
