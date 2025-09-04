@@ -63,7 +63,7 @@ We will create a campaign whose purpose is to register a leased subnet on finali
    - `min_contribution`: e.g., `100,000,000` (0.1 TAO)
    - `cap`: e.g., `2,000,000,000,000` (2000 TAO)
    - `end`: pick a block height in the near future (e.g., current + 5000)
-   - `call`: leave as **None**.
+   - `call`: put the hex code of the encoded call data saved from the previous step.
    - `target_address`: leave as **None**.
 
    :::info
