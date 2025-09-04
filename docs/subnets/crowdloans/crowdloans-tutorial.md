@@ -21,7 +21,7 @@ The following steps will take us through the lifecycle of a subnet creation crow
 - [Polkadot‑JS browser app](https://polkadot.js.org/apps/?#/explorer) and [Polkadot‑JS browser extension](https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd) installed.
 - An accessible 'Alice' wallet (see: [Provision Wallets for Local Deploy](../../local-build/provision-wallets))
 
-## Connect Polkadot‑JS to your local chain
+## Step 1: Connect Polkadot‑JS to your local chain
 
 1. Open the Polkadot‑JS app.
 2. In the network selector, choose Development → custom endpoint `ws://127.0.0.1:9944`.
@@ -31,7 +31,26 @@ The following steps will take us through the lifecycle of a subnet creation crow
 If the web app does not connect to your local chain, your browser’s privacy or security settings may be blocking it. Try adjusting those settings and reconnecting.
 :::
 
-## Create a crowdloan
+## Step 2: Generate call hash
+
+Before creating the crowdloan, you must first generate the hash that registers the subnet and creates a dedicated proxy for the designated beneficiary.
+To begin:
+
+1. Go to **Developer** → **Extrinsics**.
+2. Under “**using the selected account**”, pick the crowdloan "`creator`" account.
+3. Under “**submit the following extrinsic**”, choose module `subtensorModule`, call `registerLeasedNetwork(emissionsShare, endBlock)`.
+4. Fill the parameters:
+
+   - `emissionsShare`: choose a percentage, e.g, 30.
+   - `endBlock`: leave as none.
+
+5. Copy the hex code shown in the **encoded call data** field. You will use this to create the crowdloan in the next step.
+
+:::info
+Do not submit the transaction after entering the parameters. Only copy the encoded call data once all parameters are provided.
+:::
+
+## Step 3: Create a crowdloan
 
 We will create a campaign whose purpose is to register a leased subnet on finalize.
 
@@ -40,29 +59,31 @@ We will create a campaign whose purpose is to register a leased subnet on finali
 3. Under “**submit the following extrinsic**”, choose module `crowdloan`, call `create`.
 4. Fill the parameters:
 
-   - deposit: choose an amount (e.g., `10,000,000,000` = 10 TAO on default dev config)
-   - min_contribution: e.g., `100,000,000` (0.1 TAO)
-   - cap: e.g., `2,000,000,000,000` (2000 TAO)
-   - end: pick a block height in the near future (e.g., current + 50,400)
-   - call: leave as **None**.
-   - target_address: leave as **None**.
+   - `deposit`: choose an amount (e.g., `10,000,000,000` = 10 TAO on default dev config)
+   - `min_contribution`: e.g., `100,000,000` (0.1 TAO)
+   - `cap`: e.g., `2,000,000,000,000` (2000 TAO)
+   - `end`: pick a block height in the near future (e.g., current + 5000)
+   - `call`: leave as **None**.
+   - `target_address`: leave as **None**.
 
    :::info
 
    - Set the `cap` value higher than the projected subnet lock cost plus proxy deposit (and a small fee buffer). On most dev setups the baseline lock cost is 1,000 TAO (1,000,000,000,000 RAO). If `cap` equals the lock cost exactly, the lease coldkey may lack enough to pay proxy deposits and finalize can fail with insufficient balance.
-   - The minimum duration for a crowdloan is one week (≈ 50,400 blocks). Therefore, the `end` value must be set at least 50,400 blocks after the current block.
+   - If your local subtensor node uses non-fast blocks, the minimum duration for a crowdloan is one week (≈ 50,400 blocks). Therefore, the `end` value must be set at least 50,400 blocks after the current block.
      :::
 
 5. Click **Submit Transaction** and sign with the `creator` account.
 
-## Get the crowdloan ID
+### Get the crowdloan ID
 
 Crowdloan IDs are allocated sequentially, starting from `0`, with each new crowdloan assigned the next incremental ID. There is no extrinsic to list created crowdloans. Therefore, to check the identity of crowdloans created, you must use one of these methods.
 
 - **From Events**:
+
   1. Navigate to the **block explorer** after submitting the crowdload transaction.
-  2. In the **Explorer** tab, the block in which the transaction occured.
-  3. In the **Events** panel, find the `crowdloan.create` extrinsic. The `crowdloan.Created` event payload includes `crowdloanId` that represents the ID of the crowdloan.
+  2. In the **Explorer** tab, find the block in which the transaction occured.
+  3. In the **Events** panel, locate the `crowdloan.create` extrinsic. The `crowdloan.Created` event payload includes `crowdloanId` that represents the ID of the crowdloan.
+
 - **From storage**:
 
   1. From the **Developer** dropdown, navigate to **Chain state** → **Storage**.
@@ -83,7 +104,7 @@ const keys = await api.query.crowdloan.crowdloans.keys();
 console.log(keys.map((k) => k.args[0].toNumber()));
 ```
 
-## Contribute to the crowdloan
+## Step 4: Contribute to the crowdloan
 
 All contributions must occur before the defined `end` block and will be clipped to the `cap` value provided.
 
@@ -95,31 +116,46 @@ To contribute to the crowdloan, repeat the following steps for each contributor 
 4. Provide the `crowdloan_id` (typically 0 on a fresh chain) and an amount.
 5. Submit and sign.
 
-Notes:
+:::info
 
-- Cap is the maximum total raise, not a minimum. Contributions that would exceed the remaining amount are clipped; after cap is reached, further contributions are rejected with `CapRaised`.
-- There is no per‑contributor max beyond the remaining amount and runtime checks, but there is a global `MaxContributors` limit.
+The crowdloan cap is the maximum total raise. If a contribution would push the total above this cap, the contribution is clipped to fit the remaining available amount. Once the cap is reached, any further contributions are rejected and a `crowdloan.CapRaised` event is triggered.
+:::
 
-Verify:
+### Verify crowdloan contributions
 
-- Check Events for `crowdloan.Contributed`.
-- In Developer → Chain state → Storage, query `crowdloan.Crowdloans(crowdloan_id)` and `crowdloan.Contributions(crowdloan_id, contributor)`.
+To verify crowdload contributions:
 
-## Finalize the crowdloan
+- **From Events**:
 
-Once the end block has passed and the cap has been fully raised (`raised == cap`), the creator finalizes.
+  1. Navigate to the **block explorer** after contributing to the crowdload.
+  2. In the **Explorer** tab, find the block in which the transaction occured.
+  3. In the **Events** panel, locate the `crowdloan.contribute` extrinsic. The `crowdloan.Contributed` event payload contains the `crowdloanId`, the contributing account, and amount contributed.
 
-1. Wait for the chain to reach the `end` block (watch the status bar or use the Blocks tab).
-2. Developer → Extrinsics → using account `creator`.
-3. Select `crowdloan.finalize(crowdloan_id)`.
-4. Submit and sign.
+- **From storage**:
 
-On success:
+  1. From the **Developer** dropdown, navigate to **Chain state** → **Storage**.
+  2. Click the **selected state query** menu and select one of the following:
+
+     - `crowdloan.Crowdloans(crowdloan_id)` to check details of the crowdloan
+     - `crowdloan.Contributions(crowdloan_id, contributor)` to check contributions by an account.
+
+  3. Click the **+** icon to run the query.
+
+## Step 5: Finalize the crowdloan
+
+The crowdload can be finalized by the creator when the end block has passed and the cap has been fully raised (`raised == cap`).
+
+1. Wait for the chain to reach the `end` block.
+2. From the **Developer** dropdown, go to **Extrinsics**.
+3. Under **using the selected account**, select the crowdloan creator account.
+4. Select `crowdloan.finalize(crowdloan_id)` and put the ID of the crowdload.
+5. Submit and sign.
+
+:::info
 
 - If `target_address` was provided, the raised amount is transferred there.
 - The stored `subtensor.register_leased_network` call executes with creator origin, and the lease is created.
-
-actual success!!!
+  :::
 
 ```
 system.ExtrinsicSuccess
@@ -149,23 +185,63 @@ extrinsic event
 
 ```
 
-Notes:
+:::info
 
-- Finalizing before the contribution period ends fails with `ContributionPeriodNotEnded`. This keeps the window open so others can contribute until `end`.
+Even if the `cap` has been raised, the crowdloan cannot be finalized before the `end` block. Finalizing before the contribution period ends fails with `ContributionPeriodNotEnded`.
 
-## Verify the leased subnet
+:::
 
-Open Developer → Chain state → Storage, module `subtensor` and check:
+### Verify the leased subnet
 
-- `SubnetLeases(lease_id)` → shows beneficiary, emissions_share, end_block, netuid, cost
-- `SubnetUidToLeaseId(netuid)` → maps subnet to lease id
-- `SubnetLeaseShares(lease_id, contributor)` → pro‑rata shares per contributor
+Finalizing the crowdloan registers a new subnet and creates a dedicated proxy for the designated beneficiary. Use one of the following methods to verify the creation of the leased subnet:
 
-Also verify a proxy was added for the beneficiary:
+- **Using BTCLI**:
 
-- Module `proxy` → query `Proxies(lease_coldkey)` (if available in your UI) to see the `SubnetLeaseBeneficiary` delegate.
+  You can verify the creation of the new subnet by running the following command in your terminal:
 
-## Start the leased subnet (via proxy)
+  ```sh
+  btcli subnets list --network local
+  ```
+
+  This command lists all created subnets on the chain. Notice the addition of a new subnet among the listed subnets. Notice netuid `2` in the following output.
+
+<details>
+<summary><strong>Show Sample Output</strong></summary>
+
+```console
+Using the specified network local from config
+[15:49:40] Warning: Verify your local subtensor is running on port 9944.                                                                                                                     subtensor_interface.py:89
+
+                                                              Subnets
+                                                          Network: local
+
+
+        ┃           ┃ Price       ┃ Market Cap  ┃              ┃                        ┃               ┃              ┃
+Netuid  ┃ Name      ┃ (Τ_in/α_in) ┃ (α * Price) ┃ Emission (Τ) ┃ P (Τ_in, α_in)         ┃ Stake (α_out) ┃ Supply (α)   ┃ Tempo (k/n)
+━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━
+  0     │ τ root    │ 1.0000 τ/Τ  │ τ 0.00      │ τ 0.0000     │ -, -                   │ Τ 0.00        │ 0.00 Τ /21M  │ -/-
+  2     │ β omron   │ 0.0000 τ/β  │ τ 0.00      │ τ 0.0000     │ τ 1.00k, 1.00k β       │ 0.00 β        │ 1.00k β /21M │ 3/10
+  1     │ α apex    │ 0.0000 τ/α  │ τ 0.00      │ τ 0.0000     │ τ 10.00, 10.00 α       │ 1.00 α        │ 11.00 α /21M │ 28/100
+────────┼───────────┼─────────────┼─────────────┼──────────────┼────────────────────────┼───────────────┼──────────────┼─────────────
+  4     │           │ τ 0.0       │             │ τ 0.0        │ τ 2.01k/20.93k (9.60%) │               │              │
+
+```
+
+</details>
+
+- **From storage**:
+
+  1. From the **Developer** dropdown, navigate to **Chain state** → **Storage**.
+  2. Click the **selected state query** menu and select `subtensorModule.SubnetLeases(lease_id)` to display details of the subnet lease, including the beneficiary, emission share, end block, lease coldkey and hotkey, netuid, and creation cost.
+  3. Click the **+** icon to run the query.
+
+Also, verify a proxy was added for the beneficiary:
+
+- **From storage**:
+  1. From the **Developer** dropdown, navigate to **Chain state** → **Storage**.
+  2. Click the **selected state query** menu and select `proxy.Proxies(lease_coldkey)` to display the `SubnetLeaseBeneficiary` delegate
+
+## Step 6: Start the leased subnet (via proxy)
 
 1. Build the inner call (to get its encoding) [optional]
 
@@ -182,10 +258,12 @@ Also verify a proxy was added for the beneficiary:
   - call: either expand and select the inner call again with arguments, or paste the encoded call hex from step 1
 - Leave delay at 0 → Submit and sign.
 
-Tips:
+:::tip
 
 - Add the `lease.coldkey` to your Address book so it’s selectable in the UI.
 - Verify the proxy exists on‑chain before submitting: `proxy.Proxies(lease_coldkey)` should show your beneficiary with type `SubnetLeaseBeneficiary`.
+
+:::
 
 ## Observe dividends distribution
 

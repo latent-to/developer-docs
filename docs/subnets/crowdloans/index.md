@@ -4,7 +4,6 @@ title: "Crowdloans"
 
 ### Overview
 
-
 The crowdloan feature lets a group of people collectively fund the registration of a new Bittensor subnet and share the resulting emissions according to each person’s contribution. Instead of a single sponsor paying the full lease cost up front, a creator opens a crowdloan with a funding cap and end block, contributors deposit funds until the cap is met, and—on success—the pallet finalizes the crowdloan by funding subnet registration and activating emissions for the group.
 
 At finalization, the system executes an on‑chain call—typically `subtensor::register_leased_network`—using the crowdloan’s funds. This registers the subnet and creates a dedicated proxy, `SubnetLeaseBeneficiary`, for the designated beneficiary. That proxy is authorized to operate the subnet (for example, configuring subnet parameters and other allowed controls) without having custody of contributor funds or emissions splits.
@@ -15,8 +14,7 @@ While the lease is active, emissions flow to contributors pro‑rata based on th
 - Shared upside: emissions distributed proportionally to contributions
 - Safe operations: a dedicated proxy to manage the subnet within defined permissions
 
-
-See also [Create a Subnet with a Crowdloan](./crowdloans-tutorial)
+See also [Create a Subnet with a Crowdloan](./crowdloans-tutorial.md)
 
 ## Crowdloan Lifecycle
 
@@ -32,13 +30,11 @@ See also [Create a Subnet with a Crowdloan](./crowdloans-tutorial)
 
 - **Dissolve** after refunds; creator's deposit is returned and storage cleaned up. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L711-L721)
 
-
 ## Emissions distribution during a lease
 
 - When owner rewards are paid to a leased subnet, they are split into contributor dividends and a beneficiary cut. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/run_coinbase.rs#L450-L452)
 
 - Distribution is pro‑rata by recorded share; any remainder goes to the beneficiary. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/leasing.rs#L324-L339)
-
 
 ## Operating the leased subnet via proxy
 
@@ -46,26 +42,25 @@ See also [Create a Subnet with a Crowdloan](./crowdloans-tutorial)
 
 - Allowed calls for `ProxyType::SubnetLeaseBeneficiary` include starting subnet calls and selected admin‑utils setters (hyperparameters), not unrestricted sudo. [Source code](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L792-L852)
 
-
 ## Runtime parameters (defaults)
 
 These constants define crowdloan requirements and operational limits in the runtime: [Source code](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1556-L1571)
 
 Implications:
+
 - **Refund batching**: Up to 50 contributors are processed per `refund` call.
 - **Duration bounds**: Ensures campaigns are neither too short nor too long.
 - **Contribution floor**: Enforces a minimum "ticket size" for contributors.
 
-
 ## FAQ
 
 ### What problem do crowdloans solve?
+
 Crowdloans enable shared funding and ownership of subnets so that no single sponsor must front the entire lock cost. Emissions are shared among contributors while a designated beneficiary operates the subnet via a scoped proxy.
 
 ### How does the end‑to‑end flow work?
 
 Creator calls `create` with deposit, cap, end, and a `call` of `subtensor::register_leased_network`. Contributors fund until the cap is hit. After the end block, creator calls `finalize`; funds transfer and the stored call executes with creator origin. A subnet and a `SubnetLeaseBeneficiary` proxy are set up; contributor shares are recorded, leftover cap is refunded.
-
 
 ### Can the purpose of a crowdloan be changed after it starts?
 
@@ -86,6 +81,7 @@ Owner rewards are split to contributors by their recorded `SubnetLeaseShares`; a
 ### What permissions does the beneficiary proxy have?
 
 They can invoke a curated set of calls (e.g., start subnet calls and selected admin‑utils setters like difficulty, weights, limits).
+
 <!-- TODO: investigate this and fill out the details -->
 
 ### Can the campaign parameters be updated mid‑flight?
@@ -107,5 +103,3 @@ Your share equals your contribution divided by total raised at `finalize`. Emiss
 ### Can a lease be terminated early?
 
 No. The beneficiary may terminate only after the optional `end_block` has passed; for perpetual leases there is no end block.
-
-
