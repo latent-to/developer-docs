@@ -68,7 +68,7 @@ for netuid_i in subnets_to_emit_to.iter() {
 ```
 
 **EMA Price Smoothing Implementation:**
-The moving price for each subnet is calculated using a sophisticated EMA that adapts its responsiveness based on subnet maturity:
+The moving price for each subnet is calculated using a custom [EMA](../learn/ema) that adapts its responsiveness based on subnet maturity:
 
 $$
 \alpha = \text{base\_alpha} \times \frac{\text{blocks\_since\_start}}{\text{blocks\_since\_start} + \text{halving\_blocks}}
