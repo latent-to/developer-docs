@@ -13,8 +13,9 @@ Each of a subnet's validators periodically submits a vector of weights ranking t
 The algorithm is designed to more heavily weight the inputs of more trusted validators, in order to ignore the portion of the validation signal that is less reliable. By disregarding unreliable weight-settings, YC incentivizes validators to be worthy of trust by working hard to give consistent, fast, honest evaluations of miners that predict the eventual convergence of other validators' evaluations. YC incentivizes miners to work hard for the highest combined evaluation by the community of validators.
 
 See:
-- [How Yuma Consensus 3 Makes Bittensor More Fair](./subnets/yc3-blog)
-- [Yuma Consensus 3 Migration Guide](./subnets/yuma3-migration-guide)
+
+- [How Yuma Consensus 3 Makes Bittensor More Fair](./yc3-blog)
+- [Yuma Consensus 3 Migration Guide](./yuma3-migration-guide.md)
 - [Emissions](./emissions)
 - [Epoch Implementation](./navigating-subtensor/epoch.md) - Implementation details
 - [Subtensor Docs: Yuma Consensus](https://github.com/opentensor/subtensor/blob/main/docs/consensus.md)
@@ -110,7 +111,7 @@ B_{ij}^{(t)} = \alpha \,\Delta B_{ij} + (1-\alpha)\,B_{ij}^{(t-1)}
 $$
 
 :::tip note
-The $\alpha$ variable here is unrelated to the concept of subnet specific currencies, referred to as alpha $\alpha$ tokens. Here $\alpha$ refers to a factor used in this EMA smoothing function&mdash;see [consensus-based weights, a.k.a. liquid alpha](./subnets/consensus-based-weights.md).
+The $\alpha$ variable here is unrelated to the concept of subnet specific currencies, referred to as alpha $\alpha$ tokens. Here $\alpha$ refers to a factor used in this EMA smoothing function&mdash;see [consensus-based weights, a.k.a. liquid alpha](../concepts/consensus-based-weights.md).
 :::
 
 </details>

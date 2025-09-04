@@ -75,4 +75,4 @@ This smoothing function ensures that relationships between validators and miners
 - **Individual Alpha**: Each validator-miner pair gets its own $\alpha$ value
 - **Response Time**: 1-13 blocks depending on consensus alignment (~12 seconds to 2.6 minutes)
 
-See [Liquid Alpha/Consensus-Based Weights](../subnets/consensus-based-weights)
+See [Liquid Alpha/Consensus-Based Weights](../concepts/consensus-based-weights)

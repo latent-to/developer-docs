@@ -6,7 +6,7 @@ title: "Root Network"
 
 :::tip
 
-The Root Network no longer is in operation, so this doc is a kind of historical artifact. The Root Network was decommisioned with the [Dynamic TAO](./dynamic-tao) upgrade in February 2025
+The Root Network no longer is in operation, so this doc is a kind of historical artifact. The Root Network was decommisioned with the [Dynamic TAO](../dynamic-tao/index.md) upgrade in February 2025
 :::
 
 The root network was a special kind of subnet. The root network has the `netuid` of 0.

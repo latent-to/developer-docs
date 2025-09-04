@@ -10,7 +10,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 In Bittensor (like other cryptocurrency applications), a _wallet_ is a tool for proving your identity, signing transactions, accessing your TAO, and managing your stake in subnets.
 This page introduces the core concepts involved.
 
-For detailed procedures for handling wallets and keys, see: [Working with keys](../working-with-keys.md)
+For detailed procedures for handling wallets and keys, see: [Working with keys](./working-with-keys.md)
 
 For detailed security considerations, see: [Coldkey and Hotkey Workstation Security](./coldkey-hotkey-security.md)
 
@@ -52,23 +52,23 @@ Different wallet applications have different levels of functionality:
 
 - The mobile app and Chrome extension allow for staking and transfer of TAO balalnces, but do not include any hotkey management or advanced functionality.
 
-  - Note that the Chome extension is compatible with a hardware wallet, which can be a strong security option. This implies using a laptop as your [coldkey workstation](../getting-started/coldkey-hotkey-security).
+  - Note that the Chome extension is compatible with a hardware wallet, which can be a strong security option. This implies using a laptop as your [coldkey workstation](./coldkey-hotkey-security).
 
-  - The mobile app depends on using a secure phone as a [coldkey workstation](../getting-started/coldkey-hotkey-security).
+  - The mobile app depends on using a secure phone as a [coldkey workstation](./coldkey-hotkey-security).
 
-- `btcli` and the SDK allow for hotkey management and other advanced functionality. These require a laptop as a [coldkey workstation](../getting-started/coldkey-hotkey-security).
+- `btcli` and the SDK allow for hotkey management and other advanced functionality. These require a laptop as a [coldkey workstation](./coldkey-hotkey-security).
 
 :::tip
 Note that you can also check balances on an unsecure device without entering your coldkey private key. For example, using [https://bittensor.com/scan](https://bittensor.com/scan). These website can be considered permissionless wallet applications.
 
-See [Coldkey and Hotkey Workstation Security: Permissionless workstation](../getting-started/coldkey-hotkey-security#permissionless-workstation)
+See [Coldkey and Hotkey Workstation Security: Permissionless workstation](./coldkey-hotkey-security#permissionless-workstation)
 :::
 
 ## The seed phrase a.k.a. mnemonic
 
 The **_seed phrase_** (a.k.a. 'menemonic' or 'recovery phrase') is a series of (at least 12) words that is generated together with your wallet's cryptographic key pair, and which can be used to recover the coldkey private key. This seed phrase is therefore a human-usable way to save access to the cryptographic wallet offline, and to import the cryptographic wallet into a wallet application.
 
-Arguably the most important operational goal when handling Bittensor wallets is to avoid losing or leaking your seed phrase. Make sure you [Handle your Seed Phrase/Mnemonic Securely](../keys/handle-seed-phrase).
+Arguably the most important operational goal when handling Bittensor wallets is to avoid losing or leaking your seed phrase. Make sure you [Handle your Seed Phrase/Mnemonic Securely](./handle-seed-phrase).
 
 ## Wallet applications
 
@@ -113,7 +113,7 @@ It is also required for creating and registering hotkeys, and for subnet managem
 
 **Encryption**: A coldkey is only stored on your disk in an encrypted form, and requires an encryption password.
 
-See [Coldkey and Hotkey Workstation Security](../getting-started/coldkey-hotkey-security) for concrete security details about working with coldkeys.
+See [Coldkey and Hotkey Workstation Security](./coldkey-hotkey-security) for concrete security details about working with coldkeys.
 
 <!-- <center>
 <ThemedImage
@@ -140,7 +140,7 @@ See also [What is the Existential Deposit?](https://support.polkadot.network/sup
 
 Hotkeys are used to register on a subnet as a miner or validator.
 
-[Hotkey workstation security](../getting-started/coldkey-hotkey-security#hotkey-workstation)
+[Hotkey workstation security](./coldkey-hotkey-security#hotkey-workstation)
 
 **Relationship to coldkey**: You can create multiple hotkeys paired to your single coldkey.
 However, when you are validating or mining in a subnet, you are identified by a hotkey in that subnet, so that your coldkey is not exposed.

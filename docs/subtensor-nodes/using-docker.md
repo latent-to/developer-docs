@@ -15,8 +15,6 @@ To run a subtensor node with Docker, follow the below steps.
 We have not tested subtensor node installation scripts on any cloud service. In addition, if you are using Runpod cloud service, then note that this service is already [containerized](https://docs.runpod.io/pods/overview). Hence, the only option available to you for Runpod is to install a subtensor node by [compiling from source](using-source.md). **Note that we have not tested any subtensor installation steps on Runpod.**
 :::
 
-If you are already running a subtensor node using Docker, then go directly to [Step 5 Prepare to Run ](#step-5-prepare-to-run). The below steps 1 through 4 are for first time users only.
-
 ## Prerequisites
 
 Before you begin, make sure you have installed the following on your machine:

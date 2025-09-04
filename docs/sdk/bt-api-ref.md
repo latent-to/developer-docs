@@ -1,5 +1,5 @@
 ---
-title: "Bittensor SDK"
+title: "Bittensor SDK Reference"
 ---
 
 import { HiAcademicCap } from "react-icons/hi2";
@@ -15,10 +15,9 @@ import { GiBrainStem } from "react-icons/gi";
 import { CiWallet } from "react-icons/ci";
 import { SiTrpc } from "react-icons/si";
 
+# Bittensor SDK Reference
 
-# Bittensor SDK
-
-This section presents the Bittensor SDK reference documentation. Follow the below links to specific Python modules or [click here for SDK reference homepage](pathname:///python-api/html/autoapi/bittensor/index.html). 
+This section presents the Bittensor SDK reference documentation. Follow the below links to specific Python modules or [click here for SDK reference homepage](pathname:///python-api/html/autoapi/bittensor/index.html).
 
 <Cards>
     <Card

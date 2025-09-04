@@ -171,7 +171,7 @@ The number of blocks for the stake to become inactive for the purpose of epoch i
 
 The moving average of bonds. The higher bonds yield to higher dividends for validators.
 
-See [Yuma Consensus: bonding mechanics](../yuma-consensus#bonding-mechanics).
+See [Yuma Consensus: bonding mechanics](../learn/yuma-consensus#bonding-mechanics).
 
 ### BondsPenalty
 
@@ -190,7 +190,7 @@ See [Yuma Consensus: bonding mechanics](../yuma-consensus#bonding-mechanics).
 **Description**:
 The magnitude of the penalty subtracted from weights for exceeding consensus, for a specific subnet.
 
-See [Yuma Consensus: Penalizing out-of-consensus bonds](../yuma-consensus#penalizing-out-of-consensus-bonds).
+See [Yuma Consensus: Penalizing out-of-consensus bonds](../learn/yuma-consensus#penalizing-out-of-consensus-bonds).
 
 ### BondsResetEnabled
 
@@ -226,7 +226,7 @@ Determines whether or not bonds are reset-enabled.
 
 How long, in blocks, the consensus weights for a subnet remain time-lock encrypted, preventing weight-copying.
 
-See [Commit Reveal](./commit-reveal)
+See [Commit Reveal](../concepts/commit-reveal)
 
 ### CommitRevealWeightsEnabled
 
@@ -242,7 +242,7 @@ See [Commit Reveal](./commit-reveal)
 
 **Description**:
 
-Enables [Commit Reveal](./commit-reveal)
+Enables [Commit Reveal](../concepts/commit-reveal)
 
 ### Difficulty
 
@@ -294,7 +294,7 @@ The number of blocks after registration when a miner is protected from deregistr
 
 The consensus majority ratio: The weights set by validators who have lower normalized stake than Kappa are not used in calculating consensus, which affects ranks, which affect incentives.
 
-the consensus threshold for bond-clipping during [Yuma Consensus](../yuma-consensus)
+the consensus threshold for bond-clipping during [Yuma Consensus](../learn/yuma-consensus)
 
 ### LiquidAlphaEnabled
 
@@ -310,7 +310,7 @@ the consensus threshold for bond-clipping during [Yuma Consensus](../yuma-consen
 
 **Description**:
 
-Enables the [liquid alpha ](./consensus-based-weights) feature.
+Enables the [liquid alpha ](../concepts/consensus-based-weights) feature.
 
 ### MaxAllowedValidators
 
@@ -567,7 +567,7 @@ Maximum number of neuron registrations allowed per interval. Interval is `Adjust
 **Description**:
 
 Length of subnet tempo in blocks.
-See [Emission](../emissions.md)
+See [Emission](../learn/emissions.md)
 
 ### ToggleTransfer
 
@@ -671,7 +671,7 @@ The following variables are global and/or can only be configured with `root` per
 
 The duration in blocks of the waiting period before a coldkey swap.
 
-See [Rotate/Swap your Coldkey](./schedule-coldkey-swap)
+See [Rotate/Swap your Coldkey](../keys/schedule-coldkey-swap)
 
 <!-- fact check what is this on chain -->
 

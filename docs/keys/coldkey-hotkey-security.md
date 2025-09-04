@@ -9,8 +9,8 @@ This page goes into detail of security concerns for working with coldkeys and ho
 See also:
 
 - [Intro to Wallets, Coldkeys and Hotkeys in Bittensor](./wallets)
-- [Bittensor CLI: Permissions Guide](../btcli-permissions)
-- [Handle your Seed Phrase/Mnemonic Securely](../keys/handle-seed-phrase)
+- [Bittensor CLI: Permissions Guide](../btcli/btcli-permissions)
+- [Handle your Seed Phrase/Mnemonic Securely](./handle-seed-phrase)
 
 Interacting with Bittensor generally falls into one of three levels of security, depending on whether you need to use your coldkey private key, hotkey private key, or neither.
 
@@ -83,7 +83,7 @@ This is required for using `btcli` or the Bittensor Python SDK for advanced use 
 
 Even on a minimal or air-gapped machine, follow standard security hygiene:
 
-- Always [Handle your Seed Phrase/Mnemonic Securely](../keys/handle-seed-phrase).
+- Always [Handle your Seed Phrase/Mnemonic Securely](./handle-seed-phrase).
 - Use strong passwords for your encryption passphrases.
 - Do not reuse credentials across different environments.
 - Keep your workstation’s operating system and critical software updated with the latest security patches.
@@ -94,7 +94,7 @@ Even on a minimal or air-gapped machine, follow standard security hygiene:
 
 If you suspect your coldkey may have been leaked, you can request to swap it out of your wallet, using an extrinsic blockchain transaction. This operation has a 5 day waiting period, during which your coldkey will be locked. The cost of this coldkey swap transaction is 0.1 TAO.
 
-See [Rotate/Swap your Coldkey](../subnets/schedule-coldkey-swap)
+See [Rotate/Swap your Coldkey](./schedule-coldkey-swap)
 
 Effectively, this transfers all of your TAO and alpha stake balances, as well as your `sudo` control over any subnets you have created:
 
