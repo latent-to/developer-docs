@@ -4,17 +4,20 @@ title: "Implementation of the Yuma Consensus Epoch"
 
 # Implementation of the Yuma Consensus Epoch
 
-If [Yuma Consensus (YC](../glossary.md#yuma-consensus) is the heart of Bittensor, the epoch is the heartbeat, a regular pulse of calculations that processes [validator](../glossary.md#validator) weights and determines [emissions](../glossary.md#emission) for participants. This page takes a deep dive into how the code accomplishes its purpose.
+If [Yuma Consensus (YC](../resources/glossary.md#yuma-consensus) is the heart of Bittensor, the epoch is the heartbeat, a regular pulse of calculations that processes [validator](../resources/glossary.md#validator) weights and determines [emissions](../resources/glossary.md#emission) for participants. This page takes a deep dive into how the code accomplishes its purpose.
 
-The epoch function takes as its input the matrix values assigned to each miner by each validator, and performs stake-weighted consensus over them in order to derive the aggregated miner ratings and miner-validator bonds. Miners gain emissions (incentives) based on their aggregate ratings, and validators gain emissions (dividends) based on their bonds to highly rated miners.
+The epoch function takes as its input the matrix of values assigned to each miner by each validator, and returns emission tuples of hotkey, emission for mining, and emission for validating.
 
-1. **Validator weights** submitted during the [tempo](../glossary.md#tempo) period
-2. **[Stake](../glossary.md#stake) calculations** determining validator influence  
-3. **[Consensus](../glossary.md#consensus-score) computation** through stake-weighted medians
-4. **Bond updates** via [exponential moving averages](../glossary.md#exponential-moving-average-ema)
-5. **Emission allocation** to miners and validators
+It derives these by performing stake-weighted consensus (YC) over them in order to derive the aggregated miner ratings and miner-validator bonds. Miners gain emissions (incentives) based on their aggregate ratings, and validators gain emissions (dividends) based on their bonds to highly rated miners.
 
-The function returns emission tuples: `Vec<(T::AccountId, AlphaCurrency, AlphaCurrency)>` representing `([hotkey](../glossary.md#hotkey), miner_emission, validator_emission)`.
+The basic flow of the epoch is:
+
+1. Validator weights are submitted during the preceding [tempo](../resources/glossary.md#tempo).
+2. [Stake weight](../resources/glossary.md#stake-weight) determines validator influence during consensus.
+3. [Consensus](../resources/glossary.md#consensus-score) computation clips validator-miner ratings that outlie the stake-weighted median.
+4. Bonds update via [exponential moving averages](../resources/glossary.md#exponential-moving-average-ema).
+5. Emissions are allocated to miners and validators.
+
 
 ## Core Function: `epoch()`
 
@@ -55,7 +58,7 @@ let active: Vec<bool> = inactive.iter().map(|&b| !b).collect();
 ```
 
 **Activity Determination:**
-A [neuron](../glossary.md#neuron) is considered inactive if:
+A [neuron](../resources/glossary.md#neuron) is considered inactive if:
 ```
 last_update + activity_cutoff < current_block
 ```
@@ -100,7 +103,7 @@ let stake: Vec<I32F32> = vec_fixed64_to_fixed32(filtered_stake);
 
 The `get_stake_weights_for_network()` function combines:
 - **Alpha stake**: Subnet-specific token holdings
-- **TAO stake**: [Root subnet](../glossary.md#root-subnetsubnet-zero) holdings weighted by `[tao_weight](../glossary.md#tao-weight)` (default: 18%)
+- **TAO stake**: [Root subnet](../resources/glossary.md#root-subnetsubnet-zero) holdings weighted by `[tao_weight](../resources/glossary.md#tao-weight)` (default: 18%)
 :::
 
 
@@ -255,7 +258,7 @@ weights = vec_mask_sparse_matrix(
 
 **Weight Filtering:**
 Weights are filtered to remove:
-- **Self-weights**: Prevent validators from voting for themselves (except [subnet creator](../glossary.md#subnet-creator))
+- **Self-weights**: Prevent validators from voting for themselves (except [subnet creator](../resources/glossary.md#subnet-creator))
 - **Outdated weights**: Weights set before target neuron's latest registration
 - **Non-validator weights**: Only permitted validators can influence consensus
 
@@ -298,7 +301,7 @@ if Self::get_commit_reveal_weights_enabled(netuid) {
 }
 ```
 
-**[Commit Reveal](../glossary.md#commit-reveal) Logic:**
+**[Commit Reveal](../resources/glossary.md#commit-reveal) Logic:**
 When enabled, validators must commit to weights before revealing them. Weights are masked if:
 - Validator has an active (non-expired) commit
 - Commit was made before target neuron's registration
@@ -355,11 +358,11 @@ inplace_normalize(&mut ranks);
 let incentive: Vec<I32F32> = ranks.clone();
 ```
 
-**[Trust](../glossary.md#trust) Calculation:**
-- **[Validator trust](../glossary.md#validator-trust)**: Sum of a validator's clipped weights (measures alignment with consensus)
-- **Server trust**: Ratio of post-clip to pre-clip [rank](../glossary.md#rank) (measures consensus adherence)
+**[Trust](../resources/glossary.md#trust) Calculation:**
+- **[Validator trust](../resources/glossary.md#validator-trust)**: Sum of a validator's clipped weights (measures alignment with consensus)
+- **Server trust**: Ratio of post-clip to pre-clip [rank](../resources/glossary.md#rank) (measures consensus adherence)
 
-**Rank → [Incentive](../glossary.md#incentives):**
+**Rank → [Incentive](../resources/glossary.md#incentives):**
 Final normalized ranks become miner incentives, ensuring total incentives sum to 1.0.
 
 ### 9. Bond Processing
@@ -424,7 +427,7 @@ else {
 ```
 
 **Bond Dynamics:**
-- **[Bonds](../glossary.md#validator-miner-bonds)**: Measure validator-miner relationships over time
+- **[Bonds](../resources/glossary.md#validator-miner-bonds)**: Measure validator-miner relationships over time
 - **EMA Updates**: $B_{ij}^{(t)} = \alpha \Delta B_{ij} + (1-\alpha) B_{ij}^{(t-1)}$
 - **Validator Emissions**: Validators earn based on bonds to high-incentive miners
 
@@ -490,7 +493,7 @@ let validator_emission: Vec<AlphaCurrency> = normalized_validator_emission
     .collect();
 ```
 
-**[RAO](../glossary.md#rao) Scaling:**
+**[RAO](../resources/glossary.md#rao) Scaling:**
 Normalized emission proportions are scaled by the total RAO emission amount to get actual currency values.
 
 ### 12. State Updates

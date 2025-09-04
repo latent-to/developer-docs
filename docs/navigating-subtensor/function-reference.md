@@ -66,7 +66,7 @@ The architecture creates a **batch processing pattern**:
 #### `epoch(netuid, rao_emission) -> Vec<(AccountId, AlphaCurrency, AlphaCurrency)>`
 **Main Yuma Consensus Implementation**
 
-Processes validator weights and distributes emissions through the complete [Yuma Consensus](../yuma-consensus.md) algorithm:
+Processes validator weights and distributes emissions through the complete [Yuma Consensus](../learn/yuma-consensus.md) algorithm:
 
 1. **Activity filtering** - Only recently active validators influence consensus
 2. **Stake calculation** - Validator permit assignment based on top-k stake  
@@ -105,7 +105,7 @@ Retrieves the rho parameter used in exponential moving average calculations for 
 Gets the consensus threshold κ (kappa) that determines what fraction of stake must agree for consensus.
 
 **Default:** 0.5 (51% of stake must agree)  
-**Related:** [Consensus clipping mechanism](../yuma-consensus.md#clipping)
+**Related:** [Consensus clipping mechanism](../learn/yuma-consensus.md#clipping)
 
 ---
 
@@ -115,7 +115,7 @@ Gets the consensus threshold κ (kappa) that determines what fraction of stake m
 Retrieves the penalty factor β applied when validator weights exceed consensus.
 
 **Formula:** `W̃_ij = (1-β) W_ij + β W̄_ij`  
-**Purpose:** [Penalizes out-of-consensus bonds](../yuma-consensus.md#penalizing-out-of-consensus-bonds)
+**Purpose:** [Penalizes out-of-consensus bonds](../learn/yuma-consensus.md#penalizing-out-of-consensus-bonds)
 
 ---
 
@@ -153,7 +153,7 @@ Fetches the complete weight matrix as a dense n×n matrix.
 
 Gets the bond matrix B_ij in sparse format, representing validator-miner relationships.
 
-**Connection:** [Bond mechanics](../yuma-consensus.md#bonding-mechanics) in Yuma Consensus
+**Connection:** [Bond mechanics](../learn/yuma-consensus.md#bonding-mechanics) in Yuma Consensus
 
 ---
 
@@ -274,7 +274,7 @@ Resets bonds for a specific account, typically used during deregistration.
 #### `run_coinbase(block_emission: U96F32)`
 **Core Emission Distribution Engine**
 
-Main function that runs every block to implement the [injection phase](../emissions.md#injection) of the emission system.
+Main function that runs every block to implement the [injection phase](../learn/emissions.md#injection) of the emission system.
 
 **Process Flow:**
 1. Calculate price-proportional TAO distribution across subnets
@@ -282,7 +282,7 @@ Main function that runs every block to implement the [injection phase](../emissi
 3. Accumulate pending emissions for epoch distribution
 4. Execute epochs when tempo timing is reached
 
-**Related:** [Price-based distribution](../emissions.md#tao-reserve-injection), [alpha injection](../emissions.md#alpha-reserve-injection)
+**Related:** [Price-based distribution](../learn/emissions.md#tao-reserve-injection), [alpha injection](../learn/emissions.md#alpha-reserve-injection)
 
 ---
 
@@ -305,7 +305,7 @@ Separates epoch results into miner incentives and validator dividends, handling 
 Splits validator dividends between alpha (subnet-specific) and TAO (root) distributions based on stake composition.
 
 **Algorithm:** Proportional split based on alpha vs. TAO stake holdings  
-**Connection:** [Validator stake weight](../emissions.md#extraction) calculations
+**Connection:** [Validator stake weight](../learn/emissions.md#extraction) calculations
 
 ---
 
@@ -371,7 +371,7 @@ Calculates how much stake a validator contributes themselves (vs. delegated stak
 Determines if a subnet should run its epoch based on tempo scheduling.
 
 **Formula:** `(block_number + netuid + 1) % (tempo + 1) == 0`  
-**Connection:** [Tempo-based extraction](../emissions.md#extraction) timing
+**Connection:** [Tempo-based extraction](../learn/emissions.md#extraction) timing
 
 ---
 
@@ -500,5 +500,5 @@ This architecture elegantly coordinates complex economic mechanisms while mainta
 
 ## Documentation Links
 
-- **Conceptual**: [Yuma Consensus](../yuma-consensus.md) | [Emissions](../emissions.md) | [Staking](../staking-and-delegation/delegation.md)
+- **Conceptual**: [Yuma Consensus](../learn/yuma-consensus.md) | [Emissions](../learn/emissions.md) | [Staking](../staking-and-delegation/delegation.md)
 - **Implementation**: [Epoch Details](./epoch.md) | [Coinbase Details](./emissions-coinbase.md) | [Swap Mechanics](./swap-stake.md)

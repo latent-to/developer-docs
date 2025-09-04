@@ -1,0 +1,150 @@
+
+Speaker 9  
+I think so, yeah, cool. What? What exactly do we want to discuss implementation? Or just so how
+
+Speaker 2  
+the experience? You know, what's going to be the experience of the people who are going to start using sub-subnets? Yeah, there is a there is going to be a subtensor release, and then with the release, someone is going to figure out, using polkadot.js (extrinsics to interact with the bittensor blockchain) or whatever, they're going to create one sub subnet, and there will be two sub subnets in one of the subnets, and then people are going to have more than one incentive. Yeah, they're going to have incentive on sub subnet one and incentive on sub subnet two. But how they're going to know, yeah, can they use the CLI to display the but how does it display? Is it in the table? Do you have two incentive columns, and then when we hit 16 sub subnets, eventually, are you going to have 16 sub subnet incentive columns? That's going to be weird, but maybe that's this is the way that it's supposed to be. I don't know,
+
+Speaker 9  
+yeah, look, as far as I understand during our short discussion today, already with Greg, is it still draft and there is still going to be possibly changed logic? I just want to say Dara and JIRA and Michael's time.
+
+Speaker 2  
+No, guys, this is like, getting merged, like tomorrow, so this is not going to massively change, like I just requested, like, hey, please, can we include the parameter to direct the emission proportion? So maybe that's going to be in, or maybe that's going to be out, but I think it's shipping like very soon, Jake is pressing on it, and Greg already was supposed to ship it last week, but he slid with the tests, and he said that's going to finish it on Monday, and the release branch has been cut on the Monday morning, I think, or something like that. So it's not going to be or maybe it's going to be released tomorrow to test it. I don't know.
+
+Speaker 7  
+Yeah, it's, it sounds like that. So I mean, from the doc side, I can start describing this to people, so people can start thinking about the mental model and preparing, and can start playing around with it, with extrinsics, just on local net and stuff like that. Because that's anyone who's going to use it is going to develop with it in in dev mode first. So like, if I can get people set up doing that while we work on the tensor side, making it slick and accessible. Like to me, that's a that's a win. So I want to do that. And so the same info, yeah, I guess Roman that you'll be thinking about in developing the UI, I can start delivering that to people in a preliminary time. Yeah.
+
+Speaker 2  
+Listen, this is like an experimental thing, instead of first doing an interface and then trying to write the documentation about it and see that, oh, it's a little bit awkward. How do we describe this, this bad UI in in a pretty way, right? Instead of doing that, let's think like, okay, so how would we do it in such a way that people using it would have, like, an easy time understanding what's going on, and like writing the documentation for it is going to be a breeze. People won't have to, you know, watch one hour presentation on how to configure sub subnets in the tensor but it's going to be trivial. So that's why I want to take the people who are writing the documentation and people who are writing the CLI and the person who is implementing it on the sub tensor side, and have them actually, can we take someone from Taos stats, Ben or Dan, because they also will have to do some changes, and they're going to be the same type of changes as you can do in the CLI, because They also have a table with the meta graph. And I don't know, maybe they will need a separate tab. Maybe there should be like, A new command, which will say, show me the table of sub sub nets, where you will have the in the first column you will have UID, yeah, and in the second column you will have the hot key, because some people identify their neurons as hotkeys. Which is the right way to do it, by the way. And then you will have in the third column, fourth column, fifth column, you will have incentive in those different sub subnets, right? So you will be able to show which UID in which sub subnet, how well do they do? And you and it would be awesome if you can do like, minus minus JSON, and just get it so that if you want to script it or visualize it or graph it, or put it in an Excel spreadsheet or something, you can easily do that. But maybe that's the wrong way, and you should be doing it like differently, I don't know, yeah, but Okay, so that's all for the
+
+Speaker 7  
+mental model, right? So that's that's helpful for me already, and just like, so I guess what I learned today that the emissions are split between the sub sub nets proportionally, as opposed to, like, my stake weight or something else, which is kind of more what I expected. So that's
+
+Speaker 2  
+what, there is no the stake weight in sub subnets is the same because you have the same validator, same stake, same neurons IP. So
+
+Speaker 7  
+it doesn't matter. If so, if so, if all the validators, like, bail on one of the sub subnets and don't validate on it, that doesn't matter. Or if there's, like, just one minor on sub subnet and no, there's only one validator, and all the other validators are like, doing the real the more, quote, unquote, real work on the other ones. That's not like, there's no concern with stuff like that. It's just kind of all evened out at this point.
+
+Speaker 2  
+Yeah, so let's say a subnet owner creates a new sub subnet and updates his validator, but he forgot to update all of the other validators. Yeah, okay, he can absolutely with having 1001 Alpha direct the whole emission of that new sub sub net, yeah, yeah, yeah, which means if he sets the proportion of the first sub sub net to be 1% and the second sub, sub needs to be 99% he's going to single handedly capture 99% of the incentive, yeah, and I don't have a problem with that, as long as we have visibility and everybody can see what he's doing, and then everybody can run burn code on his ass, right? If, if he does things like that,
+
+Speaker 7  
+and as long as the documentation covers this, and everybody knows that that's something that can
+
+Speaker 2  
+happen, like, if, if it is in the SDK, somewhere, buried deeper, but there is no documentation for it. Then, then, yeah, you could just, like, not do it, that people wouldn't use it the same
+
+Speaker 7  
+way. Yeah. So good, good, good. This is the kind of Yeah. This is the kind of stuff we need to just talk out. So I know, yeah,
+
+Speaker 2  
+that's, that's what I mean. And you know, so like, guys meet and think, like, what people are going to do with it, what wonky stuff is going to happen, how we want to interact with this whole thing. You will need to be able to set the emission proportion. But should you put it in percentages? Or should you use, like you in 16 integers? Or maybe that actually should be 64 bit integers, so that you have some precision and not, you know, chunky rounding around small percentages? Yeah, so forth. If there was one or two sub subnets, whatever it can be used 16. But if there's going to be 16 sub subnets eventually one day, then I think we can afford the 64 bit integer, and it's going to be fine. But then we're going to have nice multiplication, and it's all going to calculate well, but these things just go, yeah, yeah, I'm I'm saying what the scope of the next call is, right? Because if you don't do it on the next call, then nobody's ever going to do it. It's just going to come out randomly, and the user experience is going to be
+
+Speaker 9  
+well. Let me interrupt you, in this case, and ask you one thing. I have an idea, when you guys create this idea, I mean about the sub sub nets, and when you start to work on this, I mean, when I say you, I mean nucleus and you directly. But past week, I went from the vacation, and today I heard for the first time, the second time, actually, about this idea. But I have no idea what is this, if you would like to mean implemented in SDK. Let me understand it in few words, in few in few sentences. What is the main idea of sub subnets?
+
+Speaker 2  
+Okay, okay. So currently, validators set weights for for each neuron, that's it. But now they are going to be able to set weights for for the default sub subnet, which is zero, and the old extrinsic is going to still set it for the sub subnet zero, and there might be, don't have to be depending on how subnets holder configures it, there might be more sub subnets, which is where you can set weights, and there is going to be separate uma run per sub subnet. And emission, the incentive is going to be distributed between the miners, between the sub subnets, right? So you can say, Okay, let's take 10% emission to the second sub subnet so that portion is reserved and it's going to be distributed along the same miners in the same metagraph.
+
+Speaker 9  
+Subnet is part of some real subnet, right? Yeah. So, subnet, so,
+
+Speaker 2  
+so currently the sub sub net zero, every sub net is a single sub sub net zero, and when you set the weights, you set it on the sub sub net zero. But the only columns that are added to the meta graph is weights, so that you can set weights for for each sub sub net and incentive, so that when Yuma assigns the emission, you can read from the chain and see all this is the miner that is best in the first sub subnet, and this is the miner that is best in the second sub subnet. And there are different miners, and one is getting 90% and the second one is getting 10% this point being the winner that gets the entire emission, because that is the proportion of emission between those sub subnets. So for example, in subnet nine, you used to have that they were had three competitions. Yeah, you had to do three models to solve three tasks that they that they had, and they were dividing the emission 60% 30% and 10% for those three competitions. And but this was done on the client side, and the subnet nine guys were able to do it. But it is a little bit cumbersome, and there was no transparency for it on the chain, you couldn't actually tell. You could only tell because the their emission was different, right? If they set it to 30% 30% and 30% that you look at the chain and the guy has two thirds, you don't know why, right? Maybe he won the first competition and the second, or maybe the second and the third, or maybe the first and the third, you don't know. So in order to make it more transparent and easier to do for subnet owners, the set weights and, you know, commit weights and stuff like that, they get a new optional kind of optional parameter. So it's a new extrinsic which has the extra parameter to indicate which sub subnet. There will be a parameter for the subnet which says how much emission goes to which sub subnet. And there will be incentive that will be indicated separately for all sub subnets. And bonds, of course, bonds will be kept separately for all sub subnets, which is,
+
+Unknown Speaker  
+yeah, let
+
+Unknown Speaker  
+me ask a question, Can
+
+Speaker 9  
+the same neuron can be kind of registered in two or more sub subnets within one subnet.
+
+Speaker 2  
+So in one subnet, you're registering to the subnet, and you automatically get, get into all sub subnets that are available. There is, there is no separate registration for for different subnets, right? You have the same validators. They have the same stake. Everything is the same. You just can perform as a, you know, in two competitions, or three competitions, in one competition, or if you don't compete in any competitions, then you probably get that registered.
+
+Speaker 9  
+As far I understand, this feature is more useful for validators, actually, right?
+
+Speaker 2  
+No, it's, it's only for subnet owners. This, feature, it is so that the subnet owners can easily, transparently and more reliably implement multiple incentive mechanisms in their subnet slot. Yeah, I see good point. So currently, some subnet owners were forced to register multiple subnets to have multiple incentive mechanisms so they occupy three subnet slots for three competitions, which doesn't make sense. Nobody wants that. Rabbito says it becomes complicated to know which UID to the register. Actually, no, you sort by emission, and the lowest guy that isn't immune is the first one to go. However, the registration is actually broken right now, and it doesn't do what I just said. So currently, sometimes the registers some other duty that was just standing nearby. I want to fix this. Then also, sometimes immunity is misconfigured, and everybody gets immune, and the validators with high stakes are getting kicked out of the subnet. That's not ideal for that reason. I want to introduce the Mac the
+
+Unknown Speaker  
+minimum number of non immune UIDs,
+
+Speaker 2  
+so if someone misconfigures the immunity period in such a way that it would take more than six slots then take. I.
+
+Speaker 2  
+expose you. It, you have the freedom to do a lot of things, but like, eight is generous, because
+
+Speaker 7  
+you're limiting the emissions to miners in the proportion of each subnet. So if you if you're gonna mine on one subnet. Like, you're only actually mining on the sub sub net. It's proportions of total emissions. It caps how much you can get. So, yeah, right. Like, or you have to mine all the different sub sub nets, or you have to mine as as, like,
+
+Speaker 2  
+you can imagine that there will be two miners, yeah, one will be quite good at competition three, and the another will be quite good at competition five, and they both get the registered all the time, so they will figure out, you know what? Actually, let's combine our UID and I will mine sub subnet three, and you will mine sub subnet five on the same UID. We will mine it right, so that our total emission is higher and we don't get the register.
+
+Speaker 7  
+I guess I thought that's the havoc. I guess that was some, some reason why, like, intuitively, I thought maybe there would be, like, a stake weight thing to to, like the sub, sub that's because that would kind of naturally, like load balance that a little Right? Or could, if not,
+
+Speaker 2  
+owner directs it. He says, Yeah, 5% to that sub, sub net, and that's it.
+
+Speaker 7  
+It it makes more sense because it's how you want the VAT, like the the subnet. Yeah, I like it this way, so the subnet control, but yeah, you just have to think about how it dilutes emissions to miners, right?
+
+Speaker 2  
+Indeed. So for when you view the metagraph in the CLI and when you view the metagraph using the old incentive in the subnet,
+
+Unknown Speaker  
+the same thing available in
+
+Unknown Speaker  
+the SDK. So you can imagine
+
+Speaker 2  
+some sub subnet incentives, and that would be a two dimensional array. One twist
+
+Speaker 7  
+from a UI perspective is like, this is relevant to miners, but this is kind of irrelevant to just stakers who are just like investors, right? Completely. Yeah. So it's almost like we want a different minor view that includes this information than this, and a staker oriented view that does that totally hides this information, right?
+
+Speaker 2  
+That is a very good perspective on it, and see, I don't have it, right? I didn't think about the difference perspective. That is why it is great to have different people working on the user experience together. Yeah,
+
+Speaker 7  
+I would say you want to opt in for this information, so, like, by default, it's like, lumped together. And then maybe you want to, like, be able to unfold, unfold it, and open and close sub sub nets, or something like that. Or like, if that you're, they have a hot key. Like, if your wallets connected and you're a minor like, Well, yeah, it'd be great if it showed, yeah. I don't know something about the ones that you were on, or something like that too, but
+
+Speaker 2  
+you can imagine, uh, like, if you have multiple hotkeys for miners, yeah. And you could imagine, you want to see which miner earns how much on which
+
+Unknown Speaker  
+for just your hotkeys, that
+
+Speaker 2  
+would be awesome. I built a script that that showed me that because CLI didn't have it, because I had, like, a few miners running at some point. And I know my miners union, they created like a dashboard for it, and this, this is the thing that you want to use now, if you mine on multiple UIDs, I think,
+
+Speaker 9  
+look, I return. I'm reading Greg's PR right now, and I don't see that the new information is reflected in meta graph, info, in any meta graph data and even in selective meta graph. Why you wouldn't include
+
+Unknown Speaker  
+that's
+
+Speaker 2  
+this is a problem. You should tell this to Greg immediately, so that he includes it in the in these things. So what happens here is, because,
+
+Speaker 9  
+easiest way, as far as I see, to get it from the already existed calls from Get me the graph. Get selected me the graph.
+
+Speaker 2  
+Yeah, so, so what you can do actually is, let's say you have.
+
+Unknown Speaker  
+But then we would have a lower number of we. Not that.
+
+Unknown Speaker  
+be.
+
+Speaker 2  
+later in the night. So if you guys run into a snag or something in the meeting tomorrow, then send me a DM in which part of the world you're seeing right now. I

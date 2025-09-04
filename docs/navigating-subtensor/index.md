@@ -11,8 +11,8 @@ This section of the docs is designed make the codebase more accessible by guidin
 
 We recommend reading our conceptual explainer docs before diving into the implementation details:
 
-- [Emissions](../emissions.md)
-- [Yuma Consensus](../yuma-consensus.md)
+- [Emissions](../learn/emissions.md)
+- [Yuma Consensus](../learn/yuma-consensus.md)
 - [Staking/Delegation](../staking-and-delegation/delegation.md)
 
 ## Implementation Topics

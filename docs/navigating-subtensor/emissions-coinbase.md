@@ -4,19 +4,19 @@ title: "Coinbase Implementation"
 
 # Coinbase Implementation
 
-This document provides a technical deep dive into the `run_coinbase()` function that orchestrates [TAO](../glossary.md#tao-τ) and alpha [emission](../glossary.md#emission) distribution across [subnets](../glossary.md#subnet). The coinbase mechanism serves as Bittensor's economic heartbeat, connecting [subnet validators](../glossary.md#validator), [subnet miners](../glossary.md#subnet-miner), and [stakers](../glossary.md#staking) through emission distribution.
+This document provides a technical deep dive into the `run_coinbase()` function that orchestrates [TAO](../resources/glossary.md#tao-τ) and alpha [emission](../resources/glossary.md#emission) distribution across [subnets](../resources/glossary.md#subnet). The coinbase mechanism serves as Bittensor's economic heartbeat, connecting [subnet validators](../resources/glossary.md#validator), [subnet miners](../resources/glossary.md#subnet-miner), and [stakers](../resources/glossary.md#staking) through emission distribution.
 
-For conceptual understanding of emission mechanisms, see [Emissions](../emissions.md).
+For conceptual understanding of emission mechanisms, see [Emissions](../learn/emissions.md).
 
-The coinbase mechanism orchestrates Bittensor's tokenomic engine, running every 12-second [block](../glossary.md#block) to ensure continuous flow of liquidity into the network.
+The coinbase mechanism orchestrates Bittensor's tokenomic engine, running every 12-second [block](../resources/glossary.md#block) to ensure continuous flow of liquidity into the network.
 
 Every block, the coinbase mechanism performs three critical functions:
 
 1. **Liquidity Injection**: Adds TAO and subnet-specific alpha tokens to each subnet's liquidity pools.
-2. **Accumulation**: Builds up pending [emissions](../glossary.md#emission) (also known as "alpha outstanding") bound for distribution to [subnet miners](../glossary.md#subnet-miner) and [validators](../glossary.md#validator) during the next [epoch](../glossary.md#tempo).
-3. **Consensus Triggering**: Initiates each subnet's [Yuma Consensus](../glossary.md#yuma-consensus) epochs, the process that distributes emissions to participants within each subnet. Epochs are staggered to avoid overloading the blockchain with the computation involved.
+2. **Accumulation**: Builds up pending [emissions](../resources/glossary.md#emission) (also known as "alpha outstanding") bound for distribution to [subnet miners](../resources/glossary.md#subnet-miner) and [validators](../resources/glossary.md#validator) during the next [epoch](../resources/glossary.md#tempo).
+3. **Consensus Triggering**: Initiates each subnet's [Yuma Consensus](../resources/glossary.md#yuma-consensus) epochs, the process that distributes emissions to participants within each subnet. Epochs are staggered to avoid overloading the blockchain with the computation involved.
 
-For broader conceptual understanding of emission mechanisms, see [Emissions](../emissions.md).
+For broader conceptual understanding of emission mechanisms, see [Emissions](../learn/emissions.md).
 
 ## Core Function: `run_coinbase()`
 
@@ -53,7 +53,7 @@ let subnets_to_emit_to: Vec<NetUid> = subnets
 ```
 
 **Subnet Eligibility Rules:**
-- **[Root Subnet](../glossary.md#root-subnetsubnet-zero) Exclusion**: [Subnet Zero](../glossary.md#root-subnetsubnet-zero) operates differently—it has no [subnet miners](../glossary.md#subnet-miner) and serves as a TAO staking pool for [delegates](../glossary.md#delegate), so it's excluded from direct alpha emissions
+- **[Root Subnet](../resources/glossary.md#root-subnetsubnet-zero) Exclusion**: [Subnet Zero](../resources/glossary.md#root-subnetsubnet-zero) operates differently—it has no [subnet miners](../resources/glossary.md#subnet-miner) and serves as a TAO staking pool for [delegates](../resources/glossary.md#delegate), so it's excluded from direct alpha emissions
 - **Emission Readiness**: Only subnets that have been started (and hence been assigned a `FirstEmissionBlockNumber`) receive emissions.
 ### 2. Emission Allocation to Subnets
 
@@ -105,13 +105,13 @@ For each subnet, the coinbase calculates three critical values that govern the s
 
 #### Alpha In (`alpha_in`): Liquidity Pool Balance  
 - Alpha tokens injected to maintain healthy AMM pool ratios
-- Ensures the TAO injection doesn't create excessive [slippage](../glossary.md#slippage) for [stakers](../glossary.md#staking)
+- Ensures the TAO injection doesn't create excessive [slippage](../resources/glossary.md#slippage) for [stakers](../resources/glossary.md#staking)
 - Calculated as: `tao_in / current_price` during normal operations
 
 #### Alpha Out (`alpha_out`): Participant Rewards
-- Alpha tokens allocated for distribution to [subnet miners](../glossary.md#subnet-miner) and [validators](../glossary.md#validator)
-- Represents the subnet's emission budget for [incentives](../glossary.md#incentives) and validator emissions
-- Forms the reward pool that will be processed during [epochs](../glossary.md#tempo)
+- Alpha tokens allocated for distribution to [subnet miners](../resources/glossary.md#subnet-miner) and [validators](../resources/glossary.md#validator)
+- Represents the subnet's emission budget for [incentives](../resources/glossary.md#incentives) and validator emissions
+- Forms the reward pool that will be processed during [epochs](../resources/glossary.md#tempo)
 
 #### Price Stabilization
 
@@ -168,10 +168,10 @@ The coinbase updates each subnet's liquidity pools.
 
 
 **Critical State Updates:**
-- **`SubnetAlphaIn`**: Alpha reserves backing the AMM, enabling liquid [staking](../glossary.md#staking) and unstaking operations.
-- **`SubnetAlphaOut`**: The emissions pool that [Yuma Consensus](../glossary.md#yuma-consensus) allocates to participants during epochs.
+- **`SubnetAlphaIn`**: Alpha reserves backing the AMM, enabling liquid [staking](../resources/glossary.md#staking) and unstaking operations.
+- **`SubnetAlphaOut`**: The emissions pool that [Yuma Consensus](../resources/glossary.md#yuma-consensus) allocates to participants during epochs.
 - **`SubnetTAO`**: TAO reserves backing the AMM, providing price stability and liquidity for unstaking.
-- **`TotalIssuance`**: Global TAO supply (see [Issuance](../glossary.md#issuance)).
+- **`TotalIssuance`**: Global TAO supply (see [Issuance](../resources/glossary.md#issuance)).
 
 ```rust
 for netuid_i in subnets_to_emit_to.iter() {
@@ -210,9 +210,9 @@ for netuid_i in subnets_to_emit_to.iter() {
 
 ### 5. Subnet Creator Emissions
 
-Before distributing rewards to [subnet miners](../glossary.md#subnet-miner) and [validators](../glossary.md#validator), the system allocates a percentage to [subnet creators](../glossary.md#subnet-creator).
+Before distributing rewards to [subnet miners](../resources/glossary.md#subnet-miner) and [validators](../resources/glossary.md#validator), the system allocates a percentage to [subnet creators](../resources/glossary.md#subnet-creator).
 
-[Subnet creators](../glossary.md#subnet-creator) receive 18% of alpha emissions by default, although they can reduce their cut. The subnet creator cut is calculated before other distributions to ensure creators receive emissions regardless of network performance. Subnet creator emissions accumulate in `PendingOwnerCut` until the next [epoch](../glossary.md#tempo).
+[Subnet creators](../resources/glossary.md#subnet-creator) receive 18% of alpha emissions by default, although they can reduce their cut. The subnet creator cut is calculated before other distributions to ensure creators receive emissions regardless of network performance. Subnet creator emissions accumulate in `PendingOwnerCut` until the next [epoch](../resources/glossary.md#tempo).
 
 
 ```rust
@@ -235,15 +235,15 @@ for netuid_i in subnets_to_emit_to.iter() {
 
 ### 6. Calculating Root Emissions
 
-The [Root Subnet](../glossary.md#root-subnetsubnet-zero) emission system determines how much of each subnet's emissions flows back to TAO holders that have staked into subnet zero, the root subnet.
+The [Root Subnet](../resources/glossary.md#root-subnetsubnet-zero) emission system determines how much of each subnet's emissions flows back to TAO holders that have staked into subnet zero, the root subnet.
 
 $$
 \text{root\_proportion} = \frac{\text{root\_tao} \times \text{tao\_weight}}{\text{root\_tao} \times \text{tao\_weight} + \text{alpha\_issuance}}
 $$
 
 Where:
-- `root_tao`: Total TAO [staked](../glossary.md#staking) in [Root Subnet](../glossary.md#root-subnetsubnet-zero)
-- `tao_weight`: Global parameter ([TAO Weight](../glossary.md#tao-weight)) determining TAO vs alpha influence
+- `root_tao`: Total TAO [staked](../resources/glossary.md#staking) in [Root Subnet](../resources/glossary.md#root-subnetsubnet-zero)
+- `tao_weight`: Global parameter ([TAO Weight](../resources/glossary.md#tao-weight)) determining TAO vs alpha influence
 - `alpha_issuance`: Total alpha tokens for this specific subnet
 
 
@@ -291,7 +291,7 @@ for netuid_i in subnets_to_emit_to.iter() {
 
 ### 7. Epoch Execution
 
-When each subnet's [tempo](../glossary.md#tempo) interval completes, the coinbase triggers execution of its Yuma Consensus *epoch*. Epochs execute when `(block_number + netuid + 1) % (tempo + 1) == 0`, creating a predictable, staggered schedule of epoch execution.
+When each subnet's [tempo](../resources/glossary.md#tempo) interval completes, the coinbase triggers execution of its Yuma Consensus *epoch*. Epochs execute when `(block_number + netuid + 1) % (tempo + 1) == 0`, creating a predictable, staggered schedule of epoch execution.
 
 The coinbase passes accumulated emissions to `drain_pending_emission()`, which executes the [full Yuma Consensus algorithm](./epoch.md) including validator weight processing, consensus calculation, bond updates, and final emission distribution to participants.
 

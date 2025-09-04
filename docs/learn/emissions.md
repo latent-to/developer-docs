@@ -7,22 +7,22 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Emission
 
-Emission is the economic heartbeat of Bittensor—the process that continuously distributes newly created [TAO](./glossary.md#tao-τ) and subnet-specific alpha tokens to network participants who contribute value through [mining](./glossary.md#subnet-miner), [validation](./glossary.md#validator), [staking](./glossary.md#staking), and [subnet creation](./glossary.md#subnet-creator).
+Emission is the economic heartbeat of Bittensor—the process that continuously distributes newly created [TAO](../resources/glossary.md#tao-τ) and subnet-specific alpha tokens to network participants who contribute value through [mining](../resources/glossary.md#subnet-miner), [validation](../resources/glossary.md#validator), [staking](../resources/glossary.md#staking), and [subnet creation](../resources/glossary.md#subnet-creator).
 
 ## Understanding the Two-Stage Process
 
 Bittensor's emission system operates through two coordinated stages that work together to ensure fair, market-driven distribution:
 
 ### Stage 1: Injection into Subnets
-Every [block](./glossary.md#block), new liquidity flows into [subnet](./glossary.md#subnet) pools based on market performance. [Subnets](./glossary.md#subnet) with higher-value alpha tokens attract more TAO, creating a competitive marketplace for innovation.
+Every [block](../resources/glossary.md#block), new liquidity flows into [subnet](../resources/glossary.md#subnet) pools based on market performance. [Subnets](../resources/glossary.md#subnet) with higher-value alpha tokens attract more TAO, creating a competitive marketplace for innovation.
 
 ### Stage 2: Extraction by Participants  
-Every [tempo](./glossary.md#tempo) (360 blocks, ~72 minutes), accumulated rewards are distributed to participants through [Yuma Consensus](./glossary.md#yuma-consensus), which evaluates performance and determines who deserves what share.
+Every [tempo](../resources/glossary.md#tempo) (360 blocks, ~72 minutes), accumulated rewards are distributed to participants through [Yuma Consensus](../resources/glossary.md#yuma-consensus), which evaluates performance and determines who deserves what share.
 
 This two-stage approach creates stability while maintaining responsiveness—rewards accumulate gradually but are distributed based on demonstrated value creation.
 
 ## Technical References
-- **Implementation Details**: [Coinbase Implementation](./navigating-subtensor/emissions-coinbase.md)
+- **Implementation Details**: [Coinbase Implementation](../navigating-subtensor/emissions-coinbase.md)
 - **Consensus Mechanics**: [Yuma Consensus](./yuma-consensus.md)
 - **Mathematical Framework**: [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view)
 
