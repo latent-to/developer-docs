@@ -115,7 +115,7 @@ For each subnet, the coinbase calculates three critical values that govern the s
 
 #### Price Stabilization
 
-When a subnet's alpha price falls below its expected emission proportion, the a mechanism automatically intervenes to maintain market stability:
+When a subnet's alpha price falls below its expected emission proportion, the mechanism automatically intervenes to maintain market stability:
 1. **Price Support**: Reduces TAO injection to prevent further price depression
 2. **Market Making**: Uses the "saved" TAO to buy alpha from the pool, supporting the token price
 
