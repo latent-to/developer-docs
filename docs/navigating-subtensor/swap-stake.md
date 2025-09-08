@@ -79,10 +79,16 @@ Self::stake_into_subnet(
 ```
 
 The `stake_into_subnet` function handles the AMM conversion:
-- Calls `T::SwapInterface::swap()` for Dynamic subnets (mechanism_id = 1)
 - Uses 1:1 conversion for Stable subnets (mechanism_id = 0)
+- Calls `swap_tao_for_alpha()` for dynamic subnets (mechanism_id = 1)
 - Updates subnet TAO and Alpha reserves
 - Credits Alpha tokens to the hotkey's stake
+
+The `swap_tao_for_alpha()` function:
+- Executes the actual AMM swap operation
+- Calculates the amount of Alpha tokens received for the given TAO input
+- Handles slippage and fee calculations
+- Updates the subnet's liquidity pool reserves
 
 ##### 4. Event Emission
 ```rust
@@ -144,9 +150,15 @@ Self::add_balance_to_coldkey_account(&coldkey, tao_received.into())?;
 
 The `unstake_from_subnet` function:
 - Removes Alpha from hotkey's stake
-- Calls `T::SwapInterface::swap()` to convert Alpha → TAO
+- Calls `swap_alpha_for_tao()` to convert Alpha → TAO
 - Updates subnet reserves (Alpha increases, TAO decreases)
 - Returns the TAO amount received after fees
+
+The `swap_alpha_for_tao()` function:
+- Executes the actual AMM swap operation
+- Calculates the amount of TAO tokens received for the given Alpha input
+- Handles slippage and fee calculations
+- Updates the subnet's liquidity pool reserves
 
 ## Price Protection
 

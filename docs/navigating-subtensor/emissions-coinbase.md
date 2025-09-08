@@ -29,7 +29,7 @@ pub fn run_coinbase(block_emission: U96F32)
 **Parameters**:
 - `block_emission`: Total TAO to distribute across all subnets this block. Currently 1 $\tau$, this amount will follow a halving schedule.
 
-The function implements an eight-step process that handles liquidity injection, reward accumulation, epoch triggering, and EMA updates.
+The function implements a multistep process that handles liquidity injection, reward accumulation, epoch triggering, and EMA updates.
 
 ## Implementation Flow
 
@@ -68,22 +68,7 @@ for netuid_i in subnets_to_emit_to.iter() {
 ```
 
 **EMA Price Smoothing Implementation:**
-The moving price for each subnet is calculated using a custom [EMA](../learn/ema) that adapts its responsiveness based on subnet maturity:
-
-$$
-\alpha = \text{base\_alpha} \times \frac{\text{blocks\_since\_start}}{\text{blocks\_since\_start} + \text{halving\_blocks}}
-$$
-
-$$
-\text{moving\_price}^{(t)} = \alpha \times \text{current\_price} + (1-\alpha) \times \text{moving\_price}^{(t-1)}
-$$
-
-Where:
-- **base_alpha**: ~0.000003 (approximately 30 days to reach 50% of true price)
-- **halving_blocks**: 201,600 blocks (~4 weeks at 12-second blocks)
-- **blocks_since_start**: Blocks elapsed since subnet creation
-
-This creates a **double-smoothing effect**: new subnets have extremely slow price adaptation (preventing launch manipulation), while mature subnets respond more quickly to legitimate market signals.
+The moving price for each subnet is calculated using a custom [EMA](../learn/ema) that adapts its responsiveness based on subnet maturity. This creates a **double-smoothing effect**: new subnets have extremely slow price adaptation (preventing launch manipulation), while mature subnets respond more quickly to legitimate market signals.
 
 **Price-Driven Distribution:**
 Each subnet receives TAO emissions proportional to its EMA-smoothed alpha token price:
@@ -94,9 +79,9 @@ $$
 
 **EMA Update Timing:** The EMA is updated **after** being used for emission calculations in each `run_coinbase()` call ([Line 246](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/run_coinbase.rs#L246)), ensuring that current block emissions are based on the previous block's smoothed prices while continuously updating the moving average for future calculations.
 
-### 3. Three Token Pool Injections
+### 3. Token Pool Injections and Emissions
 
-For each subnet, the coinbase calculates three critical values that govern the subnet's token economics and determine how fresh liquidity flows into the system.
+For each subnet, the coinbase calculates critical values that govern the subnet's token economics and determine how fresh liquidity flows into the system.
 
 #### TAO In (`tao_in`): Fresh Liquidity Injection
 - Represents new TAO flowing into the subnet's liquidity pool
@@ -108,18 +93,18 @@ For each subnet, the coinbase calculates three critical values that govern the s
 - Ensures the TAO injection doesn't create excessive [slippage](../resources/glossary.md#slippage) for [stakers](../resources/glossary.md#staking)
 - Calculated as: `tao_in / current_price` during normal operations
 
-#### Alpha Out (`alpha_out`): Participant Rewards
-- Alpha tokens allocated for distribution to [subnet miners](../resources/glossary.md#subnet-miner) and [validators](../resources/glossary.md#validator)
+#### Alpha Out (`alpha_out`): Participant Emissions
+- Alpha tokens emitted for distribution to [miners](../resources/glossary.md#subnet-miner) and [subnet validators](../resources/glossary.md#validator)
 - Represents the subnet's emission budget for [incentives](../resources/glossary.md#incentives) and validator dividends
 - Forms the reward pool that will be processed during [epochs](../resources/glossary.md#tempo)
 
 #### Subsidy Mechanism
 
 When a subnet's alpha price falls below its expected emission proportion, the mechanism automatically intervenes to maintain market stability:
-1. **Price Support**: Reduces TAO injection to prevent further price depression
-2. **Market Making**: Uses the "saved" TAO to buy alpha from the pool, supporting the token price
+1. **Price Neutral Injection**: Downscales both TAO and ALPHA injected to provide a price neutral injection
+2. **Market Making**: Uses the excess TAO for buying pressure on alpha tokens
 
-This creates a floor for alpha token prices while maintaining the market-driven allocation philosophy.
+This encourages alpha prices to move towards their emission ratio, or to encourage the sum of prices to be at/above 1.
 
 ```rust
 for netuid_i in subnets_to_emit_to.iter() {
@@ -169,7 +154,7 @@ The coinbase updates each subnet's liquidity pools.
 
 **Critical State Updates:**
 - **`SubnetAlphaIn`**: Alpha reserves backing the AMM, enabling liquid [staking](../resources/glossary.md#staking) and unstaking operations.
-- **`SubnetAlphaOut`**: The emissions pool that [Yuma Consensus](../resources/glossary.md#yuma-consensus) allocates to participants during epochs.
+- **`SubnetAlphaOut`**: Accumulated emissions and/or ALPHA outside the pool (ALPHA emissions + ALPHA taken out from pool).
 - **`SubnetTAO`**: TAO reserves backing the AMM, providing price stability and liquidity for unstaking.
 - **`TotalIssuance`**: Global TAO supply (see [Issuance](../resources/glossary.md#issuance)).
 
@@ -210,9 +195,9 @@ for netuid_i in subnets_to_emit_to.iter() {
 
 ### 5. Subnet Owner Emissions
 
-Before distributing rewards to [subnet miners](../resources/glossary.md#subnet-miner) and [validators](../resources/glossary.md#validator), the system allocates a percentage to [subnet creators](../resources/glossary.md#subnet-creator).
+Before distributing rewards to [miners](../resources/glossary.md#subnet-miner) and [subnet validators](../resources/glossary.md#validator), the system allocates a percentage to [subnet owners](../resources/glossary.md#subnet-creator).
 
-[Subnet creators](../resources/glossary.md#subnet-creator) receive 18% of alpha emissions by default, although they can reduce their cut. The subnet creator cut is calculated before other distributions to ensure creators receive emissions regardless of network performance. Subnet creator emissions accumulate in `PendingOwnerCut` until the next [epoch](../resources/glossary.md#tempo).
+[Subnet owners](../resources/glossary.md#subnet-creator) receive 18% of alpha emissions. The subnet owner cut is calculated before other distributions so that the owner cut can be passed to `drain_pending_emission` (there was a bug before where the owner cut was incorrectly calculated after). Subnet owner emissions accumulate in `PendingOwnerCut` until the next [epoch](../resources/glossary.md#tempo).
 
 
 ```rust
@@ -233,9 +218,9 @@ for netuid_i in subnets_to_emit_to.iter() {
 ```
 
 
-### 6. Calculating Root Emissions
+### 6. Calculating Root Proportion
 
-The [Root Subnet](../resources/glossary.md#root-subnetsubnet-zero) emission system determines how much of each subnet's emissions flows back to TAO holders that have staked into subnet zero, the root subnet.
+The root proportion on each subnet determines how much of the dividends (41% of ALPHA emissions) are being sold for each block and being distributed to stakers on root.
 
 $$
 \text{root\_proportion} = \frac{\text{root\_tao} \times \text{tao\_weight}}{\text{root\_tao} \times \text{tao\_weight} + \text{alpha\_issuance}}
@@ -267,6 +252,7 @@ for netuid_i in subnets_to_emit_to.iter() {
     let pending_alpha: U96F32 = alpha_out_i.saturating_sub(root_alpha);
     
     // Convert root alpha to TAO through AMM (if not subsidized)
+    // If the subnet is subsidized by the Subsidy Mechanism then no ALPHA will be sold - so the dividends for root are stopped.
     if !subsidized {
         let swap_result = Self::swap_alpha_for_tao(
             *netuid_i,
@@ -318,15 +304,4 @@ for &netuid in subnets.iter() {
 ```
 
 
-### 8. EMA Price Update 
-
-**After** epoch execution completes, the system updates each subnet's moving price for future calculations:
-
-```rust
-
-for netuid_i in subnets_to_emit_to.iter() {
-    // Update moving prices after using them above.
-    Self::update_moving_price(*netuid_i);
-}
-```
 
