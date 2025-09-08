@@ -92,7 +92,7 @@ $$
 \text{tao\_allocation}_i = \text{block\_emission} \times \frac{\text{moving\_price}_i}{\sum_{j} \text{moving\_price}_j}
 $$
 
-**EMA Update Timing:** The EMA is updated **after** being used for emission calculations in each `run_coinbase()` call (line 279), ensuring that current block emissions are based on the previous block's smoothed prices while continuously updating the moving average for future calculations.
+**EMA Update Timing:** The EMA is updated **after** being used for emission calculations in each `run_coinbase()` call ([Line 246](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/run_coinbase.rs#L246)), ensuring that current block emissions are based on the previous block's smoothed prices while continuously updating the moving average for future calculations.
 
 ### 3. Three Token Pool Injections
 
@@ -110,10 +110,10 @@ For each subnet, the coinbase calculates three critical values that govern the s
 
 #### Alpha Out (`alpha_out`): Participant Rewards
 - Alpha tokens allocated for distribution to [subnet miners](../resources/glossary.md#subnet-miner) and [validators](../resources/glossary.md#validator)
-- Represents the subnet's emission budget for [incentives](../resources/glossary.md#incentives) and validator emissions
+- Represents the subnet's emission budget for [incentives](../resources/glossary.md#incentives) and validator dividends
 - Forms the reward pool that will be processed during [epochs](../resources/glossary.md#tempo)
 
-#### Price Stabilization
+#### Subsidy Mechanism
 
 When a subnet's alpha price falls below its expected emission proportion, the mechanism automatically intervenes to maintain market stability:
 1. **Price Support**: Reduces TAO injection to prevent further price depression
@@ -145,7 +145,7 @@ for netuid_i in subnets_to_emit_to.iter() {
     
     if price_i < tao_in_ratio {    
         tao_in_i = price_i.saturating_mul(block_emission);
-        alpha_in_i = alpha_emission_i;
+        alpha_in_i = block_emission;
         let difference_tao: U96F32 = default_tao_in_i.saturating_sub(tao_in_i);
             
         let buy_swap_result = Self::swap_tao_for_alpha(
@@ -208,7 +208,7 @@ for netuid_i in subnets_to_emit_to.iter() {
 }
 ```
 
-### 5. Subnet Creator Emissions
+### 5. Subnet Owner Emissions
 
 Before distributing rewards to [subnet miners](../resources/glossary.md#subnet-miner) and [validators](../resources/glossary.md#validator), the system allocates a percentage to [subnet creators](../resources/glossary.md#subnet-creator).
 
