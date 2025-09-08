@@ -69,7 +69,7 @@ We will create a campaign whose purpose is to register a leased subnet on finali
    :::info
 
    - Set the `cap` value higher than the projected subnet lock cost plus proxy deposit (and a small fee buffer). On most dev setups the baseline lock cost is 1,000 TAO (1,000,000,000,000 RAO). If `cap` equals the lock cost exactly, the lease coldkey may lack enough to pay proxy deposits and finalize can fail with insufficient balance.
-   - If your local subtensor node uses non-fast blocks, the minimum duration for a crowdloan is one week (≈ 50,400 blocks). Therefore, the `end` value must be set at least 50,400 blocks after the current block.
+   - If your local subtensor node uses non-fast blocks, the minimum duration for a crowdloan is one week (≈ 50,400 blocks). Therefore, the `end` value must be set at least 50,400 blocks after the current block. This limitation also applies on testnet and mainnet.
      :::
 
 5. Click **Submit Transaction** and sign with the `creator` account.
@@ -151,12 +151,8 @@ The crowdload can be finalized by the creator when the end block has passed and 
 4. Select `crowdloan.finalize(crowdloan_id)` and put the ID of the crowdload.
 5. Submit and sign.
 
-:::info
-
-- If `target_address` was provided, the raised amount is transferred there.
-- The stored `subtensor.register_leased_network` call executes with creator origin, and the lease is created.
-  :::
-
+<details>
+<summary><strong>Show Event Output</strong></summary>
 ```
 system.ExtrinsicSuccess
 balances.Withdraw (x2)
@@ -182,14 +178,16 @@ crowdloan.Finalized
 balances.Deposit
 transactionPayment.TransactionFeePaid
 extrinsic event
-
 ```
+</details>
 
 :::info
 
-Even if the `cap` has been raised, the crowdloan cannot be finalized before the `end` block. Finalizing before the contribution period ends fails with `ContributionPeriodNotEnded`.
-
-:::
+- Even if the `cap` has been raised, the crowdloan cannot be finalized before the `end` block. Finalizing before the contribution period ends fails with a `ContributionPeriodNotEnded` event.
+- If `target_address` was provided, the raised amount is transferred there.
+- The stored `subtensor.register_leased_network` call executes with creator origin, and the subnet lease is created.
+- The created subnet lease includes the coldkey and hotkey of the proxy wallet that manages the subnet. See [Get the lease coldkey](#get-the-lease-coldkey).
+  :::
 
 ### Verify the leased subnet
 
@@ -203,7 +201,7 @@ Finalizing the crowdloan registers a new subnet and creates a dedicated proxy fo
   btcli subnets list --network local
   ```
 
-  This command lists all created subnets on the chain. Notice the addition of a new subnet among the listed subnets. Notice netuid `2` in the following output.
+  This command lists all created subnets on the chain. Notice the addition of a new subnet among the listed subnets—netuid `2` in the following output.
 
 <details>
 <summary><strong>Show Sample Output</strong></summary>
@@ -229,41 +227,34 @@ Netuid  ┃ Name      ┃ (Τ_in/α_in) ┃ (α * Price) ┃ Emission (Τ) ┃ P
 
 </details>
 
-- **From storage**:
-
-  1. From the **Developer** dropdown, navigate to **Chain state** → **Storage**.
-  2. Click the **selected state query** menu and select `subtensorModule.SubnetLeases(lease_id)` to display details of the subnet lease, including the beneficiary, emission share, end block, lease coldkey and hotkey, netuid, and creation cost.
-  3. Click the **+** icon to run the query.
-
-Also, verify a proxy was added for the beneficiary:
-
-- **From storage**:
-  1. From the **Developer** dropdown, navigate to **Chain state** → **Storage**.
-  2. Click the **selected state query** menu and select `proxy.Proxies(lease_coldkey)` to display the `SubnetLeaseBeneficiary` delegate
-
 ## Step 6: Start the leased subnet (via proxy)
 
-1. Build the inner call (to get its encoding) [optional]
+Before starting the subnet, you must first get the address of the proxy wallet specified in the subnet lease, as this wallet controls the subnet.
 
-- Developer → Extrinsics → pick the inner call you want (e.g., `subtensorModule.start_call`) and fill its arguments.
-- Copy the “encoded call data” (hex starting with `0x…`).
+#### **Get the lease coldkey**
 
-2. Submit the proxy
-
-- Using account: your beneficiary
-- Module/method: `proxy → proxy`
-- Fields:
-  - real: `lease.coldkey` from `subtensorModule.subnetLeases(lease_id)`
-  - forceProxyType: `SubnetLeaseBeneficiary`
-  - call: either expand and select the inner call again with arguments, or paste the encoded call hex from step 1
-- Leave delay at 0 → Submit and sign.
+1. From the **Developer** dropdown, navigate to **Chain state** → **Storage**.
+2. Click the **selected state query** menu and select `subtensorModule.SubnetLeases(lease_id)` to display details of the subnet lease, including the beneficiary, emission share, end block, lease coldkey and hotkey, netuid, and creation cost.
+3. Click the **+** icon to run the query.
+4. Copy the value of the `lease.coldkey` in the response. You can add the lease coldkey to the address book on the Polkadot.js web app so that it's selectable in the UI.
 
 :::tip
 
-- Add the `lease.coldkey` to your Address book so it’s selectable in the UI.
-- Verify the proxy exists on‑chain before submitting: `proxy.Proxies(lease_coldkey)` should show your beneficiary with type `SubnetLeaseBeneficiary`.
+- In your local environment, the `lease_id` would be the same as the ID of the crowdloan created. You can confirm the `lease_id` by examining the block where the subnet lease was created for a `subtensorModule.SubnetLeaseCreated` event.
 
-:::
+  :::
+
+Next, follow the following steps to start the subnet:
+
+1. Go to **Developer** → **Extrinsics**.
+2. Under “**using the selected account**”, pick the crowdloan "`creator`" account.
+3. Under “**submit the following extrinsic**”, choose module `proxy`, call `proxy(real, forceProxyType, call)`.
+4. Fill the parameters:
+
+   - `real`: enter the `lease.coldkey` gotten from the previous query.
+   - `forceProxyType`: click the toggle and then choose the `SubnetLeaseBeneficiary`option in the dropdown.
+   - `call`: choose `subtensorModule.start_call` and then enter the netuid of the subnet you want to start.
+   - Submit and sign.
 
 ## Observe dividends distribution
 
@@ -294,11 +285,21 @@ Before finalization:
 
 ## Troubleshooting
 
-- Finalize fails with CapNotRaised
+- Call fails with `InvalidCrowdloadId`
+  - Ensure that the crowdloan ID exists.
+- Call fails with `InvalidOrigin`
+  - Ensure that the selected account that is responsible for signing the transaction.
+- Call fails with `BlockDurationTooShort`
+  - Ensure that the crowdloan `end` is set at least one week away—~50,400 blocks.
+- Call fails with `BlockDurationTooLong`
+  - Ensure that the crowdloan `end` is set between a week to 2 months away.
+- Contribution call fails with `ContributionPeriodEnded`
+  - Extend the `end` value on the crowdloan using the `crowdloan.updateEnd` extrinsic.
+- Finalize fails with `CapNotRaised`
   - Ensure total `raised` equals `cap`. Add contributions or adjust `cap` via `update_cap` (creator‑only) before `finalize`.
-- Finalize fails with ContributionPeriodNotEnded
+- Finalize fails with `ContributionPeriodNotEnded`
   - Wait until the `end` block is reached.
-- Finalize fails with CallUnavailable
+- Finalize fails with `CallUnavailable`
   - Ensure the nested call was supplied during `create`. The pallet stores it as a preimage; if unavailable, it errors and drops the reference.
 - Refund does nothing
   - Refunds only after `end` and only for non‑finalized campaigns. It processes up to `RefundContributorsLimit` contributors per call.
