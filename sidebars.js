@@ -45,6 +45,19 @@ const sidebars = {
         "learn/yc3-blog",
         "learn/yuma3-migration-guide",
         "learn/fees",
+        {
+      type: "category",
+      label: "Navigating Subtensor Codebase",
+      link: { type: "doc", id: "navigating-subtensor/index" },
+      collapsible: true,
+      collapsed: true,
+      items: [
+        "navigating-subtensor/emissions-coinbase",
+        "navigating-subtensor/epoch",
+        "navigating-subtensor/swap-stake",
+      ],
+    },
+        "resources/community-links",
       ],
     },
     {
@@ -199,6 +212,7 @@ const sidebars = {
         "subtensor-nodes/subtensor-storage-query-examples",
       ],
     },
+    
     {
       type: "category",
       label: "Bittensor EVM",
