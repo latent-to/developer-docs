@@ -100,6 +100,26 @@ Related:
 **Error**: `ZeroMaxAmount`  
 **Description**: The executable amount must be greater than zero.
 
+### Error Code 15
+
+**Error**: `InvalidRevealRound`  
+**Description**: The executable amount must be greater than zero.
+
+### Error Code 16
+
+**Error**: `CommitNotFound`  
+**Description**: The executable amount must be greater than zero.
+
+### Error Code 17
+
+**Error**: `CommitBlockNotInRevealRange`  
+**Description**: The executable amount must be greater than zero.
+
+### Error Code 18
+
+**Error**: `InputLengthsUnequal`  
+**Description**: Attempted to batch reveal weights with mismatched vector input lenghts.
+
 ### Error Code 255
 
 **Error**: `BadRequest`  
