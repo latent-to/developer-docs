@@ -201,7 +201,7 @@ const config = {
           
           {
             position: "left",
-            label: "SubtensorAPI",
+            label: "Announcements",
             to: "learn/announcements",
           },
           {
