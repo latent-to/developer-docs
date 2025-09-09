@@ -103,17 +103,17 @@ Related:
 ### Error Code 15
 
 **Error**: `InvalidRevealRound`  
-**Description**: The executable amount must be greater than zero.
+**Description**: The provided reveal round is outdated or invalid.
 
 ### Error Code 16
 
 **Error**: `CommitNotFound`  
-**Description**: The executable amount must be greater than zero.
+**Description**: The referenced validator commit does not exist.
 
 ### Error Code 17
 
 **Error**: `CommitBlockNotInRevealRange`  
-**Description**: The executable amount must be greater than zero.
+**Description**: The referenced commit cannot be revealed in the current block range.
 
 ### Error Code 18
 
