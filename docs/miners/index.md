@@ -131,6 +131,12 @@ style={{width: 990}}
 Emissions may not always appear as a smooth curve. Emission might only update at the end of tempo periods, or subnet validators might do more frequent internal updates. For example, a validator might detect new miners and refresh every 100 blocks.
 :::
 
+## Auto Staking
+
+Miners can enable auto staking to automatically stake their mining income to a validator of their choice. This feature streamlines compound staking by eliminating the need for manual staking operations.
+
+See [Auto Staking for Miners](./autostaking) for detailed information on setting up and managing auto staking.
+
 ## Moving a subnet miner to a different machine
 
 Once your subnet miner has begun mining, you can move it to a different machine, but proceed with caution.
