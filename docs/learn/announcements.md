@@ -4,7 +4,7 @@ title: "Announcements and Developments"
 # Announcements and Developments
 
 ## Sub-Subnets (Major Feature Launch)
-**Status**: Predicted deploy September 12, 2024 
+**Status**: On chain (extrinsice only; SDK and BTCLI support in develoment)
 - **What**: Sub-subnets allow subnet creators to apportion emissions across multiple sub-subnets, each running Yuma Consensus independently
 - **Key Features**:
   - Each sub-subnet has its own weight matrix and independent emissions
