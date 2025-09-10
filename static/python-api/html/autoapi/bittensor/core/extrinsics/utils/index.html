@@ -399,6 +399,7 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_extrinsic_fee"><code class="docutils literal notranslate"><span class="pre">get_extrinsic_fee()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_old_stakes"><code class="docutils literal notranslate"><span class="pre">get_old_stakes()</span></code></a></li>
 </ul>
 </li>
@@ -420,7 +421,10 @@
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.get_old_stakes" title="bittensor.core.extrinsics.utils.get_old_stakes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_old_stakes</span></code></a>(wallet, hotkey_ss58s, netuids, all_stakes)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.get_extrinsic_fee" title="bittensor.core.extrinsics.utils.get_extrinsic_fee"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_extrinsic_fee</span></code></a>(call, keypair, subtensor[, netuid])</p></td>
+<td><p>Get extrinsic fee for a given extrinsic call and keypair for a given SN's netuid.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.get_old_stakes" title="bittensor.core.extrinsics.utils.get_old_stakes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_old_stakes</span></code></a>(wallet, hotkey_ss58s, netuids, all_stakes)</p></td>
 <td><p>Retrieve the previous staking balances for a wallet's hotkeys across given netuids.</p></td>
 </tr>
 </tbody>
@@ -429,6 +433,25 @@
 </section>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.utils.get_extrinsic_fee">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.utils.</span></span><span class="sig-name descname"><span class="pre">get_extrinsic_fee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">call</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keypair</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.utils.get_extrinsic_fee" title="Link to this definition">#</a></dt>
+<dd><p>Get extrinsic fee for a given extrinsic call and keypair for a given SN’s netuid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – The Subtensor instance.</p></li>
+<li><p><strong>call</strong> (<em>scalecodec.GenericCall</em>) – The extrinsic call.</p></li>
+<li><p><strong>keypair</strong> (<em>bittensor_wallet.Keypair</em>) – The keypair associated with the extrinsic.</p></li>
+<li><p><strong>netuid</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The SN’s netuid.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Balance object representing the extrinsic fee in RAO.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.core.extrinsics.utils.get_old_stakes">
 <span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.utils.</span></span><span class="sig-name descname"><span class="pre">get_old_stakes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey_ss58s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_stakes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/core/extrinsics/utils.html#get_old_stakes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.extrinsics.utils.get_old_stakes" title="Link to this definition">#</a></dt>
@@ -505,6 +528,7 @@ a default balance of zero is returned.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_extrinsic_fee"><code class="docutils literal notranslate"><span class="pre">get_extrinsic_fee()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_old_stakes"><code class="docutils literal notranslate"><span class="pre">get_old_stakes()</span></code></a></li>
 </ul>
 </li>
