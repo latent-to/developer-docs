@@ -3,6 +3,9 @@ title: "Announcements and Developments"
 ---
 # Announcements and Developments
 
+This page tracks recent and upcoming changes to the Bittensor protocol and other major events in the Bittensor ecosystem.
+
+
 ## Sub-Subnets (Major Feature Launch)
 
 **Status**: Ready for deployment on September 12, 2025
