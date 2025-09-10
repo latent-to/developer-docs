@@ -48,7 +48,7 @@ A percentage fee will be deducted from emissions bound to validator hotkeys thro
 **Status**: Implemented (Merged)
 - **What**: Miners can automatically stake their mining income to a validator of their choice
 - **Implementation**: 
-  - New extrinsic `set_coldkey_auto_stake_hotkey` (call index 114)
+  - New extrinsics `set_coldkey_auto_stake_hotkey` and `get_coldkey_auto_stake_hotkey`
   - Set per coldkey, affects all miner hotkeys
   - No transaction fees required
   - Reduces sell pressure by allowing automatic delegation of mining rewards
