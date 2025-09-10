@@ -75,15 +75,6 @@ Each sub-subnet has its own:
 - **Separate incentive tracking**: Each sub-subnet tracks incentives independently
 - **Extended metagraph**: New columns for sub-subnet weights and incentives
 
-### API Changes
-
-???
-
-
-### Best Practices
-
-???
-
 ## What Should Subnet Creators/Developers Know?
 
 ### Core Changes
@@ -102,10 +93,6 @@ Each sub-subnet has its own:
 - **Validation**: Ensure proportions sum to 100% (or equivalent in your chosen representation)
 - **Flexibility**: Design for future expansion (the discussion mentioned potential for up to 16 sub-subnets)
 
-### Design Considerations and Best Practices
-
-???
-
 ### Implementating Sub-Subnets in your Subnet
 
 
@@ -118,7 +105,7 @@ Consider a subnet focused on AI tasks that wants to evaluate three different cap
 - **Sub-subnet 2**: Code completion (10% of emissions to miners and validators)
 
 :::info
-See [Emissions](../emissions) for the breakdown of emissions between miners, validators, stakers, and subnet creators.
+See [Emissions](../learn/emissions) for the breakdown of emissions between miners, validators, stakers, and subnet creators.
 :::
 Validators would:
 - Set weights for each miner across all three sub-subnets
@@ -132,7 +119,6 @@ For each subnet, the subnet creator keeps 18% of emissions, 41% is allocated to 
 - Sub-subnet 0 (60%): 100 $\tau$ *.41 * .6 = 24.6
 - Sub-subnet 1 (30%): 100 $\tau$ *.41 * .3 = 12.3
 - Sub-subnet 2 (10%): 100 $\tau$ *.41 * .1 = 4.1
-
 
 
 A miner who excels in sub-subnet 0 but performs poorly in others might receive more emissions than a miner who performs moderately across all sub-subnets, depending on the emission proportions and their relative performance.
@@ -149,10 +135,9 @@ UID | Hotkey | Stake | Sub-subnet 0 Weights | Sub-subnet 1 Weights | Sub-subnet 
 456  | 7DEF...| 800   | [0.2, 0.3, 0.2...] | [0.2, 0.3, 0.1...] | 0.03 τ               | 0.04 τ
 ```
 
-
 ## Backward Compatibility
 
-- Existing subnets continue to work as sub-subnet 0
+- Existing subnets continue with only one subnet (sub-subnet 0) collecting all emissions by default
 - All existing API calls default to sub-subnet 0
 - No breaking changes to current functionality
 
