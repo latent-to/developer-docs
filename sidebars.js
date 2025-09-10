@@ -34,7 +34,7 @@ const sidebars = {
         },
         {
           type: "doc",
-          id: "resources/bittensor-rel-notes",
+          id: "learn/announcements",
           label: "Announcements",
         },
       ]
