@@ -60,4 +60,3 @@ A percentage fee will be deducted from emissions bound to validator hotkeys thro
 - **What**: Subnet owners can configure neuron registration fees
 - **Implementation**:
   - Subnet owners can configure neuron registration fees between 0.1 and 1 TAO
-  - Adjustment alpha parameter minimum raised to 0.3 to prevent price freezing exploits
