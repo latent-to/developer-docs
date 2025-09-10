@@ -6,7 +6,7 @@ title: "Governance Overview"
 
 Bittensor's governance protocol transitions the management of the network from centralization within the foundation to community ownership over time.
 
-The first stage of this transition to decentralized management is the creation of a bicameral legislature. In this stage, the [Triumvirate](./glossary.md#triumvirate) creates proposals for the [Senate](./senate.md) to approve. 
+The first stage of this transition to decentralized management is the creation of a bicameral legislature. In this stage, the [Triumvirate](../resources/glossary.md#triumvirate) creates proposals for the [Senate](./senate.md) to approve.
 
 Triumvirate members are Opentensor Foundation employees, while the Senate is formed from the top K delegate hotkeys.
 
@@ -39,9 +39,11 @@ Consider the following:
 **Triumvirate**
 
 `Bob` has a novel concept for a subnet and wishes to deploy it on the Bittensor network. `Bob` creates a proposal with the calldata:
+
 ```python
 SubtensorModule.SudoAddNetwork(netuid, tempo, modality)
 ```
+
 and sends the transaction to the network in order to broadcast the proposal.
 
 **Senate**

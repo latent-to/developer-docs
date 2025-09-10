@@ -35,7 +35,7 @@ Note that this alpha parameter is distinct from and unrelated to the usage of 'a
 This use of EMA smoothing protects the network's economic model from price manipulation by making emissions extremely slow to respond to price changes.
 
 **How It Works**:
-The price EMA uses a sophisticated dynamic alpha calculation to ensure that new subnets have even slower price adaptation than mature ones.
+The price EMA uses a dynamic alpha calculation to ensure that new subnets have even slower price adaptation than mature ones.
 
 $$
 \alpha = \frac{ \mathrm{base\_alpha} \times  \mathrm{blocks\_since\_start}}{\mathrm{blocks\_since\_start} + \mathrm{halving\_blocks}}
@@ -75,4 +75,4 @@ This smoothing function ensures that relationships between validators and miners
 - **Individual Alpha**: Each validator-miner pair gets its own $\alpha$ value
 - **Response Time**: 1-13 blocks depending on consensus alignment (~12 seconds to 2.6 minutes)
 
-See [Liquid Alpha/Consensus-Based Weights](../subnets/consensus-based-weights)
+See [Liquid Alpha/Consensus-Based Weights](../concepts/consensus-based-weights)

@@ -7,9 +7,8 @@ title: "How Yuma Consensus 3 Makes Bittensor More Fair"
 YC3 is the next evolution of Bittensor's consensus mechanism. It optimizes emissions to reward validators for recognizing innovation quickly.
 
 See also:
-[Yuma Consensus](../yuma-consensus)
+[Yuma Consensus](./yuma-consensus)
 [Yuma Consensus 3 (YC3) Migration Guide](./yuma3-migration-guide)
-
 
 ## Introduction: Understanding Yuma Consensus
 
@@ -92,7 +91,7 @@ $$
 B_{ij}^{(t)} = \alpha \,\Delta B_{ij} + (1-\alpha)\,B_{ij}^{(t-1)}
 $$
 
-However, YC3's innovation is that α can now be different for each validator-miner pair rather than uniform across all bonds. The system also applies a bonds penalty factor β when validator weights exceed consensus, helping maintain anti-fraud protection. For the complete mathematical treatment, see the main article on [Yuma Consensus](../yuma-consensus.md#bonding-mechanics).
+However, YC3's innovation is that α can now be different for each validator-miner pair rather than uniform across all bonds. The system also applies a bonds penalty factor β when validator weights exceed consensus, helping maintain anti-fraud protection. For the complete mathematical treatment, see the main article on [Yuma Consensus](./yuma-consensus.md#bonding-mechanics).
 
 ### How Validators Acquire Bonds
 

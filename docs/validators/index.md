@@ -7,7 +7,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Validating in Bittensor
 
-All validating in Bittensor occurs within a subnet. Each subnet independently produces the digital commodities that are its purpose, with each subnet creator defining a different _incentive mechanism_ for validators to use in judging miners' work. The validator's work is to apply this incentive mechanism to miners, using it to score their performance, and then to submit these weights to the Bittensor blockchain.  The validator scores of miners' performance determine the proportion of the subnet's emissions allocated to each miner, according to the Yuma Consensus algorithm. See [Emissions](../emissions.md).
+All validating in Bittensor occurs within a subnet. Each subnet independently produces the digital commodities that are its purpose, with each subnet creator defining a different _incentive mechanism_ for validators to use in judging miners' work. The validator's work is to apply this incentive mechanism to miners, using it to score their performance, and then to submit these weights to the Bittensor blockchain.  The validator scores of miners' performance determine the proportion of the subnet's emissions allocated to each miner, according to the Yuma Consensus algorithm. See [Emissions](../learn/emissions.md).
 
 Browse the subnets and explore links to their code repositories on [TAO.app' subnets listings](https://tao.app).
 
@@ -185,10 +185,19 @@ To obtain a validator permit, a neuron must meet these criteria:
 - **Top K Ranking**: Be among the top K neurons by stake weight
 - **Active Status**: Maintain active participation in the subnet
 
+### Permit Lifecycle and Bond Management
+
+When validator permits are lost, associated bonds are deleted. This ensures that only currently qualified validators can influence consensus.
+
+### Implementation Details
+
+For implementation details of how validator permits are calculated, managed, and cleaned up in the codebase, see the [Validator Permit Management section](../navigating-subtensor/epoch.md#validator-permit-management) in the Epoch Implementation documentation.
+
 ### Code References
 
-- Validator permit calculation: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:520-523`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L520-523)
-- Top-K selection algorithm: [`subtensor/pallets/subtensor/src/epoch/math.rs:250-260`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/math.rs#L250-260)
+- Validator permit calculation: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:520-537`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L520-537)
+- Top-K selection algorithm: [`subtensor/pallets/subtensor/src/epoch/math.rs:250-263`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/math.rs#L250-263)
+- Bond cleanup logic: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:903-921`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L903-921)
 - Access control: [`subtensor/pallets/subtensor/src/subnets/weights.rs:745-748`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/weights.rs#L745-748)
 
 ## Inspecting UIDs
@@ -222,7 +231,7 @@ After providing your wallet name at the prompt, you will see output like:
 
 ### Meaning of ACTIVE
 
-In the above table, the `ACTIVE` row applies only to UIDs that are subnet validators. It shows whether the UID is actively setting weights within the [`activity_cutoff`](../subnets/subnet-hyperparameters#activity_cutoff) window. If the UID has not set weights on the blockchain for the `activity_cutoff` duration, then the Yuma Consensus will consider this subnet validator offline, i.e., turned off (`False`).
+In the above table, the `ACTIVE` row applies only to UIDs that are subnet validators. It shows whether the UID is actively setting weights within the [`activity_cutoff`](../subnets/subnet-hyperparameters#activitycutoff) window. If the UID has not set weights on the blockchain for the `activity_cutoff` duration, then the Yuma Consensus will consider this subnet validator offline, i.e., turned off (`False`).
 
 ## Checking the registration status
 

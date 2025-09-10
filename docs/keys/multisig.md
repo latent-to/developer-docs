@@ -28,7 +28,7 @@ Coldkeys private keys and seed phrases for wallets with real (mainnet) TAO are *
 
 In a realistic scenario, using wallets with real (mainnet) TAO, it would be crucial to follow proper workstation security. This implies that each coldkey would be provisioned to its own secure coldkey workstation, as maintaining separate workstations for each coldkey is important for minimizing the risk that multiple of the keys are lost or leaked; storing or handling the keys together undermines the purpose of having multiple keys.
 
-See [Coldkey and Hotkey Workstation Security](../getting-started/coldkey-hotkey-security.md).
+See [Coldkey and Hotkey Workstation Security](./coldkey-hotkey-security).
 
 In the current _practice_ scenario, using testnet TAO, we will forego full workstation security for ease, and handle all three keys on a single workstation, which can be an ordinary laptop rather than a secure workstation.
 
@@ -49,7 +49,7 @@ Each of our 3 signatories needs a wallet. Either create them or re-use available
 
 1. Use `btcli` to create three coldkeys/wallets, or use practice wallets you already have access to. Alternatively, you can create wallets in the Polkadot-JS browser extension.
 
-   See [Creating/Importing a Bittensor Wallet](../working-with-keys).
+   See [Creating/Importing a Bittensor Wallet](./working-with-keys).
 
 1. Load each wallet key into the Polkadot-JS wallet browser extension:
 
@@ -112,6 +112,7 @@ btcli view dashboard --wallet.name WALLET_NAME
 ## Transfer TAO to the multisig wallet.
 
 1. Find the multisig wallet's coldkey public key on the [accounts page](https://polkadot.js.org/apps/#/accounts), listed under **multisig**. Click on the wallet/account to open it's show modal, then click **Copy** by the account name and address/public key to copy it out.
+
 1. Use BTCLI to transfer testnet TAO to the multisig wallet.
    1. Run `btcli wallet transfer`.
    1. Provide the multisig wallet's coldkey public key.

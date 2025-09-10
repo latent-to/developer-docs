@@ -7,7 +7,7 @@ import { CreatePartial } from "./\_create-mm-wallet.mdx";
 
 # Convert Ethereum (H160) Address to Substrate (SS58)
 
-This tutorial demonstrates how to convert between Ethereum (H160) and Substrate (SS58) addresses. This is useful for moving across the boundary between [EVM wallets and Subtensor Wallets on the Bittensor blockchain](./#evm-wallets-and-subtensor-wallets-on-the-bittensor-blockchain).
+This tutorial demonstrates how to convert between Ethereum (H160) and Substrate (SS58) addresses. This is useful for moving across the boundary between [EVM wallets and Subtensor Wallets on the Bittensor blockchain](./index.md#evm-and-subtensor-wallets-on-the-bittensor-blockchian).
 
 In what follows, we'll create a wallet in Metamask and convert it's public key to ss58 format in order to target it with a balance transfer using BTCLI.
 

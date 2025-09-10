@@ -7,14 +7,24 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Emission
 
-Emission is the process by which the Bittensor network allocates TAO and alpha to participants, including miners, validators, stakers, and subnet creators.
+Emission is the economic heartbeat of Bittensor—the process that continuously distributes newly created [TAO](../resources/glossary.md#tao-τ) and subnet-specific alpha tokens to network participants who contribute value through [mining](../resources/glossary.md#subnet-miner), [validation](../resources/glossary.md#validator), [staking](../resources/glossary.md#staking), and [subnet creation](../resources/glossary.md#subnet-creator).
 
-It unfolds in two stages:
+## Understanding the Two-Stage Process
 
-- Injection into subnets
-- Extraction by participants
+Bittensor's emission system operates through two coordinated stages that work together to ensure fair, market-driven distribution:
 
-See the [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view) for a full explanation.
+### Stage 1: Injection into Subnets
+Every [block](../resources/glossary.md#block), new liquidity flows into [subnet](../resources/glossary.md#subnet) pools based on market performance. [Subnets](../resources/glossary.md#subnet) with higher-value alpha tokens attract more TAO, creating a competitive marketplace for innovation.
+
+### Stage 2: Extraction by Participants  
+Every [tempo](../resources/glossary.md#tempo) (360 blocks, ~72 minutes), accumulated rewards are distributed to participants through [Yuma Consensus](../resources/glossary.md#yuma-consensus), which evaluates performance and determines who deserves what share.
+
+This two-stage approach creates stability while maintaining responsiveness—rewards accumulate gradually but are distributed based on demonstrated value creation.
+
+## Technical References
+- **Implementation Details**: [Coinbase Implementation](../navigating-subtensor/emissions-coinbase.md)
+- **Consensus Mechanics**: [Yuma Consensus](./yuma-consensus.md)
+- **Mathematical Framework**: [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view)
 
 ### Injection
 
@@ -102,7 +112,7 @@ Each block, liquidity is also set aside to be emitted to participants (validator
 At the end of each tempo (360 blocks), the quantity of alpha accumulated over each block of the tempo is extracted by network participants in the following proportions:
 
 1.  18% by subnet owner
-1.  41% of emissions go to miners. The allocation to particular miners is determined by [Yuma Consensus: Miner emissions#miner-emissions](../yuma-consensus).
+1.  41% of emissions go to miners. The allocation to particular miners is determined by [Yuma Consensus: Miner emissions#miner-emissions](./yuma-consensus).
 1.  41% by validators and their stakers.
 
     1.  First, the allocation to validators miners is determined by [Yuma Consensus: Validator Emissions](./yuma-consensus#validator-emissions).

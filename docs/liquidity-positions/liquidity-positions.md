@@ -18,7 +18,7 @@ A LP does not accumulate fees for staking operations by the coldkey that owns it
 
 See also:
 
-- [Managing User Liquidity Positions Tutorial](./managing-liquidity-positions).
+- [Managing User Liquidity Positions Tutorial](./managing-liquidity-positions.md).
 
 ### Liquidity Positions vs. Staking
 
@@ -73,7 +73,7 @@ Fees are generated when users perform swaps (trading TAO for Alpha or vice versa
 :::tip
 Fees are not added to your position's liquidity, they are tracked separately, in the position's `fees_tao` and `fees_alpha` fields.
 
-See: [Managing User Liquidity Positions Tutorial: View your LPs](./managing-liquidity-positions#view-your-lps)
+See: [Managing User Liquidity Positions Tutorial: View your LPs](./managing-liquidity-positions.md#view-your-lps)
 :::
 
 <!--
@@ -98,7 +98,6 @@ Fees are not distributed automatically per tempo like emissions. Instead, fees a
 
 - **When removing a position entirely**: All accumulated fees are collected along with your position's tokens.
   [See source code](https://github.com/opentensor/subtensor/blob/master/pallets/swap/src/pallet/mod.rs#L520-L535)
-
 
 This means you must actively manage your positions to claim your earned fees - they remain locked in the position until you perform a position operation (modify or remove).
 
