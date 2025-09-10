@@ -4,7 +4,8 @@ title: "Announcements and Developments"
 # Announcements and Developments
 
 ## Sub-Subnets (Major Feature Launch)
-**Status**: On chain (extrinsics only; SDK and BTCLI support in develoment)
+
+**Status**: On chain (extrinsice only; SDK and BTCLI support in develoment)
 - **What**: Sub-subnets allow subnet creators to apportion emissions across multiple sub-subnets, each running Yuma Consensus independently
 - **Key Features**:
   - Each sub-subnet has its own weight matrix and independent emissions
@@ -20,7 +21,19 @@ title: "Announcements and Developments"
 - **Rules**: Cannot change hyperparameters in last 10 blocks of a tempo
 - **Purpose**: Prevent exploitation where subnet owners kick off root validators to take full incentives
 
-## Subnet Registration/Deregistration Process
+## Child Key Fee
+
+A percentage fee will be deducted from emissions bound to validator hotkeys through a *child hotkey* relationship. This is designed to more highly incentivize validators who perform validation work, over child-key-only validators. It is being gradually rolled out to reduce surprise for the community and allow validators to adjust.
+
+**Status**: Gradual rollout TBD
+- **Plan**: 
+  - Start at 1% (September 16)
+  - 30-day delay
+  - Increase by 1% per day for 17 days
+  - Final rate: 18%
+
+## Changes to the Subnet Registration/Deregistration Process
+
 **Status**: Predicted deploy September 16, 2024
 - **Key Changes**:
   - Subnet limit remains at 128 (not increasing to 148 initially)
@@ -36,12 +49,3 @@ title: "Announcements and Developments"
   - New extrinsic `set_coldkey_auto_stake_hotkey` (call index 114)
   - Set per coldkey, affects all miner hotkeys
   - No transaction fees required
-
-## Child Key Tax Implementation
-**Status**: Gradual rollout TBD
-- **Plan**: 
-  - Start at 1% 
-  - 30-day delay
-  - Increase by 1% per day for 17 days
-  - Final rate: 18%
-  - Purpose: Incentivize hardware validation over child-key-only validators
