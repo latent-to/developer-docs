@@ -18,9 +18,6 @@ Each sub-subnet has its own:
 - **Transparent on-chain data**: All sub-subnet configurations and the flow of emissions are visible on-chain.
 - **Emission distribution**: Currently emissions are evenly distributed, but it is planned that subnet creators will control what percentage of total emissions goes to each sub-subnet.
 
-    :::info planned feature
-    Currently, emissions are divided evenly between sub-subnets; In the planned release state, you will control what percentage of total emissions goes to each sub-subnet.
-    :::
 
 
 ### Takeaways
