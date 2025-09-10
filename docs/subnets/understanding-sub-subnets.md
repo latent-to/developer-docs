@@ -88,41 +88,21 @@ Each sub-subnet has its own:
 - **Single subnet slot**: No need to register multiple subnets for multiple competitions
 
 
-### Hyperparameters and Configuration
-- **Precision**: Use 64-bit integers for emission proportions to avoid chunky rounding with small percentages
-- **Validation**: Ensure proportions sum to 100% (or equivalent in your chosen representation)
-- **Flexibility**: Design for future expansion (the discussion mentioned potential for up to 16 sub-subnets)
-
-### Implementating Sub-Subnets in your Subnet
-
-
-## Example: Multi-Task Subnet
-
-Consider a subnet focused on AI tasks that wants to evaluate three different capabilities:
-
-- **Sub-subnet 0**: Text generation (60% of emissions to miners and validators)
-- **Sub-subnet 1**: Image classification (30% of emissions to miners and validators)  
-- **Sub-subnet 2**: Code completion (10% of emissions to miners and validators)
-
-:::info
-See [Emissions](../learn/emissions) for the breakdown of emissions between miners, validators, stakers, and subnet creators.
+:::tip
+Ensure proportions sum to 100%.
 :::
-Validators would:
-- Set weights for each miner across all three sub-subnets
-- Evaluate performance separately for each task type
-- Allow miners to specialize or participate in multiple sub-subnets
 
 
-### Example Calculation
+## Example Emissions Split
 
 For each subnet, the subnet creator keeps 18% of emissions, 41% is allocated to miners, and 41% to validators and their stakers, unless the subnet creator has reduced their take. Of the 41% that goes to miners and validators, here is an estimated emission distribution across three sub-subnets for each 100 $\tau$ earned on the subnet:
+
 - Sub-subnet 0 (60%): 100 $\tau$ *.41 * .6 = 24.6
 - Sub-subnet 1 (30%): 100 $\tau$ *.41 * .3 = 12.3
 - Sub-subnet 2 (10%): 100 $\tau$ *.41 * .1 = 4.1
 
 
-A miner who excels in sub-subnet 0 but performs poorly in others might receive more emissions than a miner who performs moderately across all sub-subnets, depending on the emission proportions and their relative performance.
-
+Note that a miner who excels in sub-subnet 0 but performs poorly in others might receive more emissions than a miner who performs moderately across all sub-subnets, depending on the emission proportions and their relative performance.
 
 ## On-Chain Data Structure
 
