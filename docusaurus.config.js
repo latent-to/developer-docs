@@ -198,15 +198,16 @@ const config = {
           },
         },
         items: [
+          
+          {
+            position: "left",
+            label: "Announcements",
+            to: "learn/announcements",
+          },
           {
             position: "left",
             label: "What is Bittensor?",
             to: "learn/introduction",
-          },
-          {
-            position: "left",
-            label: "SubtensorAPI",
-            to: "sdk/subtensor-api",
           },
           {
             position: "left",

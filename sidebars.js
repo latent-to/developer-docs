@@ -22,9 +22,22 @@ const sidebars = {
     // },
     "index",
     {
-      type: "doc",
-      id: "resources/bittensor-rel-notes",
-      label: "Releases",
+      type: "category",
+      label: "Releases and Announcements",      
+      collapsible: true,
+      collapsed: true,
+      items: [
+        {
+          type: "doc",
+          id: "resources/bittensor-rel-notes",
+          label: "Releases",
+        },
+        {
+          type: "doc",
+          id: "resources/bittensor-rel-notes",
+          label: "Announcements",
+        },
+      ]
     },
     "btcli/btcli-playground",
     {
@@ -34,7 +47,7 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "learn/introduction",
+        "learn/introduction",        
         "resources/questions-and-answers",
         "subnets/understanding-subnets",
         "subnets/understanding-sub-subnets",
