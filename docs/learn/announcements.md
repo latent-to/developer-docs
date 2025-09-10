@@ -6,18 +6,18 @@ title: "Announcements and Developments"
 ## Sub-Subnets (Major Feature Launch)
 
 **Status**: Ready for deployment on September 12, 2025
-- **What**: Sub-subnets allow subnet creators to apportion emissions across multiple sub-subnets, each running Yuma Consensus independently
+- **What**: Sub-subnets allow subnet owners to apportion emissions across multiple sub-subnets, each running Yuma Consensus independently
 - **Key Features**:
   - Enables up to 8 sub-subnets (IDs 0-7) within each main subnet for multi-task validation
   - Fully backward-compatible with existing miners and validators via sub-subnet ID 0
   - Each sub-subnet has its own weight matrix and independent emissions
   - All validators participate in all sub-subnets with identical stake weights
   - Miners automatically participate in ALL sub-subnets when registering for a subnet
-  - Emissions are divided evenly, but subnet creators can configure proportions.
+  - Emissions are divided evenly, but subnet owners can configure proportions.
   - First version focuses on core functionality with additional features planned based on community feedback
 
 ## Hyperparameter Rate Limiting
-**Status**: TBD
+**Status**: WIP
 - **What**: Prevents subnet owners from changing hyperparameters too frequently
 - **Rules**: Cannot change hyperparameters in last 10 blocks of a tempo
 - **Purpose**: Prevent exploitation where subnet owners kick off root validators to take full incentives
@@ -27,9 +27,9 @@ title: "Announcements and Developments"
 
 A percentage fee will be deducted from emissions bound to validator hotkeys through a *child hotkey* relationship. This is designed to more highly incentivize validators who perform validation work, over child-key-only validators. It is being gradually rolled out to reduce surprise for the community and allow validators to adjust.
 
-**Status**: Gradual rollout TBD
+**Status**: Implemented (Merged)
 - **Plan**: 
-  - Start at 1% (September 16)
+  - Start at 1% (September 10)
   - 30-day delay
   - Increase by 1% per day for 17 days
   - Final rate: 18%
@@ -45,7 +45,7 @@ A percentage fee will be deducted from emissions bound to validator hotkeys thro
   - First deregistrations available approximately September 23 (one week after deployment)
 
 ## Auto-Staking for Miners
-**Status**: In development; deploy soon (TBD)
+**Status**: Implemented (Merged)
 - **What**: Miners can automatically stake their mining income to a validator of their choice
 - **Implementation**: 
   - New extrinsic `set_coldkey_auto_stake_hotkey` (call index 114)
@@ -59,5 +59,5 @@ A percentage fee will be deducted from emissions bound to validator hotkeys thro
 **Status**: Deployed
 - **What**: Subnet owners can configure neuron registration fees
 - **Implementation**:
-  - Subnet owners can configure neuron registration fees between 0.05 and 1 TAO
+  - Subnet owners can configure neuron registration fees between 0.1 and 1 TAO
   - Adjustment alpha parameter minimum raised to 0.3 to prevent price freezing exploits
