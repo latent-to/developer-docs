@@ -471,6 +471,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_subnet_reveal_period_epochs"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_subnet_reveal_period_epochs()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_subnet_validator_permits"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_subnet_validator_permits()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_subnets"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_subnets()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_timelocked_weight_commits"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_timelocked_weight_commits()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_timestamp"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_timestamp()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_total_subnets"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_total_subnets()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_transfer_fee"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_transfer_fee()</span></code></a></li>
@@ -1441,10 +1442,10 @@ delegates that a specific account has staked tokens on.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of tuples, each containing a delegate’s information and staked amount.</p>
+<dd class="field-even"><p>A list containing the delegated information for the specified coldkey.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[bittensor.core.chain_data.DelegateInfo, <a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance">bittensor.utils.balance.Balance</a>]]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[bittensor.core.chain_data.DelegatedInfo]</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -2210,6 +2211,38 @@ offering insights into its diversity and scale.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.subtensor.Subtensor.get_timelocked_weight_commits">
+<span class="sig-name descname"><span class="pre">get_timelocked_weight_commits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.subtensor.Subtensor.get_timelocked_weight_commits" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves CRv4 weight commit information for a specific subnet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The unique identifier of the subnet.</p></li>
+<li><p><strong>block</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The blockchain block number for the query. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><dl class="simple">
+<dt>ss58_address: The address of the committer.</dt><dd><ul>
+<li><p>commit_block: The block number when the commitment was made.</p></li>
+<li><p>commit_message: The commit message.</p></li>
+<li><p>reveal_round: The round when the commitment was revealed.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>The list may be empty if there are no commits found.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of commit details, where each item contains</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.subtensor.Subtensor.get_timestamp">
 <span class="sig-name descname"><span class="pre">get_timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/subtensor.html#Subtensor.get_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.subtensor.Subtensor.get_timestamp" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the datetime timestamp for a given block</p>
@@ -2665,7 +2698,7 @@ liquidity_delta=my_liquidity_delta</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.subtensor.Subtensor.move_stake">
-<span class="sig-name descname"><span class="pre">move_stake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/subtensor.html#Subtensor.move_stake"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.subtensor.Subtensor.move_stake" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">move_stake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">move_all_stake</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/subtensor.html#Subtensor.move_stake"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.subtensor.Subtensor.move_stake" title="Link to this definition">#</a></dt>
 <dd><p>Moves stake to a different hotkey and/or subnet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2681,6 +2714,7 @@ liquidity_delta=my_liquidity_delta</p>
 <li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s
 submitted. If the transaction is not included in a block within that number of blocks, it will expire
 and be rejected. You can think of it as an expiration date for the transaction.</p></li>
+<li><p><strong>move_all_stake</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, moves all stake from the source hotkey to the destination hotkey.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -4174,6 +4208,7 @@ This function maps each neuron’s UID to the weights it assigns to other neuron
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_subnet_reveal_period_epochs"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_subnet_reveal_period_epochs()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_subnet_validator_permits"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_subnet_validator_permits()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_subnets"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_subnets()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_timelocked_weight_commits"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_timelocked_weight_commits()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_timestamp"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_timestamp()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_total_subnets"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_total_subnets()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.subtensor.Subtensor.get_transfer_fee"><code class="docutils literal notranslate"><span class="pre">Subtensor.get_transfer_fee()</span></code></a></li>
