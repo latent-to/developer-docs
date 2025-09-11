@@ -74,16 +74,8 @@ const config = {
       {
         redirects: [
           {
-            to: "/btcli",
-            from: "/reference/btcli",
-          },
-          {
             to: "/liquidity-positions/",
             from: "/liquidity-provider",
-          },
-          {
-            to: "/staking-and-delegation/delegation",
-            from: "/delegation",
           },
           {
             to: "/staking-and-delegation/staking-polkadot-js",
@@ -95,31 +87,11 @@ const config = {
           },
           {
             from: "/subnets/register-validate-mine",
-            to: "validators/index",
-          },
-          {
-            from: "/recycled-tao",
-            to: "/resources/glossary",
-          },
-          {
-            to: "/subnets/walkthrough-prompting",
-            from: "/subnets/code-walkthrough-text-prompting",
-          },
-          {
-            to: "/subtensor-nodes",
-            from: "/getting-started/running-a-public-subtensor",
-          },
-          {
-            to: "/",
-            from: "/subnet-pages",
+            to: "/validators",
           },
           {
             to: "/keys/schedule-coldkey-swap",
-            from: "/schedule-key-swap",
-          },
-          {
-            to: "/keys/schedule-coldkey-swap",
-            from: "/subnets/schedule-key-swap",
+            from: "/subnets/schedule-coldkey-swap",
           },
           {
             to: "/sdk/bt-api-ref",
@@ -132,6 +104,110 @@ const config = {
           {
             from: "/glossary",
             to: "/resources/glossary",
+          },
+          {
+            from: "/bittensor-rel-notes",
+            to: "/resources/bittensor-rel-notes",
+          },
+          {
+            from: "/questions-and-answers",
+            to: "/resources/questions-and-answers",
+          },
+          {
+            from: "/emissions",
+            to: "/learn/emissions",
+          },
+          {
+            from: "/yuma-consensus",
+            to: "/learn/yuma-consensus",
+          },
+          {
+            from: "/subnets/yc3-blog",
+            to: "/learn/yc3-blog",
+          },
+          {
+            from: "/fees",
+            to: "/learn/fees",
+          },
+          {
+            from: "/community-links",
+            to: "/resources/community-links",
+          },
+          {
+            from: "/subnets/yuma3-migration-guide",
+            to: "/learn/yuma3-migration-guide",
+          },
+          {
+            from: "/subnets/child-hotkeys",
+            to: "/validators/child-hotkeys",
+          },
+          {
+            from: "/btcli",
+            to: "/btcli",
+          },
+          {
+            from: "/btcli-permissions",
+            to: "/btcli/btcli-permissions",
+          },
+          {
+            from: "/migration_guide",
+            to: "/sdk/migration-guide",
+          },
+          {
+            from: "/bt-api-ref",
+            to: "/sdk/bt-api-ref",
+          },
+          {
+            from: "/getting-started/wallets",
+            to: "/keys/wallets",
+          },
+          {
+            from: "/getting-started/coldkey-hotkey-security",
+            to: "/keys/coldkey-hotkey-security",
+          },
+          {
+            from: "/working-with-keys",
+            to: "/keys/working-with-keys",
+          },
+          {
+            from: "/tools",
+            to: "/concepts/tools",
+          },
+          {
+            from: "/bittensor-networks",
+            to: "/concepts/bittensor-networks",
+          },
+          {
+            from: "/commit-reveal",
+            to: "/concepts/commit-reveal",
+          },
+          {
+            from: "/consensus-based-weights",
+            to: "/concepts/consensus-based-weights",
+          },
+          {
+            from: "/bt-logging-levels",
+            to: "/concepts/bt-logging-levels",
+          },
+          {
+            from: "/utilities",
+            to: "/resources/utilities",
+          },
+          {
+            from: "/governance",
+            to: "/governance",
+          },
+          {
+            from: "/senate",
+            to: "/governance/senate",
+          },
+          {
+            from: "/errors-and-troubleshooting",
+            to: "/errors/troubleshooting",
+          },
+          {
+            from: "/media-assets",
+            to: "/resources/media-assets",
           },
         ],
       },
