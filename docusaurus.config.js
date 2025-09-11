@@ -129,6 +129,10 @@ const config = {
             to: "/errors",
             from: "/subtensor-nodes/subtensor-error-messages",
           },
+          {
+            from: "/glossary",
+            to: "/resources/glossary",
+          },
         ],
       },
     ],
@@ -198,7 +202,6 @@ const config = {
           },
         },
         items: [
-          
           {
             position: "left",
             label: "Announcements",
