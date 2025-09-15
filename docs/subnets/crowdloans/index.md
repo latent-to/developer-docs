@@ -4,15 +4,24 @@ title: "Crowdloans"
 
 ### Overview
 
-The crowdloan feature lets a group of people collectively fund the registration of a new Bittensor subnet and share the resulting emissions according to each person’s contribution. Instead of a single sponsor paying the full lease cost up front, a creator opens a crowdloan with a funding cap and end block, contributors deposit funds until the cap is met, and—on success—the pallet finalizes the crowdloan by funding subnet registration and activating emissions for the group.
+The crowdloan feature lets a group of people collectively fund an extrinsic execution or a balance transfer to a specific address. For example, it can be used to fund the registration of a new Bittensor subnet and share the resulting emissions according to each person's contribution. Instead of a single sponsor paying the full lease cost up front, a creator opens a crowdloan with a funding cap and end block, contributors deposit funds until the cap is met, and—on success—the pallet finalizes the crowdloan by funding subnet registration and activating emissions for the group.
 
-At finalization, the system executes an on‑chain call—typically `subtensor::register_leased_network`—using the crowdloan’s funds. This registers the subnet and creates a dedicated proxy, `SubnetLeaseBeneficiary`, for the designated beneficiary. That proxy is authorized to operate the subnet (for example, configuring subnet parameters and other allowed controls) without having custody of contributor funds or emissions splits.
+At finalization, the system executes an on‑chain call—typically `subtensor::register_leased_network`—using the crowdloan's funds. This registers the subnet and creates a dedicated proxy, `SubnetLeaseBeneficiary`, for the designated beneficiary (the crowdloan creator). That proxy is authorized to operate the subnet (for example, configuring subnet parameters and other allowed controls) without having custody of contributor funds or emissions splits.
 
-While the lease is active, emissions flow to contributors pro‑rata based on their contributed share. If the crowdloan is not finalized after the end block, anyone can call refunds; once all contributors are refunded, the creator can dissolve the crowdloan. The call and target address specified at creation are immutable, ensuring that the purpose of the crowdloan cannot be changed mid‑campaign. This model makes subnet bootstrapping collaborative, transparent, and permissioned through a narrowly scoped proxy for safe, ongoing operations.
+If the crowdloan is finalized and a lease is created, emissions flow to contributors pro‑rata based on their contributed share. If the crowdloan is not finalized after the end block, anyone can call refunds; once all contributors are refunded, the creator can dissolve the crowdloan. The call and target address specified at creation are immutable, ensuring that the purpose of the crowdloan cannot be changed mid‑campaign. This model makes subnet bootstrapping collaborative, transparent, and permissioned through a narrowly scoped proxy for safe, ongoing operations.
 
+Design features:
 - Strong defaults: immutable target and call, capped funding, clear end block
 - Shared upside: emissions distributed proportionally to contributions
 - Safe operations: a dedicated proxy to manage the subnet within defined permissions
+
+:::info
+**Crowdloans** and **Leasing** are two different but related concepts:
+
+**Crowdloan** enables someone to fund some extrinsic execution or a balance transfer at some end date, with contributors able to participate to a cap. When finalized, this will execute the extrinsic (substrate defined logic where we can move the funds and do something else) or transfer the balance to an address (EVM smart contract address for example).
+
+**Leasing** is split profit ownership of a subnet. This is tightly coupled to Crowdloan because a lease can only be created through a Crowdloan where the crowdloan extrinsic will be the `register_leased_network`. The logic to create a lease uses the contributors from the crowdloan as the lease shareholders, and the crowdloan creator as the lease beneficiary. Parameters like the lease end block and lease emissions shares are defined when you create the crowdloan.
+:::
 
 See also [Create a Subnet with a Crowdloan](./crowdloans-tutorial.md)
 
@@ -30,11 +39,16 @@ See also [Create a Subnet with a Crowdloan](./crowdloans-tutorial.md)
 
 - **Dissolve** after refunds; creator's deposit is returned and storage cleaned up. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L711-L721)
 
+- **Update** parameters while crowdloan is running (creator only):
+  - `update_min_contribution` - adjust minimum contribution amount
+  - `update_end` - extend the end block
+  - `update_cap` - adjust the funding cap
+
 ## Emissions distribution during a lease
 
-- When owner rewards are paid to a leased subnet, they are split into contributor dividends and a beneficiary cut. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/run_coinbase.rs#L450-L452)
+- When owner rewards are paid to a leased subnet, they are split into contributor dividends and a beneficiary cut. [Source code](https://github.com/opentensor/subtensor/blob/81ee047fd124f8837555fd79e8a3957688c5b0c6/pallets/subtensor/src/subnets/leasing.rs#L250)
 
-- Distribution is pro‑rata by recorded share; any remainder goes to the beneficiary. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/leasing.rs#L324-L339)
+- Distribution is pro‑rata by recorded share; any remainder goes to the beneficiary. A lease can be created with an emissions share from 0 to 100%, which determines the share distributed to contributors. For example, if the emissions share is 50%, it means that 50% of the owner cut (18% currently) so 9% will be split proportionally to their share to contributors. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/leasing.rs#L324-L339)
 
 ## Operating the leased subnet via proxy
 
@@ -56,7 +70,9 @@ Implications:
 
 ### What problem do crowdloans solve?
 
-Crowdloans enable shared funding and ownership of subnets so that no single sponsor must front the entire lock cost. Emissions are shared among contributors while a designated beneficiary operates the subnet via a scoped proxy.
+Crowdloans enable someone to fund some extrinsic execution or a balance transfer at some end date, with contributors able to participate to a cap. When finalized, this will execute the extrinsic (substrate defined logic where we can move the funds and do something else) or transfer the balance to an address (EVM smart contract address for example).
+
+Leasing is defined as split profit ownership of a subnet. This is tightly coupled to Crowdloan because a lease can only be created through a Crowdloan where the crowdloan extrinsic will be the "register_leased_network". The logic to create a lease will use the contributors from the crowdloan as the lease shareholders, the lease beneficiary will be crowdloan creator. Parameters like lease end block (some block in the future, probably much farther than crowdloan end) or lease emissions share are defined when you create the crowdloan and you pass the register_lease_network call with the parameters filled.
 
 ### How does the end‑to‑end flow work?
 
@@ -76,13 +92,12 @@ Anyone can call `refund` to batch‑refund contributors (excluding the creator) 
 
 ### How are emissions split during a lease?
 
-Owner rewards are split to contributors by their recorded `SubnetLeaseShares`; any remainder goes to the beneficiary. This runs automatically during coinbase distribution.
+Owner rewards are split to contributors by their recorded `SubnetLeaseShares`; any remainder goes to the beneficiary. The emissions are swapped for TAO and TAO is distributed to the contributors, not alpha. This runs automatically during coinbase distribution.
 
 ### What permissions does the beneficiary proxy have?
 
 They can invoke a curated set of calls (e.g., start subnet calls and selected admin‑utils setters like difficulty, weights, limits).
 
-<!-- TODO: investigate this and fill out the details -->
 
 ### Can the campaign parameters be updated mid‑flight?
 

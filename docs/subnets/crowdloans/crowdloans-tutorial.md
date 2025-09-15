@@ -258,7 +258,7 @@ Next, follow the following steps to start the subnet:
 
 ## Observe dividends distribution
 
-Emissions accrue in Alpha (subnet share units). On distribution, the contributors’ alpha is unstaked/swapped to TAO using the subnet pool; if swap/unstake cannot proceed (liquidity/price), the alpha is accumulated for later.
+Emissions accrue in Alpha (subnet share units), but are distributed in TAO. On distribution, the contributors' alpha is unstaked/swapped to TAO using the subnet pool; if swap/unstake cannot proceed (liquidity/price), the alpha is accumulated for later.
 
 Owner emissions are periodically split among contributors and the beneficiary, but only when all of these are true:
 
