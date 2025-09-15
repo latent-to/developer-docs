@@ -66,7 +66,7 @@ Each sub-subnet has its own:
 - **Different criteria**: Each sub-subnet may have distinct evaluation standards
 
 **2. Data Structure Changes:**
-- **Two-dimensional weights**: Weight data becomes `[validator][uid][sub_subnet]`
+- **Two-dimensional weights**: Weights are now set for each miner on each subnet.
 - **Separate incentive tracking**: Each sub-subnet tracks incentives independently
 - **Extended metagraph**: New columns for sub-subnet weights and incentives
 
