@@ -63,9 +63,6 @@ Deregistration can occur at most every once every 3 days (coordinated with regis
   - Block-based timing: 7200 blocks ≈ 3 days at 12s/block
   - [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L27)
 
-
-
-
 ## Special Cases and Edge Conditions
 
 ### All Subnets Immune
@@ -75,6 +72,7 @@ If all subnets are still within their immunity period, the system will:
 3. No subnet is deregistered until at least one becomes eligible
 
 ### Tied EMA Prices
+
 When multiple subnets have identical EMA prices:
 1. Select the subnet with the earliest registration timestamp
 2. Implementation: [Tie-breaking logic](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L774-781)
@@ -83,7 +81,7 @@ When multiple subnets have identical EMA prices:
 
 ## Token Liquidation
 
-When a subnet is deregistered, all ALPHA tokens in that subnet are liquidated and the subnet's TAO pool is distributed to ALPHA holders and to refunding the subnet owner for their lock cost minus the emissions they've received. This process is implemented in the [`destroy_alpha_in_out_stakes()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L444-623) function.
+When a subnet is deregistered, all ALPHA tokens in that subnet are liquidated and the subnet's TAO pool is distributed to ALPHA holders and to refunding the subnet owner for their lock cost minus the emissions they've received.
 
 ### Takeaways
 
@@ -111,6 +109,3 @@ When a subnet is deregistered, all ALPHA tokens in that subnet are liquidated an
 **Source Code**:
 - [`destroy_alpha_in_out_stakes()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L444-623)
 - [`prune_network()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L377)
-
-
-This liquidation mechanism ensures that when a subnet is deregistered, alpha holders are fairly compensated with the subnet's TAO pool, while the subnet owner receives their remaining lock cost after accounting for emissions already received.
