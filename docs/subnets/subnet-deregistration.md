@@ -16,7 +16,7 @@ Subnet deregistration addresses network efficiency issues:
 
 | Parameter | Value | Description |
 |-----------|-------|-------------|
-| **Subnet Limit** | 128 | Maximum number of active subnets |
+| **Subnet Limit** | 128 | Maximum number of occupied subnet slots |
 | **Immunity Period** | 4 months | Protection period from subnet deregistration
 | **Rate Limiting** | 4 days (28800 blocks) | Minimum time between registrations/deregistrations |
 
