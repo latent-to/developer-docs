@@ -18,7 +18,7 @@ Subnet deregistration addresses network efficiency issues:
 |-----------|-------|-------------|
 | **Subnet Limit** | 128 | Maximum number of active subnets |
 | **Immunity Period** | 4 months | Protection period from subnet deregistration
-| **Rate Limiting** | 3 days (7200 blocks) | Minimum time between registrations/deregistrations |
+| **Rate Limiting** | 4 days (28800 blocks) | Minimum time between registrations/deregistrations |
 
 ## The Automated Deregistration Process
 
