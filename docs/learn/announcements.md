@@ -8,7 +8,7 @@ This page tracks recent and upcoming changes to the Bittensor protocol and other
 
 ## Sub-Subnets (Major Feature Launch)
 
-**Status**: Ready for deployment on September 12, 2025
+**Status**: Deploying September 17
 - **What**: Sub-subnets allow subnet owners to apportion emissions across multiple sub-subnets, each running Yuma Consensus independently
 - **Key Features**:
   - Enables up to 8 sub-subnets (IDs 0-7) within each main subnet for multi-task validation
@@ -16,8 +16,9 @@ This page tracks recent and upcoming changes to the Bittensor protocol and other
   - Each sub-subnet has its own weight matrix and independent emissions
   - All validators participate in all sub-subnets with identical stake weights
   - Miners automatically participate in ALL sub-subnets when registering for a subnet
-  - Emissions are divided evenly, but subnet owners can configure proportions.
-  - First version focuses on core functionality with additional features planned based on community feedback
+  - **Emission distribution control**: Subnet owners can set custom emission distributions using the `sudo_set_subsubnet_emission_split` extrinsic
+  - **Immediate sub-subnet number setting**: No onset period - changes take effect immediately
+  - **Rate limiting**: Subnet owners can set sub-subnet numbers once per 7200 blocks
 
 ## Hyperparameter Rate Limiting
 **Status**: WIP
