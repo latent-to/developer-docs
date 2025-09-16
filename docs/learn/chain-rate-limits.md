@@ -1,277 +1,118 @@
-# Chain Rate Limits
+# Bittensor Rate Limits
 
 This document provides a comprehensive overview of all rate limits implemented in the Bittensor Subtensor chain. Rate limits are crucial for preventing spam, ensuring network stability, and maintaining fair access to network resources.
 
-## Overview
+---
 
-Rate limits in Bittensor are implemented as block-based cooldown periods. When a rate-limited operation is performed, subsequent attempts to perform the same operation must wait for a specified number of blocks to pass before they can be executed again.
+Rate limits in Bittensor are implemented as block-based cooldown periods. When a rate-limited operation is performed, subsequent attempts to perform the same operation must wait for a specified number of [blocks](../resources/glossary.md#block) to pass before they can be executed again.
 
-**Block Time**: ~12 seconds per block
+## Global rate limits
 
-## Global Rate Limits
+This section discusses rate limits that apply globally across the entire network.
 
-### Transaction Rate Limits
+### General transaction rate limit
 
-These rate limits apply globally across the entire network:
+This is the default transaction rate limit in Bittensor. It helps to prevent excessive transaction spam from a single account on the network.
 
-#### General Transaction Rate Limit
 - **Rate Limit**: 1000 blocks (~3.3 hours)
-- **Configuration**: `TxRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1140)
-- **Purpose**: Prevents excessive transaction spam
+- **Configuration**: `TxRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1144)
+- **Error message**: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
-```rust
-pub const SubtensorInitialTxRateLimit: u64 = 1000;
-```
+### Delegate take rate limit
 
-#### Delegate Take Rate Limit
+This rate limit prevents frequent changes to delegate take percentages.
+
 - **Rate Limit**: 216,000 blocks (~30 days)
-- **Configuration**: `TxDelegateTakeRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1141)
-- **Purpose**: Prevents frequent changes to delegate take percentages
+- **Configuration**: `TxDelegateTakeRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1145)
+- **Error message**: [`DelegateTxRateLimitExceeded`](../errors/subtensor.md#delegatetxratelimitexceeded)
 
-```rust
-pub const SubtensorInitialTxDelegateTakeRateLimit: u64 = 216000; // 30 days at 12 seconds per block
-```
+### Child key take rate limit
 
-#### Child Key Take Rate Limit
+This rate limit prevents the owner of a child hotkey from making frequent changes to the child key take percentages. This protects against rapid manipulation of child key relationships and ensures stability in the child key delegation system.
+
 - **Rate Limit**: 216,000 blocks (~30 days)
-- **Configuration**: `TxChildkeyTakeRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1142)
-- **Purpose**: Prevents frequent changes to child key take percentages
+- **Configuration**: `TxChildkeyTakeRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1146)
+- **Error message**:[ `TxChildkeyTakeRateLimitExceeded`](../errors/subtensor.md#txchildkeytakeratelimitexceeded)
 
-```rust
-pub const SubtensorInitialTxChildKeyTakeRateLimit: u64 = INITIAL_CHILDKEY_TAKE_RATELIMIT;
-// Where INITIAL_CHILDKEY_TAKE_RATELIMIT = 216000 (30 days)
-```
+### Hotkey set rate limit
 
-#### Network Registration Rate Limit
+This rate limit prevents a user from setting or swapping a hotkey too frequently.
+
+- **Rate Limit**: 1,000 blocks (~3.3 hours)
+- **Configuration**: [macros/errors.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/errors.rs#L93)
+- **Error message**: [`HotKeySetTxRateLimitExceeded`](../errors/subtensor.md#hotkeysettxratelimitexceeded)
+
+### Network registration rate rimit
+
+This rate limit prevents frequent creation of new subnets.
+
 - **Rate Limit**: 7,200 blocks (~24 hours)
-- **Configuration**: `NetworkRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1151)
-- **Purpose**: Prevents rapid creation of new subnets
+- **Configuration**: `NetworkRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1155)
+- **Error message**: [`NetworkTxRateLimitExceeded`](../errors/subtensor.md#networktxratelimitexceeded)
 
-```rust
-pub const SubtensorInitialNetworkRateLimit: u64 = 7200;
-```
+## Subnet-specific rate limits
 
-## Subnet-Specific Rate Limits
+This section discusses rate limits that apply within a specific subnet on the network. These limits are typically configurable at the subnet level.
 
-### Serving Rate Limits
+### Serving rate limits
 
-#### Axon Serving Rate Limit
+This rate limit controls how frequently neurons can update their serving information (axon and prometheus data) on the Bittensor network. This rate limit can be modified by changing the `serving_rate_limit` parameter in the subnet hyperparameters. For more information, see [subnet hyperparameters](../subnets/subnet-hyperparameters.md#servingratelimit).
+
 - **Rate Limit**: Configurable per subnet (default: 50 blocks)
-- **Configuration**: `ServingRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1136)
-- **Purpose**: Prevents excessive axon information updates
-- **Implementation**: [subnets/serving.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/serving.rs#L223-231)
+- **Configuration**: `ServingRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1138)
+- **Error message**: [`ServingRateLimitExceeded`](../errors/subtensor.md#servingratelimitexceeded)
 
-```rust
-pub const SubtensorInitialServingRateLimit: u64 = 50;
-```
+### Staking operations rate limits
 
-The serving rate limit is checked in the `axon_passes_rate_limit` function:
+This rate limit controls how frequently a user can perform staking operations (add/remove stake, move stake).
 
-```rust
-pub fn axon_passes_rate_limit(
-    netuid: NetUid,
-    prev_axon_info: &AxonInfoOf,
-    current_block: u64,
-) -> bool {
-    let rate_limit: u64 = Self::get_serving_rate_limit(netuid);
-    let last_serve = prev_axon_info.block;
-    rate_limit == 0 || last_serve == 0 || current_block.saturating_sub(last_serve) >= rate_limit
-}
-```
+- **Rate Limit**: 1 per block
+- **Configuration**: [macros/errors.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/errors.rs#L222)
+- **Error message**: [`StakingOperationRateLimitExceeded`](../errors/subtensor.md#stakingoperationratelimitexceeded)
 
-### Weights Rate Limits
+### Weights rate limits
 
-#### Weights Setting Rate Limit
-- **Rate Limit**: Configurable per subnet
+This section covers rate limits related to setting weights on a subnet. This rate limit can be modified by changing the `weights_rate_limit` parameter in the subnet hyperparameters. For more information, see [subnet hyperparameters](../subnets/subnet-hyperparameters.md#weightsratelimit--commitmentratelimit).
+
+#### Weights setting rate limit
+
+This rate limit controls how frequently a subnet validator can set weights to the network.
+
+- **Rate Limit**: Configurable per subnet (default: 100 blocks)
 - **Configuration**: `WeightsSetRateLimit` per subnet
-- **Purpose**: Prevents excessive weight updates
 - **Implementation**: [subnets/weights.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/weights.rs#L723-731)
+- **Error message**: [`SettingWeightsTooFast`](../errors/subtensor.md#settingweightstoofast)
 
-The weights setting rate limit is enforced in the `do_set_weights` function:
+#### Commit-reveal weights rate limit
 
-```rust
-// --- 9. Ensure the uid is not setting weights faster than the weights_set_rate_limit.
-let neuron_uid = Self::get_uid_for_net_and_hotkey(netuid, &hotkey)?;
-let current_block: u64 = Self::get_current_block_as_u64();
-if !Self::get_commit_reveal_weights_enabled(netuid) {
-    ensure!(
-        Self::check_rate_limit(netuid, neuron_uid, current_block),
-        Error::<T>::SettingWeightsTooFast
-    );
-}
-```
+This rate limit controls how frequently a subnet validator can set commit on to the Bittensor chain. Changing the `weights_rate_limit` parameter in the subnet's hyperparameters also modifies this rate limit. For more information, see [subnet hyperparameters](../subnets/subnet-hyperparameters.md#weightsratelimit--commitmentratelimit).
 
-#### Commit-Reveal Weights Rate Limit
-- **Rate Limit**: Uses the same rate limit as weights setting
-- **Purpose**: Prevents excessive weight commits
+- **Rate Limit**: Uses the same rate limit as [weights setting rate limit](#weights-setting-rate-limit)
 - **Implementation**: [subnets/weights.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/weights.rs#L65-71)
+- **Error message**: [`CommittingWeightsTooFast`](../errors/subtensor.md#committingweightstoofast)
 
-```rust
-// 4. Check that the commit rate does not exceed the allowed frequency.
-let commit_block = Self::get_current_block_as_u64();
-let neuron_uid = Self::get_uid_for_net_and_hotkey(netuid, &who)?;
-ensure!(
-    Self::check_rate_limit(netuid, neuron_uid, commit_block),
-    Error::<T>::CommittingWeightsTooFast
-);
-```
+### Registration rate limits
 
-### Registration Rate Limits
+This section covers rate limits related to neuron registrations on a subnet and on the network.
 
-#### Per-Block Registration Limit
+#### Per-block registration limit
+
+This rate limit controls how frequently registrations can occur on a particular subnet. This rate limit can be modified by changing the `max_regs_per_block` parameter in the subnet hyperparameters. For more information, see [subnet hyperparameters](../subnets/subnet-hyperparameters.md#maxregistrationsperblock).
+
 - **Rate Limit**: Configurable per subnet (default: 1 registration per block)
 - **Configuration**: `MaxRegistrationsPerBlock` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1123)
-- **Purpose**: Prevents registration spam within a single block
+- **Error message**: [`TooManyRegistrationsThisBlock`](../errors/subtensor.md#toomanyregistrationsthisblock)
 
-```rust
-pub const SubtensorInitialMaxRegistrationsPerBlock: u16 = 1;
-```
+#### Per-interval registration limit
 
-#### Per-Interval Registration Limit
+This rate limit controls the frequency of neuron registrations within an [interval](../subnets/subnet-hyperparameters#adjustmentinterval). This limit occurs when registration attempts in the current interval exceed three times the target registrations per interval.
+
 - **Rate Limit**: 3x the target registrations per interval
-- **Configuration**: `TargetRegistrationsPerInterval` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1120)
-- **Purpose**: Prevents registration spam over longer periods
-
-```rust
-pub const SubtensorInitialTargetRegistrationsPerInterval: u16 = 2;
-```
-
-The per-interval limit is enforced as:
-
-```rust
-// --- 5. Ensure we are not exceeding the max allowed registrations per interval.
-ensure!(
-    Self::get_registrations_this_interval(netuid)
-        < Self::get_target_registrations_per_interval(netuid).saturating_mul(3),
-    Error::<T>::TooManyRegistrationsThisInterval
-);
-```
-
-## Transaction-Specific Rate Limits
-
-### Set Children Rate Limit
-- **Rate Limit**: 150 blocks (~30 minutes)
-- **Purpose**: Prevents excessive child key management
-- **Implementation**: [utils/rate_limiting.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L50)
-
-```rust
-TransactionType::SetChildren => 150, // 30 minutes
-```
-
-### Set Child Key Take Rate Limit
-- **Rate Limit**: Uses `TxChildkeyTakeRateLimit` (216,000 blocks)
-- **Purpose**: Prevents frequent changes to child key take percentages
-- **Implementation**: [utils/rate_limiting.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L51)
-
-### Set Weights Version Key Rate Limit
-- **Rate Limit**: `Tempo * WeightsVersionKeyRateLimit`
-- **Purpose**: Prevents excessive version key updates
-- **Implementation**: [utils/rate_limiting.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L62-63)
-
-```rust
-TransactionType::SetWeightsVersionKey => (Tempo::<T>::get(netuid) as u64)
-    .saturating_mul(WeightsVersionKeyRateLimit::<T>::get()),
-```
-
-### Set Subnet Owner Hotkey Rate Limit
-- **Rate Limit**: Uses `DefaultSetSNOwnerHotkeyRateLimit`
-- **Purpose**: Prevents frequent subnet owner changes
-- **Implementation**: [utils/rate_limiting.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L64)
-
-## Rate Limit Implementation Details
-
-### Rate Limit Checking Logic
-
-The core rate limit checking logic is implemented in [utils/rate_limiting.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L70-73):
-
-```rust
-pub fn check_passes_rate_limit(limit: u64, block: u64, last_block: u64) -> bool {
-    // Allow the first transaction (when last_block is 0) or if the rate limit has passed
-    last_block == 0 || block.saturating_sub(last_block) >= limit
-}
-```
-
-### Rate Limit Storage
-
-Rate limits are tracked using the following storage mechanisms:
-
-1. **Transaction Key Last Block**: `TransactionKeyLastBlock<(AccountId, NetUid, u16)>`
-2. **Network Last Lock Block**: `NetworkLastLockBlock`
-3. **Rate Limited Last Block**: `RateLimitedLastBlock<RateLimitKey>`
-
-### Error Handling
-
-Rate limit violations result in specific error types:
-
-- `SettingWeightsTooFast`: Weights setting rate limit exceeded
-- `CommittingWeightsTooFast`: Commit-reveal rate limit exceeded
-- `ServingRateLimitExceeded`: Axon serving rate limit exceeded
-- `TxRateLimitExceeded`: General transaction rate limit exceeded
-- `DelegateTxRateLimitExceeded`: Delegate take rate limit exceeded
-- `TxChildkeyTakeRateLimitExceeded`: Child key take rate limit exceeded
-- `NetworkTxRateLimitExceeded`: Network registration rate limit exceeded
-
-## Configuration and Updates
-
-Rate limits can be updated through governance mechanisms:
-
-1. **Sudo calls**: For emergency updates
-2. **Triumvirate votes**: For major changes
-3. **Subnet-specific updates**: For subnet-level rate limits
-
-### Setting Rate Limits
-
-Rate limits can be set using the following functions:
-
-```rust
-// General transaction rate limit
-SubtensorModule::set_tx_rate_limit(rate_limit);
-
-// Delegate take rate limit
-SubtensorModule::set_tx_delegate_take_rate_limit(rate_limit);
-
-// Child key take rate limit
-SubtensorModule::set_tx_childkey_take_rate_limit(rate_limit);
-
-// Serving rate limit (per subnet)
-SubtensorModule::set_serving_rate_limit(netuid, rate_limit);
-
-// Weights setting rate limit (per subnet)
-SubtensorModule::set_weights_set_rate_limit(netuid, rate_limit);
-```
-
-## Migration Considerations
-
-When planning runtime upgrades that affect rate limits:
-
-1. **Document Changes**: All rate limit changes should be documented in advance
-2. **Gradual Updates**: Consider implementing rate limit changes gradually
-3. **User Notification**: Notify users of rate limit changes well in advance
-4. **Testing**: Thoroughly test rate limit changes on testnets
-5. **Rollback Plan**: Have a plan to rollback rate limit changes if needed
-
-### Rate Limit Change Process
-
-1. **Proposal**: Rate limit changes should be proposed through governance
-2. **Discussion**: Community discussion and feedback
-3. **Voting**: Formal voting process through Triumvirate
-4. **Implementation**: Code changes and testing
-5. **Deployment**: Runtime upgrade deployment
-6. **Monitoring**: Post-deployment monitoring and adjustment
+- **Configuration**: `TargetRegistrationsPerInterval` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1122)
+- **Error message**: [`TooManyRegistrationsThisInterval`](../errors/subtensor.md#toomanyregistrationsthisinterval)
 
 ## Best Practices
 
 1. **Monitor Usage**: Regularly monitor rate limit usage patterns
-2. **Adjust Gradually**: Make rate limit adjustments gradually
-3. **Document Changes**: Always document rate limit changes
-4. **Test Thoroughly**: Test rate limit changes on testnets
-5. **User Communication**: Communicate changes to users clearly
-6. **Emergency Procedures**: Have procedures for emergency rate limit adjustments
-
-## References
-
-- [Rate Limiting Implementation](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs)
-- [Runtime Configuration](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs)
-- [Serving Rate Limits](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/serving.rs)
-- [Weights Rate Limits](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/weights.rs)
-- [Registration Rate Limits](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/registration.rs)
+2. **Document Changes**: Always document rate limit changes
+3. **Test Thoroughly**: Test rate limit changes on testnets
