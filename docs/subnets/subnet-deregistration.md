@@ -80,3 +80,39 @@ When multiple subnets have identical EMA prices:
 2. Implementation: [Tie-breaking logic](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L774-781)
 3. Only applies to subnets outside their immunity period
 4. If all subnets are immune, no subnet is selected for deregistration
+
+## ALPHA Token Liquidation Process 
+
+When a subnet is deregistered, all ALPHA tokens in that subnet are liquidated and the subnet's TAO pool is distributed to ALPHA holders. This process is implemented in the [`destroy_alpha_in_out_stakes()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L444-623) function.
+
+### Liquidation Steps
+
+1. **Dissolve Liquidity Pools**: All liquidity providers in the subnet's AMM pools are dissolved
+2. **Calculate Owner Refund**: The subnet owner's refund is calculated as:
+   ```
+   refund = max(0, lock_cost - owner_received_emission_in_tao)
+   ```
+   Where `owner_received_emission_in_tao` is the TAO value of the owner's cut of all emissions received during the subnet's lifetime.
+
+3. **Enumerate ALPHA Holders**: All ALPHA token holders and their stake amounts are collected
+
+4. **Extract TAO Pool**: The subnet's TAO pool (`SubnetTAO`) is extracted for distribution
+
+5. **Pro-Rata Distribution**: TAO is distributed proportionally to ALPHA holders using the largest-remainder method:
+   - Each holder receives: `(holder_alpha_value / total_alpha_value) * pool_tao`
+   - TAO is credited directly to each holder's coldkey free balance
+
+6. **Cleanup**: All ALPHA-related storage is removed:
+   - All `Alpha` entries for the subnet
+   - `TotalHotkeyAlpha` and `TotalHotkeyShares` for each hotkey
+   - `SubnetAlphaIn`, `SubnetAlphaInProvided`, `SubnetAlphaOut` counters
+
+### Key Implementation Details
+
+- **Source Code**: [`destroy_alpha_in_out_stakes()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L444-623)
+- **Called From**: [`prune_network()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L377)
+- **Distribution Method**: Largest-remainder for fair rounding
+- **Owner Protection**: Owner gets refund minus emissions already received
+- **Immediate Effect**: All ALPHA tokens are destroyed and cannot be recovered
+
+This liquidation mechanism ensures that when a subnet is deregistered, ALPHA holders are fairly compensated with the subnet's TAO pool, while the subnet owner receives their remaining lock cost after accounting for emissions already received.
