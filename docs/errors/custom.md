@@ -100,6 +100,26 @@ Related:
 **Error**: `ZeroMaxAmount`  
 **Description**: The executable amount must be greater than zero.
 
+### Error Code 15
+
+**Error**: `InvalidRevealRound`  
+**Description**: The provided reveal round is outdated or invalid.
+
+### Error Code 16
+
+**Error**: `CommitNotFound`  
+**Description**: The referenced validator commit does not exist.
+
+### Error Code 17
+
+**Error**: `CommitBlockNotInRevealRange`  
+**Description**: The referenced commit cannot be revealed in the current block range.
+
+### Error Code 18
+
+**Error**: `InputLengthsUnequal`  
+**Description**: Attempted to batch reveal weights with mismatched vector input lenghts.
+
 ### Error Code 255
 
 **Error**: `BadRequest`  

@@ -179,3 +179,25 @@ If both `chain` and `network` config values are present in the `config.yml`, the
 ```bash
 btcli config --help
 ```
+
+### Environment variables
+
+The Bittensor CLI also accepts environment variables that can change how it works:
+
+- `USE_TORCH` (default 0): If set to 1, will use torch instead of numpy
+- `DISK_CACHE` (default 0, also settable in config): If set to 1 (or set in config), will use disk caching for various safe-cachable substrate
+  calls (such as block number to block hash mapping), which can speed up subsequent calls.
+- `BTCLI_CONFIG_PATH` (default `~/.bittensor/config.yml`): This will set the config file location, creating if it does not exist.
+- `BTCLI_DEBUG_FILE` (default `~/.bittensor/debug.txt`): The file stores the most recent's command's debug log.
+
+## Debugging
+
+BTCLI stores a debug log for every command you run. Debug logging is enabled by default if `use_cache` is on. All logs are written to `~/.bittensor/debug.txt` and overwritten after each BTCLI command.
+
+You can change the location with the [`BTCLI_DEBUG_FILE` environment variable](#environment-variables).
+
+:::info
+The debug log does not contain sensitive data (such as private keys). It is intended to be shared with developers for troubleshooting. The file includes details about the executed command, configuration, and request/response interactions with the chain.
+:::
+
+If you encounter an issue and want to preserve the log before it is overwritten, run `btcli --debug` and specify a new location to save the file. We recommend doing this first before starting your debugging with us on [Discord](https://discord.gg/bittensor) or opening an issue on [GitHub](https://github.com/opentensor/btcli/issues/new), where you can also upload your debug file.
