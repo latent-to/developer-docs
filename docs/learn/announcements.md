@@ -6,9 +6,9 @@ title: "Announcements and Developments"
 This page tracks recent and upcoming changes to the Bittensor protocol and other major events in the Bittensor ecosystem.
 
 
-## Sub-Subnets (Major Feature Launch)
+## Sub-Subnets
 
-**Status**: Ready for deployment on September 12, 2025
+**Status**: In develoment
 - **What**: Sub-subnets allow subnet owners to apportion emissions across multiple sub-subnets, each running Yuma Consensus independently
 - **Key Features**:
   - Enables up to 8 sub-subnets (IDs 0-7) within each main subnet for multi-task validation
@@ -47,7 +47,7 @@ A percentage fee will be deducted from emissions bound to validator hotkeys thro
   - Initial lock cost set at 1,000 TAO with standard linear decay mechanism
   - First deregistrations available approximately September 23 (one week after deployment)
 
-  See: [Subnet Deregistration]()../subnets/subnet-deregistration)
+  See: [Subnet Deregistration](../subnets/subnet-deregistration)
   
 ## Auto-Staking for Miners
 **Status**: Implemented (Merged)
