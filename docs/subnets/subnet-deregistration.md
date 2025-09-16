@@ -85,6 +85,12 @@ When multiple subnets have identical EMA prices:
 
 When a subnet is deregistered, all ALPHA tokens in that subnet are liquidated and the subnet's TAO pool is distributed to ALPHA holders and to refunding the subnet owner for their lock cost minus the emissions they've received. This process is implemented in the [`destroy_alpha_in_out_stakes()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L444-623) function.
 
+### Takeaways
+
+**Distribution Method**: Largest-remainder for fair rounding
+**Owner Protection**: Owner gets refund minus emissions already received
+**Immediate Effect**: All ALPHA tokens are destroyed and cannot be recovered
+
 ### Liquidation Steps
 
 1. **Dissolve Liquidity Pools**: All liquidity pools in the subnet's AMM pools are dissolved
@@ -94,25 +100,17 @@ When a subnet is deregistered, all ALPHA tokens in that subnet are liquidated an
    ```
    Where `owner_received_emission_in_tao` is the TAO value of the owner's cut of all emissions received during the subnet's lifetime.
 
-3. **Enumerate ALPHA Holders**: All ALPHA token holders and their stake amounts are collected
+3. **Enumerate ALPHA Holders**: All alpha token holders and their stake amounts are collected
 
 4. **Extract TAO Pool**: The subnet's TAO pool (`SubnetTAO`) is extracted for distribution
 
-5. **Pro-Rata Distribution**: TAO is distributed proportionally to ALPHA holders using the largest-remainder method:
+5. **Distribution**: TAO is distributed proportionally to alpha holders:
    - Each holder receives: `(holder_alpha_value / total_alpha_value) * pool_tao`
    - TAO is credited directly to each holder's coldkey free balance
 
-6. **Cleanup**: All ALPHA-related storage is removed:
-   - All `Alpha` entries for the subnet
-   - `TotalHotkeyAlpha` and `TotalHotkeyShares` for each hotkey
-   - `SubnetAlphaIn`, `SubnetAlphaInProvided`, `SubnetAlphaOut` counters
+**Source Code**:
+- [`destroy_alpha_in_out_stakes()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L444-623)
+- [`prune_network()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L377)
 
-### Key Implementation Details
 
-- **Source Code**: [`destroy_alpha_in_out_stakes()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L444-623)
-- **Called From**: [`prune_network()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L377)
-- **Distribution Method**: Largest-remainder for fair rounding
-- **Owner Protection**: Owner gets refund minus emissions already received
-- **Immediate Effect**: All ALPHA tokens are destroyed and cannot be recovered
-
-This liquidation mechanism ensures that when a subnet is deregistered, ALPHA holders are fairly compensated with the subnet's TAO pool, while the subnet owner receives their remaining lock cost after accounting for emissions already received.
+This liquidation mechanism ensures that when a subnet is deregistered, alpha holders are fairly compensated with the subnet's TAO pool, while the subnet owner receives their remaining lock cost after accounting for emissions already received.
