@@ -8,9 +8,9 @@ This page details the process by which subnets can become deregistered from Bitt
 
 See also [Learn Bittensor: Subnet Deregistration](https://learnbittensor.org/concepts/dynamic-tao/subnet-deregistration)
 
-Subnet deregistration is a critical mechanism that manages the lifecycle of subnets within the Bittensor network. It ensures network quality by removing underperforming subnets, clearing room for new subnet registrations within the 128 subnet limit.
+Subnet deregistration is a mechanism that manages the lifecycle of subnets within the Bittensor network. It ensures network quality by removing underperforming subnets, clearing room for new subnet registrations within the 128 subnet limit.
 
-Subnet deregistration addresses critical network efficiency issues:
+Subnet deregistration addresses network efficiency issues:
 - Removes underperforming subnets that consume TAO emissions without providing value.
 - Unlocks TAO resources locked in underperforming subnet pools
 
