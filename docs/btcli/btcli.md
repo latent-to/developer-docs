@@ -23,8 +23,9 @@ btcli [OPTIONS] COMMAND [ARGS]...
 
 **Options**:
 
-- `--version`: Show BTCLI version
-- `--commands`: Show BTCLI commands
+- `--version`: Show BTCLI version.
+- `--commands`: Show BTCLI commands.
+- `--debug`: Saves the debug log from the last used command.
 - `--install-completion`: Install completion for the current shell.
 - `--show-completion`: Show completion for the current shell, to copy it or customize the installation.
 - `--help`: Show this message and exit.
@@ -1914,6 +1915,7 @@ aliases: subnet, s
 - `check-start`: Checks if a subnet's emission schedule can be started.
 - `set-identity`: Get the identity information for a subnet.
 - `get-identity`: Set or update the identity information for a subnet.
+- `set-symbol`: Allows the user to update their subnet symbol to a different available symbol. The full list of available symbols can be found here: https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/symbols.rs#L8
 
 ### `btcli subnets hyperparameters`
 
@@ -2371,6 +2373,43 @@ alias: get_identity
 | `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.            |
 | `--help`                                                                    |         | Show this message and exit.                           |
 
+### `btcli subnets set-symbol`
+
+Allows the user to update their subnet symbol to a different available symbol. The full list of available symbols can be found here:
+https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/symbols.rs#L8
+
+**EXAMPLE**
+
+```bash
+btcli subnets set-symbol --netuid 1 シ
+```
+
+:::info
+JSON OUTPUT:
+If --json-output is used, the output will be in the following schema: `{success: bool, message: str}`
+:::
+
+**Usage:**
+
+```bash
+btcli subnets set-symbol [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                   |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
 ## `btcli weights`
 
 **Usage**:
@@ -2480,6 +2519,7 @@ btcli utils [OPTIONS] COMMAND [ARGS]...
 **Commands**:
 
 - `convert`: Allows for converting between tao and rao...
+- `latency`: This command will give you the latency of all finney-like network in additional to any additional networks you specify via the '--network' flag.
 
 ### `btcli utils convert`
 
@@ -2487,7 +2527,7 @@ Allows for converting between tao and rao using the specified flags
 
 **Usage**:
 
-```console
+```sh
 btcli utils convert [OPTIONS]
 ```
 
@@ -2498,6 +2538,31 @@ btcli utils convert [OPTIONS]
 | `--rao`  | TEXT  | Convert amount from Rao     |
 | `--tao`  | FLOAT | Convert amount from Tao     |
 | `--help` |       | Show this message and exit. |
+
+### `btcli utils latency`
+
+This command will give you the latency of all finney-like network in addition to any additional networks you specify via the `--network` flag
+
+The results are three-fold. One column is the overall time to initialise a connection, send the requests, and wait for the results. The second column measures single ping-pong speed once connected. The third makes a real world call to fetch the chain head.
+
+**Example:**
+
+```sh
+btcli utils latency --network ws://189.234.12.45 --network wss://mysubtensor.duckdns.org
+```
+
+**Usage**:
+
+```sh
+btcli utils latency [OPTIONS]
+```
+
+**Options**:
+
+| Option      | Type | Description                                                |
+| ----------- | ---- | ---------------------------------------------------------- |
+| `--network` | TEXT | Network(s) to test for the best connection [default: None] |
+| `--help`    |      | Show this message and exit.                                |
 
 ## `btcli liquidity`
 
