@@ -47,6 +47,8 @@ A percentage fee will be deducted from emissions bound to validator hotkeys thro
   - Initial lock cost set at 1,000 TAO with standard linear decay mechanism
   - First deregistrations available approximately September 23 (one week after deployment)
 
+  See: [Subnet Deregistration]()../subnets/subnet-deregistration)
+  
 ## Auto-Staking for Miners
 **Status**: Implemented (Merged)
 - **What**: Miners can automatically stake their mining income to a validator of their choice
