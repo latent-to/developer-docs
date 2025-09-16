@@ -29,9 +29,30 @@ The process begins when the subnet limit is reached and a new subnet attempts to
 Source: [`do_register_network()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/subnet.rs#L146-158)
 
 ### Selection Criteria
-The subnet to deregister is the subnet with lowest EMA (Exponential Moving Average) price among non-immune subnets. For detailed information about EMA calculations and the mathematical formulas used, see [Exponential Moving Averages (EMAs) in Bittensor](../learn/ema.md).
+The subnet to deregister is the subnet with lowest EMA (Exponential Moving Average) price among non-immune subnets.
 
 Source code: [`get_network_to_prune()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L753-795)
+
+The subnet price EMA uses the standard EMA formula:
+$$
+\mathrm{EMA}^{(t)} = \alpha \times \mathrm{current\_price} + (1 - \alpha) \times \mathrm{EMA}^{(t-1)}
+$$
+
+Where $\alpha$ is calculated dynamically based on subnet age:
+$$
+\alpha = \frac{\mathrm{base\_alpha} \times \mathrm{blocks\_since\_start}}{\mathrm{blocks\_since\_start} + \mathrm{halving\_blocks}}
+$$
+
+- **base_alpha**: ~0.0003 for Bittensor mainnet ("finney")
+- **blocks_since_start**: Number of blocks since subnet registration
+- **halving_blocks**: Halving period for the subnet
+
+This EMA value is recalculated for the subnet each time the coinbase function runs.
+
+See also:
+- [Navigating Subtensor Codebase: Coinbase Implementation](../navigating-subtensor/emissions-coinbase)
+- [Exponential Moving Averages (EMAs) in Bittensor](../learn/ema.md).
+
 
 ### Immunity Protection
 Network immunity period is currently 4 months from registration block.
