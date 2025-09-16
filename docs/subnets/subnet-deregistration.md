@@ -4,7 +4,7 @@ title: "Subnet Deregistration"
 
 # Subnet Deregistration
 
-This page provides documents the process by which subnets can become deregistered from Bittensor network, with an eye to the implementation of the functionality in the Subtensor codebase that makes up Bittensor's blockchain layer.
+This page details the process by which subnets can become deregistered from Bittensor network, with an eye to the implementation of the functionality in the Subtensor codebase that makes up Bittensor's blockchain layer.
 
 See also [Learn Bittensor: Subnet Deregistration](https://learnbittensor.org/concepts/dynamic-tao/subnet-deregistration)
 
