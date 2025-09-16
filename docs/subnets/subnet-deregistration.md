@@ -59,8 +59,8 @@ Network immunity period is currently 4 months from registration block.
   - Formula: `current_block < registered_at + network_immunity_period`
   - Source code: [Immunity check](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L768-770)
 ### Rate Limiting
-Deregistration can occur at most every once every 3 days (coordinated with registration rate).
-  - Block-based timing: 7200 blocks ≈ 3 days at 12s/block
+Deregistration can occur at most every once every 4 days (coordinated with registration rate).
+  - Block-based timing: 28800 blocks ≈ 4 days at 12s/block
   - [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L27)
 
 ## Special Cases and Edge Conditions
