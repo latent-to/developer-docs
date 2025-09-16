@@ -29,20 +29,9 @@ The process begins when the subnet limit is reached and a new subnet attempts to
 Source: [`do_register_network()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/subnet.rs#L146-158)
 
 ### Selection Criteria
-The subnet to deregister is the subnet with lowest EMA (Exponential Moving Average) price among non-immune subnets.  
-  
-    $$
-    \text{Current EMA} = \alpha \cdot \text{current\_price} + (1 - \alpha) \cdot \text{previous\_moving\_price}
-    $$
-  
-    Where alpha is:
-        $$
-        \alpha = \frac{b}{b + h}
-        $$
+The subnet to deregister is the subnet with lowest EMA (Exponential Moving Average) price among non-immune subnets. For detailed information about EMA calculations and the mathematical formulas used, see [Exponential Moving Averages (EMAs) in Bittensor](../learn/ema.md).
 
-        for $b$ = `blocks_since_start_call` and $b$ =`halving_time`     
-
-    Souce code: [`get_network_to_prune()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L753-795)
+Source code: [`get_network_to_prune()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L753-795)
 
 ### Immunity Protection
 Network immunity period is currently 4 months from registration block.
