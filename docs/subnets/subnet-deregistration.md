@@ -81,13 +81,13 @@ When multiple subnets have identical EMA prices:
 
 ## Token Liquidation
 
-When a subnet is deregistered, all ALPHA tokens in that subnet are liquidated and the subnet's TAO pool is distributed to ALPHA holders and to refunding the subnet owner for their lock cost minus the emissions they've received.
+When a subnet is deregistered, all alpha tokens in that subnet are liquidated and the subnet's TAO pool is distributed to alpha holders and to refunding the subnet owner for their lock cost minus the emissions they've received.
 
 ### Takeaways
 
 **Distribution Method**: Largest-remainder for fair rounding
 **Owner Protection**: Owner gets refund minus emissions already received
-**Immediate Effect**: All ALPHA tokens are destroyed and cannot be recovered
+**Immediate Effect**: All alpha tokens are destroyed and cannot be recovered
 
 ### Liquidation Steps
 
@@ -98,7 +98,7 @@ When a subnet is deregistered, all ALPHA tokens in that subnet are liquidated an
    ```
    Where `owner_received_emission_in_tao` is the TAO value of the owner's cut of all emissions received during the subnet's lifetime.
 
-3. **Enumerate ALPHA Holders**: All alpha token holders and their stake amounts are collected
+3. **Enumerate alpha Holders**: All alpha token holders and their stake amounts are collected
 
 4. **Extract TAO Pool**: The subnet's TAO pool (`SubnetTAO`) is extracted for distribution
 
