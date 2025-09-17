@@ -50,9 +50,10 @@ const sidebars = {
         "learn/introduction",        
         "resources/questions-and-answers",
         "subnets/understanding-subnets",
+        "learn/anatomy-of-incentive-mechanism",
         "subnets/understanding-sub-subnets",
         "learn/neurons",
-        "learn/anatomy-of-incentive-mechanism",
+        
         "learn/emissions",
         "learn/ema",
         "learn/yuma-consensus",
