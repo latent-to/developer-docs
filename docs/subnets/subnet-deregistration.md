@@ -10,6 +10,10 @@ See also [Learn Bittensor: Subnet Deregistration](https://learnbittensor.org/con
 
 Subnet deregistration is a mechanism that manages the lifecycle of subnets within the Bittensor network. It ensures network quality by removing underperforming subnets, clearing room for new subnet registrations within the 128 subnet limit.
 
+:::info Deployment Timeline
+The subnet deregistration feature deployed on September 17, 2025, with a 7-day delay before the first registrations can occur.
+:::
+
 Subnet deregistration addresses network efficiency issues:
 - Removes underperforming subnets that consume TAO emissions without providing value.
 - Unlocks TAO resources locked in underperforming subnet pools
