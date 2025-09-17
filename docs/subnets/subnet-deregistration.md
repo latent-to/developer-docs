@@ -80,8 +80,6 @@ If all subnets are still within their immunity period, the system will:
 When multiple subnets have identical EMA prices:
 1. Select the subnet with the earliest registration timestamp
 2. Implementation: [Tie-breaking logic](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L774-781)
-3. Only applies to subnets outside their immunity period
-4. If all subnets are immune, no subnet is selected for deregistration
 
 ## Token Liquidation
 
