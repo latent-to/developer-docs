@@ -26,7 +26,7 @@ UIDs are sorted by their emission scores in descending order. The trimming proce
 
 ## For Subnet Owners
 
-Subnet trim UIDs using the two `sudo_trim_to_max_allowed_uids` extrinsic.
+Subnet trim UIDs using [`btcli sudo trim`](#uid-trimming-with-btcli) or the  `sudo_trim_to_max_allowed_uids` extrinsic.
 
 **What happens:**
 
@@ -75,4 +75,34 @@ If your UID was trimmed:
 
 - **Core Implementation**: `subtensor/pallets/subtensor/src/subnets/uids.rs`
 
+## UID trimming with BTCLI
 
+The `btcli sudo trim` command allows subnet owners to reduce the number of active UIDs on their subnet by trimming excess UIDs down to a specified maximum limit. 
+
+:::warning Subnet Owner Only
+This is a **sudo operation** that can only be performed by the subnet owner (the wallet that created the subnet).
+:::
+
+### Basic usage
+
+```shell
+btcli sudo trim --netuid <NETUID> --max <MAX_UIDS>
+```
+
+### Example
+
+To trim subnet 95 to a maximum of 6 UIDs:
+
+```shell
+btcli sudo trim --netuid 95 --max 6
+```
+
+The command will:
+1. Verify that your wallet owns the specified subnet
+2. Display a confirmation prompt showing the trim operation details
+3. Execute the trim operation if confirmed
+4. Display the result of the operation
+
+:::note Transaction Fees
+UID trimming operations incur transaction fees for the underlying blockchain transactions they trigger. See [Transaction Fees in Bittensor](../learn/fees.md) for details.
+:::
