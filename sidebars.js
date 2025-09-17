@@ -23,7 +23,7 @@ const sidebars = {
     "index",
     {
       type: "category",
-      label: "Releases and Announcements",      
+      label: "Releases and Announcements",
       collapsible: true,
       collapsed: true,
       items: [
@@ -37,7 +37,7 @@ const sidebars = {
           id: "learn/announcements",
           label: "Announcements",
         },
-      ]
+      ],
     },
     "btcli/btcli-playground",
     {
@@ -47,7 +47,7 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "learn/introduction",        
+        "learn/introduction",
         "resources/questions-and-answers",
         "subnets/understanding-subnets",
         "subnets/understanding-sub-subnets",
@@ -60,17 +60,17 @@ const sidebars = {
         "learn/yuma3-migration-guide",
         "learn/fees",
         {
-      type: "category",
-      label: "Navigating Subtensor Codebase",
-      link: { type: "doc", id: "navigating-subtensor/index" },
-      collapsible: true,
-      collapsed: true,
-      items: [
-        "navigating-subtensor/emissions-coinbase",
-        "navigating-subtensor/epoch",
-        "navigating-subtensor/swap-stake",
-      ],
-    },
+          type: "category",
+          label: "Navigating Subtensor Codebase",
+          link: { type: "doc", id: "navigating-subtensor/index" },
+          collapsible: true,
+          collapsed: true,
+          items: [
+            "navigating-subtensor/emissions-coinbase",
+            "navigating-subtensor/epoch",
+            "navigating-subtensor/swap-stake",
+          ],
+        },
         "resources/community-links",
       ],
     },
@@ -176,9 +176,17 @@ const sidebars = {
       collapsed: true,
       items: [
         "keys/wallets",
+        "keys/working-with-keys",
+        {
+          type: "category",
+          label: "Proxies",
+          collapsible: true,
+          collapsed: true,
+          link: { type: "doc", id: "keys/proxies/index" },
+          items: ["keys/proxies/create-proxy"],
+        },
         "keys/handle-seed-phrase",
         "keys/coldkey-hotkey-security",
-        "keys/working-with-keys",
         "keys/multisig",
         "keys/schedule-coldkey-swap",
       ],
@@ -226,7 +234,7 @@ const sidebars = {
         "subtensor-nodes/subtensor-storage-query-examples",
       ],
     },
-    
+
     {
       type: "category",
       label: "Bittensor EVM",
