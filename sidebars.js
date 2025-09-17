@@ -59,6 +59,7 @@ const sidebars = {
         "learn/yc3-blog",
         "learn/yuma3-migration-guide",
         "learn/fees",
+        "subnets/uid-trimming"
         {
       type: "category",
       label: "Navigating Subtensor Codebase",
