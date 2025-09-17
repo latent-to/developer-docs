@@ -51,7 +51,7 @@ const sidebars = {
         "resources/questions-and-answers",
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
-        "subnets/understanding-sub-subnets",
+        "subnets/understanding-multiple-mech-subnets",
         "learn/neurons",
         
         "learn/emissions",
