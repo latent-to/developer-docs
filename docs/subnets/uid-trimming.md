@@ -91,10 +91,10 @@ btcli sudo trim --netuid <NETUID> --max <MAX_UIDS>
 
 ### Example
 
-To trim subnet 95 to a maximum of 6 UIDs:
+To trim subnet 14 to a maximum of 300 UIDs:
 
 ```shell
-btcli sudo trim --netuid 95 --max 6
+btcli sudo trim --netuid 14 --max 300
 ```
 
 The command will:
