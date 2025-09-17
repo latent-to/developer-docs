@@ -36,11 +36,6 @@ Subnet trim UIDs using the two `sudo_trim_to_max_allowed_uids` extrinsic.
 - Remaining UIDs are compressed to maintain consecutive indexing
 - All associated data (weights, bonds, etc.) is properly migrated
 
-### Rate Limits
-
-- **Trimming**: Can only be performed once every 30 days (30 * 7200 = 216,000 blocks at ~12 seconds per block)
-- **Setting minimum**: No rate limit (root-only operation)
-
 ## For Miners and Validators
 
 ### Protection from Trimming
