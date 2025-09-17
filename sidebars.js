@@ -51,6 +51,7 @@ const sidebars = {
         "resources/questions-and-answers",
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
+
         "subnets/understanding-multiple-mech-subnets",
         "learn/neurons",
         
@@ -134,6 +135,7 @@ const sidebars = {
         "subnets/subnet-creators-btcli-guide",
         "subnets/subnet-hyperparameters",
         "subnets/working-with-subnets",
+        "subnets/subnet-deregistration",
         "subnets/walkthrough-prompting",
         "tutorials/basic-subnet-tutorials",
         "tutorials/ocr-subnet-tutorial",
