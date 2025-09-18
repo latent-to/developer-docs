@@ -69,11 +69,13 @@ if not raw_split == None:
     _total = max(1, sum(raw_split))
     percentages = [round((v / _total) * 100, 6) for v in raw_split]
     print("Percentages:", percentages)
-
+else:
+    print("No split defined.")
 ```
 
 ```
 Subnet 7 mech count: 1
+No split defined.
 ```
 
 
@@ -99,17 +101,16 @@ print(f"Subnet {netuid} mech count (after): {new_count}")
 
 # Read split again; if None, display implied equal distribution
 split_after = subtensor.get_mechanism_emission_split(netuid=netuid)
-if split_after is None and new_count > 1:
-    print("Default even distribution")
-elif split_after:
-    _tot = max(1, sum(split_after))
-    print("Percentages:", [round((v/_tot)*100, 6) for v in split_after])
+
+print("split:")
+print(split_after)
 ```
 
 ```text
 Set mech count success: True
 Subnet 7 mech count (after): 2
-Percentages: [50.0, 50.0]
+print("split:")
+print(split_after)
 ```
 
 ## Set a custom 60/40 emission split
@@ -139,17 +140,13 @@ Update success: True
 
 ```python
 split_after = subtensor.get_mechanism_emission_split(netuid=netuid)
-if split_after is None and new_count > 1:
-    # Even distribution implied
-    even_pct = round(100.0 / new_count, 6)
-    print("Percentages:", [even_pct] * new_count)
-elif split_after:
-    _tot = max(1, sum(split_after))
-    print("Percentages:", [round((v/_tot)*100, 6) for v in split_after])
+print("split:")
+print(split_after)
 ```
 
 ```text
-Percentages: [60.0, 40.0]
+split:
+[60, 40]
 ```
 
 ## Troubleshooting
