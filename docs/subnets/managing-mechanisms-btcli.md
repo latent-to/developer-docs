@@ -6,8 +6,9 @@ title: "Managing Multiple Incentive Mechanisms with BTCLI"
 
 This tutorial shows how to configure and manage multiple incentive mechanisms in a single subnet using BTCLI.
 
-For background on the concepts, see [Understanding Multiple Incentive Mechanisms](understanding-multiple-mech-subnets). For SDK-based management, see [Managing Mechanisms with SDK](managing-mechanisms-with-sdk).
+For background on the concepts, see [Understanding Multiple Incentive Mechanisms](understanding-multiple-mech-subnets).
 
+See also: [Managing Mechanisms with SDK](managing-mechanisms-with-sdk).
 
 **Prerequisites**
 - A local Subtensor chain running. See: [Run a Local Bittensor Blockchain Instance](../local-build/deploy)
@@ -15,13 +16,11 @@ For background on the concepts, see [Understanding Multiple Incentive Mechanisms
 - Wallets provisioned and funded for local development. See: [Provision Wallets](../local-build/provision-wallets)
 - BTCLI installed (development version required for mechanism commands)
 
-
 :::tip
 Substitute your subnet's netuid, which you can find with `btcli subnet list`.
 :::
 
 ## Check initial state
-
 
 The following command will check the count of your subnet's incentive mechanisms and display the emissions split among them.
 
