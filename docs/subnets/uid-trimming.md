@@ -18,7 +18,7 @@ The chain's trim UID rate limit is 216,000 blocks (~30 days). Therefore, subnet 
 
 :::info
 
-- The minimum UID count to which subnet owners can trim is currently 256.
+- The minimum UID count to which subnet owners can trim is currently 64.
 - The maximum number of immune UIDs must not exceed 80% of the maximum UID count.
   :::
 
@@ -96,10 +96,10 @@ btcli sudo trim --netuid <NETUID> --max <MAX_UIDS>
 
 ### Example
 
-To trim subnet 14 to a maximum of 300 UIDs:
+To trim subnet 14 to a maximum of 100 UIDs:
 
 ```shell
-btcli sudo trim --netuid 14 --max 300
+btcli sudo trim --netuid 14 --max 100
 ```
 
 The command will:
