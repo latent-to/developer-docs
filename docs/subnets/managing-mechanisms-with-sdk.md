@@ -42,11 +42,13 @@ subtensor = bt.Subtensor(network="local")
 wallet = bt.Wallet(name="alice")
 
 netuid = 3
+print("SDK version:", bt.__version__)
 print(f"Connected to {subtensor.network} — managing subnet {netuid} with wallet {wallet.name}")
 ```
 
 Example output:
 ```text
+SDK version: 9.10.1
 Connected to local — managing subnet 3 with wallet alice
 ```
 
@@ -57,28 +59,29 @@ Connected to local — managing subnet 3 with wallet alice
 mech_count = subtensor.get_mechanism_count(netuid=netuid)
 print(f"Subnet {netuid} currently has {mech_count} mechanisms.")
 
-# Current emission split (raw u16 weights)
+# Current emission split (chain-stored values)
 raw_split = subtensor.get_mechanism_emission_split(netuid=netuid)
 print(f"Raw emission split: {raw_split}")
 
-# Convert to percentages for readability
-percentages = [(v / 65535) * 100 for v in raw_split]
-print("Percentages:", [round(p, 6) for p in percentages])
+# Normalize to percentages by sum (works for either u16-scaled or raw values)
+_total = max(1, sum(raw_split))
+percentages = [round((v / _total) * 100, 6) for v in raw_split]
+print("Percentages:", percentages)
 ```
 
-Representative output on a fresh local subnet with 2 mechanisms:
+Representative output from our run:
 ```text
 Subnet 3 currently has 2 mechanisms.
-Raw emission split: [32768, 32767]
-Percentages: [50.000763, 49.999237]
+Raw emission split: [60, 40]
+Percentages: [60.0, 40.0]
 ```
 
 ### Step 3 — Set a custom 60/40 emission split
 
 ```python
-# Convert human-friendly percentages to chain format (u16 weights)
-# 60% → 39321, 40% → 26214 (these sum to 65535)
-new_split = [39321, 26214]
+# Use simple human-friendly values; the chain stores a vector of ints.
+# Normalization on read will display percentages accurately regardless of scale.
+new_split = [60, 40]
 
 ok, err = sudo_set_mechanism_emission_split_extrinsic(
     subtensor=subtensor,
@@ -101,14 +104,15 @@ Update success: True
 
 ```python
 updated_raw = subtensor.get_mechanism_emission_split(netuid=netuid)
-updated_pct = [(v / 65535) * 100 for v in updated_raw]
+_total = max(1, sum(updated_raw))
+updated_pct = [round((v / _total) * 100, 6) for v in updated_raw]
 print("Updated raw split:", updated_raw)
-print("Updated percentages:", [round(p, 6) for p in updated_pct])
+print("Updated percentages:", updated_pct)
 ```
 
 Representative output:
 ```text
-Updated raw split: [39321, 26214]
+Updated raw split: [60, 40]
 Updated percentages: [60.0, 40.0]
 ```
 
