@@ -6,7 +6,7 @@ title: "Managing Multiple Incentive Mechanisms with SDK"
 
 This tutorial shows how to configure and manage multiple incentive mechanisms in a single subnet using the Bittensor Python SDK through a real, end-to-end flow.
 
-For background on the concepts, see [Understanding Multiple Incentive Mechanisms](understanding-multiple-mech-subnets). For SDK-based management, see [Managing Mechanisms with BTCLI](managing-mechanisms-with-btcli).
+For background on the concepts, see [Understanding Multiple Incentive Mechanisms](./understanding-multiple-mech-subnets). For SDK-based management, see [Managing Mechanisms with BTCLI](./managing-mechanisms-btcli).
 
 
 In what follows, we'll walk through managing multiple incentive mechanisms in a single subnet using the Bittensor Python SDK, on a running local blockchain.
@@ -27,7 +27,11 @@ Substitute your subnet's netuid, which you can find with `btcli subnet list`.
 
 Follow these steps on subnet 3 using the `alice` wallet. Shown outputs are representative of an actual local run aligned with the BTCLI tutorial.
 
-### Step 1 — Initialize SDK and wallet
+### Initialize SDK and wallet
+
+The following snippet initializes the Bittensor SDK, imports the needed modules, connects to the local blockchain, and initializes the wallet object for the Alice wallet.
+
+Run this at the top of each script below.
 
 ```python
 import bittensor as bt
@@ -41,7 +45,7 @@ subtensor = bt.Subtensor(network="local")
 # Load the subnet owner wallet (assumes wallet is provisioned locally)
 wallet = bt.Wallet(name="alice")
 
-netuid = 3
+netuid = 7
 print("SDK version:", bt.__version__)
 print(f"Connected to {subtensor.network} — managing subnet {netuid} with wallet {wallet.name}")
 ```
@@ -52,12 +56,19 @@ SDK version: 9.10.1
 Connected to local — managing subnet 3 with wallet alice
 ```
 
-### Step 2 — Read current mechanism configuration
+### Read current mechanism configuration
+
+Add the below
 
 ```python
 # Mechanism count
 mech_count = subtensor.get_mechanism_count(netuid=netuid)
 print(f"Subnet {netuid} currently has {mech_count} mechanisms.")
+```
+
+
+```
+
 
 # Current emission split (chain-stored values)
 raw_split = subtensor.get_mechanism_emission_split(netuid=netuid)
@@ -147,17 +158,6 @@ Quick checks:
 in_freeze = subtensor.is_in_admin_freeze_window(netuid=netuid)
 print("In admin freeze window:", in_freeze)
 
-# Verify subnet exists
+# Verify subnet mech count
 print("Mechanism count:", subtensor.get_mechanism_count(netuid=netuid))
 ```
-
-## Best Practices
-
-- Test changes on testnet first: `bt.Subtensor(network="test")`
-- Keep human-readable and chain-format splits side-by-side to avoid mistakes
-- Log changes (old split → new split) for auditability in your ops scripts
-
-## See also
-
-- CLI flow version of this tutorial: [Managing Mechanisms with BTCLI](managing-mechanisms-btcli)
-- Concepts: [Understanding Multiple Incentive Mechanisms](understanding-multiple-mech-subnets)
