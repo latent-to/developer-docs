@@ -21,14 +21,18 @@ Each incentive mechanism has its own:
 - **Independent bond pools**: Each mechanism maintains separate bonding relationships for Yuma Consensus calculations.
 - **Independent emissions**: Since they depend on weights set by validators, a miner's emissions from each mechanism are independent.
 - **Transparent on-chain data**: All incentive mechanism configurations and the flow of emissions are visible on-chain.
-- **Emission distribution**: Subnet creators can control what percentage of total emissions goes to each mechanism using the `sudo_set_mechanism_emission_split` extrinsic. <!-- See: subtensor/pallets/admin-utils/src/lib.rs:1891-1910 -->
+- **Emission distribution**: Subnet creators can control what percentage of total emissions goes to each mechanism using the `sudo_set_mechanism_emission_split` extrinsic. <!-- See: subtensor/pallets/subtensor/src/subnets/subsubnet.rs:173-175 -->
 
 ### Takeaways
 
 1. **Same Validators, Same Stake**: All validators participate in all incentive mechanisms within a subnet with identical stake weights.
-2. **Same Miners**: All miners registered on a subnet can participate in any or all of its incentive mechanisms.
+2. **Same Miners**: All miners registered on a subnet can participate in any of its incentive mechanisms.
 3. **Owner-Controlled Proportions**: The holder of the _subnet creator_ key sets the emission distribution among incentive mechanisms.
 4. **Separate Bond Pools**: Each incentive mechanism maintains separate bonding relationships for independent Yuma Consensus calculations.
+
+:::note Current runtime limit
+As of the current Subtensor runtime, a subnet can have a maximum of 2 mechanisms. Attempts to set a higher count are rejected by the chain (runtime enforces `MaxMechanismCount = 2`).
+:::
 
 ## What Should Stakers Know?
 

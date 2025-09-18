@@ -16,8 +16,13 @@ See also: [Managing Mechanisms with SDK](managing-mechanisms-with-sdk).
 - Wallets provisioned and funded for local development. See: [Provision Wallets](../local-build/provision-wallets)
 - BTCLI installed (development version required for mechanism commands)
 
-:::tip
+::::tip
 Substitute your subnet's netuid, which you can find with `btcli subnet list`.
+::::
+
+:::warning Runtime limit
+As of the current Subtensor runtime, a subnet can have a maximum of 2 mechanisms. Attempts to set a higher count will be rejected by the chain (runtime enforces `MaxMechanismCount = 2`).
+
 :::
 
 ## Check initial state
