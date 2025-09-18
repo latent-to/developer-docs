@@ -6,19 +6,21 @@ title: "Announcements and Developments"
 This page tracks recent and upcoming changes to the Bittensor protocol and other major events in the Bittensor ecosystem.
 
 
-## Sub-Subnets
+## Multiple Incentive Mechanisms Within Subnets
 
-**Status**: In develoment
-- **What**: Sub-subnets allow subnet owners to apportion emissions across multiple sub-subnets, each running Yuma Consensus independently
+**Status**: In development
+- **What**: Multiple incentive mechanisms allow subnet owners to apportion emissions across different evaluation criteria, each running Yuma Consensus independently with separate bond pools
 - **Key Features**:
-  - Enables up to 8 sub-subnets (IDs 0-7) within each main subnet for multi-task validation
-  - Fully backward-compatible with existing miners and validators via sub-subnet ID 0
-  - Each sub-subnet has its own weight matrix and independent emissions
-  - All validators participate in all sub-subnets with identical stake weights
-  - Miners automatically participate in ALL sub-subnets when registering for a subnet
+  - Enables up to 8 incentive mechanisms (IDs 0-7) within each subnet for multi-task validation
+  - Fully backward-compatible with existing miners and validators via mechanism ID 0
+  - Each mechanism has its own weight matrix and independent bond pools for consensus calculations
+  - All validators participate in all mechanisms with identical stake weights
+  - Miners automatically participate in ALL mechanisms when registering for a subnet
   - **Emission distribution control**: Subnet owners can set custom emission distributions using the `sudo_set_subsubnet_emission_split` extrinsic
-  - **Immediate sub-subnet number setting**: No onset period - changes take effect immediately
-  - **Rate limiting**: Subnet owners can set sub-subnet numbers once per 7200 blocks
+  - **Immediate mechanism number setting**: No onset period - changes take effect immediately
+  - **Rate limiting**: Subnet owners can set mechanism numbers once per 7200 blocks
+
+For detailed information, see: [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets)
 
 ## Hyperparameter Rate Limiting
 **Status**: WIP
