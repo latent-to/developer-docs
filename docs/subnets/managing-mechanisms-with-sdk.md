@@ -151,16 +151,6 @@ split:
 
 ## Troubleshooting
 
-- Rate limiting: mechanism count changes are restricted to once per ~24 hours (7200 blocks). Check before updating counts.
+- Rate limiting: mechanism count changes are restricted (on mainnet) to once per ~24 hours (7200 blocks).
 - Permissions: emission split and count updates require the subnet owner wallet.
 - Local chain connectivity: ensure your local chain is running and your SDK points to `network="local"`.
-
-Quick checks:
-```python
-# Admin freeze window
-in_freeze = subtensor.is_in_admin_freeze_window(netuid=netuid)
-print("In admin freeze window:", in_freeze)
-
-# Verify subnet mech count
-print("Mechanism count:", subtensor.get_mechanism_count(netuid=netuid))
-```

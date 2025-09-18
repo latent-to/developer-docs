@@ -95,7 +95,7 @@ Each incentive mechanism has its own:
 - **Transparent configuration**: All mechanism settings are visible on-chain for community oversight
 - **Single subnet slot**: No need to register multiple subnets for multiple competitions
 - **Immediate mechanism number setting**: The number of mechanisms is set immediately when changed. <!-- See: subtensor/pallets/subtensor/src/subnets/subsubnet.rs:91-116 -->
-- **Rate limiting**: Subnet owners can set the number of mechanisms once per 7200 blocks to prevent frequent changes. <!-- See: subtensor/pallets/subtensor/src/lib.rs:1842-1844 -->
+- **Rate limiting**: Subnet owners can set the number of mechanisms once per 7200 blocks (24 hours) on mainnet. <!-- See: subtensor/pallets/subtensor/src/lib.rs:1842-1844 -->
 
 :::tip
 Ensure proportions sum to 100% when setting them, or the request will be rejected.
