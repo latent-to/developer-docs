@@ -96,10 +96,15 @@ btcli sudo trim --netuid <NETUID> --max <MAX_UIDS>
 
 ### Example
 
-To trim subnet 14 to a maximum of 100 UIDs:
+
+To trim subnet 14 on a local chain to a maximum of 100 UIDs:
 
 ```shell
 btcli sudo trim --netuid 14 --max 100
+```
+```                                                                                                       
+You are about to trim UIDs on SN3 to a limit of 100 [y/n] (n): y
+✅ Successfully trimmed UIDs on SN3 to 100
 ```
 
 The command will:
