@@ -30,7 +30,7 @@ Subnets can implement multiple incentive mechanisms to evaluate different aspect
 - **Provide transparent control**: All emission distributions and mechanism configurations are visible on-chain
 
 
-For detailed information about implementing and managing multiple incentive mechanisms, see [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-sub-subnets).
+For detailed information about implementing and managing multiple incentive mechanisms, see [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets).
 
 ## Subnet creator responsibilities
 
