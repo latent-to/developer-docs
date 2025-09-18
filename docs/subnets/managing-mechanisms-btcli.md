@@ -4,12 +4,10 @@ title: "Managing Multiple Incentive Mechanisms with BTCLI"
 
 # Managing Multiple Incentive Mechanisms with BTCLI
 
-This tutorial shows how to configure and manage multiple incentive mechanisms in a single subnet using BTCLI through a real, end-to-end flow.
+This tutorial shows how to configure and manage multiple incentive mechanisms in a single subnet using BTCLI.
 
 For background on the concepts, see [Understanding Multiple Incentive Mechanisms](understanding-multiple-mech-subnets). For SDK-based management, see [Managing Mechanisms with SDK](managing-mechanisms-with-sdk).
 
-
-In what follows, we'll walk through managing multiple incentive mechanisms in a single subnet using BTCLI, on a running local blockchain.
 
 **Prerequisites**
 - A local Subtensor chain running. See: [Run a Local Bittensor Blockchain Instance](../local-build/deploy)

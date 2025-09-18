@@ -4,12 +4,12 @@ title: "Managing Multiple Incentive Mechanisms with SDK"
 
 # Managing Multiple Incentive Mechanisms with SDK
 
-This tutorial shows how to configure and manage multiple incentive mechanisms in a single subnet using the Bittensor Python SDK through a real, end-to-end flow.
+This tutorial shows how to configure and manage multiple incentive mechanisms in a single subnet using the Bittensor Python SDK.
 
-For background on the concepts, see [Understanding Multiple Incentive Mechanisms](./understanding-multiple-mech-subnets). For SDK-based management, see [Managing Mechanisms with BTCLI](./managing-mechanisms-btcli).
+For background on the concepts, see [Understanding Multiple Incentive Mechanisms](./understanding-multiple-mech-subnets).
 
+See also [Managing Mechanisms with BTCLI](./managing-mechanisms-btcli).
 
-In what follows, we'll walk through managing multiple incentive mechanisms in a single subnet using the Bittensor Python SDK, on a running local blockchain.
 
 **Prerequisites**
 - A local Subtensor chain running. See: [Run a Local Bittensor Blockchain Instance](../local-build/deploy)
@@ -23,11 +23,7 @@ Substitute your subnet's netuid, which you can find with `btcli subnet list`.
 :::
 
 
-## Tutorial: Manage mechanisms end-to-end (SDK)
-
-Follow these steps on subnet 3 using the `alice` wallet. Shown outputs are representative of an actual local run aligned with the BTCLI tutorial.
-
-### Initialize SDK and wallet
+## Initialize SDK and wallet
 
 The following snippet initializes the Bittensor SDK, imports the needed modules, connects to the local blockchain, and initializes the wallet object for the Alice wallet.
 
@@ -37,6 +33,7 @@ Run this at the top of each script below.
 import bittensor as bt
 from bittensor.core.extrinsics.sudo import (
     sudo_set_mechanism_emission_split_extrinsic,
+    sudo_set_mechanism_count_extrinsic,
 )
 
 # Connect to local chain
@@ -53,41 +50,77 @@ print(f"Connected to {subtensor.network} — managing subnet {netuid} with walle
 Example output:
 ```text
 SDK version: 9.10.1
-Connected to local — managing subnet 3 with wallet alice
+Connected to local — managing subnet 7 with wallet alice
 ```
 
-### Read current mechanism configuration
+## Read current mechanism configuration
 
-Add the below
+Add the below snippet to display the current mechanism count on subnet 7 (or whatever subnet you have set above).
 
 ```python
 # Mechanism count
 mech_count = subtensor.get_mechanism_count(netuid=netuid)
-print(f"Subnet {netuid} currently has {mech_count} mechanisms.")
-```
-
-
-```
-
+print(f"Subnet {netuid} mech count: {mech_count} ")
 
 # Current emission split (chain-stored values)
 raw_split = subtensor.get_mechanism_emission_split(netuid=netuid)
 print(f"Raw emission split: {raw_split}")
 
 # Normalize to percentages by sum (works for either u16-scaled or raw values)
-_total = max(1, sum(raw_split))
-percentages = [round((v / _total) * 100, 6) for v in raw_split]
-print("Percentages:", percentages)
+if not raw_split == None:
+    _total = max(1, sum(raw_split))
+    percentages = [round((v / _total) * 100, 6) for v in raw_split]
+    print("Percentages:", percentages)
+
 ```
 
-Representative output from our run:
+```
+Subnet 7 mech count: 1
+Raw emission split: None
+```
+
+
+## Create a second mechanism
+
+Use the sudo extrinsic to increase the mechanism count to 2 for your subnet owner wallet.
+
+```python
+# Increase mechanism count to 2
+ok, err = sudo_set_mechanism_count_extrinsic(
+    subtensor=subtensor,
+    wallet=wallet,
+    netuid=netuid,
+    mech_count=2,
+)
+print("Set mech count success:", ok)
+if not ok:
+    print("Error:", err)
+
+# Verify the change
+new_count = subtensor.get_mechanism_count(netuid=netuid)
+print(f"Subnet {netuid} mech count (after): {new_count}")
+
+# Read split again; if None, display implied equal distribution
+split_after = subtensor.get_mechanism_emission_split(netuid=netuid)
+print("Raw emission split (after):", split_after)
+if split_after is None and new_count > 1:
+    # Even distribution implied
+    even_pct = round(100.0 / new_count, 6)
+    print("Percentages:", [even_pct] * new_count)
+elif split_after:
+    _tot = max(1, sum(split_after))
+    print("Percentages:", [round((v/_tot)*100, 6) for v in split_after])
+```
+
+Example output:
 ```text
-Subnet 3 currently has 2 mechanisms.
-Raw emission split: [60, 40]
-Percentages: [60.0, 40.0]
+Set mech count success: True
+Subnet 7 mech count (after): 2
+Raw emission split (after): [32768, 32767]
+Percentages: [50.000763, 49.999237]
 ```
 
-### Step 3 — Set a custom 60/40 emission split
+## Set a custom 60/40 emission split
 
 ```python
 # Use simple human-friendly values; the chain stores a vector of ints.
@@ -109,9 +142,11 @@ if not ok:
 Expected output:
 ```text
 Update success: True
+
+
 ```
 
-### Step 4 — Verify the change
+## Verify the change
 
 ```python
 updated_raw = subtensor.get_mechanism_emission_split(netuid=netuid)
@@ -127,7 +162,7 @@ Updated raw split: [60, 40]
 Updated percentages: [60.0, 40.0]
 ```
 
-### Step 5 — Query mechanism-specific data (optional)
+## Query mechanism-specific data (optional)
 
 ```python
 # Example: read per-mechanism weights/bonds counts to sanity-check data paths
