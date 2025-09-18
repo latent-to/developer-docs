@@ -42,11 +42,19 @@ This rate limit prevents a user from setting or swapping a hotkey too frequently
 - **Configuration**: [macros/errors.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/errors.rs#L93)
 - **Error message**: [`HotKeySetTxRateLimitExceeded`](../errors/subtensor.md#hotkeysettxratelimitexceeded)
 
+### UID trimming rate limit
+
+This rate limit controls how frequently subnet owners can trim UIDs on their subnets. This prevents disruptions in subnet stability and excessive network reorganization.
+
+- **Rate Limit**: 216,000 blocks (~30 days)
+- **Configuration**: `MaxUidsTrimmingRateLimit` [macros/errors.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L620-L624)
+- **Error message**: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
+
 ### Network registration rate rimit
 
 This rate limit prevents frequent creation of new subnets.
 
-- **Rate Limit**: 7,200 blocks (~24 hours)
+- **Rate Limit**: 28,800 blocks (~4 days)
 - **Configuration**: `NetworkRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1155)
 - **Error message**: [`NetworkTxRateLimitExceeded`](../errors/subtensor.md#networktxratelimitexceeded)
 
