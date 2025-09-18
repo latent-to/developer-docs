@@ -6,6 +6,10 @@ title: "UID Trimming"
 
 UID trimming is a subnet management feature that allows subnet owners to reduce the number of neuron UIDs registered on their subnet, compressing the remaining UIDs to maintain consecutive indexing. UID trimming safely preserves high-performing and immune neurons,
 
+:::info UID trimming rate limit
+The chain's trim UID rate limit is 216,000 blocks (~30 days). Therefore, subnet owners can only make changes to their UID count every 30 days.
+:::
+
 - **Preserves Immune UIDs**: Both temporally immune UIDs and owner-owned UIDs are protected from trimming
 - **Emission-Based Selection**: UIDs are trimmed based on their emission scores, removing the lowest performers
 - **UID Compression**: After trimming, remaining UIDs are compressed to the left to maintain consecutive indexing
@@ -13,8 +17,10 @@ UID trimming is a subnet management feature that allows subnet owners to reduce 
 - **Configurable Limits**: Subnet owners can set minimum and maximum allowed UID counts
 
 :::info
-The minimum UID count to which subnet owners can trim is currently 256.
-:::
+
+- The minimum UID count to which subnet owners can trim is currently 256.
+- The maximum number of immune UIDs must not exceed 80% of the maximum UID count.
+  :::
 
 ## Emission-Based Selection
 
@@ -26,7 +32,7 @@ UIDs are sorted by their emission scores in descending order. The trimming proce
 
 ## For Subnet Owners
 
-Subnet trim UIDs using [`btcli sudo trim`](#uid-trimming-with-btcli) or the  `sudo_trim_to_max_allowed_uids` extrinsic.
+Subnet trim UIDs using [`btcli sudo trim`](#uid-trimming-with-btcli) or the `sudo_trim_to_max_allowed_uids` extrinsic.
 
 **What happens:**
 
@@ -62,14 +68,13 @@ When your UID is trimmed, all of your neuron data is **permanently deleted** fro
 
 **Your UID number will be reassigned** - the remaining UIDs are compressed to maintain consecutive numbering (e.g., if UIDs 5, 7, 9 remain after trimming, they become UIDs 0, 1, 2).
 
-
 ### After Trimming
 
 If your UID was trimmed:
+
 - You must re-register to participate again
 - You will receive a new UID number
 - You start fresh with default scores
-
 
 ### Source Code References
 
@@ -77,7 +82,7 @@ If your UID was trimmed:
 
 ## UID trimming with BTCLI
 
-The `btcli sudo trim` command allows subnet owners to reduce the number of active UIDs on their subnet by trimming excess UIDs down to a specified maximum limit. 
+The `btcli sudo trim` command allows subnet owners to reduce the number of active UIDs on their subnet by trimming excess UIDs down to a specified maximum limit.
 
 :::warning Subnet Owner Only
 This is a **sudo operation** that can only be performed by the subnet owner (the wallet that created the subnet).
@@ -91,13 +96,14 @@ btcli sudo trim --netuid <NETUID> --max <MAX_UIDS>
 
 ### Example
 
-To trim subnet 14 to a maximum of 300 UIDs:
+To trim subnet 14 to a maximum of 50 UIDs:
 
 ```shell
-btcli sudo trim --netuid 14 --max 300
+btcli sudo trim --netuid 14 --max 50
 ```
 
 The command will:
+
 1. Verify that your wallet owns the specified subnet
 2. Display a confirmation prompt showing the trim operation details
 3. Execute the trim operation if confirmed
