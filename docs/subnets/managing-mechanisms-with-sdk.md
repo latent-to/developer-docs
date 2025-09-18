@@ -47,7 +47,6 @@ print("SDK version:", bt.__version__)
 print(f"Connected to {subtensor.network} — managing subnet {netuid} with wallet {wallet.name}")
 ```
 
-Example output:
 ```text
 SDK version: 9.10.1
 Connected to local — managing subnet 7 with wallet alice
@@ -107,7 +106,6 @@ elif split_after:
     print("Percentages:", [round((v/_tot)*100, 6) for v in split_after])
 ```
 
-Example output:
 ```text
 Set mech count success: True
 Subnet 7 mech count (after): 2
@@ -117,8 +115,6 @@ Percentages: [50.0, 50.0]
 ## Set a custom 60/40 emission split
 
 ```python
-# Use simple human-friendly values; the chain stores a vector of ints.
-# Normalization on read will display percentages accurately regardless of scale.
 new_split = [60, 40]
 
 ok, err = sudo_set_mechanism_emission_split_extrinsic(
@@ -133,7 +129,6 @@ if not ok:
     print("Error:", err)
 ```
 
-Expected output:
 ```text
 Update success: True
 
@@ -153,7 +148,6 @@ elif split_after:
     print("Percentages:", [round((v/_tot)*100, 6) for v in split_after])
 ```
 
-Representative output:
 ```text
 Percentages: [60.0, 40.0]
 ```
