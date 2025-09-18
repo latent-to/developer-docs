@@ -109,8 +109,8 @@ print(split_after)
 ```text
 Set mech count success: True
 Subnet 7 mech count (after): 2
-print("split:")
-print(split_after)
+split:
+[50, 50]
 ```
 
 ## Set a custom 60/40 emission split
