@@ -96,7 +96,7 @@ To trim subnet 14 to a maximum of 300 UIDs:
 ```shell
 btcli sudo trim --netuid 14 --max 300
 ```
-
+d
 The command will:
 1. Verify that your wallet owns the specified subnet
 2. Display a confirmation prompt showing the trim operation details
