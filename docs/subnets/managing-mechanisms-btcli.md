@@ -79,7 +79,7 @@ No custom split found; displaying an even distribution.
 ```
 
 
-### Set a custom 90/10 emission split
+## Set a custom 90/10 emission split
 
 Let's alloate only 10% of our subnet's emissions to the second subnet.
 

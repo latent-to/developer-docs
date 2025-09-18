@@ -4,24 +4,24 @@ title: "Managing Multiple Incentive Mechanisms with SDK"
 
 # Managing Multiple Incentive Mechanisms with SDK
 
-This tutorial walks through configuring and managing multiple incentive mechanisms within a subnet using the Bittensor SDK. For background on concepts, see [Understanding Multiple Incentive Mechanisms](understanding-multiple-mech-subnets). For a CLI-based approach, see [Managing Mechanisms with BTCLI](managing-mechanisms-btcli).
+This tutorial shows how to configure and manage multiple incentive mechanisms in a single subnet using the Bittensor Python SDK through a real, end-to-end flow.
 
-## What you'll do
+For background on the concepts, see [Understanding Multiple Incentive Mechanisms](understanding-multiple-mech-subnets). For SDK-based management, see [Managing Mechanisms with BTCLI](managing-mechanisms-with-btcli).
 
-Use the SDK to read the current mechanism configuration, set a custom emission split, and verify results on a local subnet.
 
-::::info Prerequisites
+In what follows, we'll walk through managing multiple incentive mechanisms in a single subnet using the Bittensor Python SDK, on a running local blockchain.
+
+**Prerequisites**
 - A local Subtensor chain running. See: [Run a Local Bittensor Blockchain Instance](../local-build/deploy)
 - A local subnet created (and emissions started). See: [Create a Subnet (Locally)](../local-build/create-subnet)
 - Wallets provisioned and funded for local development. See: [Provision Wallets](../local-build/provision-wallets)
-- Bittensor SDK installed in your environment
-::::
+- BTCLI installed (development version required for mechanism commands)
 
-::::info Assumptions
-- Subnet `netuid 3` exists on your local chain and is owned by wallet `alice`
-- Code examples connect to `network="local"` and use those provisioned wallets
-- If your `netuid` or wallet name differ, substitute your own values
-::::
+
+:::tip
+Substitute your subnet's netuid, which you can find with `btcli subnet list`.
+:::
+
 
 ## Tutorial: Manage mechanisms end-to-end (SDK)
 
