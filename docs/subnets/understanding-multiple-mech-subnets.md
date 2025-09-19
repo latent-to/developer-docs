@@ -11,6 +11,10 @@ This page explores how subnets can implement multiple incentive mechanisms to di
 
 For an introduction to incentive mechanisms in general, see [Understanding Incentive Mechanisms](../learn/anatomy-of-incentive-mechanism). For the basics of subnets, miners, validators, and the blockchain, see [Components of the Bittensor platform](../learn/neurons).
 
+For procedural coverage, see:
+- [Managing Mechanisms with SDK](managing-mechanisms-with-sdk)
+- [Managing Mechanisms with BTCLI](./managing-mechanisms-btcli)
+
 Historically, each subnet operates with a single **incentive mechanism**, a function that validators run to assign weights to miners based on the value of their work. Subnets can now support **multiple incentive mechanisms**, allowing a subnet creator to apportion the subnet's emissions across different evaluation criteria, each running Yuma Consensus _independently_ with separate bond pools to evaluate miners' performance on distinct tasks.
 
 Each miner receives emissions separately from each incentive mechanism, so a miner's performance in one mechanism does not affect their rating in another, and their emissions for each epoch are summed across all mechanisms. Validators receive dividends as a weighted sum of their performance across all incentive mechanisms - they cannot choose which mechanisms to validate, and if they don't validate all mechanisms, they receive proportionally reduced emissions. Multiple incentive mechanisms don't change the total emissions to a subnet, but create a way for subnet creators to distribute those emissions to miners working on different tasks. This mechanism affords subnet creators a transparent, on-chain way to exercise fine-grained control over the work they are incentivizing, keeping miner effort focused on work that is most needed at a time.
