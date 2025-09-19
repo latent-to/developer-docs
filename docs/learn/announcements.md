@@ -11,7 +11,7 @@ This page tracks recent and upcoming changes to the Bittensor protocol and other
 **Status**: In development
 - **What**: Multiple incentive mechanisms allow subnet owners to apportion emissions across different evaluation criteria, each running Yuma Consensus independently with separate bond pools
 - **Key Features**:
-  - Enables up to 8 incentive mechanisms (IDs 0-7) within each subnet for multi-task validation
+  - Enables up to 2 incentive mechanisms (IDs 0,1) within each subnet for multi-task validation.
   - Fully backward-compatible with existing miners and validators via mechanism ID 0
   - Each mechanism has its own weight matrix and independent bond pools for consensus calculations
   - All validators participate in all mechanisms with identical stake weights

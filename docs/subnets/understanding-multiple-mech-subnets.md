@@ -31,7 +31,7 @@ Each incentive mechanism has its own:
 4. **Separate Bond Pools**: Each incentive mechanism maintains separate bonding relationships for independent Yuma Consensus calculations.
 
 :::note Current runtime limit
-As of the current Subtensor runtime, a subnet can have a maximum of 2 mechanisms. Attempts to set a higher count are rejected by the chain (runtime enforces `MaxMechanismCount = 2`).
+As of the current Subtensor runtime, a subnet can have a maximum of 2 mechanisms. It is planned to raised this cap in the future.
 :::
 
 ## What Should Stakers Know?
@@ -108,6 +108,10 @@ Ensure proportions sum to 100% when setting them, or the request will be rejecte
 ## Example Emissions Split
 
 For each subnet, the subnet creator keeps 18% of emissions, 41% is allocated to miners, and 41% to validators and their stakers, unless the subnet creator has reduced their take. Of the 41% that goes to miners and validators, here is an estimated emission distribution across three incentive mechanisms for each 100 $\tau$ earned on the subnet:
+
+:::info
+Note that currently, only 2 mechanisms are allowed per subnet; it is planned that this cap will be raised in the future.
+:::
 
 - Mechanism 0 (60%): 100 $\tau$  X .41 X .6 = 24.6
 - Mechanism 1 (30%): 100 $\tau$ X  .41 X  .3 = 12.3
