@@ -472,6 +472,10 @@ Invalid identity.
 
 Activity cutoff is too low.
 
+### `AdminActionProhibitedDuringWeightsWindow`
+
+Admin operation is prohibited during the protected weights window.
+
 ### `CallDisabled`
 
 Call is disabled.
