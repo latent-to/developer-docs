@@ -30,6 +30,8 @@ You can access metagraph data through multiple interfaces:
 
 The `btcli` command-line interface provides access to a subset of metagraph information (corresponding to "lite" mode in the SDK). For full metagraph data including weights and bonds, use the Python SDK with `lite=False`.
 
+Note that if the subnet has multiple incentive mechanisms, you will be prompted to specify the id of the mechanism unless you specify it with the `--mech-id` flag. See [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets).
+
 ```bash
 # Dump metagraph subset to file (lite mode)
 btcli subnets metagraph --netuid 14 --network finney \
