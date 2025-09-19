@@ -60,7 +60,7 @@ const sidebars = {
         "learn/yuma-consensus",
         "learn/yc3-blog",
         "learn/yuma3-migration-guide",
-        "learn/fees",
+        "learn/fees",        
         {
       type: "category",
       label: "Navigating Subtensor Codebase",
@@ -137,6 +137,7 @@ const sidebars = {
         "subnets/working-with-subnets",
         "subnets/managing-mechanisms-with-sdk",
         "subnets/managing-mechanisms-btcli",
+        "subnets/uid-trimming",
         "subnets/subnet-deregistration",
         "subnets/walkthrough-prompting",
         "tutorials/basic-subnet-tutorials",
