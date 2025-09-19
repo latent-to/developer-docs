@@ -135,7 +135,8 @@ const sidebars = {
         "subnets/subnet-creators-btcli-guide",
         "subnets/subnet-hyperparameters",
         "subnets/working-with-subnets",
-
+        // "subnets/managing-mechanisms-with-sdk",
+        // "subnets/managing-mechanisms-btcli",
         "subnets/uid-trimming",
         "subnets/subnet-deregistration",
         "subnets/walkthrough-prompting",
