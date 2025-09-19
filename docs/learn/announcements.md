@@ -15,7 +15,7 @@ This page tracks recent and upcoming changes to the Bittensor protocol and other
   - Fully backward-compatible with existing miners and validators via mechanism ID 0
   - Each mechanism has its own weight matrix and independent bond pools for consensus calculations
   - All validators participate in all mechanisms with identical stake weights
-  - Miners automatically participate in ALL mechanisms when registering for a subnet
+- Miners can automatically participate in any of the subnet's mechanisms when registering for a subnet
   - **Emission distribution control**: Subnet owners can set custom emission distributions using the `sudo_set_subsubnet_emission_split` extrinsic
   - **Immediate mechanism number setting**: No onset period - changes take effect immediately
   - **Rate limiting**: Subnet owners can set mechanism numbers once per 7200 blocks

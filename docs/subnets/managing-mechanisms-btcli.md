@@ -83,7 +83,7 @@ No custom split found; displaying an even distribution.
 
 ## Set a custom 90/10 emission split
 
-Let's alloate only 10% of our subnet's emissions to the second subnet.
+Let's allocate only 10% of our subnet's emissions to the second subnet.
 
 
 ```bash
@@ -147,4 +147,4 @@ Totals are expressed as a fraction of 65535 (U16_MAX).
 
 - Rate limiting: mechanism count changes are restricted (on mainnet) to once per ~24 hours (7200 blocks).
 - Permissions: emission split and count updates require the subnet owner wallet.
-- Local chain connectivity: ensure your local chain is running and your SDK points to `network="local"`.
+- Local chain connectivity: ensure your local chain is running and the `network` parameter in your BTCLI config is set to `local`.
