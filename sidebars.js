@@ -50,9 +50,11 @@ const sidebars = {
         "learn/introduction",
         "resources/questions-and-answers",
         "subnets/understanding-subnets",
-        "subnets/understanding-sub-subnets",
-        "learn/neurons",
         "learn/anatomy-of-incentive-mechanism",
+
+        "subnets/understanding-multiple-mech-subnets",
+        "learn/neurons",
+        
         "learn/emissions",
         "learn/ema",
         "learn/yuma-consensus",
@@ -133,6 +135,7 @@ const sidebars = {
         "subnets/subnet-creators-btcli-guide",
         "subnets/subnet-hyperparameters",
         "subnets/working-with-subnets",
+        "subnets/subnet-deregistration",
         "subnets/walkthrough-prompting",
         "tutorials/basic-subnet-tutorials",
         "tutorials/ocr-subnet-tutorial",
