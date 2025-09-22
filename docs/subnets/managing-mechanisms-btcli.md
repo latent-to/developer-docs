@@ -6,9 +6,15 @@ title: "Managing Multiple Incentive Mechanisms with BTCLI"
 
 This tutorial shows how to configure and manage multiple incentive mechanisms in a single subnet using BTCLI.
 
-For background on the concepts, see [Understanding Multiple Incentive Mechanisms](understanding-multiple-mech-subnets).
+For a discussion of the background concepts, see [Understanding Multiple Incentive Mechanisms](understanding-multiple-mech-subnets).
 
 See also: [Managing Mechanisms with SDK](managing-mechanisms-with-sdk).
+
+:::tip Hot new feature
+Multiple incentive mechanisms per subnet is a new feature that is still in development. It's initial release on mainnet is expected the week of September 22. In the meantime, it can be experimented with using a locally run chain.
+
+See [Announcements](../learn/announcements) for updates.
+:::
 
 **Prerequisites**
 - A local Subtensor chain running. See: [Run a Local Bittensor Blockchain Instance](../local-build/deploy)
@@ -16,9 +22,9 @@ See also: [Managing Mechanisms with SDK](managing-mechanisms-with-sdk).
 - Wallets provisioned and funded for local development. See: [Provision Wallets](../local-build/provision-wallets)
 - BTCLI installed (development version required for mechanism commands)
 
-::::tip
+:::tip
 Substitute your subnet's netuid, which you can find with `btcli subnet list`.
-::::
+:::
 
 :::warning Runtime limit
 As of the current Subtensor runtime, a subnet can have a maximum of 2 mechanisms. Attempts to set a higher count will be rejected by the chain (runtime enforces `MaxMechanismCount = 2`).
