@@ -71,6 +71,30 @@ m = Metagraph(netuid=14, network="finney", sync=True)
 m = Metagraph(netuid=14, network="finney", lite=False, sync=True)
 ```
 
+### Mechanism-aware metagraphs (multiple incentive mechanisms)
+
+Subnets can run multiple incentive mechanisms. The SDK supports selecting a mechanism and exposes mechanism-related fields:
+
+- Metagraph accepts a `mechid` parameter (default `0`).
+- New fields: `mechid: int`, `mechanisms_emissions_split: list[int]`, `mechanism_count: int`.
+
+```python
+from bittensor.core.metagraph import Metagraph
+
+# Default mechanism (0)
+meta = Metagraph(netuid=14, network="finney", sync=True)
+print(meta.mechid)  # 0
+print(meta.mechanism_count)  # e.g., 2
+print(meta.mechanisms_emissions_split)  # e.g., [60, 40]
+
+# Specific mechanism (1)
+mech_meta = Metagraph(netuid=14, network="finney", sync=True, lite=False)
+mech_meta.mechid = 1
+await mech_meta.sync()  # or re-init with mechid in helper constructors
+```
+
+See also: [Multiple Incentive Mechanisms Within Subnets](./understanding-multiple-mech-subnets.md).
+
 ### Smart Contract Access (Metagraph Precompile)
 
 For smart contract integration, you can access metagraph data through the **Metagraph Precompile** at address `0x0000000000000000000000000000000000000802`. This provides read-only access to individual neuron metrics and network information.
