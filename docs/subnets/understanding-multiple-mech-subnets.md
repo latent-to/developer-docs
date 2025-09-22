@@ -9,6 +9,12 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 This page explores how subnets can implement multiple incentive mechanisms to distribute emissions across different evaluation criteria.
 
+:::tip Hot new feature
+Multiple incentive mechanisms per subnet is a new feature that is still in development. It's initial release on mainnet is expected the week of September 22. In the meantime, it can be experimented with using a locally run chain.
+
+See [Announcements](../learn/announcements) for updates.
+:::
+
 For an introduction to incentive mechanisms in general, see [Understanding Incentive Mechanisms](../learn/anatomy-of-incentive-mechanism). For the basics of subnets, miners, validators, and the blockchain, see [Components of the Bittensor platform](../learn/neurons).
 
 For coverage of the procedures involved, see:

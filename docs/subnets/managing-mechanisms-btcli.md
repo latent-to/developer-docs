@@ -10,6 +10,12 @@ For a discussion of the background concepts, see [Understanding Multiple Incenti
 
 See also: [Managing Mechanisms with SDK](managing-mechanisms-with-sdk).
 
+:::tip Hot new feature
+Multiple incentive mechanisms per subnet is a new feature that is still in development. It's initial release on mainnet is expected the week of September 22. In the meantime, it can be experimented with using a locally run chain.
+
+See [Announcements](../learn/announcements) for updates.
+:::
+
 **Prerequisites**
 - A local Subtensor chain running. See: [Run a Local Bittensor Blockchain Instance](../local-build/deploy)
 - A local subnet created (and emissions started). See: [Create a Subnet (Locally)](../local-build/create-subnet)
