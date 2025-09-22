@@ -61,8 +61,7 @@ const sidebars = {
         "learn/yc3-blog",
         "learn/yuma3-migration-guide",
         "learn/fees",
-        "learn/chain-rate-limits",
-        "learn/fees",        
+        "learn/chain-rate-limits",    
         {
           type: "category",
           label: "Navigating Subtensor Codebase",
