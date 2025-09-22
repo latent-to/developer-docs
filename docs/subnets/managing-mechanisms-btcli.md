@@ -6,7 +6,7 @@ title: "Managing Multiple Incentive Mechanisms with BTCLI"
 
 This tutorial shows how to configure and manage multiple incentive mechanisms in a single subnet using BTCLI.
 
-For background on the concepts, see [Understanding Multiple Incentive Mechanisms](understanding-multiple-mech-subnets).
+For a discussion of the background concepts, see [Understanding Multiple Incentive Mechanisms](understanding-multiple-mech-subnets).
 
 See also: [Managing Mechanisms with SDK](managing-mechanisms-with-sdk).
 
