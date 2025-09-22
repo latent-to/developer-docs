@@ -9,11 +9,11 @@ This document introduces the proxy pattern used in Bittensor and explains how it
 Rather than using funds in a single account, smaller accounts with unique roles can complete tasks on behalf of the main stash account.
 A proxy lets one account (the delegator, or "real" account) authorize another account (the delegate) to make permitted calls on its behalf. Proxies allow a delegator to keep their "real" accounts safe and "cold", thereby adding an extra layer of security to the tokens in the account.
 
-The permission scope is determined by the `ProxyType` call filter. This call filter allows the delegator account set the roles and limitations of the delegate account. Optionally, actions can require an on-chain announcement window—`delay`,giving the delegator time to veto.
+The permission scope is determined by the `ProxyType` call filter. This call filter allows the delegator account set the roles and limitations of the delegate account. Optionally, actions can require an on-chain announcement period—`delay`, giving the delegator time to reject a call made by a delegate.
 
 ## Proxy terminology
 
-When working with proxy accounts, it’s important to understand the roles and terms used. The following concepts define how proxy relationships are set up and managed:
+The following concepts define how proxy relationships are set up and managed:
 
 - **Real account**: The account whose identity and funds are at stake.
 - **Delegate account**: The account with access to tokens in the real account and allowed to perform certain actions for the real account.
@@ -30,89 +30,59 @@ Proxies enable secure delegation of account responsibilities. Below are common s
 
 ## How it works
 
-1. The real account adds a proxy entry: (delegate, ProxyType, delay).
-2. The delegate can invoke `proxy(real, proxy_type?, call)` to execute an allowed call.
-3. If the proxy definition has a non-zero delay, the delegate must first announce the call and wait the delay before executing.
-4. The real account may reject announcements during the waiting period.
-5. The real account can remove proxies at any time to revoke access.
+A proxy relationship starts when the _real account_—delegator—creates a proxy entry, which specifies or creates the _delegate account_, the allowed `ProxyType`, and an optional delay. Once this entry exists, the delegate can execute permitted calls on behalf of the real account using the `proxy(real, forceProxyType, call)` extrinsic.
 
-Economic and storage safeguards:
+If the proxy entry includes a non-zero delay, the delegate cannot execute the call immediately. Instead, they must first announce the intended action and wait for the delay period to pass. During this waiting window, the delegator has the ability to reject the announcement, effectively blocking the call. The delegate can also remove a call they previously announced and return the deposit.
 
-- Deposits are reserved per-proxy and per-announcement to prevent spam.
-- Limits exist on the maximum number of proxies and pending announcements.
+The real account always retains full control over the relationship. It can revoke a delegate’s access at any time by removing the proxy entry, immediately disabling the delegate’s ability to act on its behalf.
 
----
+## Types of proxies
 
-## Runtime configuration
+When setting up a proxy, there are two aspects of proxy setup:
 
-At the runtime level, the Proxy pallet is configured with:
+1. **Proxy Account Type**
 
-- Deposits: `ProxyDepositBase`, `ProxyDepositFactor`, `AnnouncementDepositBase`, `AnnouncementDepositFactor`.
-- Limits: `MaxProxies` per account, `MaxPending` pending announcements.
-- Hasher for call announcements: `CallHasher` (Blake2 256).
-- Weight accounting for proxy calls.
+This determines how the proxy is set up and managed. When creating a proxy, you can choose between two account types:
 
-The runtime uses a strongly-typed `ProxyType` enum implementing an `InstanceFilter<RuntimeCall>` that determines which calls are permitted for each type.
+- **Standard Proxy Account**: Registers an existing account as a proxy for the delegator. The assigned account now acts as a delegate and can make calls on behalf of the delegator, according to the configured `ProxyType`. You can create it with the `addProxy` extrinsic.
 
-Common `ProxyType` categories include (names illustrative):
+- **Pure Proxy Account**: Creates a new account that cannot be accessed directly to act as the delegate. This account is initialized with a proxy of the specified `ProxyType` for the origin sender, and all actions are signed by the delegator on its behalf. You can create it with the `createPure` extrinsic.
 
-- **Any**: full permissions (most permissive; use with caution).
-- **NonTransfer / NonFungibile**: forbids currency or token-transfer operations while allowing other actions.
-- **Transfer / SmallTransfer**: limited to transfers, with `SmallTransfer` capped below a threshold.
-- **Owner / Governance / Triumvirate / Senate**: governance-scoped authorities.
-- **Staking / Registration / ChildKeys / SwapHotkey**: targeted Subtensor operations.
-- **SubnetLeaseBeneficiary**: narrowly-scoped permissions to operate leased subnets.
-- **SudoUncheckedSetCode**: extremely restricted to a single privileged call form.
+:::warning
+Pure proxies are _keyless_, _non-deterministic_ accounts. They have no private key, cannot sign transactions themselves, and cannot be recovered. If the relationship between the delegator and the pure proxy is broken, any funds in the pure proxy account are permanently lost.
+:::
 
-Superset logic enforces relationships (e.g., `Transfer` ⊇ `SmallTransfer`; `Governance` ⊇ `Triumvirate|Senate`).
+2. **`ProxyType`**
 
----
+This defines what the proxy is allowed to do on behalf of the real account. It describes the capabilities of that proxy (e.g., staking-only, governance-only, transfer-only, etc.).
 
-## Storage and Events
+The following table shows the available `ProxyType` options and their descriptions:
 
-Key storage items:
+| `ProxyType`              | Description                                                                         |
+| ------------------------ | ----------------------------------------------------------------------------------- |
+| `Any`                    | Grants full permissions. This is the most permissive `ProxyType`; use with caution. |
+| `Owner`                  | Allows subnet owner operations.                                                     |
+| `NonCritical`            | Allows only non-critical operations.                                                |
+| `NonTransfer`            | Blocks all transfer operations.                                                     |
+| `Senate`                 | Allows senate governance operations.                                                |
+| `NonFungible`            | Blocks all TAO transfer or movement.                                                |
+| `Triumvirate`            | Allows triumvirate governance operations.                                           |
+| `Governance`             | Covers both senate and triumvirate governance operations.                           |
+| `Staking`                | Allows staking-related operations.                                                  |
+| `Registration`           | Allows registration-related operations.                                             |
+| `Transfer`               | Allows unrestricted transfer operations.                                            |
+| `SmallTransfer`          | Allows transfers capped at 0.5 TAO.                                                 |
+| `RootWeights`            | Deprecated.                                                                         |
+| `ChildKeys`              | Allows child key operations.                                                        |
+| `SudoUncheckedSetCode`   | Restricted to a single privileged call form.                                        |
+| `SwapHotkey`             | Allows hotkey swap operations.                                                      |
+| `SubnetLeaseBeneficiary` | Allows management of leased subnets.                                                |
 
-- `Proxies(real) -> (BoundedVec<ProxyDefinition>, deposit)`
-- `Announcements(delegate) -> (BoundedVec<Announcement>, deposit)`
+## Best practices for using proxies
 
-Important events (conceptual):
-
-- Proxy added/removed for a real account.
-- Announcement made/removed.
-- Proxy call executed.
-
----
-
-## Lifecycle: Adding, Announcing, Executing, Removing
-
-1. Add proxy: Real account reserves deposit and records `(delegate, ProxyType, delay)`.
-2. (Optional) Announce: Delegate submits a call hash; deposit reserved; timer starts.
-3. Execute: After delay, delegate calls `proxy(real, proxy_type?, call)`; runtime checks filter and delay, then dispatches.
-4. Remove proxy or announcement: Real account or delegate can clean up state and reclaim deposits (subject to rules).
-
-Security notes:
-
-- Prefer least-privilege `ProxyType` profiles.
-- Use non-zero delays for high-risk actions; monitor announcements.
-- Keep the real account cold; use the delegate hot account operationally.
-
----
-
-## Bittensor-Specific Usage: Subnet Leasing
-
-Subtensor integrates proxies for subnet leasing. When a subnet lease is initiated, the beneficiary receives a scoped proxy (`SubnetLeaseBeneficiary`) from the lease owner so the beneficiary can operate subnet-specific calls without broad access to the owner’s funds.
-
-Typical flow:
-
-- Lease owner authorizes beneficiary via a lease flow that internally adds the proxy.
-- Beneficiary operates the subnet with constrained privileges.
-- On lease termination, the proxy is revoked.
-
----
-
-## Developer Tips
+When setting up and using proxies, it’s important to follow practices that reduce security risks and operational overhead. The following guidelines highlight how to map permissions correctly, manage delays, and keep accounts secure while making proxy usage efficient:
 
 - Map your operational needs to a minimal `ProxyType`. If a type seems overly broad, consider whether a more restrictive variant exists.
+- Use non-zero delays for high-risk actions; monitor announcements.
 - Track deposits and limits; batch or clear announcements to avoid dangling deposits.
-- For automated systems, implement announcement management and retries on dispatch errors (`Unproxyable`, `Unannounced`, `TooMany`).
-- Always have a recovery path: keep the real account secured and able to remove proxies rapidly.
+- Keep the real account cold; use the delegate hot account operationally.
