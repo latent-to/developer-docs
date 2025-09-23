@@ -30,6 +30,8 @@ You can access metagraph data through multiple interfaces:
 
 The `btcli` command-line interface provides access to a subset of metagraph information (corresponding to "lite" mode in the SDK). For full metagraph data including weights and bonds, use the Python SDK with `lite=False`.
 
+<!-- Note that if the subnet has multiple incentive mechanisms, you will be prompted to specify the id of the mechanism unless you specify it with the `--mech-id` flag. See [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets). -->
+
 ```bash
 # Dump metagraph subset to file (lite mode)
 btcli subnets metagraph --netuid 14 --network finney \
@@ -68,6 +70,30 @@ m = Metagraph(netuid=14, network="finney", sync=True)
 # Initialize metagraph with full data including weights and bonds
 m = Metagraph(netuid=14, network="finney", lite=False, sync=True)
 ```
+
+### Mechanism-aware metagraphs (multiple incentive mechanisms)
+
+Subnets can run multiple incentive mechanisms. The SDK supports selecting a mechanism and exposes mechanism-related fields:
+
+- Metagraph accepts a `mechid` parameter (default `0`).
+- New fields: `mechid: int`, `mechanisms_emissions_split: list[int]`, `mechanism_count: int`.
+
+```python
+from bittensor.core.metagraph import Metagraph
+
+# Default mechanism (0)
+meta = Metagraph(netuid=14, network="finney", sync=True)
+print(meta.mechid)  # 0
+print(meta.mechanism_count)  # e.g., 2
+print(meta.mechanisms_emissions_split)  # e.g., [60, 40]
+
+# Specific mechanism (1)
+mech_meta = Metagraph(netuid=14, network="finney", sync=True, lite=False)
+mech_meta.mechid = 1
+await mech_meta.sync()  # or re-init with mechid in helper constructors
+```
+
+See also: [Multiple Incentive Mechanisms Within Subnets](./understanding-multiple-mech-subnets.md).
 
 ### Smart Contract Access (Metagraph Precompile)
 
