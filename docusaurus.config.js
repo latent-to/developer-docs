@@ -73,7 +73,11 @@ const config = {
       "@docusaurus/plugin-client-redirects",
       {
         redirects: [
-          {
+        {
+            "to": "/subnets/understanding-multiple-mech-subnets",
+            "from": "/subnets/understanding-sub-subnets"
+          },
+            {
             to: "/liquidity-positions/",
             from: "/liquidity-provider",
           },
