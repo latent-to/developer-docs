@@ -157,4 +157,4 @@ When querying OTF-provided lite nodes, then the following rate limits apply. We 
 - Any OTF-provided lite node will rate limit the requests to one request per second, per IP address. Note that this rate limit may change dynamically based on the network or application requirements.
 - A request can be either WS/WSS or HTTP/HTTPS.
 - If you exceed the rate limit, you will receive 429 error code. You will then have to wait until the rate limit window has expired.
-- You can avoid OTF-lite node rate limits by running your own local lite node. You can run a lite node either [Using Docker](.subtensor-nodes/using-docker.md#using-lite-nodes) or [Using Source](../subtensor-nodes/using-source#lite-node-on-mainchain).
+- You can avoid OTF-lite node rate limits by running your own local lite node. You can run a lite node either [Using Docker](../subtensor-nodes/using-docker.md#using-lite-nodes) or [Using Source](../subtensor-nodes/using-source#lite-node-on-mainchain).
