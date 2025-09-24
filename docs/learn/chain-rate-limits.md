@@ -4,7 +4,7 @@ This document provides a comprehensive overview of all rate limits implemented i
 
 ---
 
-Rate limits in Bittensor are implemented as block-based cooldown periods. When a rate-limited operation is performed, subsequent attempts to perform the same operation must wait for a specified number of [blocks](../resources/glossary.md#block) to pass before they can be executed again.
+Rate limits in Bittensor are implemented as block-based cooldown periods. When a rate-limited operation succeeds, subsequent attempts to perform the same operation must wait for a specified number of [blocks](../resources/glossary.md#block) to pass before they can be executed again. Unsuccessful operations may be re-tried.
 
 ## Global rate limits
 
@@ -12,7 +12,7 @@ This section discusses rate limits that apply globally across the entire network
 
 ### General transaction rate limit
 
-This is the default transaction rate limit in Bittensor. It helps to prevent excessive transaction spam from a single account on the network.
+This is the default transaction rate limit in Bittensor, but it currently only applies to hotkey swaps (other rate limited transsactions are handled by custom rate limits).
 
 - **Rate Limit**: 1000 blocks (~3.3 hours)
 - **Configuration**: `TxRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1144)
