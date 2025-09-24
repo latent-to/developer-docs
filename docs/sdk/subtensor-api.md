@@ -74,6 +74,36 @@ print(sub.delegates.get_delegate_identities())
 sub.chain.tx_rate_limit()
 ```
 
+### Mechanism helpers (multiple incentive mechanisms)
+
+Subnets can run multiple incentive mechanisms. The API adds helpers and optional `mechid` on key calls.
+
+- New getters:
+  - `get_mechanism_count(netuid)` → int
+  - `get_mechanism_emission_split(netuid)` → list[int] or None (even split implied)
+  - `is_in_admin_freeze_window(netuid)` → bool
+- Mechanism-aware methods now accept `mechid` (default `0`):
+  - `set_weights`, `commit_weights`, `reveal_weights`, `weights`, `bonds`, `get_metagraph_info`, `get_all_metagraphs_info(all_mechanisms=False)`
+
+```python
+import bittensor as bt
+
+sub = bt.SubtensorApi()
+netuid = 14
+
+count = sub.get_mechanism_count(netuid=netuid)
+split = sub.get_mechanism_emission_split(netuid=netuid)
+
+# Set weights for mechanism 1
+ok, msg = sub.set_weights(
+    wallet=bt.Wallet("alice"),
+    netuid=netuid,
+    mechid=1,
+    uids=[0,1,2],
+    weights=[1,1,1],
+)
+```
+
 ### Asynchronous
 
 ```python
