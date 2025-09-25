@@ -60,7 +60,8 @@ const sidebars = {
         "learn/yuma-consensus",
         "learn/yc3-blog",
         "learn/yuma3-migration-guide",
-        "learn/fees",        
+        "learn/fees",
+        "learn/chain-rate-limits",    
         {
           type: "category",
           label: "Navigating Subtensor Codebase",
@@ -235,8 +236,7 @@ const sidebars = {
       items: [
         "subtensor-nodes/subtensor-node-requirements",
         "subtensor-nodes/using-source",
-        "subtensor-nodes/using-docker",
-        "subtensor-nodes/subtensor-rate-limits",
+        "subtensor-nodes/using-docker",        
         "subtensor-nodes/subtensor-storage-query-examples",
       ],
     },
