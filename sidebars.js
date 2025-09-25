@@ -54,14 +54,14 @@ const sidebars = {
 
         "subnets/understanding-multiple-mech-subnets",
         "learn/neurons",
-        
+
         "learn/emissions",
         "learn/ema",
         "learn/yuma-consensus",
         "learn/yc3-blog",
         "learn/yuma3-migration-guide",
         "learn/fees",
-        "learn/chain-rate-limits",    
+        "learn/chain-rate-limits",
         {
           type: "category",
           label: "Navigating Subtensor Codebase",
@@ -75,6 +75,28 @@ const sidebars = {
           ],
         },
         "resources/community-links",
+      ],
+    },
+    {
+      type: "category",
+      label: "Wallets and Keys",
+      collapsible: true,
+      collapsed: true,
+      items: [
+        "keys/wallets",
+        "keys/working-with-keys",
+        {
+          type: "category",
+          label: "Proxies",
+          collapsible: true,
+          collapsed: true,
+          link: { type: "doc", id: "keys/proxies/index" },
+          items: ["keys/proxies/create-proxy"],
+        },
+        "keys/handle-seed-phrase",
+        "keys/coldkey-hotkey-security",
+        "keys/multisig",
+        "keys/schedule-coldkey-swap",
       ],
     },
     {
@@ -175,29 +197,6 @@ const sidebars = {
         "sdk/managing-subtensor-connections",
       ],
     },
-
-    {
-      type: "category",
-      label: "Wallets and Keys",
-      collapsible: true,
-      collapsed: true,
-      items: [
-        "keys/wallets",
-        "keys/working-with-keys",
-        {
-          type: "category",
-          label: "Proxies",
-          collapsible: true,
-          collapsed: true,
-          link: { type: "doc", id: "keys/proxies/index" },
-          items: ["keys/proxies/create-proxy"],
-        },
-        "keys/handle-seed-phrase",
-        "keys/coldkey-hotkey-security",
-        "keys/multisig",
-        "keys/schedule-coldkey-swap",
-      ],
-    },
     {
       type: "category",
       label: "Tools and Special Features",
@@ -236,7 +235,7 @@ const sidebars = {
       items: [
         "subtensor-nodes/subtensor-node-requirements",
         "subtensor-nodes/using-source",
-        "subtensor-nodes/using-docker",        
+        "subtensor-nodes/using-docker",
         "subtensor-nodes/subtensor-storage-query-examples",
       ],
     },
