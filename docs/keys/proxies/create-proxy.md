@@ -47,6 +47,17 @@ Your delegate is now authorized to execute small transfers on behalf of the real
 A delegator can assign multiple proxies to the same delegate account. However, each proxy entry must use a unique `ProxyType`. Attempting to register a duplicate entry with the same delegate and `ProxyType` will result in a `proxy.Duplicate` error.
 :::
 
+### Checking an Account’s Proxies
+
+You can check which proxies are associated with an account to see their delegate addresses, proxy types, and any configured delays. To do this:
+
+1. From the **Developer** dropdown, navigate to **Chain state** → **Storage**.
+2. Click the **selected state query** menu and select `proxy.proxies`.
+3. Select the account used to create the proxy.
+4. Click the **+** icon to run the query.
+
+This returns the set of proxies related to the account and their information—`delegate`, `proxyType`, and `delay`.
+
 ## Step 3: Execute a Proxy Call
 
 1. Go to **Developer** → **Extrinsics**.
@@ -149,6 +160,7 @@ After the announcement waiting period has passed, the delegate account can now e
 
 ## Troubleshooting
 
+- `proxy.Duplicate`: A proxy with the same configuration already exists on the real account.
 - `proxy.Unannounced`: A non-zero delay proxy requires an announcement; announce and wait the delay.
 - `proxy.Unproxyable`/`system.CallFiltered`: The call is not permitted under the current `ProxyType`.
 - `proxy.TooMany`: You exceeded `MaxProxies` or `MaxPending`. Remove unused proxies/announcements.
