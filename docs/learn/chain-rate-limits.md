@@ -126,7 +126,7 @@ This rate limit controls how frequently a subnet validator can set commit on to 
 
 ### Registration rate limits
 
-This section covers rate limits related to neuron registrations on a subnet and on the network.
+This section covers rate limits related to neuron registrations on a subnet.
 
 #### Per-block registration limit
 
