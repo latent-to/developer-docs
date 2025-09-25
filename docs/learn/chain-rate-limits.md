@@ -10,7 +10,7 @@ This section discusses rate limits that apply globally across the entire network
 
 This is the default transaction rate limit in Bittensor, but it currently only applies to hotkey swaps (other rate limited transsactions are handled by custom rate limits).
 
-- **Rate Limit**: 1000 blocks (~3.3 hours)
+- **Rate Limit**: 1 blocks (~12 seconds)
 - **Configuration**: `TxRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1144)
 - **Error message**: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
