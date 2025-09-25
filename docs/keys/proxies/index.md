@@ -94,7 +94,7 @@ Only use the unrestricted `Any` type when no other option fits. If a proxy call 
 To ensure scalability and prevent abuse, proxy usage is subject to certain limits as shown:
 
 - **`MaxProxies`**: This refers to the maximum number of delegate accounts that can be linked to a single real account. Each account can register up to 20 proxies in total. See [source code](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L644).
-- MaxPending: This refers to the maximum number of pending announcements that an account can have. This limit helps prevent excessive queuing. Each account can have up to 75 pending announcements at a time. See [source code](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L645).
+- **`MaxPending`**: This refers to the maximum number of pending announcements that a delegate account can have. This limit helps prevent excessive queuing. Each account can have up to 75 pending announcements at a time. See [source code](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L645).
 
 ## Best practices for using proxies
 
