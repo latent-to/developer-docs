@@ -23,7 +23,7 @@ const sidebars = {
     "index",
     {
       type: "category",
-      label: "Releases and Announcements",      
+      label: "Releases and Announcements",
       collapsible: true,
       collapsed: true,
       items: [
@@ -37,7 +37,7 @@ const sidebars = {
           id: "learn/announcements",
           label: "Announcements",
         },
-      ]
+      ],
     },
     "btcli/btcli-playground",
     {
@@ -47,7 +47,7 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "learn/introduction",        
+        "learn/introduction",
         "resources/questions-and-answers",
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
@@ -60,19 +60,20 @@ const sidebars = {
         "learn/yuma-consensus",
         "learn/yc3-blog",
         "learn/yuma3-migration-guide",
-        "learn/fees",        
+        "learn/fees",
+        "learn/chain-rate-limits",    
         {
-      type: "category",
-      label: "Navigating Subtensor Codebase",
-      link: { type: "doc", id: "navigating-subtensor/index" },
-      collapsible: true,
-      collapsed: true,
-      items: [
-        "navigating-subtensor/emissions-coinbase",
-        "navigating-subtensor/epoch",
-        "navigating-subtensor/swap-stake",
-      ],
-    },
+          type: "category",
+          label: "Navigating Subtensor Codebase",
+          link: { type: "doc", id: "navigating-subtensor/index" },
+          collapsible: true,
+          collapsed: true,
+          items: [
+            "navigating-subtensor/emissions-coinbase",
+            "navigating-subtensor/epoch",
+            "navigating-subtensor/swap-stake",
+          ],
+        },
         "resources/community-links",
       ],
     },
@@ -227,12 +228,11 @@ const sidebars = {
       items: [
         "subtensor-nodes/subtensor-node-requirements",
         "subtensor-nodes/using-source",
-        "subtensor-nodes/using-docker",
-        "subtensor-nodes/subtensor-rate-limits",
+        "subtensor-nodes/using-docker",        
         "subtensor-nodes/subtensor-storage-query-examples",
       ],
     },
-    
+
     {
       type: "category",
       label: "Bittensor EVM",
