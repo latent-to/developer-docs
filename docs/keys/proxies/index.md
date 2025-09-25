@@ -78,6 +78,24 @@ The following table shows the available `ProxyType` options and their descriptio
 | `SwapHotkey`             | Allows hotkey swap operations.                                                      |
 | `SubnetLeaseBeneficiary` | Allows management of leased subnets.                                                |
 
+### Choosing the Right `ProxyType`
+
+When setting up proxies, always follow the principle of least privilege. Choose the narrowest `ProxyType` that covers the intended actions instead of defaulting to broad permissions. For example:
+
+- Operational tasks: `Staking`, `Registration`, `ChildKeys`, `SwapHotkey`.
+- Governance actions: `Triumvirate`, `Senate`, or `Governance` (broader).
+- Funds movement: `Transfer` or `SmallTransfer` (with per-transfer limit).
+- Subnet leasing: `SubnetLeaseBeneficiary`.
+
+Only use the unrestricted `Any` type when no other option fits. If a proxy call fails with `proxy.Unproxyable` or `system.CallFiltered`, it usually means the selected `ProxyType` doesn’t permit that call. In such cases, switch to a more suitable type or create a separate proxy with proper scope.
+
+## Proxy Usage Limits
+
+To ensure scalability and prevent abuse, proxy usage is subject to certain limits as shown:
+
+- **`MaxProxies`**: This refers to the maximum number of delegate accounts that can be linked to a single real account. Each account can register up to 20 proxies in total. See [source code](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L644).
+- MaxPending: This refers to the maximum number of pending announcements that an account can have. This limit helps prevent excessive queuing. Each account can have up to 75 pending announcements at a time. See [source code](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L645).
+
 ## Best practices for using proxies
 
 When setting up and using proxies, it’s important to follow practices that reduce security risks and operational overhead. The following guidelines highlight how to map permissions correctly, manage delays, and keep accounts secure while making proxy usage efficient:
