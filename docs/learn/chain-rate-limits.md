@@ -2,6 +2,16 @@
 
 This page reviews all rate limits implemented in the Bittensor blockchain (Subtensor). Rate limits prevent spam, ensure network stability, and maintain fair access to network resources. Rate limits in Bittensor are implemented as block-based cooldown periods. When a rate-limited operation succeeds, subsequent attempts to perform the same operation must wait for a specified number of [blocks](../resources/glossary.md#block) to pass before they can be executed again. Unsuccessful operations may be re-tried.
 
+:::info
+To check/confirm confirm current rate limits and other chain state variables on the blockchain, use the Polkadot.js chain explorer.
+
+To view the chain state for Bittensor main network ('finney'), visit [`https://polkadot.js.org/apps`](https://polkadot.js.org/apps), choose Bittensor network, and click **Chain State** under the **Developer** tab, or visit:
+
+[`https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fbittensor-finney.api.onfinality.io%2Fpublic-ws#/chainstate`](https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fbittensor-finney.api.onfinality.io%2Fpublic-ws#/chainstate).
+
+Most relevant attributes are under the `subtensorModule`.
+:::
+
 ## Global rate limits
 
 This section discusses rate limits that apply globally across the entire network.
@@ -10,7 +20,7 @@ This section discusses rate limits that apply globally across the entire network
 
 This is the default transaction rate limit in Bittensor, but it currently only applies to hotkey swaps (other rate limited transsactions are handled by custom rate limits).
 
-- **Rate Limit**: 1 blocks (~12 seconds)
+- **Rate Limit**: 1 block (12 sec)
 - **Configuration**: `TxRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1144)
 - **Error message**: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
@@ -32,7 +42,7 @@ This rate limit prevents the owner of a child hotkey from making frequent change
 
 ### Hotkey set rate limit
 
-This rate limit prevents a user from setting or swapping a hotkey too frequently.
+This rate limit prevents a user from swapping a hotkey too frequently.
 
 - **Rate Limit**: 1,000 blocks (~3.3 hours)
 - **Configuration**: [macros/errors.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/errors.rs#L93)
@@ -42,7 +52,7 @@ This rate limit prevents a user from setting or swapping a hotkey too frequently
 
 This rate limit controls how frequently subnet owners can trim UIDs on their subnets. This prevents disruptions in subnet stability and excessive network reorganization.
 
-- **Rate Limit**: 216,000 blocks (~30 days)
+- **Rate Limit**: 216,000 blocks (~30 days) on main net; 1 block in 'fastblocks' development mode.
 - **Configuration**: `MaxUidsTrimmingRateLimit` [macros/errors.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L620-L624)
 - **Error message**: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
@@ -77,7 +87,7 @@ This rate limit controls how frequently a subnet owner can change subnet hyperpa
 - **Implementation**: [rate_limiting.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L41-L49)
 - **Error message**: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
-Note: Admin operations are also disallowed during the final blocks of each tempo as governed by `AdminFreezeWindow` (root-configurable). This restriction is orthogonal to the above rate limit.
+Note: All subnet owner operations are disallowed during the final blocks of each tempo as governed by `AdminFreezeWindow`. This restriction is in addition to the above rate limit.
 
 ### Mechanism configuration rate limits
 
@@ -91,13 +101,13 @@ These limits govern how often a subnet owner can change the number of incentive 
 
 #### Mechanism emission split update rate limit
 
-- **Rate Limit**: 7,200 blocks (~24 hours)
+- **Rate Limit**: 7,200 blocks (~24 hours) on main net; 1 block in 'fastblocks' development mode.
 - **Implementation**: [utils/rate_limiting.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L28-L29)
 - **Error message**: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
 ### Staking operations rate limits
 
-This rate limit controls how frequently a user can perform staking operations (add/remove stake, move stake).
+This rate limit controls how frequently a user can perform staking operations (add/remove stake, move stake) to a particular subnet (netuid).
 
 - **Rate Limit**: 1 per block
 - **Configuration**: [macros/errors.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/errors.rs#L222)
@@ -143,12 +153,6 @@ This rate limit controls the frequency of neuron registrations within an [interv
 - **Rate Limit**: 3x the target registrations per interval
 - **Configuration**: `TargetRegistrationsPerInterval` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1122)
 - **Error message**: [`TooManyRegistrationsThisInterval`](../errors/subtensor.md#toomanyregistrationsthisinterval)
-
-## Best Practices
-
-1. **Monitor Usage**: Regularly monitor rate limit usage patterns
-2. **Document Changes**: Always document rate limit changes
-3. **Test Thoroughly**: Test rate limit changes on testnets
 
 ## Subtensor Node Rate Limits
 
