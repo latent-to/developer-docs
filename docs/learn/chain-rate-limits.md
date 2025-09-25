@@ -81,7 +81,7 @@ Note: Admin operations are also disallowed during the final blocks of each tempo
 
 ### Mechanism configuration rate limits
 
-These limits govern how often a subnet creator can change the number of incentive mechanisms and the emission split among them. For background on mechanisms, see [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets.md).
+These limits govern how often a subnet owner can change the number of incentive mechanisms and the emission split among them. For background on mechanisms, see [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets.md).
 
 #### Mechanism count update rate limit
 
