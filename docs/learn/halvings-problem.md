@@ -6,36 +6,42 @@ title: "Token Halvings Problem and Solution"
 
 ## FAQ
 
-### What’s the core problem in one sentence?
+### What’s the core problem?
 Later subnets are structurally disadvantaged: every TAO halving creates a new class of subnets with weaker tokenomics, making them more prone to deregistration—even if they behave identically to earlier cohorts.
 
-### Why does timing (registration date) matter so much?
-Because injections shrink with the global TAO halving index k, while emissions depend on the subnet’s own ALPHA halving index n. The gap m = n - k controls outcomes. Same behavior, different m ⇒ different behavior, withi advantages to earlier cohorts.
+### Why do we need to act before the first TAO halving?
+
+Because the first halving already creates two permanent classes. Once split, later subnets will be persistently weaker and more deregistration-prone.
+
+The crux is that injections shrink with the global TAO halving index k, while emissions depend on the subnet’s own ALPHA halving index n. The gap m = n - k controls outcomes, giving exponential advantageous 2^(k-n) to older subnets.
 
 ### What is ADR?
-ADR is the emissions-to-injections ratio. It measures how much ALPHA goes to people (emissions) relative to how much is put into the pool (injections). Under the baseline, ADR_k,n ≈ 2^(k - n). A higher ADR means liquidation happens at a deeper discount to spot (P_L = P/ADR).
+
+ADR is the emissions-to-injections ratio. It measures how much ALPHA goes to people (emissions) relative to how much is put into the pool (injections). Under the baseline, ADR_k,n ≈ 2^(k - n). A higher ADR means liquidation happens at a deeper discount.
 
 ### Doesn’t buy pressure balance things out between newer and older subnets?
 
 Not symmetrically. Unstake/slippage depends only on the ALPHA reserve. As injections shrink with k while emissions remain at n, identical sell fractions yank out more TAO in later cohorts. Systematic sell flows (e.g., root) happen every block; buy flows are sporadic.
 
-### Why do we need to act before the first TAO halving?
-Because the first halving already creates two permanent classes. Once split, path dependence makes later subnets persistently weaker and more deregistration-prone.
+### What is the synchronized-halving fix in plain words?
+
+Make both ALPHA injection and ALPHA emission halve with the same global schedule (k). That kills the gap m. Consequences: no interval compression asymmetry, no liquidation discount vs spot, and liquidity impact becomes cohort-invariant for the same behavior.
 
 ### What happens to the “21M per subnet” idea?
+
 This design concept is the root of the problem. Keeping a fixed 21M for every subnet conflicts with eliminating the cohort disadvantage. Synchronizing both ALPHA components to k removes the disadvantage but implies per-subnet max supply depends on registration time. ALPHA is highly divisible; Zeno-halvings keep a clean tail.
 
-### What is the synchronized-halving fix in plain words?
-Make both ALPHA injection and ALPHA emission halve with the same global schedule (k). That kills the gap m. Consequences: no interval compression asymmetry, no liquidation discount vs spot, and liquidity impact becomes cohort-invariant for the same behavior.
 
 ### What are the trade-offs of synchronizing?
 - Pro: Removes cohort classes (fairness), simpler mental model, predictable dynamics.
 - Con: Per-subnet max ALPHA varies with registration time; requires accepting supply differences and potentially using Zeno-halvings to keep the tail smooth.
 
 ### Can we fix it by only changing how ALPHA halvings work (emissions-only)?
+
 That slows interval compression but leaves ADR/liquidity asymmetries intact. You still get unequal max supplies and persistent cohort differences.
 
 ### Can subnet mergers/forks cure the asymmetry?
+
 Not safely if ADRs differ a lot. Big gaps in ADR (e.g., 2^(k - n)) create merger/arbitrage issues. Late->early mergers can be exploitable unless ADRs are aligned.
 
 ### What is “liquidity impact” and why does it hurt later cohorts more?
