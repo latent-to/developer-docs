@@ -12,7 +12,7 @@ For formal derivations, see the [white paper](https://github.com/mcjkula/papers/
 
 See also: [Token Halvings Problem and Solution: Frequently asked questions (FAQ)](./halvings-problem.md).
 
-## 1) How Dynamic TAO works — and why ALPHA follows the TAO clock
+## 1) Background: Current Token Emissions Halving Schedules
 
 ### Market-driven emissions
 - In Bittensor, each subnet has its own token, known as its ALPHA (α) currency. This internal currency marketplace is known as Dynamic TAO (dTAO). So that users can trade TAO (τ) for ALPHA, and vice versa, on demand, each subnet maintains reserves of both tokens, and adjusts the price as needed. This is a customized application of the [Uniswap](https://en.wikipedia.org/wiki/Uniswap) AMM pattern.
