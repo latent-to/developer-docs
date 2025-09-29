@@ -20,7 +20,7 @@ See also: [Token Halvings Problem and Solution: Frequently asked questions (FAQ)
 
 ### Three key flows
 
-The dTAO system operates through three distinct token flows, each with different timing schedules:
+The dTAO emissions involves a threefold token injection for each subnet, which occurs each block. Over time, emissions halvings will change the rate of these token injections:
 
 1. **τ_in (TAO injection)**: New TAO is injected into every subnet's AMM reserve each [block](#block). This allocation is distributed across subnets based on their relative prices, with [EMA](#exponential-moving-average-ema) smoothing to prevent manipulation. TAO injections shrink over time following the global TAO [halving schedule](../learn/halvings-problem.md).
 
