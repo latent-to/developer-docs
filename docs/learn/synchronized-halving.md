@@ -99,7 +99,7 @@ This makes it progressively harder for newer subnets to maintain healthy liquidi
 
 This asymmetry makes staking in later subnet cohorts fundamentally riskier, even when the underlying subnet performance is identical.
 
-## 3) One root cause
+### 2.5 One root cause
 
 Despite appearing as four separate problems, all of the above distortions stem from a single mathematical source: **timing asynchrony between global and local halving schedules**.
 
@@ -111,9 +111,9 @@ Despite appearing as four separate problems, all of the above distortions stem f
 
 **Why it gets worse over time**: The longer the Bittensor network operates, the more TAO halvings occur, and the more severe these asymmetries become. Early subnets benefit from favorable ratios, while later subnets face increasingly disadvantageous conditions — not due to their performance, but purely due to when they were created relative to the global halving schedule.
 
-## 4) Toward a Solution: Exploring a synchronized design
+## 3) Toward a Solution: Exploring a synchronized design
 
-### 4.1 Core change — one clock for both
+### 3.1 Core change — one clock for both
 
 The proposed solution directly addresses the root cause by eliminating the timing mismatch:
 
@@ -121,7 +121,7 @@ The proposed solution directly addresses the root cause by eliminating the timin
 
 **Unified timing**: Now all three flows—TAO injections (τ_in), ALPHA injections (α_in), and ALPHA emissions (α_out)—shrink together proportionally at each global halving event.
 
-### 4.2 Immediate benefits
+### 3.2 Immediate benefits
 
 Synchronization eliminates all four distortions at their mathematical source:
 
@@ -133,7 +133,7 @@ Synchronization eliminates all four distortions at their mathematical source:
 
 4. **Elimination of liquidation haircuts**: The liquidation price matches the spot price for all cohorts (ADR = 1), removing built-in disadvantages for later subnets.
 
-### 4.3 Key implications and trade-offs
+### 3.3 Key implications and trade-offs
 
 While synchronization solves the core asymmetry problems, it introduces some changes to the current system:
 
