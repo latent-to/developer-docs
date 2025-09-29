@@ -37,20 +37,26 @@ The dTAO emissions process involves a threefold token injection for each subnet,
 
 ### Why α_in must follow TAO halvings
 
-The synchronization between TAO and ALPHA injections is essential for market stability. If global TAO [issuance](../resources/glossary.md#issuance) halves but ALPHA injection (α_in) does not, each subnet's AMM pool would suddenly receive proportionally more ALPHA tokens per TAO token. This would immediately cut ALPHA's price in half, creating massive market disruption.
+The synchronization between TAO and ALPHA injections is essential for market stability. If global TAO [issuance](../resources/glossary.md#issuance) halves but ALPHA injection (α_in) does not, each subnet's AMM pool would suddenly receive proportionally more ALPHA tokens per TAO token. This would proportionally remove more TAO from the AMM reserves over time, and for newer or low liquidity subnets, make the AMM subject to proportionally higher selling pressure and price impact.
 
-To maintain stable exchange rates and prevent artificial price shocks, α_in must be locked to TAO's global halving schedule. This ensures that both sides of the AMM pool shrink proportionally, preserving price relationships across halving events.
+To maintain stable exchange rates and prevent artificial price shocks, α_in must be locked to TAO's global halving schedule. This ensures that both sides of the AMM pool shrink proportionally, preserving price relationships across halving events. Without this synchronization, the AMM reserves would be affected more by selling pressure over time, particularly for newer and low-liquidity subnets, resulting in higher price impact.
 
 ALPHA emissions to participants (α_out) remain on each subnet's independent local halving schedule, while injections follow the global TAO schedule.  While synchronizing injections (τ_in and α_in) stabilizes markets, this 'semi-synchronization' creates unintended downstream consequences. This timing split—α_in synchronized globally, α_out running locally—creates a growing imbalance between "ALPHA in AMM pools" versus "ALPHA in participant wallets." This imbalance is the mathematical root cause of all four distortions described below.
 
-## 2) The problem — asymmetries caused by two clocks
+## 2) The problem
 
 The fundamental issue emerges from the timing mismatch between global and local halving schedules. When ALPHA injections (α_in) halve according to TAO's global schedule but ALPHA emissions (α_out) continue on each subnet's independent schedule, the ratio between "ALPHA in AMM pools" versus "ALPHA held by participants" shifts at every global halving event.
 
 This single mathematical drift creates several distinct but related distortions that systematically disadvantage later subnet cohorts:
 
+### 2.1 Halving "speed‑up" (interval compression)
 
-### 2.1 Liquidity impact on AMMs
+**The mechanism**: TAO halvings slow down ALPHA halvings by reducing the mining rate while keeping the threshold constant. However, when an ALPHA halving occurs, it halves the threshold while reducing the minting rate by less than 50%, causing the next ALPHA halving to happen faster (compressed intervals). This compression becomes stronger as ALPHA injections outweigh ALPHA emissions.
+
+**Real impact**: A subnet that initially had 2-year halving intervals might see this compress to 18 months, then 12 months, and eventually approach a "singularity" where halvings occur nearly every block. 
+ALPHA halvings will compress so severely that no more incentives/emissions would be distributed in ~10 years instead of the intended ~60 years.
+
+### 2.2 Liquidity impact on AMMs
 
 **The mechanism**: As ALPHA emissions (α_out) increasingly dominate relative to ALPHA injections (α_in), the AMM pools receive proportionally less liquidity while participants hold proportionally more tokens. This changes the fundamental dynamics of trading.
 
@@ -62,7 +68,7 @@ This single mathematical drift creates several distinct but related distortions 
 
 This makes it progressively harder for newer subnets to maintain healthy liquidity and stable prices, even when participant behavior is identical across cohorts.
 
-### 2.2 Slower root‑proportion decline
+### 2.3 Slower root‑proportion decline
 
 **Background**: The [Root Subnet](../resources/glossary.md#root-subnetsubnet-zero) (Subnet Zero) provides a mechanism for TAO holders to stake in a subnet-agnostic way. Root's influence in any given subnet depends on the total TAO staked there, scaled by the global [TAO‑weight](../resources/glossary.md#tao-weight) parameter (γ, currently 0.18).
 
@@ -74,9 +80,9 @@ This makes it progressively harder for newer subnets to maintain healthy liquidi
 
 **Solution**: Scale the TAO-weight parameter with each TAO halving (e.g., 0.18 → 0.09 → 0.045 → …). This would keep Root's effective power declining in sync with the overall issuance scale, preserving consistent dilution dynamics across all epochs.
 
-### 2.3 Disadvantageous liquidation
+### 2.4 Disadvantageous liquidation
 
-**Subnet deregistration context**: Subnets can be deregistered when they no longer meet economic or operational criteria. When this occurs, the AMM pool is dissolved, and all ALPHA holders redeem their tokens against the pool's remaining TAO reserves.
+**Subnet deregistration context**: Subnets can be deregistered based on their relative performance (currently the lowest EMA subnet among all subnets). When this occurs, the AMM pool is dissolved, and all ALPHA holders redeem their tokens against the pool's remaining TAO reserves.
 
 **Two critical prices**:
 - **Spot price**: The current market rate offered by the AMM (TAO reserves ÷ ALPHA reserves)
@@ -94,13 +100,7 @@ This makes it progressively harder for newer subnets to maintain healthy liquidi
 
 This asymmetry makes staking in later subnet cohorts fundamentally riskier, even when the underlying subnet performance is identical.
 
-### 2.4 Halving "speed‑up" (interval compression)
 
-**The mechanism**: As global TAO halvings reduce ALPHA injections (α_in) while ALPHA emissions (α_out) maintain their original pace until the subnet reaches its own local halving, the total ALPHA issuance becomes increasingly dominated by emissions rather than injections.
-
-**The consequence**: Since ALPHA halvings are triggered by reaching fixed issuance thresholds, and emissions now represent a larger fraction of total issuance, each successive ALPHA halving threshold is reached more quickly. This creates a compression effect where halving intervals progressively shorten over time.
-
-**Real impact**: A subnet that initially had 2-year halving intervals might see this compress to 18 months, then 12 months, and eventually approach a "singularity" where halvings occur nearly every block. This completely disrupts the intended tokenomics and makes long-term planning impossible.
 
 ### 2.5 One root cause
 
@@ -112,7 +112,7 @@ Despite appearing as four separate problems, all of the above distortions stem f
 
 **The compounding effect**: At each global TAO halving, the gap between these two timing systems widens. This changes the fundamental ratio between "tokens injected into pools" versus "tokens emitted to participants," and all four distortions flow mathematically from this shifting ratio.
 
-**Why it gets worse over time**: The longer the Bittensor network operates, the more TAO halvings occur, and the more severe these asymmetries become. Early subnets benefit from favorable ratios, while later subnets face increasingly disadvantageous conditions — not due to their performance, but purely due to when they were created relative to the global halving schedule.
+**Why it gets worse over time**: The longer the Bittensor network operates, the more TAO halvings occur, and the more severe these asymmetries become. Critically, no subnet truly benefits in the long term.
 
 ## 3) Toward a Solution: Exploring a synchronized design
 
@@ -135,23 +135,23 @@ Synchronization eliminates all four distortions at their mathematical source:
 
 3. **Elimination of liquidation haircuts**: The liquidation price matches the spot price for all cohorts (ADR = 1), removing built-in disadvantages for later subnets.
 
-4. **Stable halving intervals**: ALPHA halving intervals maintain their intended 2-year spacing across all epochs—no compression or acceleration.
+4. **Stable emission schedule**: ALPHA emissions would halve with TAO every 4 years, eliminating the problematic independent ALPHA halving schedule entirely.
 
 ### 3.3 Key implications and trade-offs
 
 While synchronization solves the core asymmetry problems, it introduces some changes to the current system:
 
 #### Supply implications
-**Reduced maximum supply for some cohorts**: The current system's interval compression effectively accelerates some subnets beyond their intended pace. Synchronization removes this artificial acceleration, resulting in lower total ALPHA supply for cohorts that would have benefited from compression.
+**Reduced maximum supply for some cohorts**: The current system's interval compression effectively accelerates some subnets beyond their intended pace. Synchronization removes this artificial acceleration, resulting in lower total ALPHA supply for cohorts that would have benefited from compression. Hence, nobody truly benefits.
 
 **Predictable supply curves**: Each subnet's maximum ALPHA supply becomes calculable based on its registration timing relative to the global TAO supply, creating transparent and predictable tokenomics.
 
 #### Long-term considerations
 
-**Emission endpoint**: Once halvings reduce per-block rewards below the smallest unit (RAO = 10^9 TAO), minting would naturally stop unless token precision is increased.
+**Emission endpoint**: Once halvings reduce per-block rewards below the smallest unit (RAO = 10⁻⁹ TAO), minting would naturally stop unless token precision is increased.
 
 **Two tail options**:
-1. **Hard-stop tail**: Emissions end at the final discrete halving when rewards reach the RAO floor. Simple and finite, but creates a discontinuous endpoint.
+1. **Hard-stop tail**: Emissions end at the final discrete halving when rewards reach the RAO floor. Simple and finite, but creates a discontinuous endpoint. This approach would also require increasing the TAO supply above 21 million, which may not be desirable.
 2. **Zeno-halving tail**: Increase token precision (e.g., from 9 to 18 decimal places) so halvings can continue smoothly below the current minimum unit. Rewards asymptotically approach zero without ever stopping, maintaining the same finite total supply with smoother mathematical properties.
 
 #### Parameter adjustments
@@ -168,7 +168,7 @@ The asymmetries described above begin manifesting immediately after the first TA
 
 Several implementation strategies could be considered:
 - **Immediate synchronization**: All existing subnets switch to the global halving schedule
-- **Grandfathering**: Existing subnets continue on local schedules, new subnets use global schedule
+- **Grandfathering**: Existing subnets continue on local schedules, new subnets use global schedule. One implication of this approach is that grandfathered subnets would reach their supply cap in ~10 years instead of ~60 years, while still benefiting from liquidity and liquidation advantages.
 - **Opt-in transition**: Subnet creators choose between current and synchronized models
 
 ### Governance considerations
