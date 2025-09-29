@@ -52,7 +52,7 @@ This single mathematical drift creates several distinct but related distortions 
 
 ### 2.1 Liquidity impact on AMMs
 
-**The mechanism**: As ALPHA emissions (α_out) increasingly dominate relative to ALPHA injections (α_in), the AMM pools receive proportionally less fresh liquidity while participants hold proportionally more tokens. This changes the fundamental dynamics of trading.
+**The mechanism**: As ALPHA emissions (α_out) increasingly dominate relative to ALPHA injections (α_in), the AMM pools receive proportionally less liquidity while participants hold proportionally more tokens. This changes the fundamental dynamics of trading.
 
 **Cohort disadvantage**: For subnets created after multiple TAO halvings, the same selling pressure from participants removes a much larger fraction of the pool's TAO reserves compared to earlier subnet cohorts. This is because later subnets have smaller injection rates but the same emission rates.
 
@@ -62,7 +62,7 @@ This single mathematical drift creates several distinct but related distortions 
 
 This makes it progressively harder for newer subnets to maintain healthy liquidity and stable prices, even when participant behavior is identical across cohorts.
 
-### 2.2 Slower root‑share decline
+### 2.2 Slower root‑proportion decline
 
 **Background**: The [Root Subnet](../resources/glossary.md#root-subnetsubnet-zero) (Subnet Zero) provides a mechanism for TAO holders to stake in a subnet-agnostic way. Root's influence in any given subnet depends on the total TAO staked there, scaled by the global [TAO‑weight](../resources/glossary.md#tao-weight) parameter (γ, currently 0.18).
 
@@ -72,7 +72,7 @@ This makes it progressively harder for newer subnets to maintain healthy liquidi
 - **Early subnets**: Root's influence declined predictably as ALPHA supply grew
 - **Later subnets**: Root maintains higher influence for extended periods due to slower ALPHA supply growth
 
-**Potential solution**: Scale the TAO-weight parameter with each TAO halving (e.g., 0.18 → 0.09 → 0.045 → …). This would keep Root's effective power declining in sync with the overall issuance scale, preserving consistent dilution dynamics across all epochs.
+**Solution**: Scale the TAO-weight parameter with each TAO halving (e.g., 0.18 → 0.09 → 0.045 → …). This would keep Root's effective power declining in sync with the overall issuance scale, preserving consistent dilution dynamics across all epochs.
 
 ### 2.3 Disadvantageous liquidation
 
@@ -80,7 +80,7 @@ This makes it progressively harder for newer subnets to maintain healthy liquidi
 
 **Two critical prices**:
 - **Spot price**: The current market rate offered by the AMM (TAO reserves ÷ ALPHA reserves)
-- **Liquidation price**: The redemption value if the subnet shuts down (pool's TAO ÷ total outstanding ALPHA held by users)
+- **Liquidation price**: The redemption value if the subnet get deregistered (TAO reserves ÷ total outstanding ALPHA held by users)
 
 **Alpha Distribution Ratio ([ADR](../resources/glossary.md#adr-alpha-distribution-ratio))**: This metric compares ALPHA tokens held by participants versus ALPHA tokens remaining in the AMM pool. When injection and emission clocks are misaligned, emissions (α_out) tend to outpace injections (α_in), pushing more ALPHA into participant wallets and driving ADR above 1. A higher ADR means more tokens are in circulation relative to what's in the pool, which affects liquidation dynamics.
 
@@ -187,6 +187,6 @@ Dynamic TAO represents a significant advancement over manual emission allocation
 - Predictable Root Subnet influence patterns
 - Elimination of liquidation disadvantages
 
-**Implementation trade-offs**: While synchronization solves the asymmetry problems, it requires accepting lower maximum ALPHA supplies for some cohorts and implementing either hard-stop or Zeno-style emission tails. Scaling the TAO-weight parameter with each halving ensures consistent root dynamics.
+**Implementation trade-offs**: While synchronization solves the asymmetry problems, it requires accepting different maximum ALPHA supplies for some cohorts and implementing either hard-stop or Zeno-style emission tails. Scaling the TAO-weight parameter with each halving ensures consistent root dynamics.
 
 **The result**: A mathematically cleaner system with fairer outcomes for every subnet cohort, predictable tokenomics for builders and users, and elimination of timing-based advantages that have nothing to do with subnet performance or value creation.

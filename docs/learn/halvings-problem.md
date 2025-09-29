@@ -11,7 +11,7 @@ For a long-form, plain language walk-through, see: [Synchronized Halving for Dyn
 ## FAQ
 
 ### What’s the core problem?
-Later subnets are structurally disadvantaged: every TAO halving creates a new class of subnets with weaker tokenomics, making them more prone to deregistration—even if they behave identically to earlier cohorts.
+Later subnets are structurally disadvantaged: every TAO halving creates a new class of subnets with weaker tokenomics, making them more prone to deregistration, even if they behave identically to earlier cohorts.
 
 ### Why do we need to act before the first TAO halving?
 
@@ -34,7 +34,7 @@ Make both ALPHA injection and ALPHA emission halve with the same global schedule
 
 ### What happens to the “21M per subnet” idea?
 
-This design concept is the root of the problem. Keeping a fixed 21M for every subnet conflicts with eliminating the cohort disadvantage. Synchronizing both ALPHA components to k removes the disadvantage but implies per-subnet max supply depends on registration time. ALPHA is highly divisible; Zeno-halvings keep a clean tail.
+This design concept is the root of the problem. Keeping a fixed 21M for every subnet conflicts with eliminating the cohort disadvantage. Synchronizing both ALPHA components to k removes the disadvantage but implies per-subnet max supply depends on registration time.
 
 
 ### What are the trade-offs of synchronizing?
