@@ -6,6 +6,8 @@ title: "Token Halvings Problem and Solution"
 
 This page introduces the basic concepts for this [white paper](https://github.com/mcjkula/papers/blob/main/dtao-halving-synchronization-2025-v1.pdf) on a problem (and its solution) in the design of Bittensor's Emission halving schedule.
 
+For a long-form, plain language walk-through, see: [Synchronized Halving for Dynamic TAO](./synchronized-halving.md).
+
 ## FAQ
 
 ### What’s the core problem?
@@ -28,6 +30,7 @@ Not symmetrically. Unstake/slippage depends only on the ALPHA reserve. As inject
 ### What is the synchronized-halving fix in plain words?
 
 Make both ALPHA injection and ALPHA emission halve with the same global schedule (k). That kills the gap m. Consequences: no interval compression asymmetry, no liquidation discount vs spot, and liquidity impact becomes cohort-invariant for the same behavior.
+
 
 ### What happens to the “21M per subnet” idea?
 

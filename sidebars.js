@@ -50,6 +50,7 @@ const sidebars = {
         "learn/introduction",
         "resources/questions-and-answers",
         "learn/halvings-problem",
+        "learn/synchronized-halving",
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
 
