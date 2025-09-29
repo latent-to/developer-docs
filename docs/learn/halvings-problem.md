@@ -56,7 +56,7 @@ It’s the fraction of TAO reserves removed when selling ALPHA. For unstaking, t
 It’s the discount between liquidation price and spot. With ADR>1 (typical for late cohorts), P_L = P/ADR ⇒ a large haircut. Example: ADR=32 ⇒ P_L is P/32 (~97% discount).
 
 ### How does the root proportion change across cohorts?
-Later cohorts’ total issuance grows slower over shared horizons, so the root’s share declines more slowly. Practically, root sells a larger share for longer—another persistent disadvantage for later cohorts.
+Later cohorts’ total issuance grows slower over shared horizons, so the root’s share declines more slowly. Practically, root sells a larger share for longer (another persistent disadvantage for later cohorts).
 
 ### What if we do nothing?
 
