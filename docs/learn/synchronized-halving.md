@@ -47,7 +47,7 @@ ALPHA emissions to participants (α_out) remain on each subnet's independent loc
 
 The fundamental issue emerges from the timing mismatch between global and local halving schedules. When ALPHA injections (α_in) halve according to TAO's global schedule but ALPHA emissions (α_out) continue on each subnet's independent schedule, the ratio between "ALPHA in AMM pools" versus "ALPHA held by participants" shifts at every global halving event.
 
-This single mathematical drift creates four distinct but related distortions that systematically disadvantage later subnet cohorts:
+This single mathematical drift creates several distinct but related distortions that systematically disadvantage later subnet cohorts:
 
 
 ### 2.1 Liquidity impact on AMMs
