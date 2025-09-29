@@ -1,8 +1,8 @@
 ---
-title: "Synchronized Halving for Dynamic TAO"
+title: "Token Halvings Problem and Solution"
 ---
 
-# Synchronized Halving for Dynamic TAO
+# Token Halvings Problem and Solution
 
 This page explains the motivation for synchronizing ALPHA emission halvings with the global TAO halving schedule, in plain language without requiring any math. 
 
