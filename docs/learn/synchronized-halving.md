@@ -128,13 +128,14 @@ The proposed solution directly addresses the root cause by eliminating the timin
 
 Synchronization eliminates all four distortions at their mathematical source:
 
-1. **Stable halving intervals**: ALPHA halving intervals maintain their intended 2-year spacing across all epochs—no compression or acceleration.
 
-2. **Cohort-invariant liquidity**: Selling a fixed fraction of rewards produces identical AMM slippage impact across all subnet cohorts, regardless of when they were created.
+1. **Cohort-invariant liquidity**: Selling a fixed fraction of rewards produces identical AMM slippage impact across all subnet cohorts, regardless of when they were created.
 
-3. **Predictable root dynamics**: Root Subnet influence follows a stable dilution trajectory when the TAO-weight parameter (γ) is scaled alongside issuance (e.g., 0.18 → 0.09 → 0.045).
+2. **Predictable root dynamics**: Root Subnet influence follows a stable dilution trajectory when the TAO-weight parameter (γ) is scaled alongside issuance (e.g., 0.18 → 0.09 → 0.045).
 
-4. **Elimination of liquidation haircuts**: The liquidation price matches the spot price for all cohorts (ADR = 1), removing built-in disadvantages for later subnets.
+3. **Elimination of liquidation haircuts**: The liquidation price matches the spot price for all cohorts (ADR = 1), removing built-in disadvantages for later subnets.
+
+4. **Stable halving intervals**: ALPHA halving intervals maintain their intended 2-year spacing across all epochs—no compression or acceleration.
 
 ### 3.3 Key implications and trade-offs
 
@@ -146,27 +147,32 @@ While synchronization solves the core asymmetry problems, it introduces some cha
 **Predictable supply curves**: Each subnet's maximum ALPHA supply becomes calculable based on its registration timing relative to the global TAO supply, creating transparent and predictable tokenomics.
 
 #### Long-term considerations
-**Emission endpoint**: Once halvings reduce per-block rewards below the smallest unit (RAO = 10⁻⁹ TAO), minting would naturally stop unless token precision is increased.
+
+**Emission endpoint**: Once halvings reduce per-block rewards below the smallest unit (RAO = 10^9 TAO), minting would naturally stop unless token precision is increased.
 
 **Two tail options**:
 1. **Hard-stop tail**: Emissions end at the final discrete halving when rewards reach the RAO floor. Simple and finite, but creates a discontinuous endpoint.
 2. **Zeno-halving tail**: Increase token precision (e.g., from 9 to 18 decimal places) so halvings can continue smoothly below the current minimum unit. Rewards asymptotically approach zero without ever stopping, maintaining the same finite total supply with smoother mathematical properties.
 
 #### Parameter adjustments
+
 **TAO-weight scaling**: The TAO-weight parameter (γ) should be halved at each TAO halving (0.18 → 0.09 → 0.045 → …) to keep Root Subnet influence properly aligned with the shrinking issuance scale across all epochs.
 
-## 5) Implementation considerations
+## 5) Further considerations
 
 ### Timing urgency
+
 The asymmetries described above begin manifesting immediately after the first TAO halving and compound with each subsequent halving. Early implementation preserves fairness across subnet cohorts, while delayed implementation creates permanent advantages for early subnets and disadvantages for later ones.
 
 ### Transition approach
+
 Several implementation strategies could be considered:
 - **Immediate synchronization**: All existing subnets switch to the global halving schedule
 - **Grandfathering**: Existing subnets continue on local schedules, new subnets use global schedule
 - **Opt-in transition**: Subnet creators choose between current and synchronized models
 
 ### Governance considerations
+
 This change affects fundamental tokenomics and requires broad community consensus. The mathematical analysis provides objective evidence of the problems, but implementation decisions involve balancing current subnet owner interests against long-term network fairness and sustainability.
 
 ## 6) Conclusion
