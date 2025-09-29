@@ -17,7 +17,7 @@ The crux is that injections shrink with the global TAO halving index k, while em
 
 ### What is ADR?
 
-ADR is the emissions-to-injections ratio. It measures how much ALPHA goes to people (emissions) relative to how much is put into the pool (injections). Under the baseline, ADR_k,n ≈ 2^(k - n). A higher ADR means liquidation happens at a deeper discount.
+ADR is the emissions-to-injections ratio. It measures how much ALPHA goes to people (emissions) relative to how much is put into the pool (injections). A higher ADR means liquidation happens at a deeper discount. In the current protocol, ADR tracks 2^(k - n), underlying the subnet cohort asymmetry. 
 
 ### Doesn’t buy pressure balance things out between newer and older subnets?
 
