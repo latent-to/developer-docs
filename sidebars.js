@@ -246,6 +246,7 @@ const sidebars = {
         "evm-tutorials/evm-mainnet-with-metamask-wallet",
         "evm-tutorials/hardhat-config-for-subtensor-evm",
         "evm-tutorials/remix-config-for-subtensor-evm",
+        "evm-tutorials/bridge-vtao",
         "evm-tutorials/troubleshooting",
       ],
     },
