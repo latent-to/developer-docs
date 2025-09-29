@@ -17,11 +17,11 @@ See also: [Token Halvings Problem and Solution: Frequently asked questions (FAQ)
 - Users stake (buy) by putting TAO in and taking ALPHA out; they unstake (sell) by putting ALPHA in and taking TAO out. The price is set by how much TAO and ALPHA are in the pool at any moment.
 
 ### Three key flows
-- τ_in (TAO injection): New TAO injected into every subnet’s AMM reserve, allocated across subnets by price weights with EMA smoothing, and shrinking over time on the global TAO [halving schedule](../docs/learn/halvings-problem.md).
+- τ_in (TAO injection): New TAO injected into every subnet’s AMM reserve, allocated across subnets by price weights with EMA smoothing, and shrinking over time on the global TAO [halving schedule](../learn/halvings-problem.md).
 - α_in (ALPHA injection): ALPHA minted into the AMM reserve (so the pool has inventory on both sides). This is capped by the same global TAO halving schedule as τ_in, so they shrink together.
 - α_out (ALPHA emissions): ALPHA minted directly to participants (miners/validators/nominators). This follows each subnet’s own, local ALPHA halving schedule.
 
-Allocation note: TAO and ALPHA injections use smoothed prices to avoid manipulation, via Exponential Moving Average (EMA). See [EMA](../docs/learn/ema.md) for details.
+Allocation note: TAO and ALPHA injections use smoothed prices to avoid manipulation, via Exponential Moving Average (EMA). See [EMA](../learn/ema.md) for details.
 
 ### Why α_in must follow TAO halvings
 - If TAO issuance halves but α_in does not, the pool suddenly receives proportionally more ALPHA per TAO. That would cut ALPHA’s price in half overnight and destabilize markets.
@@ -42,13 +42,13 @@ When α_in halves on TAO’s schedule but α_out keeps running on its own, the m
 - Translation: the same sell‑pressure moves the price more for later cohorts (higher price impact). Liquidity becomes harder to sustain for newer subnets even when behavior is identical.
 
 ### 2.3 Slower root‑share decline
-- Root’s effective influence depends on TAO staked on [Root Subnet](../docs/resources/glossary.md#root-subnetsubnet-zero), scaled by [TAO‑weight](../docs/resources/glossary.md#tao-weight).
+- Root’s effective influence depends on TAO staked on [Root Subnet](../resources/glossary.md#root-subnetsubnet-zero), scaled by [TAO‑weight](../resources/glossary.md#tao-weight).
 - Root’s share declines only as ALPHA supply grows. But after a TAO halving, pool top‑ups slow while γ stays the same, so it takes longer for a new subnet to dilute root.
 - Potential fix (?): halve γ at each TAO halving (e.g., 0.18 → 0.09 → …). That keeps root’s effective power shrinking in sync with issuance, preserving a stable dilution pace across epochs.
 
 ### 2.4 Disadvantageous liquidation
 
-Subnets can be [deregistered](../docs/subnets/subnet-deregistration.md) when they no longer meet economic or operational criteria. When that happens, the AMM is dissolved, and subnet owners and ALPHA holders redeem their held stakes against the pool’s remaining TAO. That redemption value is the liquidation price.
+Subnets can be [deregistered](../subnets/subnet-deregistration.md) when they no longer meet economic or operational criteria. When that happens, the AMM is dissolved, and subnet owners and ALPHA holders redeem their held stakes against the pool’s remaining TAO. That redemption value is the liquidation price.
 
 - Spot price is what the AMM offers right now (TAO reserve divided by ALPHA reserve).
 - Liquidation price is what you’d recover if a subnet shuts down: the pool’s TAO divided by outstanding ALPHA held by users (see [Subnet Deregistration](developer-docs/docs/subnets/subnet-deregistration.md)).
@@ -73,7 +73,7 @@ Results:
 
 ### 4.2 Key implications
 - Lower total ALPHA supply for some cohorts: compression had previously accelerated some subnets; syncing removes that extra pace.
-- Eventual end of emissions: once halvings push per‑block rewards below the smallest unit ([RAO](../docs/resources/glossary.md#rao)), minting would stop unless the unit size changes.
+- Eventual end of emissions: once halvings push per‑block rewards below the smallest unit ([RAO](../resources/glossary.md#rao)), minting would stop unless the unit size changes.
 - Two options for the “tail” after many halvings:
   - Hard‑stop tail: emissions end at the final discrete halving. Simple and finite.
   - Zeno‑halving tail: increase token precision so halvings can continue smoothly below today’s minimum unit. Rewards shrink toward zero without ever snapping to zero, keeping the same finite total with smoother aesthetics.
