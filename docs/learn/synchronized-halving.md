@@ -51,7 +51,7 @@ When α_in halves on TAO’s schedule but α_out keeps running on its own, the m
 Subnets can be [deregistered](../subnets/subnet-deregistration.md) when they no longer meet economic or operational criteria. When that happens, the AMM is dissolved, and subnet owners and ALPHA holders redeem their held stakes against the pool’s remaining TAO. That redemption value is the liquidation price.
 
 - Spot price is what the AMM offers right now (TAO reserve divided by ALPHA reserve).
-- Liquidation price is what you’d recover if a subnet shuts down: the pool’s TAO divided by outstanding ALPHA held by users (see [Subnet Deregistration](developer-docs/docs/subnets/subnet-deregistration.md)).
+- Liquidation price is what you’d recover if a subnet shuts down: the pool’s TAO divided by outstanding ALPHA held by users (see [Subnet Deregistration](../subnets/subnet-deregistration.md)).
 - ADR (Alpha Distribution Ratio) compares ALPHA held by users to ALPHA left in the pool. When the two clocks are out of sync, α_out tends to outpace α_in, pushing ADR above 1.
 - When ADR > 1, liquidation price falls below spot. That means if a subnet deregisters, users can recover less TAO than their ALPHA’s current market value—a built‑in haircut risk for later cohorts.
 
