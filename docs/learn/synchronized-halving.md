@@ -15,18 +15,22 @@ See also: [Token Halvings Problem and Solution: Frequently asked questions (FAQ)
 ## 1) Background: Current Token Emissions Halving Schedules
 
 ### Market-driven emissions
-- In Bittensor, each subnet has its own token, known as its ALPHA (α) currency. This internal currency marketplace is known as Dynamic TAO (dTAO). So that users can trade TAO (τ) for ALPHA, and vice versa, on demand, each subnet maintains reserves of both tokens, and adjusts the price as needed. This is a customized application of the [Uniswap](https://en.wikipedia.org/wiki/Uniswap) AMM pattern.
-- Users stake (buy) by putting TAO in and taking ALPHA out; they unstake (sell) by putting ALPHA in and taking TAO out. The price is set by how much TAO and ALPHA are in the pool at any moment.
+
+In Bittensor, each subnet has its own token, known as its ALPHA (α) currency. TAO-holders can trade TAO for ALPHA-tokens, and vice-versa. This internal currency marketplace is historically known as Dynamic TAO (dTAO), in contrast to the initial iteraction of Bittensor, in which all subnets shared a single 'static' TAO currency.
+
+So that users can trade TAO (τ) for any subnet's ALPHA token, and vice versa, on demand, each subnet maintains reserves of both tokens, and adjusts the price as needed. This is a customized application of the [Uniswap](https://en.wikipedia.org/wiki/Uniswap) AMM pattern.
+
+Users stake by putting TAO into a subnet's reserve and taking ALPHA; they unstake (sell) by putting ALPHA in and taking TAO out. The price is set by how much TAO and ALPHA are in the pool at any moment.
 
 ### Three key flows
 
-The dTAO emissions involves a threefold token injection for each subnet, which occurs each block. Over time, emissions halvings will change the rate of these token injections:
+The dTAO emissions process involves a threefold token injection for each subnet, which occurs each block. Over time, emissions halvings will change the rate of these token injections.
 
 1. **τ_in (TAO injection)**: New TAO is injected into every subnet's AMM reserve each [block](#block). This allocation is distributed across subnets based on their relative prices, with [EMA](#exponential-moving-average-ema) smoothing to prevent manipulation. TAO injections shrink over time following the global TAO [halving schedule](../learn/halvings-problem.md).
 
 2. **α_in (ALPHA injection)**: ALPHA tokens are minted directly into each subnet's AMM reserve to maintain balanced liquidity on both sides of the pool. This injection is capped by the same global TAO halving schedule as τ_in, ensuring they shrink together proportionally.
 
-3. **α_out (ALPHA outbound)**: ALPHA tokens bound for distribution to network participants (miners, validators, and stakers) accumulate each block throughout an epoch, before being emitted to participants at the epoch's conclusions. Unlike the injections above, these emissions follow each subnet's own independent ALPHA halving schedule.
+3. **α_out (ALPHA outbound)**: ALPHA tokens bound for distribution to network participants (miners, validators, and stakers) accumulate each block throughout an epoch, before being emitted to participants at the epoch's conclusion. Unlike the injections above, injection to **ALPHA out** follow each subnet's own independent ALPHA halving schedule.
 
 **Critical insight**: The first two flows (τ_in and α_in) are synchronized to the global TAO clock, while the third flow (α_out) runs on each subnet's local clock. This timing mismatch is the root cause of the asymmetries described below.
 
