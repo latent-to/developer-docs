@@ -1,6 +1,6 @@
 # Proxies
 
-This document introduces the proxy pattern used in Bittensor and explains how it enables secure delegation of account permissions for specific classes of calls.
+This page introduces the proxy pattern used in Bittensor and explains how it enables secure delegation of account permissions for specific classes of calls.
 
 ---
 
