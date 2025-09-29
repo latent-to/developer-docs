@@ -22,7 +22,7 @@ So that users can trade TAO (τ) for any subnet's ALPHA token, and vice versa, o
 
 Users stake by putting TAO into a subnet's reserve and taking ALPHA; they unstake (sell) by putting ALPHA in and taking TAO out. The price is set by how much TAO and ALPHA are in the pool at any moment.
 
-### Three key flows
+### How the tokens flow
 
 The dTAO emissions process involves a threefold token injection for each subnet, which occurs each block. Over time, emissions halvings will change the rate of these token injections.
 
@@ -37,7 +37,7 @@ The dTAO emissions process involves a threefold token injection for each subnet,
 
 ### Why α_in must follow TAO halvings
 
-The synchronization between TAO and ALPHA injections is essential for market stability. If global TAO [issuance](#issuance) halves but ALPHA injection (α_in) does not, each subnet's AMM pool would suddenly receive proportionally more ALPHA tokens per TAO token. This would immediately cut ALPHA's price in half, creating massive market disruption.
+The synchronization between TAO and ALPHA injections is essential for market stability. If global TAO [issuance](./glossary#issuance) halves but ALPHA injection (α_in) does not, each subnet's AMM pool would suddenly receive proportionally more ALPHA tokens per TAO token. This would immediately cut ALPHA's price in half, creating massive market disruption.
 
 To maintain stable exchange rates and prevent artificial price shocks, α_in must be locked to TAO's global halving schedule. This ensures that both sides of the AMM pool shrink proportionally, preserving price relationships across halving events.
 
