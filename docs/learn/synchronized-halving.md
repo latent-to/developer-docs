@@ -37,17 +37,11 @@ The dTAO emissions process involves a threefold token injection for each subnet,
 
 ### Why α_in must follow TAO halvings
 
-The synchronization between TAO and ALPHA injections is essential for market stability:
+The synchronization between TAO and ALPHA injections is essential for market stability. If global TAO [issuance](#issuance) halves but ALPHA injection (α_in) does not, each subnet's AMM pool would suddenly receive proportionally more ALPHA tokens per TAO token. This would immediately cut ALPHA's price in half, creating massive market disruption.
 
-- **Price stability requirement**: If global TAO [issuance](#issuance) halves but ALPHA injection (α_in) does not, each subnet's AMM pool would suddenly receive proportionally more ALPHA tokens per TAO token. This would immediately cut ALPHA's price in half, creating massive market disruption.
-- **Balanced liquidity**: To maintain stable exchange rates and prevent artificial price shocks, α_in must be locked to TAO's global halving schedule. This ensures that both sides of the AMM pool shrink proportionally, preserving price relationships across halving events.
+To maintain stable exchange rates and prevent artificial price shocks, α_in must be locked to TAO's global halving schedule. This ensures that both sides of the AMM pool shrink proportionally, preserving price relationships across halving events.
 
-### The critical side-effect
-
-While synchronizing injections (τ_in and α_in) stabilizes markets, it creates an unintended consequence:
-
-- **Split timing**: ALPHA emissions to participants (α_out) remain on each subnet's independent local halving schedule, while injections follow the global TAO schedule.
-- **The root problem**: This timing split—α_in synchronized globally, α_out running locally—creates a growing imbalance between "ALPHA in AMM pools" versus "ALPHA in participant wallets." This imbalance is the mathematical root cause of all four distortions described below.
+ALPHA emissions to participants (α_out) remain on each subnet's independent local halving schedule, while injections follow the global TAO schedule.  While synchronizing injections (τ_in and α_in) stabilizes markets, this 'semi-synchronization' creates unintended downstream consequences. This timing split—α_in synchronized globally, α_out running locally—creates a growing imbalance between "ALPHA in AMM pools" versus "ALPHA in participant wallets." This imbalance is the mathematical root cause of all four distortions described below.
 
 ## 2) The problem — asymmetries caused by two clocks
 
