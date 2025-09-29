@@ -26,11 +26,10 @@ The dTAO emissions involves a threefold token injection for each subnet, which o
 
 2. **α_in (ALPHA injection)**: ALPHA tokens are minted directly into each subnet's AMM reserve to maintain balanced liquidity on both sides of the pool. This injection is capped by the same global TAO halving schedule as τ_in, ensuring they shrink together proportionally.
 
-3. **α_out (ALPHA emissions)**: ALPHA tokens are distributed to network participants—[subnet miners](#subnet-miner), [validators](#validator), and [nominators](#nominator). Unlike the injections above, these emissions follow each subnet's own independent ALPHA halving schedule.
+3. **α_out (ALPHA outbound)**: ALPHA tokens bound for distribution to network participants (miners, validators, and stakers) accumulate each block throughout an epoch, before being emitted to participants at the epoch's conclusions. Unlike the injections above, these emissions follow each subnet's own independent ALPHA halving schedule.
 
 **Critical insight**: The first two flows (τ_in and α_in) are synchronized to the global TAO clock, while the third flow (α_out) runs on each subnet's local clock. This timing mismatch is the root cause of the asymmetries described below.
 
-**Allocation protection**: Token injections use [Exponential Moving Average (EMA)](#exponential-moving-average-ema) smoothing of prices to prevent manipulation attempts. EMA prioritizes recent price observations while exponentially decreasing the weight of older data, with Bittensor using very conservative smoothing parameters (α ≈ 0.000003, requiring ~30 days for 50% price adjustment).
 
 ### Why α_in must follow TAO halvings
 
