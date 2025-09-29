@@ -45,12 +45,8 @@ This design concept is the root of the problem. Keeping a fixed 21M for every su
 
 That slows interval compression but leaves ADR/liquidity asymmetries intact. You still get unequal max supplies and persistent cohort differences.
 
-### Can subnet mergers/forks cure the asymmetry?
-
-Not safely if ADRs differ a lot. Big gaps in ADR (e.g., 2^(k - n)) create merger/arbitrage issues. Late->early mergers can be exploitable unless ADRs are aligned.
-
 ### What is “liquidity impact” and why does it hurt later cohorts more?
-It’s the fraction of TAO reserves removed when selling ALPHA. For unstaking, the impact depends only on the ALPHA reserve. Later cohorts get smaller injections into the pool, so the same sell fraction removes more TAO.
+It’s the fraction of TAO reserves removed when selling ALPHA. For unstaking, the impact depends only on the ALPHA reserve. Later cohorts get smaller injections into the pool, yet the same emissions to participants, so the same sell fraction removes more TAO.
 
 ### What is the “haircut” on liquidation?
 It’s the discount between liquidation price and spot. With ADR>1 (typical for late cohorts), P_L = P/ADR ⇒ a large haircut. Example: ADR=32 ⇒ P_L is P/32 (~97% discount).
