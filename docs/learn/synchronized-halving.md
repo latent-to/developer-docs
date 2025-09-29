@@ -6,7 +6,7 @@ title: "Token Halvings Problem and Solution"
 
 This page explains the motivation for synchronizing ALPHA [emission](#emission) halvings with the global [TAO](#tao-τ) halving schedule, in plain language without requiring any math. 
 
-In Bittensor's Dynamic TAO (dTAO) system, each [subnet](#subnet) has its own token called ALPHA (α), which trades against the universal TAO (τ) token through automated market makers ([AMMs](#automated-market-makers)). While this creates a powerful market-driven allocation system, the current design uses independent halving schedules that create unintended asymmetries over time, disadvantaging later subnet cohorts.
+In Bittensor's Dynamic TAO (dTAO) system, each [subnet](#subnet) has its own token, referred to as its ALPHA (α), which represents stake in the subnet and powers commodity validation according to [Yuma Consensus](../learn/yuma-consensus). While this creates a powerful market-driven allocation system, the current design uses independent halving schedules that create unintended asymmetries over time, disadvantaging later subnet cohorts.
 
 For formal derivations, see the [white paper](https://github.com/mcjkula/papers/blob/main/dtao-halving-synchronization-2025-v1.pdf).
 
