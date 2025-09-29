@@ -49,6 +49,7 @@ const sidebars = {
       items: [
         "learn/introduction",
         "resources/questions-and-answers",
+        "learn/halvings-problem",
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
 
