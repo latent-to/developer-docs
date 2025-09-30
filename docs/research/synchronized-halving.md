@@ -26,7 +26,7 @@ Users stake by putting TAO into a subnet's reserve and taking ALPHA; they unstak
 
 The dTAO emissions process involves a threefold token injection for each subnet, which occurs each block. Over time, emissions halvings will change the rate of these token injections.
 
-1. **τ_in (TAO injection)**: New TAO is injected into every subnet's AMM reserve each [block](../resources/glossary.md#block). This allocation is distributed across subnets based on their relative prices, with [EMA](../resources/glossary.md#exponential-moving-average-ema) smoothing to prevent manipulation. TAO injections shrink over time following the global TAO [halving schedule](../learn/halvings-problem.md).
+1. **τ_in (TAO injection)**: New TAO is injected into every subnet's AMM reserve each [block](../resources/glossary.md#block). This allocation is distributed across subnets based on their relative prices, with [EMA](../resources/glossary.md#exponential-moving-average-ema) smoothing to prevent manipulation. TAO injections shrink over time following the global TAO [halving schedule](./halvings-problem.md).
 
 2. **α_in (ALPHA injection)**: ALPHA tokens are minted directly into each subnet's AMM reserve to maintain balanced liquidity on both sides of the pool. This injection is capped by the same global TAO halving schedule as τ_in, ensuring they shrink together proportionally.
 
