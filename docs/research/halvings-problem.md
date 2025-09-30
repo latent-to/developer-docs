@@ -39,9 +39,7 @@ This design concept is the root of the problem. Keeping a fixed 21M for every su
 
 ### What are the trade-offs of synchronizing?
 - Pro: Removes cohort classes (fairness), simpler mental model, predictable dynamics.
-- Con: Per-subnet max ALPHA varies with registration time; requires accepting supply differences and potentially using Zeno-halvings to keep the tail smooth.
-
-{The Zeno-Halvings aren't about keeping the tail smooth (if I understand correctly), it's about never stopping injections and emissions so that new subnets can be created to receive emissions and so that the asymmetries don't happen, because without injections while having emissions asymmetries come back.}
+- Con: Per-subnet max ALPHA varies with registration time; requires accepting supply differences and potentially using Zeno-halvings to allow emissions to scale down without limit.
 
 ### Can we fix it by only changing how ALPHA halvings work (emissions-only)?
 
