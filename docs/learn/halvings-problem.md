@@ -6,7 +6,7 @@ title: "Token Halvings Problem and Solution: FAQ"
 
 This page introduces the basic concepts for this [white paper](https://github.com/mcjkula/papers/blob/main/dtao-halving-synchronization-2025-v1.pdf) on a problem (and its solution) in the design of Bittensor's Emission halving schedule.
 
-For a long-form, plain language walk-through, see: [Synchronized Halving for Dynamic TAO](./synchronized-halving.md).
+For a long-form, plain language walk-through, see: [Token Halvings Problem and Solution](./synchronized-halving.md).
 
 ## FAQ
 
