@@ -41,6 +41,8 @@ This design concept is the root of the problem. Keeping a fixed 21M for every su
 - Pro: Removes cohort classes (fairness), simpler mental model, predictable dynamics.
 - Con: Per-subnet max ALPHA varies with registration time; requires accepting supply differences and potentially using Zeno-halvings to keep the tail smooth.
 
+{The Zeno-Halvings aren't about keeping the tail smooth (if I understand correctly), it's about never stopping injections and emissions so that new subnets can be created to receive emissions and so that the asymmetries don't happen, because without injections while having emissions asymmetries come back.}
+
 ### Can we fix it by only changing how ALPHA halvings work (emissions-only)?
 
 That slows interval compression but leaves ADR/liquidity asymmetries intact. You still get unequal max supplies and persistent cohort differences.
@@ -52,11 +54,11 @@ It’s the fraction of TAO reserves removed when selling ALPHA. For unstaking, t
 It’s the discount between liquidation price and spot. With ADR>1 (typical for late cohorts), P_L = P/ADR ⇒ a large haircut. Example: ADR=32 ⇒ P_L is P/32 (~97% discount).
 
 ### How does the root proportion change across cohorts?
-Later cohorts’ total issuance grows slower over shared horizons, so the root’s share declines more slowly. Practically, root sells a larger share for longer (another persistent disadvantage for later cohorts).
+Later cohorts’ total issuance grows slower over shared horizons, so the root proportion declines more slowly. Practically, root sells a larger share for longer (another persistent disadvantage for later cohorts).
 
 ### What if we do nothing?
 
-We entrench permanent classes. Later subnets will be weaker across liquidity, liquidation, and incentive trajectories, and be more vulnerable to deregistration even with identical performance.
+We entrench permanent classes. Later subnets will be weaker across liquidity, liquidation, and incentive trajectories, and be more vulnerable to deregistration even with identical performance. Subnets will also reach their maximum supply in the coming ~10 years (much quicker than intended) and thus stop having emissions without anything to incentivize validators/miners.
 
 ### What changes immediately after the first halving?
 
