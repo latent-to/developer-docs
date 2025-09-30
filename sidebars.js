@@ -47,7 +47,7 @@ const sidebars = {
       collapsed: true,
       items: [
         "learn/introduction",
-        "resources/questions-and-answers",        
+        "resources/questions-and-answers",
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
 
@@ -90,22 +90,20 @@ const sidebars = {
           collapsible: true,
           collapsed: true,
           link: { type: "doc", id: "keys/proxies/index" },
-          items: ["keys/proxies/create-proxy"],
+          items: ["keys/proxies/create-proxy", "keys/proxies/pure-proxies"],
         },
         "keys/handle-seed-phrase",
         "keys/coldkey-hotkey-security",
         "keys/multisig",
         "keys/schedule-coldkey-swap",
-      },
+      ],
+    },
     {
       type: "category",
       label: "Research",
       collapsible: true,
       collapsed: true,
-      items: [
-      "research/synchronized-halving",
-        "research/halvings-problem",                
-      ],
+      items: ["research/synchronized-halving", "research/halvings-problem"],
     },
     {
       type: "category",

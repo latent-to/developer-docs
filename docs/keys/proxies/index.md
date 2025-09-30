@@ -6,7 +6,7 @@ This page introduces the proxy pattern used in Bittensor and explains how it ena
 
 ## What is a proxy?
 
-Rather than using funds in a single account, smaller accounts with unique roles can complete tasks on behalf of the main stash account.
+Rather than using funds in a single account, accounts with unique roles can complete tasks on behalf of the main stash account.
 A proxy lets one account (the delegator, or "real" account) authorize another account (the delegate) to make permitted calls on its behalf. Proxies allow a delegator to keep their "real" accounts safe and "cold", thereby adding an extra layer of security to the tokens in the account.
 
 The permission scope is determined by the `ProxyType` call filter. This call filter allows the delegator account set the roles and limitations of the delegate account. Optionally, actions can require an on-chain announcement period—`delay`, giving the delegator time to reject a call made by a delegate.
@@ -17,7 +17,7 @@ The following concepts define how proxy relationships are set up and managed:
 
 - **Real account**: The account whose identity and funds are at stake.
 - **Delegate account**: The account with access to tokens in the real account and allowed to perform certain actions for the real account.
-- **ProxyType**: A capability profile that restricts which calls can be made by the delegate account.
+- **ProxyType**: A call filter that restricts which calls can be made by the delegate account.
 - **Delay/announcement**: Optional time window before a proxy action can be executed.
 
 ## Common use cases
@@ -72,7 +72,6 @@ The following table shows the available `ProxyType` options and their descriptio
 | `Registration`           | Allows registration-related operations.                                             |
 | `Transfer`               | Allows unrestricted transfer operations.                                            |
 | `SmallTransfer`          | Allows transfers capped at 0.5 TAO.                                                 |
-| `RootWeights`            | Deprecated.                                                                         |
 | `ChildKeys`              | Allows child key operations.                                                        |
 | `SudoUncheckedSetCode`   | Restricted to a single privileged call form.                                        |
 | `SwapHotkey`             | Allows hotkey swap operations.                                                      |

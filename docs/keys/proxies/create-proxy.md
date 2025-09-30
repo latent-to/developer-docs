@@ -2,9 +2,23 @@
 toc_max_heading_level: 2
 ---
 
-# Create a Proxy in Bittensor
+# Create a Proxy Account
 
-This page describes creating and managing a proxy using the Polkadot.js web app. You will create a delegate account, add it as a proxy to your real account with a chosen `ProxyType`, and optionally use announcements for delayed execution.
+This tutorial walks you through creating a standard proxy and executing a call from the proxy account using the Polkadot.js web app. You will set up a delegate account, add it as a proxy to your real account with a chosen `ProxyType`, and optionally use announcements for delayed execution.
+
+---
+
+A standard proxy links a _delegator_ to a known account. The delegator specifies:
+
+- The _delegate_ account.
+- The allowed `ProxyType` (scope of permissions).
+- An optional delay.
+
+The delegate has access to funds in the real account and can then execute calls on behalf of the real account within the constraints of the specified `ProxyType`.
+
+:::info When to use standard proxies
+Delegating through a standard proxy is a good option when you want to entrust control to trusted individuals or organizations who can act on your behalf. In this setup, the delegate maintains their own independent signing capability, which allows them to initiate and authorize actions without relying on your key. This approach provides maximum operational flexibility while also making the delegate responsible for managing the security of their own keys.
+:::
 
 ## Prerequisites
 
@@ -32,12 +46,12 @@ If the web app does not connect to your local chain, your browser’s privacy or
 
 1. In the navbar menu, navigate to **Developers** → **Extrinsics**.
 2. Under “using the selected account”, pick the funded delegator account.
-3. Under “submit the following extrinsic”, choose the `proxy` pallete and call `addProxy(delegate, proxyType, delay)`.
+3. Under “submit the following extrinsic”, choose the `proxy` pallet and call `addProxy(delegate, proxyType, delay)`.
 4. Fill the parameters:
 
    - `delegate`: select the imported delegate account from the _Accounts_ dropdown.
    - `proxyType`: select `SmallTransfer`; this should allow us transfer amounts that do not exceed 0.5τ.
-   - `delay`: Optionally, include a delay in blocks.
+   - `delay`: optionally, include a delay in blocks.
 
 5. Click **Submit Transaction** and sign with the _delegator_ account.
 
@@ -74,6 +88,10 @@ This returns the set of proxies related to the account and their information—`
 
 The runtime verifies that the call is permitted by the proxy filter and that any delay requirements have been met, then dispatches the call as if signed by the Real account.
 
+:::info
+After submitting the transaction, check the Polkadot.JS web app's **Explorer** page for a `balances.Transfer` event. Notice the sender is the delegator account.
+:::
+
 :::warning
 
 - With the SmallTransfer proxy type, transfers are limited to less than 0.5 TAO (500,000,000 RAO). Use the Transfer proxy type for amounts above this limit.
@@ -93,7 +111,7 @@ Announcing a delayed proxy call requires the hash of the call that you intend to
 4. Fill the parameters:
    - `dest`: select the recipient account.
    - `value`: input the amount to be transferred in RAO—1 TAO = 1<sup>9</sup>RAO.
-5. Copy the hex code shown in the **encoded call data** field. You will use this to announce †he call in the next step.
+5. Copy the hex code shown in the **encoded call data** field. You will use this to announce the call in the next step.
 
 ---
 
@@ -165,3 +183,4 @@ After the announcement waiting period has passed, the delegate account can now e
 - `proxy.Unproxyable`/`system.CallFiltered`: The call is not permitted under the current `ProxyType`.
 - `proxy.TooMany`: You exceeded `MaxProxies` or `MaxPending`. Remove unused proxies/announcements.
 - `proxy.NotProxy`: Ensure you’re submitting from the delegate account and referencing the correct real account.
+- `Token.FundsUnavailable`: Ensure that your real account has enough available funds to cover the transaction.
