@@ -12,6 +12,12 @@ A UID slot that is considered active within a specific subnet, allowing the asso
 
 **See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/)
 
+### ADR (Alpha Distribution Ratio)
+
+A metric that compares ALPHA tokens held by participants versus ALPHA tokens remaining in the AMM pool. ADR is calculated as the ratio of emissions to injections, measuring how much ALPHA goes to people (emissions) relative to how much is put into the pool (injections). A higher ADR means liquidation happens at a deeper discount to spot price. Under the current protocol, ADR tracks 2^(k - n), where k is the global TAO halving index and n is the subnet's ALPHA halving index.
+
+**See also:** [Token Halvings Problem and Solution](../research/synchronized-halving.md), [Token Halvings Problem and Solution: FAQ](../research/halvings-problem.md)
+
 ### Archive Node
 
 A type of public subtensor node that stores the entire blockchain history, allowing for full data access and querying capabilities.
