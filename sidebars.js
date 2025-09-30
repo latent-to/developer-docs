@@ -39,7 +39,6 @@ const sidebars = {
         },
       ],
     },
-    "btcli/btcli-playground",
     {
       type: "category",
       label: "Understand Bittensor",
@@ -48,9 +47,7 @@ const sidebars = {
       collapsed: true,
       items: [
         "learn/introduction",
-        "resources/questions-and-answers",
-        "research/synchronized-halving",
-        "research/halvings-problem",        
+        "resources/questions-and-answers",        
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
 
@@ -77,6 +74,16 @@ const sidebars = {
           ],
         },
         "resources/community-links",
+      ],
+    },
+    {
+      type: "category",
+      label: "Research",
+      collapsible: true,
+      collapsed: true,
+      items: [
+      "research/synchronized-halving",
+        "research/halvings-problem",                
       ],
     },
     {
