@@ -49,8 +49,8 @@ const sidebars = {
       items: [
         "learn/introduction",
         "resources/questions-and-answers",
-        "learn/synchronized-halving",
-        "learn/halvings-problem",        
+        "research/synchronized-halving",
+        "research/halvings-problem",        
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
 
