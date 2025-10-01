@@ -23,7 +23,7 @@ const sidebars = {
     "index",
     {
       type: "category",
-      label: "Releases and Announcements",      
+      label: "Releases and Announcements",
       collapsible: true,
       collapsed: true,
       items: [
@@ -37,9 +37,8 @@ const sidebars = {
           id: "learn/announcements",
           label: "Announcements",
         },
-      ]
+      ],
     },
-    "btcli/btcli-playground",
     {
       type: "category",
       label: "Understand Bittensor",
@@ -47,31 +46,44 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "learn/introduction",        
-        "resources/questions-and-answers",
+        "learn/introduction",
+        "resources/questions-and-answers",        
         "subnets/understanding-subnets",
-        "subnets/understanding-sub-subnets",
-        "learn/neurons",
         "learn/anatomy-of-incentive-mechanism",
+
+        "subnets/understanding-multiple-mech-subnets",
+        "learn/neurons",
+        
         "learn/emissions",
         "learn/ema",
         "learn/yuma-consensus",
         "learn/yc3-blog",
         "learn/yuma3-migration-guide",
         "learn/fees",
+        "learn/chain-rate-limits",    
         {
+          type: "category",
+          label: "Navigating Subtensor Codebase",
+          link: { type: "doc", id: "navigating-subtensor/index" },
+          collapsible: true,
+          collapsed: true,
+          items: [
+            "navigating-subtensor/emissions-coinbase",
+            "navigating-subtensor/epoch",
+            "navigating-subtensor/swap-stake",
+          ],
+        },
+        "resources/community-links",
+      ],
+    },
+    {
       type: "category",
-      label: "Navigating Subtensor Codebase",
-      link: { type: "doc", id: "navigating-subtensor/index" },
+      label: "Research",
       collapsible: true,
       collapsed: true,
       items: [
-        "navigating-subtensor/emissions-coinbase",
-        "navigating-subtensor/epoch",
-        "navigating-subtensor/swap-stake",
-      ],
-    },
-        "resources/community-links",
+      "research/synchronized-halving",
+        "research/halvings-problem",                
       ],
     },
     {
@@ -141,6 +153,10 @@ const sidebars = {
         "subnets/subnet-creators-btcli-guide",
         "subnets/subnet-hyperparameters",
         "subnets/working-with-subnets",
+        "subnets/managing-mechanisms-with-sdk",
+        "subnets/managing-mechanisms-btcli",
+        "subnets/uid-trimming",
+        "subnets/subnet-deregistration",
         "subnets/walkthrough-prompting",
         "tutorials/basic-subnet-tutorials",
         "tutorials/ocr-subnet-tutorial",
@@ -229,12 +245,11 @@ const sidebars = {
       items: [
         "subtensor-nodes/subtensor-node-requirements",
         "subtensor-nodes/using-source",
-        "subtensor-nodes/using-docker",
-        "subtensor-nodes/subtensor-rate-limits",
+        "subtensor-nodes/using-docker",        
         "subtensor-nodes/subtensor-storage-query-examples",
       ],
     },
-    
+
     {
       type: "category",
       label: "Bittensor EVM",
