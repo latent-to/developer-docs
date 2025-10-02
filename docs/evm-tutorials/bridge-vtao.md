@@ -25,7 +25,7 @@ You can move TAO back and forth between Substrate and EVM wallets several ways:
 	- [Convert H160 ↔ SS58](./convert-h160-to-ss58)
 	- [Transfer TAO from MetaMask to SS58](./transfer-from-metamask-to-ss58)
 - Using OTF's EVM Bridge: [`bridge.bittensor.com/`](https://bridge.bittensor.com/)
-- using the [`tao.app/vtao`](tao.app/?) in the UI.
+- using the [`tao.app/vtao`](https://tao.app) in the UI.
 
 
 ## Bridge to other EVM Chains with vTAO
