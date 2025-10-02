@@ -252,12 +252,13 @@ btcli wallet list [OPTIONS]
 
 **Options**:
 
-| Option                                                  | Type | Description                                                                          |
-| ------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------ |
-| `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path` | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
-| `--quiet`                                               |      | Display only critical information on the console.                                    |
-| `--verbose`                                             |      | Enable verbose output.                                                               |
-| `--help`                                                |      | Show this message and exit.                                                          |
+| Option                                                      | Type | Description                                                                          |
+| ----------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------ |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name` | TEXT | Name of the wallet.                                                                  |
+| `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`     | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--quiet`                                                   |      | Display only critical information on the console.                                    |
+| `--verbose`                                                 |      | Enable verbose output.                                                               |
+| `--help`                                                    |      | Show this message and exit.                                                          |
 
 ### `btcli wallet associate-hotkey`
 
@@ -1467,10 +1468,10 @@ alias: children
 
 **Commands**:
 
-- `get`: Get all the child hotkeys on a specified...
-- `set`: Set child hotkeys on specified subnets.
-- `revoke`: Remove all children hotkeys on a specified...
-- `take`: Get and set your child hotkey take on a...
+- `get`: Get all the child hotkeys on a specified subnet.
+- `set`: Set child hotkeys on a specified subnet (or all). Overrides currently set children.
+- `revoke`: Remove all children hotkeys on a specified subnet (or all).
+- `take`: Get and set your child hotkey take on a specified subnet.
 
 #### `btcli stake child get`
 
@@ -1661,6 +1662,7 @@ alias: su
 - `senate-vote`: Cast a vote on an active proposal in Bittensor's governance protocol.
 - `set-take`: Allows users to change their delegate take percentage.
 - `get-take`: Allows users to check their delegate take percentage.
+- `trim`: Allows subnet owners to trim UIDs on their subnet to a specified max number of netuids.
 
 ### `btcli sudo set`
 
@@ -1815,7 +1817,7 @@ alias: senate_vote
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                        |      | Enable or disable interactive prompts.                                               |
 | `--quiet`                                                                                  |      | Display only critical information on the console.                                    |
 | `--verbose`                                                                                |      | Enable verbose output.                                                               |
-| `--vote-aye`/`--json-nay`                                                                  |      | The vote casted on the proposal.                                                     |
+| `--vote-aye/--vote-nay`                                                                    |      | The vote cast on the proposal                                                        |
 | `--help`                                                                                   |      | Show this message and exit.                                                          |
 
 ### `btcli sudo set-take`
@@ -1887,6 +1889,38 @@ alias: get_take
 | `--json-output`, `--json-out`                                                              |      | Outputs the result of the command as JSON.                                           |
 | `--help`                                                                                   |      | Show this message and exit.                                                          |
 
+### `btcli sudo trim`
+
+Allows subnet owners to trim UIDs on their subnet to a specified max number of netuids.
+
+**EXAMPLE**
+
+```bash
+btcli sudo trim --netuid 95 --wallet-name my_wallet --wallet-hotkey my_hotkey --max 64
+```
+
+**Usage:**
+
+```bash
+btcli sudo trim [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                   |
+| `--max`, `--max-uids`                                                       | INTEGER | The maximum number of allowed uids to which to trim                                  |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
 ## `btcli subnets`
 
 **Usage**:
@@ -1903,6 +1937,7 @@ aliases: subnet, s
 
 **Commands**:
 
+- `mechanisms`: Subnet mechanism commands, alias: `mech`
 - `hyperparameters`: Shows a list of the hyperparameters for the specified subnet.
 - `list`: List all subnets and their detailed information.
 - `burn-cost`: Shows the required amount of TAO to be recycled for creating a new subnet, i.e., cost of registering a new subnet.
@@ -1916,6 +1951,165 @@ aliases: subnet, s
 - `set-identity`: Get the identity information for a subnet.
 - `get-identity`: Set or update the identity information for a subnet.
 - `set-symbol`: Allows the user to update their subnet symbol to a different available symbol. The full list of available symbols can be found here: https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/symbols.rs#L8
+
+### `btcli subnet mechanisms`
+
+**Usage**:
+
+```console
+btcli s mechanisms [OPTIONS] COMMAND [ARGS]...
+
+alias: mech
+```
+
+**Options**:
+
+- `--help`: Show this message and exit.
+
+**Commands**:
+
+- `count`: Display how many mechanisms are registered under a subnet.
+- `set`: Configure how many mechanisms are registered for a subnet.
+- `emissions`: Display the current emission split across mechanisms for a subnet.
+- `emissions-split`: Update the emission split across mechanisms for a subnet.
+
+#### `btcli subnet mechanisms count`
+
+Display how many mechanisms are registered under a subnet. Includes the base mechanism (index 0). Helpful for verifying the active mechanism counts in a subnet.
+
+```bash
+btcli subnet mechanisms count --netuid 12
+```
+
+**Usage:**
+
+```bash
+btcli subnet mechanisms count [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                           |
+| --------------------------------------------------------------------------- | ------- | ----------------------------------------------------- |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney. |
+| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).    |
+| `--quiet`                                                                   |         | Display only critical information on the console.     |
+| `--verbose`                                                                 |         | Enable verbose output.                                |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.            |
+| `--help`                                                                    |         | Show this message and exit.                           |
+
+#### `btcli subnet mechanisms set`
+
+Configure how many mechanisms are registered for a subnet.
+
+The base mechanism at index 0 and new ones are incremented by 1.
+
+Common Examples:
+
+1. Prompt for the new mechanism count interactively:
+
+```bash
+btcli subnet mechanisms set --netuid 12
+```
+
+2. Set the count to 2 using a specific wallet:
+
+```bash
+btcli subnet mechanisms set --netuid 12 --count 2 --wallet.name my_wallet --wallet.hotkey admin
+```
+
+**Usage:**
+
+```bash
+btcli subnet mechanisms set [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                   |
+| `--count`, `--mech-count`                                                   | INTEGER | Number of mechanisms to set for the subnet.                                          |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+#### `btcli subnet mechanisms emissions`
+
+Display the current emission split across mechanisms for a subnet. Shows raw `U16` weights alongside percentage shares for each mechanism. Useful for verifying the emission split in a subnet.
+
+```bash
+btcli subnet mechanisms emissions --netuid 12
+```
+
+**Usage:**
+
+```bash
+btcli subnet mechanisms emissions [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                           |
+| --------------------------------------------------------------------------- | ------- | ----------------------------------------------------- |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney. |
+| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).    |
+| `--quiet`                                                                   |         | Display only critical information on the console.     |
+| `--verbose`                                                                 |         | Enable verbose output.                                |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.            |
+| `--help`                                                                    |         | Show this message and exit.                           |
+
+#### `btcli subnet mechanisms emissions-split`
+
+Update the emission split across mechanisms for a subnet.
+
+Accepts comma-separated weights (`U16` values or percentages). When `--split` is omitted and prompts remain enabled, you will be guided interactively and the CLI automatically normalises the weights.
+
+Common Examples:
+
+1. Configure the split interactively:
+
+```bash
+btcli subnet mechanisms emissions-split --netuid 12
+```
+
+2. Apply a 70/30 distribution in one command:
+
+```bash
+btcli subnet mechanisms emissions-split --netuid 12 --split 70,30 --wallet.name my_wallet --wallet.hotkey admin
+```
+
+**Usage:**
+
+```bash
+btcli subnet mechanisms emissions-split [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                   |
+| `--split`                                                                   | TEXT    | Comma-separated relative weights for each mechanism (normalised automatically).      |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
 
 ### `btcli subnets hyperparameters`
 
@@ -2161,12 +2355,22 @@ btcli subnets register [OPTIONS]
 
 ### `btcli subnets metagraph`
 
-Displays detailed information about a subnet including participants and their state.
+Inspect the metagraph for a subnet.
 
-**Example:**
+Shows miners, validators, stake, ranks, emissions, and other runtime stats. When multiple mechanisms exist, the CLI prompts for one unless `--mechid` is supplied. Netuid `0` always uses mechid `0`.
 
+Common Examples:
+
+1. Inspect the mechanism with prompts for selection:
+
+```bash
+btcli subnets metagraph --netuid 12
 ```
-btcli subnets list
+
+2. Pick mechanism 1 explicitly:
+
+```bash
+btcli subnets metagraph --netuid 12 --mechid 1
 ```
 
 **Usage**:
@@ -2181,6 +2385,7 @@ btcli subnets metagraph [OPTIONS]
 | --------------------------------------------------------------------------- | ------- | ----------------------------------------------------- |
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT    | The subtensor network to connect to. Default: finney. |
 | `--netuid`,                                                                 | INTEGER | The netuid of the subnet in the network, (e.g. 1).    |
+| `--mechid`, `--mech-id`, `--mech_id`, `--mechanism_id`, `--mechanism-id`    | INTEGER | Mechanism ID within the subnet (defaults to 0).       |
 | `--sort`                                                                    |         | Sort the subnets by uid.                              |
 | `--quiet`                                                                   |         | Display only critical information on the console.     |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`         |         | Enable or disable interactive prompts.                |
@@ -2190,12 +2395,22 @@ btcli subnets metagraph [OPTIONS]
 
 ### `btcli subnets show`
 
-Displays detailed information about a subnet including participants and their state.
+Inspect the metagraph for a subnet.
 
-**Example:**
+Shows miners, validators, stake, ranks, emissions, and other runtime stats. When multiple mechanisms exist, the CLI prompts for one unless `--mechid` is supplied. Netuid `0` always uses mechid `0`.
 
+Common Examples:
+
+1. Inspect the mechanism with prompts for selection:
+
+```bash
+btcli subnets show --netuid 12
 ```
-btcli subnets list
+
+2. Pick mechanism 1 explicitly:
+
+```bash
+btcli subnets show --netuid 12 --mechid 1
 ```
 
 **Usage**:
@@ -2210,6 +2425,7 @@ btcli subnets show [OPTIONS]
 | --------------------------------------------------------------------------- | ------- | ----------------------------------------------------- |
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT    | The subtensor network to connect to. Default: finney. |
 | `--netuid`,                                                                 | INTEGER | The netuid of the subnet in the network, (e.g. 1).    |
+| `--mechid`, `--mech-id`, `--mech_id`, `--mechanism_id`, `--mechanism-id`    | INTEGER | Mechanism ID within the subnet (defaults to 0).       |
 | `--sort`                                                                    |         | Sort the subnets by uid.                              |
 | `--quiet`                                                                   |         | Display only critical information on the console.     |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`         |         | Enable or disable interactive prompts.                |

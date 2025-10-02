@@ -39,7 +39,6 @@ const sidebars = {
         },
       ],
     },
-    "btcli/btcli-playground",
     {
       type: "category",
       label: "Understand Bittensor",
@@ -48,7 +47,7 @@ const sidebars = {
       collapsed: true,
       items: [
         "learn/introduction",
-        "resources/questions-and-answers",
+        "resources/questions-and-answers",        
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
 
@@ -75,6 +74,16 @@ const sidebars = {
           ],
         },
         "resources/community-links",
+      ],
+    },
+    {
+      type: "category",
+      label: "Research",
+      collapsible: true,
+      collapsed: true,
+      items: [
+      "research/synchronized-halving",
+        "research/halvings-problem",                
       ],
     },
     {
@@ -133,6 +142,14 @@ const sidebars = {
       items: [
         "subnets/metagraph",
         "subnets/create-a-subnet",
+        {
+          type: "category",
+          label: "Crowdloans",
+          collapsible: true,
+          collapsed: true,
+          link: { type: "doc", id: "subnets/crowdloans/index" },
+          items: ["subnets/crowdloans/crowdloans-tutorial"],
+        },
         "subnets/subnet-creators-btcli-guide",
         "subnets/subnet-hyperparameters",
         "subnets/working-with-subnets",

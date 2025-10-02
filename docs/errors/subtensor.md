@@ -496,6 +496,10 @@ Symbol does not exist.
 
 Symbol already in use.
 
+### `BadOrigin`
+
+Call was made from an unauthorized origin.
+
 ### `InvalidValue`
 
 Generic error for out-of-range parameter value
