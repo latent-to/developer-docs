@@ -496,7 +496,7 @@ Symbol does not exist.
 
 Symbol already in use.
 
-### BadOrigin
+### `BadOrigin`
 
 Call was made from an unauthorized origin.
 
