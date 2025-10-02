@@ -46,33 +46,10 @@ vTAO conceptually similar to [Lido's wstETH](https://docs.lido.fi/contracts/wste
 this you can only do from the bridge tab from tao.app/vtao... # todo fill this junk out a bit
 
 
-## TAO.app/vtao
-
-TAO EVM tab → transfer TAO between Substrate (ss58) and EVM (h160) accounts.
-
-
-TAO ↔ vTAO swaps: allows entry and exit into liquid staking.
-
-Bridge tab → convert between TAO and vTAO, and move vTAO across different EVM chains (via LayerZero).
-vTAO cross-chain transfers: built on LayerZero to enable interoperability between Bittensor EVM and other EVM chains.
-
-Only operates on vTAO, not raw TAO.
-
-
-- Different execution environments are siloed. Substrate (SS58) and EVM (H160) use different address formats and state machines; balances cannot natively move between them.
-- Liquidity is fragmented across networks. Users often need value where applications/liquidity live (Subtensor EVM, or other EVM chains).
-- Users prefer self-custodial movement of value, without centralized exchanges or manual wrapping flows.
-- A bridge provides predictable conversion and transport:
-  - On Subtensor: SS58 ↔ H160 transfers for TAO, and TAO ↔ vTAO mint/redeem via a staking contract.
-  - Across EVM chains: message-based transfer of vTAO (via LayerZero), minting/burning the representation on the destination/source.
-- Net effect: ownership preserved, liquidity portable, and minimal trust assumptions beyond the audited contracts and the messaging layer.
-
-
 ## TAO-EVM vs Bridge (in the tao.app UI)
 
 - TAO-EVM: Handles moving TAO between Substrate (SS58) and the Subtensor EVM (H160) on the same network. This uses Bittensor EVM precompiles to make SS58 ↔ H160 transfers simpler. See the step-by-step docs below.
 - Bridge: Handles TAO ↔ vTAO on Subtensor EVM, and vTAO ↔ vTAO transfers across EVM chains via LayerZero.
-
 
 
 ## FAQs
