@@ -257,7 +257,7 @@ const sidebars = {
       items: [
         "evm-tutorials/index",
         "evm-tutorials/subtensor-networks",
-
+        "evm-tutorials/bridge-vtao",
         "evm-tutorials/evm-testnet-with-metamask-wallet",
         "evm-tutorials/evm-localnet-with-metamask-wallet",
         "evm-tutorials/evm-mainnet-with-metamask-wallet",
