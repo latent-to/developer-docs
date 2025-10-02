@@ -498,7 +498,7 @@ Symbol already in use.
 
 ### `BadOrigin`
 
-Call was made from an unauthorized origin.
+Wallet not authorized. Ensure that the account has the correct root or subnet owner permissions.
 
 ### `InvalidValue`
 
