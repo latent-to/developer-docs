@@ -30,7 +30,7 @@ You can move TAO back and forth between Substrate and EVM wallets several ways:
 
 ## Bridge to other EVM Chains with vTAO
 
-vTAO is a liquid-staked TAO token on the Subtensor EVM, available through tao.app.
+vTAO is a liquid-staked TAO token on the Subtensor EVM, available through ['tao.app/vtao'](https://dev.tao.app/vtao).
 
 
 - vTAO is minted by depositing TAO into a staking contract, the vTAO can later be redeemed for an amount of TAO depending on the exchange rate.
