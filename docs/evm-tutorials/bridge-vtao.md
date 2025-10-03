@@ -22,16 +22,16 @@ If TAO is transferred to an Ethereum-style h160 wallet, it can be used in Bitten
 
 You can move TAO back and forth between Substrate and EVM wallets several ways:
 - Using precompiles:
-	- [Convert H160 ↔ SS58](./convert-h160-to-ss58)
-	- [Transfer TAO from MetaMask to SS58](./transfer-from-metamask-to-ss58)
+	- [Transfer TAO from H160 to SS58 wallet](./convert-h160-to-ss58)
+	- [Transfer TAO from SS58 to H160 wallet](./transfer-from-metamask-to-ss58)
+- Using [`tao.app/evm`](https://tao.app). 
+<!-- fix link when ready ^^ -->
 - Using OTF's EVM Bridge: [`bridge.bittensor.com/`](https://bridge.bittensor.com/)
-- using the [`tao.app/vtao`](https://tao.app) in the UI.
-
 
 ## Bridge to other EVM Chains with vTAO
 
 vTAO is a liquid-staked TAO token on the Subtensor EVM, available through ['tao.app/vtao'](https://dev.tao.app/vtao).
-
+<!-- fix link when ready ^^ -->
 
 - vTAO is minted by depositing TAO into a staking contract, the vTAO can later be redeemed for an amount of TAO depending on the exchange rate.
 - Your wallet balance in vTAO stays the same, but the underlying TAO locked in the contract increases with staking rewards.
