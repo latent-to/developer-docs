@@ -161,6 +161,14 @@ const sidebars = {
       items: [
         "subnets/metagraph",
         "subnets/create-a-subnet",
+        {
+          type: "category",
+          label: "Crowdloans",
+          collapsible: true,
+          collapsed: true,
+          link: { type: "doc", id: "subnets/crowdloans/index" },
+          items: ["subnets/crowdloans/crowdloans-tutorial"],
+        },
         "subnets/subnet-creators-btcli-guide",
         "subnets/subnet-hyperparameters",
         "subnets/working-with-subnets",

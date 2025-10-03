@@ -496,6 +496,10 @@ Symbol does not exist.
 
 Symbol already in use.
 
+### `BadOrigin`
+
+Wallet not authorized. Ensure that the account has the correct root or subnet owner permissions.
+
 ### `InvalidValue`
 
 Generic error for out-of-range parameter value
