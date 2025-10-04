@@ -56,13 +56,39 @@ This rate limit controls how frequently subnet owners can trim UIDs on their sub
 - **Configuration**: `MaxUidsTrimmingRateLimit` [macros/errors.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L620-L624)
 - **Error message**: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
-### Network registration rate rimit
+### Network registration rate limit
 
 This rate limit prevents frequent creation of new subnets.
 
 - **Rate Limit**: 28,800 blocks (~4 days)
 - **Configuration**: `NetworkRateLimit` in [runtime/src/lib.rs](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1155)
 - **Error message**: [`NetworkTxRateLimitExceeded`](../errors/subtensor.md#networktxratelimitexceeded)
+
+### Administrative rate limits
+
+#### Owner hyperparameter rate limit
+
+This rate limit controls how frequently subnet owners can modify hyperparameters.
+
+- **Rate Limit**: 2 blocks (~24 seconds)
+- **Configuration**: `OwnerHyperparamRateLimit` 
+- **Error message**: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
+
+#### Weights version key rate limit
+
+This rate limit controls the frequency of weights version key updates.
+
+- **Rate Limit**: 5 blocks (~1 minute)
+- **Configuration**: `WeightsVersionKeyRateLimit`
+- **Error message**: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
+
+#### Administrative freeze window
+
+This controls the duration of administrative freeze operations.
+
+- **Duration**: 10 blocks (~2 minutes)
+- **Configuration**: `AdminFreezeWindow`
+- **Error message**: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
 ## Subnet-specific rate limits
 
@@ -88,6 +114,24 @@ This rate limit controls how frequently a subnet owner can change subnet hyperpa
 - **Error message**: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
 Note: All subnet owner operations are disallowed during the final blocks of each tempo as governed by `AdminFreezeWindow`. This restriction is in addition to the above rate limit.
+
+### Additional subnet-specific limits
+
+#### Adjustment interval
+
+This controls the time between subnet adjustment periods where mechanism steps occur.
+
+- **Rate Limit**: Typically 112 blocks (~22 minutes)
+- **Configuration**: `AdjustmentInterval` per subnet
+- **Implementation**: Controls frequency of subnet mechanism execution
+
+#### Immunity period
+
+This provides protection for new subnet registrations.
+
+- **Rate Limit**: Typically 7,200 blocks (~24 hours)
+- **Configuration**: `ImmunityPeriod` per subnet
+- **Implementation**: Protection window for new registrants
 
 ### Mechanism configuration rate limits
 
@@ -121,10 +165,21 @@ This section covers rate limits related to setting weights on a subnet. This rat
 
 This rate limit controls how frequently a subnet validator can set weights to the network.
 
-- **Rate Limit**: Configurable per subnet (default: 100 blocks)
+- **Rate Limit**: Configurable per subnet (default: 100 blocks, varies significantly by subnet)
 - **Configuration**: `WeightsSetRateLimit` per subnet
 - **Implementation**: [subnets/weights.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/weights.rs#L723-731)
 - **Error message**: [`SettingWeightsTooFast`](../errors/subtensor.md#settingweightstoofast)
+- **Effective Period**: Formula is `Tempo × WeightsSetRateLimit × 12 seconds`
+
+:::note Current subnet variations
+The weights setting rate limit varies significantly across subnets:
+- Subnet 1: 100 blocks (~33 minutes)
+- Subnet 12: 700 blocks (~3.9 hours) 
+- Subnet 13: 50 blocks (~16 minutes)
+- Subnet 25: 5 blocks (~2.5 minutes)
+- Subnet 28: 1 block (~30 seconds)
+- Most others: 100 blocks (~33 minutes)
+:::
 
 #### Commit-reveal weights rate limit
 
@@ -162,3 +217,20 @@ When querying OTF-provided lite nodes, then the following rate limits apply. We 
 - A request can be either WS/WSS or HTTP/HTTPS.
 - If you exceed the rate limit, you will receive the error code 429. You will then have to wait until the rate limit window has expired.
 - You can avoid OTF-lite node rate limits by running your own local lite node. You can run a lite node either [Using Docker](../subtensor-nodes/using-docker.md#using-lite-nodes) or [Using Source](../subtensor-nodes/using-source#lite-node-on-mainchain).
+
+## Rate Limit Discovery Tool
+
+We provide a comprehensive rate limit discovery script that programmatically queries all rate limiting parameters from the blockchain:
+
+**Location**: [`scripts/check-rate-limits.js`](../scripts/check-rate-limits.js)
+
+This tool automatically discovers all storage methods containing rate limiting keywords ('limit', 'rate', 'period', 'delay', 'cooldown', 'interval', 'freeze', 'pause', 'gap', 'timeout', 'restriction', 'throttle') and displays their current values.
+
+**Usage:**
+```bash
+cd scripts
+npm install @polkadot/api prompt-sync
+node check-rate-limits.js
+```
+
+The tool provides real-time rate limit values and can be used to verify current blockchain parameters without manual Polkadot.js queries.
