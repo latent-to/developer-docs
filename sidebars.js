@@ -42,7 +42,6 @@ const sidebars = {
     {
       type: "category",
       label: "Understand Bittensor",
-      link: { type: "doc", id: "learn/introduction" },
       collapsible: true,
       collapsed: true,
       items: [
@@ -91,7 +90,6 @@ const sidebars = {
       label: "Staking/Delegation",
       collapsible: true,
       collapsed: true,
-      link: { type: "doc", id: "staking-and-delegation/delegation" },
       items: [
         "staking-and-delegation/delegation",
         "staking-and-delegation/stakers-btcli-guide",
