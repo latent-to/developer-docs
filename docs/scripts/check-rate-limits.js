@@ -87,7 +87,8 @@ async function discoverAndQueryRateLimits() {
     // Find methods that might be rate limits using comprehensive keywords
     const rateLimitKeywords = [
       'limit', 'rate', 'period', 'delay', 'cooldown', 'interval', 
-      'freeze', 'pause', 'gap', 'timeout', 'restriction', 'throttle'
+      'freeze', 'pause', 'gap', 'timeout', 'restriction', 'throttle',
+      'last', 'target', 'max', 'min', 'registration', 'commit', 'burn'
     ];
     
     const potentialRateLimits = storageKeys.filter(key => 
@@ -95,6 +96,8 @@ async function discoverAndQueryRateLimits() {
     );
 
     console.log(`Discovered ${potentialRateLimits.length} storage methods with rate-limiting characteristics:`);
+    console.log(`Total storage methods in subtensor module: ${storageKeys.length}`);
+    console.log("Some rate limits may be runtime-calculated and not available as storage methods.");
     console.log("=".repeat(80));
 
     // Categorize and test each potential rate limit
@@ -102,7 +105,9 @@ async function discoverAndQueryRateLimits() {
       global: [],
       subnetSpecific: [],
       operationalCounters: [],
-      administrative: []
+      administrative: [],
+      complex: [],
+      failed: []
     };
 
     for (const method of potentialRateLimits) {
@@ -126,7 +131,19 @@ async function discoverAndQueryRateLimits() {
               category = 'subnetSpecific';
               categories.subnetSpecific.push({ method, result: testResult, requiresNetuid: true });
             } catch (sampleError) {
-              category = 'failed';
+              // Some methods need specific account/transaction IDs - try with different parameters
+              try {
+                // Try with example account address
+                const exampleAccount = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY";
+                await queryFn(exampleAccount);
+                console.log(`  ${method}: Requires specific account parameter`);
+                category = 'complex';
+                categories.complex.push({ method, error: sampleError.message, requiresAccount: true });
+              } catch (accountError) {
+                console.log(`  ${method}: Query failed - may need complex parameters or be non-queryable`);
+                category = 'failed';
+                categories.failed.push({ method, error: sampleError.message });
+              }
             }
           }
 
@@ -157,6 +174,23 @@ async function discoverAndQueryRateLimits() {
     displayCategoryResults('SUBNET-SPECIFIC RATE LIMITS', categories.subnetSpecific, blockTimeSeconds);
     displayCategoryResults('OPERATIONAL COUNTERS & INTERVALS', categories.operationalCounters, blockTimeSeconds);
     displayCategoryResults('ADMINISTRATIVE CONTROLS', categories.administrative, blockTimeSeconds);
+    
+    // Display complex and failed queries for analysis
+    if (categories.complex.length > 0) {
+      console.log("\nCOMPLEX PARAMETER METHODS");
+      console.log("-".repeat(80));
+      for (const item of categories.complex) {
+        console.log(`${item.method}: Requires specific parameters (${item.error})`);
+      }
+    }
+    
+    if (categories.failed.length > 0) {
+      console.log("\nFAILED QUERIES (May be non-rate-limiting or require complex parameters)");
+      console.log("-".repeat(80));
+      for (const item of categories.failed) {
+        console.log(`${item.method}: ${item.error}`);
+      }
+    }
 
     // Staking operation lock information
     console.log("=".repeat(80));
@@ -195,22 +229,27 @@ function displayCategoryResults(title, items, blockTimeSeconds) {
     
     console.log(`\n${method}:`);
     
-    if (result.toNumber) {
-      const blockValue = result.toNumber();
-      const hours = Math.round(blockValue * blockTimeSeconds / 3600 * 10) / 10;
-      const days = Math.round(blockValue * blockTimeSeconds / 86400 * 10) / 10;
-      
-      console.log(`  Value: ${blockValue} blocks`);
-      console.log(`  Time: ~${hours} hours (${days} days)`);
-      console.log(`  ${requiresNetuid ? 'Subnet-specific' : 'Global'}`);
-      
-      // Add interpretation based on method name
-      const interpretation = getRateLimitInterpretation(method);
-      if (interpretation) {
-        console.log(`  Purpose: ${interpretation}`);
+    try {
+      if (result.toNumber) {
+        const blockValue = result.toNumber();
+        const hours = Math.round(blockValue * blockTimeSeconds / 3600 * 10) / 10;
+        const days = Math.round(blockValue * blockTimeSeconds / 86400 * 10) / 10;
+        
+        console.log(`  Value: ${blockValue} blocks`);
+        console.log(`  Time: ~${hours} hours (${days} days)`);
+        console.log(`  ${requiresNetuid ? 'Subnet-specific' : 'Global'}`);
+        
+        // Add interpretation based on method name
+        const interpretation = getRateLimitInterpretation(method);
+        if (interpretation) {
+          console.log(`  Purpose: ${interpretation}`);
+        }
+      } else {
+        console.log(`  Complex object result`);
+        console.log(`  ${requiresNetuid ? 'Subnet-specific' : 'Global'}`);
       }
-    } else {
-      console.log(`  Complex object result`);
+    } catch (numberError) {
+      console.log(`  Large number or unsupported format`);
       console.log(`  ${requiresNetuid ? 'Subnet-specific' : 'Global'}`);
     }
   }
@@ -231,7 +270,19 @@ function getRateLimitInterpretation(methodName) {
     'pendingChildKeyCooldown': 'Cooldown delays for child key operations',
     'networkImmunityPeriod': 'Network-wide immunity protection period',
     'networkLockReductionInterval': 'Interval for network lock cost reductions',
-    'subnetLimit': 'Maximum number of subnets allowed'
+    'subnetLimit': 'Maximum number of subnets allowed',
+    'lastTxBlock': 'Last transaction block for account (rate limiting tracking)',
+    'lastTxBlockChildKeyTake': 'Last childkey take block for account (rate limiting tracking)',
+    'lastTxBlockDelegateTake': 'Last delegate take block for account (rate limiting tracking)',
+    'stakingOperationRateLimiter': 'Per-block staking operation lock system',
+    'lastColdkeyHotkeyStakeBlock': 'Last staking block for (coldkey, hotkey) pair',
+    'maxRegistrationsPerBlock': 'Maximum registrations allowed per block',
+    'targetRegistrationsPerInterval': 'Target registrations per subnet adjustment interval',
+    'registrationsThisInterval': 'Current registration count in interval (counter)',
+    'powRegistrationsThisInterval': 'Current PoW registration count in interval (counter)',
+    'burnRegistrationsThisInterval': 'Current burn registration count in interval (counter)',
+    'blocksSinceLastStep': 'Blocks since last subnet mechanism step (counter)',
+    'lastMechanismStepBlock': 'Block when last mechanism step occurred (tracking)'
   };
   
   return interpretations[methodName] || null;
