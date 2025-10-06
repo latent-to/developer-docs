@@ -573,7 +573,7 @@ alias: regen_hotkey
 This command regenerates the public part of a hotkey (hotkeypub.txt) for a wallet. Use this command when you need to move machine for subnet mining. Use the public key or SS58 address from your hotkeypub.txt that you have on another machine to regenerate the hotkeypub.txt on this new machine.
 
 **Usage**
-The command requires either a public key in hexadecimal format or an `SS58` address from the existing `hotkeypub.txt` from old machine to regenerate the coldkeypub on the new machine.
+The command requires either a public key in hexadecimal format or an `SS58` address from the existing `hotkeypub.txt` from old machine to regenerate the hotkeypub on the new machine.
 
 **Example:**
 
