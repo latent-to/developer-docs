@@ -14,8 +14,6 @@ To view the chain state for Bittensor main network ('finney'), visit [`https://p
 [`https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fbittensor-finney.api.onfinality.io%2Fpublic-ws#/chainstate`](https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fbittensor-finney.api.onfinality.io%2Fpublic-ws#/chainstate).
 
 Most relevant attributes are under the `subtensorModule`.
-
-You can also use this [script](../scripts/check-rate-limits.js) to check all of the values.
 :::
 
 ## Global rate limits
