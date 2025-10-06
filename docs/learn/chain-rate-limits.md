@@ -98,20 +98,7 @@ This controls the duration of the administrative freeze window at the end of eac
 - Chain State Variable: `AdminFreezeWindow`
 - Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
-## Subnet-specific rate limits
-
-This section discusses rate limits that apply within a specific subnet on the network. These limits are typically configurable at the subnet level.
-
-### Serving rate limits
-
-This rate limit controls how frequently neurons can update their serving information (axon and prometheus data) on the Bittensor network. This rate limit can be modified by changing the `serving_rate_limit` parameter in the subnet hyperparameters. For more information, see [subnet hyperparameters](../subnets/subnet-hyperparameters.md#servingratelimit).
-
-- Rate Limit: Configurable per subnet (default: 10 blocks)
-- Chain State Variable: `ServingRateLimit`
-- Error message: [`ServingRateLimitExceeded`](../errors/subtensor.md#servingratelimitexceeded)
-
-
-### Mechanism count update rate limit
+### Subnet Mechanism count update rate limit
 
 Limits how often a subnet owner can change the number of incentive mechanisms. For background on mechanisms, see [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets.md).
 
@@ -120,7 +107,7 @@ Limits how often a subnet owner can change the number of incentive mechanisms. F
 - Source Code: [lib.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1894-1897)
 - Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
-### Mechanism emission split update rate limit
+### Subnet Mechanism emission split update rate limit
 
 Limits how often a subnet owner can change the allocation of emissions among the subnet's mechanisms. For background on mechanisms, see [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets.md).
 
@@ -136,6 +123,17 @@ This rate limit controls how frequently a user can perform staking operations (a
 - Rate Limit: 1 per block
 - Chain State Variable: `StakingOperationRateLimiter` (Bool, since limit is 1 operation)
 - Error message: [`StakingOperationRateLimitExceeded`](../errors/subtensor.md#stakingoperationratelimitexceeded)
+## Subnet-specific rate limits
+
+This section discusses rate limits that apply within a specific subnet on the network. These limits are typically configurable at the subnet level.
+
+### Serving rate limits
+
+This rate limit controls how frequently neurons can update their serving information (axon and prometheus data) on the Bittensor network. This rate limit can be modified by changing the `serving_rate_limit` parameter in the subnet hyperparameters. For more information, see [subnet hyperparameters](../subnets/subnet-hyperparameters.md#servingratelimit).
+
+- Rate Limit: Configurable per subnet (default: 10 blocks)
+- Chain State Variable: `ServingRateLimit`
+- Error message: [`ServingRateLimitExceeded`](../errors/subtensor.md#servingratelimitexceeded)
 
 
 ### Weights setting rate limit
