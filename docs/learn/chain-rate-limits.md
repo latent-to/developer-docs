@@ -1,8 +1,8 @@
 ---
-title: "Rate Limits in Bittensor"
+title: "Rate Limits"
 ---
 
-# Rate Limits in Bittensor
+# Rate Limits
 
 This page reviews all rate limits implemented in the Bittensor blockchain (Subtensor). Rate limits prevent spam, ensure network stability, and maintain fair access to network resources. Rate limits in Bittensor are implemented as block-based cooldown periods. When a rate-limited operation succeeds, subsequent attempts to perform the same operation must wait for a specified number of [blocks](../resources/glossary.md#block) to pass before they can be executed again. Unsuccessful operations may be re-tried.
 
