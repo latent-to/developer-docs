@@ -113,23 +113,6 @@ This rate limit controls how frequently neurons can update their serving informa
 - Chain State Variable: `ServingRateLimit`
 - Error message: [`ServingRateLimitExceeded`](../errors/subtensor.md#servingratelimitexceeded)
 
-### Adjustment interval
-
-This controls the time between subnet adjustment periods where mechanism steps occur.
-
-- Rate Limit: Typically 112 blocks (~22 minutes)
-- Chain State Variable: `AdjustmentInterval` per subnet
-- Error message: <!-- TODO: Add error message -->
-
-### Immunity period
-
-This provides protection for new subnet registrations.
-
-- Rate Limit: Typically 7,200 blocks (~24 hours)
-- Chain State Variable: `ImmunityPeriod` per subnet
-- Error message: <!-- TODO: Add error message -->
-
-
 
 ### Mechanism count update rate limit
 
