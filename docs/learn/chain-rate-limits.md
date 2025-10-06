@@ -69,7 +69,7 @@ This rate limit controls how frequently subnet owners can trim UIDs on their sub
 
 This rate limit prevents frequent creation of new subnets.
 
-- Rate Limit: 28,800 blocks (~4 days)
+- Rate Limit: 28,800 blocks (4 days)
 - Chain State Variable: `NetworkRateLimit`
 - Error message: [`NetworkTxRateLimitExceeded`](../errors/subtensor.md#networktxratelimitexceeded)
 

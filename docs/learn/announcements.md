@@ -48,7 +48,7 @@ A percentage fee will be deducted from emissions bound to validator hotkeys thro
 - **Key Changes**:
   - Subnet limit remains at 128 initially with no new registrations available immediately
   - Immunity period reduced from 6 months to 4 months from registration block
-  - Network rate limit increased to 3 days (from 2 days) between registrations
+  - Network rate limit increased to 4 days between registrations
   - Initial lock cost set at 1,000 TAO with standard linear decay mechanism
   - First deregistrations available approximately September 23 (one week after deployment)
 
