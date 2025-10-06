@@ -7,7 +7,7 @@ title: "Rate Limits in Bittensor"
 This page reviews all rate limits implemented in the Bittensor blockchain (Subtensor). Rate limits prevent spam, ensure network stability, and maintain fair access to network resources. Rate limits in Bittensor are implemented as block-based cooldown periods. When a rate-limited operation succeeds, subsequent attempts to perform the same operation must wait for a specified number of [blocks](../resources/glossary.md#block) to pass before they can be executed again. Unsuccessful operations may be re-tried.
 
 :::info
-To check/confirm confirm current rate limits and other chain state variables on the blockchain, use the Polkadot.js chain explorer.
+To check/confirm current rate limits and other chain state variables on the blockchain, use the Polkadot.js chain explorer.
 
 To view the chain state for Bittensor main network ('finney'), visit [`https://polkadot.js.org/apps`](https://polkadot.js.org/apps), choose Bittensor network, and click **Chain State** under the **Developer** tab, or visit:
 
@@ -22,7 +22,7 @@ This section discusses rate limits that apply globally across the entire network
 
 ### General transaction rate limit
 
-This is the default transaction rate limit in Bittensor, but it currently only applies to hotkey swaps (other rate limited transsactions are handled by custom rate limits).
+This is the default transaction rate limit in Bittensor, but it currently only applies to hotkey swaps (other rate limited transactions are handled by custom rate limits).
 
 - Rate Limit: 1 block (12 sec)
 - Chain State Variable: `TxRateLimit`
@@ -169,7 +169,7 @@ This rate limit controls the frequency of neuron registrations within an [interv
 
 ## Subtensor Node Rate Limits
 
-When querying OTF-provided lite nodes, then the following rate limits apply. We strongly encourage you to run your own local lite node.
+When querying OTF-provided lite nodes, the following rate limits apply. We strongly encourage you to run your own local lite node.
 
 - Any OTF-provided lite node will rate limit the requests to one request per second, per IP address. Note that this rate limit may change dynamically based on the network or application requirements.
 - A request can be either WS/WSS or HTTP/HTTPS.
