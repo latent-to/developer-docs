@@ -49,7 +49,8 @@ This rate limit prevents the owner of a child hotkey from making frequent change
 This rate limit prevents a user from swapping a hotkey too frequently.
 
 - Rate Limit: 1,000 blocks (~3.3 hours)
-- Chain State Variable: <!-- TODO: Add chain state variable name -->
+- Chain State Variable: `TxRateLimit` (uses general transaction rate limit)
+- Source Code: [swap_hotkey.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/swap/swap_hotkey.rs#L52-56)
 - Error message: [`HotKeySetTxRateLimitExceeded`](../errors/subtensor.md#hotkeysettxratelimitexceeded)
 
 ### UID trimming rate limit
@@ -57,7 +58,7 @@ This rate limit prevents a user from swapping a hotkey too frequently.
 This rate limit controls how frequently subnet owners can trim UIDs on their subnets. This prevents disruptions in subnet stability and excessive network reorganization.
 
 - Rate Limit: 216,000 blocks (~30 days) on main net; 1 block in 'fastblocks' development mode.
-- Chain State Variable: `MaxUidsTrimmingRateLimit`
+- Chain State Variable: `MaxUidsTrimmingRateLimit` (Not queryable from chain state)
 - Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
 ### Network registration rate limit
@@ -101,7 +102,7 @@ This section discusses rate limits that apply within a specific subnet on the ne
 
 This rate limit controls how frequently neurons can update their serving information (axon and prometheus data) on the Bittensor network. This rate limit can be modified by changing the `serving_rate_limit` parameter in the subnet hyperparameters. For more information, see [subnet hyperparameters](../subnets/subnet-hyperparameters.md#servingratelimit).
 
-- Rate Limit: Configurable per subnet (default: 50 blocks)
+- Rate Limit: Configurable per subnet (default: 10 blocks)
 - Chain State Variable: `ServingRateLimit`
 - Error message: [`ServingRateLimitExceeded`](../errors/subtensor.md#servingratelimitexceeded)
 
@@ -128,7 +129,8 @@ This provides protection for new subnet registrations.
 Limits how often a subnet owner can change the number of incentive mechanisms. For background on mechanisms, see [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets.md).
 
 - Rate Limit: 7,200 blocks (~24 hours)
-- Chain State Variable: <!-- TODO: Add chain state variable name -->
+- Chain State Variable: `MechanismCountSetRateLimit` (Not queryable from chain state)
+- Source Code: [lib.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1894-1897)
 - Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
 ### Mechanism emission split update rate limit
@@ -136,7 +138,8 @@ Limits how often a subnet owner can change the number of incentive mechanisms. F
 Limits how often a subnet owner can change the allocation of emissions among the subnet's mechanisms. For background on mechanisms, see [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets.md).
 
 - Rate Limit: 7,200 blocks (~24 hours) on main net; 1 block in 'fastblocks' development mode.
-- Chain State Variable: <!-- TODO: Add chain state variable name -->
+- Chain State Variable: `MechanismEmissionRateLimit` (Not queryable from chain state)
+- Source Code: [lib.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1898-1902)
 - Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
 ### Staking operations rate limits
@@ -144,7 +147,7 @@ Limits how often a subnet owner can change the allocation of emissions among the
 This rate limit controls how frequently a user can perform staking operations (add/remove stake, move stake) to a particular subnet (netuid).
 
 - Rate Limit: 1 per block
-- Chain State Variable: <!-- TODO: Add chain state variable name -->
+- Chain State Variable: `StakingOperationRateLimiter` (Bool, since limit is 1 operation)
 - Error message: [`StakingOperationRateLimitExceeded`](../errors/subtensor.md#stakingoperationratelimitexceeded)
 
 
