@@ -48,9 +48,6 @@ This rate limit prevents the owner of a child hotkey from making frequent change
 
 This rate limit prevents a user from swapping a hotkey too frequently. Hotkey swaps are subject to **two separate rate limits** that must both be satisfied:
 
-1. **General transaction rate limit**: Prevents the same coldkey from making multiple transactions too quickly
-2. **Hotkey swap interval**: Prevents the same coldkey from swapping hotkeys on the same subnet too frequently (tracked per subnet)
-
 - Rate Limit: 
   - General transaction: 1 block (12 seconds)
   - Per-subnet: 36,000 blocks (~5 days)
