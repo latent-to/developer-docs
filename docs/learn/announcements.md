@@ -29,6 +29,8 @@ For detailed information, see: [Multiple Incentive Mechanisms Within Subnets](..
 - **Purpose**: Prevent exploitation where subnet owners kick off root validators to take full incentives
 - **Implementation**: Applies 7,200-block rate limit to prevent subnet owner exploitation
 
+See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
+
 ## Child Key Fee
 
 A percentage fee will be deducted from emissions bound to validator hotkeys through a *child hotkey* relationship. This is designed to more highly incentivize validators who perform validation work, over child-key-only validators. It is being gradually rolled out to reduce surprise for the community and allow validators to adjust.
@@ -46,7 +48,7 @@ A percentage fee will be deducted from emissions bound to validator hotkeys thro
 - **Key Changes**:
   - Subnet limit remains at 128 initially with no new registrations available immediately
   - Immunity period reduced from 6 months to 4 months from registration block
-  - Network rate limit increased to 3 days (from 2 days) between registrations
+  - Network rate limit increased to 4 days between registrations
   - Initial lock cost set at 1,000 TAO with standard linear decay mechanism
   - First deregistrations available approximately September 23 (one week after deployment)
 

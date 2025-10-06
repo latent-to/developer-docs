@@ -69,6 +69,8 @@ The following rate limits apply for child hotkeys:
 - A child hotkey's take rate can only be adjusted once per 30 days.
 - One successful execution of `set_children` or `revoke_children` is allowed for every 720 blocks.
 
+See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
+
 ## Minimum stake
 
 The minimum stake you can redelegate to a child hotkey is as follows:

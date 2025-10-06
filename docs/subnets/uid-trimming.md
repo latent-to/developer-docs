@@ -8,6 +8,8 @@ UID trimming is a subnet management feature that allows subnet owners to reduce 
 
 :::info UID trimming rate limit
 The chain's trim UID rate limit is 216,000 blocks (~30 days). Therefore, subnet owners can only make changes to their UID count every 30 days.
+
+See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
 :::
 
 - **Preserves Immune UIDs**: Both temporally immune UIDs and owner-owned UIDs are protected from trimming
