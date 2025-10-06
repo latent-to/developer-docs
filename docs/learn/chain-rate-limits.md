@@ -14,6 +14,8 @@ To view the chain state for Bittensor main network ('finney'), visit [`https://p
 [`https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fbittensor-finney.api.onfinality.io%2Fpublic-ws#/chainstate`](https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fbittensor-finney.api.onfinality.io%2Fpublic-ws#/chainstate).
 
 Most relevant attributes are under the `subtensorModule`.
+
+You can also use this [script](../scripts/check-rate-limits.js) to check all of the values.
 :::
 
 ## Global rate limits
@@ -44,12 +46,19 @@ This rate limit prevents the owner of a child hotkey from making frequent change
 - Chain State Variable: `TxChildkeyTakeRateLimit`
 - Error message: [`TxChildkeyTakeRateLimitExceeded`](../errors/subtensor.md#txchildkeytakeratelimitexceeded)
 
-### Hotkey set rate limit
+### Hotkey swap rate limit
 
-This rate limit prevents a user from swapping a hotkey too frequently.
+This rate limit prevents a user from swapping a hotkey too frequently. Hotkey swaps are subject to **two separate rate limits** that must both be satisfied:
 
-- Rate Limit: 1,000 blocks (~3.3 hours)
-- Chain State Variable: `TxRateLimit` (uses general transaction rate limit)
+1. **General transaction rate limit**: Prevents the same coldkey from making multiple transactions too quickly
+2. **Hotkey swap interval**: Prevents the same coldkey from swapping hotkeys on the same subnet too frequently (tracked per subnet)
+
+- Rate Limit: 
+  - General transaction: 1 block (12 seconds)
+  - Per-subnet: 36,000 blocks (~5 days)
+- Chain State Variables: 
+  - `TxRateLimit` (general transaction rate limit)
+  - `HotkeySwapOnSubnetInterval` (global interval constant, not queryable from chain state)
 - Source Code: [swap_hotkey.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/swap/swap_hotkey.rs#L52-56)
 - Error message: [`HotKeySetTxRateLimitExceeded`](../errors/subtensor.md#hotkeysettxratelimitexceeded)
 
