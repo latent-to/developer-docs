@@ -29,6 +29,8 @@ For detailed information, see: [Multiple Incentive Mechanisms Within Subnets](..
 - **Purpose**: Prevent exploitation where subnet owners kick off root validators to take full incentives
 - **Implementation**: Applies 7,200-block rate limit to prevent subnet owner exploitation
 
+See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
+
 ## Child Key Fee
 
 A percentage fee will be deducted from emissions bound to validator hotkeys through a *child hotkey* relationship. This is designed to more highly incentivize validators who perform validation work, over child-key-only validators. It is being gradually rolled out to reduce surprise for the community and allow validators to adjust.
