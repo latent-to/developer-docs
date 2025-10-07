@@ -521,6 +521,22 @@ Deprecated.
 
 Rate limit for calling `serve_axon` and `serve_prometheus` extrinsics used by miners.
 
+### OwnerHyperparamRateLimit
+
+**Type**: u16
+
+**Default**: 2 (tempos)
+
+**`btcli` setter**: none
+
+**Setter extrinsic**: `sudo_set_owner_hparam_rate_limit`
+
+**Permissions required to set**: Root
+
+**Description**:
+
+Global multiplier that rate-limits how frequently a subnet owner can update subnet hyperparameters. The cooldown window equals `Tempo(netuid) × OwnerHyperparamRateLimit` blocks. The rate limit is tracked independently per hyperparameter; changing `kappa` does not block an immediate change to `rho`, for example.
+
 ### SubnetIsActive
 
 **Type**: Bool

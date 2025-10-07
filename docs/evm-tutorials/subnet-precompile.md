@@ -74,6 +74,8 @@ Registers a new subnet with comprehensive identity metadata that helps users und
 
 ### Rate Limiting
 
+See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
+
 #### `getServingRateLimit`
 
 Gets the serving rate limit for a subnet.

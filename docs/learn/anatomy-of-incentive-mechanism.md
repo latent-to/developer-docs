@@ -8,15 +8,29 @@ This page explores the concept and usage of incentive mechanisms in Bittensor.
 
 See [Components of the Bittensor platform](../learn/neurons) for an explanation of the basics, such as subnets, miners, validators, and the role of the blockchain.
 
-Each subnet has its own _incentive mechanism_, a scoring model that drives the behavior of its participants, and the production of the subnet's digital commodity, by defining **how validators are to evaluate miners’ work**. Miners are incentivized to optimize for this model so validators will score (or 'weight') their work highly, resulting in higher emissions. Validators are incentivized to accurately score miners' work according to the model because the algorithm penalizes departure from consensus in miner scores with lower emissions.
+Each subnet has one or more _incentive mechanisms_, scoring models that drive the behavior of participants and the production of the subnet's digital commodity by defining **how validators are to evaluate miners' work**. Miners are incentivized to optimize for these models so validators will score (or 'weight') their work highly, resulting in higher emissions. Validators are incentivized to accurately score miners' work according to the models because the algorithm penalizes departure from consensus in miner scores with lower emissions.
 
-Each validator on a subnet is responsible for periodically computing a vector of weights assigned to each miner, representing an aggregate ranking based on the miners' performance. Validators transmit these **weight vectors** to the blockchain. Typically, each subnet validator transmits an updated ranking weight vector to the blockchain every 100-200 blocks.
+When a subnet uses multiple incentive mechanisms, each mechanism operates independently with its own bond pool for [Yuma Consensus](./yuma-consensus) calculations, allowing subnet creators to distribute emissions across different types of work or evaluation criteria.
 
-The Bittensor blockchain waits for the latest rankings/weight vectors from all the validators of a given subnet, then forms a **weight matrix** from these rankings, which is then provided as input to the Yuma Consensus module on-chain. Yuma Consensus (YC) uses this weight matrix, along with the amount of stake associated with each UID on the subnet, to calculate emissions to each participant within each subnet. These emissions are finalized and debited to participants' hotkeys at the end of each _tempo_ or 360 blocks.
+Each validator on a subnet is responsible for periodically computing vectors of weights assigned to each miner for each incentive mechanism, representing aggregate rankings based on the miners' performance in each mechanism. Validators transmit these **weight vectors** to the blockchain. 
+
+The Bittensor blockchain waits for the latest rankings/weight vectors from all the validators of a given subnet, then forms **weight matrices** from these rankings (one matrix per incentive mechanism), which are then provided as input to the Yuma Consensus module on-chain. Yuma Consensus (YC) uses these weight matrices, along with the amount of stake associated with each UID on the subnet, to calculate emissions to each participant within each mechanism. These emissions are finalized and debited to participants' hotkeys at the end of each _tempo_ or 360 blocks.
 
 :::tip note
 The tempo duration (360 blocks) is the same for all the user-created subnets. However, the timing of tempos can differ among subnets, depending on when they were created.
 :::
+
+## Multiple Incentive Mechanisms
+
+Subnets can implement multiple incentive mechanisms to evaluate different aspects of miner performance or to support diverse tasks within a single subnet. This allows subnet creators to:
+
+- **Distribute emissions across different tasks**: Allocate specific percentages of subnet emissions to different types of work
+- **Maintain independent evaluation**: Each mechanism operates with separate bond pools, so miner performance in one mechanism doesn't affect their rating in another
+- **Enable specialized competition**: Miners can excel in specific mechanisms that match their capabilities
+- **Provide transparent control**: All emission distributions and mechanism configurations are visible on-chain
+
+
+For detailed information about implementing and managing multiple incentive mechanisms, see [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets).
 
 ## Subnet creator responsibilities
 

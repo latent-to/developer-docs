@@ -22,11 +22,23 @@ const sidebars = {
     // },
     "index",
     {
-      type: "doc",
-      id: "resources/bittensor-rel-notes",
-      label: "Releases",
+      type: "category",
+      label: "Releases and Announcements",
+      collapsible: true,
+      collapsed: true,
+      items: [
+        {
+          type: "doc",
+          id: "resources/bittensor-rel-notes",
+          label: "Releases",
+        },
+        {
+          type: "doc",
+          id: "learn/announcements",
+          label: "Announcements",
+        },
+      ],
     },
-    "btcli/btcli-playground",
     {
       type: "category",
       label: "Understand Bittensor",
@@ -35,16 +47,43 @@ const sidebars = {
       collapsed: true,
       items: [
         "learn/introduction",
-        "resources/questions-and-answers",
+        "resources/questions-and-answers",        
         "subnets/understanding-subnets",
-        "learn/neurons",
         "learn/anatomy-of-incentive-mechanism",
+
+        "subnets/understanding-multiple-mech-subnets",
+        "learn/neurons",
+        
         "learn/emissions",
         "learn/ema",
         "learn/yuma-consensus",
         "learn/yc3-blog",
         "learn/yuma3-migration-guide",
         "learn/fees",
+        "learn/chain-rate-limits",    
+        {
+          type: "category",
+          label: "Navigating Subtensor Codebase",
+          link: { type: "doc", id: "navigating-subtensor/index" },
+          collapsible: true,
+          collapsed: true,
+          items: [
+            "navigating-subtensor/emissions-coinbase",
+            "navigating-subtensor/epoch",
+            "navigating-subtensor/swap-stake",
+          ],
+        },
+        "resources/community-links",
+      ],
+    },
+    {
+      type: "category",
+      label: "Research",
+      collapsible: true,
+      collapsed: true,
+      items: [
+      "research/synchronized-halving",
+        "research/halvings-problem",                
       ],
     },
     {
@@ -103,9 +142,21 @@ const sidebars = {
       items: [
         "subnets/metagraph",
         "subnets/create-a-subnet",
+        {
+          type: "category",
+          label: "Crowdloans",
+          collapsible: true,
+          collapsed: true,
+          link: { type: "doc", id: "subnets/crowdloans/index" },
+          items: ["subnets/crowdloans/crowdloans-tutorial"],
+        },
         "subnets/subnet-creators-btcli-guide",
         "subnets/subnet-hyperparameters",
         "subnets/working-with-subnets",
+        "subnets/managing-mechanisms-with-sdk",
+        "subnets/managing-mechanisms-btcli",
+        "subnets/uid-trimming",
+        "subnets/subnet-deregistration",
         "subnets/walkthrough-prompting",
         "tutorials/basic-subnet-tutorials",
         "tutorials/ocr-subnet-tutorial",
@@ -194,11 +245,11 @@ const sidebars = {
       items: [
         "subtensor-nodes/subtensor-node-requirements",
         "subtensor-nodes/using-source",
-        "subtensor-nodes/using-docker",
-        "subtensor-nodes/subtensor-rate-limits",
+        "subtensor-nodes/using-docker",        
         "subtensor-nodes/subtensor-storage-query-examples",
       ],
     },
+
     {
       type: "category",
       label: "Bittensor EVM",

@@ -6,12 +6,12 @@ title: "Subtensor Standard Errors"
 
 This page documents the standard errors that can arise from Subtensor, the blockchain underlying the Bittensor network.
 
-Related: 
+Related:
+
 - [Source code in GitHub](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/errors.rs)
 - [Subtensor Custom Errors](./custom.md)
-- [Substrate Errors](https://polkadot.js.org/docs/substrate/errors/) - Errors from the underlying Substrate framework 
+- [Substrate Errors](https://polkadot.js.org/docs/substrate/errors/) - Errors from the underlying Substrate framework
 
-    
 ## Network and Subnet Errors
 
 ### `SubNetworkDoesNotExist`
@@ -21,6 +21,7 @@ The specified subnet does not exist.
 ### `RootNetworkDoesNotExist`
 
 The root network does not exist.
+
 <!-- Why would this ever happen? only local build? -->
 
 ### `SubnetNotExists`
@@ -42,11 +43,13 @@ Operation is not permitted on the root subnet.
 ### `AllNetworksInImmunity`
 
 All subnets are in the immunity period.
+
 <!-- umm why? -->
 
 ### `MechanismDoesNotExist`
 
 Trying to register a subnet into a mechanism that does not exist.
+
 <!-- wth does this mean? -->
 
 ### `SubNetRegistrationDisabled`
@@ -110,6 +113,10 @@ Public key cannot be recovered.
 ### `InvalidRecoveredPublicKey`
 
 Recovered public key is invalid.
+
+### `HotKeySwapOnSubnetIntervalNotPassed`
+
+Attempting a hotkey swap on subnet too frequently.
 
 ## Stake and Balance Errors
 
@@ -184,6 +191,10 @@ Transaction slippage is above your limit.
 ### `TransferDisallowed`
 
 Transfers are disallowed on this subnet.
+
+### `InsufficientBalance`
+
+The caller does not have enough balance for the operation.
 
 ## Weight Setting Errors
 
@@ -271,6 +282,18 @@ Alpha high value is too low (> 0.8 required).
 
 Alpha low value is out of allowed range (0 < alpha_low < 0.8).
 
+### `IncorrectCommitRevealVersion`
+
+Incorrect commit-reveal version.
+
+### `RevealPeriodTooLarge`
+
+Reveal period is too large.
+
+### `RevealPeriodTooSmall`
+
+Reveal period is too small.
+
 ## Rate Limiting Errors
 
 ### `ServingRateLimitExceeded`
@@ -300,6 +323,10 @@ Default transaction rate limit exceeded.
 ### `TxChildkeyTakeRateLimitExceeded`
 
 Childkey take rate limit exceeded.
+
+### `StakingOperationRateLimitExceeded`
+
+Attempting staking operations too frequently.
 
 ## Registration and Network Management
 
@@ -355,11 +382,49 @@ Proportion overflow when setting children.
 
 ### `TooManyChildren`
 
-Too many children. 
+Too many children.
 
 ### `InvalidChildkeyTake`
 
 Childkey take is invalid.
+
+## Subnet Leasing Errors
+
+### `InvalidLeaseBeneficiary`
+
+Invalid lease beneficiary to register the leased network.
+
+### `LeaseCannotEndInThePast`
+
+Lease cannot end in the past.
+
+### `LeaseNetuidNotFound`
+
+Couldn't find the lease netuid.
+
+### `LeaseDoesNotExist`
+
+Lease does not exist.
+
+### `LeaseHasNoEndBlock`
+
+Lease has no end block.
+
+### `LeaseHasNotEnded`
+
+Lease has not ended.
+
+### `Overflow`
+
+An overflow occurred.
+
+### `BeneficiaryDoesNotOwnHotkey`
+
+Beneficiary does not own hotkey.
+
+### `ExpectedBeneficiaryOrigin`
+
+Expected beneficiary origin.
 
 ## Other Errors
 
@@ -407,6 +472,10 @@ Invalid identity.
 
 Activity cutoff is too low.
 
+### `AdminActionProhibitedDuringWeightsWindow`
+
+Admin operation is prohibited during the protected weights window.
+
 ### `CallDisabled`
 
 Call is disabled.
@@ -419,3 +488,18 @@ SubToken disabled.
 
 Invalid netuid duplication.
 
+### `SymbolDoesNotExist`
+
+Symbol does not exist.
+
+### `SymbolAlreadyInUse`
+
+Symbol already in use.
+
+### `BadOrigin`
+
+Wallet not authorized. Ensure that the account has the correct root or subnet owner permissions.
+
+### `InvalidValue`
+
+Generic error for out-of-range parameter value
