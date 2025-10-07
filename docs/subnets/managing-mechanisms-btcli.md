@@ -151,6 +151,6 @@ Totals are expressed as a fraction of 65535 (U16_MAX).
 
 ## Troubleshooting
 
-- Rate limiting: mechanism count changes are restricted (on mainnet) to once per ~24 hours (7200 blocks).
+- Rate limiting: mechanism count changes are restricted (on mainnet) to once per ~24 hours (7200 blocks). See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
 - Permissions: emission split and count updates require the subnet owner wallet.
 - Local chain connectivity: ensure your local chain is running and the `network` parameter in your BTCLI config is set to `local`.
