@@ -1,4 +1,4 @@
-# Pure Proxies
+# Understanding Pure Proxies
 
 Pure proxies are a specialized type of proxy account in Bittensor that provide enhanced security and isolation for complex delegation scenarios. Unlike standard proxies that use existing accounts, pure proxies create new, keyless accounts that can only operate through their delegator relationship.
 
@@ -9,7 +9,7 @@ This page walks you through creating a pure proxy account, executing a transfer 
 Pure proxies are **keyless, non-deterministic accounts** that are created fresh using the `createPure` extrinsic. They represent a unique approach to account delegation where:
 
 - The proxy account has **no private key** and cannot sign transactions independently
-- The proxy can **only act through its delegator** - all operations must be initiated by the delegator
+- The proxy can **only act through its delegator**—all operations must be initiated by the delegator
 - The account is **completely isolated** and cannot escalate its own permissions
 
 Unlike standard proxies, where the delegate can access the delegator’s funds to execute calls on their behalf, pure proxies operate differently. A pure proxy account must hold its own funds, while the real account acts as an _any proxy_ for it—signing and authorizing transactions on the proxy’s behalf.
