@@ -187,8 +187,6 @@ If you encounter issues with auto staking:
 
 ## Related Topics
 
-- [Mining in Bittensor](./index) - Overview of mining operations
+- [Mining in Bittensor](./) - Overview of mining operations
 - [Staking and Delegation](../staking-and-delegation/delegation) - General staking information
-- [Validator Selection](../validators/validator-selection) - Choosing validators
 - [Wallet Management](../keys/wallets) - Managing your keys and TAO
-- [Chain Extrinsics](../navigating-subtensor/chain-extrinsics) - Working with blockchain transactions

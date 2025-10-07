@@ -135,7 +135,7 @@ Emissions may not always appear as a smooth curve. Emission might only update at
 
 Miners can enable auto staking to automatically stake their mining income to a validator of their choice. This feature streamlines compound staking by eliminating the need for manual staking operations.
 
-See [Auto Staking for Miners](./autostaking) for detailed information on setting up and managing auto staking.
+See [Auto Staking for Miners](./autostaking.md) for detailed information on setting up and managing auto staking.
 
 ## Moving a subnet miner to a different machine
 
