@@ -163,7 +163,7 @@ After the announcement waiting period has passed, the delegate account can now e
 
 </details>
 
-## Step 4: Remove a Proxy (Revoke Access)
+## Step 4: Remove a Proxy
 
 1. In the navbar menu, navigate to **Developers** → **Extrinsics**.
 2. Under “using the selected account”, pick the delegator account.

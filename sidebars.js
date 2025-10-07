@@ -78,6 +78,13 @@ const sidebars = {
     },
     {
       type: "category",
+      label: "Research",
+      collapsible: true,
+      collapsed: true,
+      items: ["research/synchronized-halving", "research/halvings-problem"],
+    },
+    {
+      type: "category",
       label: "Wallets and Keys",
       collapsible: true,
       collapsed: true,
@@ -97,13 +104,6 @@ const sidebars = {
         "keys/multisig",
         "keys/schedule-coldkey-swap",
       ],
-    },
-    {
-      type: "category",
-      label: "Research",
-      collapsible: true,
-      collapsed: true,
-      items: ["research/synchronized-halving", "research/halvings-problem"],
     },
     {
       type: "category",

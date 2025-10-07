@@ -46,7 +46,7 @@ Use the `proxy::createPure` extrinsic to create a pure proxy as shown:
 3. Under “submit the following extrinsic”, choose the `proxy` pallet and call `createPure(proxyType, delay, index)`.
 4. Fill the parameters:
 
-   - `proxyType`: select `SmallTransfer`; this should allow us transfer amounts that do not exceed 0.5τ.
+   - `proxyType`: select `Any`; this grants full permissions to the proxy, including the ability to make transfers and kill the proxy.
    - `delay`: optionally, include a delay in blocks.
    - `index`: leave as zero.
 
@@ -90,7 +90,30 @@ Importing the proxy account makes it selectable in the Polkadot-JS web app UI.
 - Ensure the pure proxy account holds enough funds to cover both the transfer and associated fees.
   :::
 
+### Kill a pure proxy
+
+Pure proxies are killed using the `killPure` extrinsic as shown:
+
+1. Go to **Developer** → **Extrinsics**.
+2. Under “using the selected account”, choose the pure proxy account.
+3. Select the `proxy` pallet and choose `killPure(spawner, proxyType, index, height, extIndex)`.
+4. Fill the parameters:
+   - `spawner`: select the account that created the proxy from th UI.
+   - `proxyType`: select the proxy type.
+   - `index`: leave as `0`.
+   - `height`: input the block number that the proxy was created at.
+   - `extIndex`: input the extrinsic index of the `proxy.PureCreated` event.
+5. Click **Submit Transaction** and sign the transaction from the delegate account.
+
+Ensure that all parameters are correct before making this call. The call will fail with a `Proxy.NoPermission` error if any parameter is invalid or if the origin account lacks permission to perform the action.
+
+:::info Removing vs. Killing a Pure Proxy
+Killing a pure proxy permanently deletes the account and releases its reserved deposit. Removing a proxy, on the other hand, only detaches it from the account that initiates the transaction. The pure proxy remains on-chain and can still be used if it has other proxies linked to it, but it becomes inactive once all proxy relationships are removed. For more information on how to remove a proxy, see [Remove a proxy](create-proxy.md#step-4-remove-a-proxy).
+:::
+
 ## Troubleshooting
 
-- funds unavailable
-- cant sign with locked key pair: using pure proxy as signer
+- `Token.FundsUnavailable`: Ensure thhat the pure proxy account has been funded and has enough funds to cover the transfer.
+- `proxy.NotProxy`: Ensure you’re executing the pure proxy correctly—from the creator account and referencing the pure proxy account as `real`.
+- `Proxy.NoPermission`: The `killPure` call is not permitted under the current.
+- `system.CallFiltered`: The call is not permitted under the current `ProxyType`.
