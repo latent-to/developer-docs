@@ -9,7 +9,7 @@ This page introduces the proxy pattern used in Bittensor and explains how it ena
 Rather than using funds in a single account, accounts with unique roles can complete tasks on behalf of the main stash account.
 A proxy lets one account (the delegator, or "real" account) authorize another account (the delegate) to make permitted calls on its behalf. Proxies allow a delegator to keep their "real" accounts safe and "cold", thereby adding an extra layer of security to the tokens in the account.
 
-The permission scope is determined by the `ProxyType` call filter. This call filter allows the delegator account set the roles and limitations of the delegate account. Optionally, actions can require an on-chain announcement period—`delay`, giving the delegator time to reject a call made by a delegate.
+The permission scope is determined by the `ProxyType` call filter. This call filter allows the delegator account to set the roles and limitations of the delegate account. Optionally, actions can require an on-chain announcement period—`delay`, giving the delegator time to reject a call made by a delegate.
 
 ## Proxy terminology
 

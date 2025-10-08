@@ -14,7 +14,7 @@ Pure proxies are **keyless, non-deterministic accounts** that are created fresh 
 
 Unlike standard proxies, where the delegate can access the delegator’s funds to execute calls on their behalf, pure proxies operate differently. A pure proxy account must hold its own funds, while the real account acts as an _any proxy_ for it—signing and authorizing transactions on the proxy’s behalf.
 
-:::info when to use pure proxies
+:::info When to use pure proxies
 Pure proxies are valuable when you want to keep your real account secure by reducing direct key exposure to the blockchain. They provide a keyless, flexible account that enables permissionless management and are especially effective for multisigs, since they allow updates to membership or thresholds without changing the account address.
 :::
 
@@ -98,7 +98,7 @@ Pure proxies are killed using the `killPure` extrinsic as shown. See [source cod
 2. Under “using the selected account”, choose the pure proxy account.
 3. Select the `proxy` pallet and choose `killPure(spawner, proxyType, index, height, extIndex)`.
 4. Fill the parameters:
-   - `spawner`: select the account that created the proxy from th UI.
+   - `spawner`: select the account that created the proxy from the UI.
    - `proxyType`: select the proxy type.
    - `index`: leave as `0`.
    - `height`: input the block number that the proxy was created at.
@@ -113,7 +113,7 @@ Killing a pure proxy permanently deletes the account and releases its reserved d
 
 ## Troubleshooting
 
-- `Token.FundsUnavailable`: Ensure thhat the pure proxy account has been funded and has enough funds to cover the transfer.
+- `Token.FundsUnavailable`: Ensure that the pure proxy account has been funded and has enough funds to cover the transfer.
 - `proxy.NotProxy`: Ensure you're executing the pure proxy correctly—from the creator account and referencing the pure proxy account as `real`. See [source code: `NotProxy` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L735).
 - `Proxy.NoPermission`: The `killPure` call is not permitted under the current. See [source code: `NoPermission` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L741).
 - `system.CallFiltered`: The call is not permitted under the current `ProxyType`.

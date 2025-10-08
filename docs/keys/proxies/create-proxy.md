@@ -50,7 +50,7 @@ If the web app does not connect to your local chain, your browser’s privacy or
 4. Fill the parameters:
 
    - `delegate`: select the imported delegate account from the _Accounts_ dropdown.
-   - `proxyType`: select `SmallTransfer`; this should allow us transfer amounts that do not exceed 0.5τ.
+   - `proxyType`: select `SmallTransfer`; this should allow us to transfer amounts that do not exceed 0.5τ.
    - `delay`: optionally, include a delay in blocks.
 
 5. Click **Submit Transaction** and sign with the _delegator_ account.
@@ -155,7 +155,7 @@ After the announcement waiting period has passed, the delegate account can now e
 
 :::info
 
-- The call details must exactly match the original announcement. Any change—such as modifying the recipient or amount—will result in a `proxy.Unannounced error.
+- The call details must exactly match the original announcement. Any change—such as modifying the recipient or amount—will result in a `proxy.Unannounced` error.
 - Once a delayed proxy call is executed, its announcement is cleared. To run another proxy with the same details, you must create a new announcement.
   :::
 
@@ -167,11 +167,11 @@ After the announcement waiting period has passed, the delegate account can now e
 
 1. In the navbar menu, navigate to **Developers** → **Extrinsics**.
 2. Under “using the selected account”, pick the delegator account.
-3. Under “submit the following extrinsic”, choose the `proxy` pallete and call `removeProxy(delegate, proxyType, delay)`.
+3. Under "submit the following extrinsic", choose the `proxy` pallet and call `removeProxy(delegate, proxyType, delay)`.
 4. Fill the parameters:
 
    - `delegate`: select the imported delegate account from the _Accounts_ dropdown.
-   - `proxyType`: select `SmallTransfer`; this should allow us transfer amounts that do not exceed 0.5τ.
+   - `proxyType`: select `SmallTransfer`; this should allow us to transfer amounts that do not exceed 0.5τ.
    - `delay`: Optionally, include a delay in blocks.
 
 5. Click **Submit Transaction** and sign with the _delegator_ account.
