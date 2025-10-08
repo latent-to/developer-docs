@@ -36,7 +36,7 @@ You can't choose an address directly, but attackers can **brute-force generate m
 - Matching 14 characters: requires dedicated computing
 - Matching 20 characters: requires GPU clusters (some attackers use these!)
 
-The research found that one attack group spent an estimated \$1.7 million on computing to generate their lookalike addresses, but made \$4 million in profit. The economics work.
+[Research](#research-source) found that one attack group spent an estimated \$1.7 million on computing to generate their lookalike addresses, but made \$4 million in profit.
 
 Whether you're:
 - Transferring TAO
@@ -44,10 +44,9 @@ Whether you're:
 - Delegating to validators
 - Sending funds to a coldkey
 
-
 ## The Economics: Why This Scam Is So Prevalent
 
-Address poisoning is a highly profitable criminal enterprise:
+[Research](#research-source) shows address poisoning is a highly profitable criminal enterprise:
 
 - Low success rate, high volume: Only 0.01% of poisoning attempts succeed, but scammers compensate by attacking millions of victims
 - Organized crime: The largest attack groups have made $26+ million in profit over two years
@@ -58,7 +57,7 @@ One successful attack of $20,000 pays for 20,000 failed attempts. The math works
 
 ## Who's Most at Risk?
 
-Research shows that scammers don't attack randomly. They specifically target users who:
+[Research](#research-source) shows that scammers don't attack randomly. They specifically target users who:
 
 - Have high balances: Victims targeted had significantly more funds than average users
 - Are very active: Users making frequent transactions are attacked more often
@@ -125,7 +124,7 @@ Further reading:
 - [Working with Keys](../keys/working-with-keys.md)
 - [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security.md)
 
-
+### Research Source
 This guide is based on the largest study of this scam to date: Tsuchiya, T., Dong, J.-D., Soska, K., & Christin, N. (2025). "Blockchain Address Poisoning," in *Proceedings of the 34th USENIX Security Symposium*. Seattle, WA, USA. [https://www.usenix.org/conference/usenixsecurity25/presentation/tsuchiya](https://www.usenix.org/conference/usenixsecurity25/presentation/tsuchiya)
 
 Key Research Findings:
