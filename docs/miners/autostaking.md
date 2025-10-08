@@ -10,22 +10,19 @@ Auto staking allows miners to automatically stake their mining income to a valid
 
 The auto staking feature enables miners to set a destination validator where their mining emissions will be automatically staked. This eliminates the need for manual staking operations and ensures that mining rewards are continuously reinvested into the network.
 
-## How Auto Staking Works
 
-When auto staking is enabled:
-
-1. **Mining Income**: As a miner earns emissions from your subnet participation
-2. **Automatic Staking**: These emissions are automatically staked to your chosen validator
-3. **Compound Growth**: Your stake grows automatically without manual intervention
-4. **Validator Selection**: You choose which validator receives your auto-staked TAO
-
-## Setting Up Auto Staking
+When auto staking is set, as a miner earns emissions from your subnet participation, their emissions are automatically staked to a specified validator. This conveniently allows miners to grow their stake as they earn it, without the need for repetitive manual stake movement operations.
 
 ### Prerequisites
 
-- A coldkey
+- A wallet with a coldkey and hotkey
 - A target hotkey to receive the auto-staked TAO (can be any hotkey, including the miner's own hotkey)
-
+- In order to  follow along with this tutorial and see autostaking in action:
+    - [Run a Local Bittensor Blockchain Instance](../local-build/deploy)
+    - [Create a subnet on a local blockchain](../local-build/create-subnet)
+    - [Provision wallets for miner and validator, and register them on the subnet, in preparation for mining.]
+    
+    Once you have accomplished the above, you should be able to see both miner and validator registered on the subnet
 
 ### Configuration
 
@@ -63,6 +60,110 @@ Source: [`subtensor/pallets/subtensor/src/lib.rs:1086-1088`](https://github.com/
 ### Checking Auto Staking Status
 
 You can check your auto staking configuration by querying the `AutoStakeDestination` storage map for your coldkey.
+
+## Autostaking with btcli
+
+You can view and set auto-stake destinations directly from the CLI.
+
+### View current auto-stake destinations
+
+- Shows the target hotkey per subnet for a given coldkey. If none is set, the output notes the default behavior.
+
+Examples:
+
+```bash
+# By wallet name (uses your configured wallet path)
+btcli stake auto --wallet.name <wallet>
+
+# By coldkey SS58 address
+btcli stake auto --ss58 <coldkey-ss58>
+
+# JSON output
+btcli stake auto --wallet.name <wallet> --json-output
+
+# Specify network explicitly (default is finney)
+btcli stake auto --wallet.name <wallet> --network finney
+```
+
+### Set auto-stake destination
+
+- Sets the destination hotkey for a specific subnet. You can paste a hotkey SS58 directly or press Enter to select from a list of top validators (with identities) on that subnet.
+
+Examples:
+
+```bash
+# Interactive: prompts for hotkey or lets you select from validators
+btcli stake set-auto --wallet.name <wallet> --netuid <netuid>
+
+# Specify network explicitly
+btcli stake set-auto --wallet.name <wallet> --netuid <netuid> --network finney
+
+# Control waiting behavior
+btcli stake set-auto --wallet.name <wallet> --netuid <netuid> \
+  --wait-for-inclusion --wait-for-finalization
+```
+
+Notes:
+- The command currently operates on a single `netuid` at a time.
+- Destination must be a hotkey SS58 (e.g., a validator hotkey) on the specified subnet.
+- Flags like `--wallet.name`, `--wallet.path`, `--network`, `--json-output`, `--wait-for-inclusion`, and `--wait-for-finalization` are supported.
+
+## Autostaking with Python SDK
+
+Use the asynchronous SDK to read and configure auto-stake.
+
+### View current auto-stake destinations
+
+```python
+import asyncio
+import bittensor as bt
+
+async def main():
+    async with bt.async_subtensor(network="test") as subtensor:
+        coldkey_ss58 = "5F..."  # replace with your coldkey SS58
+        pairs = await subtensor.get_auto_stakes(coldkey_ss58=coldkey_ss58)
+        if not pairs:
+            print("No auto-stake destinations set.")
+        else:
+            for netuid, hotkey in pairs.items():
+                print(f"netuid {netuid}: {hotkey}")
+
+asyncio.run(main())
+```
+
+### Set auto-stake destination
+
+```python
+import asyncio
+import bittensor as bt
+
+async def main():
+    async with bt.async_subtensor(network="test") as subtensor:
+        wallet = bt.wallet(
+            name="ExampleWalletName",
+            hotkey="ExampleHotkey",
+        )
+        wallet.unlock_coldkey()
+
+        netuid = 3  # subnet to configure
+        hotkey_ss58 = "5..."  # validator hotkey to auto-stake to
+
+        success, msg = await subtensor.set_auto_stake(
+            wallet=wallet,
+            netuid=netuid,
+            hotkey_ss58=hotkey_ss58,
+            wait_for_inclusion=True,
+            wait_for_finalization=False,
+        )
+        print("Success" if success else f"Failed: {msg}")
+
+asyncio.run(main())
+```
+
+Notes:
+- `get_auto_stakes(coldkey_ss58)` returns `{netuid: destination_hotkey_ss58}`.
+- `set_auto_stake(...)` configures a single `netuid` per call and returns `(success: bool, message: str)`.
+- Ensure the destination is a valid hotkey SS58 on the target subnet.
 
 ## Benefits of Auto Staking
 
