@@ -21,6 +21,10 @@ The weight matrix is public information, and must be, so that emissions in the B
 
 The commit reveal feature is designed to solve the weight copying problem by giving would-be weight copiers access only to stale weights. Copying stale weights should result in validators departing from consensus. However, it is critical to note that this only works if the consensus weight matrix changes sufficiently on the time scale of the commit reveal interval. If the demands on miners are too static, and miner performance is very stable, weight copying will still be successful. The only solution for this is to demand continuous improvement from miners, requiring them to continuously evolve to maintain their scoring. Combined with a properly tuned Commit Reveal interval, this will keep validators honest, as well as producing the best models.
 
+:::tip Learn more about weight copying
+For a detailed explanation of how weight copying works, why it's problematic, and how commit-reveal prevents it, see [Weight Copying in Bittensor](./weight-copying-in-bittensor.md).
+:::
+
 ## Commit Reveal and Immunity Period
 
 The [Immunity Period](../resources/glossary.md#immunity-period) is the interval (measured in blocks) during which a miner or validator newly registered on a subnet is 'immune' from deregistration due to performance. The duration of this period value should always be larger than the Commit Reveal interval, otherwise the immunity period will expire before a given miner's scores are available, and they may be deregistered without having their work counted.

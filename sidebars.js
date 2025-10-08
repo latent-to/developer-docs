@@ -217,6 +217,7 @@ const sidebars = {
       items: [
         "concepts/bittensor-networks",
         "concepts/commit-reveal",
+        "concepts/weight-copying-in-bittensor",
         "concepts/consensus-based-weights",
         "concepts/bt-logging-levels",
         "resources/utilities",
