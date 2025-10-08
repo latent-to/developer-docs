@@ -4,45 +4,44 @@ title: "Address Poisoning Scams: Protect Your Wallet"
 
 # Address Poisoning Scams: Protect Your Wallet
 
-Address poisoning is one of the most successful cryptocurrency scams, with over **$83 million stolen** from more than 6,600 victims on Ethereum and Binance Smart Chain alone. Because Bittensor uses similar wallet addresses, you need to know how to protect yourself.
+Address poisoning is one of the most successful cryptocurrency scams, with over $83 million stolen from more than 6,600 victims on Ethereum and Binance Smart Chain alone. Because Bittensor uses similar wallet addresses, users of Bittensor wallets should understand how to protect themselves.
 
 ## What is Address Poisoning?
 
-Address poisoning exploits a simple human weakness: **we're all busy, and long wallet addresses are hard to read**.
+Address poisoning exploits a simple human weakness: long wallet addresses are hard to read.
 
 Here's how the scam works:
 
-1. **You make a transaction** to a legitimate address (like `0x3b75...2712a`)
-2. **The scammer generates a fake address** that looks very similar (like `0x3b75...2712b` or `0x3b74...2712a`)
-   - They do this by brute-force generating millions of private keys and checking the resulting addresses
-   - When they find one that matches the first and last characters of your recipient's address, they keep it
+1. You make a transaction to a legitimate address (like `0x3b75...2712a`)
+2. An attacker generates a fake address that looks very similar (like `0x3b75...2712b` or `0x3b74...2712a`)
+   - They do this by brute-force generating millions of private keys and checking for matches with target addresses
+   - When they find one that matches the first and last characters of a target's address, they keep it
    - This is computationally expensive but profitable - it's called "vanity address generation"
-3. **Within minutes—often less than 20 minutes—the scammer "poisons" your transaction history** by sending you a tiny amount (or even zero) of tokens from their fake address
-4. **Later, when you're in a hurry**, you copy an address from your recent transactions or wallet history
-5. **You accidentally send funds to the scammer's lookalike address** instead of your intended recipient
+3. Within minutes—often less than 20 minutes—the scammer "poisons" your transaction history by sending you a tiny amount (or even zero) of tokens from their fake address
+4. Later, when you're in a hurry, you copy an address from your recent transactions or wallet history
+5. You accidentally send funds to the scammer's lookalike address instead of your intended recipient
 
 The transactions are irreversible. Your funds are gone.
 
 ## Why This Scam Works
 
-This isn't about technical sophistication—it's about **social engineering**:
+This isn't about technical sophistication—it's about social engineering:
 
-- **We're all busy**: You don't have time to verify every character in a 40-character address
-- **We rely on patterns**: Most wallet apps only show the first and last few characters (like `0x3b75...2712a`)
-- **We trust our history**: If an address appears in your recent transactions, it feels legitimate
-- **One mistake is enough**: Unlike traditional phishing, this scam only requires one moment of inattention
-- **Competition makes it worse**: Research shows that in 79% of successful attacks, multiple scammer groups were competing to trick the same victim—flooding their transaction history with lookalike addresses
+- We're all busy: You don't have time to verify every character in a 40-character address
+- We rely on patterns: Most wallet apps only show the first and last few characters (like `0x3b75...2712a`)
+- We trust our history: If an address appears in your recent transactions, it feels legitimate
+- One mistake is enough: Unlike traditional phishing, this scam only requires one moment of inattention
 
 ### Who's Most at Risk?
 
 Research shows that scammers don't attack randomly. They specifically target users who:
 
-- **Have high balances**: Victims targeted had significantly more funds than average users
-- **Are very active**: Users making frequent transactions are attacked more often
-- **Make large transfers**: The bigger your typical transaction, the more likely you are to be targeted
-- **Use centralized exchanges**: Many attackers generate fake addresses mimicking exchange deposit addresses
+- Have high balances: Victims targeted had significantly more funds than average users
+- Are very active: Users making frequent transactions are attacked more often
+- Make large transfers: The bigger your typical transaction, the more likely you are to be targeted
+- Use centralized exchanges: Many attackers generate fake addresses mimicking exchange deposit addresses
 
-**If you're an active Bittensor participant**—staking, delegating, validating, or mining—**you are likely in the high-risk category**.
+If you're an active Bittensor participant—staking, delegating, validating, or mining—you are likely in the high-risk category.
 
 ## What Makes Bittensor Vulnerable?
 
@@ -64,52 +63,50 @@ Whether you're:
 - Delegating to validators
 - Sending funds to a coldkey
 
-**Every transaction requires the same vigilance.**
+
 
 ## The Economics: Why This Scam Is So Prevalent
 
-Address poisoning is a **highly profitable criminal enterprise**:
+Address poisoning is a highly profitable criminal enterprise:
 
-- **Low success rate, high volume**: Only 0.01% of poisoning attempts succeed, but scammers compensate by attacking millions of victims
-- **Organized crime**: The largest attack groups have made $26+ million in profit over two years
-- **Cheap to execute**: Each poisoning attempt costs only about \$1 on Ethereum and $0.01 on BSC
-- **Sophisticated operations**: Some groups use GPU computing to generate extremely convincing lookalike addresses with 20 matching characters
+- Low success rate, high volume: Only 0.01% of poisoning attempts succeed, but scammers compensate by attacking millions of victims
+- Organized crime: The largest attack groups have made $26+ million in profit over two years
+- Cheap to execute: Each poisoning attempt costs only about \$1 on Ethereum and $0.01 on BSC
+- Sophisticated operations: Some groups use GPU computing to generate extremely convincing lookalike addresses with 20 matching characters
 
 One successful attack of $20,000 pays for 20,000 failed attempts. The math works in favor of the scammers.
 
 
 ## How to Protect Yourself
 
-Address poisoning succeeds because of one thing: **inattention during routine tasks**.
+Address poisoning succeeds because of one thing: inattention during routine tasks.
 
 The best defense is simple but requires discipline:
-- **Slow down** when sending transactions
-- **Verify addresses completely** before clicking send
-- **Use an address book** instead of transaction history
-- **Trust your caution**, not your convenience
+- Slow down when sending transactions
+- Verify addresses completely before clicking send
+- Use an address book instead of transaction history
+- Trust your caution, not your convenience
 
-Five extra seconds of verification can save you thousands of dollars.
+Five extra seconds of verification can save you thousands of dollars. These aren't random attacks. If you're an active user with significant holdings, you're likely being targeted right now. Your transaction history may already be poisoned.
 
-**Remember**: These aren't random attacks. If you're an active user with significant holdings, you're likely being targeted right now. Your transaction history may already be poisoned.
-
-### 1. **Always Double-Check the Full Address**
+### 1. Always Double-Check the Full Address
 
 Before sending any transaction:
-- **Expand and read the complete address**, not just the abbreviated version
+- Expand and read the complete address, not just the abbreviated version
 - Check the beginning AND the end—scammers match both
 - If possible, verify the address through a second channel (message the recipient, check a saved note, etc.)
 
-### 2. **Use an Address Book**
+### 2. Use an Address Book
 
 - Maintain a saved list of trusted addresses with clear labels
-- **Never select addresses from your transaction history**—always use your saved address book
+- Never select addresses from your transaction history—always use your saved address book
 - Most wallet applications support address books or contact lists
 
-### 3. **Be Suspicious of Unexpected Transfers**
+### 3. Be Suspicious of Unexpected Transfers
 
 Scammers exist, so do not give unknown parties "the benefit of the doubt." If you receive unexpected transfers for very small amounts ("dust"), they are likely attempts to seed your transaction history for address poisoning.
 
-### 4. **Send a Test Transaction First**
+### 4. Send a Test Transaction First
 
 For large transfers:
 - Send a very small amount first
@@ -118,22 +115,22 @@ For large transfers:
 
 This two-step process can save you from a costly mistake.
 
-### 5. **Use Wallet Apps with Protection Features**
+### 5. Use Wallet Apps with Protection Features
 
 Some wallet applications and blockchain scanners now flag suspicious addresses or hide poisoning attempts. Keep your wallet software updated.
 
 The [TAO.app](https://www.tao.app) UI includes a warning for addresses flagged as suspicious.
 
-### 6. **Never Rush Important Transactions**
+### 6. Never Rush Important Transactions
 
 Scammers count on you being in a hurry. If you're tired, distracted, or rushing your procedures, consider taking a break before conducting irreversible blockchain transactions. The blockchain will still be there in an hour. Your funds won't be if you make a mistake.
 
 
 ## Learn More
 
-Your private key is your identity in cryptocurrency. One careless transaction can mean permanent, irreversible loss. **Always verify. Always double-check.**
+Your private key is your identity in cryptocurrency. One careless transaction can mean permanent, irreversible loss. Always verify. Always double-check.
 
-**Further reading:**
+Further reading:
 
 - [Wallets, Coldkeys and Hotkeys in Bittensor](../keys/wallets.md)
 - [Working with Keys](../keys/working-with-keys.md)
@@ -142,11 +139,11 @@ Your private key is your identity in cryptocurrency. One careless transaction ca
 
 This guide is based on the largest study of this scam to date: Tsuchiya, T., Dong, J.-D., Soska, K., & Christin, N. (2025). "Blockchain Address Poisoning," in *Proceedings of the 34th USENIX Security Symposium*. Seattle, WA, USA. [https://www.usenix.org/conference/usenixsecurity25/presentation/tsuchiya](https://www.usenix.org/conference/usenixsecurity25/presentation/tsuchiya)
 
-**Key Research Findings:**
+Key Research Findings:
 
-- **270 million attack attempts** detected over two years (2022-2024)
-- **17 million victims** targeted on Ethereum and Binance Smart Chain
-- **$83.8 million stolen** in 6,633 successful attacks
-- **49 distinct attack groups** identified, some operating like organized crime syndicates
-- **13x more attacks** than previously reported in earlier research
+- 270 million attack attempts detected over two years (2022-2024)
+- 17 million victims targeted on Ethereum and Binance Smart Chain
+- $83.8 million stolen in 6,633 successful attacks
+- 49 distinct attack groups identified, some operating like organized crime syndicates
+- 13x more attacks than previously reported in earlier research
 - Attackers exploit the same vulnerability across all EVM-compatible blockchains (including those using Substrate)
