@@ -76,6 +76,7 @@ const sidebars = {
         "resources/community-links",
       ],
     },
+<<<<<<< HEAD
     {
       type: "category",
       label: "Research",
