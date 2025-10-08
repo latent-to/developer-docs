@@ -56,7 +56,7 @@ You can't choose an address directly, but attackers can **brute-force generate m
 - Matching 14 characters: requires dedicated computing
 - Matching 20 characters: requires GPU clusters (some attackers use these!)
 
-The research found that one attack group spent an estimated **$1.7 million on computing** to generate their lookalike addresses, but made **$4 million in profit**. The economics work.
+The research found that one attack group spent an estimated \$1.7 million on computing to generate their lookalike addresses, but made \$4 million in profit. The economics work.
 
 Whether you're:
 - Transferring TAO
@@ -72,7 +72,7 @@ Address poisoning is a **highly profitable criminal enterprise**:
 
 - **Low success rate, high volume**: Only 0.01% of poisoning attempts succeed, but scammers compensate by attacking millions of victims
 - **Organized crime**: The largest attack groups have made $26+ million in profit over two years
-- **Cheap to execute**: Each poisoning attempt costs only about $1 on Ethereum and $0.01 on BSC
+- **Cheap to execute**: Each poisoning attempt costs only about \$1 on Ethereum and $0.01 on BSC
 - **Sophisticated operations**: Some groups use GPU computing to generate extremely convincing lookalike addresses with 20 matching characters
 
 One successful attack of $20,000 pays for 20,000 failed attempts. The math works in favor of the scammers.
