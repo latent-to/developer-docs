@@ -76,14 +76,6 @@ const sidebars = {
         "resources/community-links",
       ],
     },
-<<<<<<< HEAD
-    {
-      type: "category",
-      label: "Research",
-      collapsible: true,
-      collapsed: true,
-      items: ["research/synchronized-halving", "research/halvings-problem"],
-    },
     {
       type: "category",
       label: "Wallets and Keys",
