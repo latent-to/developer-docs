@@ -47,20 +47,20 @@ const sidebars = {
       collapsed: true,
       items: [
         "learn/introduction",
-        "resources/questions-and-answers",        
+        "resources/questions-and-answers",
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
 
         "subnets/understanding-multiple-mech-subnets",
         "learn/neurons",
-        
+
         "learn/emissions",
         "learn/ema",
         "learn/yuma-consensus",
         "learn/yc3-blog",
         "learn/yuma3-migration-guide",
         "learn/fees",
-        "learn/chain-rate-limits",    
+        "learn/chain-rate-limits",
         {
           type: "category",
           label: "Navigating Subtensor Codebase",
@@ -76,16 +76,16 @@ const sidebars = {
         "resources/community-links",
       ],
     },
-    {
-      type: "category",
-      label: "Research",
-      collapsible: true,
-      collapsed: true,
-      items: [
-      "research/synchronized-halving",
-        "research/halvings-problem",                
-      ],
-    },
+    // {
+    //   type: "category",
+    //   label: "Research",
+    //   collapsible: true,
+    //   collapsed: true,
+    //   items: [
+    //   "research/synchronized-halving",
+    //     "research/halvings-problem",
+    //   ],
+    // },
     {
       type: "category",
       label: "Staking/Delegation",
@@ -245,7 +245,7 @@ const sidebars = {
       items: [
         "subtensor-nodes/subtensor-node-requirements",
         "subtensor-nodes/using-source",
-        "subtensor-nodes/using-docker",        
+        "subtensor-nodes/using-docker",
         "subtensor-nodes/subtensor-storage-query-examples",
       ],
     },

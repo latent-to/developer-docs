@@ -16,8 +16,6 @@ A UID slot that is considered active within a specific subnet, allowing the asso
 
 A metric that compares ALPHA tokens held by participants versus ALPHA tokens remaining in the AMM pool. ADR is calculated as the ratio of emissions to injections, measuring how much ALPHA goes to people (emissions) relative to how much is put into the pool (injections). A higher ADR means liquidation happens at a deeper discount to spot price. Under the current protocol, ADR tracks 2^(k - n), where k is the global TAO halving index and n is the subnet's ALPHA halving index.
 
-**See also:** [Token Halvings Problem and Solution](../research/synchronized-halving.md), [Token Halvings Problem and Solution: FAQ](../research/halvings-problem.md)
-
 ### Archive Node
 
 A type of public subtensor node that stores the entire blockchain history, allowing for full data access and querying capabilities.
@@ -274,7 +272,6 @@ A portion of the TAO emission received by the subnet miners when they provide va
 
 A system that drives the behavior of subnet miners and governs consensus among subnet validators in a Bittensor subnet. Each subnet has one or more incentive mechanisms, which should be designed carefully to promote desired behaviors and penalize undesired ones. When multiple incentive mechanisms are used, each operates independently with separate bond pools for Yuma Consensus calculations, allowing subnet creators to distribute emissions across different types of work or evaluation criteria.
 
-
 **See also:** [Anatomy of Incentive Mechanism](../learn/anatomy-of-incentive-mechanism.md), [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets), [Understanding Subnets](../subnets/understanding-subnets.md)
 
 ### Issuance
@@ -330,7 +327,6 @@ A data structure that contains comprehensive information about the current state
 ### Multiple Incentive Mechanisms
 
 A feature that allows subnets to implement multiple independent evaluation systems within a single subnet. Each mechanism operates with its own bond pool for Yuma Consensus calculations, enabling subnet creators to distribute emissions across different types of work or evaluation criteria. Validators must evaluate miners separately for each mechanism, and miner performance in one mechanism does not affect their rating in another.
-
 
 **See also:** [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets), [Anatomy of Incentive Mechanism](../learn/anatomy-of-incentive-mechanism.md)
 
@@ -608,7 +604,6 @@ A Bittensor subnet is an incentive-based competition market that produces a spec
 
 **See also:** [Understanding Subnets](../subnets/understanding-subnets.md), [Working with Subnets](../subnets/working-with-subnets.md), [Create a Subnet](../subnets/create-a-subnet.md)
 
-
 ### Subnet Miner
 
 The task-performing entity within a Bittensor subnet. A subnet miner is a type of node in a Bittensor subnet that is connected only to subnet validators. Subnet miners are isolated from the external world and communicate bidirectionally with subnet validators. A subnet miner is responsible for performing tasks given to them by the subnet validators in that subnet.
@@ -619,9 +614,7 @@ The task-performing entity within a Bittensor subnet. A subnet miner is a type o
 
 The individual or entity responsible for defining the specific digital task to be performed by subnet miners, implementing one or more incentive mechanisms, and providing sufficient documentation for participation in the subnet. Subnet creators can configure multiple incentive mechanisms to distribute emissions across different types of work or evaluation criteria.
 
-
 **See also:** [Create a Subnet](../subnets/create-a-subnet.md), [Subnet Creators btcli Guide](../subnets/subnet-creators-btcli-guide.md), [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets)
-
 
 ### Subnet Protocol
 
@@ -633,17 +626,13 @@ A unique set of rules defining interactions between subnet validators and miners
 
 A component of an incentive mechanism that defines how subnet miners' responses are evaluated, aiming to align subnet miner behavior with the subnet's goals and user preferences. It is a mathematical object that converts miner responses into numerical scores, enabling continuous improvement and competition among miners. When multiple incentive mechanisms are used, each has its own scoring model for independent evaluation.
 
-
 **See also:** [Anatomy of Incentive Mechanism](../learn/anatomy-of-incentive-mechanism.md), [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets), [Understanding Subnets](../subnets/understanding-subnets.md)
-
 
 ### Subnet Task
 
 A key component of any incentive mechanism that defines the work the subnet miners will perform. The task should be chosen to maximize subnet miner effectiveness at the intended use case for the subnet. When multiple incentive mechanisms are used within a subnet, each mechanism can define different tasks for miners to perform.
 
-
 **See also:** [Understanding Subnets](../subnets/understanding-subnets.md), [Anatomy of Incentive Mechanism](../learn/anatomy-of-incentive-mechanism.md), [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets)
-
 
 ### Subnet Weights
 
@@ -969,9 +958,7 @@ The directory path where the generated Bittensor wallets are stored locally on t
 
 A matrix formed from the ranking weight vectors of all subnet validators in a subnet, used as input for the Yuma Consensus module to calculate emissions to that subnet. When multiple incentive mechanisms are used, each mechanism has its own weight matrix for independent consensus calculations.
 
-
 **See also:** [Yuma Consensus](../learn/yuma-consensus.md), [Consensus-Based Weights](../concepts/consensus-based-weights.md), [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets)
-
 
 ### Weight Vector
 
@@ -980,7 +967,6 @@ A vector maintained by each subnet validator, with each element representing the
 The ranking weight vectors for each subnet are transmitted to the blockchain, where they combine to form the [weight matrix](#weight-matrix) (or matrices when multiple mechanisms are used) that is input for Yuma Consensus.
 
 **See also:** [Consensus-Based Weights](../concepts/consensus-based-weights.md), [Yuma Consensus](../learn/yuma-consensus.md), [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets)
-
 
 ## Y
 
