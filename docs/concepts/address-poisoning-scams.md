@@ -23,25 +23,6 @@ Here's how the scam works:
 
 The transactions are irreversible. Your funds are gone.
 
-## Why This Scam Works
-
-This isn't about technical sophistication—it's about social engineering:
-
-- We're all busy: You don't have time to verify every character in a 40-character address
-- We rely on patterns: Most wallet apps only show the first and last few characters (like `0x3b75...2712a`)
-- We trust our history: If an address appears in your recent transactions, it feels legitimate
-- One mistake is enough: Unlike traditional phishing, this scam only requires one moment of inattention
-
-### Who's Most at Risk?
-
-Research shows that scammers don't attack randomly. They specifically target users who:
-
-- Have high balances: Victims targeted had significantly more funds than average users
-- Are very active: Users making frequent transactions are attacked more often
-- Make large transfers: The bigger your typical transaction, the more likely you are to be targeted
-- Use centralized exchanges: Many attackers generate fake addresses mimicking exchange deposit addresses
-
-If you're an active Bittensor participant—staking, delegating, validating, or mining—you are likely in the high-risk category.
 
 ## What Makes Bittensor Vulnerable?
 
@@ -64,7 +45,6 @@ Whether you're:
 - Sending funds to a coldkey
 
 
-
 ## The Economics: Why This Scam Is So Prevalent
 
 Address poisoning is a highly profitable criminal enterprise:
@@ -75,6 +55,15 @@ Address poisoning is a highly profitable criminal enterprise:
 - Sophisticated operations: Some groups use GPU computing to generate extremely convincing lookalike addresses with 20 matching characters
 
 One successful attack of $20,000 pays for 20,000 failed attempts. The math works in favor of the scammers.
+
+## Who's Most at Risk?
+
+Research shows that scammers don't attack randomly. They specifically target users who:
+
+- Have high balances: Victims targeted had significantly more funds than average users
+- Are very active: Users making frequent transactions are attacked more often
+- Make large transfers: The bigger your typical transaction, the more likely you are to be targeted
+- Use centralized exchanges: Many attackers generate fake addresses mimicking exchange deposit addresses
 
 
 ## How to Protect Yourself
