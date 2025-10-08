@@ -156,7 +156,7 @@ After the announcement waiting period has passed, the delegate account can now e
 :::info
 
 - The call details must exactly match the original announcement. Any change—such as modifying the recipient or amount—will result in a `proxy.Unannounced` error.
-- Once a delayed proxy call is executed, its announcement is cleared. To run another proxy with the same details, you must create a new announcement.
+- Once a delayed proxy call is executed, its announcement is cleared. To execute another proxy with the same details, you must create a new announcement and wait for the waiting period to pass.
   :::
 
 ---
