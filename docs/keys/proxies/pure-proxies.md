@@ -25,7 +25,7 @@ All transactions involving a pure proxy must be signed by the delegator account.
 When submitting calls with the `proxy(real, forceProxyType, call)` extrinsic, the pure proxy account is passed as the `real` argument, while the delegator signs the transaction. This effectively reverses the usual proxy relationship where the proxy account only authorizes the transaction, while the real account appears as the origin on chain.
 
 :::info
-You can modify who signs for a pure proxy by assigning another account as its _any proxy_. This is done by executing a proxy call that creates a standard proxy with the `Any` proxy type. The new account can then sign on behalf of the pure proxy—for example, when updating signers in a multisig wallet.
+You can modify who signs for a pure proxy by assigning another account as its _any proxy_. This is done by executing a proxy call that creates a standard proxy with the `Any` proxy type. The new account can then sign on behalf of the pure proxy—for example, when updating signers in a multisig wallet. See [source code: pure proxy account generation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L827-L850).
 :::
 
 ## Prerequisites
@@ -39,7 +39,7 @@ You can modify who signs for a pure proxy by assigning another account as its _a
 
 ## Create a pure proxy
 
-Use the `proxy::createPure` extrinsic to create a pure proxy as shown:
+Use the `proxy::createPure` extrinsic to create a pure proxy as shown. See [source code: `createPure` implementation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L328-L360):
 
 1. In the navbar menu, navigate to **Developers** → **Extrinsics**.
 2. Under “using the selected account”, pick the delegator account.
@@ -92,7 +92,7 @@ Importing the proxy account makes it selectable in the Polkadot-JS web app UI.
 
 ### Kill a pure proxy
 
-Pure proxies are killed using the `killPure` extrinsic as shown:
+Pure proxies are killed using the `killPure` extrinsic as shown. See [source code: `killPure` implementation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L380-L406):
 
 1. Go to **Developer** → **Extrinsics**.
 2. Under “using the selected account”, choose the pure proxy account.
@@ -114,6 +114,6 @@ Killing a pure proxy permanently deletes the account and releases its reserved d
 ## Troubleshooting
 
 - `Token.FundsUnavailable`: Ensure thhat the pure proxy account has been funded and has enough funds to cover the transfer.
-- `proxy.NotProxy`: Ensure you’re executing the pure proxy correctly—from the creator account and referencing the pure proxy account as `real`.
-- `Proxy.NoPermission`: The `killPure` call is not permitted under the current.
+- `proxy.NotProxy`: Ensure you're executing the pure proxy correctly—from the creator account and referencing the pure proxy account as `real`. See [source code: `NotProxy` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L735).
+- `Proxy.NoPermission`: The `killPure` call is not permitted under the current. See [source code: `NoPermission` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L741).
 - `system.CallFiltered`: The call is not permitted under the current `ProxyType`.

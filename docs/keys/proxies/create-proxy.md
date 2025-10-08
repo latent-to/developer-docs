@@ -94,7 +94,7 @@ After submitting the transaction, check the Polkadot.JS web app's **Explorer** p
 
 :::warning
 
-- With the SmallTransfer proxy type, transfers are limited to less than 0.5 TAO (500,000,000 RAO). Use the Transfer proxy type for amounts above this limit.
+- With the SmallTransfer proxy type, transfers are limited to less than 0.5 TAO (500,000,000 RAO). Use the Transfer proxy type for amounts above this limit. See [source code: SmallTransfer limit definition](https://github.com/opentensor/subtensor/blob/main/common/src/lib.rs#L43).
 - The delegate account must hold enough funds to cover transaction fees, which are approximately 25 µTAO (0.000025 TAO).
   :::
 
@@ -178,9 +178,9 @@ After the announcement waiting period has passed, the delegate account can now e
 
 ## Troubleshooting
 
-- `proxy.Duplicate`: A proxy with the same configuration already exists on the real account.
-- `proxy.Unannounced`: A non-zero delay proxy requires an announcement; announce and wait the delay.
-- `proxy.Unproxyable`/`system.CallFiltered`: The call is not permitted under the current `ProxyType`.
-- `proxy.TooMany`: You exceeded `MaxProxies` or `MaxPending`. Remove unused proxies/announcements.
-- `proxy.NotProxy`: Ensure you’re submitting from the delegate account and referencing the correct real account.
+- `proxy.Duplicate`: A proxy with the same configuration already exists on the real account. See [source code: `Duplicate` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L739).
+- `proxy.Unannounced`: A non-zero delay proxy requires an announcement; announce and wait the delay. See [source code: `Unannounced` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L743).
+- `proxy.Unproxyable`/`system.CallFiltered`: The call is not permitted under the current `ProxyType`. See [source code: `Unproxyable` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L737).
+- `proxy.TooMany`: You exceeded `MaxProxies` or `MaxPending`. Remove unused proxies/announcements. See [source code: `TooMany` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L731).
+- `proxy.NotProxy`: Ensure you're submitting from the delegate account and referencing the correct real account. See [source code: `NotProxy` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L735).
 - `Token.FundsUnavailable`: Ensure that your real account has enough available funds to cover the transaction.

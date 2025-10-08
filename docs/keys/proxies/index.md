@@ -65,7 +65,7 @@ The following table shows the available `ProxyType` options and their descriptio
 | `NonCritical`            | Allows only non-critical operations.                                                |
 | `NonTransfer`            | Blocks all transfer operations.                                                     |
 | `Senate`                 | Allows senate governance operations.                                                |
-| `NonFungible`            | Blocks all TAO transfer or movement.                                                |
+| `NonFungibile` (sic)     | Blocks all TAO transfer or movement.                                                |
 | `Triumvirate`            | Allows triumvirate governance operations.                                           |
 | `Governance`             | Covers both senate and triumvirate governance operations.                           |
 | `Staking`                | Allows staking-related operations.                                                  |
@@ -76,6 +76,8 @@ The following table shows the available `ProxyType` options and their descriptio
 | `SudoUncheckedSetCode`   | Restricted to a single privileged call form.                                        |
 | `SwapHotkey`             | Allows hotkey swap operations.                                                      |
 | `SubnetLeaseBeneficiary` | Allows management of leased subnets.                                                |
+
+See [source code: ProxyType enum definition](https://github.com/opentensor/subtensor/blob/main/common/src/lib.rs#L144-L162) and [source code: proxy filtering implementation](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L678-L884).
 
 ### Choosing the Right `ProxyType`
 
@@ -92,8 +94,8 @@ Only use the unrestricted `Any` type when no other option fits. If a proxy call 
 
 To ensure scalability and prevent abuse, proxy usage is subject to certain limits as shown:
 
-- **`MaxProxies`**: This refers to the maximum number of delegate accounts that can be linked to a single real account. Each account can register up to 20 proxies in total. See [source code](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L644).
-- **`MaxPending`**: This refers to the maximum number of pending announcements that a delegate account can have. This limit helps prevent excessive queuing. Each account can have up to 75 pending announcements at a time. See [source code](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L645).
+- **`MaxProxies`**: This refers to the maximum number of delegate accounts that can be linked to a single real account. Each account can register up to 20 proxies in total. See [source code: MaxProxies configuration](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L670).
+- **`MaxPending`**: This refers to the maximum number of pending announcements that a delegate account can have. This limit helps prevent excessive queuing. Each account can have up to 75 pending announcements at a time. See [source code: MaxPending configuration](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L671).
 
 ## Best practices for using proxies
 
