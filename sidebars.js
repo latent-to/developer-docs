@@ -203,7 +203,7 @@ const sidebars = {
         "keys/handle-seed-phrase",
         "keys/coldkey-hotkey-security",
         "keys/working-with-keys",
-        "concepts/address-poisoning-scams",
+        "keys/address-poisoning-scams",
         "keys/multisig",
         "keys/schedule-coldkey-swap",
       ],
