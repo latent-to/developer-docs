@@ -76,16 +76,31 @@ const sidebars = {
         "resources/community-links",
       ],
     },
-    // {
-    //   type: "category",
-    //   label: "Research",
-    //   collapsible: true,
-    //   collapsed: true,
-    //   items: [
-    //   "research/synchronized-halving",
-    //     "research/halvings-problem",
-    //   ],
-    // },
+    {
+      type: "category",
+      label: "Wallets and Keys",
+      collapsible: true,
+      collapsed: true,
+      items: [
+        "keys/wallets",
+        "keys/working-with-keys",        
+        "keys/handle-seed-phrase",
+        "keys/coldkey-hotkey-security",
+        "keys/address-poisoning-scams",
+        {
+          type: "category",
+          label: "Proxies",
+          collapsible: true,
+          collapsed: true,
+          link: { type: "doc", id: "keys/proxies/index" },
+          items: ["keys/proxies/create-proxy", "keys/proxies/pure-proxies"],
+        },
+        "keys/multisig",
+        "keys/schedule-coldkey-swap",
+      ],
+    },
+
+
     {
       type: "category",
       label: "Staking/Delegation",
@@ -192,22 +207,7 @@ const sidebars = {
         "sdk/managing-subtensor-connections",
       ],
     },
-
-    {
-      type: "category",
-      label: "Wallets and Keys",
-      collapsible: true,
-      collapsed: true,
-      items: [
-        "keys/wallets",
-        "keys/handle-seed-phrase",
-        "keys/coldkey-hotkey-security",
-        "keys/working-with-keys",
-        "keys/address-poisoning-scams",
-        "keys/multisig",
-        "keys/schedule-coldkey-swap",
-      ],
-    },
+    
     {
       type: "category",
       label: "Tools and Special Features",
