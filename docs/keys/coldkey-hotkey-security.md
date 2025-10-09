@@ -2,7 +2,10 @@
 title: "Coldkey and Hotkey Workstation Security"
 ---
 
+import { SecurityWarning } from "./_security-warning.mdx";
+
 # Coldkey and Hotkey Workstation Security
+
 
 This page goes into detail of security concerns for working with coldkeys and hotkeys in Bittensor.
 
@@ -19,6 +22,8 @@ The workstations you use to do this work can be referred to as a permissionless 
 - [Permisionless workstation](#permissionless-workstation)
 - [Coldkey workstation](#permissionless-workstation)
 - [Hotkey workstation](#permissionless-workstation)
+
+<SecurityWarning />
 
 ## Permissionless workstation
 
