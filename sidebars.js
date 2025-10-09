@@ -83,7 +83,10 @@ const sidebars = {
       collapsed: true,
       items: [
         "keys/wallets",
-        "keys/working-with-keys",
+        "keys/working-with-keys",        
+        "keys/handle-seed-phrase",
+        "keys/coldkey-hotkey-security",
+        "keys/address-poisoning-scams",
         {
           type: "category",
           label: "Proxies",
@@ -92,12 +95,12 @@ const sidebars = {
           link: { type: "doc", id: "keys/proxies/index" },
           items: ["keys/proxies/create-proxy", "keys/proxies/pure-proxies"],
         },
-        "keys/handle-seed-phrase",
-        "keys/coldkey-hotkey-security",
         "keys/multisig",
         "keys/schedule-coldkey-swap",
       ],
     },
+
+
     {
       type: "category",
       label: "Staking/Delegation",
@@ -204,6 +207,7 @@ const sidebars = {
         "sdk/managing-subtensor-connections",
       ],
     },
+    
     {
       type: "category",
       label: "Tools and Special Features",

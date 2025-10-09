@@ -2,6 +2,8 @@
 title: "Handle your Seed Phrase/Mnemonic Securely"
 ---
 
+import { SecurityWarning } from "./_security-warning.mdx";
+
 # Handle your Seed Phrase/Mnemonic Securely
 
 The seed phrase (a.k.a. 'menemonic' or 'recovery phrase') is a series of (at least 12) words that is generated together with your wallet's cryptographic key pair, and which can be used to recover the coldkey private key. This seed phrase is therefore a human-usable way to save access to the cryptographic wallet offline, and to import the cryptographic wallet into a wallet application.
@@ -14,6 +16,8 @@ There are two categories of security failure with a secret like a seed phrase/mn
 - To _leak_ the secret means accidentally giving someone else access to it. This may result in them stealing your resources, or further leaking it to others who may in turn act maliciously. If your secret is leaked, you can (and should) rotate it, i.e. perform a coldkey swap.
 
   See: [Rotating your coldkey](./coldkey-hotkey-security#rotating-your-coldkey)
+
+<SecurityWarning />
 
 ## Do not leak your keys/seed phrase
 
