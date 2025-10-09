@@ -85,6 +85,24 @@ btcli stake auto --wallet.name <wallet> --json-output
 btcli stake auto --wallet.name <wallet> --network finney
 ```
 
+**Sample Output:**
+
+```console
+btcli stake auto --wallet.name alice --network local
+
+                    Auto Stake Destinations for alice
+                             Network: local
+        Coldkey: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+
+ Netuid   Subnet                 Status    Destination Hotkey   Identity
+─────────────────────────────────────────────────────────────────────────
+   0      root                   Default
+   1      apex                   Default
+   2      zawesome-first-su...   Default
+
+Total subnets: 3  Custom destinations: 0
+```
+
 ### Set auto-stake destination
 
 - Sets the destination hotkey for a specific subnet. You can paste a hotkey SS58 directly or press Enter to select from a list of top validators (with identities) on that subnet.
@@ -101,6 +119,39 @@ btcli stake set-auto --wallet.name <wallet> --netuid <netuid> --network finney
 # Control waiting behavior
 btcli stake set-auto --wallet.name <wallet> --netuid <netuid> \
   --wait-for-inclusion --wait-for-finalization
+```
+
+**Sample Output:**
+
+```console
+btcli stake set-auto --wallet.name alice --network local
+Using the wallet path from config: /Users/michaeltrestman/.bittensor/wallets
+Enter the netuid to configure (1): 2
+Enter the hotkey ss58 address to auto-stake to (Press Enter to view delegates):
+
+                                             Subnet 2: zawesome-first-su...
+                                              Network: local • Mechanism 0
+
+ UID ┃ Stake (β) ┃ Alpha (β) ┃ Tao (τ) ┃ Dividends ┃ Incentive ┃ Emissions (β) ┃ Hotkey ┃ Coldkey ┃ Identity
+━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━
+  0  │   8.38k β │   8.38k β │  τ 0.00 │ 0.000000  │ 0.000000  │  0.000000 β   │ 5Grwva │ 5Grwva  │ (*Owner controlled)
+  2  │  13.38k β │  13.38k β │  τ 0.00 │ 0.000000  │ 0.000000  │  9.020050 β   │ 5CffqS │ 5EEy34  │ ~
+  1  │    0.00 β │    0.00 β │  τ 0.00 │ 0.000000  │ 0.000000  │  0.000000 β   │ 5Capz7 │ 5DA7Us  │ ~
+─────┼───────────┼───────────┼─────────┼───────────┼───────────┼───────────────┼────────┼─────────┼─────────────────────
+     │  21.77k β │  21.77k β │  0.00 β │   0.000   │           │   9.0201 β    │        │         │
+
+Enter the UID of the delegate you want to stake to (or press Enter to cancel): 2
+
+Selected delegate: 5CffqSVhydFJHBSbbgfVLAVkoNBTsv3wLj2Tsh1cr2kfanU6
+
+                               Confirm Auto-Stake Destination
+ Netuid   Subnet                                Destination Hotkey                  Identity
+─────────────────────────────────────────────────────────────────────────────────────────────
+   2      zawesome-first-su...   5CffqSVhydFJHBSbbgfVLAVkoNBTsv3wLj2Tsh1cr2kfanU6
+
+Set this auto-stake destination? [y/n] (y): y
+✅Your extrinsic has been included as 20979-1
+✅ Auto-stake destination set for netuid 2
 ```
 
 Notes:
