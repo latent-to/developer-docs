@@ -97,7 +97,7 @@ You can participate in an existing subnet as either a subnet validator or a subn
     body='Get ready to mine on Bittensor subnets' />
     <ResponsiveCard
     icon={GiArchiveRegister}
-    title='Mining in Bittensor'
+    title='Validating in Bittensor'
     link='./validators'
     body='Get ready to validate on Bittensor subnets' />
     <ResponsiveCard
