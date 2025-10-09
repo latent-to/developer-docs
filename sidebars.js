@@ -100,7 +100,6 @@ const sidebars = {
       ],
     },
 
-
     {
       type: "category",
       label: "Staking/Delegation",
