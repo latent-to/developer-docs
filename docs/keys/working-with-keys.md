@@ -6,11 +6,8 @@ import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import { SecurityWarning } from "./_security-warning.mdx";
 
 # Creating/Importing a Bittensor Wallet
-
-<SecurityWarning />
 
 In Bittensor (like other cryptocurrency applications), a _wallet_ is a tool for proving your identity, signing transactions, accessing your TAO, and managing your stake in subnets.
 
