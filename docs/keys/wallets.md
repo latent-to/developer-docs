@@ -7,7 +7,6 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Wallets, Coldkeys and Hotkeys in Bittensor
 
-
 In Bittensor (like other cryptocurrency applications), a _wallet_ is a tool for proving your identity, signing transactions, accessing your TAO, and managing your stake in subnets.
 This page introduces the core concepts involved.
 
