@@ -130,13 +130,6 @@ Further reading:
 - [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security.md)
 
 ### Research Source
+
 This guide is based on the largest study of this scam to date: Tsuchiya, T., Dong, J.-D., Soska, K., & Christin, N. (2025). "Blockchain Address Poisoning," in *Proceedings of the 34th USENIX Security Symposium*. Seattle, WA, USA. [https://www.usenix.org/conference/usenixsecurity25/presentation/tsuchiya](https://www.usenix.org/conference/usenixsecurity25/presentation/tsuchiya)
 
-Key Research Findings:
-
-- 270 million attack attempts detected over two years (2022-2024)
-- 17 million victims targeted on Ethereum and Binance Smart Chain
-- $83.8 million stolen in 6,633 successful attacks
-- 49 distinct attack groups identified, some operating like organized crime syndicates
-- 13x more attacks than previously reported in earlier research
-- Attackers exploit the same vulnerability across all EVM-compatible blockchains (indicating similar risk for Bittensor)
