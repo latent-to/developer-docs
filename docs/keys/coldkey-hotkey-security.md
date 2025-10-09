@@ -6,7 +6,6 @@ import { SecurityWarning } from "./_security-warning.mdx";
 
 # Coldkey and Hotkey Workstation Security
 
-
 This page goes into detail of security concerns for working with coldkeys and hotkeys in Bittensor.
 
 See also:
