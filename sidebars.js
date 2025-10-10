@@ -258,12 +258,13 @@ const sidebars = {
       items: [
         "evm-tutorials/index",
         "evm-tutorials/subtensor-networks",
-
+        "evm-tutorials/bridge-vtao",
         "evm-tutorials/evm-testnet-with-metamask-wallet",
         "evm-tutorials/evm-localnet-with-metamask-wallet",
         "evm-tutorials/evm-mainnet-with-metamask-wallet",
         "evm-tutorials/hardhat-config-for-subtensor-evm",
         "evm-tutorials/remix-config-for-subtensor-evm",
+        "evm-tutorials/bridge-vtao",
         "evm-tutorials/troubleshooting",
       ],
     },
