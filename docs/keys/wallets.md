@@ -37,6 +37,7 @@ We must be careful to distinguish two senses of the term 'wallet' that can other
 - The **wallet application** is software that runs on your device and allows you to interact with the blockchain by entering your keys. There are several officially supported Bittensor wallet applications:
 
   - The Bittensor wallet app for mobile: [bittensor.com/wallet](https://bittensor.com/wallet)
+  - [The Crucible wallet](https://cruciblelabs.com) a Tao wallet featuring an auto-allocator for dynamic TAO staking across subnets, with full Ledger integration.
   - [The Polkadot browser extension](https://polkadot.js.org/extension/) which can be used with Polkadot Vault.
 
   - [The Bitensor wallet browser extension](https://chromewebstore.google.com/detail/bittensor-wallet/bdgmdoedahdcjmpmifafdhnffjinddgc), which is also compatible with use of a Ledger hardware wallet. See [Using Ledger Hardware Wallet](../staking-and-delegation/using-ledger-hw-wallet.md)
@@ -91,6 +92,7 @@ Secure wallet apps supported by Opentensor Foundation include:
 
 - The Bittensor wallet app for mobile: [bittensor.com/wallet](https://bittensor.com/wallet)
 - [The Chrome extension](https://chromewebstore.google.com/detail/bittensor-wallet/bdgmdoedahdcjmpmifafdhnffjinddgc), which is also compatible with use of a Ledger hardware wallet. See [Using Ledger Hardware Wallet](../staking-and-delegation/using-ledger-hw-wallet.md)
+- [The Crucible wallet](https://cruciblelabs.com) a Tao wallet featuring an auto-allocator for dynamic TAO staking across subnets, with full Ledger integration.
 
 ### `btcli` and the Bittensor Python SDK
 
