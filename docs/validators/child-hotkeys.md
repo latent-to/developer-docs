@@ -75,8 +75,8 @@ See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
 
 The minimum stake you can redelegate to a child hotkey is as follows:
 
-- **Testnet**: 100 testnet TAO.
-- **Mainnet**: 1000 TAO.
+- **Testnet**: 100 testnet ALPHA.
+- **Mainnet**: 1000 ALPHA.
 
 ---
 
