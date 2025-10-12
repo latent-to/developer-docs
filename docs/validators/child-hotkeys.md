@@ -50,8 +50,6 @@ See the above diagram. With the child hotkeys, if an attacker steals a child hot
   The terms "child hotkey" and "parent hotkey" are only terms of convenience. There is nothing inherently different about a "child hotkey" that separates it from a "parent hotkey". Neither have any special attributes compared to a normal hotkey.
   :::
 
----
-
 ## Features
 
 The child hotkey features are as follows:
@@ -71,18 +69,12 @@ The following rate limits apply for child hotkeys:
 
 See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
 
-## Minimum stake
+## Minimum stake requirement
 
-The minimum stake you can redelegate to a child hotkey is as follows:
+There is a minimum alpha stake (measured in TAO value) requirement in order to redelegate to child hotkeys:
 
-- **Testnet**: 100 testnet TAO.
-- **Mainnet**: 1000 TAO.
-
----
-
-## Installing
-
-This feature is available in Bittensor 7.4.0 and later versions. See [Install Bittensor](../getting-started/installation.md).
+- **Mainnet**: 1000 TAO
+- **Testnet**: 100 TAO.
 
 ## Child hotkey commands
 
