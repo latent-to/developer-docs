@@ -75,8 +75,8 @@ To set child hotkeys, the parent hotkey must have a minimum total stake. This re
 
 The minimum stake requirement is:
 
-- **Mainnet**: 1000 TAO equivalent
-- **Testnet**: 100 TAO equivalent
+- **Mainnet**: 1000 TAO worth of alpha
+- **Testnet**: 100 TAO worth of alpha
 
 **How it's calculated**: Your alpha stake is summed **across ALL subnets** (not just the subnet where you're setting children). Each subnet's alpha is converted to TAO value using that subnet's alpha price, then all values are summed together. View [source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/helpers.rs#L47-L62).
 

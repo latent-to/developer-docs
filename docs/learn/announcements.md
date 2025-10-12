@@ -1,14 +1,40 @@
 ---
 title: "Announcements and Developments"
 ---
+
 # Announcements and Developments
 
 This page tracks recent and upcoming changes to the Bittensor protocol and other major events in the Bittensor ecosystem.
 
+## Bittensor SDK v10
+
+**Status**: In development
+
+- **What**: A new major version of the Bittensor SDK is in development and will introduce breaking changes.
+- **Key Features**:
+  - Comprehensive error handling for all extrinsics and related calls.
+  - New standardized extrinsic response class with success status, error objects, receipts, and transaction fees in TAO and alpha.
+  - Amount handling standardized to balance type only for consistent calculations.
+
+<!-- For detailed information, see: [Bittensor SDK v10 Migration guide](../subnets/understanding-multiple-mech-subnets). -->
+
+## Subnet UID trimming
+
+**Status**: Implemented (Merged)
+
+- **What**: UID trimming allows subnet owners to reduce the number of neuron UIDs registered on their subnet, compressing the remaining UIDs to maintain consecutive indexing.
+- **Key Features**:
+  - Now allows subnet owners to increase maximum UID count after previous trimming.
+  - Removes the lowest-performing neurons based on emission scores.
+  - Both temporally immune UIDs and owner-owned UIDs are protected from trimming.
+  - After trimming, remaining UIDs are compressed to the left to maintain consecutive indexing
+
+For detailed information, see: [UID trimming](../subnets/uid-trimming.md).
 
 ## Multiple Incentive Mechanisms Within Subnets
 
-**Status**: In development
+**Status**: Implemented (Merged)
+
 - **What**: Multiple incentive mechanisms allow subnet owners to apportion emissions across different evaluation criteria, each running Yuma Consensus independently with separate bond pools
 - **Key Features**:
   - Enables up to 2 incentive mechanisms (IDs 0,1) within each subnet for multi-task validation.
@@ -23,7 +49,9 @@ This page tracks recent and upcoming changes to the Bittensor protocol and other
 For detailed information, see: [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets)
 
 ## Hyperparameter Rate Limiting
+
 **Status**: WIP
+
 - **What**: Prevents subnet owners from changing hyperparameters too frequently
 - **Rules**: Cannot change hyperparameters in last 10 blocks of a tempo
 - **Purpose**: Prevent exploitation where subnet owners kick off root validators to take full incentives
@@ -33,10 +61,11 @@ See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
 
 ## Child Key Fee
 
-A percentage fee will be deducted from emissions bound to validator hotkeys through a *child hotkey* relationship. This is designed to more highly incentivize validators who perform validation work, over child-key-only validators. It is being gradually rolled out to reduce surprise for the community and allow validators to adjust.
+A percentage fee will be deducted from emissions bound to validator hotkeys through a _child hotkey_ relationship. This is designed to more highly incentivize validators who perform validation work, over child-key-only validators. It is being gradually rolled out to reduce surprise for the community and allow validators to adjust.
 
 **Status**: Implemented (Merged)
-- **Plan**: 
+
+- **Plan**:
   - Start at 1% (September 10)
   - 30-day delay
   - Increase by 1% per day for 17 days
@@ -45,7 +74,9 @@ A percentage fee will be deducted from emissions bound to validator hotkeys thro
 ## Changes to the Subnet Registration/Deregistration Process
 
 **Status**: Ready for deployment on September 16, 2025
+
 - **Key Changes**:
+
   - Subnet limit remains at 128 initially with no new registrations available immediately
   - Immunity period reduced from 6 months to 4 months from registration block
   - Network rate limit increased to 4 days between registrations
@@ -53,11 +84,13 @@ A percentage fee will be deducted from emissions bound to validator hotkeys thro
   - First deregistrations available approximately September 23 (one week after deployment)
 
   See: [Subnet Deregistration](../subnets/subnet-deregistration)
-  
+
 ## Auto-Staking for Miners
+
 **Status**: Implemented (Merged)
+
 - **What**: Miners can automatically stake their mining income to a validator of their choice
-- **Implementation**: 
+- **Implementation**:
   - New extrinsics `set_coldkey_auto_stake_hotkey` and `get_coldkey_auto_stake_hotkey`
   - Set per coldkey, affects all miner hotkeys
   - No transaction fees required
@@ -66,7 +99,9 @@ A percentage fee will be deducted from emissions bound to validator hotkeys thro
   - Requires CLI support for configuration and management
 
 ## Registration Fee Controls
+
 **Status**: Deployed
+
 - **What**: Subnet owners can configure neuron registration fees
 - **Implementation**:
   - Subnet owners can configure neuron registration fees between 0.1 and 1 TAO
