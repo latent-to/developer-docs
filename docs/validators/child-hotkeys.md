@@ -71,10 +71,19 @@ See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
 
 ## Minimum stake requirement
 
-There is a minimum alpha stake (measured in TAO value) requirement in order to redelegate to child hotkeys:
+To set child hotkeys, the parent hotkey must have a minimum total stake. This requirement checks the TAO-equivalent value of your alpha stake across all subnets.
 
-- **Mainnet**: 1000 TAO
-- **Testnet**: 100 TAO.
+The minimum stake requirement is:
+
+- **Mainnet**: 1000 TAO equivalent
+- **Testnet**: 100 TAO equivalent
+
+**How it's calculated**: Your alpha stake is summed **across ALL subnets** (not just the subnet where you're setting children). Each subnet's alpha is converted to TAO value using that subnet's alpha price, then all values are summed together. View [source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/helpers.rs#L47-L62).
+
+:::tip
+Query `subtensorModule.stakeThreshold()` to check the current threshold.
+:::
+
 
 ## Child hotkey commands
 
