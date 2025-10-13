@@ -106,17 +106,24 @@ commits = subtensor.get_timelocked_weight_commits(netuid=1, mechid=0)
 `sim_swap()` calculates the **exact token yields** for stake or unstake operations at a given block, without actually executing the transaction.
 
 ```python
-# Simulate adding stake to see exact Alpha received
+# Simulate adding stake (TAO → Alpha) to see exact Alpha received
 result = subtensor.sim_swap(
-    netuid=1,
+    origin_netuid=0,        # 0 = TAO (root)
+    destination_netuid=1,   # Target subnet
     amount=tao(100.0),
-    is_stake=True  # True for stake, False for unstake
 )
 
-print(f"TAO to stake: {result.tao_in}")
-print(f"Alpha received: {result.alpha_out}")
-print(f"Swap fee: {result.fee}")
-print(f"Effective rate: {result.rate}")
+print(f"TAO amount: {result.tao_amount}")
+print(f"Alpha received: {result.alpha_amount}")
+print(f"TAO fee: {result.tao_fee}")
+print(f"Alpha fee: {result.alpha_fee}")
+
+# Simulate unstaking (Alpha → TAO)
+result = subtensor.sim_swap(
+    origin_netuid=1,        # Source subnet
+    destination_netuid=0,   # 0 = TAO (root)
+    amount=tao(100.0),
+)
 ```
 
 ### Build Extrinsic Calls
@@ -124,18 +131,21 @@ print(f"Effective rate: {result.rate}")
 Compose an extrinsic call without submitting it to the blockchain with `compose_call`. Useful for fee estimation and transaction preparation.
 
 ```python
+from bittensor.core.extrinsics.params import StakingParams
+
 # Compose a call for later submission or fee estimation
 call = subtensor.compose_call(
-    call_name="add_stake",
-    params={
-        "netuid": 1,
-        "hotkey": hotkey_ss58,
-        "amount_staked": amount.rao
-    }
+    call_module="SubtensorModule",
+    call_function="add_stake",
+    call_params=StakingParams.add_stake(
+        netuid=1,
+        hotkey_ss58=hotkey_ss58,
+        amount=amount
+    )
 )
 
-# Use the composed call to estimate fees
-fee = subtensor.get_extrinsic_fee(call)
+# Use the composed call to estimate fees (requires keypair)
+fee = subtensor.get_extrinsic_fee(call, wallet.coldkey)
 ```
 
 
@@ -182,6 +192,8 @@ from bittensor.utils import hex_to_ss58
 ss58_address = hex_to_ss58(hex_string)
 ```
 
+**Note:** `hex_to_ss58` is an alias for `ss58_encode` from scalecodec. Similarly, `ss58_to_hex` is an alias for `ss58_decode`.
+
 
 ### Estimate Transaction Fees
 
@@ -189,11 +201,15 @@ Query the estimated fee for submitting an extrinsic to the Subtensor blockchain 
 
 ```python
 # Estimate the fee for a transfer extrinsic
-extrinsic = subtensor.compose_call("transfer", {
-    "dest": destination_address,
-    "value": amount.rao
-})
-fee = subtensor.get_extrinsic_fee(extrinsic)
+extrinsic = subtensor.compose_call(
+    call_module="Balances",
+    call_function="transfer_keep_alive",
+    call_params={
+        "dest": destination_address,
+        "value": amount.rao
+    }
+)
+fee = subtensor.get_extrinsic_fee(extrinsic, wallet.coldkey)
 print(f"Estimated fee: {fee}")  # Returns Balance object
 ```
 
@@ -207,20 +223,29 @@ See also: [Transaction Fees in Bittensor](../learn/fees) for complete fee inform
 
 ### Parameter Validation
 
-Validate extrinsic parameters before submission to catch errors early, with `compose_call`.
+Validate extrinsic parameters before submission to catch errors early, with `validate_extrinsic_params`.
 
 ```python
 # Validate parameters match the extrinsic schema
 params = {
     "netuid": 1,
     "hotkey": hotkey_ss58,
-    "amount": amount.rao
+    "alpha_amount": amount.rao
 }
 
-is_valid = subtensor.validate_extrinsic_params("add_stake", params)
-if not is_valid:
-    print("Invalid parameters!")
+try:
+    # Returns validated/corrected params or raises an exception
+    validated_params = subtensor.validate_extrinsic_params(
+        call_module="SubtensorModule",
+        call_function="add_stake",
+        call_params=params
+    )
+    print(f"Parameters validated: {validated_params}")
+except Exception as e:
+    print(f"Invalid parameters: {e}")
 ```
+
+**Note:** This method returns the validated parameters (potentially with corrections) or raises an exception if validation fails. It does not return a boolean.
 
 ### Query Commitment Data
 
@@ -508,7 +533,7 @@ subtensor.move_stake(wallet, origin_hotkey_ss58, destination_hotkey_ss58, amount
 subtensor.transfer(wallet, dest, amount)
 
 # ✅ New:
-subtensor.transfer(wallet, destination, amount)
+subtensor.transfer(wallet, destination_ss58, amount)
 ```
 
 #### Staking Parameters
@@ -520,7 +545,26 @@ subtensor.swap_stake(wallet, from_hotkey, to_hotkey, amount, safe_staking=True)
 
 # ✅ New:
 subtensor.unstake(wallet, netuid, hotkey_ss58, amount, safe_unstaking=True)
-subtensor.swap_stake(wallet, from_hotkey_ss58, to_hotkey_ss58, amount, safe_swapping=True)
+
+# For swapping stake between subnets (same hotkey, different subnets):
+subtensor.swap_stake(
+    wallet,
+    hotkey_ss58="5D...",
+    origin_netuid=1,
+    destination_netuid=2,
+    amount=amount,
+    safe_swapping=True
+)
+
+# For moving stake between hotkeys (use move_stake instead):
+subtensor.move_stake(
+    wallet,
+    origin_netuid=1,
+    origin_hotkey_ss58="5D...1",
+    destination_netuid=1,
+    destination_hotkey_ss58="5D...2",
+    amount=amount
+)
 ```
 
 #### Required Parameters
@@ -594,17 +638,24 @@ commit_timelocked_weights_extrinsic(..., commit_reveal_version=4)
 
 ### Merged Functions
 
-#### `increase_take` and `decrease_take` merged into `set_take`
+#### `increase_take` and `decrease_take` merged into `set_delegate_take`
 
 ```python
 # ❌ Old:
-subtensor.increase_take(wallet, netuid, amount)
-subtensor.decrease_take(wallet, netuid, amount)
+subtensor.increase_take(wallet, hotkey_ss58, take)
+subtensor.decrease_take(wallet, hotkey_ss58, take)
 
 # ✅ New:
-subtensor.set_take(wallet, netuid, amount, action="increase_take")
-subtensor.set_take(wallet, netuid, amount, action="decrease_take")
+# The new method automatically determines whether to increase or decrease
+# based on the current vs new take value
+subtensor.set_delegate_take(
+    wallet,
+    hotkey_ss58="5D...",
+    take=0.18  # 18% as a float between 0 and 1
+)
 ```
+
+**Note:** The method automatically calls `increase_take` or `decrease_take` internally based on whether the new take is higher or lower than the current take.
 
 #### Mechanism-specific weight functions consolidated
 
