@@ -483,6 +483,18 @@ subtensor.get_stake_info_for_coldkey = subtensor.get_stake_for_coldkey
 subtensor.get_stake_info_for_coldkey(coldkey_ss58)
 ```
 
+### DefaultConfig Class Removed
+
+```python
+# ❌ Removed:
+from bittensor.core.config import DefaultConfig
+
+# ✅ Use Config directly:
+from bittensor.core.config import Config
+```
+
+The `DefaultConfig` class has been removed as it was unused in the codebase.
+
 ### DelegateInfo Attribute Removed
 
 ```python
