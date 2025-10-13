@@ -1,145 +1,880 @@
+
+title: "Bittensor 10.0 Migration Guide"
+
+
+# Bittensor 10.0 Migration Guide
+
+This page documents breaking changes and new features for the Bittensor Python SDK `v10.0`. This is a major release with significant refactoring, standardization, and new functionality.
+
+:::warning Important
+This is a **major breaking release**. Please read this guide carefully before upgrading.
+:::
+
+
+## Executive Summary
+
+Bittensor SDK v10.0 is a **major breaking release** with significant improvements to consistency, type safety, and functionality. Key changes include:
+
+**Breaking Changes:**
+- **Python 3.10+ required** - Python 3.9 no longer supported ([details](#python-version-support))
+- **ExtrinsicResponse return type** - All blockchain transaction functions now return structured `ExtrinsicResponse` objects instead of `bool` or tuples ([details](#extrinsicresponse-return-type))
+- **Strict Balance type checking** - All amount parameters require `Balance` objects using `tao()` or `rao()` helpers ([details](#balance-handling))
+- **Parameter renames** - Consistent `_ss58` suffix for all address parameters (e.g., `hotkey` → `hotkey_ss58`) ([details](#parameter-renames))
+- **Method renames and removals** - Several methods renamed or removed for consistency ([details](#breaking-changes-method-renames))
+
+**New Features:**
+- **Multiple Incentive Mechanisms** - Full SDK support for running multiple evaluation mechanisms per subnet with independent weight matrices and emissions ([details](#multiple-incentive-mechanisms-support))
+- **Transaction simulation** - `sim_swap()` calculates exact token yields without executing transactions ([details](#simulate-token-swaps))
+- **Fee estimation** - `get_extrinsic_fee()` estimates blockchain transaction costs before submission ([details](#estimate-transaction-fees))
+- **BlockInfo class** - Rich blockchain block information objects ([details](#blockinfo-class))
+
+**Major Improvements:**
+- Standardized parameter ordering across all functions ([details](#standardized-parameters))
+- Centralized extrinsic parameters in `bittensor.core.extrinsics.params` ([details](#extrinsic-parameters-package))
+- Enhanced metagraph support for mechanism-specific queries ([details](#metagraph-changes))
+- Environment variable updates for clarity ([details](#environment-variables))
+
+**Migration Required:**
+See the [Migration Checklist](#migration-checklist) for step-by-step upgrade instructions.
+
 ---
-title: "Bittensor 9.0 Migration Guide"
----
 
-# Bittensor 9.0 Migration Guide
 
-This page notes breaking changes for the Bittensor Python SDK `v9.0`. This version supports Dynamic TAO, a major evolution of the Bittensor network's tokenomic architecture.
+## Python Version Support
 
-See: [Dynamic TAO: What to expect](../dynamic-tao).
+**Python 3.9 is no longer supported.** The SDK now requires **Python 3.10 or higher**.
 
-**Contents:**
 
-- [`Subtensor`: removed functions](#subtensor-removed-functions)
-- [`Subtensor`: type changes](#subtensor-type-changes)
-- [`AsyncSubtensor` parity with `Subtensor`](#asyncsubtensor)
-- [`py-substrate-interface` replaced with `async-substrate-interface`](#py-substrate-interface-replaced-with-async-substrate-interface)
 
-See: [Concurrency with AyncIO and AsyncSubtensor](../subnets/asyncio)
+## New Features
 
-## Subtensor: removed functions
 
-### `get_account_next_index`
 
-This was only used for getting nonce, which can be achieved with `subtensor.substrate.get_account_next_index(hotkey.ss58_address)`.
+### Multiple Incentive Mechanisms Support
 
-### `get_prometheus_info`
+Full SDK support for **multiple incentive mechanisms within subnets** is now implemented, a major new Subtensor blockchain feature.
 
-We no longer use prometheus info.
+Previously referred to as "sub-subnets" during development, this feature allows subnet creators to run multiple independent evaluation mechanisms within a single subnet, each with separate weight matrices, bond pools, and emission distributions. This is a significant architectural change that enables more sophisticated subnet designs. See [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets) for a complete overview.
 
-### `get_total_stake_for_coldkey`
 
-Not compatible with Dynamic TAO.
+**Key Concepts:**
 
-Replaced with [`get_stake`](../dynamic-tao/sdk-cheat-sheet#get_stake), which returns a staked balance for a coldkey, hotkey pair on a specific subnet.
+- **`mechid` (Mechanism ID)**: An integer identifying which mechanism within a subnet (0 for the first mechanism, 1 for the second, etc.).
+- **Default behavior**: All methods default to `mechid=0`, so existing single-mechanism subnets work unchanged
+- **Backward compatible**: Subnets with only one mechanism (the default) don't need code changes
 
-### `get_total_stake_for_coldkeys`
 
-Not compatible with Dynamic TAO.
+#### Setting Mechanism Weights:
 
-Replaced with [`get_stake`](../dynamic-tao/sdk-cheat-sheet#get_stake), which returns a staked balance for a coldkey, hotkey pair on a specific subnet.
-
-### `get_total_stake_for_hotkey`
-
-Not compatible with Dynamic TAO.
-
-Replaced with [`get_stake`](../dynamic-tao/sdk-cheat-sheet#get_stake), which returns a staked balance for a coldkey, hotkey pair on a specific subnet.
-
-### `get_total_stake_for_hotkeys`
-
-Not compatible with Dynamic TAO.
-
-Replaced with [`get_stake`](../dynamic-tao/sdk-cheat-sheet#get_stake), which returns a staked balance for a coldkey, hotkey pair on a specific subnet.
-
-## Subtensor: type changes
-
-### `__init__`
-
-No longer takes `connection_timeout` or `websocket` args. This is due to `py-substrate-interface` being re-written as `async-substrate-interface`.
-
-### `amount`
-
-All Subtensor methods that accept an `amount` arg now accept it only as a `Balance` object, rather than the previous `Union[Balance, int, float]`.
-
-New helper functions, `tao` and `rao` in `bittensor.utils.balance`, return a `balance` object from the given Tao or Rao amount.
-
-These methods include the following, and their associated extrinsics:
-
-- `transfer`
-- `unstake`
-- `add_stake`
-- `move_stake`
-- `swap_stake`
-- `transfer_stake`
-- `get_transfer_fee`
-
-For example, where `transfer` previously accepted float for the amount, it now takes a `Balance` object, which can be created on the fly:
-
-**Previously:**
+Validators must set weights independently for each mechanism in a subnet:
 
 ```python
-from bittensor.core.subtensor import Subtensor
+# Set weights for a specific mechanism (mechid)
+response = subtensor.set_weights(
+    wallet,
+    netuid=1,
+    uids=[0, 1, 2],
+    weights=[0.5, 0.3, 0.2],
+    mechid=0  # Mechanism ID (default: 0)
+)
 
-subtensor = Subtensor()
-subtensor.transfer(wallet, destination, 1.0)
+# For subnets with multiple mechanisms, set weights for each:
+response1 = subtensor.set_weights(wallet, netuid=1, uids, weights1, mechid=0)
+response2 = subtensor.set_weights(wallet, netuid=1, uids, weights2, mechid=1)
+
+# Commit and reveal weights for mechanisms (commit-reveal subnets)
+response = subtensor.commit_weights(wallet, netuid, uids, weights, mechid=0)
+response = subtensor.reveal_weights(wallet, netuid, uids, weights, mechid=0)
 ```
 
-**Now written as:**
+#### Querying Mechanism-Specific Data on the Metagraph:
+
+All metagraph queries now accept a `mechid` parameter:
 
 ```python
-from bittensor.core.subtensor import Subtensor
+# Get metagraph for specific mechanism
+metagraph = subtensor.metagraph(netuid=1, mechid=0)
+
+# Get weights for specific mechanism
+weights = subtensor.weights(netuid=1, mechid=0)
+
+# Get bonds for specific mechanism
+bonds = subtensor.bonds(netuid=1, mechid=0)
+
+# Get timelocked weight commits for a mechanism
+commits = subtensor.get_timelocked_weight_commits(netuid=1, mechid=0)
+```
+
+###  Simulate Token Swaps
+
+`sim_swap()` calculates the **exact token yields** for stake or unstake operations at a given block, without actually executing the transaction.
+
+```python
+# Simulate adding stake to see exact Alpha received
+result = subtensor.sim_swap(
+    netuid=1,
+    amount=tao(100.0),
+    is_stake=True  # True for stake, False for unstake
+)
+
+print(f"TAO to stake: {result.tao_in}")
+print(f"Alpha received: {result.alpha_out}")
+print(f"Swap fee: {result.fee}")
+print(f"Effective rate: {result.rate}")
+```
+
+### Build Extrinsic Calls
+
+Compose an extrinsic call without submitting it to the blockchain with `compose_call`. Useful for fee estimation and transaction preparation.
+
+```python
+# Compose a call for later submission or fee estimation
+call = subtensor.compose_call(
+    call_name="add_stake",
+    params={
+        "netuid": 1,
+        "hotkey": hotkey_ss58,
+        "amount_staked": amount.rao
+    }
+)
+
+# Use the composed call to estimate fees
+fee = subtensor.get_extrinsic_fee(call)
+```
+
+
+
+
+### SimSwap Fee Calculation Methods
+
+The SDK now provides dedicated methods for calculating swap-based fees for staking operations. These methods use the new `sim_swap()` functionality (see [New Subtensor Methods](#new-subtensor-methods)) to query the Subtensor blockchain and return precise fee calculations:
+
+```python
+# Get fee for adding stake (staking operation)
+fee = subtensor.get_stake_add_fee(netuid, hotkey_ss58, amount)
+
+# Get fee for moving stake between hotkeys
+fee = subtensor.get_stake_movement_fee(from_hotkey_ss58, to_hotkey_ss58, amount)
+
+# Get fee for removing stake (unstaking operation)
+fee = subtensor.get_unstake_fee(netuid, hotkey_ss58, amount)
+
+# All methods return Balance objects representing the fee in TAO or Alpha
+```
+
+**Note:** These are **application-level swap fees** (0.05% of transacted liquidity), separate from **blockchain transaction fees** (weight-based). See [Transaction Fees in Bittensor](../learn/fees) for details on both fee types.
+
+
+### Verbose Logging Control
+
+The `Subtensor` class now supports verbose logging to help debug interactions with the Subtensor blockchain:
+
+```python
+# Set verbose mode for trace-level logging
+subtensor = Subtensor(network="test", log_verbose=True)
+# Automatically sets btlogging to trace level for detailed blockchain interaction logs
+```
+
+### Hex to SS58 Conversion
+
+New utility function for converting hex addresses to SS58 format:
+
+```python
+# ✅ New utility:
+from bittensor.utils import hex_to_ss58
+
+ss58_address = hex_to_ss58(hex_string)
+```
+
+
+### Estimate Transaction Fees
+
+Query the estimated fee for submitting an extrinsic to the Subtensor blockchain before actually sending it, with ``get_extrinsic_fee()`.
+
+```python
+# Estimate the fee for a transfer extrinsic
+extrinsic = subtensor.compose_call("transfer", {
+    "dest": destination_address,
+    "value": amount.rao
+})
+fee = subtensor.get_extrinsic_fee(extrinsic)
+print(f"Estimated fee: {fee}")  # Returns Balance object
+```
+
+**Use cases:**
+- Check if wallet has sufficient balance before submitting transactions
+- Display estimated costs to users
+- Optimize transaction batching based on fee estimates
+
+See also: [Transaction Fees in Bittensor](../learn/fees) for complete fee information.
+
+
+### Parameter Validation
+
+Validate extrinsic parameters before submission to catch errors early, with `compose_call`.
+
+```python
+# Validate parameters match the extrinsic schema
+params = {
+    "netuid": 1,
+    "hotkey": hotkey_ss58,
+    "amount": amount.rao
+}
+
+is_valid = subtensor.validate_extrinsic_params("add_stake", params)
+if not is_valid:
+    print("Invalid parameters!")
+```
+
+### Query Commitment Data
+
+Get commitment metadata for a hotkey on a subnet with `get_commitment_metadata`. Previously in `bittensor.core.extrinsic.serving`, now a `Subtensor` method.
+
+```python
+# Query commitment metadata
+metadata = subtensor.get_commitment_metadata(netuid=1, hotkey_ss58="5D...")
+```
+
+### Query Bonds Reset
+
+Get the last bonds reset block for a subnet with `get_last_bonds_reset`. Previously in `bittensor.core.extrinsic.serving`, now a `Subtensor` method.
+
+```python
+# Query when bonds were last reset
+last_reset_block = subtensor.get_last_bonds_reset(netuid=1)
+```
+
+### ExtrinsicResponse Class
+
+Unified response type for all functions that submit blockchain transactions, with an extensible `data` field:
+
+```python
+from bittensor.core.types import ExtrinsicResponse
+
+response = subtensor.add_stake(wallet, netuid, hotkey_ss58, amount)
+
+print(response.success)   # bool
+print(response.message)   # str: "Success" or error message
+print(response.data)      # Optional[dict]: extra information
+```
+
+### BlockInfo Class
+
+New `BlockInfo` class for working with Subtensor blockchain block information:
+
+```python
+from bittensor.core.chain_data import BlockInfo
+
+# Query block information from the blockchain
+block = subtensor.get_block_info(block_number)
+
+print(block.number)           # int: Block number
+print(block.hash)             # str: Block hash
+print(block.timestamp)        # datetime: Block timestamp
+print(block.header)           # dict: Raw block header from node
+print(block.extrinsics)       # list: Extrinsics included in block
+print(block.block_explorer)   # str: Link to block on tao.app explorer
+```
+
+
+
+## Breaking Changes: Method Renames
+
+### Subnet Methods
+
+```python
+# ❌ Old:
+netuids = subtensor.get_subnets()
+
+# ✅ New:
+netuids = subtensor.get_all_subnets_netuid()
+```
+
+### Stake Methods
+
+```python
+# ❌ Old (removed - duplicate functionality):
+stake_info = subtensor.get_stake_for_coldkey(coldkey)
+
+# ✅ Use instead:
+stake_info = subtensor.get_stake_info_for_coldkey(coldkey_ss58)
+```
+
+### Commitment Methods
+
+```python
+# ❌ Old:
+subtensor.commit(wallet, netuid, data)
+
+# ✅ New:
+subtensor.set_commitment(wallet, netuid, data)
+
+# ❌ Old alias removed:
+subtensor.set_commitment  # (was an alias)
+```
+
+### Balance/Fee Methods
+
+```python
+# ❌ Old:
+fee = subtensor.get_transfer_fee(wallet, destination, value)
+
+# ✅ New:
+fee = subtensor.get_transfer_fee(wallet, destination, amount)
+```
+
+### Serving Methods
+
+Functions moved from `bittensor.core.extrinsic.serving` to `Subtensor` methods:
+
+```python
+# ❌ Old:
+from bittensor.core.extrinsic.serving import get_metadata, get_last_bonds_reset
+metadata = get_metadata(subtensor, netuid, hotkey)
+last_reset = get_last_bonds_reset(subtensor, netuid)
+
+# ✅ New:
+metadata = subtensor.get_commitment_metadata(netuid, hotkey_ss58)
+last_reset = subtensor.get_last_bonds_reset(netuid)
+```
+
+### Timelocked Weight Commits
+
+```python
+# ❌ Old (deprecated):
+commits = subtensor.get_current_weight_commit_info(netuid, mechid)
+commits_v2 = subtensor.get_current_weight_commit_info_v2(netuid, mechid)
+
+# ✅ Use:
+commits = subtensor.get_timelocked_weight_commits(netuid, mechid)
+```
+
+## Breaking Changes: Parameter Changes
+
+### Consistent Parameter Ordering
+
+Many methods now follow the standard order: `subtensor`, `netuid`, `hotkey_ss58`, ...
+
+```python
+# ❌ Old:
+subtensor.set_children(wallet, netuid, hotkey, children, proportions)
+subtensor.move_stake(wallet, origin_hotkey, dest_hotkey, amount)
+
+# ✅ New:
+subtensor.set_children(wallet, hotkey_ss58, netuid, children, proportions)
+subtensor.move_stake(wallet, origin_hotkey_ss58, destination_hotkey_ss58, amount, netuid)
+```
+
+**Methods with reordered parameters:**
+- `add_stake_multiple`
+- `set_children`
+- `move_stake`
+- `query_subtensor`
+- `query_module`
+- `query_map_subtensor`
+- `query_map`
+- `root_set_pending_childkey_cooldown`
+
+### Block Parameter Standardization
+
+```python
+# ❌ Old:
+subnets = subtensor.all_subnets(block_number=12345)
+
+# ✅ New:
+subnets = subtensor.all_subnets(block=12345)
+```
+
+All `block_number` and `block_id` parameters are now consistently named `block`.
+
+### Metagraph Info Parameter
+
+```python
+# ❌ Old:
+info = subtensor.get_metagraph_info(netuid, field_indices=[0, 1, 2])
+
+# ✅ New:
+info = subtensor.get_metagraph_info(netuid, selected_indices=[0, 1, 2])
+```
+
+### Mock Parameter
+
+```python
+# ❌ Old:
+subtensor = Subtensor(network="local", _mock=True)
+
+# ✅ New:
+subtensor = Subtensor(network="local", mock=True)
+```
+
+The `_mock` parameter is now public as `mock` and moved to the last position in the parameter list.
+
+### Async Methods Parity
+
+Async methods now have the same parameters as sync methods:
+
+```python
+# New parameters added to async versions:
+async_subtensor.get_subnet_validator_permits(netuid, block_hash=None, reuse_block=None)
+async_subtensor.get_subnet_owner_hotkey(netuid, block_hash=None, reuse_block=None)
+```
+
+### Removed `reuse_block` from Sync Methods
+
+```python
+# ❌ Old:
+hotkeys = subtensor.get_owned_hotkeys(coldkey, reuse_block=True)
+
+# ✅ New:
+hotkeys = subtensor.get_owned_hotkeys(coldkey_ss58)
+```
+
+The `reuse_block` parameter has been removed from sync methods for consistency. It's still available in async methods where appropriate.
+
+## Breaking Changes:Removed Methods
+
+### Duplicate References
+
+```python
+# ❌ Removed (was just a reference):
+subtensor.get_stake_info_for_coldkey = subtensor.get_stake_for_coldkey
+
+# ✅ Use the canonical name:
+subtensor.get_stake_info_for_coldkey(coldkey_ss58)
+```
+
+## Extrinsic Calling Changes
+
+All functions that submit extrinsics to the Subtensor blockchain (both standalone functions and `Subtensor` class methods) have been standardized for consistency.
+
+### Standardized Parameters
+
+All functions that submit extrinsics now follow a **consistent parameter ordering** and include standard flags:
+
+```python
+# Standard parameter order:
+extrinsic_function(
+    subtensor,
+    # ... extrinsic-specific parameters (wallet, netuid, hotkey_ss58, amount, etc.) ...
+    period: Optional[int] = None,
+    raise_error: bool = False,
+    wait_for_inclusion: bool = True,
+    wait_for_finalization: bool = True,
+)
+```
+
+1. **Extrinsic-specific arguments come first** (e.g., `wallet`, `hotkey_ss58`, `netuid`, `amount`)
+2. **Optional general flags come last** (e.g., `period`, `raise_error`, `wait_for_inclusion`, `wait_for_finalization`)
+3. **Default behavior changed**: `wait_for_inclusion` and `wait_for_finalization` now default to `True`
+
+This ensures the SDK function response correctly reflects the blockchain transaction outcome.
+
+### ExtrinsicResponse Return Type
+
+All SDK functions that submit extrinsics to the blockchain now return an `ExtrinsicResponse` object instead of `bool` or tuples.
+
+- **`success`**: Primary indicator - `True` if transaction succeeded, `False` otherwise
+- **`message`**: User-friendly status (e.g., "Success", "Insufficient balance")
+- **`extrinsic_fee`**: Network fee paid to validators (similar to gas fees) - see [Transaction Fees](../learn/fees)
+- **`transaction_tao_fee`** / **`transaction_alpha_fee`**: Application-level fees for operations like stake swaps (0.05% of liquidity)
+- **`extrinsic_receipt`**: Contains block number, hash, events, and execution details when `wait_for_inclusion=True`
+- **`data`**: Operation-specific results:
+  - Registration: `{"uid": int}` - assigned neuron UID
+  - Commit weights: `{"reveal_round": int}` - round for revealing
+  - Metadata: `{"encrypted": bytes, "reveal_round": int}`
+  - Stake operations: balance information
+- **`error`**: Python exception for programmatic error handling when `raise_error=False`
+
+See [source code](https://github.com/opentensor/bittensor/blob/main/bittensor/core/types.py#L290-L484).
+
+### Parameter Renames
+
+Many parameters in functions that submit blockchain transactions have been renamed for consistency across the SDK:
+
+#### Hotkey and Coldkey Parameters
+
+**All SS58 address parameters now use the `_ss58` suffix:**
+
+```python
+# ❌ Old:
+subtensor.move_stake(wallet, origin_hotkey, destination_hotkey, amount)
+
+# ✅ New:
+subtensor.move_stake(wallet, origin_hotkey_ss58, destination_hotkey_ss58, amount)
+```
+
+**Affected methods:**
+- `hotkey` → `hotkey_ss58` (all methods)
+- `hotkey_ss58_address` → `hotkey_ss58` (all methods)
+- `coldkey` → `coldkey_ss58` (all methods)
+- `coldkey_ss58_address` → `coldkey_ss58` (all methods)
+- `hotkeypub` → `hotkeypub_ss58` (where applicable)
+- `coldkeypub` → `coldkeypub_ss58` (where applicable)
+
+#### Transfer Extrinsic
+
+```python
+# ❌ Old:
+subtensor.transfer(wallet, dest, amount)
+
+# ✅ New:
+subtensor.transfer(wallet, destination, amount)
+```
+
+#### Staking Parameters
+
+```python
+# ❌ Old:
+subtensor.unstake(wallet, hotkey, amount, safe_staking=True)
+subtensor.swap_stake(wallet, from_hotkey, to_hotkey, amount, safe_staking=True)
+
+# ✅ New:
+subtensor.unstake(wallet, netuid, hotkey_ss58, amount, safe_unstaking=True)
+subtensor.swap_stake(wallet, from_hotkey_ss58, to_hotkey_ss58, amount, safe_swapping=True)
+```
+
+#### Required Parameters
+
+Several previously optional parameters are now **required**:
+
+```python
+# ❌ Old:
+subtensor.add_stake(wallet, hotkey_ss58=None, amount=None)
+
+# ✅ New:
+subtensor.add_stake(
+    wallet,
+    netuid: int,          # Now required
+    hotkey_ss58: str,     # Now required
+    amount: Balance       # Now required
+)
+```
+
+**Affected functions:**
+- `add_stake_extrinsic`: `netuid`, `hotkey_ss58`, `amount` now required
+- `add_stake_multiple_extrinsic`: `amounts` now required
+- `unstake_extrinsic`: `netuid`, `hotkey_ss58`, `amount` now required
+- `unstake_multiple_extrinsic`: `amounts` now required
+
+### Removed Functions
+
+#### `unstake_all` parameter removed from `unstake_extrinsic`
+
+```python
+# ❌ Old:
+subtensor.unstake(wallet, hotkey, amount=None, unstake_all=True)
+
+# ✅ New: Use dedicated method
+subtensor.unstake_all(wallet, netuid, hotkey_ss58)
+```
+
+#### Internal `_do*` methods removed
+
+All internal helper methods have been consolidated into the main functions that submit extrinsics:
+
+- `_do_commit_reveal_v3` → merged into `commit_timelocked_weights_extrinsic`
+- `_do_commit_weights` → merged into `commit_weights_extrinsic`
+- `_do_reveal_weights` → merged into `reveal_weights_extrinsic`
+- `_do_set_weights` → merged into `set_weights_extrinsic`
+- `_do_burned_register` → merged into `burned_register_extrinsic`
+- `_do_pow_register` → merged into `register_extrinsic`
+- `_do_set_root_weights` → merged into `set_root_weights_extrinsic`
+- `_do_transfer` → merged into `transfer_extrinsic`
+
+#### Deprecated root weights method removed
+
+```python
+# ❌ Removed:
+subtensor.set_root_weights_extrinsic(...)
+
+# This was obsolete and has been removed entirely
+```
+
+#### Commit-Reveal v3 (CRv3) removed
+
+All CRv3-related logic and extrinsics have been removed as CRv3 is no longer supported on the chain.
+
+```python
+# ❌ Removed:
+commit_reveal_extrinsic(...)  # Old non-mechanism version
+
+# ✅ Use:
+commit_timelocked_weights_extrinsic(..., commit_reveal_version=4)
+```
+
+### Merged Functions
+
+#### `increase_take` and `decrease_take` merged into `set_take`
+
+```python
+# ❌ Old:
+subtensor.increase_take(wallet, netuid, amount)
+subtensor.decrease_take(wallet, netuid, amount)
+
+# ✅ New:
+subtensor.set_take(wallet, netuid, amount, action="increase_take")
+subtensor.set_take(wallet, netuid, amount, action="decrease_take")
+```
+
+#### Mechanism-specific weight functions consolidated
+
+Non-mechanism versions removed, mechanism versions renamed and moved:
+
+```python
+# Old paths (removed):
+from bittensor.core.extrinsics.mechanism import (
+    commit_timelocked_mechanism_weights_extrinsic,
+    commit_mechanism_weights_extrinsic,
+    reveal_mechanism_weights_extrinsic,
+)
+
+# ✅ New paths:
+from bittensor.core.extrinsics.weights import (
+    commit_timelocked_weights_extrinsic,
+    commit_weights_extrinsic,
+    reveal_weights_extrinsic,
+    set_weights_extrinsic,
+)
+```
+
+
+
+
+## Balance Handling
+
+### Stricter Type Checking
+
+**Balance operations now raise errors instead of warnings** for type mismatches.
+
+```python
+from bittensor.utils.balance import Balance, tao, rao
+from bittensor.core.errors import BalanceTypeError, BalanceUnitMismatchError
+
+# ❌ Old: Would warn but continue
+amount = 1.0  # float
+subtensor.transfer(wallet, dest, amount)  # Warning issued
+
+# ✅ New: Raises BalanceTypeError
+amount = tao(1.0)  # Must be Balance object
+subtensor.transfer(wallet, dest, amount)
+
+# ❌ Old: Would warn about unit mismatch
+balance_tao = Balance.from_tao(1.0)
+balance_rao = Balance.from_rao(1000000000)
+result = balance_tao + balance_rao  # Warning issued
+
+# ✅ New: Raises BalanceUnitMismatchError
+# You must ensure units match
+result = balance_tao + Balance.from_tao(balance_rao.tao)
+```
+
+### Function Renames
+
+```python
+# ❌ Old:
+from bittensor.utils.balance import check_balance, check_and_convert_to_balance
+
+amount = check_and_convert_to_balance(value)
+
+# ✅ New:
+from bittensor.utils.balance import check_balance_amount
+
+amount = check_balance_amount(value)
+```
+
+### All Amount Parameters Require Balance Objects
+
+```python
+# ❌ Old:
+subtensor.transfer(wallet, destination, 1.0)  # float accepted
+subtensor.add_stake(wallet, hotkey, 5)  # int accepted
+
+# ✅ New:
 from bittensor.utils.balance import tao, rao
 
-subtensor = Subtensor()
 subtensor.transfer(wallet, destination, tao(1.0))
+subtensor.add_stake(wallet, netuid, hotkey_ss58, tao(5.0))
 # or
 subtensor.transfer(wallet, destination, rao(1000000000))
 ```
 
-### consolidation of arg label: `block`
+**Affected methods:**
+- `transfer`
+- `add_stake`
+- `add_stake_multiple`
+- `unstake`
+- `unstake_multiple`
+- `move_stake`
+- `swap_stake`
+- `transfer_stake`
+- `get_transfer_fee`
+- `get_stake_add_fee`
+- `get_stake_movement_fee`
+- `get_unstake_fee`
 
-There were some cases where the block arg was called `block_number` or `block_id`. This is standardised, and now all block args are called `block`.
 
-### `get_block_hash`
 
-No longer requires `block` arg, will fetch the latest block if not specified.
+## Import Changes
 
-### `get_stake_for_coldkey_and_hotkey`
+### Removed Backwards Compatibility Aliases
 
-Arg order has changed. It now takes `(coldkey, hotkey)` to align with the method name.
+The following lowercase aliases have been **removed** from `bittensor`:
 
-In addition, to accomodate changes to staking in dynamic TAO, the function now also accepts an optional list of `netuids` to check for stake, and returns a `dict[int, StakeInfo]`, where `int` is the netuid. If `netuids` is left as `None`, all netuids are fetched.
+```python
+# ❌ Old (removed):
+from bittensor import subtensor, wallet, config, axon, dendrite
+from bittensor import keyfile, metagraph, synapse, async_subtensor
 
-### `get_subnet_reveal_period_epochs`
+# ✅ New (use PascalCase):
+from bittensor import Subtensor, Wallet, Config, Axon, Dendrite
+from bittensor import Keyfile, Metagraph, Synapse, AsyncSubtensor
+```
 
-Type hint is updated to reflect it always returns an `int`, rather than an `Optional[int]`.
+### Removed Direct Subpackage Links
 
-### `query_runtime_api`
+```python
+# ❌ Old (removed):
+from bittensor.mock import MockSubtensor
+from bittensor.extrinsics import transfer_extrinsic
 
-Now accepts params as `Any`, returns `Any`. This is due to an update in `bt-decode` and `async-substrate-interface` that allows for arbitrary decoding of runtime calls.
+# ✅ New:
+from bittensor.core.mock import MockSubtensor
+from bittensor.core.extrinsics import transfer_extrinsic
+```
 
-### `get_subnet_burn_cost`
+### New Import Convenience
 
-Now returns an `Optional[Balance]` object rather than `Optional[int]` (previously it gave rao `int`)
+```python
+# ✅ New convenience imports:
+from bittensor import extrinsics
+from bittensor import mock
+from bittensor import get_async_subtensor
 
-### `get_children`
+# Use them:
+response = extrinsics.transfer_extrinsic(...)
+mock_sub = mock.MockSubtensor()
+async_sub = get_async_subtensor(network="test")
+```
 
-Now returns `tuple[bool, list[tuple[float, str]], str]` instead of `tuple[bool, list[tuple[int, str]], str]`, as the proportions are now normalised floats.
+### Module Reorganization
 
-## `AsyncSubtensor`
+Several modules have been moved to new subpackages:
 
-`AsyncSubtensor` and `Subtensor` now have all and only the same methods.
+```python
+# ❌ Old:
+from bittensor.core.subtensor_api import SubtensorAPI
+from bittensor.core.timelock import TimelockManager
 
-Check out the wiki entry on [Concurrency in Bittensor](https://github.com/opentensor/bittensor/wiki/Concurrency-in-Bittensor) to learn more.
+# ✅ New:
+from bittensor.core.addons.subtensor_api import SubtensorAPI
+from bittensor.core.addons.timelock import TimelockManager
+```
 
-## `py-substrate-interface` replaced with `async-substrate-interface`
+A new `bittensor.extras` package hosts optional extensions:
 
-`py-substrate-interface` has been completely removed as a requirement, and has been rewritten as `async-substrate-interface`.
+```python
+from bittensor.extras.subtensor_api import SubtensorAPI
+from bittensor.extras.timelock import TimelockManager
+from bittensor.extras.dev_framework import DevFramework  # New!
+```
 
-While the main goal of this project was initially just providing an AsyncIO-compatible version of `py-substrate-interface` for our use in `btcli` and `AsyncSubtensor`, we noticed a lot of room for improvement, so we wrote not only the async part, but also a synchronous part. We aimed to be as API-compatible as possible, but there are a few differences (mainly in runtime calls).
+### Extrinsic Parameters Package
 
-`async-substrate-interface` is its own standalone package, as is a requirement for `bittensor` and `btcli`, replacing `py-substrate-interface`.
+Parameters for functions that submit extrinsics are now centralized in a dedicated package, `bittensor.core.extrinsics.params`.
 
-While we do practically all the decoding now through `bt-decode`, we still use `py-scale-codec` for a few `SCALE` encodings. This package will also eventually be replaced by an updated version of `bt-decode`.
+This makes it easier to discover available parameters and ensures consistency across sync/async implementations of blockchain transaction functions.
 
-Check out the wiki entry on [Concurrency in Bittensor](https://github.com/opentensor/bittensor/wiki/Concurrency-in-Bittensor) to learn more.
+
+## Environment Variables
+
+### Renamed Variables
+
+```python
+# ❌ Old:
+BT_CHAIN_ENDPOINT=ws://127.0.0.1:9945
+BT_NETWORK=local
+
+# ✅ New:
+BT_SUBTENSOR_CHAIN_ENDPOINT=ws://127.0.0.1:9945
+BT_SUBTENSOR_NETWORK=local
+```
+
+**All environment variables:**
+- `BT_CHAIN_ENDPOINT` → `BT_SUBTENSOR_CHAIN_ENDPOINT`
+- `BT_NETWORK` → `BT_SUBTENSOR_NETWORK`
+
+### Disabling CLI Argument Parsing
+
+If your script uses the SDK and receives unwanted `--config` or other CLI parameters:
+
+```python
+# Set environment variable to disable config processing:
+BT_NO_PARSE_CLI_ARGS=1  # or: true, yes, on
+
+# In code:
+import os
+os.environ['BT_NO_PARSE_CLI_ARGS'] = '1'
+
+from bittensor import Subtensor
+# CLI args will no longer be processed
+```
+
+
+
+## Metagraph Changes
+
+This section covers changes to metagraph-related functionality in both the `Subtensor` and `Metagraph` classes, particularly around the new multiple incentive mechanisms feature.
+
+### Mechid Parameter Ordering
+
+With the introduction of multiple incentive mechanisms per subnet, many methods now accept a `mechid` (mechanism ID) parameter to specify which mechanism to query. These methods have been standardized with consistent parameter ordering:
+
+```python
+# ❌ Old:
+bonds = subtensor.bonds(netuid, mechid=0, block=None)
+
+# ✅ New:
+bonds = subtensor.bonds(netuid, block=None, mechid=0)
+```
+
+**Affected methods:**
+- `bonds`
+- `weights`
+- `get_metagraph_info`
+- `get_timelocked_weight_commits`
+- `metagraph`
+- `commit_weights`
+- `reveal_weights`
+- `set_weights`
+
+### MetagraphInfo Changes
+
+The `MetagraphInfo` class now requires a `mechid` parameter to support multiple incentive mechanisms:
+
+```python
+# mechid is now required in MetagraphInfo
+from bittensor.core.chain_data.metagraph_info import MetagraphInfo
+
+info = MetagraphInfo(
+    netuid=1,
+    mechid=0,  # Now required (mechanism ID)
+    # ... other fields
+)
+```
+
+**Note:** `mechid=0` refers to the first (or only) incentive mechanism in a subnet. Subnets can have multiple mechanisms (currently limited to 2), each with their own independent weight matrices and emissions. See [Multiple Incentive Mechanisms](../subnets/understanding-multiple-mech-subnets) for details.
+
+
+## Migration Checklist
+
+1. **Update Python version** to 3.10 or higher
+2. **Update bittensor package**: `pip install bittensor>=10.0.0`
+3. **Update all imports** to use PascalCase class names (`Subtensor`, `Wallet`, etc.)
+4. **Replace all amount parameters** with `Balance` objects using `tao()` or `rao()`
+5. **Update all functions that submit extrinsics** to handle `ExtrinsicResponse` return type instead of `bool` or tuples
+6. **Rename parameters** according to the standardization (`hotkey` → `hotkey_ss58`, `dest` → `destination`, etc.)
+7. **Update environment variables** (`BT_CHAIN_ENDPOINT` → `BT_SUBTENSOR_CHAIN_ENDPOINT`, `BT_NETWORK` → `BT_SUBTENSOR_NETWORK`)
+8. **Review removed methods** and replace with alternatives (see [Removed Methods](#removed-methods))
+9. **Update parameter order** for affected methods (see [Parameter Changes](#parameter-changes))
+10. **Add `mechid` parameter** to weight-setting code if working with multiple mechanisms
+11. **Test thoroughly** with your specific use case, especially blockchain transactions and balance handling

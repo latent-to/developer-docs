@@ -148,6 +148,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../floop/index.html">floop</a></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
@@ -167,6 +168,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../threadpool/index.html">bittensor.core.threadpool</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../types/index.html">bittensor.core.types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
 </ul>
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../utils/index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -622,11 +629,11 @@ the attachment and operation of endpoints.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>wallet</strong> (<em>Optional</em><em>[</em><em>bittensor_wallet.Wallet</em><em>]</em>) – Wallet with hotkey and coldkeypub.</p></li>
 <li><p><strong>config</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../config/index.html#bittensor.core.config.Config" title="bittensor.core.config.Config"><em>bittensor.core.config.Config</em></a><em>]</em>) – Configuration parameters for the axon.</p></li>
-<li><p><strong>port</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Port for server binding.</p></li>
-<li><p><strong>ip</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – Binding IP address.</p></li>
-<li><p><strong>external_ip</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – External IP address to broadcast.</p></li>
-<li><p><strong>external_port</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – External port to broadcast.</p></li>
-<li><p><strong>max_workers</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Number of active threads for request handling.</p></li>
+<li><p><strong>port</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – Port for server binding.</p></li>
+<li><p><strong>ip</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – Binding IP address.</p></li>
+<li><p><strong>external_ip</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – External IP address to broadcast.</p></li>
+<li><p><strong>external_port</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – External port to broadcast.</p></li>
+<li><p><strong>max_workers</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – Number of active threads for request handling.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -684,8 +691,8 @@ active threads servicing requests.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.13)"><em>argparse.ArgumentParser</em></a>) – Argument parser to which the arguments will be added.</p></li>
-<li><p><strong>prefix</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – Prefix to add to the argument names. Defaults to None.</p></li>
+<li><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.14)"><em>argparse.ArgumentParser</em></a>) – Argument parser to which the arguments will be added.</p></li>
+<li><p><strong>prefix</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – Prefix to add to the argument names. Defaults to None.</p></li>
 </ul>
 </dd>
 </dl>
@@ -741,10 +748,10 @@ designed to receive the same parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.13)"><strong>AssertionError</strong></a> – If <code class="xref py py-func docutils literal notranslate"><span class="pre">forward_fn()</span></code> does not have the signature: <code class="docutils literal notranslate"><span class="pre">forward(</span> <span class="pre">synapse:</span> <span class="pre">YourSynapse</span> <span class="pre">)</span> <span class="pre">-&gt;</span> <span class="pre">synapse</span></code>.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.13)"><strong>AssertionError</strong></a> – If <code class="xref py py-func docutils literal notranslate"><span class="pre">blacklist_fn()</span></code> does not have the signature: <code class="docutils literal notranslate"><span class="pre">blacklist(</span> <span class="pre">synapse:</span> <span class="pre">YourSynapse</span> <span class="pre">)</span> <span class="pre">-&gt;</span> <span class="pre">bool</span></code>.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.13)"><strong>AssertionError</strong></a> – If <code class="xref py py-func docutils literal notranslate"><span class="pre">priority_fn()</span></code> does not have the signature: <code class="docutils literal notranslate"><span class="pre">priority(</span> <span class="pre">synapse:</span> <span class="pre">YourSynapse</span> <span class="pre">)</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code>.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.13)"><strong>AssertionError</strong></a> – If <code class="xref py py-func docutils literal notranslate"><span class="pre">verify_fn()</span></code> does not have the signature: <code class="docutils literal notranslate"><span class="pre">verify(</span> <span class="pre">synapse:</span> <span class="pre">YourSynapse</span> <span class="pre">)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code>.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.14)"><strong>AssertionError</strong></a> – If <code class="xref py py-func docutils literal notranslate"><span class="pre">forward_fn()</span></code> does not have the signature: <code class="docutils literal notranslate"><span class="pre">forward(</span> <span class="pre">synapse:</span> <span class="pre">YourSynapse</span> <span class="pre">)</span> <span class="pre">-&gt;</span> <span class="pre">synapse</span></code>.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.14)"><strong>AssertionError</strong></a> – If <code class="xref py py-func docutils literal notranslate"><span class="pre">blacklist_fn()</span></code> does not have the signature: <code class="docutils literal notranslate"><span class="pre">blacklist(</span> <span class="pre">synapse:</span> <span class="pre">YourSynapse</span> <span class="pre">)</span> <span class="pre">-&gt;</span> <span class="pre">bool</span></code>.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.14)"><strong>AssertionError</strong></a> – If <code class="xref py py-func docutils literal notranslate"><span class="pre">priority_fn()</span></code> does not have the signature: <code class="docutils literal notranslate"><span class="pre">priority(</span> <span class="pre">synapse:</span> <span class="pre">YourSynapse</span> <span class="pre">)</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code>.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.14)"><strong>AssertionError</strong></a> – If <code class="xref py py-func docutils literal notranslate"><span class="pre">verify_fn()</span></code> does not have the signature: <code class="docutils literal notranslate"><span class="pre">verify(</span> <span class="pre">synapse:</span> <span class="pre">YourSynapse</span> <span class="pre">)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -792,7 +799,7 @@ use cases.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.axon.Axon.blacklist_fns">
-<span class="sig-name descname"><span class="pre">blacklist_fns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.axon.Axon.blacklist_fns" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">blacklist_fns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.axon.Axon.blacklist_fns" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -804,7 +811,7 @@ use cases.</p>
 <dd class="field-odd"><p><strong>config</strong> (<a class="reference internal" href="../config/index.html#bittensor.core.config.Config" title="bittensor.core.config.Config"><em>bittensor.core.config.Config</em></a>) – The config object holding axon settings.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.13)"><strong>AssertionError</strong></a> – If the axon or external ports are not in range [1024, 65535]</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.14)"><strong>AssertionError</strong></a> – If the axon or external ports are not in range [1024, 65535]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -865,9 +872,9 @@ cryptographic keys can participate in secure communication.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If the <code class="docutils literal notranslate"><span class="pre">receiver_hotkey</span></code> doesn’t match with <code class="docutils literal notranslate"><span class="pre">self.receiver_hotkey</span></code>.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If the nonce is not larger than the previous nonce for the same endpoint key.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If the signature verification fails.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><strong>Exception</strong></a> – If the <code class="docutils literal notranslate"><span class="pre">receiver_hotkey</span></code> doesn’t match with <code class="docutils literal notranslate"><span class="pre">self.receiver_hotkey</span></code>.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><strong>Exception</strong></a> – If the nonce is not larger than the previous nonce for the same endpoint key.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><strong>Exception</strong></a> – If the signature verification fails.</p></li>
 </ul>
 </dd>
 </dl>
@@ -882,12 +889,12 @@ signature using the sender’s public key.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.axon.Axon.external_ip">
-<span class="sig-name descname"><span class="pre">external_ip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.axon.Axon.external_ip" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">external_ip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.axon.Axon.external_ip" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.axon.Axon.external_port">
-<span class="sig-name descname"><span class="pre">external_port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.axon.Axon.external_port" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">external_port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.axon.Axon.external_port" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -902,12 +909,12 @@ signature using the sender’s public key.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.axon.Axon.forward_class_types">
-<span class="sig-name descname"><span class="pre">forward_class_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/inspect.html#inspect.Signature" title="(in Python v3.13)"><span class="pre">inspect.Signature</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.axon.Axon.forward_class_types" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">forward_class_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/inspect.html#inspect.Signature" title="(in Python v3.14)"><span class="pre">inspect.Signature</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.axon.Axon.forward_class_types" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.axon.Axon.forward_fns">
-<span class="sig-name descname"><span class="pre">forward_fns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.axon.Axon.forward_fns" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">forward_fns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.axon.Axon.forward_fns" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -934,7 +941,7 @@ signature using the sender’s public key.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.axon.Axon.ip">
-<span class="sig-name descname"><span class="pre">ip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.axon.Axon.ip" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.axon.Axon.ip" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -944,17 +951,17 @@ signature using the sender’s public key.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.axon.Axon.nonces">
-<span class="sig-name descname"><span class="pre">nonces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.axon.Axon.nonces" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">nonces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.axon.Axon.nonces" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.axon.Axon.port">
-<span class="sig-name descname"><span class="pre">port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.axon.Axon.port" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.axon.Axon.port" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.axon.Axon.priority_fns">
-<span class="sig-name descname"><span class="pre">priority_fns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.axon.Axon.priority_fns" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">priority_fns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.axon.Axon.priority_fns" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -972,7 +979,7 @@ of information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The unique identifier of the subnet to register on. This ID is essential for the Axon to
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The unique identifier of the subnet to register on. This ID is essential for the Axon to
 correctly position itself within the Bittensor network topology.</p></li>
 <li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em>) – The subtensor connection to use for serving. If
 not provided, a new connection is established based on default configurations.</p></li>
@@ -1105,7 +1112,7 @@ a level of trust and security between the sender and receiver in the network.</p
 </p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>JSONResponse</strong> – Raises a JSONResponse with a 400 status code if any of the hash comparisons fail, indicating
@@ -1131,7 +1138,7 @@ the reliability and trust in the network communication.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.axon.Axon.verify_fns">
-<span class="sig-name descname"><span class="pre">verify_fns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.axon.Axon.verify_fns" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">verify_fns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.axon.Axon.verify_fns" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1190,7 +1197,7 @@ are prohibited from accessing certain resources.</p>
 <dd class="field-odd"><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>) – The Synapse object representing the request.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If the request is found in the blacklist.</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><strong>Exception</strong></a> – If the request is found in the blacklist.</p>
 </dd>
 </dl>
 <p>The blacklist check involves:</p>
@@ -1273,7 +1280,7 @@ level to the request, determining its urgency and importance in the processing q
 <dd class="field-odd"><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>) – The Synapse object representing the request.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If the priority assessment process encounters issues, such as timeouts.</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><strong>Exception</strong></a> – If the priority assessment process encounters issues, such as timeouts.</p>
 </dd>
 </dl>
 <p>The priority function plays a crucial role in managing the processing load and ensuring that
@@ -1313,7 +1320,7 @@ request takes place, leading to the generation of a response.</p>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>)</p></li>
-<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
+<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
 <li><p><strong>response_override</strong> (<em>Optional</em><em>[</em><em>starlette.responses.Response</em><em>]</em>)</p></li>
 </ul>
 </dd>
@@ -1326,7 +1333,7 @@ request takes place, leading to the generation of a response.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>) – The Synapse object representing the request.</p></li>
-<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The timestamp when the request processing started.</p></li>
+<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The timestamp when the request processing started.</p></li>
 <li><p><strong>response_override</strong> (<em>Optional</em><em>[</em><em>starlette.responses.Response</em><em>]</em>) – Instead of serializing the synapse, mutate the provided response object. This is only
 really useful for StreamingSynapse responses.</p></li>
 </ul>
@@ -1352,7 +1359,7 @@ request meets the predefined security and validation criteria.</p>
 <dd class="field-odd"><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>) – The Synapse object representing the request.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If the verification process fails due to unmet criteria or security concerns.</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><strong>Exception</strong></a> – If the verification process fails due to unmet criteria or security concerns.</p>
 </dd>
 </dl>
 <p>The verification process involves:</p>
@@ -1416,8 +1423,8 @@ gracefully, ensuring that all resources are properly released.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>should_exit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Flag to indicate whether the server should stop running.</p></li>
-<li><p><strong>is_running</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Flag to indicate whether the server is currently running.</p></li>
+<li><p><strong>should_exit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Flag to indicate whether the server should stop running.</p></li>
+<li><p><strong>is_running</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Flag to indicate whether the server is currently running.</p></li>
 <li><p><strong>config</strong> (<em>uvicorn.config.Config</em>)</p></li>
 </ul>
 </dd>
@@ -1434,7 +1441,7 @@ complex asynchronous environment like the Axon server.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.axon.FastAPIThreadedServer.is_running">
-<span class="sig-name descname"><span class="pre">is_running</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#bittensor.core.axon.FastAPIThreadedServer.is_running" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">is_running</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#bittensor.core.axon.FastAPIThreadedServer.is_running" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1452,7 +1459,7 @@ request handling in the Axon server.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.axon.FastAPIThreadedServer.should_exit">
-<span class="sig-name descname"><span class="pre">should_exit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#bittensor.core.axon.FastAPIThreadedServer.should_exit" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">should_exit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#bittensor.core.axon.FastAPIThreadedServer.should_exit" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1506,9 +1513,9 @@ associated axon.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>) – The synapse object to be updated with error information.</p></li>
-<li><p><strong>exception</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><em>Exception</em></a>) – The exception that was raised and needs to be logged and handled.</p></li>
-<li><p><strong>status_code</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The HTTP status code to be set on the synapse object. Defaults to None.</p></li>
-<li><p><strong>start_time</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>]</em>) – The timestamp marking the start of the processing, used to calculate process time.
+<li><p><strong>exception</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><em>Exception</em></a>) – The exception that was raised and needs to be logged and handled.</p></li>
+<li><p><strong>status_code</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The HTTP status code to be set on the synapse object. Defaults to None.</p></li>
+<li><p><strong>start_time</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>]</em>) – The timestamp marking the start of the processing, used to calculate process time.
 Defaults to None.</p></li>
 </ul>
 </dd>

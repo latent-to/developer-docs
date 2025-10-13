@@ -148,6 +148,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../floop/index.html">floop</a></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
@@ -167,6 +168,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../core/threadpool/index.html">bittensor.core.threadpool</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/types/index.html">bittensor.core.types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
 </ul>
 </details></li>
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../../index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -563,13 +570,13 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>proc_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of the process being created.</p></li>
-<li><p><strong>num_proc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The total number of processes running.</p></li>
-<li><p><strong>update_interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of nonces to try to solve before checking for a new block.</p></li>
-<li><p><strong>finished_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.13)"><em>multiprocessing.Queue</em></a>) – The queue to put the process number when a process finishes each
+<li><p><strong>proc_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of the process being created.</p></li>
+<li><p><strong>num_proc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The total number of processes running.</p></li>
+<li><p><strong>update_interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of nonces to try to solve before checking for a new block.</p></li>
+<li><p><strong>finished_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.14)"><em>multiprocessing.Queue</em></a>) – The queue to put the process number when a process finishes each
 update_interval. Used for calculating the average time per update_interval across all processes.</p></li>
-<li><p><strong>solution_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.13)"><em>multiprocessing.Queue</em></a>) – The queue to put the solution the process has found during the pow solve.</p></li>
-<li><p><strong>stopEvent</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Event" title="(in Python v3.13)"><em>multiprocessing.Event</em></a>) – The event to set by the main process when all the solver processes should
+<li><p><strong>solution_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.14)"><em>multiprocessing.Queue</em></a>) – The queue to put the solution the process has found during the pow solve.</p></li>
+<li><p><strong>stopEvent</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Event" title="(in Python v3.14)"><em>multiprocessing.Event</em></a>) – The event to set by the main process when all the solver processes should
 stop. The solver process will check for the event after each update_interval. The solver process will stop
 when the event is set. Used to stop the solver processes when a solution is found.</p></li>
 <li><p><strong>curr_block</strong> (<em>multiprocessing.Array</em>) – The array containing this process’s current block hash. The main process
@@ -581,17 +588,17 @@ solver process will get the new block number from this value when newBlockEvent 
 <li><p><strong>curr_diff</strong> (<em>multiprocessing.Array</em>) – The array containing this process’s current difficulty. The main process will
 set the array to the new difficulty when a new block is finalized in the network. The solver process will
 get the new difficulty from this array when newBlockEvent is set.</p></li>
-<li><p><strong>check_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Lock" title="(in Python v3.13)"><em>multiprocessing.Lock</em></a>) – The lock to prevent this process from getting the new block data while the
+<li><p><strong>check_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Lock" title="(in Python v3.14)"><em>multiprocessing.Lock</em></a>) – The lock to prevent this process from getting the new block data while the
 main process is updating the data.</p></li>
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The limit of the pow solve for a valid solution.</p></li>
-<li><p><strong>dev_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
-<li><p><strong>tpb</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The limit of the pow solve for a valid solution.</p></li>
+<li><p><strong>dev_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>tpb</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.CUDASolver.dev_id">
-<span class="sig-name descname"><span class="pre">dev_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.CUDASolver.dev_id" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dev_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.CUDASolver.dev_id" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -602,7 +609,7 @@ main process is updating the data.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.CUDASolver.tpb">
-<span class="sig-name descname"><span class="pre">tpb</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.CUDASolver.tpb" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tpb</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.CUDASolver.tpb" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -615,7 +622,7 @@ main process is updating the data.</p></li>
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/utils/registration/pow.html#Console.log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.registration.pow.Console.log" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -625,7 +632,7 @@ main process is updating the data.</p></li>
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/utils/registration/pow.html#Console.status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.registration.pow.Console.status" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -644,12 +651,12 @@ main process is updating the data.</p></li>
 <dd><p>A solution to the registration PoW problem.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.POWSolution.block_number">
-<span class="sig-name descname"><span class="pre">block_number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.POWSolution.block_number" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">block_number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.POWSolution.block_number" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.POWSolution.difficulty">
-<span class="sig-name descname"><span class="pre">difficulty</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.POWSolution.difficulty" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">difficulty</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.POWSolution.difficulty" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -662,7 +669,7 @@ main process is updating the data.</p></li>
 <dd class="field-odd"><p><strong>subtensor</strong> (<a class="reference internal" href="../../../core/subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -677,19 +684,19 @@ main process is updating the data.</p></li>
 <dd class="field-odd"><p><strong>subtensor</strong> (<a class="reference internal" href="../../../core/async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.POWSolution.nonce">
-<span class="sig-name descname"><span class="pre">nonce</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.POWSolution.nonce" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">nonce</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.POWSolution.nonce" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.POWSolution.seal">
-<span class="sig-name descname"><span class="pre">seal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><span class="pre">bytes</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.POWSolution.seal" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">seal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><span class="pre">bytes</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.POWSolution.seal" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -700,47 +707,47 @@ main process is updating the data.</p></li>
 <dd><p>Statistics for a registration.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.RegistrationStatistics.block_hash">
-<span class="sig-name descname"><span class="pre">block_hash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.block_hash" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">block_hash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.block_hash" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.RegistrationStatistics.block_number">
-<span class="sig-name descname"><span class="pre">block_number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.block_number" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">block_number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.block_number" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.RegistrationStatistics.difficulty">
-<span class="sig-name descname"><span class="pre">difficulty</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.difficulty" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">difficulty</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.difficulty" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.RegistrationStatistics.hash_rate">
-<span class="sig-name descname"><span class="pre">hash_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.hash_rate" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">hash_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.hash_rate" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.RegistrationStatistics.hash_rate_perpetual">
-<span class="sig-name descname"><span class="pre">hash_rate_perpetual</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.hash_rate_perpetual" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">hash_rate_perpetual</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.hash_rate_perpetual" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.RegistrationStatistics.rounds_total">
-<span class="sig-name descname"><span class="pre">rounds_total</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.rounds_total" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rounds_total</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.rounds_total" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.RegistrationStatistics.time_average">
-<span class="sig-name descname"><span class="pre">time_average</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.time_average" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">time_average</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.time_average" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.RegistrationStatistics.time_spent">
-<span class="sig-name descname"><span class="pre">time_spent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.time_spent" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">time_spent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.time_spent" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.RegistrationStatistics.time_spent_total">
-<span class="sig-name descname"><span class="pre">time_spent_total</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.time_spent_total" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">time_spent_total</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatistics.time_spent_total" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -753,7 +760,7 @@ main process is updating the data.</p></li>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>console</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#bittensor.utils.registration.pow.Console" title="bittensor.utils.registration.pow.Console"><em>Console</em></a><em>]</em>)</p></li>
-<li><p><strong>output_in_place</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>output_in_place</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -770,11 +777,11 @@ main process is updating the data.</p></li>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>stats</strong> (<a class="reference internal" href="#bittensor.utils.registration.pow.RegistrationStatistics" title="bittensor.utils.registration.pow.RegistrationStatistics"><em>RegistrationStatistics</em></a>)</p></li>
-<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -791,7 +798,7 @@ main process is updating the data.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.registration.pow.RegistrationStatisticsLogger.status">
-<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#bittensor.utils.registration.pow.Status" title="bittensor.utils.registration.pow.Status"><span class="pre">Status</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatisticsLogger.status" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#bittensor.utils.registration.pow.Status" title="bittensor.utils.registration.pow.Status"><span class="pre">Status</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.utils.registration.pow.RegistrationStatisticsLogger.status" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -811,7 +818,7 @@ main process is updating the data.</p></li>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>stats</strong> (<a class="reference internal" href="#bittensor.utils.registration.pow.RegistrationStatistics" title="bittensor.utils.registration.pow.RegistrationStatistics"><em>RegistrationStatistics</em></a>)</p></li>
-<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -830,13 +837,13 @@ main process is updating the data.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>proc_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of the process being created.</p></li>
-<li><p><strong>num_proc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The total number of processes running.</p></li>
-<li><p><strong>update_interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of nonces to try to solve before checking for a new block.</p></li>
-<li><p><strong>finished_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.13)"><em>multiprocessing.Queue</em></a>) – The queue to put the process number when a process finishes each
+<li><p><strong>proc_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of the process being created.</p></li>
+<li><p><strong>num_proc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The total number of processes running.</p></li>
+<li><p><strong>update_interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of nonces to try to solve before checking for a new block.</p></li>
+<li><p><strong>finished_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.14)"><em>multiprocessing.Queue</em></a>) – The queue to put the process number when a process finishes each
 update_interval. Used for calculating the average time per update_interval across all processes.</p></li>
-<li><p><strong>solution_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.13)"><em>multiprocessing.Queue</em></a>) – The queue to put the solution the process has found during the pow solve.</p></li>
-<li><p><strong>stopEvent</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Event" title="(in Python v3.13)"><em>multiprocessing.Event</em></a>) – The event to set by the main process when all the solver processes should
+<li><p><strong>solution_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.14)"><em>multiprocessing.Queue</em></a>) – The queue to put the solution the process has found during the pow solve.</p></li>
+<li><p><strong>stopEvent</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Event" title="(in Python v3.14)"><em>multiprocessing.Event</em></a>) – The event to set by the main process when all the solver processes should
 stop. The solver process will check for the event after each update_interval. The solver process will stop
 when the event is set. Used to stop the solver processes when a solution is found.</p></li>
 <li><p><strong>curr_block</strong> (<em>multiprocessing.Array</em>) – The array containing this process’s current block hash. The main process
@@ -848,9 +855,9 @@ solver process will get the new block number from this value when newBlockEvent 
 <li><p><strong>curr_diff</strong> (<em>multiprocessing.Array</em>) – The array containing this process’s current difficulty. The main process will
 set the array to the new difficulty when a new block is finalized in the network. The solver process will
 get the new difficulty from this array when newBlockEvent is set.</p></li>
-<li><p><strong>check_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Lock" title="(in Python v3.13)"><em>multiprocessing.Lock</em></a>) – The lock to prevent this process from getting the new block data while the
+<li><p><strong>check_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Lock" title="(in Python v3.14)"><em>multiprocessing.Lock</em></a>) – The lock to prevent this process from getting the new block data while the
 main process is updating the data.</p></li>
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The limit of the pow solve for a valid solution.</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The limit of the pow solve for a valid solution.</p></li>
 </ul>
 </dd>
 </dl>
@@ -867,7 +874,7 @@ main process is updating the data.</p></li>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.utils.registration.pow.</span></span><span class="sig-name descname"><span class="pre">Status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/utils/registration/pow.html#Status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.registration.pow.Status" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -885,7 +892,7 @@ main process is updating the data.</p></li>
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/utils/registration/pow.html#Status.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.registration.pow.Status.update" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -897,7 +904,7 @@ main process is updating the data.</p></li>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.utils.registration.pow.</span></span><span class="sig-name descname"><span class="pre">UsingSpawnStartMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/utils/registration/pow.html#UsingSpawnStartMethod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.registration.pow.UsingSpawnStartMethod" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>force</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p>
+<dd class="field-odd"><p><strong>force</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -911,18 +918,18 @@ main process is updating the data.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../core/subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – The subtensor to create a proof of work for.</p></li>
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – The wallet to create a proof of work for.</p></li>
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The netuid for the subnet to create a proof of work for.</p></li>
-<li><p><strong>output_in_place</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, prints the progress of the proof of work to the console in-place. Meaning the
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid for the subnet to create a proof of work for.</p></li>
+<li><p><strong>output_in_place</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, prints the progress of the proof of work to the console in-place. Meaning the
 progress is printed on the same lines. Default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
-<li><p><strong>cuda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, uses CUDA to solve the proof of work. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
-<li><p><strong>dev_id</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The CUDA device id(s) to use. If cuda is true and dev_id is a list, then
+<li><p><strong>cuda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, uses CUDA to solve the proof of work. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>dev_id</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The CUDA device id(s) to use. If cuda is true and dev_id is a list, then
 multiple CUDA devices will be used to solve the proof of work. Default is <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
-<li><p><strong>tpb</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of threads per block to use when solving the proof of work. Should be a multiple of 32.
+<li><p><strong>tpb</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of threads per block to use when solving the proof of work. Should be a multiple of 32.
 Default is <code class="docutils literal notranslate"><span class="pre">256</span></code>.</p></li>
-<li><p><strong>num_processes</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The number of processes to use when solving the proof of work. If None, then the
+<li><p><strong>num_processes</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of processes to use when solving the proof of work. If None, then the
 number of processes is equal to the number of CPU cores. Default is None.</p></li>
-<li><p><strong>update_interval</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The number of nonces to run before checking for a new block. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
-<li><p><strong>log_verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, prints the progress of the proof of work more verbosely. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>update_interval</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of nonces to run before checking for a new block. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>log_verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, prints the progress of the proof of work more verbosely. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -933,10 +940,10 @@ number of processes is equal to the number of CPU cores. Default is None.</p></l
 </p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Optional[Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, Any]]</p>
+<dd class="field-odd"><p>Optional[Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, Any]]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If the subnet does not exist.</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If the subnet does not exist.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -947,7 +954,7 @@ number of processes is equal to the number of CPU cores. Default is None.</p></l
 <dd><p>Returns the number of CPUs in the system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -979,7 +986,7 @@ number of processes is equal to the number of CPU cores. Default is None.</p></l
 <span class="sig-prename descclassname"><span class="pre">bittensor.utils.registration.pow.</span></span><span class="sig-name descname"><span class="pre">terminate_workers_and_wait_for_exit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/utils/registration/pow.html#terminate_workers_and_wait_for_exit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.registration.pow.terminate_workers_and_wait_for_exit" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Process" title="(in Python v3.13)"><em>multiprocessing.Process</em></a><em>, </em><em>multiprocessing.queues.Queue</em><em>]</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Process" title="(in Python v3.14)"><em>multiprocessing.Process</em></a><em>, </em><em>multiprocessing.queues.Queue</em><em>]</em><em>]</em>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
@@ -1004,11 +1011,11 @@ number, hashes the block with the hotkey, updates the current block bytes, and p
 <li><p><strong>curr_diff</strong> (<em>multiprocessing.Array</em>) – Shared array to store the current difficulty.</p></li>
 <li><p><strong>curr_block</strong> (<em>multiprocessing.Array</em>) – Shared array to store the current block data.</p></li>
 <li><p><strong>curr_block_num</strong> (<em>multiprocessing.Value</em>) – Shared value to store the current block number.</p></li>
-<li><p><strong>block_number</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The block number to set as the current block number.</p></li>
-<li><p><strong>block_bytes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a>) – The block data bytes to be hashed with the hotkey.</p></li>
-<li><p><strong>diff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The difficulty value to be packed into the current difficulty array.</p></li>
-<li><p><strong>hotkey_bytes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a>) – The hotkey bytes used for hashing the block.</p></li>
-<li><p><strong>lock</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Lock" title="(in Python v3.13)"><em>multiprocessing.Lock</em></a>) – A lock to ensure thread-safe updates.</p></li>
+<li><p><strong>block_number</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The block number to set as the current block number.</p></li>
+<li><p><strong>block_bytes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><em>bytes</em></a>) – The block data bytes to be hashed with the hotkey.</p></li>
+<li><p><strong>diff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The difficulty value to be packed into the current difficulty array.</p></li>
+<li><p><strong>hotkey_bytes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><em>bytes</em></a>) – The hotkey bytes used for hashing the block.</p></li>
+<li><p><strong>lock</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Lock" title="(in Python v3.14)"><em>multiprocessing.Lock</em></a>) – A lock to ensure thread-safe updates.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1020,7 +1027,7 @@ number, hashes the block with the hotkey, updates the current block bytes, and p
 <dd><p>Force the use of torch over numpy for certain operations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>

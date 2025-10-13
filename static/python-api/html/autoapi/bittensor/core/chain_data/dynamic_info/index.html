@@ -148,6 +148,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../floop/index.html">floop</a></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="../../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
@@ -167,6 +168,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../../threadpool/index.html">bittensor.core.threadpool</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../types/index.html">bittensor.core.types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
 </ul>
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../utils/index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -498,7 +505,7 @@ dynamic information in the Bittensor network.</p>
 <span class="sig-name descname"><span class="pre">alpha_to_tao</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/core/chain_data/dynamic_info.html#DynamicInfo.alpha_to_tao"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.alpha_to_tao" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>alpha</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>)</p>
+<dd class="field-odd"><p><strong>alpha</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance">bittensor.utils.balance.Balance</a></p>
@@ -513,8 +520,8 @@ dynamic information in the Bittensor network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>alpha</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Amount of Alpha to stake.</p></li>
-<li><p><strong>percentage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – percentage</p></li>
+<li><p><strong>alpha</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – Amount of Alpha to stake.</p></li>
+<li><p><strong>percentage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – percentage</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -523,14 +530,14 @@ second part (slippage) is the difference between the estimated amount and ideal
 amount as if there was no slippage. If percentage is True, a float representing the slippage percentage.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance">bittensor.utils.balance.Balance</a>, <a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance">bittensor.utils.balance.Balance</a>], <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a>]</p>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[<a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance">bittensor.utils.balance.Balance</a>, <a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance">bittensor.utils.balance.Balance</a>], <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.blocks_since_last_step">
-<span class="sig-name descname"><span class="pre">blocks_since_last_step</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.blocks_since_last_step" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">blocks_since_last_step</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.blocks_since_last_step" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -540,42 +547,42 @@ amount as if there was no slippage. If percentage is True, a float representing 
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.is_dynamic">
-<span class="sig-name descname"><span class="pre">is_dynamic</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.is_dynamic" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">is_dynamic</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.is_dynamic" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.k">
-<span class="sig-name descname"><span class="pre">k</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.k" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">k</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.k" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.last_step">
-<span class="sig-name descname"><span class="pre">last_step</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.last_step" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">last_step</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.last_step" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.moving_price">
-<span class="sig-name descname"><span class="pre">moving_price</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.moving_price" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">moving_price</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.moving_price" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.netuid">
-<span class="sig-name descname"><span class="pre">netuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.netuid" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">netuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.netuid" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.network_registered_at">
-<span class="sig-name descname"><span class="pre">network_registered_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.network_registered_at" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">network_registered_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.network_registered_at" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.owner_coldkey">
-<span class="sig-name descname"><span class="pre">owner_coldkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.owner_coldkey" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">owner_coldkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.owner_coldkey" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.owner_hotkey">
-<span class="sig-name descname"><span class="pre">owner_hotkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.owner_hotkey" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">owner_hotkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.owner_hotkey" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -590,7 +597,7 @@ amount as if there was no slippage. If percentage is True, a float representing 
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.price">
-<span class="sig-name descname"><span class="pre">price</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.price" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">price</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.price" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -600,12 +607,12 @@ amount as if there was no slippage. If percentage is True, a float representing 
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.subnet_identity">
-<span class="sig-name descname"><span class="pre">subnet_identity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../subnet_identity/index.html#bittensor.core.chain_data.subnet_identity.SubnetIdentity" title="bittensor.core.chain_data.subnet_identity.SubnetIdentity"><span class="pre">bittensor.core.chain_data.subnet_identity.SubnetIdentity</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.subnet_identity" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">subnet_identity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../subnet_identity/index.html#bittensor.core.chain_data.subnet_identity.SubnetIdentity" title="bittensor.core.chain_data.subnet_identity.SubnetIdentity"><span class="pre">bittensor.core.chain_data.subnet_identity.SubnetIdentity</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.subnet_identity" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.subnet_name">
-<span class="sig-name descname"><span class="pre">subnet_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.subnet_name" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">subnet_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.subnet_name" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -615,7 +622,7 @@ amount as if there was no slippage. If percentage is True, a float representing 
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.symbol">
-<span class="sig-name descname"><span class="pre">symbol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.symbol" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">symbol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.symbol" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -638,7 +645,7 @@ amount as if there was no slippage. If percentage is True, a float representing 
 <span class="sig-name descname"><span class="pre">tao_to_alpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tao</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/core/chain_data/dynamic_info.html#DynamicInfo.tao_to_alpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.tao_to_alpha" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>tao</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>)</p>
+<dd class="field-odd"><p><strong>tao</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance">bittensor.utils.balance.Balance</a></p>
@@ -653,8 +660,8 @@ amount as if there was no slippage. If percentage is True, a float representing 
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tao</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Amount of TAO to stake.</p></li>
-<li><p><strong>percentage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – percentage</p></li>
+<li><p><strong>tao</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – Amount of TAO to stake.</p></li>
+<li><p><strong>percentage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – percentage</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -663,14 +670,14 @@ second part (slippage) is the difference between the estimated amount and ideal
 amount as if there was no slippage. If percentage is True, a float representing the slippage percentage.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance">bittensor.utils.balance.Balance</a>, <a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance">bittensor.utils.balance.Balance</a>], <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a>]</p>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[<a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance">bittensor.utils.balance.Balance</a>, <a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance">bittensor.utils.balance.Balance</a>], <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.dynamic_info.DynamicInfo.tempo">
-<span class="sig-name descname"><span class="pre">tempo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.tempo" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tempo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.dynamic_info.DynamicInfo.tempo" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
