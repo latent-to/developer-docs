@@ -891,7 +891,7 @@ BT_SUBTENSOR_CHAIN_ENDPOINT=ws://127.0.0.1:9945
 BT_SUBTENSOR_NETWORK=local
 ```
 
-**All environment variables:**
+**All renamed environment variables:**
 - `BT_CHAIN_ENDPOINT` → `BT_SUBTENSOR_CHAIN_ENDPOINT`
 - `BT_NETWORK` → `BT_SUBTENSOR_NETWORK`
 
