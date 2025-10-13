@@ -6,10 +6,7 @@ title: "Bittensor 10.0 Migration Guide"
 
 This page documents breaking changes and new features for the Bittensor Python SDK `v10.0`. This is a major release with significant refactoring, standardization, and new functionality.
 
-:::warning Important
-This is a **major breaking release**. Please read this guide carefully before upgrading.
-:::
-
+See [Bittensor Python SDK Reference Docs](./bt-api-ref)
 
 ## Executive Summary
 
