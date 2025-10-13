@@ -175,7 +175,7 @@ The `Subtensor` class now supports verbose logging to help debug interactions wi
 ```python
 # Set verbose mode for trace-level logging
 subtensor = Subtensor(network="test", log_verbose=True)
-# Automatically sets btlogging to trace level for detailed blockchain interaction logs
+# Automatically sets btlogging to TRACE level for detailed blockchain interaction logs
 ```
 
 ### BlockInfo Class
