@@ -373,8 +373,6 @@ subnets = subtensor.all_subnets(block_number=12345)
 subnets = subtensor.all_subnets(block=12345)
 ```
 
-<!-- TODO: Clarify which specific parameter names were changed - just `block_number` or also `block_id`? Document all affected methods. -->
-
 All `block_number` and `block_id` parameters are now consistently named `block`.
 
 ### Get Metagraph Info Fields Parameter
@@ -498,7 +496,6 @@ All SDK functions that submit extrinsics to the blockchain now return an `Extrin
   - Stake operations: balance information
 - **`error`**: Python exception for programmatic error handling when `raise_error=False`
 
-<!-- TODO: Document comprehensive list of which extrinsics include extra data in the `data` field. Known from SME notes: add_stake_extrinsic, add_stake_multiple_extrinsic, burned_register_extrinsic, register_extrinsic, transfer_extrinsic, unstake_extrinsic, unstake_multiple_extrinsic. Document what specific data each returns. -->
 
 See [source code](https://github.com/opentensor/bittensor/blob/main/bittensor/core/types.py#L290-L484).
 
