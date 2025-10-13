@@ -244,36 +244,13 @@ Get the last bonds reset block for a subnet with `get_last_bonds_reset`. Previou
 last_reset_block = subtensor.get_last_bonds_reset(netuid=1)
 ```
 
-### ExtrinsicResponse Class
+### Historical Block Data Query
 
-Unified response type for all functions that submit blockchain transactions, with an extensible `data` field:
-
-```python
-from bittensor.core.types import ExtrinsicResponse
-
-response = subtensor.add_stake(wallet, netuid, hotkey_ss58, amount)
-
-print(response.success)   # bool
-print(response.message)   # str: "Success" or error message
-print(response.data)      # Optional[dict]: extra information
-```
-
-### BlockInfo Class
-
-New `BlockInfo` class for working with Subtensor blockchain block information:
+The `blocks_since_last_update` method has been improved and can now be used to query historical data from archive nodes.
 
 ```python
-from bittensor.core.chain_data import BlockInfo
-
-# Query block information from the blockchain
-block = subtensor.get_block_info(block_number)
-
-print(block.number)           # int: Block number
-print(block.hash)             # str: Block hash
-print(block.timestamp)        # datetime: Block timestamp
-print(block.header)           # dict: Raw block header from node
-print(block.extrinsics)       # list: Extrinsics included in block
-print(block.block_explorer)   # str: Link to block on tao.app explorer
+# Query blocks since last update with archive node support
+blocks = subtensor.blocks_since_last_update(netuid=1, uid=0)
 ```
 
 
@@ -311,16 +288,6 @@ subtensor.set_commitment(wallet, netuid, data)
 
 # ❌ Old alias removed:
 subtensor.set_commitment  # (was an alias)
-```
-
-### Balance/Fee Methods
-
-```python
-# ❌ Old:
-fee = subtensor.get_transfer_fee(wallet, destination, value)
-
-# ✅ New:
-fee = subtensor.get_transfer_fee(wallet, destination, amount)
 ```
 
 ### Serving Methods
@@ -385,6 +352,8 @@ subnets = subtensor.all_subnets(block_number=12345)
 subnets = subtensor.all_subnets(block=12345)
 ```
 
+<!-- TODO: Clarify which specific parameter names were changed - just `block_number` or also `block_id`? Document all affected methods. -->
+
 All `block_number` and `block_id` parameters are now consistently named `block`.
 
 ### Metagraph Info Parameter
@@ -411,7 +380,7 @@ The `_mock` parameter is now public as `mock` and moved to the last position in 
 
 ### Async Methods Parity
 
-Async methods now have the same parameters as sync methods:
+All async methods now have the same parameters as sync methods:
 
 ```python
 # New parameters added to async versions:
@@ -431,6 +400,18 @@ hotkeys = subtensor.get_owned_hotkeys(coldkey_ss58)
 
 The `reuse_block` parameter has been removed from sync methods for consistency. It's still available in async methods where appropriate.
 
+### Transfer Fee Parameter Rename
+
+```python
+# ❌ Old:
+fee = subtensor.get_transfer_fee(wallet, destination, value)
+
+# ✅ New:
+fee = subtensor.get_transfer_fee(wallet, destination, amount)
+```
+
+The `value` parameter has been renamed to `amount` for consistency with other amount parameters across the SDK.
+
 ## Breaking Changes:Removed Methods
 
 ### Duplicate References
@@ -442,6 +423,17 @@ subtensor.get_stake_info_for_coldkey = subtensor.get_stake_for_coldkey
 # ✅ Use the canonical name:
 subtensor.get_stake_info_for_coldkey(coldkey_ss58)
 ```
+
+### DelegateInfo Attribute Removed
+
+```python
+# ❌ Removed:
+delegate_info.total_daily_return  # No longer calculated or provided
+
+# This attribute has been removed from both DelegateInfo and DelegateInfoLite classes
+```
+
+The `total_daily_return` attribute has been removed as it was not providing accurate information and should not be relied upon.
 
 ## Extrinsic Calling Changes
 
@@ -484,6 +476,8 @@ All SDK functions that submit extrinsics to the blockchain now return an `Extrin
   - Metadata: `{"encrypted": bytes, "reveal_round": int}`
   - Stake operations: balance information
 - **`error`**: Python exception for programmatic error handling when `raise_error=False`
+
+<!-- TODO: Document comprehensive list of which extrinsics include extra data in the `data` field. Known from SME notes: add_stake_extrinsic, add_stake_multiple_extrinsic, burned_register_extrinsic, register_extrinsic, transfer_extrinsic, unstake_extrinsic, unstake_multiple_extrinsic. Document what specific data each returns. -->
 
 See [source code](https://github.com/opentensor/bittensor/blob/main/bittensor/core/types.py#L290-L484).
 
@@ -863,6 +857,10 @@ info = MetagraphInfo(
 ```
 
 **Note:** `mechid=0` refers to the first (or only) incentive mechanism in a subnet. Subnets can have multiple mechanisms (currently limited to 2), each with their own independent weight matrices and emissions. See [Multiple Incentive Mechanisms](../subnets/understanding-multiple-mech-subnets) for details.
+
+### Async Metagraph Initialization
+
+The async `_initialize_subtensor` method no longer terminates the subtensor instance after use, improving resource management and allowing for reuse of connections in async contexts.
 
 
 ## Migration Checklist
