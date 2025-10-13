@@ -964,7 +964,7 @@ The async `AsyncMetagraph.sync` method no longer terminates the subtensor instan
 ## Migration Checklist
 
 1. **Update Python version** to 3.10 or higher
-2. **Update bittensor package**: `pip install bittensor>=10.0.0`
+2. **Update bittensor package**: `pip install bittensor>=10.0.0` (until the public release, you should install the latest available release candidate).
 3. **Update all imports** to use PascalCase class names (`Subtensor`, `Wallet`, etc.)
 4. **Replace all amount parameters** with `Balance` objects using `tao()` or `rao()`
 5. **Update all functions that submit extrinsics** to handle `ExtrinsicResponse` return type instead of `bool` or tuples
