@@ -145,7 +145,7 @@ call = subtensor.compose_call(
 )
 
 # Use the composed call to estimate fees (requires keypair)
-fee = subtensor.get_extrinsic_fee(call, wallet.coldkey)
+fee = subtensor.get_extrinsic_fee(call, wallet.coldkeypub)
 ```
 
 
@@ -157,13 +157,13 @@ The SDK now provides dedicated methods for calculating swap-based fees for staki
 
 ```python
 # Get fee for adding stake (staking operation)
-fee = subtensor.get_stake_add_fee(netuid, hotkey_ss58, amount)
+fee = subtensor.get_stake_add_fee(amount, netuid)
 
-# Get fee for moving stake between hotkeys
-fee = subtensor.get_stake_movement_fee(from_hotkey_ss58, to_hotkey_ss58, amount)
+# Get fee for moving stake between subnets
+fee = subtensor.get_stake_movement_fee(origin_netuid, destination_netuid, amount)
 
 # Get fee for removing stake (unstaking operation)
-fee = subtensor.get_unstake_fee(netuid, hotkey_ss58, amount)
+fee = subtensor.get_unstake_fee(netuid, amount)
 
 # All methods return Balance objects representing the fee in TAO or Alpha
 ```
@@ -209,7 +209,7 @@ extrinsic = subtensor.compose_call(
         "value": amount.rao
     }
 )
-fee = subtensor.get_extrinsic_fee(extrinsic, wallet.coldkey)
+fee = subtensor.get_extrinsic_fee(extrinsic, wallet.coldkeypub)
 print(f"Estimated fee: {fee}")  # Returns Balance object
 ```
 
@@ -261,8 +261,8 @@ metadata = subtensor.get_commitment_metadata(netuid=1, hotkey_ss58="5D...")
 Get the last bonds reset block for a subnet with `get_last_bonds_reset`. Previously in `bittensor.core.extrinsic.serving`, now a `Subtensor` method.
 
 ```python
-# Query when bonds were last reset
-last_reset_block = subtensor.get_last_bonds_reset(netuid=1)
+# Query when bonds were last reset (requires both netuid and hotkey_ss58)
+last_reset_block = subtensor.get_last_bonds_reset(netuid=1, hotkey_ss58="5D...")
 ```
 
 ### Historical Block Data Query
@@ -323,7 +323,7 @@ last_reset = get_last_bonds_reset(subtensor, netuid)
 
 # ✅ New:
 metadata = subtensor.get_commitment_metadata(netuid, hotkey_ss58)
-last_reset = subtensor.get_last_bonds_reset(netuid)
+last_reset = subtensor.get_last_bonds_reset(netuid, hotkey_ss58)
 ```
 
 ### Timelocked Weight Commits
@@ -349,8 +349,8 @@ subtensor.set_children(wallet, netuid, hotkey, children, proportions)
 subtensor.move_stake(wallet, origin_hotkey, dest_hotkey, amount)
 
 # ✅ New:
-subtensor.set_children(wallet, hotkey_ss58, netuid, children, proportions)
-subtensor.move_stake(wallet, origin_hotkey_ss58, destination_hotkey_ss58, amount, netuid)
+subtensor.set_children(wallet, netuid, hotkey_ss58, children)
+subtensor.move_stake(wallet, origin_netuid, origin_hotkey_ss58, destination_netuid, destination_hotkey_ss58, amount)
 ```
 
 **Methods with reordered parameters:**
@@ -512,7 +512,7 @@ Many parameters in functions that submit blockchain transactions have been renam
 subtensor.move_stake(wallet, origin_hotkey, destination_hotkey, amount)
 
 # ✅ New:
-subtensor.move_stake(wallet, origin_hotkey_ss58, destination_hotkey_ss58, amount)
+subtensor.move_stake(wallet, origin_netuid, origin_hotkey_ss58, destination_netuid, destination_hotkey_ss58, amount)
 ```
 
 **Affected methods:**
@@ -775,8 +775,13 @@ from bittensor import Keyfile, Metagraph, Synapse, AsyncSubtensor
 from bittensor.mock import MockSubtensor
 from bittensor.extrinsics import transfer_extrinsic
 
-# ✅ New:
-from bittensor.core.mock import MockSubtensor
+# ✅ New (use top-level convenience imports or full paths):
+from bittensor import mock, extrinsics
+mock_sub = mock.MockSubtensor()
+response = extrinsics.transfer_extrinsic(...)
+
+# Or use full paths:
+from bittensor.utils.mock import MockSubtensor
 from bittensor.core.extrinsics import transfer_extrinsic
 ```
 
@@ -804,17 +809,14 @@ from bittensor.core.subtensor_api import SubtensorAPI
 from bittensor.core.timelock import TimelockManager
 
 # ✅ New:
-from bittensor.core.addons.subtensor_api import SubtensorAPI
-from bittensor.core.addons.timelock import TimelockManager
-```
-
-A new `bittensor.extras` package hosts optional extensions:
-
-```python
 from bittensor.extras.subtensor_api import SubtensorAPI
-from bittensor.extras.timelock import TimelockManager
-from bittensor.extras.dev_framework import DevFramework  # New!
+from bittensor.extras import timelock
+
+# Or use top-level convenience import:
+from bittensor import SubtensorApi, timelock
 ```
+
+The `bittensor.extras` package now hosts optional extensions like `SubtensorApi` and `timelock`.
 
 ### Extrinsic Parameters Package
 
@@ -865,25 +867,25 @@ This section covers changes to metagraph-related functionality in both the `Subt
 
 ### Mechid Parameter Ordering
 
-With the introduction of multiple incentive mechanisms per subnet, many methods now accept a `mechid` (mechanism ID) parameter to specify which mechanism to query. These methods have been standardized with consistent parameter ordering:
+With the introduction of multiple incentive mechanisms per subnet, many methods now accept a `mechid` (mechanism ID) parameter to specify which mechanism to query:
 
 ```python
-# ❌ Old:
-bonds = subtensor.bonds(netuid, mechid=0, block=None)
-
-# ✅ New:
-bonds = subtensor.bonds(netuid, block=None, mechid=0)
+# Query methods with mechid support (parameter order: netuid, mechid=0, block=None)
+bonds = subtensor.bonds(netuid=1, mechid=0)
+weights = subtensor.weights(netuid=1, mechid=0)
+metagraph = subtensor.metagraph(netuid=1, mechid=0)
+commits = subtensor.get_timelocked_weight_commits(netuid=1, mechid=0)
 ```
 
-**Affected methods:**
-- `bonds`
-- `weights`
-- `get_metagraph_info`
-- `get_timelocked_weight_commits`
-- `metagraph`
-- `commit_weights`
-- `reveal_weights`
-- `set_weights`
+**Methods with mechid parameter:**
+- `bonds(netuid, mechid=0, block=None)`
+- `weights(netuid, mechid=0, block=None)`
+- `metagraph(netuid, mechid=0, lite=True, block=None)`
+- `get_metagraph_info(netuid, mechid=0, ...)`
+- `get_timelocked_weight_commits(netuid, mechid=0, block=None)`
+- `commit_weights(wallet, netuid, uids, weights, mechid=0, ...)`
+- `reveal_weights(wallet, netuid, uids, weights, mechid=0, ...)`
+- `set_weights(wallet, netuid, uids, weights, mechid=0, ...)`
 
 ### MetagraphInfo Changes
 
