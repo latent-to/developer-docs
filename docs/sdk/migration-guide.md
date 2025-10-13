@@ -178,6 +178,49 @@ subtensor = Subtensor(network="test", log_verbose=True)
 # Automatically sets btlogging to trace level for detailed blockchain interaction logs
 ```
 
+### BlockInfo Class
+
+New [`BlockInfo`](pathname:///python-api/html/autoapi/bittensor/core/types/index.html) class provides rich information about blockchain blocks, including metadata and links to block explorers.
+
+```python
+from bittensor.core.types import BlockInfo
+
+# Get block information by block number
+block = subtensor.get_block_info(block=12345)
+
+# Or get block information by block hash
+block = subtensor.get_block_info(block_hash="0x1234...")
+
+# Access block data
+print(f"Block number: {block.number}")
+print(f"Block hash: {block.hash}")
+print(f"Timestamp: {block.timestamp}")
+print(f"Number of extrinsics: {len(block.extrinsics)}")
+print(f"View on explorer: {block.explorer}")
+
+# Access raw header data
+print(f"Parent hash: {block.header['parentHash']}")
+
+# Iterate through extrinsics
+for extrinsic in block.extrinsics:
+    print(f"Extrinsic: {extrinsic}")
+```
+
+**BlockInfo attributes:**
+- **`number`** (int): The block number
+- **`hash`** (str): The block hash
+- **`timestamp`** (Optional[int]): Unix timestamp when the block was created (from `Timestamp.Now` extrinsic)
+- **`header`** (dict): Raw block header data from the node RPC, including parent hash, state root, and other metadata
+- **`extrinsics`** (list): List of all extrinsics (transactions) included in the block
+- **`explorer`** (str): Direct link to view the block on [tao.app/](https://tao.app) block explorer
+
+**Use cases:**
+- Inspect transaction history and block contents
+- Debug blockchain interactions
+- Verify transaction inclusion in specific blocks
+- Access detailed block metadata for analysis
+- Link users to block explorer for visual inspection
+
 ### Hex to SS58 Conversion
 
 New utility function for converting hex addresses to SS58 format:
@@ -428,7 +471,7 @@ fee = subtensor.get_transfer_fee(wallet, destination, amount)
 
 The `value` parameter has been renamed to `amount` for consistency with other amount parameters across the SDK.
 
-## Breaking Changes: Removed Methods
+## Breaking Changes:Removed Methods
 
 ### Duplicate References
 
@@ -915,7 +958,7 @@ The async `_initialize_subtensor` method no longer terminates the subtensor inst
 5. **Update all functions that submit extrinsics** to handle `ExtrinsicResponse` return type instead of `bool` or tuples
 6. **Rename parameters** according to the standardization (`hotkey` → `hotkey_ss58`, `dest` → `destination`, etc.)
 7. **Update environment variables** (`BT_CHAIN_ENDPOINT` → `BT_SUBTENSOR_CHAIN_ENDPOINT`, `BT_NETWORK` → `BT_SUBTENSOR_NETWORK`)
-8. **Review removed methods** and replace with alternatives (see [Removed Methods](#breaking-changes-removed-methods))
-9. **Update parameter order** for affected methods (see [Parameter Changes](#breaking-changes-parameter-changes))
+8. **Review removed methods** and replace with alternatives (see [Removed Methods](#removed-methods))
+9. **Update parameter order** for affected methods (see [Parameter Changes](#parameter-changes))
 10. **Add `mechid` parameter** to weight-setting code if working with multiple mechanisms
 11. **Test thoroughly** with your specific use case, especially blockchain transactions and balance handling
