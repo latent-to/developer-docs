@@ -79,12 +79,8 @@ response = subtensor.set_weights(
 )
 
 # For subnets with multiple mechanisms, set weights for each:
-response1 = subtensor.set_weights(wallet, netuid=1, uids, weights1, mechid=0)
-response2 = subtensor.set_weights(wallet, netuid=1, uids, weights2, mechid=1)
-
-# Commit and reveal weights for mechanisms (commit-reveal subnets)
-response = subtensor.commit_weights(wallet, netuid, uids, weights, mechid=0)
-response = subtensor.reveal_weights(wallet, netuid, uids, weights, mechid=0)
+mechanism1_response = subtensor.set_weights(wallet, netuid=1, uids, weights1, mechid=0)
+mechanism2_response = subtensor.set_weights(wallet, netuid=1, uids, weights2, mechid=1)
 ```
 
 #### Querying Mechanism-Specific Data on the Metagraph:
@@ -356,7 +352,7 @@ subnets = subtensor.all_subnets(block=12345)
 
 All `block_number` and `block_id` parameters are now consistently named `block`.
 
-### Metagraph Info Parameter
+### Get Metagraph Info Fields Parameter
 
 ```python
 # ❌ Old:
