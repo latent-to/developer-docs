@@ -967,7 +967,7 @@ The async `AsyncMetagraph.sync` method no longer terminates the subtensor instan
 2. **Update bittensor package**: `pip install bittensor>=10.0.0` (until the public release, you should install the latest available release candidate).
 3. **Update all imports** to use PascalCase class names (`Subtensor`, `Wallet`, etc.), also known as the CapWords convention.
 4. **Replace all amount parameters** with `Balance` objects.`
-5. **Update all functions that submit extrinsics** to handle `ExtrinsicResponse` return type instead of `bool` or tuples
+5. **Update all functions that submit extrinsics** to handle `ExtrinsicResponse` return type instead of `bool` or tuples[bool, str]
 6. **Rename parameters** according to the standardization (`hotkey` → `hotkey_ss58`, `dest` → `destination`, etc.)
 7. **Update environment variables** (`BT_CHAIN_ENDPOINT` → `BT_SUBTENSOR_CHAIN_ENDPOINT`, `BT_NETWORK` → `BT_SUBTENSOR_NETWORK`)
 8. **Review removed methods** and replace with alternatives (see [Removed Methods](#removed-methods))
