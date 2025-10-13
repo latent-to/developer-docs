@@ -44,6 +44,16 @@ See the [Migration Checklist](#migration-checklist) for step-by-step upgrade ins
 
 
 ## New Features
+### Structured Extrinsic Responses (ExtrinsicResponse)
+
+`ExtrinsicResponse` is now a first-class feature that provides rich, structured data for both outgoing requests and incoming on-chain results. While it is a breaking change in return types, it primarily unlocks better development, testing, and debugging workflows by standardizing success flags, messages, fees, receipts, and operation-specific data in one object.
+
+- **Purpose**: Enables more accurate, predictable code paths and easier assertions in tests
+- **What you get**: Success flag, human-readable message, network fee, application-level swap fee(s), inclusion/finalization receipts, and operation-specific data
+- **Where it applies**: Returned by all functions that submit extrinsics
+
+See details: [ExtrinsicResponse Return Type](#extrinsicresponse-return-type)
+
 
 
 
@@ -230,9 +240,19 @@ New utility function for converting hex addresses to SS58 format:
 from bittensor.utils import hex_to_ss58
 
 ss58_address = hex_to_ss58(hex_string)
+
+# Reverse conversion (SS58 → hex)
+from bittensor.utils import ss58_to_hex
+
+hex_string = ss58_to_hex(ss58_address)
 ```
 
 **Note:** `hex_to_ss58` is an alias for `ss58_encode` from scalecodec. Similarly, `ss58_to_hex` is an alias for `ss58_decode`.
+### Development Test Framework
+
+New developer testing utilities provide helpers and fixtures for rapid local testing of SDK integrations and extrinsic flows. Use cases: Simulate common workflows, stub chain interactions, and write predictable tests around `ExtrinsicResponse` without a full node.
+
+Learn more: [`bittensor/extras/dev_framework`](https://github.com/opentensor/bittensor/tree/SDKv10/bittensor/extras/dev_framework)
 
 
 ### Estimate Transaction Fees
@@ -347,8 +367,6 @@ subtensor.commit(wallet, netuid, data)
 # ✅ New:
 subtensor.set_commitment(wallet, netuid, data)
 
-# ❌ Old alias removed:
-subtensor.set_commitment  # (was an alias)
 ```
 
 ### Serving Methods
@@ -532,6 +550,8 @@ extrinsic_function(
 
 This ensures the SDK function response correctly reflects the blockchain transaction outcome.
 
+**About `raise_error`:** When `raise_error=False`, extrinsic functions do not raise exceptions; all error information is captured inside the returned `ExtrinsicResponse` object. Set `raise_error=True` if you prefer exceptions to be raised directly for error cases.
+
 ### ExtrinsicResponse Return Type
 
 All SDK functions that submit extrinsics to the blockchain now return an `ExtrinsicResponse` object instead of `bool` or tuples.
@@ -539,7 +559,8 @@ All SDK functions that submit extrinsics to the blockchain now return an `Extrin
 - **`success`**: Primary indicator - `True` if transaction succeeded, `False` otherwise
 - **`message`**: User-friendly status (e.g., "Success", "Insufficient balance")
 - **`extrinsic_fee`**: Network fee paid to validators (similar to gas fees) - see [Transaction Fees](../learn/fees)
-- **`transaction_tao_fee`** / **`transaction_alpha_fee`**: Application-level fees for operations like stake swaps (0.05% of liquidity)
+- **`transaction_tao_fee`**: Application-level fee charged in TAO for swap-based staking operations (0.05% of transacted liquidity when applicable)
+- **`transaction_alpha_fee`**: Application-level fee charged in Alpha (subnet token) for swap-based staking operations (0.05% of transacted liquidity when applicable)
 - **`extrinsic_receipt`**: Contains block number, hash, events, and execution details when `wait_for_inclusion=True`
 - **`data`**: Operation-specific results:
   - Registration: `{"uid": int}` - assigned neuron UID
@@ -694,13 +715,35 @@ commit_timelocked_weights_extrinsic(..., commit_reveal_version=4)
 subtensor.increase_take(wallet, hotkey_ss58, take)
 subtensor.decrease_take(wallet, hotkey_ss58, take)
 
-# ✅ New:
-# The new method automatically determines whether to increase or decrease
-# based on the current vs new take value
+# ✅ New (high-level Subtensor method):
+# Automatically determines whether to increase or decrease based on current vs new take
 subtensor.set_delegate_take(
     wallet,
     hotkey_ss58="5D...",
     take=0.18  # 18% as a float between 0 and 1
+)
+
+# ✅ New (low-level extrinsic with explicit action):
+# The extrinsic requires an explicit action parameter with a strict type:
+# action: Literal["increase_take", "decrease_take"]
+from bittensor.core.extrinsics.take import set_take_extrinsic
+
+# Example: increase take
+response_inc = set_take_extrinsic(
+    subtensor,
+    wallet=wallet,
+    hotkey_ss58="5D...",
+    take=0.20,
+    action="increase_take",
+)
+
+# Example: decrease take
+response_dec = set_take_extrinsic(
+    subtensor,
+    wallet=wallet,
+    hotkey_ss58="5D...",
+    take=0.15,
+    action="decrease_take",
 )
 ```
 
@@ -736,26 +779,44 @@ from bittensor.core.extrinsics.weights import (
 
 **Balance operations now raise errors instead of warnings** for type mismatches.
 
+#### 1) Invalid balance type (`BalanceTypeError`)
+
+Raised when a method expecting a `Balance` receives a non-`Balance` value.
+
 ```python
 from bittensor.utils.balance import Balance, tao, rao
-from bittensor.core.errors import BalanceTypeError, BalanceUnitMismatchError
+from bittensor.core.errors import BalanceTypeError
 
-# ❌ Old: Would warn but continue
+# ❌ Old (pre-10.0): would warn but continue
 amount = 1.0  # float
-subtensor.transfer(wallet, dest, amount)  # Warning issued
+# subtensor.transfer(wallet, dest, amount)
 
-# ✅ New: Raises BalanceTypeError
-amount = tao(1.0)  # Must be Balance object
-subtensor.transfer(wallet, dest, amount)
+# ✅ New: must pass a Balance object (choose your preferred constructor)
+subtensor.transfer(wallet, dest, tao(1.0))
+subtensor.transfer(wallet, dest, rao(1_000_000_000))
+subtensor.transfer(wallet, dest, Balance.from_tao(1.0))
+subtensor.transfer(wallet, dest, Balance.from_rao(1_000_000_000))
+```
 
-# ❌ Old: Would warn about unit mismatch
+#### 2) Mismatched balance units (`BalanceUnitMismatchError`)
+
+Raised when performing operations on two `Balance` objects that represent different units (e.g., TAO vs Alpha from a subnet).
+
+```python
+from bittensor.utils.balance import Balance
+from bittensor.core.errors import BalanceUnitMismatchError
+
 balance_tao = Balance.from_tao(1.0)
-balance_rao = Balance.from_rao(1000000000)
-result = balance_tao + balance_rao  # Warning issued
+balance_alpha = Balance.from_rao(1_000_000_000)  # Example Alpha balance (units differ from TAO)
 
-# ✅ New: Raises BalanceUnitMismatchError
-# You must ensure units match
-result = balance_tao + Balance.from_tao(balance_rao.tao)
+# ❌ Will raise BalanceUnitMismatchError: mixing units in arithmetic
+_ = balance_tao + balance_alpha
+
+# ❌ Will raise BalanceUnitMismatchError: comparing mismatched units
+_ = balance_tao > balance_alpha
+
+# ✅ Ensure units match before operations
+_ = balance_tao + Balance.from_tao(0.5)
 ```
 
 ### Function Renames
@@ -782,7 +843,7 @@ subtensor.add_stake(wallet, hotkey, 5)  # int accepted
 # ✅ New:
 from bittensor.utils.balance import tao, rao
 
-subtensor.transfer(wallet, destination, tao(1.0))
+subtensor.transfer(wallet, destination, tao(1.0))  # convenience helper
 subtensor.add_stake(wallet, netuid, hotkey_ss58, tao(5.0))
 # or
 subtensor.transfer(wallet, destination, rao(1000000000))
@@ -910,6 +971,8 @@ os.environ['BT_NO_PARSE_CLI_ARGS'] = '1'
 from bittensor import Subtensor
 # CLI args will no longer be processed
 ```
+
+When `BT_NO_PARSE_CLI_ARGS` is set, the SDK skips CLI parsing entirely and falls back to default configuration values defined in `bittensor.core.settings.DEFAULTS` for all configuration options across the SDK. This is useful when embedding the SDK in applications that manage their own configuration.
 
 
 
