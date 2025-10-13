@@ -15,7 +15,7 @@ Bittensor SDK v10.0 is a **major breaking release** with significant improvement
 **Breaking Changes:**
 - **Python 3.10+ required** - Python 3.9 no longer supported ([details](#python-version-support))
 - **ExtrinsicResponse return type** - All blockchain transaction functions now return structured `ExtrinsicResponse` objects instead of `bool` or tuples ([details](#extrinsicresponse-return-type))
-- **Strict Balance type checking** - All amount parameters require `Balance` objects using `tao()` or `rao()` helpers ([details](#balance-handling))
+- **Strict Balance type checking** - All amount parameters require `Balance` objects. ([details](#balance-handling))
 - **Parameter renames** - Consistent `_ss58` suffix for all address parameters (e.g., `hotkey` → `hotkey_ss58`) ([details](#parameter-renames))
 - **Method renames and removals** - Several methods renamed or removed for consistency ([details](#breaking-changes-method-renames))
 
