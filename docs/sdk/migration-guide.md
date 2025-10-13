@@ -868,7 +868,7 @@ from bittensor.extras import timelock
 from bittensor import SubtensorApi, timelock
 ```
 
-The `bittensor.extras` package now hosts optional extensions like `SubtensorApi` and `timelock`.
+The `bittensor.extras` package now hosts optional extensions like `SubtensorApi`, `timelock` and `dev_framework`.
 
 ### Extrinsic Parameters Package
 
