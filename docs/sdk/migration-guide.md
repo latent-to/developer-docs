@@ -830,7 +830,7 @@ from bittensor.extrinsics import transfer_extrinsic
 # ✅ New (use top-level convenience imports or full paths):
 from bittensor import mock, extrinsics
 mock_sub = mock.MockSubtensor()
-response = extrinsics.transfer_extrinsic(...)
+response = extrinsics.transfer.transfer_extrinsic(...)
 
 # Or use full paths:
 from bittensor.utils.mock import MockSubtensor
