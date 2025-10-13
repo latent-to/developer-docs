@@ -846,7 +846,7 @@ from bittensor import mock
 from bittensor import get_async_subtensor
 
 # Use them:
-response = extrinsics.transfer_extrinsic(...)
+response = extrinsics.transfer.transfer_extrinsic(...)
 mock_sub = mock.MockSubtensor()
 async_sub = get_async_subtensor(network="test")
 ```
