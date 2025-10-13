@@ -1,6 +1,6 @@
-
+---
 title: "Bittensor 10.0 Migration Guide"
-
+---
 
 # Bittensor 10.0 Migration Guide
 
