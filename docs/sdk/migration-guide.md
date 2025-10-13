@@ -958,7 +958,7 @@ info = MetagraphInfo(
 
 ### Async Metagraph Initialization
 
-The async `_initialize_subtensor` method no longer terminates the subtensor instance after use, improving resource management and allowing for reuse of connections in async contexts.
+The async `AsyncMetagraph.sync` method no longer terminates the subtensor instance after use, improving resource management and allowing for reuse of connections in async contexts.
 
 
 ## Migration Checklist
