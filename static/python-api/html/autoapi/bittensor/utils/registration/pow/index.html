@@ -150,7 +150,6 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/config/index.html">bittensor.core.config</a></li>
@@ -161,11 +160,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../core/settings/index.html">bittensor.core.settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/stream/index.html">bittensor.core.stream</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/subtensor/index.html">bittensor.core.subtensor</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../core/subtensor_api/index.html">bittensor.core.subtensor_api</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/synapse/index.html">bittensor.core.synapse</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/tensor/index.html">bittensor.core.tensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/threadpool/index.html">bittensor.core.threadpool</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../core/timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/types/index.html">bittensor.core.types</a></li>
 </ul>
 </details></li>
@@ -185,7 +182,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4 current active"><a class="reference internal" href="../index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../subnets/index.html">bittensor.utils.subnets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../substrate_utils/index.html">bittensor.utils.substrate_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../version/index.html">bittensor.utils.version</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../weight_utils/index.html">bittensor.utils.weight_utils</a></li>
 </ul>
@@ -569,27 +565,27 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>proc_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of the process being created.</p></li>
-<li><p><strong>num_proc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The total number of processes running.</p></li>
-<li><p><strong>update_interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of nonces to try to solve before checking for a new block.</p></li>
-<li><p><strong>finished_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.14)"><em>multiprocessing.Queue</em></a>) – The queue to put the process number when a process finishes each
-update_interval. Used for calculating the average time per update_interval across all processes.</p></li>
-<li><p><strong>solution_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.14)"><em>multiprocessing.Queue</em></a>) – The queue to put the solution the process has found during the pow solve.</p></li>
-<li><p><strong>stopEvent</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Event" title="(in Python v3.14)"><em>multiprocessing.Event</em></a>) – The event to set by the main process when all the solver processes should
-stop. The solver process will check for the event after each update_interval. The solver process will stop
-when the event is set. Used to stop the solver processes when a solution is found.</p></li>
-<li><p><strong>curr_block</strong> (<em>multiprocessing.Array</em>) – The array containing this process’s current block hash. The main process
-will set the array to the new block hash when a new block is finalized in the network. The solver process
-will get the new block hash from this array when newBlockEvent is set.</p></li>
-<li><p><strong>curr_block_num</strong> (<em>multiprocessing.Value</em>) – The value containing this process’s current block number. The main
-process will set the value to the new block number when a new block is finalized in the network. The
-solver process will get the new block number from this value when newBlockEvent is set.</p></li>
-<li><p><strong>curr_diff</strong> (<em>multiprocessing.Array</em>) – The array containing this process’s current difficulty. The main process will
-set the array to the new difficulty when a new block is finalized in the network. The solver process will
-get the new difficulty from this array when newBlockEvent is set.</p></li>
-<li><p><strong>check_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Lock" title="(in Python v3.14)"><em>multiprocessing.Lock</em></a>) – The lock to prevent this process from getting the new block data while the
-main process is updating the data.</p></li>
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The limit of the pow solve for a valid solution.</p></li>
+<li><p><strong>proc_num</strong> – The number of the process being created.</p></li>
+<li><p><strong>num_proc</strong> – The total number of processes running.</p></li>
+<li><p><strong>update_interval</strong> – The number of nonces to try to solve before checking for a new block.</p></li>
+<li><p><strong>finished_queue</strong> – The queue to put the process number when a process finishes each update_interval. Used for
+calculating the average time per update_interval across all processes.</p></li>
+<li><p><strong>solution_queue</strong> – The queue to put the solution the process has found during the pow solve.</p></li>
+<li><p><strong>stopEvent</strong> – The event to set by the main process when all the solver processes should stop. The solver process
+will check for the event after each update_interval. The solver process will stop when the event is set.
+Used to stop the solver processes when a solution is found.</p></li>
+<li><p><strong>curr_block</strong> – The array containing this process’s current block hash. The main process will set the array to the
+new block hash when a new block is finalized in the network. The solver process will get the new block hash
+from this array when newBlockEvent is set.</p></li>
+<li><p><strong>curr_block_num</strong> – The value containing this process’s current block number. The main process will set the value to
+the new block number when a new block is finalized in the network. The solver process will get the new block
+number from this value when newBlockEvent is set.</p></li>
+<li><p><strong>curr_diff</strong> – The array containing this process’s current difficulty. The main process will set the array to the
+new difficulty when a new block is finalized in the network. The solver process will get the new difficulty
+from this array when newBlockEvent is set.</p></li>
+<li><p><strong>check_block</strong> – The lock to prevent this process from getting the new block data while the main process is updating
+the data.</p></li>
+<li><p><strong>limit</strong> – The limit of the pow solve for a valid solution.</p></li>
 <li><p><strong>dev_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 <li><p><strong>tpb</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 </ul>
@@ -680,7 +676,7 @@ main process is updating the data.</p></li>
 <p>This means the block the POW is solved for is within 3 blocks of the current block.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>subtensor</strong> (<a class="reference internal" href="../../../core/async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>)</p>
+<dd class="field-odd"><p><strong>subtensor</strong> (<em>bittensor.core.async_subtensor.AsyncSubtensor</em>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
@@ -836,27 +832,27 @@ main process is updating the data.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>proc_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of the process being created.</p></li>
-<li><p><strong>num_proc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The total number of processes running.</p></li>
-<li><p><strong>update_interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of nonces to try to solve before checking for a new block.</p></li>
-<li><p><strong>finished_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.14)"><em>multiprocessing.Queue</em></a>) – The queue to put the process number when a process finishes each
-update_interval. Used for calculating the average time per update_interval across all processes.</p></li>
-<li><p><strong>solution_queue</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue" title="(in Python v3.14)"><em>multiprocessing.Queue</em></a>) – The queue to put the solution the process has found during the pow solve.</p></li>
-<li><p><strong>stopEvent</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Event" title="(in Python v3.14)"><em>multiprocessing.Event</em></a>) – The event to set by the main process when all the solver processes should
-stop. The solver process will check for the event after each update_interval. The solver process will stop
-when the event is set. Used to stop the solver processes when a solution is found.</p></li>
-<li><p><strong>curr_block</strong> (<em>multiprocessing.Array</em>) – The array containing this process’s current block hash. The main process
-will set the array to the new block hash when a new block is finalized in the network. The solver process
-will get the new block hash from this array when newBlockEvent is set.</p></li>
-<li><p><strong>curr_block_num</strong> (<em>multiprocessing.Value</em>) – The value containing this process’s current block number. The main
-process will set the value to the new block number when a new block is finalized in the network. The
-solver process will get the new block number from this value when newBlockEvent is set.</p></li>
-<li><p><strong>curr_diff</strong> (<em>multiprocessing.Array</em>) – The array containing this process’s current difficulty. The main process will
-set the array to the new difficulty when a new block is finalized in the network. The solver process will
-get the new difficulty from this array when newBlockEvent is set.</p></li>
-<li><p><strong>check_block</strong> (<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Lock" title="(in Python v3.14)"><em>multiprocessing.Lock</em></a>) – The lock to prevent this process from getting the new block data while the
-main process is updating the data.</p></li>
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The limit of the pow solve for a valid solution.</p></li>
+<li><p><strong>proc_num</strong> – The number of the process being created.</p></li>
+<li><p><strong>num_proc</strong> – The total number of processes running.</p></li>
+<li><p><strong>update_interval</strong> – The number of nonces to try to solve before checking for a new block.</p></li>
+<li><p><strong>finished_queue</strong> – The queue to put the process number when a process finishes each update_interval. Used for
+calculating the average time per update_interval across all processes.</p></li>
+<li><p><strong>solution_queue</strong> – The queue to put the solution the process has found during the pow solve.</p></li>
+<li><p><strong>stopEvent</strong> – The event to set by the main process when all the solver processes should stop. The solver process
+will check for the event after each update_interval. The solver process will stop when the event is set.
+Used to stop the solver processes when a solution is found.</p></li>
+<li><p><strong>curr_block</strong> – The array containing this process’s current block hash. The main process will set the array to the
+new block hash when a new block is finalized in the network. The solver process will get the new block hash
+from this array when newBlockEvent is set.</p></li>
+<li><p><strong>curr_block_num</strong> – The value containing this process’s current block number. The main process will set the value to
+the new block number when a new block is finalized in the network. The solver process will get the new block
+number from this value when newBlockEvent is set.</p></li>
+<li><p><strong>curr_diff</strong> – The array containing this process’s current difficulty. The main process will set the array to the
+new difficulty when a new block is finalized in the network. The solver process will get the new difficulty
+from this array when newBlockEvent is set.</p></li>
+<li><p><strong>check_block</strong> – The lock to prevent this process from getting the new block data while the main process is updating
+the data.</p></li>
+<li><p><strong>limit</strong> – The limit of the pow solve for a valid solution.</p></li>
 </ul>
 </dd>
 </dl>
@@ -915,34 +911,29 @@ main process is updating the data.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../core/subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – The subtensor to create a proof of work for.</p></li>
-<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – The wallet to create a proof of work for.</p></li>
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../core/subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – The Subtensor instance.</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – The Bittensor Wallet instance.</p></li>
 <li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid for the subnet to create a proof of work for.</p></li>
-<li><p><strong>output_in_place</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, prints the progress of the proof of work to the console in-place. Meaning the
-progress is printed on the same lines. Default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
-<li><p><strong>cuda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, uses CUDA to solve the proof of work. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
-<li><p><strong>dev_id</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The CUDA device id(s) to use. If cuda is true and dev_id is a list, then
-multiple CUDA devices will be used to solve the proof of work. Default is <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
-<li><p><strong>tpb</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of threads per block to use when solving the proof of work. Should be a multiple of 32.
-Default is <code class="docutils literal notranslate"><span class="pre">256</span></code>.</p></li>
-<li><p><strong>num_processes</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of processes to use when solving the proof of work. If None, then the
-number of processes is equal to the number of CPU cores. Default is None.</p></li>
-<li><p><strong>update_interval</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of nonces to run before checking for a new block. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
-<li><p><strong>log_verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, prints the progress of the proof of work more verbosely. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>output_in_place</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, prints the progress of the proof of work to the console in-place. Meaning the progress
+is printed on the same lines.</p></li>
+<li><p><strong>cuda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, uses CUDA to solve the proof of work.</p></li>
+<li><p><strong>dev_id</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The CUDA device id(s) to use. If cuda is true and dev_id is a list, then multiple CUDA devices will be
+used to solve the proof of work.</p></li>
+<li><p><strong>tpb</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of threads per block to use when solving the proof of work. Should be a multiple of 32.</p></li>
+<li><p><strong>num_processes</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of processes to use when solving the proof of work. If None, then the number of
+processes is equal to the number of CPU cores.</p></li>
+<li><p><strong>update_interval</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of nonces to run before checking for a new block.</p></li>
+<li><p><strong>log_verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, prints the progress of the proof of work more verbosely.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>The proof of work solution or None if the wallet is already registered or there is a</dt><dd><p>different error.</p>
+<dd class="field-even"><p>The proof of work solution or None if the wallet is already registered or there is a different error.</p>
 </dd>
-</dl>
-</p>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If the subnet does not exist.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Optional[Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, Any]]</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If the subnet does not exist.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optional[<a class="reference internal" href="#bittensor.utils.registration.pow.POWSolution" title="bittensor.utils.registration.pow.POWSolution">POWSolution</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -964,13 +955,13 @@ number of processes is equal to the number of CPU cores. Default is None.</p></l
 <dd><p>Convert function operating on numpy Input&amp;Output to legacy torch Input&amp;Output API if <cite>use_torch()</cite> is True.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>func</strong> (<em>function</em>) – Function with numpy Input/Output to be decorated.</p>
+<dd class="field-odd"><p><strong>func</strong> – Function with numpy Input/Output to be decorated.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Decorated function.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>decorated (function)</p>
+<dd class="field-odd"><p>decorated</p>
 </dd>
 </dl>
 </dd></dl>
