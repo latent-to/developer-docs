@@ -1,8 +1,8 @@
 ---
-title: "Bittensor 10.0 Migration Guide"
+title: "Bittensor SDK v10.0 Migration Guide"
 ---
 
-# Bittensor 10.0 Migration Guide
+# Bittensor SDK v10.0 Migration Guide
 
 This page documents breaking changes and new features for the Bittensor Python SDK `v10.0`. This is a major release with significant refactoring, standardization, and new functionality.
 
@@ -21,6 +21,7 @@ Bittensor SDK v10.0 is a **major breaking release** with significant improvement
 
 **New Features:**
 - **Multiple Incentive Mechanisms** - Full SDK support for running multiple evaluation mechanisms per subnet with independent weight matrices and emissions ([details](#multiple-incentive-mechanisms-support))
+- **Crowdloan implementation**: Adds support for creating, managing, and interacting with crowdloans directly through the SDK
 - **Transaction simulation** - `sim_swap()` calculates exact token yields without executing transactions ([details](#simulate-token-swaps))
 - **Fee estimation** - `get_extrinsic_fee()` estimates blockchain transaction costs before submission ([details](#estimate-transaction-fees))
 - **BlockInfo class** - Rich blockchain block information objects ([details](#blockinfo-class))
