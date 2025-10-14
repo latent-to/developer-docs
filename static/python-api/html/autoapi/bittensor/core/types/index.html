@@ -48,7 +48,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/types/index';</script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="bittensor.utils" href="../../utils/index.html" />
+    <link rel="next" title="bittensor.extras" href="../../extras/index.html" />
     <link rel="prev" title="bittensor.core.timelock" href="../timelock/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -167,6 +167,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../threadpool/index.html">bittensor.core.threadpool</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4 current active"><a class="current reference internal" href="#">bittensor.core.types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
 </ul>
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../utils/index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -397,6 +403,7 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams</span></code></a><ul class="nav section-nav flex-column">
@@ -428,6 +435,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PrometheusServeCallParams.version"><code class="docutils literal notranslate"><span class="pre">PrometheusServeCallParams.version</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.Salt"><code class="docutils literal notranslate"><span class="pre">Salt</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin.add_args"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin.add_args()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin.chain_endpoint"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin.chain_endpoint</span></code></a></li>
@@ -438,6 +446,8 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin.setup_config"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin.setup_config()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.UIDs"><code class="docutils literal notranslate"><span class="pre">UIDs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.Weights"><code class="docutils literal notranslate"><span class="pre">Weights</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -453,6 +463,23 @@
                   
   <section id="module-bittensor.core.types">
 <span id="bittensor-core-types"></span><h1>bittensor.core.types<a class="headerlink" href="#module-bittensor.core.types" title="Link to this heading">#</a></h1>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.types.Salt" title="bittensor.core.types.Salt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Salt</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.types.UIDs" title="bittensor.core.types.UIDs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UIDs</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.types.Weights" title="bittensor.core.types.Weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Weights</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
@@ -481,16 +508,16 @@
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>version</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
-<li><p><strong>ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
-<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
-<li><p><strong>ip_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
-<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
-<li><p><strong>coldkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
-<li><p><strong>protocol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
-<li><p><strong>placeholder1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
-<li><p><strong>placeholder2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
+<li><p><strong>version</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>ip_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>coldkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>protocol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>placeholder1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>placeholder2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 <li><p><strong>certificate</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../../utils/index.html#bittensor.utils.Certificate" title="bittensor.utils.Certificate"><em>bittensor.utils.Certificate</em></a><em>]</em>)</p></li>
 </ul>
 </dd>
@@ -522,7 +549,7 @@
 it is not included in this.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -596,12 +623,12 @@ for k, v in iterable:</p>
 <p>Initialize self.  See help(type(self)) for accurate signature.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.ParamWithTypes.name">
-<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.ParamWithTypes.name" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.ParamWithTypes.name" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.ParamWithTypes.type">
-<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.ParamWithTypes.type" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.ParamWithTypes.type" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -614,35 +641,40 @@ for k, v in iterable:</p>
 <p>Initialize self.  See help(type(self)) for accurate signature.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.PrometheusServeCallParams.ip">
-<span class="sig-name descname"><span class="pre">ip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.ip" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.ip" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.PrometheusServeCallParams.ip_type">
-<span class="sig-name descname"><span class="pre">ip_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.ip_type" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ip_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.ip_type" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.PrometheusServeCallParams.netuid">
-<span class="sig-name descname"><span class="pre">netuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.netuid" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">netuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.netuid" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.PrometheusServeCallParams.port">
-<span class="sig-name descname"><span class="pre">port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.port" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.port" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.PrometheusServeCallParams.version">
-<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.version" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.version" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
+<dl class="py data">
+<dt class="sig sig-object py" id="bittensor.core.types.Salt">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">Salt</span></span><a class="headerlink" href="#bittensor.core.types.Salt" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.types.SubtensorMixin">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">SubtensorMixin</span></span><a class="reference internal" href="../../../../_modules/bittensor/core/types.html#SubtensorMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.types.SubtensorMixin" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
 <p>Helper class that provides a standard way to create an ABC using
 inheritance.</p>
 <dl class="py method">
@@ -652,8 +684,8 @@ inheritance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.13)"><em>argparse.ArgumentParser</em></a>) – The ArgumentParser object to which the Subtensor arguments will be added.</p></li>
-<li><p><strong>prefix</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – An optional prefix for the argument names. If provided, the prefix is prepended to
+<li><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.14)"><em>argparse.ArgumentParser</em></a>) – The ArgumentParser object to which the Subtensor arguments will be added.</p></li>
+<li><p><strong>prefix</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – An optional prefix for the argument names. If provided, the prefix is prepended to
 each argument name.</p></li>
 </ul>
 </dd>
@@ -676,7 +708,7 @@ Subtensor.add_args(parser)</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.SubtensorMixin.chain_endpoint">
-<span class="sig-name descname"><span class="pre">chain_endpoint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.chain_endpoint" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">chain_endpoint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.chain_endpoint" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -705,12 +737,12 @@ Subtensor.add_args(parser)</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.SubtensorMixin.log_verbose">
-<span class="sig-name descname"><span class="pre">log_verbose</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.log_verbose" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">log_verbose</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.log_verbose" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.SubtensorMixin.network">
-<span class="sig-name descname"><span class="pre">network</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.network" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">network</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.network" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -729,7 +761,7 @@ Subtensor.add_args(parser)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>network</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The name of the Subtensor network. If None, the network and endpoint will be
+<li><p><strong>network</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The name of the Subtensor network. If None, the network and endpoint will be
 determined from the <cite>config</cite> object.</p></li>
 <li><p><strong>config</strong> (<a class="reference internal" href="../config/index.html#bittensor.core.config.Config" title="bittensor.core.config.Config"><em>bittensor.core.config.Config</em></a>) – The configuration object containing the network and chain endpoint
 settings.</p></li>
@@ -739,12 +771,22 @@ settings.</p></li>
 <dd class="field-even"><p>A tuple containing the formatted WebSocket endpoint URL and the evaluated network name.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 </dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bittensor.core.types.UIDs">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">UIDs</span></span><a class="headerlink" href="#bittensor.core.types.UIDs" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bittensor.core.types.Weights">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">Weights</span></span><a class="headerlink" href="#bittensor.core.types.Weights" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 </section>
 </section>
@@ -770,11 +812,11 @@ settings.</p></li>
       </div>
     </a>
     <a class="right-next"
-       href="../../utils/index.html"
+       href="../../extras/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">bittensor.utils</p>
+        <p class="prev-next-title">bittensor.extras</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -795,6 +837,7 @@ settings.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams</span></code></a><ul class="nav section-nav flex-column">
@@ -826,6 +869,7 @@ settings.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PrometheusServeCallParams.version"><code class="docutils literal notranslate"><span class="pre">PrometheusServeCallParams.version</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.Salt"><code class="docutils literal notranslate"><span class="pre">Salt</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin.add_args"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin.add_args()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin.chain_endpoint"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin.chain_endpoint</span></code></a></li>
@@ -836,6 +880,8 @@ settings.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin.setup_config"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin.setup_config()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.UIDs"><code class="docutils literal notranslate"><span class="pre">UIDs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.Weights"><code class="docutils literal notranslate"><span class="pre">Weights</span></code></a></li>
 </ul>
 </li>
 </ul>

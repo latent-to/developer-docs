@@ -168,6 +168,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../../core/types/index.html">bittensor.core.types</a></li>
 </ul>
 </details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
+</ul>
+</details></li>
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="../axon_utils/index.html">bittensor.utils.axon_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../balance/index.html">bittensor.utils.balance</a></li>
@@ -403,6 +409,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.U32_MAX"><code class="docutils literal notranslate"><span class="pre">U32_MAX</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.convert_and_normalize_weights_and_uids"><code class="docutils literal notranslate"><span class="pre">convert_and_normalize_weights_and_uids()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.convert_bond_uids_and_vals_to_tensor"><code class="docutils literal notranslate"><span class="pre">convert_bond_uids_and_vals_to_tensor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.convert_maybe_split_to_u16"><code class="docutils literal notranslate"><span class="pre">convert_maybe_split_to_u16()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.convert_root_weight_uids_and_vals_to_tensor"><code class="docutils literal notranslate"><span class="pre">convert_root_weight_uids_and_vals_to_tensor()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.convert_uids_and_weights"><code class="docutils literal notranslate"><span class="pre">convert_uids_and_weights()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.convert_weight_uids_and_vals_to_tensor"><code class="docutils literal notranslate"><span class="pre">convert_weight_uids_and_vals_to_tensor()</span></code></a></li>
@@ -451,28 +458,31 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.convert_bond_uids_and_vals_to_tensor" title="bittensor.utils.weight_utils.convert_bond_uids_and_vals_to_tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_bond_uids_and_vals_to_tensor</span></code></a>(n, uids, bonds)</p></td>
 <td><p>Converts bond and uids from chain representation into a np.array.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.convert_root_weight_uids_and_vals_to_tensor" title="bittensor.utils.weight_utils.convert_root_weight_uids_and_vals_to_tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_root_weight_uids_and_vals_to_tensor</span></code></a>(n, uids, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.convert_maybe_split_to_u16" title="bittensor.utils.weight_utils.convert_maybe_split_to_u16"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_maybe_split_to_u16</span></code></a>(maybe_split)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.convert_root_weight_uids_and_vals_to_tensor" title="bittensor.utils.weight_utils.convert_root_weight_uids_and_vals_to_tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_root_weight_uids_and_vals_to_tensor</span></code></a>(n, uids, ...)</p></td>
 <td><p>Converts root weights and uids from chain representation into a np.array or torch FloatTensor</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.convert_uids_and_weights" title="bittensor.utils.weight_utils.convert_uids_and_weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_uids_and_weights</span></code></a>(uids, weights)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.convert_uids_and_weights" title="bittensor.utils.weight_utils.convert_uids_and_weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_uids_and_weights</span></code></a>(uids, weights)</p></td>
 <td><p>Converts netuids and weights to numpy arrays if they are not already.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.convert_weight_uids_and_vals_to_tensor" title="bittensor.utils.weight_utils.convert_weight_uids_and_vals_to_tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_weight_uids_and_vals_to_tensor</span></code></a>(n, uids, weights)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.convert_weight_uids_and_vals_to_tensor" title="bittensor.utils.weight_utils.convert_weight_uids_and_vals_to_tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_weight_uids_and_vals_to_tensor</span></code></a>(n, uids, weights)</p></td>
 <td><p>Converts weights and uids from chain representation into a np.array (inverse operation from</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.convert_weights_and_uids_for_emit" title="bittensor.utils.weight_utils.convert_weights_and_uids_for_emit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_weights_and_uids_for_emit</span></code></a>(uids, weights)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.convert_weights_and_uids_for_emit" title="bittensor.utils.weight_utils.convert_weights_and_uids_for_emit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_weights_and_uids_for_emit</span></code></a>(uids, weights)</p></td>
 <td><p>Converts weights into integer u32 representation that sum to MAX_INT_WEIGHT.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.generate_weight_hash" title="bittensor.utils.weight_utils.generate_weight_hash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_weight_hash</span></code></a>(address, netuid, uids, values, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.generate_weight_hash" title="bittensor.utils.weight_utils.generate_weight_hash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_weight_hash</span></code></a>(address, netuid, uids, values, ...)</p></td>
 <td><p>Generate a valid commit hash from the provided weights.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.normalize_max_weight" title="bittensor.utils.weight_utils.normalize_max_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalize_max_weight</span></code></a>(x[, limit])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.normalize_max_weight" title="bittensor.utils.weight_utils.normalize_max_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalize_max_weight</span></code></a>(x[, limit])</p></td>
 <td><p>Normalizes the tensor x so that sum(x) = 1 and the max value is not greater than the limit.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.process_weights" title="bittensor.utils.weight_utils.process_weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_weights</span></code></a>(uids, weights, num_neurons, ...[, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.process_weights" title="bittensor.utils.weight_utils.process_weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_weights</span></code></a>(uids, weights, num_neurons, ...[, ...])</p></td>
 <td><p>Processes weight tensors for a given weights and UID arrays and hyperparams, applying constraints</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.process_weights_for_netuid" title="bittensor.utils.weight_utils.process_weights_for_netuid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_weights_for_netuid</span></code></a>(uids, weights, netuid, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.weight_utils.process_weights_for_netuid" title="bittensor.utils.weight_utils.process_weights_for_netuid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_weights_for_netuid</span></code></a>(uids, weights, netuid, ...)</p></td>
 <td><p>Processes weight tensors for a given subnet id using the provided weight and UID arrays, applying constraints</p></td>
 </tr>
 </tbody>
@@ -498,8 +508,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>uids</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.int64</em><em>]</em><em>, </em><em>torch.LongTensor</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>]</em>) – The <code class="docutils literal notranslate"><span class="pre">uint64</span></code> uids of destination neurons.</p></li>
-<li><p><strong>weights</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.float32</em><em>]</em><em>, </em><em>torch.FloatTensor</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>]</em>) – The weights to set. These must be <code class="docutils literal notranslate"><span class="pre">float</span></code> s
+<li><p><strong>uids</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.int64</em><em>]</em><em>, </em><em>torch.LongTensor</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>]</em>) – The <code class="docutils literal notranslate"><span class="pre">uint64</span></code> uids of destination neurons.</p></li>
+<li><p><strong>weights</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.float32</em><em>]</em><em>, </em><em>torch.FloatTensor</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>]</em>) – The weights to set. These must be <code class="docutils literal notranslate"><span class="pre">float</span></code> s
 and correspond to the passed <code class="docutils literal notranslate"><span class="pre">uid</span></code> s.</p></li>
 </ul>
 </dd>
@@ -519,9 +529,9 @@ and correspond to the passed <code class="docutils literal notranslate"><span cl
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – number of neurons on network.</p></li>
-<li><p><strong>uids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Tensor of uids as destinations for passed bonds.</p></li>
-<li><p><strong>bonds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Tensor of bonds.</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – number of neurons on network.</p></li>
+<li><p><strong>uids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – Tensor of uids as destinations for passed bonds.</p></li>
+<li><p><strong>bonds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – Tensor of bonds.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -534,6 +544,19 @@ and correspond to the passed <code class="docutils literal notranslate"><span cl
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="bittensor.utils.weight_utils.convert_maybe_split_to_u16">
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.weight_utils.</span></span><span class="sig-name descname"><span class="pre">convert_maybe_split_to_u16</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maybe_split</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.weight_utils.convert_maybe_split_to_u16" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>maybe_split</strong> (<em>bittensor.core.types.Weights</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.weight_utils.convert_root_weight_uids_and_vals_to_tensor">
 <span class="sig-prename descclassname"><span class="pre">bittensor.utils.weight_utils.</span></span><span class="sig-name descname"><span class="pre">convert_root_weight_uids_and_vals_to_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subnets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/weight_utils.html#convert_root_weight_uids_and_vals_to_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.weight_utils.convert_root_weight_uids_and_vals_to_tensor" title="Link to this definition">#</a></dt>
 <dd><p>Converts root weights and uids from chain representation into a np.array or torch FloatTensor
@@ -541,10 +564,10 @@ and correspond to the passed <code class="docutils literal notranslate"><span cl
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – number of neurons on network.</p></li>
-<li><p><strong>uids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Tensor of uids as destinations for passed weights.</p></li>
-<li><p><strong>weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Tensor of weights.</p></li>
-<li><p><strong>subnets</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – list of subnets on the network.</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – number of neurons on network.</p></li>
+<li><p><strong>uids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – Tensor of uids as destinations for passed weights.</p></li>
+<li><p><strong>weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – Tensor of weights.</p></li>
+<li><p><strong>subnets</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – list of subnets on the network.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -563,15 +586,15 @@ and correspond to the passed <code class="docutils literal notranslate"><span cl
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>uids</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.int64</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>]</em>) – The uint64 uids of destination neurons.</p></li>
-<li><p><strong>weights</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.float32</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>]</em>) – The weights to set. These must be floated.</p></li>
+<li><p><strong>uids</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.int64</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>]</em>) – The uint64 uids of destination neurons.</p></li>
+<li><p><strong>weights</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.float32</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>]</em>) – The weights to set. These must be floated.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Bytes converted netuids and weights.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[ndarray, ndarray]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[ndarray, ndarray]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -584,9 +607,9 @@ convert_weights_and_uids_for_emit).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – number of neurons on network.</p></li>
-<li><p><strong>uids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Tensor of uids as destinations for passed weights.</p></li>
-<li><p><strong>weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Tensor of weights.</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – number of neurons on network.</p></li>
+<li><p><strong>uids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – Tensor of uids as destinations for passed weights.</p></li>
+<li><p><strong>weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – Tensor of weights.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -614,7 +637,7 @@ convert_weights_and_uids_for_emit).</p>
 weight_vals (list[int]): Weights as a list.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>weight_uids (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>])</p>
+<dd class="field-odd"><p>weight_uids (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a>])</p>
 </dd>
 </dl>
 </dd></dl>
@@ -626,19 +649,19 @@ weight_vals (list[int]): Weights as a list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The account identifier. Wallet ss58_address.</p></li>
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The network unique identifier.</p></li>
-<li><p><strong>uids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The list of UIDs.</p></li>
-<li><p><strong>salt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The salt to add to hash.</p></li>
-<li><p><strong>values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The list of weight values.</p></li>
-<li><p><strong>version_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The version key.</p></li>
+<li><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The account identifier. Wallet ss58_address.</p></li>
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The subnet unique identifier.</p></li>
+<li><p><strong>uids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The list of UIDs.</p></li>
+<li><p><strong>salt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The salt to add to hash.</p></li>
+<li><p><strong>values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The list of weight values.</p></li>
+<li><p><strong>version_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The version key.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The generated commit hash.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -660,7 +683,7 @@ weight_vals (list[int]): Weights as a list.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>Union</em><em>[</em><em>numpy.typing.NDArray</em><em>[</em><em>numpy.float32</em><em>]</em><em>, </em><em>bittensor.utils.registration.torch.FloatTensor</em><em>]</em>)</p></li>
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -677,10 +700,10 @@ tensors.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>uids</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.int64</em><em>]</em><em>, </em><em>&quot;torch.Tensor&quot;</em><em>]</em>) – Array of unique identifiers of the neurons.</p></li>
 <li><p><strong>weights</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.float32</em><em>]</em><em>, </em><em>&quot;torch.Tensor&quot;</em><em>]</em>) – Array of weights associated with the user IDs.</p></li>
-<li><p><strong>num_neurons</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of neurons in the network.</p></li>
-<li><p><strong>min_allowed_weights</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Subnet hyperparam Minimum number of allowed weights.</p></li>
-<li><p><strong>max_weight_limit</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>]</em>) – Subnet hyperparam Maximum weight limit.</p></li>
-<li><p><strong>exclude_quantile</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Quantile threshold for excluding lower weights. Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
+<li><p><strong>num_neurons</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of neurons in the network.</p></li>
+<li><p><strong>min_allowed_weights</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – Subnet hyperparam Minimum number of allowed weights.</p></li>
+<li><p><strong>max_weight_limit</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>]</em>) – Subnet hyperparam Maximum weight limit.</p></li>
+<li><p><strong>exclude_quantile</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Quantile threshold for excluding lower weights. Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -692,7 +715,7 @@ matches the type of the input weights (NumPy or PyTorch).</p>
 </p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[“torch.Tensor”, “torch.FloatTensor”], <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[NDArray[np.int64], NDArray[np.float32]]]</p>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[“torch.Tensor”, “torch.FloatTensor”], <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[NDArray[np.int64], NDArray[np.float32]]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -708,11 +731,11 @@ tensors.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>uids</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.int64</em><em>]</em><em>, </em><em>&quot;torch.Tensor&quot;</em><em>]</em>) – Array of unique identifiers of the neurons.</p></li>
 <li><p><strong>weights</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.float32</em><em>]</em><em>, </em><em>&quot;torch.Tensor&quot;</em><em>]</em>) – Array of weights associated with the user IDs.</p></li>
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The network uid to process weights for.</p></li>
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The network uid to process weights for.</p></li>
 <li><p><strong>subtensor</strong> (<a class="reference internal" href="../../core/subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>Subtensor</em></a>) – Subtensor instance to access blockchain data.</p></li>
 <li><p><strong>metagraph</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../../core/metagraph/index.html#bittensor.core.metagraph.Metagraph" title="bittensor.core.metagraph.Metagraph"><em>Metagraph</em></a><em>]</em>) – Metagraph instance for additional network data. If None, it is fetched from
 the subtensor using the netuid.</p></li>
-<li><p><strong>exclude_quantile</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Quantile threshold for excluding lower weights. Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
+<li><p><strong>exclude_quantile</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Quantile threshold for excluding lower weights. Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -724,7 +747,7 @@ matches the type of the input weights (NumPy or PyTorch).</p>
 </p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[“torch.Tensor”, “torch.FloatTensor”], <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[NDArray[np.int64], NDArray[np.float32]]]</p>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[“torch.Tensor”, “torch.FloatTensor”], <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[NDArray[np.int64], NDArray[np.float32]]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -776,6 +799,7 @@ matches the type of the input weights (NumPy or PyTorch).</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.U32_MAX"><code class="docutils literal notranslate"><span class="pre">U32_MAX</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.convert_and_normalize_weights_and_uids"><code class="docutils literal notranslate"><span class="pre">convert_and_normalize_weights_and_uids()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.convert_bond_uids_and_vals_to_tensor"><code class="docutils literal notranslate"><span class="pre">convert_bond_uids_and_vals_to_tensor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.convert_maybe_split_to_u16"><code class="docutils literal notranslate"><span class="pre">convert_maybe_split_to_u16()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.convert_root_weight_uids_and_vals_to_tensor"><code class="docutils literal notranslate"><span class="pre">convert_root_weight_uids_and_vals_to_tensor()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.convert_uids_and_weights"><code class="docutils literal notranslate"><span class="pre">convert_uids_and_weights()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.weight_utils.convert_weight_uids_and_vals_to_tensor"><code class="docutils literal notranslate"><span class="pre">convert_weight_uids_and_vals_to_tensor()</span></code></a></li>

@@ -169,6 +169,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../../core/types/index.html">bittensor.core.types</a></li>
 </ul>
 </details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
+</ul>
+</details></li>
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="../axon_utils/index.html">bittensor.utils.axon_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../balance/index.html">bittensor.utils.balance</a></li>
@@ -474,7 +480,7 @@
 <dl class="py exception">
 <dt class="sig sig-object py" id="bittensor.utils.version.VersionCheckError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.utils.version.</span></span><span class="sig-name descname"><span class="pre">VersionCheckError</span></span><a class="headerlink" href="#bittensor.utils.version.VersionCheckError" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
 <p>Exception raised for errors in the version check process.</p>
 <p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
@@ -492,7 +498,7 @@
 Raises a VersionCheckError if the version check fails.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The timeout for the request to PyPI in seconds. Default is <code class="docutils literal notranslate"><span class="pre">15</span></code>.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The timeout for the request to PyPI in seconds. Default is <code class="docutils literal notranslate"><span class="pre">15</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -503,13 +509,13 @@ Raises a VersionCheckError if the version check fails.</p>
 <dd><p>Retrieves and saves the latest version of Bittensor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The timeout for the request to PyPI in seconds. Default is <code class="docutils literal notranslate"><span class="pre">15</span></code>.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The timeout for the request to PyPI in seconds. Default is <code class="docutils literal notranslate"><span class="pre">15</span></code>.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The latest version of Bittensor.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -520,7 +526,7 @@ Raises a VersionCheckError if the version check fails.</p>
 <dd><p>Deprecated, kept for backwards compatibility. Use check_version() instead.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The timeout for calling :func:<code class="docutils literal notranslate"><span class="pre">check_version</span></code> function. Default is <code class="docutils literal notranslate"><span class="pre">15</span></code>.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The timeout for calling :func:<code class="docutils literal notranslate"><span class="pre">check_version</span></code> function. Default is <code class="docutils literal notranslate"><span class="pre">15</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>

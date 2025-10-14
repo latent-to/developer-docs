@@ -49,7 +49,7 @@
     <link rel="index" title="Index" href="../../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../../search.html" />
     <link rel="next" title="bittensor.core.extrinsics.asyncex.registration" href="../registration/index.html" />
-    <link rel="prev" title="bittensor.core.extrinsics.asyncex.liquidity" href="../liquidity/index.html" />
+    <link rel="prev" title="bittensor.core.extrinsics.asyncex.mechanism" href="../mechanism/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -167,6 +167,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../threadpool/index.html">bittensor.core.threadpool</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../types/index.html">bittensor.core.types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
 </ul>
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../utils/index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -445,24 +451,24 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>) – The subtensor instance to interact with the blockchain.</p></li>
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – The wallet containing the coldkey to authorize the move.</p></li>
-<li><p><strong>origin_hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – SS58 address of the origin hotkey associated with the stake.</p></li>
-<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Network UID of the origin subnet.</p></li>
-<li><p><strong>destination_hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – SS58 address of the destination hotkey.</p></li>
-<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Network UID of the destination subnet.</p></li>
+<li><p><strong>origin_hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – SS58 address of the origin hotkey associated with the stake.</p></li>
+<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Network UID of the origin subnet.</p></li>
+<li><p><strong>destination_hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – SS58 address of the destination hotkey.</p></li>
+<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Network UID of the destination subnet.</p></li>
 <li><p><strong>amount</strong> (<a class="reference internal" href="../../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a>) – The amount of stake to move as a <cite>Balance</cite> object.</p></li>
-<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, waits for transaction inclusion in a block. Defaults to True.</p></li>
-<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, waits for transaction finalization. Defaults to False.</p></li>
-<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, waits for transaction inclusion in a block. Defaults to True.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, waits for transaction finalization. Defaults to False.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
 transaction is not included in a block within that number of blocks, it will expire and be rejected. You can
 think of it as an expiration date for the transaction.</p></li>
-<li><p><strong>move_all_stake</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, moves all stake from the source hotkey to the destination hotkey.</p></li>
+<li><p><strong>move_all_stake</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, moves all stake from the source hotkey to the destination hotkey.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if the move was successful, False otherwise.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -476,16 +482,16 @@ think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>AsyncSubtensor</em></a>) – The subtensor instance to interact with the blockchain.</p></li>
 <li><p><strong>wallet</strong> (<em>Wallet</em>) – The wallet containing the coldkey to authorize the swap.</p></li>
-<li><p><strong>hotkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – SS58 address of the hotkey associated with the stake.</p></li>
-<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Network UID of the origin subnet.</p></li>
-<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Network UID of the destination subnet.</p></li>
+<li><p><strong>hotkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – SS58 address of the hotkey associated with the stake.</p></li>
+<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Network UID of the origin subnet.</p></li>
+<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Network UID of the destination subnet.</p></li>
 <li><p><strong>amount</strong> (<a class="reference internal" href="../../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>Balance</em></a>) – The amount of stake to swap as a <cite>Balance</cite> object.</p></li>
-<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, waits for transaction inclusion in a block. Defaults to True.</p></li>
-<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, waits for transaction finalization. Defaults to False.</p></li>
-<li><p><strong>safe_staking</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, enables price safety checks to protect against price impact.</p></li>
-<li><p><strong>allow_partial_stake</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, allows partial stake swaps when the full amount would exceed the price tolerance.</p></li>
-<li><p><strong>rate_tolerance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Maximum allowed increase in a price ratio (0.005 = 0.5%).</p></li>
-<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, waits for transaction inclusion in a block. Defaults to True.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, waits for transaction finalization. Defaults to False.</p></li>
+<li><p><strong>safe_staking</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, enables price safety checks to protect against price impact.</p></li>
+<li><p><strong>allow_partial_stake</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, allows partial stake swaps when the full amount would exceed the price tolerance.</p></li>
+<li><p><strong>rate_tolerance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Maximum allowed increase in a price ratio (0.005 = 0.5%).</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If
 the transaction is not included in a block within that number of blocks, it will expire and be rejected.
 You can think of it as an expiration date for the transaction.</p></li>
 </ul>
@@ -494,7 +500,7 @@ You can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-even"><p>True if the swap was successful, False otherwise.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -508,14 +514,14 @@ You can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>AsyncSubtensor</em></a>) – The subtensor instance to interact with the blockchain.</p></li>
 <li><p><strong>wallet</strong> (<em>Wallet</em>) – The wallet containing the coldkey to authorize the transfer.</p></li>
-<li><p><strong>destination_coldkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – SS58 address of the destination coldkey.</p></li>
-<li><p><strong>hotkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – SS58 address of the hotkey associated with the stake.</p></li>
-<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Network UID of the origin subnet.</p></li>
-<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Network UID of the destination subnet.</p></li>
+<li><p><strong>destination_coldkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – SS58 address of the destination coldkey.</p></li>
+<li><p><strong>hotkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – SS58 address of the hotkey associated with the stake.</p></li>
+<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Network UID of the origin subnet.</p></li>
+<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Network UID of the destination subnet.</p></li>
 <li><p><strong>amount</strong> (<a class="reference internal" href="../../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>Balance</em></a>) – The amount of stake to transfer as a <cite>Balance</cite> object.</p></li>
-<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, waits for transaction inclusion in a block. Defaults to <cite>True</cite>.</p></li>
-<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, waits for transaction finalization. Defaults to <cite>False</cite>.</p></li>
-<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, waits for transaction inclusion in a block. Defaults to <cite>True</cite>.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, waits for transaction finalization. Defaults to <cite>False</cite>.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If
 the transaction is not included in a block within that number of blocks, it will expire and be rejected.
 You can think of it as an expiration date for the transaction.</p></li>
 </ul>
@@ -524,7 +530,7 @@ You can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-even"><p>True if the transfer was successful, False otherwise.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -544,12 +550,12 @@ You can think of it as an expiration date for the transaction.</p></li>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../liquidity/index.html"
+       href="../mechanism/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">bittensor.core.extrinsics.asyncex.liquidity</p>
+        <p class="prev-next-title">bittensor.core.extrinsics.asyncex.mechanism</p>
       </div>
     </a>
     <a class="right-next"

@@ -51,7 +51,7 @@
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="bittensor.core.settings" href="../settings/index.html" />
-    <link rel="prev" title="bittensor.core.extrinsics.utils" href="../extrinsics/utils/index.html" />
+    <link rel="prev" title="bittensor.core.extrinsics.weights" href="../extrinsics/weights/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -169,6 +169,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../threadpool/index.html">bittensor.core.threadpool</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../types/index.html">bittensor.core.types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
 </ul>
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../utils/index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -452,6 +458,9 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.load"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.load()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.load_from_path"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.load_from_path()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.max_uids"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.max_uids</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.mechanism_count"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.mechanism_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.mechanisms_emissions_split"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.mechanisms_emissions_split</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.mechid"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.mechid</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.metadata"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.metadata()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.n"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.n</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.name"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.name</span></code></a></li>
@@ -621,7 +630,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.AsyncMetagraph">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">AsyncMetagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#AsyncMetagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.AsyncMetagraph" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">AsyncMetagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#AsyncMetagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.AsyncMetagraph" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bittensor.core.metagraph.NumpyOrTorch" title="bittensor.core.metagraph.NumpyOrTorch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NumpyOrTorch</span></code></a></p>
 <p>TODO docstring. Advise user to use <cite>async_metagraph</cite> factory fn if they want to sync at init</p>
 <p>Initializes a new instance of the metagraph object, setting up the basic structure and parameters based on the
@@ -630,14 +639,14 @@ metagraph object, which is a central component in representing the state of the 
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The unique identifier for the network, distinguishing this instance of the metagraph within
-potentially multiple network configurations.</p></li>
-<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the network, which can indicate specific configurations or versions of the
-Bittensor network.</p></li>
-<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag indicating whether to use a lite version of the metagraph. The lite version may contain
-less detailed information but can be quicker to initialize and sync.</p></li>
-<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet unique identifier.</p></li>
+<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the network, which can indicate specific configurations or versions of the Bittensor</p></li>
+<li><p><strong>network.</strong></p></li>
+<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to use a lite version of the metagraph. The lite version may contain less
+detailed information but can be quicker to initialize and sync.</p></li>
+<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
 Synchronization involves updating the metagraph’s parameters to reflect the current state of the network.</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet mechanism unique identifier.</p></li>
 <li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>]</em>)</p></li>
 </ul>
 </dd>
@@ -645,11 +654,10 @@ Synchronization involves updating the metagraph’s parameters to reflect the cu
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p>Initializing a metagraph object for the Bittensor network with a specific network UID:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bittensor.core.metagraph</span> <span class="kn">import</span> <span class="n">Metagraph</span>
-
-<span class="n">metagraph</span> <span class="o">=</span> <span class="n">Metagraph</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">network</span><span class="o">=</span><span class="s2">&quot;finney&quot;</span><span class="p">,</span> <span class="n">lite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
+<blockquote>
+<div><p>from bittensor.core.metagraph import Metagraph</p>
+<p>metagraph = Metagraph(netuid=123, network=”finney”, lite=True, sync=True)</p>
+</div></blockquote>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.AsyncMetagraph.sync">
@@ -662,9 +670,9 @@ network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>block</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – A specific block number to synchronize with. If None, the metagraph syncs with the
+<li><p><strong>block</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – A specific block number to synchronize with. If None, the metagraph syncs with the
 latest block. This allows for historical analysis or specific state examination of the network.</p></li>
-<li><p><strong>lite</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>]</em>) – If True, a lite version of the metagraph is used for quicker synchronization. This is
+<li><p><strong>lite</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>]</em>) – If True, a lite version of the metagraph is used for quicker synchronization. This is
 beneficial when full detail is not necessary, allowing for reduced computational and time overhead.
 Defaults to <cite>True</cite>.</p></li>
 <li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em>) – An instance of the subtensor class from Bittensor,
@@ -745,7 +753,7 @@ ndarray objects. Each key corresponds to a specific attribute or metric associat
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.Metagraph">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">Metagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#Metagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.Metagraph" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">Metagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#Metagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.Metagraph" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bittensor.core.metagraph.NumpyOrTorch" title="bittensor.core.metagraph.NumpyOrTorch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NumpyOrTorch</span></code></a></p>
 <p>The metagraph class is a core component of the Bittensor network, representing the neural graph that forms the
 backbone of the decentralized machine learning system.</p>
@@ -762,11 +770,12 @@ interact, how they are incentivized, and their roles within the network’s deci
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – A unique identifier that distinguishes between different instances or versions of the Bittensor network.</p></li>
-<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the network, signifying specific configurations or iterations within the Bittensor ecosystem.</p></li>
-<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – A unique identifier that distinguishes between different instances or versions of the Bittensor network.</p></li>
+<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the network, signifying specific configurations or iterations within the Bittensor ecosystem.</p></li>
+<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em>)</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
@@ -828,14 +837,14 @@ metagraph object, which is a central component in representing the state of the 
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The unique identifier for the network, distinguishing this instance of the metagraph within
-potentially multiple network configurations.</p></li>
-<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the network, which can indicate specific configurations or versions of the
-Bittensor network.</p></li>
-<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag indicating whether to use a lite version of the metagraph. The lite version may contain
-less detailed information but can be quicker to initialize and sync.</p></li>
-<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet unique identifier.</p></li>
+<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the network, which can indicate specific configurations or versions of the Bittensor</p></li>
+<li><p><strong>network.</strong></p></li>
+<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to use a lite version of the metagraph. The lite version may contain less
+detailed information but can be quicker to initialize and sync.</p></li>
+<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
 Synchronization involves updating the metagraph’s parameters to reflect the current state of the network.</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet mechanism unique identifier.</p></li>
 <li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em>)</p></li>
 </ul>
 </dd>
@@ -843,11 +852,10 @@ Synchronization involves updating the metagraph’s parameters to reflect the cu
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p>Initializing a metagraph object for the Bittensor network with a specific network UID:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bittensor.core.metagraph</span> <span class="kn">import</span> <span class="n">Metagraph</span>
-
-<span class="n">metagraph</span> <span class="o">=</span> <span class="n">Metagraph</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">network</span><span class="o">=</span><span class="s2">&quot;finney&quot;</span><span class="p">,</span> <span class="n">lite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
+<blockquote>
+<div><p>from bittensor.core.metagraph import Metagraph</p>
+<p>metagraph = Metagraph(netuid=123, network=”finney”, lite=True, sync=True)</p>
+</div></blockquote>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.Metagraph.sync">
@@ -860,9 +868,9 @@ network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>block</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – A specific block number to synchronize with. If None, the metagraph syncs with the
+<li><p><strong>block</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – A specific block number to synchronize with. If None, the metagraph syncs with the
 latest block. This allows for historical analysis or specific state examination of the network.</p></li>
-<li><p><strong>lite</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>]</em>) – If True, a lite version of the metagraph is used for quicker synchronization. This is
+<li><p><strong>lite</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>]</em>) – If True, a lite version of the metagraph is used for quicker synchronization. This is
 beneficial when full detail is not necessary, allowing for reduced computational and time overhead.
 Defaults to <cite>True</cite>.</p></li>
 <li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em>) – An instance of the subtensor class from Bittensor,
@@ -912,8 +920,8 @@ test networks.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">MetagraphMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#MetagraphMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">MetagraphMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#MetagraphMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
 <p>The metagraph class is a core component of the Bittensor network, representing the neural graph that forms the
 backbone of the decentralized machine learning system.</p>
 <dl class="simple">
@@ -929,11 +937,12 @@ interact, how they are incentivized, and their roles within the network’s deci
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – A unique identifier that distinguishes between different instances or versions of the Bittensor network.</p></li>
-<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the network, signifying specific configurations or iterations within the Bittensor ecosystem.</p></li>
-<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – A unique identifier that distinguishes between different instances or versions of the Bittensor network.</p></li>
+<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the network, signifying specific configurations or iterations within the Bittensor ecosystem.</p></li>
+<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
@@ -995,24 +1004,25 @@ in representing the state of the Bittensor network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The unique identifier for the network, distinguishing this instance of the metagraph within
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The unique identifier for the network, distinguishing this instance of the metagraph within
 potentially multiple network configurations.</p></li>
-<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the network, which can indicate specific configurations or versions of the
-Bittensor network.</p></li>
-<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag indicating whether to use a lite version of the metagraph. The lite version may contain
-less detailed information but can be quicker to initialize and sync.</p></li>
-<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
+<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the network, which can indicate specific configurations or versions of the Bittensor
+network.</p></li>
+<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to use a lite version of the metagraph. The lite version may contain less
+detailed information but can be quicker to initialize and sync.</p></li>
+<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
 Synchronization involves updating the metagraph’s parameters to reflect the current state of the network.</p></li>
 <li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 </ul>
 </dd>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p>Initializing a metagraph object for the Bittensor network with a specific network UID:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">metagraph</span> <span class="o">=</span> <span class="n">Metagraph</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">network</span><span class="o">=</span><span class="s2">&quot;finney&quot;</span><span class="p">,</span> <span class="n">lite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
+<blockquote>
+<div><p>metagraph = Metagraph(netuid=123, network=”finney”, lite=True, sync=True)</p>
+</div></blockquote>
 </div>
 <dl class="py property">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.AS">
@@ -1268,7 +1278,7 @@ influencing the distribution of incentives and the inter-neuronal dynamics.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.addresses">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">addresses</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.addresses" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">addresses</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.addresses" title="Link to this definition">#</a></dt>
 <dd><p>Provides a list of IP addresses for each neuron in the Bittensor network. These addresses are used for
 network communication, allowing neurons to connect, interact, and exchange information with each other.
 IP addresses are fundamental for the network’s peer-to-peer communication infrastructure.</p>
@@ -1282,7 +1292,7 @@ exchange among neurons.</p>
 </p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>]</p>
+<dd class="field-even"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>]</p>
 </dd>
 </dl>
 <div class="admonition note">
@@ -1295,7 +1305,7 @@ the functioning of any distributed network.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.alpha_dividends_per_hotkey">
-<span class="sig-name descname"><span class="pre">alpha_dividends_per_hotkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.alpha_dividends_per_hotkey" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">alpha_dividends_per_hotkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.alpha_dividends_per_hotkey" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1305,7 +1315,7 @@ the functioning of any distributed network.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.axons">
-<span class="sig-name descname"><span class="pre">axons</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bittensor.core.chain_data.AxonInfo</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.axons" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">axons</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bittensor.core.chain_data.AxonInfo</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.axons" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1315,12 +1325,12 @@ the functioning of any distributed network.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.block_at_registration">
-<span class="sig-name descname"><span class="pre">block_at_registration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.block_at_registration" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">block_at_registration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.block_at_registration" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.blocks_since_last_step">
-<span class="sig-name descname"><span class="pre">blocks_since_last_step</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.blocks_since_last_step" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">blocks_since_last_step</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.blocks_since_last_step" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1330,12 +1340,12 @@ the functioning of any distributed network.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.chain_endpoint">
-<span class="sig-name descname"><span class="pre">chain_endpoint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.chain_endpoint" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">chain_endpoint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.chain_endpoint" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.coldkeys">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">coldkeys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.coldkeys" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">coldkeys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.coldkeys" title="Link to this definition">#</a></dt>
 <dd><p>Contains a list of <code class="docutils literal notranslate"><span class="pre">coldkeys</span></code> for each neuron in the Bittensor network.</p>
 <p>Coldkeys are similar to hotkeys but are typically used for more secure, offline activities such as storing
 assets or offline signing of transactions. They are an important aspect of a neuron’s security, providing an
@@ -1349,7 +1359,7 @@ additional layer of protection for sensitive operations and assets.</p>
 </p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>]</p>
+<dd class="field-even"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>]</p>
 </dd>
 </dl>
 <div class="admonition note">
@@ -1383,7 +1393,7 @@ additional layer of protection for sensitive operations and assets.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.hotkeys">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hotkeys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.hotkeys" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hotkeys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.hotkeys" title="Link to this definition">#</a></dt>
 <dd><p>Represents a list of <code class="docutils literal notranslate"><span class="pre">hotkeys</span></code> for each neuron in the Bittensor network.</p>
 <p>Hotkeys are unique identifiers used by neurons for active participation in the network, such as sending and
 receiving information or transactions. They are akin to public keys in cryptographic systems and are essential
@@ -1398,7 +1408,7 @@ for identifying and authenticating neurons within the network’s operations.</p
 </p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>]</p>
+<dd class="field-even"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>]</p>
 </dd>
 </dl>
 <div class="admonition note">
@@ -1418,12 +1428,12 @@ and authenticated interactions.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.identities">
-<span class="sig-name descname"><span class="pre">identities</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bittensor.core.chain_data.ChainIdentity</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.identities" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">identities</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bittensor.core.chain_data.ChainIdentity</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.identities" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.identity">
-<span class="sig-name descname"><span class="pre">identity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bittensor.core.chain_data.SubnetIdentity</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.identity" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">identity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bittensor.core.chain_data.SubnetIdentity</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.identity" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1433,7 +1443,7 @@ and authenticated interactions.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.last_step">
-<span class="sig-name descname"><span class="pre">last_step</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.last_step" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">last_step</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.last_step" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1461,7 +1471,7 @@ metagraph’s current <code class="docutils literal notranslate"><span class="pr
 the metagraph’s state for the user, requiring no direct path specifications.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>root_dir</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em>) – list to the file path for the root directory of your metagraph saves
+<dd class="field-odd"><p><strong>root_dir</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em><em>]</em>) – list to the file path for the root directory of your metagraph saves
 (i.e. [‘/’, ‘tmp’, ‘metagraphs’], defaults to [“~”, “.bittensor”, “metagraphs”]</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1504,7 +1514,7 @@ including neuron attributes and parameters from this file. This ensures that the
 reconstituted to reflect the network state at the time of the saved block.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dir_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The directory path where the metagraph’s state files are stored. This path should contain
+<dd class="field-odd"><p><strong>dir_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The directory path where the metagraph’s state files are stored. This path should contain
 one or more saved state files, typically named in a format that includes the block number.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1538,7 +1548,22 @@ state files within it are accurate and consistent with the expected metagraph st
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.max_uids">
-<span class="sig-name descname"><span class="pre">max_uids</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.max_uids" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">max_uids</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.max_uids" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.mechanism_count">
+<span class="sig-name descname"><span class="pre">mechanism_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.mechanism_count" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.mechanisms_emissions_split">
+<span class="sig-name descname"><span class="pre">mechanisms_emissions_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.mechanisms_emissions_split" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.mechid">
+<span class="sig-name descname"><span class="pre">mechid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.mechid" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1560,7 +1585,7 @@ of neurons (<code class="docutils literal notranslate"><span class="pre">n</span
 </p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
 </dd>
 </dl>
 <div class="admonition note">
@@ -1579,42 +1604,42 @@ of neurons (<code class="docutils literal notranslate"><span class="pre">n</span
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.name">
-<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.name" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.name" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.netuid">
-<span class="sig-name descname"><span class="pre">netuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.netuid" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">netuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.netuid" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.network">
-<span class="sig-name descname"><span class="pre">network</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.network" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">network</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.network" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.network_registered_at">
-<span class="sig-name descname"><span class="pre">network_registered_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.network_registered_at" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">network_registered_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.network_registered_at" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.neurons">
-<span class="sig-name descname"><span class="pre">neurons</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bittensor.core.chain_data.NeuronInfo</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bittensor.core.chain_data.NeuronInfoLite</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.neurons" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">neurons</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bittensor.core.chain_data.NeuronInfo</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bittensor.core.chain_data.NeuronInfoLite</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.neurons" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.num_uids">
-<span class="sig-name descname"><span class="pre">num_uids</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.num_uids" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">num_uids</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.num_uids" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.owner_coldkey">
-<span class="sig-name descname"><span class="pre">owner_coldkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.owner_coldkey" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">owner_coldkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.owner_coldkey" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.owner_hotkey">
-<span class="sig-name descname"><span class="pre">owner_hotkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.owner_hotkey" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">owner_hotkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.owner_hotkey" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1624,7 +1649,7 @@ of neurons (<code class="docutils literal notranslate"><span class="pre">n</span
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.pruning_score">
-<span class="sig-name descname"><span class="pre">pruning_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.pruning_score" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pruning_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.pruning_score" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1642,7 +1667,7 @@ neuron attributes and parameters, ensuring a complete snapshot of the metagraph�
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>root_dir</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em>) – list to the file path for the root directory of your metagraph saves
+<dd class="field-odd"><p><strong>root_dir</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em><em>]</em>) – list to the file path for the root directory of your metagraph saves
 (i.e. [‘/’, ‘tmp’, ‘metagraphs’], defaults to [“~”, “.bittensor”, “metagraphs”]</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1687,17 +1712,17 @@ neuron attributes and parameters, ensuring a complete snapshot of the metagraph�
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.subtensor">
-<span class="sig-name descname"><span class="pre">subtensor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><span class="pre">bittensor.core.async_subtensor.AsyncSubtensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><span class="pre">bittensor.core.subtensor.Subtensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.subtensor" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">subtensor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><span class="pre">bittensor.core.async_subtensor.AsyncSubtensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><span class="pre">bittensor.core.subtensor.Subtensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.subtensor" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.symbol">
-<span class="sig-name descname"><span class="pre">symbol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.symbol" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">symbol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.symbol" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.tao_dividends_per_hotkey">
-<span class="sig-name descname"><span class="pre">tao_dividends_per_hotkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.tao_dividends_per_hotkey" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tao_dividends_per_hotkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.tao_dividends_per_hotkey" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1707,7 +1732,7 @@ neuron attributes and parameters, ensuring a complete snapshot of the metagraph�
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.tempo">
-<span class="sig-name descname"><span class="pre">tempo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.tempo" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tempo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.tempo" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1732,7 +1757,7 @@ neuron attributes and parameters, ensuring a complete snapshot of the metagraph�
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.version">
-<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bittensor.utils.registration.torch.nn.Parameter</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">numpy.typing.NDArray</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.version" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bittensor.utils.registration.torch.nn.Parameter</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">numpy.typing.NDArray</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.version" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1744,7 +1769,7 @@ neuron attributes and parameters, ensuring a complete snapshot of the metagraph�
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.NonTorchMetagraph">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">NonTorchMetagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#NonTorchMetagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.NonTorchMetagraph" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">NonTorchMetagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#NonTorchMetagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.NonTorchMetagraph" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bittensor.core.metagraph.MetagraphMixin" title="bittensor.core.metagraph.MetagraphMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MetagraphMixin</span></code></a></p>
 <p>The metagraph class is a core component of the Bittensor network, representing the neural graph that forms the
 backbone of the decentralized machine learning system.</p>
@@ -1761,11 +1786,12 @@ interact, how they are incentivized, and their roles within the network’s deci
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – A unique identifier that distinguishes between different instances or versions of the Bittensor network.</p></li>
-<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the network, signifying specific configurations or iterations within the Bittensor ecosystem.</p></li>
-<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – A unique identifier that distinguishes between different instances or versions of the Bittensor network.</p></li>
+<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the network, signifying specific configurations or iterations within the Bittensor ecosystem.</p></li>
+<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
@@ -1827,14 +1853,14 @@ metagraph object, which is a central component in representing the state of the 
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The unique identifier for the network, distinguishing this instance of the metagraph within
-potentially multiple network configurations.</p></li>
-<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the network, which can indicate specific configurations or versions of the
-Bittensor network.</p></li>
-<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag indicating whether to use a lite version of the metagraph. The lite version may contain
-less detailed information but can be quicker to initialize and sync.</p></li>
-<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet unique identifier.</p></li>
+<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the network, which can indicate specific configurations or versions of the Bittensor</p></li>
+<li><p><strong>network.</strong></p></li>
+<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to use a lite version of the metagraph. The lite version may contain less
+detailed information but can be quicker to initialize and sync.</p></li>
+<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
 Synchronization involves updating the metagraph’s parameters to reflect the current state of the network.</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet mechanism unique identifier.</p></li>
 <li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
@@ -1899,7 +1925,7 @@ Synchronization involves updating the metagraph’s parameters to reflect the cu
 <dd><p>Loads the state of the Metagraph from a specified directory path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dir_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The directory path where the metagraph’s state file is located.</p>
+<dd class="field-odd"><p><strong>dir_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The directory path where the metagraph’s state file is located.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><dl class="simple">
@@ -1913,9 +1939,9 @@ Synchronization involves updating the metagraph’s parameters to reflect the cu
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/pickle.html#pickle.UnpicklingError" title="(in Python v3.13)"><strong>pickle.UnpicklingError</strong></a> – If there is an error unpickling the state file.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.13)"><strong>RuntimeError</strong></a> – If there is an error loading the state file using PyTorch.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ImportError" title="(in Python v3.13)"><strong>ImportError</strong></a> – If there is an error importing PyTorch.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/pickle.html#pickle.UnpicklingError" title="(in Python v3.14)"><strong>pickle.UnpicklingError</strong></a> – If there is an error unpickling the state file.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.14)"><strong>RuntimeError</strong></a> – If there is an error loading the state file using PyTorch.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ImportError" title="(in Python v3.14)"><strong>ImportError</strong></a> – If there is an error importing PyTorch.</p></li>
 </ul>
 </dd>
 </dl>
@@ -2005,7 +2031,7 @@ Synchronization involves updating the metagraph’s parameters to reflect the cu
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.TorchMetagraph">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">TorchMetagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#TorchMetagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.TorchMetagraph" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">TorchMetagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#TorchMetagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.TorchMetagraph" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bittensor.core.metagraph.MetagraphMixin" title="bittensor.core.metagraph.MetagraphMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MetagraphMixin</span></code></a>, <a class="reference internal" href="#bittensor.core.metagraph.BaseClass" title="bittensor.core.metagraph.BaseClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseClass</span></code></a></p>
 <p>The metagraph class is a core component of the Bittensor network, representing the neural graph that forms the
 backbone of the decentralized machine learning system.</p>
@@ -2022,11 +2048,12 @@ interact, how they are incentivized, and their roles within the network’s deci
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – A unique identifier that distinguishes between different instances or versions of the Bittensor network.</p></li>
-<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the network, signifying specific configurations or iterations within the Bittensor ecosystem.</p></li>
-<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – A unique identifier that distinguishes between different instances or versions of the Bittensor network.</p></li>
+<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the network, signifying specific configurations or iterations within the Bittensor ecosystem.</p></li>
+<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
@@ -2088,14 +2115,14 @@ metagraph object, which is a central component in representing the state of the 
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The unique identifier for the network, distinguishing this instance of the metagraph within
-potentially multiple network configurations.</p></li>
-<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the network, which can indicate specific configurations or versions of the
-Bittensor network.</p></li>
-<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag indicating whether to use a lite version of the metagraph. The lite version may contain
-less detailed information but can be quicker to initialize and sync.</p></li>
-<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet unique identifier.</p></li>
+<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the network, which can indicate specific configurations or versions of the Bittensor</p></li>
+<li><p><strong>network.</strong></p></li>
+<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to use a lite version of the metagraph. The lite version may contain less
+detailed information but can be quicker to initialize and sync.</p></li>
+<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
 Synchronization involves updating the metagraph’s parameters to reflect the current state of the network.</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet mechanism unique identifier.</p></li>
 <li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
@@ -2103,11 +2130,10 @@ Synchronization involves updating the metagraph’s parameters to reflect the cu
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p>Initializing a metagraph object for the Bittensor network with a specific network UID:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bittensor.core.metagraph</span> <span class="kn">import</span> <span class="n">Metagraph</span>
-
-<span class="n">metagraph</span> <span class="o">=</span> <span class="n">Metagraph</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">network</span><span class="o">=</span><span class="s2">&quot;finney&quot;</span><span class="p">,</span> <span class="n">lite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
+<blockquote>
+<div><p>from bittensor.core.metagraph import Metagraph</p>
+<p>metagraph = Metagraph(netuid=123, network=”finney”, lite=True, sync=True)</p>
+</div></blockquote>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.TorchMetagraph.active">
@@ -2160,7 +2186,7 @@ Synchronization involves updating the metagraph’s parameters to reflect the cu
 <dd><p>Loads the metagraph state from a specified directory path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dir_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The directory path where the state file is located.</p>
+<dd class="field-odd"><p><strong>dir_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The directory path where the state file is located.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The current metagraph instance with the loaded state.</p>
@@ -2242,10 +2268,10 @@ metagraph = Metagraph(netuid=netuid)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
-<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
-<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>subtensor</strong> (<a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>)</p></li>
 </ul>
 </dd>
@@ -2262,9 +2288,9 @@ metagraph = Metagraph(netuid=netuid)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Network name.</p></li>
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Network UID.</p></li>
-<li><p><strong>root_dir</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em>) – list to the file path for the root directory of your metagraph saves (i.e. [‘/’, ‘tmp’, ‘metagraphs’],
+<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Network name.</p></li>
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Network UID.</p></li>
+<li><p><strong>root_dir</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em><em>]</em>) – list to the file path for the root directory of your metagraph saves (i.e. [‘/’, ‘tmp’, ‘metagraphs’],
 defaults to [“~”, “.bittensor”, “metagraphs”]</p></li>
 </ul>
 </dd>
@@ -2272,7 +2298,7 @@ defaults to [“~”, “.bittensor”, “metagraphs”]</p></li>
 <dd class="field-even"><p>Directory path.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2283,13 +2309,13 @@ defaults to [“~”, “.bittensor”, “metagraphs”]</p></li>
 <dd><p>Get the latest block path from the provided directory path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dir_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Directory path.</p>
+<dd class="field-odd"><p><strong>dir_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Directory path.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Latest block path.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2315,12 +2341,12 @@ defaults to [“~”, “.bittensor”, “metagraphs”]</p></li>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../extrinsics/utils/index.html"
+       href="../extrinsics/weights/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">bittensor.core.extrinsics.utils</p>
+        <p class="prev-next-title">bittensor.core.extrinsics.weights</p>
       </div>
     </a>
     <a class="right-next"
@@ -2402,6 +2428,9 @@ defaults to [“~”, “.bittensor”, “metagraphs”]</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.load"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.load()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.load_from_path"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.load_from_path()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.max_uids"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.max_uids</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.mechanism_count"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.mechanism_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.mechanisms_emissions_split"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.mechanisms_emissions_split</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.mechid"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.mechid</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.metadata"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.metadata()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.n"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.n</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.metagraph.MetagraphMixin.name"><code class="docutils literal notranslate"><span class="pre">MetagraphMixin.name</span></code></a></li>

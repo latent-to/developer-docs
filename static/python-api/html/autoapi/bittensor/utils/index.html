@@ -49,7 +49,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="bittensor.utils.axon_utils" href="axon_utils/index.html" />
-    <link rel="prev" title="bittensor.core.types" href="../core/types/index.html" />
+    <link rel="prev" title="bittensor.extras.timelock" href="../extras/timelock/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -167,6 +167,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../core/threadpool/index.html">bittensor.core.threadpool</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../core/timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../core/types/index.html">bittensor.core.types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../extras/timelock/index.html">bittensor.extras.timelock</a></li>
 </ul>
 </details></li>
 <li class="toctree-l3 current active has-children"><a class="current reference internal" href="#">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -404,6 +410,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.BT_DOCS_LINK"><code class="docutils literal notranslate"><span class="pre">BT_DOCS_LINK</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.Certificate"><code class="docutils literal notranslate"><span class="pre">Certificate</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.GLOBAL_MAX_SUBNET_COUNT"><code class="docutils literal notranslate"><span class="pre">GLOBAL_MAX_SUBNET_COUNT</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.RAOPERTAO"><code class="docutils literal notranslate"><span class="pre">RAOPERTAO</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.U16_MAX"><code class="docutils literal notranslate"><span class="pre">U16_MAX</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.U64_MAX"><code class="docutils literal notranslate"><span class="pre">U64_MAX</span></code></a></li>
@@ -421,6 +428,8 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.format_error_message"><code class="docutils literal notranslate"><span class="pre">format_error_message()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_explorer_url_for_network"><code class="docutils literal notranslate"><span class="pre">get_explorer_url_for_network()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_hash"><code class="docutils literal notranslate"><span class="pre">get_hash()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_mechid_storage_index"><code class="docutils literal notranslate"><span class="pre">get_mechid_storage_index()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_netuid_and_mechid_by_storage_index"><code class="docutils literal notranslate"><span class="pre">get_netuid_and_mechid_by_storage_index()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_transfer_fn_params"><code class="docutils literal notranslate"><span class="pre">get_transfer_fn_params()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.hex_to_bytes"><code class="docutils literal notranslate"><span class="pre">hex_to_bytes</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.is_valid_bittensor_address_or_public_key"><code class="docutils literal notranslate"><span class="pre">is_valid_bittensor_address_or_public_key()</span></code></a></li>
@@ -478,37 +487,40 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.BT_DOCS_LINK" title="bittensor.utils.BT_DOCS_LINK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BT_DOCS_LINK</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.RAOPERTAO" title="bittensor.utils.RAOPERTAO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RAOPERTAO</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.GLOBAL_MAX_SUBNET_COUNT" title="bittensor.utils.GLOBAL_MAX_SUBNET_COUNT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GLOBAL_MAX_SUBNET_COUNT</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.U16_MAX" title="bittensor.utils.U16_MAX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U16_MAX</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.RAOPERTAO" title="bittensor.utils.RAOPERTAO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RAOPERTAO</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.U64_MAX" title="bittensor.utils.U64_MAX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U64_MAX</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.U16_MAX" title="bittensor.utils.U16_MAX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U16_MAX</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.VersionCheckError" title="bittensor.utils.VersionCheckError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VersionCheckError</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.U64_MAX" title="bittensor.utils.U64_MAX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U64_MAX</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.check_version" title="bittensor.utils.check_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_version</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.VersionCheckError" title="bittensor.utils.VersionCheckError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VersionCheckError</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.hex_to_bytes" title="bittensor.utils.hex_to_bytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hex_to_bytes</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.check_version" title="bittensor.utils.check_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_version</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.logging" title="bittensor.utils.logging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logging</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.hex_to_bytes" title="bittensor.utils.hex_to_bytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hex_to_bytes</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.ss58_decode" title="bittensor.utils.ss58_decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ss58_decode</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.logging" title="bittensor.utils.logging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logging</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.torch" title="bittensor.utils.torch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.ss58_decode" title="bittensor.utils.ss58_decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ss58_decode</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.use_torch" title="bittensor.utils.use_torch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_torch</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.torch" title="bittensor.utils.torch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.version_checking" title="bittensor.utils.version_checking"><code class="xref py py-obj docutils literal notranslate"><span class="pre">version_checking</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.use_torch" title="bittensor.utils.use_torch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_torch</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.version_checking" title="bittensor.utils.version_checking"><code class="xref py py-obj docutils literal notranslate"><span class="pre">version_checking</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -554,6 +566,12 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.get_hash" title="bittensor.utils.get_hash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_hash</span></code></a>(content[, encoding])</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.get_mechid_storage_index" title="bittensor.utils.get_mechid_storage_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_mechid_storage_index</span></code></a>(netuid, mechid)</p></td>
+<td><p>Computes the storage index for a given netuid and mechid pair.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.get_netuid_and_mechid_by_storage_index" title="bittensor.utils.get_netuid_and_mechid_by_storage_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_netuid_and_mechid_by_storage_index</span></code></a>(storage_index)</p></td>
+<td><p>Returns the netuid and mechid from the storage index.</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.get_transfer_fn_params" title="bittensor.utils.get_transfer_fn_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_transfer_fn_params</span></code></a>(amount, destination, keep_alive)</p></td>
 <td><p>Helper function to get the transfer call function and call params, depending on the value and keep_alive flag</p></td>
 </tr>
@@ -598,7 +616,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.utils.Certificate">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">Certificate</span></span><a class="reference internal" href="../../../_modules/bittensor/utils.html#Certificate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.Certificate" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p>
 <p>str(object=’’) -&gt; str
 str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
 <p>Create a new string object from the given object. If encoding or
@@ -610,6 +628,11 @@ encoding defaults to sys.getdefaultencoding().
 errors defaults to ‘strict’.</p>
 <p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bittensor.utils.GLOBAL_MAX_SUBNET_COUNT">
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">GLOBAL_MAX_SUBNET_COUNT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#bittensor.utils.GLOBAL_MAX_SUBNET_COUNT" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.utils.RAOPERTAO">
@@ -629,7 +652,7 @@ errors defaults to ‘strict’.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.utils.UnlockStatus">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">UnlockStatus</span></span><a class="headerlink" href="#bittensor.utils.UnlockStatus" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.UnlockStatus.message">
 <span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#bittensor.utils.UnlockStatus.message" title="Link to this definition">#</a></dt>
@@ -658,10 +681,10 @@ errors defaults to ‘strict’.</p>
 <dd><p>Decodes a dictionary of hexadecimal identities.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>info_dictionary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Any</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>info_dictionary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>Any</em><em>]</em>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, Any]</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, Any]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -672,7 +695,7 @@ errors defaults to ‘strict’.</p>
 <dd><p>Shows a deprecation warning message with the given message.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
@@ -686,7 +709,7 @@ errors defaults to ‘strict’.</p>
 <dd><p>Determines the chain endpoint and network from the passed network or chain_endpoint.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The network flag. The choices are: <code class="docutils literal notranslate"><span class="pre">finney</span></code> (main network), <code class="docutils literal notranslate"><span class="pre">archive</span></code> (archive network
+<dd class="field-odd"><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The network flag. The choices are: <code class="docutils literal notranslate"><span class="pre">finney</span></code> (main network), <code class="docutils literal notranslate"><span class="pre">archive</span></code> (archive network
 +300 blocks), <code class="docutils literal notranslate"><span class="pre">local</span></code> (local running network), <code class="docutils literal notranslate"><span class="pre">test</span></code> (test network).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -697,7 +720,7 @@ errors defaults to ‘strict’.</p>
 </p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>], Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>]]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>], Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -708,10 +731,10 @@ errors defaults to ‘strict’.</p>
 <dd><p>Converts a float to a u64 int</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -722,14 +745,14 @@ errors defaults to ‘strict’.</p>
 <dd><p>Formats an error message from the Subtensor error information for use in extrinsics.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>error_message</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><em>Exception</em></a><em>]</em>) – A dictionary containing the error information from Subtensor, or a SubstrateRequestException
+<dd class="field-odd"><p><strong>error_message</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><em>Exception</em></a><em>]</em>) – A dictionary containing the error information from Subtensor, or a SubstrateRequestException
 containing dictionary literal args.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A formatted error message string.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -741,9 +764,9 @@ containing dictionary literal args.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The network to get the explorer url for.</p></li>
-<li><p><strong>block_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The block hash to get the explorer url for.</p></li>
-<li><p><strong>network_map</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em>) – The network maps to get the explorer urls from.</p></li>
+<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The network to get the explorer url for.</p></li>
+<li><p><strong>block_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The block hash to get the explorer url for.</p></li>
+<li><p><strong>network_map</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em><em>]</em>) – The network maps to get the explorer urls from.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -751,7 +774,7 @@ containing dictionary literal args.</p>
 Or None if the network is not known.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>]]</p>
+<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -760,6 +783,49 @@ Or None if the network is not known.</p>
 <dt class="sig sig-object py" id="bittensor.utils.get_hash">
 <span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">get_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bittensor/utils.html#get_hash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.get_hash" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.utils.get_mechid_storage_index">
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">get_mechid_storage_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.get_mechid_storage_index" title="Link to this definition">#</a></dt>
+<dd><p>Computes the storage index for a given netuid and mechid pair.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the subnet.</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The mechid of the subnet.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Storage index number for the subnet and mechanism id.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.utils.get_netuid_and_mechid_by_storage_index">
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">get_netuid_and_mechid_by_storage_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">storage_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.get_netuid_and_mechid_by_storage_index" title="Link to this definition">#</a></dt>
+<dd><p>Returns the netuid and mechid from the storage index.</p>
+<p>Chain APIs (e.g., SubMetagraph response) returns netuid which is storage index that encodes both the netuid and
+mechid. This function reverses the encoding to extract these components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>storage_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The storage index of the subnet.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>netuid - subnet identifier.</p></li>
+<li><p>mechid - mechanism identifier.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.get_transfer_fn_params">
@@ -772,15 +838,15 @@ Or None if the network is not known.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>amount</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>balance.Balance</em></a><em>]</em>) – the amount of Tao to transfer. <cite>None</cite> if transferring all.</p></li>
-<li><p><strong>destination</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – the destination SS58 of the transfer</p></li>
-<li><p><strong>keep_alive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – whether to enforce a retention of the existential deposit in the account after transfer.</p></li>
+<li><p><strong>destination</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – the destination SS58 of the transfer</p></li>
+<li><p><strong>keep_alive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – whether to enforce a retention of the existential deposit in the account after transfer.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>tuple[call function, call params]</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a>]]]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a>]]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -796,13 +862,13 @@ Or None if the network is not known.</p>
 <dd><p>Checks if the given address is a valid destination address.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>address</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em>]</em>) – The address to check.</p>
+<dd class="field-odd"><p><strong>address</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><em>bytes</em></a><em>]</em>) – The address to check.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if the address is a valid destination address, False otherwise.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -813,13 +879,13 @@ Or None if the network is not known.</p>
 <dd><p>Checks if the given address is a valid ss58 address.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The address to check.</p>
+<dd class="field-odd"><p><strong>address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The address to check.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if the address is a valid ss58 address for Bittensor, False otherwise.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -835,10 +901,10 @@ Or None if the network is not known.</p>
 <dd><p>Converts a ss58 address to a bytes object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ss58_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>ss58_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)">bytes</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)">bytes</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -853,10 +919,10 @@ Or None if the network is not known.</p>
 <span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">ss58_to_vec_u8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ss58_address</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bittensor/utils.html#ss58_to_vec_u8"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.ss58_to_vec_u8" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ss58_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>ss58_address</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -870,10 +936,10 @@ false-y values are ‘n’, ‘no’, ‘f’, ‘false’, ‘off’, and ‘0�
 <p>Raises ValueError if ‘val’ is anything else.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>val</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>val</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a>, Literal[‘==SUPRESS==’]]</p>
+<dd class="field-even"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a>, Literal[‘==SUPRESS==’]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -888,10 +954,10 @@ false-y values are ‘n’, ‘no’, ‘f’, ‘false’, ‘off’, and ‘0�
 <span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">u16_normalized_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bittensor/utils.html#u16_normalized_float"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.u16_normalized_float" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p>
+<dd class="field-odd"><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -901,10 +967,10 @@ false-y values are ‘n’, ‘no’, ‘f’, ‘false’, ‘off’, and ‘0�
 <span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">u64_normalized_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bittensor/utils.html#u64_normalized_float"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.u64_normalized_float" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p>
+<dd class="field-odd"><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -947,10 +1013,10 @@ false-y values are ‘n’, ‘no’, ‘f’, ‘false’, ‘off’, and ‘0�
 <dd><p>Validates if the provided endpoint URL is a valid WebSocket URL.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>endpoint_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+<dd class="field-odd"><p><strong>endpoint_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>]</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -975,12 +1041,12 @@ false-y values are ‘n’, ‘no’, ‘f’, ‘false’, ‘off’, and ‘0�
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../core/types/index.html"
+       href="../extras/timelock/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">bittensor.core.types</p>
+        <p class="prev-next-title">bittensor.extras.timelock</p>
       </div>
     </a>
     <a class="right-next"
@@ -1016,6 +1082,7 @@ false-y values are ‘n’, ‘no’, ‘f’, ‘false’, ‘off’, and ‘0�
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.BT_DOCS_LINK"><code class="docutils literal notranslate"><span class="pre">BT_DOCS_LINK</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.Certificate"><code class="docutils literal notranslate"><span class="pre">Certificate</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.GLOBAL_MAX_SUBNET_COUNT"><code class="docutils literal notranslate"><span class="pre">GLOBAL_MAX_SUBNET_COUNT</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.RAOPERTAO"><code class="docutils literal notranslate"><span class="pre">RAOPERTAO</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.U16_MAX"><code class="docutils literal notranslate"><span class="pre">U16_MAX</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.U64_MAX"><code class="docutils literal notranslate"><span class="pre">U64_MAX</span></code></a></li>
@@ -1033,6 +1100,8 @@ false-y values are ‘n’, ‘no’, ‘f’, ‘false’, ‘off’, and ‘0�
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.format_error_message"><code class="docutils literal notranslate"><span class="pre">format_error_message()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_explorer_url_for_network"><code class="docutils literal notranslate"><span class="pre">get_explorer_url_for_network()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_hash"><code class="docutils literal notranslate"><span class="pre">get_hash()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_mechid_storage_index"><code class="docutils literal notranslate"><span class="pre">get_mechid_storage_index()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_netuid_and_mechid_by_storage_index"><code class="docutils literal notranslate"><span class="pre">get_netuid_and_mechid_by_storage_index()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.get_transfer_fn_params"><code class="docutils literal notranslate"><span class="pre">get_transfer_fn_params()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.hex_to_bytes"><code class="docutils literal notranslate"><span class="pre">hex_to_bytes</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.is_valid_bittensor_address_or_public_key"><code class="docutils literal notranslate"><span class="pre">is_valid_bittensor_address_or_public_key()</span></code></a></li>

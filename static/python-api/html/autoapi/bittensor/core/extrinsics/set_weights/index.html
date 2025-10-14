@@ -169,6 +169,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../../types/index.html">bittensor.core.types</a></li>
 </ul>
 </details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
+</ul>
+</details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../utils/index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/axon_utils/index.html">bittensor.utils.axon_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/balance/index.html">bittensor.utils.balance</a></li>
@@ -438,16 +444,16 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>subtensor</strong> (<a class="reference internal" href="../../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>) – Bittensor subtensor object.</p></li>
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object.</p></li>
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The <code class="docutils literal notranslate"><span class="pre">netuid</span></code> of the subnet to set weights for.</p></li>
-<li><p><strong>uids</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.int64</em><em>]</em><em>, </em><em>torch.LongTensor</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>]</em>) – The <code class="docutils literal notranslate"><span class="pre">uint64</span></code> uids of destination neurons.</p></li>
-<li><p><strong>weights</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.float32</em><em>]</em><em>, </em><em>torch.FloatTensor</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>]</em>) – The weights to set. These must be <code class="docutils literal notranslate"><span class="pre">float</span></code> s
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The <code class="docutils literal notranslate"><span class="pre">netuid</span></code> of the subnet to set weights for.</p></li>
+<li><p><strong>uids</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.int64</em><em>]</em><em>, </em><em>torch.LongTensor</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>]</em>) – The <code class="docutils literal notranslate"><span class="pre">uint64</span></code> uids of destination neurons.</p></li>
+<li><p><strong>weights</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.float32</em><em>]</em><em>, </em><em>torch.FloatTensor</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>]</em>) – The weights to set. These must be <code class="docutils literal notranslate"><span class="pre">float</span></code> s
 and correspond to the passed <code class="docutils literal notranslate"><span class="pre">uid</span></code> s.</p></li>
-<li><p><strong>version_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The version key of the validator.</p></li>
-<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If set, waits for the extrinsic to enter a block before returning <code class="docutils literal notranslate"><span class="pre">True</span></code>, or
+<li><p><strong>version_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The version key of the validator.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If set, waits for the extrinsic to enter a block before returning <code class="docutils literal notranslate"><span class="pre">True</span></code>, or
 returns <code class="docutils literal notranslate"><span class="pre">False</span></code> if the extrinsic fails to enter the block within the timeout.</p></li>
-<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If set, waits for the extrinsic to be finalized on the chain before returning
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If set, waits for the extrinsic to be finalized on the chain before returning
 <code class="docutils literal notranslate"><span class="pre">True</span></code>, or returns <code class="docutils literal notranslate"><span class="pre">False</span></code> if the extrinsic fails to be finalized within the timeout.</p></li>
-<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted.
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted.
 If the transaction is not included in a block within that number of blocks, it will expire and be rejected.
 You can think of it as an expiration date for the transaction.</p></li>
 </ul>
@@ -460,7 +466,7 @@ You can think of it as an expiration date for the transaction.</p></li>
 </p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>success (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a>)</p>
+<dd class="field-odd"><p>success (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a>)</p>
 </dd>
 </dl>
 </dd></dl>

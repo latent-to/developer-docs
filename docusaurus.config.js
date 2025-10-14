@@ -289,6 +289,11 @@ const config = {
           },
           {
             position: "left",
+            label: "Bittensor SDKv10 Migration Guide",
+            to: "sdk/migration-guide",
+          },
+          {
+            position: "left",
             label: "What is Bittensor?",
             to: "learn/introduction",
           },
@@ -296,11 +301,6 @@ const config = {
             position: "left",
             label: "Bittensor SDK Reference",
             to: "sdk/bt-api-ref",
-          },
-          {
-            position: "left",
-            label: "BTCLI Live Coding Playground",
-            to: "btcli/btcli-playground",
           },
 
           {

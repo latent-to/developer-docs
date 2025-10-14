@@ -169,6 +169,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../core/types/index.html">bittensor.core.types</a></li>
 </ul>
 </details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
+</ul>
+</details></li>
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../../index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="../../axon_utils/index.html">bittensor.utils.axon_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../balance/index.html">bittensor.utils.balance</a></li>
@@ -438,24 +444,24 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../core/async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>) – The subtensor instance.</p></li>
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – The wallet to create a proof of work for.</p></li>
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The netuid for the subnet to create a proof of work for.</p></li>
-<li><p><strong>output_in_place</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, prints the progress of the proof of work to the console in-place. Meaning the
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid for the subnet to create a proof of work for.</p></li>
+<li><p><strong>output_in_place</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, prints the progress of the proof of work to the console in-place. Meaning the
 progress is printed on the same lines.</p></li>
-<li><p><strong>cuda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, uses CUDA to solve the proof of work.</p></li>
-<li><p><strong>dev_id</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The CUDA device id(s) to use. If cuda is true and dev_id is a list, then
+<li><p><strong>cuda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, uses CUDA to solve the proof of work.</p></li>
+<li><p><strong>dev_id</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The CUDA device id(s) to use. If cuda is true and dev_id is a list, then
 multiple CUDA devices will be used to solve the proof of work.</p></li>
-<li><p><strong>tpb</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of threads per block to use when solving the proof of work. Should be a multiple of 32.</p></li>
-<li><p><strong>num_processes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of processes to use when solving the proof of work. If None, then the number of
+<li><p><strong>tpb</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of threads per block to use when solving the proof of work. Should be a multiple of 32.</p></li>
+<li><p><strong>num_processes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of processes to use when solving the proof of work. If None, then the number of
 processes is equal to the number of CPU cores.</p></li>
-<li><p><strong>update_interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of nonces to run before checking for a new block.</p></li>
-<li><p><strong>log_verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If true, prints the progress of the proof of work more verbosely.</p></li>
+<li><p><strong>update_interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of nonces to run before checking for a new block.</p></li>
+<li><p><strong>log_verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, prints the progress of the proof of work more verbosely.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The proof of work solution or None if the wallet is already registered or there is a different error.</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If the subnet does not exist.</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If the subnet does not exist.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bittensor.utils.registration.POWSolution</p>

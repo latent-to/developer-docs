@@ -169,6 +169,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../../types/index.html">bittensor.core.types</a></li>
 </ul>
 </details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
+</ul>
+</details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../utils/index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/axon_utils/index.html">bittensor.utils.axon_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/balance/index.html">bittensor.utils.balance</a></li>
@@ -452,12 +458,12 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_block">
-<span class="sig-name descname"><span class="pre">commit_block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_block" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">commit_block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_block" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_hex">
-<span class="sig-name descname"><span class="pre">commit_hex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_hex" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">commit_hex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.commit_hex" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -466,7 +472,7 @@
 <dd><p>Creates a WeightCommitInfo instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a>) – Tuple containing ((AccountId,), (commit_data,), round_number)</p>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a>) – Tuple containing ((AccountId,), (commit_data,), round_number)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A new instance with the decoded data</p>
@@ -488,7 +494,7 @@ not exist in Subtensor module.</p>
 <dd><p>Creates a WeightCommitInfo instance</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a>) – Tuple containing ((AccountId,), (commit_block, ) (commit_data,), round_number)</p>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a>) – Tuple containing ((AccountId,), (commit_block, ) (commit_data,), round_number)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A new instance with the decoded data</p>
@@ -501,12 +507,12 @@ not exist in Subtensor module.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.reveal_round">
-<span class="sig-name descname"><span class="pre">reveal_round</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.reveal_round" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">reveal_round</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.reveal_round" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.ss58">
-<span class="sig-name descname"><span class="pre">ss58</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.ss58" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ss58</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.weight_commit_info.WeightCommitInfo.ss58" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
