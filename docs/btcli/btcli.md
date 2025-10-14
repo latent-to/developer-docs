@@ -1153,6 +1153,55 @@ btcli stake add [OPTIONS]
 | `--json-output`, `--json-out`                                                                             |         | Outputs the result of the command as JSON.                                                                                                |
 | `--help`                                                                                                  |         | Show this message and exit.                                                                                                               |
 
+### `btcli stake auto`
+
+Display auto-stake destinations for a wallet across all subnets.
+
+**Usage:**
+
+```bash
+btcli stake auto [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type | Description                                                                          |
+| --------------------------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------ |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |      | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--ss58`, `--coldkey_ss58`, `--coldkey.ss58_address`, `--coldkey.ss58`      |      | Coldkey address of the wallet                                                        |
+| `--quiet`                                                                   |      | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |      | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |      | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |      | Show this message and exit.                                                          |
+
+### `btcli stake set-auto`
+
+Set the auto-stake destination hotkey for a coldkey.
+
+**Usage:**
+
+```bash
+btcli stake set-auto [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                   |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
 ### `btcli stake remove`
 
 Unstake TAO from one or more hotkeys and transfer them back to the user's coldkey wallet.
@@ -1322,23 +1371,23 @@ btcli stake move [OPTIONS]
 
 **Options**:
 
-| Option                                                                                     | Type    | Description                                                                          |
-| ------------------------------------------------------------------------------------------ | ------- | ------------------------------------------------------------------------------------ |
-| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint`                | TEXT    | The subtensor network to connect to. Default: finney.                                |
-| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                                | TEXT    | Name of the wallet.                                                                  |
-| `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                                    | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
-| `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`, `--hotkey-ss58` | TEXT    | Hotkey name or SS58 address of the hotkey                                            |
-| `--origin-netuid`                                                                          | INTEGER | Origin netuid.                                                                       |
-| `--dest-netuid`                                                                            | INTEGER | Destination netuid.                                                                  |
-| `--dest-ss58`, `--dest`                                                                    | TEXT    | Destination hotkey.                                                                  |
-| `--amount`                                                                                 | FLOAT   | The amount of TAO to stake                                                           |
-| `--stake-all`, `--all`                                                                     |         | Stake all.                                                                           |
-| `--period`, `-era`                                                                         | INTEGER | Length (in blocks) for which the transaction should be valid.                        |
-| `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                        |         | Enable or disable interactive prompts.                                               |
-| `--quiet`                                                                                  |         | Display only critical information on the console.                                    |
-| `--verbose`                                                                                |         | Enable verbose output.                                                               |
-| `--json-output`, `--json-out`                                                              |         | Outputs the result of the command as JSON.                                           |
-| `--help`                                                                                   |         | Show this message and exit.                                                          |
+| Option                                                                                             | Type    | Description                                                                          |
+| -------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint`                        | TEXT    | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                                        | TEXT    | Name of the wallet.                                                                  |
+| `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                                            | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `from`, `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`, `--hotkey-ss58` | TEXT    | Validator hotkey or SS58 where the stake is currently located.                       |
+| `--origin-netuid`                                                                                  | INTEGER | Origin netuid.                                                                       |
+| `--dest-netuid`                                                                                    | INTEGER | Destination netuid.                                                                  |
+| `to`, `--dest-ss58`, `--dest`                                                                      | TEXT    | Destination validator hotkey SS58.                                                   |
+| `--amount`                                                                                         | FLOAT   | The amount of TAO to stake                                                           |
+| `--stake-all`, `--all`                                                                             |         | Stake all.                                                                           |
+| `--period`, `-era`                                                                                 | INTEGER | Length (in blocks) for which the transaction should be valid.                        |
+| `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                                |         | Enable or disable interactive prompts.                                               |
+| `--quiet`                                                                                          |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                                        |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                                                      |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                                           |         | Show this message and exit.                                                          |
 
 ### `btcli stake transfer`
 
@@ -1971,7 +2020,7 @@ alias: mech
 - `count`: Display how many mechanisms are registered under a subnet.
 - `set`: Configure how many mechanisms are registered for a subnet.
 - `emissions`: Display the current emission split across mechanisms for a subnet.
-- `emissions-split`: Update the emission split across mechanisms for a subnet.
+- `split-emissions`: Update the emission split across mechanisms for a subnet.
 
 #### `btcli subnet mechanisms count`
 
@@ -2067,7 +2116,7 @@ btcli subnet mechanisms emissions [OPTIONS]
 | `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.            |
 | `--help`                                                                    |         | Show this message and exit.                           |
 
-#### `btcli subnet mechanisms emissions-split`
+#### `btcli subnet mechanisms split-emissions`
 
 Update the emission split across mechanisms for a subnet.
 
@@ -2078,19 +2127,21 @@ Common Examples:
 1. Configure the split interactively:
 
 ```bash
-btcli subnet mechanisms emissions-split --netuid 12
+btcli subnet mechanisms split-emissions --netuid 12
 ```
 
 2. Apply a 70/30 distribution in one command:
 
 ```bash
-btcli subnet mechanisms emissions-split --netuid 12 --split 70,30 --wallet.name my_wallet --wallet.hotkey admin
+btcli subnet mechanisms split-emissions --netuid 12 --split 70,30 --wallet.name my_wallet --wallet.hotkey admin
 ```
 
 **Usage:**
 
 ```bash
-btcli subnet mechanisms emissions-split [OPTIONS]
+btcli subnet mechanisms split-emissions [OPTIONS]
+
+alias: emissions-split
 ```
 
 **Parameters:**
