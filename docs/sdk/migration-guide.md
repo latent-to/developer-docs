@@ -231,7 +231,7 @@ for extrinsic in block.extrinsics:
 - Access detailed block metadata for analysis
 - Link users to block explorer for visual inspection
 
-### Hex <--> SS58 Conversion
+### Hex / SS58 Conversion
 
 New utility function for converting hex addresses to SS58 format:
 
