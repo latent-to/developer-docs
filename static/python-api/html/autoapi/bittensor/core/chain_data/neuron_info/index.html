@@ -150,7 +150,6 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4 current active"><a class="reference internal" href="../index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../config/index.html">bittensor.core.config</a></li>
@@ -161,11 +160,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../settings/index.html">bittensor.core.settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../stream/index.html">bittensor.core.stream</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../subtensor/index.html">bittensor.core.subtensor</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../subtensor_api/index.html">bittensor.core.subtensor_api</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../synapse/index.html">bittensor.core.synapse</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tensor/index.html">bittensor.core.tensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../threadpool/index.html">bittensor.core.threadpool</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../types/index.html">bittensor.core.types</a></li>
 </ul>
 </details></li>
@@ -185,7 +182,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../utils/substrate_utils/index.html">bittensor.utils.substrate_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/version/index.html">bittensor.utils.version</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/weight_utils/index.html">bittensor.utils.weight_utils</a></li>
 </ul>
@@ -469,29 +465,29 @@
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey associated with the neuron.</p></li>
-<li><p><strong>coldkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The coldkey associated with the neuron.</p></li>
-<li><p><strong>uid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The unique identifier for the neuron.</p></li>
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The network unique identifier for the neuron.</p></li>
-<li><p><strong>active</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The active status of the neuron.</p></li>
-<li><p><strong>stake</strong> (<a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>Balance</em></a>) – The balance staked to this neuron.</p></li>
-<li><p><strong>stake_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>Balance</em></a><em>]</em>) – A dictionary mapping coldkey to the amount staked.</p></li>
-<li><p><strong>total_stake</strong> (<a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>Balance</em></a>) – The total amount of stake.</p></li>
-<li><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The rank score of the neuron.</p></li>
-<li><p><strong>emission</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The emission rate.</p></li>
-<li><p><strong>incentive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The incentive value.</p></li>
-<li><p><strong>consensus</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The consensus score.</p></li>
-<li><p><strong>trust</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The trust score.</p></li>
-<li><p><strong>validator_trust</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The validation trust score.</p></li>
-<li><p><strong>dividends</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The dividends value.</p></li>
-<li><p><strong>last_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The timestamp of the last update.</p></li>
-<li><p><strong>validator_permit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Validator permit status.</p></li>
-<li><p><strong>weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>]</em>) – List of weights associated with the neuron.</p></li>
-<li><p><strong>bonds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>]</em>) – List of bonds associated with the neuron.</p></li>
-<li><p><strong>pruning_score</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The pruning score of the neuron.</p></li>
-<li><p><strong>prometheus_info</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../prometheus_info/index.html#bittensor.core.chain_data.prometheus_info.PrometheusInfo" title="bittensor.core.chain_data.prometheus_info.PrometheusInfo"><em>PrometheusInfo</em></a><em>]</em>) – Information related to Prometheus.</p></li>
-<li><p><strong>axon_info</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../axon_info/index.html#bittensor.core.chain_data.axon_info.AxonInfo" title="bittensor.core.chain_data.axon_info.AxonInfo"><em>AxonInfo</em></a><em>]</em>) – Information related to Axon.</p></li>
-<li><p><strong>is_null</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Indicator if this is a null neuron.</p></li>
+<li><p><strong>hotkey</strong> – The hotkey associated with the neuron.</p></li>
+<li><p><strong>coldkey</strong> – The coldkey associated with the neuron.</p></li>
+<li><p><strong>uid</strong> – The unique identifier for the neuron.</p></li>
+<li><p><strong>netuid</strong> – The network unique identifier for the neuron.</p></li>
+<li><p><strong>active</strong> – The active status of the neuron.</p></li>
+<li><p><strong>stake</strong> – The balance staked to this neuron.</p></li>
+<li><p><strong>stake_dict</strong> – A dictionary mapping coldkey to the amount staked.</p></li>
+<li><p><strong>total_stake</strong> – The total amount of stake.</p></li>
+<li><p><strong>rank</strong> – The rank score of the neuron.</p></li>
+<li><p><strong>emission</strong> – The emission rate.</p></li>
+<li><p><strong>incentive</strong> – The incentive value.</p></li>
+<li><p><strong>consensus</strong> – The consensus score.</p></li>
+<li><p><strong>trust</strong> – The trust score.</p></li>
+<li><p><strong>validator_trust</strong> – The validation trust score.</p></li>
+<li><p><strong>dividends</strong> – The dividends value.</p></li>
+<li><p><strong>last_update</strong> – The timestamp of the last update.</p></li>
+<li><p><strong>validator_permit</strong> – Validator permit status.</p></li>
+<li><p><strong>weights</strong> – List of weights associated with the neuron.</p></li>
+<li><p><strong>bonds</strong> – List of bonds associated with the neuron.</p></li>
+<li><p><strong>pruning_score</strong> – The pruning score of the neuron.</p></li>
+<li><p><strong>prometheus_info</strong> – Information related to Prometheus.</p></li>
+<li><p><strong>axon_info</strong> – Information related to Axon.</p></li>
+<li><p><strong>is_null</strong> – Indicator if this is a null neuron.</p></li>
 </ul>
 </dd>
 </dl>
@@ -537,11 +533,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>neuron_lite</strong> (<a class="reference internal" href="../neuron_info_lite/index.html#bittensor.core.chain_data.neuron_info_lite.NeuronInfoLite" title="bittensor.core.chain_data.neuron_info_lite.NeuronInfoLite"><em>NeuronInfoLite</em></a>) – A lite version of the neuron containing basic attributes.</p></li>
-<li><p><strong>weights_as_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>]</em><em>]</em>) – A dictionary where the key is the UID and the value is
-a list of weight tuples associated with the neuron.</p></li>
-<li><p><strong>bonds_as_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>]</em><em>]</em>) – A dictionary where the key is the UID and the value is a
-list of bond tuples associated with the neuron.</p></li>
+<li><p><strong>neuron_lite</strong> (<a class="reference internal" href="../neuron_info_lite/index.html#bittensor.core.chain_data.neuron_info_lite.NeuronInfoLite" title="bittensor.core.chain_data.neuron_info_lite.NeuronInfoLite"><em>bittensor.core.chain_data.neuron_info_lite.NeuronInfoLite</em></a>) – A lite version of the neuron containing basic attributes.</p></li>
+<li><p><strong>weights_as_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>]</em><em>]</em>) – A dictionary where the key is the UID and the value is a list of weight tuples associated
+with the neuron.</p></li>
+<li><p><strong>bonds_as_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>]</em><em>]</em>) – A dictionary where the key is the UID and the value is a list of bond tuples associated with
+the neuron.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

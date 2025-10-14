@@ -49,7 +49,7 @@
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="bittensor.extras" href="../../extras/index.html" />
-    <link rel="prev" title="bittensor.core.timelock" href="../timelock/index.html" />
+    <link rel="prev" title="bittensor.core.threadpool" href="../threadpool/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -150,7 +150,6 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../config/index.html">bittensor.core.config</a></li>
@@ -161,11 +160,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../settings/index.html">bittensor.core.settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../stream/index.html">bittensor.core.stream</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../subtensor/index.html">bittensor.core.subtensor</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../subtensor_api/index.html">bittensor.core.subtensor_api</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../synapse/index.html">bittensor.core.synapse</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../tensor/index.html">bittensor.core.tensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../threadpool/index.html">bittensor.core.threadpool</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4 current active"><a class="current reference internal" href="#">bittensor.core.types</a></li>
 </ul>
 </details></li>
@@ -185,7 +182,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../utils/substrate_utils/index.html">bittensor.utils.substrate_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/version/index.html">bittensor.utils.version</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/weight_utils/index.html">bittensor.utils.weight_utils</a></li>
 </ul>
@@ -422,6 +418,32 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.version"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.version</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo"><code class="docutils literal notranslate"><span class="pre">BlockInfo</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.explorer"><code class="docutils literal notranslate"><span class="pre">BlockInfo.explorer</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.extrinsics"><code class="docutils literal notranslate"><span class="pre">BlockInfo.extrinsics</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.hash"><code class="docutils literal notranslate"><span class="pre">BlockInfo.hash</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.header"><code class="docutils literal notranslate"><span class="pre">BlockInfo.header</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.number"><code class="docutils literal notranslate"><span class="pre">BlockInfo.number</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.timestamp"><code class="docutils literal notranslate"><span class="pre">BlockInfo.timestamp</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.as_dict"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.as_dict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.data"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.data</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.error"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.error</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.extrinsic"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.extrinsic</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.extrinsic_fee</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_function"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.extrinsic_function</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_receipt"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.extrinsic_receipt</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.from_exception"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.from_exception()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.message"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.message</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.success"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.success</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.transaction_alpha_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.transaction_alpha_fee</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.transaction_tao_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.transaction_tao_fee</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.unlock_wallet"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.unlock_wallet()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.with_log"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.with_log()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ParamWithTypes"><code class="docutils literal notranslate"><span class="pre">ParamWithTypes</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ParamWithTypes.name"><code class="docutils literal notranslate"><span class="pre">ParamWithTypes.name</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ParamWithTypes.type"><code class="docutils literal notranslate"><span class="pre">ParamWithTypes.type</span></code></a></li>
@@ -486,6 +508,12 @@
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.types.AxonServeCallParams" title="bittensor.core.types.AxonServeCallParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AxonServeCallParams</span></code></a></p></td>
 <td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.types.BlockInfo" title="bittensor.core.types.BlockInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BlockInfo</span></code></a></p></td>
+<td><p>Class that holds information about a blockchain block.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExtrinsicResponse</span></code></a></p></td>
+<td><p>A standardized response container for handling the extrinsic results submissions and related operations in the SDK.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.types.ParamWithTypes" title="bittensor.core.types.ParamWithTypes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParamWithTypes</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
@@ -602,6 +630,259 @@ it is not included in this.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="bittensor.core.types.BlockInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">BlockInfo</span></span><a class="headerlink" href="#bittensor.core.types.BlockInfo" title="Link to this definition">#</a></dt>
+<dd><p>Class that holds information about a blockchain block.</p>
+<p>This class encapsulates all relevant information about a block in the blockchain, including its number, hash,
+timestamp, and contents.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number</strong> – The block number.</p></li>
+<li><p><strong>hash</strong> – The corresponding block hash.</p></li>
+<li><p><strong>timestamp</strong> – The timestamp of the block (based on the <cite>Timestamp.Now</cite> extrinsic).</p></li>
+<li><p><strong>header</strong> – The raw block header returned by the node RPC.</p></li>
+<li><p><strong>extrinsics</strong> – The list of extrinsics included in the block.</p></li>
+<li><p><strong>explorer</strong> – The link to block explorer service.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.BlockInfo.explorer">
+<span class="sig-name descname"><span class="pre">explorer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.BlockInfo.explorer" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.BlockInfo.extrinsics">
+<span class="sig-name descname"><span class="pre">extrinsics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a></em><a class="headerlink" href="#bittensor.core.types.BlockInfo.extrinsics" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.BlockInfo.hash">
+<span class="sig-name descname"><span class="pre">hash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.BlockInfo.hash" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.BlockInfo.header">
+<span class="sig-name descname"><span class="pre">header</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a></em><a class="headerlink" href="#bittensor.core.types.BlockInfo.header" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.BlockInfo.number">
+<span class="sig-name descname"><span class="pre">number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.BlockInfo.number" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.BlockInfo.timestamp">
+<span class="sig-name descname"><span class="pre">timestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.types.BlockInfo.timestamp" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">ExtrinsicResponse</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse" title="Link to this definition">#</a></dt>
+<dd><p>A standardized response container for handling the extrinsic results submissions and related operations in the SDK.</p>
+<p>This class is designed to give developers a consistent way to represent the outcome of an extrinsic call — whether
+it succeeded or failed — along with useful metadata for debugging, logging, or higher-level business logic.</p>
+<dl class="simple">
+<dt>The object also implements tuple-like behavior:</dt><dd><ul class="simple">
+<li><p>Iteration yields <code class="docutils literal notranslate"><span class="pre">(success,</span> <span class="pre">message)</span></code>.</p></li>
+<li><p>Indexing is supported: <code class="docutils literal notranslate"><span class="pre">response[0]</span> <span class="pre">-&gt;</span> <span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">response[1]</span> <span class="pre">-&gt;</span> <span class="pre">message</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">len(response)</span></code> returns 2.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>success</strong> – Indicates if the extrinsic execution was successful.</p></li>
+<li><p><strong>message</strong> – A status or informational message returned from the execution (e.g., “Successfully registered subnet”).</p></li>
+<li><p><strong>extrinsic_function</strong> – The SDK extrinsic or external function name that was executed (e.g., “add_stake_extrinsic”).</p></li>
+<li><p><strong>extrinsic</strong> – The raw extrinsic object used in the call, if available. This is a <code class="docutils literal notranslate"><span class="pre">GenericExtrinsic</span></code> instance
+containing the full payload and metadata of the submitted extrinsic, including call section, method, signer,
+signature, parameters, and encoded bytes. Useful for inspecting or reconstructing the exact transaction
+submitted to the chain.</p></li>
+<li><p><strong>extrinsic_fee</strong> – The fee charged by the extrinsic, if available.</p></li>
+<li><p><strong>extrinsic_receipt</strong> – The receipt object of the submitted extrinsic. This is an <code class="docutils literal notranslate"><span class="pre">ExtrinsicReceipt</span></code> instance that
+contains the most detailed execution data available, including the block number and hash, triggered events,
+extrinsic index, execution phase, and other low-level details. This allows deep debugging or post-analysis
+of on-chain execution.</p></li>
+<li><p><strong>transaction_tao_fee</strong> – TAO fee charged by the transaction in TAO (e.g., fee for add_stake), if available.</p></li>
+<li><p><strong>transaction_alpha_fee</strong> – Alpha fee charged by the transaction (e.g., fee for transfer_stake), if available.</p></li>
+<li><p><strong>error</strong> – Captures the underlying exception if the extrinsic failed, otherwise <cite>None</cite>.</p></li>
+<li><p><strong>data</strong> – Arbitrary data returned from the extrinsic, such as decoded events, balance or another extra context.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Instance methods:</dt><dd><p>as_dict: Returns a dictionary representation of this object.
+with_log: Returns itself but with logging message.</p>
+</dd>
+<dt>Class methods:</dt><dd><p>from_exception: Checks if error is raised or return ExtrinsicResponse accordingly.
+unlock_wallet: Checks if keypair is unlocked and can be used for signing the extrinsic.</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>import bittensor as bt</p>
+<p>subtensor = bt.SubtensorApi(“local”)
+wallet = bt.Wallet(“alice”)</p>
+<p>response = subtensor.subnets.register_subnet(alice_wallet)
+print(response)</p>
+<dl class="simple">
+<dt>ExtrinsicResponse:</dt><dd><p>success: True
+message: Successfully registered subnet
+extrinsic_function: register_subnet_extrinsic
+extrinsic: {‘account_id’: ‘0xd43593c715fdd31c…
+transaction_tao_fee: τ1.0
+transaction_alpha_fee: 1.0β
+extrinsic_receipt: Extrinsic Receipt data of of the submitted extrinsic
+transaction_fee: τ1.0
+error: None
+data: None</p>
+</dd>
+</dl>
+<p>success, message = response
+print(success, message)</p>
+<p>True Successfully registered subnet</p>
+<p>print(response[0])
+True
+print(response[1])
+‘Successfully registered subnet’</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.as_dict">
+<span class="sig-name descname"><span class="pre">as_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.as_dict" title="Link to this definition">#</a></dt>
+<dd><p>Represents this object as a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.data">
+<span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.data" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.error">
+<span class="sig-name descname"><span class="pre">error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><span class="pre">Exception</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.error" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.extrinsic">
+<span class="sig-name descname"><span class="pre">extrinsic</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scalecodec.types.GenericExtrinsic</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.extrinsic" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.extrinsic_fee">
+<span class="sig-name descname"><span class="pre">extrinsic_fee</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_fee" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.extrinsic_function">
+<span class="sig-name descname"><span class="pre">extrinsic_function</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_function" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.extrinsic_receipt">
+<span class="sig-name descname"><span class="pre">extrinsic_receipt</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">async_substrate_interface.async_substrate.AsyncExtrinsicReceipt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">async_substrate_interface.sync_substrate.ExtrinsicReceipt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_receipt" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.from_exception">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raise_error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.from_exception" title="Link to this definition">#</a></dt>
+<dd><p>Check if error is raised and return ExtrinsicResponse accordingly.
+:param raise_error: Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.
+:param error: Exception raised during extrinsic execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Extrinsic Response with False checks whether to raise an error or simply return the instance.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><em>Exception</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.message">
+<span class="sig-name descname"><span class="pre">message</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.message" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.success">
+<span class="sig-name descname"><span class="pre">success</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.success" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.transaction_alpha_fee">
+<span class="sig-name descname"><span class="pre">transaction_alpha_fee</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.transaction_alpha_fee" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.transaction_tao_fee">
+<span class="sig-name descname"><span class="pre">transaction_tao_fee</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.transaction_tao_fee" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.unlock_wallet">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unlock_wallet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unlock_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coldkey'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonce_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.unlock_wallet" title="Link to this definition">#</a></dt>
+<dd><p>Check if keypair is unlocked and return ExtrinsicResponse accordingly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor Wallet instance.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>unlock_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The key type, ‘coldkey’ or ‘hotkey’. Or ‘both’ to check both.</p></li>
+<li><p><strong>nonce_key</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – Key used for generating nonce in extrinsic function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Extrinsic Response is used to check if the key is unlocked.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When an extrinsic is signed with the coldkey but internally references or uses the hotkey, both keypairs
+must be validated. Passing unlock_type=’both’ ensures that authentication is performed against both the
+coldkey and hotkey.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.with_log">
+<span class="sig-name descname"><span class="pre">with_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.with_log" title="Link to this definition">#</a></dt>
+<dd><p>Logs provided message with provided level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>level</strong> (<em>Literal</em><em>[</em><em>'trace'</em><em>, </em><em>'debug'</em><em>, </em><em>'info'</em><em>, </em><em>'warning'</em><em>, </em><em>'error'</em><em>, </em><em>'success'</em><em>]</em>) – Logging level represented as “trace”, “debug”, “info”, “warning”, “error”, “success” uses to logging
+message.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ExtrinsicResponse instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.types.ParamWithTypes">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">ParamWithTypes</span></span><a class="reference internal" href="../../../../_modules/bittensor/core/types.html#ParamWithTypes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.types.ParamWithTypes" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
@@ -685,8 +966,7 @@ inheritance.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.14)"><em>argparse.ArgumentParser</em></a>) – The ArgumentParser object to which the Subtensor arguments will be added.</p></li>
-<li><p><strong>prefix</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – An optional prefix for the argument names. If provided, the prefix is prepended to
-each argument name.</p></li>
+<li><p><strong>prefix</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – An optional prefix for the argument names. If provided, the prefix is prepended to each argument name.</p></li>
 </ul>
 </dd>
 </dl>
@@ -761,10 +1041,9 @@ Subtensor.add_args(parser)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>network</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The name of the Subtensor network. If None, the network and endpoint will be
-determined from the <cite>config</cite> object.</p></li>
-<li><p><strong>config</strong> (<a class="reference internal" href="../config/index.html#bittensor.core.config.Config" title="bittensor.core.config.Config"><em>bittensor.core.config.Config</em></a>) – The configuration object containing the network and chain endpoint
-settings.</p></li>
+<li><p><strong>network</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The name of the Subtensor network. If None, the network and endpoint will be determined from the
+<cite>config</cite> object.</p></li>
+<li><p><strong>config</strong> (<a class="reference internal" href="../config/index.html#bittensor.core.config.Config" title="bittensor.core.config.Config"><em>bittensor.core.config.Config</em></a>) – The configuration object containing the network and chain endpoint settings.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -803,12 +1082,12 @@ settings.</p></li>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../timelock/index.html"
+       href="../threadpool/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">bittensor.core.timelock</p>
+        <p class="prev-next-title">bittensor.core.threadpool</p>
       </div>
     </a>
     <a class="right-next"
@@ -854,6 +1133,32 @@ settings.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.port"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.port</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.protocol"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.protocol</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.version"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.version</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo"><code class="docutils literal notranslate"><span class="pre">BlockInfo</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.explorer"><code class="docutils literal notranslate"><span class="pre">BlockInfo.explorer</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.extrinsics"><code class="docutils literal notranslate"><span class="pre">BlockInfo.extrinsics</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.hash"><code class="docutils literal notranslate"><span class="pre">BlockInfo.hash</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.header"><code class="docutils literal notranslate"><span class="pre">BlockInfo.header</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.number"><code class="docutils literal notranslate"><span class="pre">BlockInfo.number</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.timestamp"><code class="docutils literal notranslate"><span class="pre">BlockInfo.timestamp</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.as_dict"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.as_dict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.data"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.data</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.error"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.error</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.extrinsic"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.extrinsic</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.extrinsic_fee</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_function"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.extrinsic_function</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_receipt"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.extrinsic_receipt</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.from_exception"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.from_exception()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.message"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.message</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.success"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.success</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.transaction_alpha_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.transaction_alpha_fee</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.transaction_tao_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.transaction_tao_fee</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.unlock_wallet"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.unlock_wallet()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.with_log"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.with_log()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ParamWithTypes"><code class="docutils literal notranslate"><span class="pre">ParamWithTypes</span></code></a><ul class="nav section-nav flex-column">

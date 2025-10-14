@@ -150,7 +150,6 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4 current active"><a class="reference internal" href="../index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../config/index.html">bittensor.core.config</a></li>
@@ -161,11 +160,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../settings/index.html">bittensor.core.settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../stream/index.html">bittensor.core.stream</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../subtensor/index.html">bittensor.core.subtensor</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../subtensor_api/index.html">bittensor.core.subtensor_api</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../synapse/index.html">bittensor.core.synapse</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tensor/index.html">bittensor.core.tensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../threadpool/index.html">bittensor.core.threadpool</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../types/index.html">bittensor.core.types</a></li>
 </ul>
 </details></li>
@@ -185,7 +182,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../utils/substrate_utils/index.html">bittensor.utils.substrate_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/version/index.html">bittensor.utils.version</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/weight_utils/index.html">bittensor.utils.weight_utils</a></li>
 </ul>
@@ -492,7 +488,7 @@ properties such as IP address, ports, and relevant keys.</p>
 <dd class="field-even"><p>An instance of AxonInfo created from the dictionary.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>instance (<a class="reference internal" href="#bittensor.core.chain_data.axon_info.AxonInfo" title="bittensor.core.chain_data.axon_info.AxonInfo">AxonInfo</a>)</p>
+<dd class="field-odd"><p><a class="reference internal" href="#bittensor.core.chain_data.axon_info.AxonInfo" title="bittensor.core.chain_data.axon_info.AxonInfo">AxonInfo</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -521,20 +517,20 @@ properties such as IP address, ports, and relevant keys.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><dl class="simple">
-<dt>An instance of AxonInfo created from the JSON string. If decoding fails, returns a default</dt><dd><p><cite>AxonInfo</cite> object with default values.</p>
+<dt>An instance of AxonInfo created from the JSON string. If decoding fails, returns a default AxonInfo` object</dt><dd><p>with default values.</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#bittensor.core.chain_data.axon_info.AxonInfo" title="bittensor.core.chain_data.axon_info.AxonInfo">AxonInfo</a></p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><a class="reference external" href="https://docs.python.org/3/library/json.html#json.JSONDecodeError" title="(in Python v3.14)"><strong>json.JSONDecodeError</strong></a> – If there is an error in decoding the JSON string.</p></li>
 <li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.14)"><strong>TypeError</strong></a> – If there is a type error when creating the AxonInfo object.</p></li>
 <li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If there is a value error when creating the AxonInfo object.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#bittensor.core.chain_data.axon_info.AxonInfo" title="bittensor.core.chain_data.axon_info.AxonInfo">AxonInfo</a></p>
 </dd>
 </dl>
 </dd></dl>

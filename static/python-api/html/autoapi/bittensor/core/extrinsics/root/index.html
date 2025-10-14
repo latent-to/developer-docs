@@ -150,7 +150,6 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../config/index.html">bittensor.core.config</a></li>
@@ -161,11 +160,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../settings/index.html">bittensor.core.settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../stream/index.html">bittensor.core.stream</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../subtensor/index.html">bittensor.core.subtensor</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../subtensor_api/index.html">bittensor.core.subtensor_api</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../synapse/index.html">bittensor.core.synapse</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tensor/index.html">bittensor.core.tensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../threadpool/index.html">bittensor.core.threadpool</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../types/index.html">bittensor.core.types</a></li>
 </ul>
 </details></li>
@@ -185,7 +182,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../utils/substrate_utils/index.html">bittensor.utils.substrate_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/version/index.html">bittensor.utils.version</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/weight_utils/index.html">bittensor.utils.weight_utils</a></li>
 </ul>
@@ -406,7 +402,6 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.root.root_register_extrinsic"><code class="docutils literal notranslate"><span class="pre">root_register_extrinsic()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.root.set_root_weights_extrinsic"><code class="docutils literal notranslate"><span class="pre">set_root_weights_extrinsic()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -426,11 +421,8 @@
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.root.root_register_extrinsic" title="bittensor.core.extrinsics.root.root_register_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">root_register_extrinsic</span></code></a>(subtensor, wallet[, ...])</p></td>
-<td><p>Registers the wallet to the root network.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.root.set_root_weights_extrinsic" title="bittensor.core.extrinsics.root.set_root_weights_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_root_weights_extrinsic</span></code></a>(subtensor, wallet, netuids, ...)</p></td>
-<td><p>Sets the given weights and values on chain for a given wallet hotkey account.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.root.root_register_extrinsic" title="bittensor.core.extrinsics.root.root_register_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">root_register_extrinsic</span></code></a>(subtensor, wallet[, period, ...])</p></td>
+<td><p>Registers the neuron to the root network.</p></td>
 </tr>
 </tbody>
 </table>
@@ -440,66 +432,26 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.core.extrinsics.root.root_register_extrinsic">
-<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.root.</span></span><span class="sig-name descname"><span class="pre">root_register_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/core/extrinsics/root.html#root_register_extrinsic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.extrinsics.root.root_register_extrinsic" title="Link to this definition">#</a></dt>
-<dd><p>Registers the wallet to the root network.</p>
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.root.</span></span><span class="sig-name descname"><span class="pre">root_register_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/core/extrinsics/root.html#root_register_extrinsic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.extrinsics.root.root_register_extrinsic" title="Link to this definition">#</a></dt>
+<dd><p>Registers the neuron to the root network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – The Subtensor object</p></li>
-<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object.</p></li>
-<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If set, waits for the extrinsic to enter a block before returning <cite>True</cite>, or returns
-<cite>False</cite> if the extrinsic fails to enter the block within the timeout.</p></li>
-<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If set, waits for the extrinsic to be finalized on the chain before returning
-<cite>True</cite>, or returns <cite>False</cite> if the extrinsic fails to be finalized within the timeout.</p></li>
-<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If
-the transaction is not included in a block within that number of blocks, it will expire and be rejected.
-You can think of it as an expiration date for the transaction.</p></li>
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – Subtensor instance to interact with the blockchain.</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor Wallet instance.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
+transaction is not included in a block within that number of blocks, it will expire and be rejected. You can
+think of it as an expiration date for the transaction.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt><cite>True</cite> if extrinsic was finalized or included in the block. If we did not wait for finalization/inclusion, the</dt><dd><p>response is <cite>True</cite>.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>The result object of the extrinsic execution.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="bittensor.core.extrinsics.root.set_root_weights_extrinsic">
-<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.root.</span></span><span class="sig-name descname"><span class="pre">set_root_weights_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/core/extrinsics/root.html#set_root_weights_extrinsic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.extrinsics.root.set_root_weights_extrinsic" title="Link to this definition">#</a></dt>
-<dd><p>Sets the given weights and values on chain for a given wallet hotkey account.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – The Subtensor object</p></li>
-<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object.</p></li>
-<li><p><strong>netuids</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.int64</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>]</em>) – The <cite>netuid</cite> of the subnet to set weights for.</p></li>
-<li><p><strong>weights</strong> (<em>Union</em><em>[</em><em>NDArray</em><em>[</em><em>np.float32</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>]</em><em>]</em>) – Weights to set. These must be floats and must correspond
-to the passed <cite>netuid</cite> s.</p></li>
-<li><p><strong>version_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The version key of the validator.</p></li>
-<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If set, waits for the extrinsic to enter a block before returning <cite>True</cite>, or returns
-<cite>False</cite> if the extrinsic fails to enter the block within the timeout.</p></li>
-<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If set, waits for the extrinsic to be finalized on the chain before returning
-True`, or returns <cite>False</cite> if the extrinsic fails to be finalized within the timeout.</p></li>
-<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If
-the transaction is not included in a block within that number of blocks, it will expire and be rejected.
-You can think of it as an expiration date for the transaction.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt><cite>True</cite> if extrinsic was finalized or included in the block. If we did not wait for finalization/inclusion, the</dt><dd><p>response is <cite>True</cite>.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -556,7 +508,6 @@ You can think of it as an expiration date for the transaction.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.root.root_register_extrinsic"><code class="docutils literal notranslate"><span class="pre">root_register_extrinsic()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.root.set_root_weights_extrinsic"><code class="docutils literal notranslate"><span class="pre">set_root_weights_extrinsic()</span></code></a></li>
 </ul>
 </li>
 </ul>

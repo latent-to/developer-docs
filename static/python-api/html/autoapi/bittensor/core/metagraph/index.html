@@ -152,7 +152,6 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../config/index.html">bittensor.core.config</a></li>
@@ -163,11 +162,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../settings/index.html">bittensor.core.settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../stream/index.html">bittensor.core.stream</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../subtensor/index.html">bittensor.core.subtensor</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../subtensor_api/index.html">bittensor.core.subtensor_api</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../synapse/index.html">bittensor.core.synapse</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../tensor/index.html">bittensor.core.tensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../threadpool/index.html">bittensor.core.threadpool</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../types/index.html">bittensor.core.types</a></li>
 </ul>
 </details></li>
@@ -187,7 +184,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../utils/substrate_utils/index.html">bittensor.utils.substrate_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/version/index.html">bittensor.utils.version</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/weight_utils/index.html">bittensor.utils.weight_utils</a></li>
 </ul>
@@ -588,10 +584,10 @@
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.metagraph.AsyncMetagraph" title="bittensor.core.metagraph.AsyncMetagraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AsyncMetagraph</span></code></a></p></td>
-<td><p>TODO docstring. Advise user to use <cite>async_metagraph</cite> factory fn if they want to sync at init</p></td>
+<td><p>Asynchronous version of the Metagraph class for non-blocking synchronization  with the Bittensor network state.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.metagraph.Metagraph" title="bittensor.core.metagraph.Metagraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Metagraph</span></code></a></p></td>
-<td><p>The metagraph class is a core component of the Bittensor network, representing the neural graph that forms the</p></td>
+<td><p>Synchronous implementation of the Metagraph, representing the current state of a Bittensor subnet.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.metagraph.MetagraphMixin" title="bittensor.core.metagraph.MetagraphMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MetagraphMixin</span></code></a></p></td>
 <td><p>The metagraph class is a core component of the Bittensor network, representing the neural graph that forms the</p></td>
@@ -610,7 +606,7 @@
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.metagraph.async_metagraph" title="bittensor.core.metagraph.async_metagraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">async_metagraph</span></code></a>(netuid[, network, lite, sync, subtensor])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.metagraph.async_metagraph" title="bittensor.core.metagraph.async_metagraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">async_metagraph</span></code></a>(netuid[, mechid, network, lite, sync, ...])</p></td>
 <td><p>Factory function to create an instantiated AsyncMetagraph, mainly for the ability to use sync at instantiation.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.metagraph.get_save_dir" title="bittensor.core.metagraph.get_save_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_save_dir</span></code></a>(network, netuid[, root_dir])</p></td>
@@ -630,9 +626,20 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.AsyncMetagraph">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">AsyncMetagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#AsyncMetagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.AsyncMetagraph" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">AsyncMetagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#AsyncMetagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.AsyncMetagraph" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bittensor.core.metagraph.NumpyOrTorch" title="bittensor.core.metagraph.NumpyOrTorch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NumpyOrTorch</span></code></a></p>
-<p>TODO docstring. Advise user to use <cite>async_metagraph</cite> factory fn if they want to sync at init</p>
+<p>Asynchronous version of the Metagraph class for non-blocking synchronization  with the Bittensor network state.</p>
+<p>This class allows developers to fetch and update metagraph data using async  operations, enabling concurrent
+execution in event-driven environments.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prefer using the factory function <cite>async_metagraph()</cite> for initialization,  which handles async synchronization
+automatically.</p>
+</div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>metagraph = await async_metagraph(netuid=1, network=”finney”)</p>
+</div>
 <p>Initializes a new instance of the metagraph object, setting up the basic structure and parameters based on the
 provided arguments. This class requires Torch to be installed. This method is the entry point for creating a
 metagraph object, which is a central component in representing the state of the Bittensor network.</p>
@@ -647,7 +654,7 @@ detailed information but can be quicker to initialize and sync.</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
 Synchronization involves updating the metagraph’s parameters to reflect the current state of the network.</p></li>
 <li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet mechanism unique identifier.</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>]</em>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>]</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -670,14 +677,12 @@ network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>block</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – A specific block number to synchronize with. If None, the metagraph syncs with the
-latest block. This allows for historical analysis or specific state examination of the network.</p></li>
-<li><p><strong>lite</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>]</em>) – If True, a lite version of the metagraph is used for quicker synchronization. This is
-beneficial when full detail is not necessary, allowing for reduced computational and time overhead.
-Defaults to <cite>True</cite>.</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em>) – An instance of the subtensor class from Bittensor,
-providing an interface to the underlying blockchain data. If provided, this instance is used for data
-retrieval during synchronization.</p></li>
+<li><p><strong>block</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – A specific block number to synchronize with. If None, the metagraph syncs with the latest block. This
+allows for historical analysis or specific state examination of the network.</p></li>
+<li><p><strong>lite</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>]</em>) – If True, a lite version of the metagraph is used for quicker synchronization. This is beneficial when
+full detail is not necessary, allowing for reduced computational and time overhead.</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>]</em>) – An instance of the subtensor class from Bittensor, providing an interface to the underlying
+blockchain data. If provided, this instance is used for data retrieval during synchronization.</p></li>
 </ul>
 </dd>
 </dl>
@@ -753,83 +758,16 @@ ndarray objects. Each key corresponds to a specific attribute or metric associat
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.Metagraph">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">Metagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#Metagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.Metagraph" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">Metagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#Metagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.Metagraph" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bittensor.core.metagraph.NumpyOrTorch" title="bittensor.core.metagraph.NumpyOrTorch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NumpyOrTorch</span></code></a></p>
-<p>The metagraph class is a core component of the Bittensor network, representing the neural graph that forms the
-backbone of the decentralized machine learning system.</p>
-<dl class="simple">
-<dt>The metagraph is a dynamic representation of the network’s state, capturing the interconnectedness and attributes of</dt><dd><p>neurons (participants) in the Bittensor ecosystem. This class is not just a static structure but a live
-reflection of the network, constantly updated and synchronized with the state of the blockchain.</p>
-</dd>
-<dt>In Bittensor, neurons are akin to nodes in a distributed system, each contributing computational resources and</dt><dd><p>participating in the network’s collective intelligence. The metagraph tracks various attributes of these
-neurons, such as stake, trust, and consensus, which are crucial for the network’s incentive mechanisms and the
-Yuma Consensus algorithm as outlined in the <a class="reference external" href="https://bittensor.com/pdfs/academia/NeurIPS_DAO_Workshop_2022_3_3.pdf">NeurIPS paper</a>. These attributes govern how neurons
-interact, how they are incentivized, and their roles within the network’s decision-making processes.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – A unique identifier that distinguishes between different instances or versions of the Bittensor network.</p></li>
-<li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the network, signifying specific configurations or iterations within the Bittensor ecosystem.</p></li>
-<li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
-<li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em>)</p></li>
-<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>version</strong> (<em>NDArray</em>) – The version number of the network, integral for tracking network updates.</p></li>
-<li><p><strong>n</strong> (<em>NDArray</em>) – The total number of neurons in the network, reflecting its size and complexity.</p></li>
-<li><p><strong>block</strong> (<em>NDArray</em>) – The current block number in the blockchain, crucial for synchronizing with the network’s latest state.</p></li>
-<li><p><strong>stake</strong> – Represents the cryptocurrency staked by neurons, impacting their influence and earnings within the network.</p></li>
-<li><p><strong>total_stake</strong> – The cumulative stake across all neurons.</p></li>
-<li><p><strong>ranks</strong> – Neuron rankings as per the Yuma Consensus algorithm, influencing their incentive distribution and network authority.</p></li>
-<li><p><strong>trust</strong> – Scores indicating the reliability of neurons, mainly miners, within the network’s operational context.</p></li>
-<li><p><strong>consensus</strong> – Scores reflecting each neuron’s alignment with the network’s collective decisions.</p></li>
-<li><p><strong>validator_trust</strong> – Trust scores for validator neurons, crucial for network security and validation.</p></li>
-<li><p><strong>incentive</strong> – Rewards allocated to neurons, particularly miners, for their network contributions.</p></li>
-<li><p><strong>emission</strong> – The rate at which rewards are distributed to neurons.</p></li>
-<li><p><strong>dividends</strong> – Rewards received primarily by validators as part of the incentive mechanism.</p></li>
-<li><p><strong>active</strong> – Status indicating whether a neuron is actively participating in the network.</p></li>
-<li><p><strong>last_update</strong> – Timestamp of the latest update to a neuron’s data.</p></li>
-<li><p><strong>validator_permit</strong> – Indicates if a neuron is authorized to act as a validator.</p></li>
-<li><p><strong>weights</strong> – Inter-neuronal weights set by each neuron, influencing network dynamics.</p></li>
-<li><p><strong>bonds</strong> – Represents speculative investments by neurons in others, part of the reward mechanism.</p></li>
-<li><p><strong>uids</strong> – Unique identifiers for each neuron, essential for network operations.</p></li>
-<li><p><strong>axons</strong> (<em>List</em>) – Details about each neuron’s axon, critical for facilitating network communication.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="simple">
-<dt>The metagraph plays a pivotal role in Bittensor’s decentralized AI operations, influencing everything from data</dt><dd><p>propagation to reward distribution. It embodies the principles of decentralized governance and collaborative
-intelligence, ensuring that the network remains adaptive, secure, and efficient.</p>
-</dd>
-</dl>
+<p>Synchronous implementation of the Metagraph, representing the current state of a Bittensor subnet.</p>
+<p>The Metagraph encapsulates neuron attributes such as stake, trust, incentive,  weights, and connectivity, and
+provides methods to synchronize these values directly from the blockchain via a Subtensor instance.</p>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Initializing the metagraph to represent the current state of the Bittensor network:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bittensor.core.metagraph</span> <span class="kn">import</span> <span class="n">Metagraph</span>
-<span class="n">metagraph</span> <span class="o">=</span> <span class="n">Metagraph</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">netuid</span><span class="p">,</span> <span class="n">network</span><span class="o">=</span><span class="n">subtensor</span><span class="o">.</span><span class="n">network</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Synchronizing the metagraph with the network to reflect the latest state and neuron data:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">metagraph</span><span class="o">.</span><span class="n">sync</span><span class="p">(</span><span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Accessing metagraph properties to inform network interactions and decisions:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total_stake</span> <span class="o">=</span> <span class="n">metagraph</span><span class="o">.</span><span class="n">S</span>
-<span class="n">neuron_ranks</span> <span class="o">=</span> <span class="n">metagraph</span><span class="o">.</span><span class="n">R</span>
-<span class="n">neuron_incentives</span> <span class="o">=</span> <span class="n">metagraph</span><span class="o">.</span><span class="n">I</span>
-<span class="n">axons</span> <span class="o">=</span> <span class="n">metagraph</span><span class="o">.</span><span class="n">axons</span>
-<span class="n">neurons</span> <span class="o">=</span> <span class="n">metagraph</span><span class="o">.</span><span class="n">neurons</span>
-</pre></div>
-</div>
-<p>Maintaining a local copy of hotkeys for querying and interacting with network entities:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hotkeys</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">metagraph</span><span class="o">.</span><span class="n">hotkeys</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>from bittensor.core.subtensor import Subtensor
+subtensor = Subtensor(network=”finney”)
+metagraph = Metagraph(netuid=1, network=”finney”, sync=True, subtensor=subtensor)</p>
 </div>
 <p>Initializes a new instance of the metagraph object, setting up the basic structure and parameters based on the
 provided arguments. This class requires Torch to be installed. This method is the entry point for creating a
@@ -868,14 +806,12 @@ network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>block</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – A specific block number to synchronize with. If None, the metagraph syncs with the
-latest block. This allows for historical analysis or specific state examination of the network.</p></li>
-<li><p><strong>lite</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>]</em>) – If True, a lite version of the metagraph is used for quicker synchronization. This is
-beneficial when full detail is not necessary, allowing for reduced computational and time overhead.
-Defaults to <cite>True</cite>.</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em>) – An instance of the subtensor class from Bittensor,
-providing an interface to the underlying blockchain data. If provided, this instance is used for data
-retrieval during synchronization.</p></li>
+<li><p><strong>block</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – A specific block number to synchronize with. If None, the metagraph syncs with the latest block. This
+allows for historical analysis or specific state examination of the network.</p></li>
+<li><p><strong>lite</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>]</em>) – If True, a lite version of the metagraph is used for quicker synchronization. This is beneficial when
+full detail is not necessary, allowing for reduced computational and time overhead.</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em>) – An instance of the subtensor class from Bittensor, providing an interface to the underlying
+blockchain data. If provided, this instance is used for data retrieval during synchronization.</p></li>
 </ul>
 </dd>
 </dl>
@@ -920,7 +856,7 @@ test networks.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">MetagraphMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#MetagraphMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">MetagraphMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#MetagraphMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
 <p>The metagraph class is a core component of the Bittensor network, representing the neural graph that forms the
 backbone of the decentralized machine learning system.</p>
@@ -939,10 +875,10 @@ interact, how they are incentivized, and their roles within the network’s deci
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – A unique identifier that distinguishes between different instances or versions of the Bittensor network.</p></li>
 <li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the network, signifying specific configurations or iterations within the Bittensor ecosystem.</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 <li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
-<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
@@ -969,11 +905,9 @@ interact, how they are incentivized, and their roles within the network’s deci
 </ul>
 </dd>
 </dl>
-<dl class="simple">
-<dt>The metagraph plays a pivotal role in Bittensor’s decentralized AI operations, influencing everything from data</dt><dd><p>propagation to reward distribution. It embodies the principles of decentralized governance and collaborative
+<p>The metagraph plays a pivotal role in Bittensor’s decentralized AI operations, influencing everything from data
+propagation to reward distribution. It embodies the principles of decentralized governance and collaborative
 intelligence, ensuring that the network remains adaptive, secure, and efficient.</p>
-</dd>
-</dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p>Initializing the metagraph to represent the current state of the Bittensor network:</p>
@@ -1012,8 +946,8 @@ network.</p></li>
 detailed information but can be quicker to initialize and sync.</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
 Synchronization involves updating the metagraph’s parameters to reflect the current state of the network.</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 <li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -1471,18 +1405,14 @@ metagraph’s current <code class="docutils literal notranslate"><span class="pr
 the metagraph’s state for the user, requiring no direct path specifications.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>root_dir</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em><em>]</em>) – list to the file path for the root directory of your metagraph saves
-(i.e. [‘/’, ‘tmp’, ‘metagraphs’], defaults to [“~”, “.bittensor”, “metagraphs”]</p>
+<dd class="field-odd"><p><strong>root_dir</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em><em>]</em>) – list to the file path for the root directory of your metagraph saves (i.e. [‘/’, ‘tmp’,
+‘metagraphs’], defaults to [“~”, “.bittensor”, “metagraphs”]</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>The metagraph instance after loading its state from the</dt><dd><p>default directory.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>The metagraph instance after loading its state from the default directory.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>metagraph (<a class="reference internal" href="#bittensor.core.metagraph.Metagraph" title="bittensor.core.metagraph.Metagraph">bittensor.core.metagraph.Metagraph</a>)</p>
+<dd class="field-odd"><p>metagraph</p>
 </dd>
 </dl>
 <div class="admonition-example admonition">
@@ -1514,18 +1444,14 @@ including neuron attributes and parameters from this file. This ensures that the
 reconstituted to reflect the network state at the time of the saved block.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dir_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The directory path where the metagraph’s state files are stored. This path should contain
-one or more saved state files, typically named in a format that includes the block number.</p>
+<dd class="field-odd"><p><strong>dir_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The directory path where the metagraph’s state files are stored. This path should contain one or
+more saved state files, typically named in a format that includes the block number.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>The metagraph instance after loading its state from the</dt><dd><p>specified directory path.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>The metagraph instance after loading its state from the specified directory path.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>metagraph (<a class="reference internal" href="#bittensor.core.metagraph.AsyncMetagraph" title="bittensor.core.metagraph.AsyncMetagraph">bittensor.core.metagraph.AsyncMetagraph</a>)</p>
+<dd class="field-odd"><p>metagraph</p>
 </dd>
 </dl>
 <div class="admonition-example admonition">
@@ -1667,14 +1593,14 @@ neuron attributes and parameters, ensuring a complete snapshot of the metagraph�
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>root_dir</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em><em>]</em>) – list to the file path for the root directory of your metagraph saves
-(i.e. [‘/’, ‘tmp’, ‘metagraphs’], defaults to [“~”, “.bittensor”, “metagraphs”]</p>
+<dd class="field-odd"><p><strong>root_dir</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em><em>]</em>) – list to the file path for the root directory of your metagraph saves (i.e. [‘/’, ‘tmp’,
+‘metagraphs’], defaults to [“~”, “.bittensor”, “metagraphs”]</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The metagraph instance after saving its state.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>metagraph (<a class="reference internal" href="#bittensor.core.metagraph.Metagraph" title="bittensor.core.metagraph.Metagraph">bittensor.core.metagraph.Metagraph</a>)</p>
+<dd class="field-odd"><p>metagraph</p>
 </dd>
 </dl>
 <div class="admonition-example admonition">
@@ -1712,7 +1638,7 @@ neuron attributes and parameters, ensuring a complete snapshot of the metagraph�
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.subtensor">
-<span class="sig-name descname"><span class="pre">subtensor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><span class="pre">bittensor.core.async_subtensor.AsyncSubtensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><span class="pre">bittensor.core.subtensor.Subtensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.subtensor" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">subtensor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bittensor.core.async_subtensor.AsyncSubtensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><span class="pre">bittensor.core.subtensor.Subtensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.subtensor" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1769,7 +1695,7 @@ neuron attributes and parameters, ensuring a complete snapshot of the metagraph�
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.NonTorchMetagraph">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">NonTorchMetagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#NonTorchMetagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.NonTorchMetagraph" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">NonTorchMetagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#NonTorchMetagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.NonTorchMetagraph" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bittensor.core.metagraph.MetagraphMixin" title="bittensor.core.metagraph.MetagraphMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MetagraphMixin</span></code></a></p>
 <p>The metagraph class is a core component of the Bittensor network, representing the neural graph that forms the
 backbone of the decentralized machine learning system.</p>
@@ -1788,10 +1714,10 @@ interact, how they are incentivized, and their roles within the network’s deci
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – A unique identifier that distinguishes between different instances or versions of the Bittensor network.</p></li>
 <li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the network, signifying specific configurations or iterations within the Bittensor ecosystem.</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 <li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
-<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
@@ -1818,11 +1744,9 @@ interact, how they are incentivized, and their roles within the network’s deci
 </ul>
 </dd>
 </dl>
-<dl class="simple">
-<dt>The metagraph plays a pivotal role in Bittensor’s decentralized AI operations, influencing everything from data</dt><dd><p>propagation to reward distribution. It embodies the principles of decentralized governance and collaborative
+<p>The metagraph plays a pivotal role in Bittensor’s decentralized AI operations, influencing everything from data
+propagation to reward distribution. It embodies the principles of decentralized governance and collaborative
 intelligence, ensuring that the network remains adaptive, secure, and efficient.</p>
-</dd>
-</dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p>Initializing the metagraph to represent the current state of the Bittensor network:</p>
@@ -1861,7 +1785,7 @@ detailed information but can be quicker to initialize and sync.</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
 Synchronization involves updating the metagraph’s parameters to reflect the current state of the network.</p></li>
 <li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet mechanism unique identifier.</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -1928,14 +1852,10 @@ Synchronization involves updating the metagraph’s parameters to reflect the cu
 <dd class="field-odd"><p><strong>dir_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The directory path where the metagraph’s state file is located.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>An instance of the Metagraph with the state</dt><dd><p>loaded from the file.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>An instance of the Metagraph with the state loaded from the file.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>metagraph (<a class="reference internal" href="#bittensor.core.metagraph.AsyncMetagraph" title="bittensor.core.metagraph.AsyncMetagraph"><code class="xref py py-func docutils literal notranslate"><span class="pre">bittensor.core.metagraph.AsyncMetagraph()</span></code></a>)</p>
+<dd class="field-odd"><p>metagraph</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
@@ -2031,7 +1951,7 @@ Synchronization involves updating the metagraph’s parameters to reflect the cu
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.TorchMetagraph">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">TorchMetagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#TorchMetagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.TorchMetagraph" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">TorchMetagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#TorchMetagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.TorchMetagraph" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bittensor.core.metagraph.MetagraphMixin" title="bittensor.core.metagraph.MetagraphMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MetagraphMixin</span></code></a>, <a class="reference internal" href="#bittensor.core.metagraph.BaseClass" title="bittensor.core.metagraph.BaseClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseClass</span></code></a></p>
 <p>The metagraph class is a core component of the Bittensor network, representing the neural graph that forms the
 backbone of the decentralized machine learning system.</p>
@@ -2050,10 +1970,10 @@ interact, how they are incentivized, and their roles within the network’s deci
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – A unique identifier that distinguishes between different instances or versions of the Bittensor network.</p></li>
 <li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the network, signifying specific configurations or iterations within the Bittensor ecosystem.</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 <li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
-<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
@@ -2080,11 +2000,9 @@ interact, how they are incentivized, and their roles within the network’s deci
 </ul>
 </dd>
 </dl>
-<dl class="simple">
-<dt>The metagraph plays a pivotal role in Bittensor’s decentralized AI operations, influencing everything from data</dt><dd><p>propagation to reward distribution. It embodies the principles of decentralized governance and collaborative
+<p>The metagraph plays a pivotal role in Bittensor’s decentralized AI operations, influencing everything from data
+propagation to reward distribution. It embodies the principles of decentralized governance and collaborative
 intelligence, ensuring that the network remains adaptive, secure, and efficient.</p>
-</dd>
-</dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p>Initializing the metagraph to represent the current state of the Bittensor network:</p>
@@ -2123,7 +2041,7 @@ detailed information but can be quicker to initialize and sync.</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
 Synchronization involves updating the metagraph’s parameters to reflect the current state of the network.</p></li>
 <li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet mechanism unique identifier.</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -2192,7 +2110,7 @@ Synchronization involves updating the metagraph’s parameters to reflect the cu
 <dd class="field-even"><p>The current metagraph instance with the loaded state.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>metagraph (<a class="reference internal" href="#bittensor.core.metagraph.AsyncMetagraph" title="bittensor.core.metagraph.AsyncMetagraph">bittensor.core.metagraph.AsyncMetagraph</a>)</p>
+<dd class="field-odd"><p>metagraph</p>
 </dd>
 </dl>
 <div class="admonition-example admonition">
@@ -2263,16 +2181,17 @@ metagraph = Metagraph(netuid=netuid)</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.async_metagraph">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">async_metagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#async_metagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.async_metagraph" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.metagraph.</span></span><span class="sig-name descname"><span class="pre">async_metagraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">settings.DEFAULT_NETWORK</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/metagraph.html#async_metagraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.metagraph.async_metagraph" title="Link to this definition">#</a></dt>
 <dd><p>Factory function to create an instantiated AsyncMetagraph, mainly for the ability to use sync at instantiation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 <li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
 <li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
-<li><p><strong>subtensor</strong> (<a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>)</p></li>
+<li><p><strong>subtensor</strong> (<em>bittensor.core.async_subtensor.AsyncSubtensor</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

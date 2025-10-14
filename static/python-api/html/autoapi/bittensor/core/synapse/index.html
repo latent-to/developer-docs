@@ -49,7 +49,7 @@
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="bittensor.core.tensor" href="../tensor/index.html" />
-    <link rel="prev" title="bittensor.core.subtensor_api.wallets" href="../subtensor_api/wallets/index.html" />
+    <link rel="prev" title="bittensor.core.subtensor" href="../subtensor/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -150,7 +150,6 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../config/index.html">bittensor.core.config</a></li>
@@ -161,11 +160,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../settings/index.html">bittensor.core.settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../stream/index.html">bittensor.core.stream</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../subtensor/index.html">bittensor.core.subtensor</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../subtensor_api/index.html">bittensor.core.subtensor_api</a></li>
 <li class="toctree-l4 current active"><a class="current reference internal" href="#">bittensor.core.synapse</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../tensor/index.html">bittensor.core.tensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../threadpool/index.html">bittensor.core.threadpool</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../types/index.html">bittensor.core.types</a></li>
 </ul>
 </details></li>
@@ -185,7 +182,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../utils/substrate_utils/index.html">bittensor.utils.substrate_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/version/index.html">bittensor.utils.version</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/weight_utils/index.html">bittensor.utils.weight_utils</a></li>
 </ul>
@@ -608,14 +604,14 @@ the robustness of their applications.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – HTTP route name, set on <code class="xref py py-func docutils literal notranslate"><span class="pre">axon.attach()</span></code>.</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Total query length, set by the dendrite terminal.</p></li>
-<li><p><strong>total_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Total size of request body in bytes.</p></li>
-<li><p><strong>header_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Size of request header in bytes.</p></li>
-<li><p><strong>dendrite</strong> (<a class="reference internal" href="#bittensor.core.synapse.TerminalInfo" title="bittensor.core.synapse.TerminalInfo"><code class="xref py py-func docutils literal notranslate"><span class="pre">TerminalInfo()</span></code></a>) – Information about the dendrite terminal.</p></li>
-<li><p><strong>axon</strong> (<a class="reference internal" href="#bittensor.core.synapse.TerminalInfo" title="bittensor.core.synapse.TerminalInfo"><code class="xref py py-func docutils literal notranslate"><span class="pre">TerminalInfo()</span></code></a>) – Information about the axon terminal.</p></li>
-<li><p><strong>computed_body_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Computed hash of the request body.</p></li>
-<li><p><strong>required_hash_fields</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – Fields required to compute the body hash.</p></li>
+<li><p><strong>name</strong> – HTTP route name, set on <code class="xref py py-func docutils literal notranslate"><span class="pre">axon.attach()</span></code>.</p></li>
+<li><p><strong>timeout</strong> – Total query length, set by the dendrite terminal.</p></li>
+<li><p><strong>total_size</strong> – Total size of request body in bytes.</p></li>
+<li><p><strong>header_size</strong> – Size of request header in bytes.</p></li>
+<li><p><strong>dendrite</strong> – Information about the dendrite terminal.</p></li>
+<li><p><strong>axon</strong> – Information about the axon terminal.</p></li>
+<li><p><strong>computed_body_hash</strong> – Computed hash of the request body.</p></li>
+<li><p><strong>required_hash_fields</strong> – Fields required to compute the body hash.</p></li>
 <li><p><strong>data</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
@@ -822,9 +818,23 @@ which is the HTTP status code for unauthorized access.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_headers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">headers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/synapse.html#Synapse.from_headers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition">#</a></dt>
 <dd><p>Constructs a new Synapse instance from a given headers dictionary, enabling the re-creation of the Synapse’s
 state as it was prior to network transmission.</p>
-<p>This method is a key part of the
-deserialization process in the Bittensor network, allowing nodes to accurately reconstruct Synapse
-objects from received data.</p>
+<p>This method is a key part of the deserialization process in the Bittensor network, allowing nodes to accurately
+reconstruct Synapse objects from received data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>headers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – The dictionary of headers containing serialized Synapse information.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A new instance of Synapse, reconstructed from the parsed header information, replicating the original</dt><dd><p>instance’s state.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">Synapse</a></p>
+</dd>
+</dl>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">received_headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;bt_header_axon_address&#39;</span><span class="p">:</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
@@ -835,21 +845,6 @@ objects from received data.</p>
 <span class="c1"># synapse is a new Synapse instance reconstructed from the received headers</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>headers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – The dictionary of headers containing serialized Synapse information.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A new instance of Synapse, reconstructed from the parsed header information,</dt><dd><p>replicating the original instance’s state.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -959,31 +954,8 @@ which is the HTTP status code for a request timeout.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_headers_to_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">headers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/synapse.html#Synapse.parse_headers_to_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition">#</a></dt>
 <dd><p>Interprets and transforms a given dictionary of headers into a structured dictionary, facilitating the
 reconstruction of Synapse objects.</p>
-<p>This method is essential for parsing network-transmitted
-data back into a Synapse instance, ensuring data consistency and integrity.</p>
-<p>Process:</p>
-<ol class="arabic simple">
-<li><p>Separates headers into categories based on prefixes (<code class="docutils literal notranslate"><span class="pre">axon</span></code>, <code class="docutils literal notranslate"><span class="pre">dendrite</span></code>, etc.).</p></li>
-<li><p>Decodes and deserializes <code class="docutils literal notranslate"><span class="pre">input_obj</span></code> headers into their original objects.</p></li>
-<li><p>Assigns simple fields directly from the headers to the input dictionary.</p></li>
-</ol>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">received_headers</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;bt_header_axon_address&#39;</span><span class="p">:</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;bt_header_dendrite_port&#39;</span><span class="p">:</span> <span class="s1">&#39;8080&#39;</span><span class="p">,</span>
-    <span class="c1"># Other headers...</span>
-<span class="p">}</span>
-<span class="n">inputs</span> <span class="o">=</span> <span class="n">Synapse</span><span class="o">.</span><span class="n">parse_headers_to_inputs</span><span class="p">(</span><span class="n">received_headers</span><span class="p">)</span>
-<span class="c1"># inputs now contains a structured representation of Synapse properties based on the headers</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<dl class="simple">
-<dt>This is handled automatically when calling <code class="xref py py-func docutils literal notranslate"><span class="pre">Synapse.from_headers(headers)()</span></code> and does not need to be</dt><dd><p>called directly.</p>
-</dd>
-</dl>
-</div>
+<p>This method is essential for parsing network-transmitted data back into a Synapse instance, ensuring data
+consistency and integrity.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>headers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – The headers dictionary to parse.</p>
@@ -995,6 +967,29 @@ data back into a Synapse instance, ensuring data consistency and integrity.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
 </dd>
 </dl>
+<dl>
+<dt>Process:</dt><dd><ol class="arabic simple">
+<li><p>Separates headers into categories based on prefixes (<code class="docutils literal notranslate"><span class="pre">axon</span></code>, <code class="docutils literal notranslate"><span class="pre">dendrite</span></code>, etc.).</p></li>
+<li><p>Decodes and deserializes <code class="docutils literal notranslate"><span class="pre">input_obj</span></code> headers into their original objects.</p></li>
+<li><p>Assigns simple fields directly from the headers to the input dictionary.</p></li>
+</ol>
+</dd>
+<dt>Example::</dt><dd><dl class="simple">
+<dt>received_headers = {</dt><dd><p>‘bt_header_axon_address’: ‘127.0.0.1’,
+‘bt_header_dendrite_port’: ‘8080’,
+# Other headers…</p>
+</dd>
+</dl>
+<p>}
+inputs = Synapse.parse_headers_to_inputs(received_headers)
+# inputs now contains a structured representation of Synapse properties based on the headers</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is handled automatically when calling <code class="xref py py-func docutils literal notranslate"><span class="pre">Synapse.from_headers(headers)()</span></code> and does not need to be
+called directly.</p>
+</div>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1078,23 +1073,23 @@ is used as a helper class for Synapses.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>status_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – HTTP status code indicating the result of a network request. Essential for identifying the
-outcome of network interactions.</p></li>
-<li><p><strong>status_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Descriptive message associated with the status code, providing additional context about
-the request’s result.</p></li>
-<li><p><strong>process_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Time taken by the terminal to process the call, important for performance monitoring and
+<li><p><strong>status_code</strong> – HTTP status code indicating the result of a network request. Essential for identifying the outcome
+of network interactions.</p></li>
+<li><p><strong>status_message</strong> – Descriptive message associated with the status code, providing additional context about the
+request’s result.</p></li>
+<li><p><strong>process_time</strong> – Time taken by the terminal to process the call, important for performance monitoring and
 optimization.</p></li>
-<li><p><strong>ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – IP address of the terminal, crucial for network routing and data transmission.</p></li>
-<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Network port used by the terminal, key for establishing network connections.</p></li>
-<li><p><strong>version</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Bittensor version running on the terminal, ensuring compatibility between different nodes in the
+<li><p><strong>ip</strong> – IP address of the terminal, crucial for network routing and data transmission.</p></li>
+<li><p><strong>port</strong> – Network port used by the terminal, key for establishing network connections.</p></li>
+<li><p><strong>version</strong> – Bittensor version running on the terminal, ensuring compatibility between different nodes in the
 network.</p></li>
-<li><p><strong>nonce</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Unique, monotonically increasing number for each terminal, aiding in identifying and ordering
-network interactions.</p></li>
-<li><p><strong>uuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Unique identifier for the terminal, fundamental for network security and identification.</p></li>
-<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Encoded hotkey string of the terminal wallet, important for transaction and identity verification
-in the network.</p></li>
-<li><p><strong>signature</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Digital signature verifying the tuple of nonce, axon_hotkey, dendrite_hotkey, and uuid,
-critical for ensuring data authenticity and security.</p></li>
+<li><p><strong>nonce</strong> – Unique, monotonically increasing number for each terminal, aiding in identifying and ordering network
+interactions.</p></li>
+<li><p><strong>uuid</strong> – Unique identifier for the terminal, fundamental for network security and identification.</p></li>
+<li><p><strong>hotkey</strong> – Encoded hotkey string of the terminal wallet, important for transaction and identity verification in the
+network.</p></li>
+<li><p><strong>signature</strong> – Digital signature verifying the tuple of nonce, axon_hotkey, dendrite_hotkey, and uuid, critical for
+ensuring data authenticity and security.</p></li>
 <li><p><strong>data</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
@@ -1201,7 +1196,7 @@ validated to form a valid model.</p>
 <dd class="field-even"><p>The converted float, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the input was <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a> or None</p>
+<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1219,7 +1214,7 @@ validated to form a valid model.</p>
 <dd class="field-even"><p>The converted integer, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the input was <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a> or None</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1260,12 +1255,12 @@ validated to form a valid model.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../subtensor_api/wallets/index.html"
+       href="../subtensor/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">bittensor.core.subtensor_api.wallets</p>
+        <p class="prev-next-title">bittensor.core.subtensor</p>
       </div>
     </a>
     <a class="right-next"
