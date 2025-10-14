@@ -46,7 +46,7 @@ See the [Migration Checklist](#migration-checklist) for step-by-step upgrade ins
 ## New Features
 ### Structured Extrinsic Responses (ExtrinsicResponse)
 
-`ExtrinsicResponse` is now a first-class feature that provides rich, structured data for both outgoing requests and incoming on-chain results. While it is a breaking change in return types, it primarily unlocks better development, testing, and debugging workflows by standardizing success flags, messages, fees, receipts, and operation-specific data in one object.
+`ExtrinsicResponse` provides rich, structured data for both outgoing requests and incoming on-chain results. While it is a breaking change in return types, it primarily unlocks better development, testing, and debugging workflows by standardizing success flags, messages, fees, receipts, and operation-specific data in one object.
 
 - **Purpose**: Enables more accurate, predictable code paths and easier assertions in tests
 - **What you get**: Success flag, human-readable message, network fee, application-level swap fee(s), inclusion/finalization receipts, and operation-specific data
@@ -231,23 +231,22 @@ for extrinsic in block.extrinsics:
 - Access detailed block metadata for analysis
 - Link users to block explorer for visual inspection
 
-### Hex to SS58 Conversion
+### Hex <--> SS58 Conversion
 
 New utility function for converting hex addresses to SS58 format:
 
 ```python
-# ✅ New utility:
 from bittensor.utils import hex_to_ss58
 
 ss58_address = hex_to_ss58(hex_string)
 
-# Reverse conversion (SS58 → hex)
 from bittensor.utils import ss58_to_hex
 
 hex_string = ss58_to_hex(ss58_address)
 ```
 
 **Note:** `hex_to_ss58` is an alias for `ss58_encode` from scalecodec. Similarly, `ss58_to_hex` is an alias for `ss58_decode`.
+
 ### Development Test Framework
 
 New developer testing utilities provide helpers and fixtures for rapid local testing of SDK integrations and extrinsic flows. Use cases: Simulate common workflows, stub chain interactions, and write predictable tests around `ExtrinsicResponse` without a full node.
@@ -290,7 +289,7 @@ Validate extrinsic parameters before submission to catch errors early, with `val
 params = {
     "netuid": 1,
     "hotkey": hotkey_ss58,
-    "alpha_amount": amount.rao
+    "amount_staked": amount.rao
 }
 
 try:
@@ -550,7 +549,9 @@ extrinsic_function(
 
 This ensures the SDK function response correctly reflects the blockchain transaction outcome.
 
-**About `raise_error`:** When `raise_error=False`, extrinsic functions do not raise exceptions; all error information is captured inside the returned `ExtrinsicResponse` object. Set `raise_error=True` if you prefer exceptions to be raised directly for error cases.
+:::note
+When `raise_error=False`, extrinsic functions do not raise exceptions; all error information is captured inside the returned `ExtrinsicResponse` object. Set `raise_error=True` if you prefer exceptions to be raised directly for error cases.
+:::
 
 ### ExtrinsicResponse Return Type
 
@@ -715,7 +716,7 @@ commit_timelocked_weights_extrinsic(..., commit_reveal_version=4)
 subtensor.increase_take(wallet, hotkey_ss58, take)
 subtensor.decrease_take(wallet, hotkey_ss58, take)
 
-# ✅ New (high-level Subtensor method):
+# ✅ New:
 # Automatically determines whether to increase or decrease based on current vs new take
 subtensor.set_delegate_take(
     wallet,
@@ -746,6 +747,7 @@ response_dec = set_take_extrinsic(
     action="decrease_take",
 )
 ```
+
 
 **Note:** The method automatically calls `increase_take` or `decrease_take` internally based on whether the new take is higher or lower than the current take.
 
@@ -807,7 +809,7 @@ from bittensor.utils.balance import Balance
 from bittensor.core.errors import BalanceUnitMismatchError
 
 balance_tao = Balance.from_tao(1.0)
-balance_alpha = Balance.from_rao(1_000_000_000)  # Example Alpha balance (units differ from TAO)
+balance_alpha = Balance.from_rao(1_000_000_000)  # 1 tao = 1x10^9 rao
 
 # ❌ Will raise BalanceUnitMismatchError: mixing units in arithmetic
 _ = balance_tao + balance_alpha
@@ -972,8 +974,9 @@ from bittensor import Subtensor
 # CLI args will no longer be processed
 ```
 
+:::tip
 When `BT_NO_PARSE_CLI_ARGS` is set, the SDK skips CLI parsing entirely and falls back to default configuration values defined in `bittensor.core.settings.DEFAULTS` for all configuration options across the SDK. This is useful when embedding the SDK in applications that manage their own configuration.
-
+:::
 
 
 ## Metagraph Changes
