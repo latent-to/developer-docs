@@ -149,7 +149,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../autoapi/index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../autoapi/bittensor/index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../../autoapi/bittensor/core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/core/chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/core/config/index.html">bittensor.core.config</a></li>
@@ -160,12 +159,16 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/core/settings/index.html">bittensor.core.settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/core/stream/index.html">bittensor.core.stream</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/core/subtensor/index.html">bittensor.core.subtensor</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/core/subtensor_api/index.html">bittensor.core.subtensor_api</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/core/synapse/index.html">bittensor.core.synapse</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/core/tensor/index.html">bittensor.core.tensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/core/threadpool/index.html">bittensor.core.threadpool</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/core/timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/core/types/index.html">bittensor.core.types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../../autoapi/bittensor/extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/extras/timelock/index.html">bittensor.extras.timelock</a></li>
 </ul>
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -178,7 +181,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/substrate_utils/index.html">bittensor.utils.substrate_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/version/index.html">bittensor.utils.version</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/bittensor/utils/weight_utils/index.html">bittensor.utils.weight_utils</a></li>
 </ul>
@@ -353,8 +355,6 @@
     <span class="kn">from</span> <span class="nn">bittensor_wallet</span> <span class="kn">import</span> <span class="n">Wallet</span>
 
 
-<div class="viewcode-block" id="do_serve_axon">
-<a class="viewcode-back" href="../../../../../autoapi/bittensor/core/extrinsics/asyncex/serving/index.html#bittensor.core.extrinsics.asyncex.serving.do_serve_axon">[docs]</a>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">do_serve_axon</span><span class="p">(</span>
     <span class="n">subtensor</span><span class="p">:</span> <span class="s2">&quot;AsyncSubtensor&quot;</span><span class="p">,</span>
     <span class="n">wallet</span><span class="p">:</span> <span class="s2">&quot;Wallet&quot;</span><span class="p">,</span>
@@ -402,8 +402,7 @@
         <span class="n">sign_with</span><span class="o">=</span><span class="s2">&quot;hotkey&quot;</span><span class="p">,</span>
         <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="k">return</span> <span class="n">success</span><span class="p">,</span> <span class="n">message</span></div>
-
+    <span class="k">return</span> <span class="n">success</span><span class="p">,</span> <span class="n">message</span>
 
 
 <div class="viewcode-block" id="serve_extrinsic">
@@ -572,8 +571,6 @@
 
 
 
-<div class="viewcode-block" id="publish_metadata">
-<a class="viewcode-back" href="../../../../../autoapi/bittensor/core/extrinsics/asyncex/serving/index.html#bittensor.core.extrinsics.asyncex.serving.publish_metadata">[docs]</a>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">publish_metadata</span><span class="p">(</span>
     <span class="n">subtensor</span><span class="p">:</span> <span class="s2">&quot;AsyncSubtensor&quot;</span><span class="p">,</span>
     <span class="n">wallet</span><span class="p">:</span> <span class="s2">&quot;Wallet&quot;</span><span class="p">,</span>
@@ -643,12 +640,9 @@
 
         <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">raise</span> <span class="n">MetadataError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">MetadataError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
 
-
-<div class="viewcode-block" id="get_metadata">
-<a class="viewcode-back" href="../../../../../autoapi/bittensor/core/extrinsics/asyncex/serving/index.html#bittensor.core.extrinsics.asyncex.serving.get_metadata">[docs]</a>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">get_metadata</span><span class="p">(</span>
     <span class="n">subtensor</span><span class="p">:</span> <span class="s2">&quot;AsyncSubtensor&quot;</span><span class="p">,</span>
     <span class="n">netuid</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -669,12 +663,9 @@
             <span class="n">block_hash</span><span class="o">=</span><span class="n">block_hash</span><span class="p">,</span>
             <span class="n">reuse_block_hash</span><span class="o">=</span><span class="n">reuse_block</span><span class="p">,</span>
         <span class="p">)</span>
-    <span class="k">return</span> <span class="n">commit_data</span></div>
+    <span class="k">return</span> <span class="n">commit_data</span>
 
 
-
-<div class="viewcode-block" id="get_last_bonds_reset">
-<a class="viewcode-back" href="../../../../../autoapi/bittensor/core/extrinsics/asyncex/serving/index.html#bittensor.core.extrinsics.asyncex.serving.get_last_bonds_reset">[docs]</a>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">get_last_bonds_reset</span><span class="p">(</span>
     <span class="n">subtensor</span><span class="p">:</span> <span class="s2">&quot;AsyncSubtensor&quot;</span><span class="p">,</span>
     <span class="n">netuid</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -691,8 +682,7 @@
         <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="n">netuid</span><span class="p">,</span> <span class="n">hotkey</span><span class="p">],</span>
         <span class="n">block_hash</span><span class="o">=</span><span class="n">block_hash</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="k">return</span> <span class="n">block</span></div>
-
+    <span class="k">return</span> <span class="n">block</span>
 </pre></div>
 
                 </article>

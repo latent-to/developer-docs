@@ -150,7 +150,6 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../config/index.html">bittensor.core.config</a></li>
@@ -161,12 +160,16 @@
 <li class="toctree-l4"><a class="reference internal" href="../settings/index.html">bittensor.core.settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../stream/index.html">bittensor.core.stream</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../subtensor/index.html">bittensor.core.subtensor</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../subtensor_api/index.html">bittensor.core.subtensor_api</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../synapse/index.html">bittensor.core.synapse</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../tensor/index.html">bittensor.core.tensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../threadpool/index.html">bittensor.core.threadpool</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../types/index.html">bittensor.core.types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
 </ul>
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../utils/index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -179,7 +182,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../utils/substrate_utils/index.html">bittensor.utils.substrate_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/version/index.html">bittensor.utils.version</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/weight_utils/index.html">bittensor.utils.weight_utils</a></li>
 </ul>
@@ -512,7 +514,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.core.dendrite.BaseModel">
-<span class="sig-prename descclassname"><span class="pre">bittensor.core.dendrite.</span></span><span class="sig-name descname"><span class="pre">BaseModel</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bittensor.utils.registration.torch.nn.Module</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><span class="pre">object</span></a></em><a class="headerlink" href="#bittensor.core.dendrite.BaseModel" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.dendrite.</span></span><span class="sig-name descname"><span class="pre">BaseModel</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bittensor.utils.registration.torch.nn.Module</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><span class="pre">object</span></a></em><a class="headerlink" href="#bittensor.core.dendrite.BaseModel" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
@@ -522,7 +524,7 @@
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.core.dendrite.DENDRITE_ERROR_MAPPING">
-<span class="sig-prename descclassname"><span class="pre">bittensor.core.dendrite.</span></span><span class="sig-name descname"><span class="pre">DENDRITE_ERROR_MAPPING</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><span class="pre">Exception</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.dendrite.DENDRITE_ERROR_MAPPING" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.dendrite.</span></span><span class="sig-name descname"><span class="pre">DENDRITE_ERROR_MAPPING</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><span class="pre">Exception</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.dendrite.DENDRITE_ERROR_MAPPING" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py class">
@@ -539,10 +541,9 @@ network requests and processing server responses.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>keypair</strong> (<em>Option</em><em>[</em><em>Union</em><em>[</em><em>bittensor_wallet.Wallet</em><em>, </em><em>bittensor_wallet.Keypair</em><em>]</em><em>]</em>) – The wallet or keypair used for
-signing messages.</p></li>
-<li><p><strong>external_ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The external IP address of the local system.</p></li>
-<li><p><strong>synapse_history</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of Synapse objects representing the historical responses.</p></li>
+<li><p><strong>keypair</strong> – The wallet or keypair used for signing messages.</p></li>
+<li><p><strong>external_ip</strong> – The external IP address of the local system.</p></li>
+<li><p><strong>synapse_history</strong> – A list of Synapse objects representing the historical responses.</p></li>
 <li><p><strong>wallet</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor_wallet.Wallet</em><em>, </em><em>bittensor_wallet.Keypair</em><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
@@ -553,7 +554,7 @@ signing messages.</p></li>
 <dd><p>Returns a string representation of the Dendrite object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -564,19 +565,19 @@ signing messages.</p></li>
 <dd><p>Returns a string representation of the Dendrite object, acting as a fallback for __str__().</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.dendrite.Dendrite.query">
-<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><span class="pre">Synapse</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><span class="pre">Synapse</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#bittensor.core.dendrite.Dendrite.query" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><span class="pre">Synapse</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><span class="pre">Synapse</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#bittensor.core.dendrite.Dendrite.query" title="Link to this definition">#</a></dt>
 <dd><p>Makes synchronous requests to one or multiple
 target Axons and returns responses.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[Union[AsyncGenerator[Any, Any], <a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse">bittensor.core.stream.StreamingSynapse</a>]]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[Union[AsyncGenerator[Any, Any], <a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse">bittensor.core.stream.StreamingSynapse</a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -588,16 +589,16 @@ target Axons and returns responses.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>axons</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em><em>, </em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>axons</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em><em>, </em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em>)</p></li>
 <li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>)</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
-<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>run_async</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>streaming</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>run_async</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>streaming</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[Union[AsyncGenerator[Any, Any], <a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse">bittensor.core.stream.StreamingSynapse</a>]]</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[Union[AsyncGenerator[Any, Any], <a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse">bittensor.core.stream.StreamingSynapse</a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -612,8 +613,8 @@ request to a specified Axon and processes the response.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>target_axon</strong> (<em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em>)</p></li>
 <li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>)</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
-<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -632,8 +633,8 @@ contains streaming response chunks before finally yielding the filled Synapse as
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>target_axon</strong> (<em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em>)</p></li>
 <li><p><strong>synapse</strong> (<a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse"><em>bittensor.core.stream.StreamingSynapse</em></a>)</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
-<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -652,7 +653,7 @@ synapse for making a request, including building headers and signing.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>target_axon_info</strong> (<em>bittensor.core.chain_data.AxonInfo</em>)</p></li>
 <li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>)</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -670,7 +671,7 @@ updates the local synapse state, and merges headers.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>server_response</strong> (<em>aiohttp.ClientResponse</em>)</p></li>
-<li><p><strong>json_response</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>)</p></li>
+<li><p><strong>json_response</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>)</p></li>
 <li><p><strong>local_synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>)</p></li>
 </ul>
 </dd>
@@ -683,7 +684,7 @@ updates the local synapse state, and merges headers.</p>
 <dd><p>Synchronously closes the internal aiohttp client session.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>using_new_loop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p>
+<dd class="field-odd"><p><strong>using_new_loop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -718,9 +719,7 @@ updates the local synapse state, and merges headers.</p>
 <p>Initializes the Dendrite object, setting up essential properties.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>wallet</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor_wallet.Wallet</em><em>, </em><em>bittensor_wallet.Keypair</em><em>]</em><em>]</em>) – The user’s wallet or keypair
-used for signing messages. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>, in which case a new
-<code class="xref py py-func docutils literal notranslate"><span class="pre">bittensor_wallet.Wallet().hotkey()</span></code> is generated and used.</p>
+<dd class="field-odd"><p><strong>wallet</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor_wallet.Wallet</em><em>, </em><em>bittensor_wallet.Keypair</em><em>]</em><em>]</em>) – The user’s wallet or keypair used for signing messages.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -738,10 +737,9 @@ network requests and processing server responses.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>keypair</strong> (<em>Option</em><em>[</em><em>Union</em><em>[</em><em>bittensor_wallet.Wallet</em><em>, </em><em>bittensor_wallet.Keypair</em><em>]</em><em>]</em>) – The wallet or keypair used for
-signing messages.</p></li>
-<li><p><strong>external_ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The external IP address of the local system.</p></li>
-<li><p><strong>synapse_history</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list of Synapse objects representing the historical responses.</p></li>
+<li><p><strong>keypair</strong> – The wallet or keypair used for signing messages.</p></li>
+<li><p><strong>external_ip</strong> – The external IP address of the local system.</p></li>
+<li><p><strong>synapse_history</strong> – A list of Synapse objects representing the historical responses.</p></li>
 <li><p><strong>wallet</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor_wallet.Wallet</em><em>, </em><em>bittensor_wallet.Keypair</em><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
@@ -752,7 +750,7 @@ signing messages.</p></li>
 <dd><p>Returns a string representation of the Dendrite object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -763,19 +761,19 @@ signing messages.</p></li>
 <dd><p>Returns a string representation of the Dendrite object, acting as a fallback for __str__().</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.dendrite.DendriteMixin.query">
-<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><span class="pre">Synapse</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><span class="pre">Synapse</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/bittensor/core/dendrite.html#DendriteMixin.query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.dendrite.DendriteMixin.query" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><span class="pre">Synapse</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><span class="pre">Synapse</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/bittensor/core/dendrite.html#DendriteMixin.query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.dendrite.DendriteMixin.query" title="Link to this definition">#</a></dt>
 <dd><p>Makes synchronous requests to one or multiple
 target Axons and returns responses.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[Union[AsyncGenerator[Any, Any], <a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse">bittensor.core.stream.StreamingSynapse</a>]]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[Union[AsyncGenerator[Any, Any], <a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse">bittensor.core.stream.StreamingSynapse</a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -787,16 +785,16 @@ target Axons and returns responses.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>axons</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em><em>, </em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>axons</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em><em>, </em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em>)</p></li>
 <li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>)</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
-<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>run_async</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>streaming</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>run_async</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>streaming</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[Union[AsyncGenerator[Any, Any], <a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse">bittensor.core.stream.StreamingSynapse</a>]]</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[Union[AsyncGenerator[Any, Any], <a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse">bittensor.core.stream.StreamingSynapse</a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -811,8 +809,8 @@ request to a specified Axon and processes the response.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>target_axon</strong> (<em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em>)</p></li>
 <li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>)</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
-<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -831,8 +829,8 @@ contains streaming response chunks before finally yielding the filled Synapse as
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>target_axon</strong> (<em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em>)</p></li>
 <li><p><strong>synapse</strong> (<a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse"><em>bittensor.core.stream.StreamingSynapse</em></a>)</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
-<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -851,7 +849,7 @@ synapse for making a request, including building headers and signing.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>target_axon_info</strong> (<em>bittensor.core.chain_data.AxonInfo</em>)</p></li>
 <li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>)</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -869,7 +867,7 @@ updates the local synapse state, and merges headers.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>server_response</strong> (<em>aiohttp.ClientResponse</em>)</p></li>
-<li><p><strong>json_response</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>)</p></li>
+<li><p><strong>json_response</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>)</p></li>
 <li><p><strong>local_synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>)</p></li>
 </ul>
 </dd>
@@ -882,7 +880,7 @@ updates the local synapse state, and merges headers.</p>
 <dd><p>Synchronously closes the internal aiohttp client session.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>using_new_loop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p>
+<dd class="field-odd"><p><strong>using_new_loop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -917,9 +915,7 @@ updates the local synapse state, and merges headers.</p>
 <p>Initializes the Dendrite object, setting up essential properties.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>wallet</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor_wallet.Wallet</em><em>, </em><em>bittensor_wallet.Keypair</em><em>]</em><em>]</em>) – The user’s wallet or keypair
-used for signing messages. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>, in which case a new
-<code class="xref py py-func docutils literal notranslate"><span class="pre">bittensor_wallet.Wallet().hotkey()</span></code> is generated and used.</p>
+<dd class="field-odd"><p><strong>wallet</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor_wallet.Wallet</em><em>, </em><em>bittensor_wallet.Keypair</em><em>]</em><em>]</em>) – The user’s wallet or keypair used for signing messages.</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -966,12 +962,10 @@ object, waits for a response, processes it, and then returns the updated Synapse
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>target_axon</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../chain_data/axon_info/index.html#bittensor.core.chain_data.axon_info.AxonInfo" title="bittensor.core.chain_data.axon_info.AxonInfo"><em>bittensor.core.chain_data.axon_info.AxonInfo</em></a><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em>) – The target Axon
-to send the request to.</p></li>
-<li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>) – The Synapse object encapsulating the data. Defaults to a new
-<code class="xref py py-func docutils literal notranslate"><span class="pre">Synapse()</span></code> instance.</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Maximum duration to wait for a response from the Axon in seconds. Defaults to <code class="docutils literal notranslate"><span class="pre">12.0</span></code>.</p></li>
-<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Determines if the received response should be deserialized. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>target_axon</strong> (<em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em>) – The target Axon to send the request to.</p></li>
+<li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>) – The Synapse object encapsulating the data.</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Maximum duration to wait for a response from the Axon in seconds.</p></li>
+<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Determines if the received response should be deserialized.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -994,13 +988,10 @@ data to be transmitted.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>target_axon</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../chain_data/axon_info/index.html#bittensor.core.chain_data.axon_info.AxonInfo" title="bittensor.core.chain_data.axon_info.AxonInfo"><em>bittensor.core.chain_data.axon_info.AxonInfo</em></a><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em>) – The target Axon
-to send the request to.</p></li>
-<li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>) – The Synapse object encapsulating the data. Defaults to a new
-<code class="xref py py-func docutils literal notranslate"><span class="pre">Synapse()</span></code> instance.</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Maximum duration to wait for a response (or a chunk of the response) from the Axon in
-seconds. Defaults to <code class="docutils literal notranslate"><span class="pre">12.0</span></code>.</p></li>
-<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Determines if each received chunk should be deserialized. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>target_axon</strong> (<em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em>) – The target Axon to send the request to.</p></li>
+<li><p><strong>synapse</strong> (<a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse"><em>bittensor.core.stream.StreamingSynapse</em></a>) – The Synapse object encapsulating the data.</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Maximum duration to wait for a response (or a chunk of the response) from the Axon in seconds.</p></li>
+<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Determines if each received chunk should be deserialized.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Yields<span class="colon">:</span></dt>
@@ -1022,7 +1013,7 @@ resources like open connections and internal buffers. It is crucial for preventi
 and should be called when the dendrite instance is no longer in use, especially in synchronous contexts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>using_new_loop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – A flag to determine whether this has been called with a new event loop rather than
+<dd class="field-odd"><p><strong>using_new_loop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag to determine whether this has been called with a new event loop rather than
 the default. This will indicate whether to close this event loop at the end of this call.</p>
 </dd>
 </dl>
@@ -1047,13 +1038,12 @@ It is advisable to use this method only when asynchronous context management is 
 <dt class="sig sig-object py" id="id7">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synapse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Synapse()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deserialize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_async</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streaming</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/dendrite.html#DendriteMixin.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Link to this definition">#</a></dt>
 <dd><p>Asynchronously sends requests to one or multiple Axons and collates their responses.</p>
-<p>This function acts as a bridge for sending multiple requests concurrently or sequentially
-based on the provided parameters. It checks the type of the target Axons, preprocesses
-the requests, and then sends them off. After getting the responses, it processes and
-collates them into a unified format.</p>
-<p>When querying an Axon that sends a single response, this function returns a Synapse object
-containing the response data. If multiple Axons are queried, a list of Synapse objects is
-returned, each containing the response from the corresponding Axon.</p>
+<p>This function acts as a bridge for sending multiple requests concurrently or sequentially based on the provided
+parameters. It checks the type of the target Axons, preprocesses the requests, and then sends them off. After
+getting the responses, it processes and collates them into a unified format.</p>
+<p>When querying an Axon that sends a single response, this function returns a Synapse object containing the
+response data. If multiple Axons are queried, a list of Synapse objects is returned, each containing the
+response from the corresponding Axon.</p>
 <p>For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
 <span class="kn">import</span> <span class="nn">bittensor</span>
@@ -1080,49 +1070,20 @@ iterated over to process each chunk individually.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>Union</strong><strong>[</strong><strong>list</strong><strong>[</strong><strong>Union</strong><strong>[</strong><strong>bittensor.core.chain_data.axon_info.AxonInfo</strong> (<em>axons</em>) – Union[bittensor.core.chain_data.axon_info.AxonInfo, bittensor.core.axon.Axon]]): The target Axons to
-send requests to. Can be a single Axon or a list of Axons.</p></li>
-<li><p><strong>bittensor.core.axon.Axon</strong><strong>]</strong><strong>]</strong> – Union[bittensor.core.chain_data.axon_info.AxonInfo, bittensor.core.axon.Axon]]): The target Axons to
-send requests to. Can be a single Axon or a list of Axons.</p></li>
-<li><p><strong>axons</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em><em>, </em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em>)</p></li>
-<li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>)</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
-<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>run_async</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>streaming</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[Union[AsyncGenerator[Any, Any], <a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse">bittensor.core.stream.StreamingSynapse</a>]]</p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>:param<span class="classifier">Union[bittensor.core.chain_data.axon_info.AxonInfo, bittensor.core.axon.Axon]]): The target Axons to</span></dt><dd><p>send requests to. Can be a single Axon or a list of Axons.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>) – The Synapse object encapsulating the data. Defaults to a new
-<code class="xref py py-func docutils literal notranslate"><span class="pre">Synapse()</span></code> instance.</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Maximum duration to wait for a response from an Axon in seconds. Defaults to <code class="docutils literal notranslate"><span class="pre">12.0</span></code>.</p></li>
-<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Determines if the received response should be deserialized. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
-<li><p><strong>run_async</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, sends requests concurrently. Otherwise, sends requests sequentially.
-Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
-<li><p><strong>streaming</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Indicates if the response is expected to be in streaming format. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
-<li><p><strong>axons</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em><em>, </em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>axons</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em><em>, </em><em>Union</em><em>[</em><em>bittensor.core.chain_data.AxonInfo</em><em>, </em><a class="reference internal" href="../axon/index.html#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon"><em>bittensor.core.axon.Axon</em></a><em>]</em><em>]</em>) – The target Axons to send requests to. Can be a single Axon or a list of Axons.</p></li>
+<li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>) – The Synapse object encapsulating the data.</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Maximum duration to wait for a response from an Axon in seconds.</p></li>
+<li><p><strong>deserialize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Determines if the received response should be deserialized.</p></li>
+<li><p><strong>run_async</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, sends requests concurrently. Otherwise, sends requests sequentially.</p></li>
+<li><p><strong>streaming</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Indicates if the response is expected to be in streaming format.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>If a single</dt><dd><p><cite>Axon</cite> is targeted, returns its response.</p>
-</dd>
-</dl>
-<p>If multiple Axons are targeted, returns a list of their responses.</p>
-</p>
+<dd class="field-even"><p>If a single <cite>Axon</cite> is targeted, returns its response. If multiple Axons are targeted, returns a list of
+their responses.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Union[AsyncGenerator, <a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>]]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[Union[AsyncGenerator[Any, Any], <a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse">bittensor.core.stream.StreamingSynapse</a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1140,7 +1101,7 @@ Defaults to <code class="docutils literal notranslate"><span class="pre">True</s
 and logs the error message using Bittensor’s logging system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>exception</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><em>Exception</em></a>) – The exception object to be logged.</p>
+<dd class="field-odd"><p><strong>exception</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><em>Exception</em></a>) – The exception object to be logged.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
@@ -1156,9 +1117,9 @@ the request.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>target_axon_info</strong> (<a class="reference internal" href="../chain_data/axon_info/index.html#bittensor.core.chain_data.axon_info.AxonInfo" title="bittensor.core.chain_data.axon_info.AxonInfo"><em>bittensor.core.chain_data.axon_info.AxonInfo</em></a>) – The target axon information.</p></li>
+<li><p><strong>target_axon_info</strong> (<em>bittensor.core.chain_data.AxonInfo</em>) – The target axon information.</p></li>
 <li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>) – The synapse object to be preprocessed.</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The request timeout duration in seconds. Defaults to <code class="docutils literal notranslate"><span class="pre">12.0</span></code> seconds.</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The request timeout duration in seconds.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1173,22 +1134,23 @@ the request.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.dendrite.DendriteMixin.process_error_message">
 <span class="sig-name descname"><span class="pre">process_error_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">synapse</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exception</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/dendrite.html#DendriteMixin.process_error_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.dendrite.DendriteMixin.process_error_message" title="Link to this definition">#</a></dt>
-<dd><p>Handles exceptions that occur during network requests, updating the synapse with appropriate status codes and messages.</p>
-<p>This method interprets different types of exceptions and sets the corresponding status code and
-message in the synapse object. It covers common network errors such as connection issues and timeouts.</p>
+<dd><p>Handles exceptions that occur during network requests, updating the synapse with appropriate status codes and
+messages.</p>
+<p>This method interprets different types of exceptions and sets the corresponding status code and message in the
+synapse object. It covers common network errors such as connection issues and timeouts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>) – The synapse object associated with the request.</p></li>
-<li><p><strong>request_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the request during which the exception occurred.</p></li>
-<li><p><strong>exception</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><em>Exception</em></a>) – The exception object caught during the request.</p></li>
+<li><p><strong>synapse</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a><em>, </em><a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse"><em>bittensor.core.stream.StreamingSynapse</em></a><em>]</em>) – The synapse object associated with the request.</p></li>
+<li><p><strong>request_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the request during which the exception occurred.</p></li>
+<li><p><strong>exception</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><em>Exception</em></a>) – The exception object caught during the request.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The updated synapse object with the error status code and message.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">Synapse</a> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>)</p>
+<dd class="field-odd"><p><a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">Synapse</a></p>
 </dd>
 </dl>
 <div class="admonition note">
@@ -1205,9 +1167,9 @@ by the server.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>server_response</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><em>object</em></a>) – <p>The <a class="reference external" href="https://github.com/aio-libs/aiohttp">aiohttp</a> response object from the server.</p>
+<li><p><strong>server_response</strong> (<em>aiohttp.ClientResponse</em>) – <p>The <a class="reference external" href="https://github.com/aio-libs/aiohttp">aiohttp</a> response object from the server.</p>
 </p></li>
-<li><p><strong>json_response</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The parsed JSON response from the server.</p></li>
+<li><p><strong>json_response</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – The parsed JSON response from the server.</p></li>
 <li><p><strong>local_synapse</strong> (<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a>) – The local synapse object to be updated.</p></li>
 </ul>
 </dd>
@@ -1225,34 +1187,17 @@ by the server.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>Union</strong><strong>[</strong><strong>list</strong><strong>[</strong><strong>Union</strong><strong>[</strong><strong>bittensor.core.chain_data.axon_info.AxonInfo</strong> (<em>axons</em>) – Union[‘bittensor.core.chain_data.axon_info.AxonInfo’, ‘bittensor.core.axon.Axon’]]): The list of target
-Axon information.</p></li>
-<li><p><strong>'bittensor.core.axon.Axon'</strong><strong>]</strong><strong>]</strong> – Union[‘bittensor.core.chain_data.axon_info.AxonInfo’, ‘bittensor.core.axon.Axon’]]): The list of target
-Axon information.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[Union[AsyncGenerator[Any, Any], <a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse">bittensor.core.stream.StreamingSynapse</a>]]</p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>:param<span class="classifier">Union[‘bittensor.core.chain_data.axon_info.AxonInfo’, ‘bittensor.core.axon.Axon’]]): The list of target</span></dt><dd><p>Axon information.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>synapse</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse"><em>bittensor.core.synapse.Synapse</em></a><em>]</em>) – The Synapse object. Defaults to <code class="xref py py-func docutils literal notranslate"><span class="pre">Synapse()</span></code>.</p></li>
-<li><p><strong>timeout</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>]</em>) – The request timeout duration in seconds. Defaults to <code class="docutils literal notranslate"><span class="pre">12.0</span></code> seconds.</p></li>
+<li><p><strong>axons</strong> – The list of target Axon information.</p></li>
+<li><p><strong>synapse</strong> – The Synapse object.</p></li>
+<li><p><strong>timeout</strong> – The request timeout duration in seconds.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>If a single target axon is
-provided, returns the response from that axon. If multiple target axons are provided, returns a list of
-responses from all target axons.</p>
+<dd class="field-even"><p>If a single target axon is provided, returns the response from that axon. If multiple target axons are
+provided, returns a list of responses from all target axons.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Union[<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>]]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[Union[AsyncGenerator[Any, Any], <a class="reference internal" href="../synapse/index.html#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">bittensor.core.synapse.Synapse</a>, <a class="reference internal" href="../stream/index.html#bittensor.core.stream.StreamingSynapse" title="bittensor.core.stream.StreamingSynapse">bittensor.core.stream.StreamingSynapse</a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1297,7 +1242,7 @@ within the dendrite, adhering to the async nature of the network interactions in
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.dendrite.DendriteMixin.synapse_history">
-<span class="sig-name descname"><span class="pre">synapse_history</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#bittensor.core.dendrite.DendriteMixin.synapse_history" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">synapse_history</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#bittensor.core.dendrite.DendriteMixin.synapse_history" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

@@ -150,7 +150,6 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4 current active"><a class="reference internal" href="../index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../config/index.html">bittensor.core.config</a></li>
@@ -161,12 +160,16 @@
 <li class="toctree-l4"><a class="reference internal" href="../../settings/index.html">bittensor.core.settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../stream/index.html">bittensor.core.stream</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../subtensor/index.html">bittensor.core.subtensor</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../subtensor_api/index.html">bittensor.core.subtensor_api</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../synapse/index.html">bittensor.core.synapse</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tensor/index.html">bittensor.core.tensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../threadpool/index.html">bittensor.core.threadpool</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../timelock/index.html">bittensor.core.timelock</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../types/index.html">bittensor.core.types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
 </ul>
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../utils/index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -179,7 +182,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/registration/index.html">bittensor.utils.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../utils/substrate_utils/index.html">bittensor.utils.substrate_utils</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/version/index.html">bittensor.utils.version</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/weight_utils/index.html">bittensor.utils.weight_utils</a></li>
 </ul>
@@ -410,7 +412,6 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.registrations"><code class="docutils literal notranslate"><span class="pre">DelegateInfoBase.registrations</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.return_per_1000"><code class="docutils literal notranslate"><span class="pre">DelegateInfoBase.return_per_1000</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.take"><code class="docutils literal notranslate"><span class="pre">DelegateInfoBase.take</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.total_daily_return"><code class="docutils literal notranslate"><span class="pre">DelegateInfoBase.total_daily_return</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.validator_permits"><code class="docutils literal notranslate"><span class="pre">DelegateInfoBase.validator_permits</span></code></a></li>
 </ul>
 </li>
@@ -445,7 +446,7 @@
 <td><p>Base class containing common delegate information fields.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.chain_data.delegate_info.DelegatedInfo" title="bittensor.core.chain_data.delegate_info.DelegatedInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DelegatedInfo</span></code></a></p></td>
-<td><p>Dataclass for delegated information. This class represents a delegate's information</p></td>
+<td><p>Dataclass for delegated information. This class represents a delegate's information specific to a particular subnet.</p></td>
 </tr>
 </tbody>
 </table>
@@ -459,18 +460,18 @@
 <dd><p>Bases: <a class="reference internal" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase" title="bittensor.core.chain_data.delegate_info.DelegateInfoBase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DelegateInfoBase</span></code></a></p>
 <p>Dataclass for delegate information.</p>
 <dl class="simple">
-<dt>Additional Attributes:</dt><dd><p>total_stake (dict[int, Balance]): Total stake of the delegate mapped by netuid.
-nominators (dict[str, dict[int, Balance]]): Mapping of nominator SS58 addresses to their stakes per subnet.</p>
+<dt>Additional Attributes:</dt><dd><p>total_stake: Total stake of the delegate mapped by netuid.
+nominators: Mapping of nominator SS58 addresses to their stakes per subnet.</p>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.delegate_info.DelegateInfo.nominators">
-<span class="sig-name descname"><span class="pre">nominators</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfo.nominators" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">nominators</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfo.nominators" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.delegate_info.DelegateInfo.total_stake">
-<span class="sig-name descname"><span class="pre">total_stake</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfo.total_stake" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">total_stake</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfo.total_stake" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -483,29 +484,28 @@ nominators (dict[str, dict[int, Balance]]): Mapping of nominator SS58 addresses 
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>hotkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Hotkey of delegate.</p></li>
-<li><p><strong>owner_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Coldkey of owner.</p></li>
-<li><p><strong>take</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Take of the delegate as a percentage.</p></li>
-<li><p><strong>validator_permits</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – List of subnets that the delegate is allowed to validate on.</p></li>
-<li><p><strong>registrations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – List of subnets that the delegate is registered on.</p></li>
-<li><p><strong>return_per_1000</strong> (<a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>Balance</em></a>) – Return per 1000 tao of the delegate over a day.</p></li>
-<li><p><strong>total_daily_return</strong> (<a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>Balance</em></a>) – Total daily return of the delegate.</p></li>
+<li><p><strong>hotkey_ss58</strong> – Hotkey of delegate.</p></li>
+<li><p><strong>owner_ss58</strong> – Coldkey of owner.</p></li>
+<li><p><strong>take</strong> – Take of the delegate as a percentage.</p></li>
+<li><p><strong>validator_permits</strong> – List of subnets that the delegate is allowed to validate on.</p></li>
+<li><p><strong>registrations</strong> – List of subnets that the delegate is registered on.</p></li>
+<li><p><strong>return_per_1000</strong> – Return per 1000 tao of the delegate over a day.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.delegate_info.DelegateInfoBase.hotkey_ss58">
-<span class="sig-name descname"><span class="pre">hotkey_ss58</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.hotkey_ss58" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">hotkey_ss58</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.hotkey_ss58" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.delegate_info.DelegateInfoBase.owner_ss58">
-<span class="sig-name descname"><span class="pre">owner_ss58</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.owner_ss58" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">owner_ss58</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.owner_ss58" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.delegate_info.DelegateInfoBase.registrations">
-<span class="sig-name descname"><span class="pre">registrations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.registrations" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">registrations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.registrations" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -515,17 +515,12 @@ nominators (dict[str, dict[int, Balance]]): Mapping of nominator SS58 addresses 
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.delegate_info.DelegateInfoBase.take">
-<span class="sig-name descname"><span class="pre">take</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.take" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="bittensor.core.chain_data.delegate_info.DelegateInfoBase.total_daily_return">
-<span class="sig-name descname"><span class="pre">total_daily_return</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.total_daily_return" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">take</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.take" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.delegate_info.DelegateInfoBase.validator_permits">
-<span class="sig-name descname"><span class="pre">validator_permits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.validator_permits" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">validator_permits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.validator_permits" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -534,16 +529,15 @@ nominators (dict[str, dict[int, Balance]]): Mapping of nominator SS58 addresses 
 <dt class="sig sig-object py" id="bittensor.core.chain_data.delegate_info.DelegatedInfo">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.delegate_info.</span></span><span class="sig-name descname"><span class="pre">DelegatedInfo</span></span><a class="reference internal" href="../../../../../_modules/bittensor/core/chain_data/delegate_info.html#DelegatedInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegatedInfo" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase" title="bittensor.core.chain_data.delegate_info.DelegateInfoBase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DelegateInfoBase</span></code></a></p>
-<p>Dataclass for delegated information. This class represents a delegate’s information
-specific to a particular subnet.</p>
+<p>Dataclass for delegated information. This class represents a delegate’s information specific to a particular subnet.</p>
 <dl class="simple">
-<dt>Additional Attributes:</dt><dd><p>netuid (int): Network ID of the subnet.
-stake (Balance): Stake amount for this specific delegation.</p>
+<dt>Additional Attributes:</dt><dd><p>netuid: Network ID of the subnet.
+stake: Stake amount for this specific delegation.</p>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.delegate_info.DelegatedInfo.netuid">
-<span class="sig-name descname"><span class="pre">netuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegatedInfo.netuid" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">netuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.delegate_info.DelegatedInfo.netuid" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -615,7 +609,6 @@ stake (Balance): Stake amount for this specific delegation.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.registrations"><code class="docutils literal notranslate"><span class="pre">DelegateInfoBase.registrations</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.return_per_1000"><code class="docutils literal notranslate"><span class="pre">DelegateInfoBase.return_per_1000</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.take"><code class="docutils literal notranslate"><span class="pre">DelegateInfoBase.take</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.total_daily_return"><code class="docutils literal notranslate"><span class="pre">DelegateInfoBase.total_daily_return</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.delegate_info.DelegateInfoBase.validator_permits"><code class="docutils literal notranslate"><span class="pre">DelegateInfoBase.validator_permits</span></code></a></li>
 </ul>
 </li>
