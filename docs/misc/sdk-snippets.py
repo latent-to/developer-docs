@@ -32,7 +32,7 @@ balance = sub.get_balance(wallet.coldkey.ss58_address)
 print(balance)
 
 
-# stake exchange rate
+# stake exchange rate (with and without slippage)
 import bittensor as bt
 
 sub = bt.Subtensor(network="test")
@@ -314,4 +314,50 @@ async def main():
             print("Failed to move stake.")
 # Because move_stake is asynchronous, we run it in an event loop:
 asyncio.run(main())
+
+# check registration status
+
+import bittensor as bt
+# Replace below with your SS58 hotkey
+hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
+network = "finney"
+netuid = 1 # subnet uid
+sub = bt.Subtensor(network)
+mg = sub.metagraph(netuid)
+uid = 2 # Your UID
+registered = mg.hotkeys[uid] == hotkey
+if not registered:
+  print(f"Miner at uid {uid} not registered")
+else:
+  print(f"Miner at uid {uid} registered")
+
+# metagraph info
+
+#!/usr/bin/env python3
+
+from bittensor.core.metagraph import Metagraph
+
+def main():
+    # Initialize metagraph for subnet 1
+    print("Initializing metagraph for subnet 1...")
+    metagraph = Metagraph(netuid=1, network="finney", sync=True)
+
+    # Get basic metagraph metadata
+    print("\n=== Basic Metagraph Metadata ===")
+    print(f"Network: {metagraph.network}")
+    print(f"Subnet UID: {metagraph.netuid}")
+    print(f"Total neurons: {metagraph.n.item()}")
+    print(f"Current block: {metagraph.block.item()}")
+    print(f"Version: {metagraph.version.item()}")
+
+    # Get subnet information
+    print("\n=== Subnet Information ===")
+    print(f"Subnet name: {metagraph.name}")
+    print(f"Subnet symbol: {metagraph.symbol}")
+    print(f"Registered at block: {metagraph.network_registered_at}")
+    print(f"Max UIDs: {metagraph.max_uids}")
+    print(f"Owner: {metagraph.owner_coldkey}")
+
+if __name__ == "__main__":
+    main()
 

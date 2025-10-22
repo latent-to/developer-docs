@@ -17,11 +17,11 @@ See [Announcements](../learn/announcements) for updates.
 :::
 
 **Prerequisites**
+
 - A local Subtensor chain running. See: [Run a Local Bittensor Blockchain Instance](../local-build/deploy)
 - A local subnet created (and emissions started). See: [Create a Subnet (Locally)](../local-build/create-subnet)
 - Wallets provisioned and funded for local development. See: [Provision Wallets](../local-build/provision-wallets)
 - BTCLI installed (development version required for mechanism commands)
-
 
 :::tip
 Substitute your subnet's netuid, which you can find with `btcli subnet list`.
@@ -30,7 +30,6 @@ Substitute your subnet's netuid, which you can find with `btcli subnet list`.
 :::warning Runtime limit
 As of the current Subtensor runtime, a subnet can have a maximum of 2 mechanisms. Attempts to set a higher count will be rejected by the chain (runtime enforces `MaxMechanismCount = 2`).
 :::
-
 
 ## Initialize SDK and wallet
 
@@ -51,7 +50,8 @@ subtensor = bt.Subtensor(network="local")
 # Load the subnet owner wallet (assumes wallet is provisioned locally)
 wallet = bt.Wallet(name="alice")
 
-netuid = 7
+# Input the netuid of the created subnet
+netuid = 2
 print("SDK version:", bt.__version__)
 print(f"Connected to {subtensor.network} — managing subnet {netuid} with wallet {wallet.name}")
 ```
@@ -86,7 +86,6 @@ else:
 Subnet 7 mech count: 1
 No split defined.
 ```
-
 
 ## Create a second mechanism
 
