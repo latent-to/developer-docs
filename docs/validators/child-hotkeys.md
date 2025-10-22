@@ -205,14 +205,14 @@ To set child hotkey take, run the following command:
 ```bash
 btcli stake child take \
   --netuid <netuid> \
-  --hotkey <child hotkey> \
+  --child-hotkey-ss58 <child hotkey> \
   --take <decimal number> \
   --wallet.name <coldkey>
 ```
 
 ### Parameters
 
-- `--hotkey`: A single SS58 of the child hotkey.
+- `--child-hotkey-ss58 `: A single SS58 of the child hotkey. If not provided, it assigns the take value to the hotkey of the signing wallet.
 - `--take`: A value between `0` (0%) and `0.18` (18%). Default value is `0`.
 - `--netuid`: The `netuid` in which this child hotkey's `take` is applicable. Note that a child hotkey's `take` is subnet-specific, i.e., a child hotkey can have one `take` in one `netuid` and a different `take` in another `netuid`.
 
