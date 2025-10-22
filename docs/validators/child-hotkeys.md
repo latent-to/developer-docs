@@ -65,10 +65,10 @@ The child hotkey features are as follows:
 
 The following rate limits apply for child hotkeys:
 
-- A child hotkey's take rate can only be adjusted once per 30 days.
-- One successful execution of `set_children` or `revoke_children` is allowed for every 720 blocks.
+- Setting or revoking children is allowed for every 150 blocks (~30 minutes).
+- A given child hotkey's take rate can only be adjusted once per 30 days.
 
-See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
+See [Rate Limits in Bittensor: Child hotkey operations rate limit](../learn/chain-rate-limits#child-hotkey-operations-rate-limit).
 
 ## Minimum stake requirement
 
@@ -176,7 +176,7 @@ btcli stake child revoke
 ```
 
 ### Example
-
+<!-- this is still the wrong syntax! Let's make sure all the examples are still valid-->
 ```bash
 btcli stake revoke_children \
   --netuid 4 \
