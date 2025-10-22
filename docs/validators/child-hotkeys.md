@@ -176,9 +176,9 @@ btcli stake child revoke
 ```
 
 ### Example
-<!-- this is still the wrong syntax! Let's make sure all the examples are still valid-->
+
 ```bash
-btcli stake revoke_children \
+btcli stake child revoke \
   --netuid 4 \
   --hotkey 5DqJdDLU23m7yf6rZSmbLTshU7Bfn9eCTBkduhF4r9i73B9Y \
   --wallet.name Alice
