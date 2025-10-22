@@ -504,7 +504,7 @@ from bittensor.core.async_subtensor import AsyncSubtensor
 async def main():
     async with AsyncSubtensor("test") as subtensor:
         wallet = bt.Wallet(
-            name="WALLET_HOTKEY"
+            name="WALLET_NAME"
         )
         wallet.unlock_coldkey()
         amount = bt.Balance.from_tao(1.0).set_unit(5) # set amount in origin subnet
@@ -527,5 +527,5 @@ asyncio.run(main())
 ```
 
 :::info
-Replace `WALLET_HOTKEY` with the name of the funded wallet you intend to use.
+Replace `WALLET_NAME` with the name of the funded wallet you intend to use.
 :::
