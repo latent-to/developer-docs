@@ -88,11 +88,11 @@ In theory this means that without your encryption password, it is impossible to 
 However, still consider that using your coldkey on a device offers other ways for attackers to steal your key, even without decrypting it.
 See [Coldkey workstation security](./coldkey-hotkey-security#coldkey-workstation).
 
-Secure wallet apps supported by Opentensor Foundation include:
+Secure wallet apps include:
 
-- The Bittensor wallet app for mobile: [bittensor.com/wallet](https://bittensor.com/wallet)
-- [The Chrome extension](https://chromewebstore.google.com/detail/bittensor-wallet/bdgmdoedahdcjmpmifafdhnffjinddgc), which is also compatible with use of a Ledger hardware wallet. See [Using Ledger Hardware Wallet](../staking-and-delegation/using-ledger-hw-wallet.md)
-- [The Crucible wallet](https://cruciblelabs.com) a Tao wallet featuring an auto-allocator for dynamic TAO staking across subnets, with full Ledger integration.
+- The Bittensor wallet app for mobile, by Opentensor Foundation: [bittensor.com/wallet](https://bittensor.com/wallet)
+- [The Chrome extension](https://chromewebstore.google.com/detail/bittensor-wallet/bdgmdoedahdcjmpmifafdhnffjinddgc), which is also compatible with use of a Ledger hardware wallet, by Opentensor Foundation. See [Using Ledger Hardware Wallet](../staking-and-delegation/using-ledger-hw-wallet.md)
+- [The Crucible wallet](https://cruciblelabs.com) by Crucible Labs a Tao wallet featuring an auto-allocator for dynamic TAO staking across subnets, with full Ledger integration.
 
 ### `btcli` and the Bittensor Python SDK
 
