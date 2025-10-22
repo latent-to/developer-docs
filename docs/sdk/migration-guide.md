@@ -489,6 +489,24 @@ fee = subtensor.get_transfer_fee(wallet, destination, amount)
 
 The `value` parameter has been renamed to `amount` for consistency with other amount parameters across the SDK.
 
+#### Weight Setting Methods Parameter Rename
+
+The following weight-setting methods have renamed `max_retries` to `max_attempts`:
+
+```python
+# ❌ Old:
+subtensor.commit_weights(wallet, netuid, uids, weights, max_retries=5)
+subtensor.reveal_weights(wallet, netuid, uids, weights, salt, max_retries=5)
+subtensor.set_weights(wallet, netuid, uids, weights, max_retries=5)
+
+# ✅ New:
+subtensor.commit_weights(wallet, netuid, uids, weights, max_attempts=5)
+subtensor.reveal_weights(wallet, netuid, uids, weights, salt, max_attempts=5)
+subtensor.set_weights(wallet, netuid, uids, weights, max_attempts=5)
+```
+
+**New Validation:** The `max_attempts` parameter now includes validation. If `max_attempts=0` or negative, the method will return an `ExtrinsicResponse` with `success=False` and an appropriate error message instead of attempting the operation.
+
 ## Breaking Changes:Removed Methods
 
 ### Duplicate References
