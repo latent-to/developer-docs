@@ -9,12 +9,11 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # The Weight Copying Problem
 
-This page explains **weight copying**—a free-riding behavior where validators copy other validators' work instead of independently evaluating miners. This article covers how weight copying works, why it's problematic, how Bittensor's [Commit Reveal](./commit-reveal.md) mechanism prevents it, and best practices for subnet owners.
+This page explains **weight copying**—a free-riding behavior where validators copy other validators' work instead of independently evaluating miners. This article covers how weight copying works, why it is problematic, and how subnet owners can prevent weight copying on their subnets using Bittensor's [Commit Reveal](./commit-reveal.md) mechanism.
 
-
+See also:
 - [Opentensor Weight Copying technical paper (PDF)](pathname:///papers/BT_Weight_Copier-29May2024.pdf)
 - [Opentesor Blog: Weight Copying in Bittensor](https://blog.bittensor.com/weight-copying-in-bittensor-422585ab8fa5) 
-
 
 ## What is weight copying?
 
