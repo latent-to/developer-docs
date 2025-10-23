@@ -9,7 +9,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # The Weight Copying Problem
 
-This page explains **weight copying**—a free-riding behavior where validators copy other validators' work instead of independently evaluating miners. This article covers how weight copying works, why it's problematic, how Bittensor's [commit-reveal](./commit-reveal.md) mechanism prevents it, and best practices for subnet owners.
+This page explains **weight copying**—a free-riding behavior where validators copy other validators' work instead of independently evaluating miners. This article covers how weight copying works, why it's problematic, how Bittensor's [Commit Reveal](./commit-reveal.md) mechanism prevents it, and best practices for subnet owners.
 
 
 - [Opentensor Weight Copying technical paper (PDF)](pathname:///papers/BT_Weight_Copier-29May2024.pdf)
@@ -53,7 +53,7 @@ Weight copiers earn dividends without doing the work, in a sense free-riding or 
 
 If weight copying is more profitable than honest validation, rational actors will copy weights. Another way of thinking about this is that validators must actually pay a cost to validate honestly. Therefore, when weight copying is profitable, the incentive system driving Bittensor is distorted, weakening its ability to fulfill its purpose: producing the best digital commodities in the world.
 
-Therefore, it can be seen as subnet owners' responsibility to the community, as well as being in their own interests, to prevent ensure that weight copying is not profitable in their subnets. The best way to do this is by enabling and properly configuring [commit reveal](./commit-reveal).
+Therefore, it can be seen as subnet owners' responsibility to the community, as well as being in their own interests, to prevent ensure that weight copying is not profitable in their subnets. The best way to do this is by enabling and properly configuring [Commit Reveal](./commit-reveal).
 
 
 Historically, many large weight copiers used an optimized strategy which we can call the stake-weighted averaging attack, that actually gives them *higher* returns than any single honest validator:
@@ -66,15 +66,15 @@ Historically, many large weight copiers used an optimized strategy which we can 
 
 This works because in Yuma Consensus, validators are rewarded based on how well their weights align with the emerging consensus. By calculating the stake-weighted median, weight copiers can predict consensus better than any individual honest validator who might have some disagreement with others. As a result, optimized weight copiers achieve higher validator dividends per stake than honest validators, making weight copying more profitable than honest work.
 
-This is a fundamental incentive problem for Bittensor subnet owners: if validators are needed to do validation work rather than weight copy, the validation work itself must be incentivized more than weight-copying. Fortunately, the commit reveal mechanism exists to make weight copying impossible.
+This is a fundamental incentive problem for Bittensor subnet owners: if validators are needed to do validation work rather than weight copy, the validation work itself must be incentivized more than weight-copying. Fortunately, the Commit Reveal mechanism exists to make weight copying impossible.
 
-## How commit-reveal prevents weight copying
+## How Commit Reveal prevents weight copying
 
-The [commit-reveal mechanism](./commit-reveal.md) solves weight copying by introducing a time delay between when weights are set and when they're publicly visible.
+Bittensor's [Commit Reveal mechanism](./commit-reveal.md) solves weight copying by introducing a time delay between when weights are set and when they're publicly visible.
 
 When weights are concealed for one or more tempos, weight copiers only have access to **stale weights** from previous tempos. If miner performance has changed since those old weights were set, the old weights are inaccurate, and copying them will put the copiers far from consensus. This will wreck their vtrust and their emissions, making weight copying unprofitable.
 
-### The commit reveal flow
+### The Commit Reveal Flow
 
 1. Validators set weights
 2. Weights are encrypted using time-lock encryption
@@ -98,7 +98,7 @@ style={{width: '100%', maxWidth: 900}}
 
 ### The caveat: Dynamic scoring required
 
-Commit-reveal only works if **miner performance actually changes** over the timescale of the concealment period. If the ground truth about miner rankings is static, then even stale weights will be accurate, and weight copying can still work.
+Commit reveal only works if **miner performance actually changes** over the timescale of the concealment period. If the ground truth about miner rankings is static, then even stale weights will be accurate, and weight copying can still work.
 
 Subnet owners should design subnets that demand continuous miner improvement, which is important generally for producing best-in-class digital commodities, and also ensures that weights from yesterday are less accurate than fresh evaluations today, preventing weight copying.
 
@@ -106,9 +106,9 @@ Subnet owners should design subnets that demand continuous miner improvement, wh
 
 Understanding how weight copying evolved helps explain why the current system works the way it does.
 
-### Commit-reveal v3 (CRv3): The same-tempo vulnerability
+### Commit reveal v3 (CRv3): The same-tempo vulnerability
 
-In the third version of commit-reveal:
+In the third version of Commit Reveal:
 - Validators committed weights (encrypted)
 - Validators revealed weights (decrypted) **in the same tempo**
 - Both operations happened before the epoch calculation
@@ -123,7 +123,7 @@ Weight copiers discovered they could:
 
 Despite weights being "concealed," the same-tempo reveal gave weight copiers enough time to copy and submit.
 
-### The fix: Commit-reveal v4 (CRv4)
+### The fix: Commit reveal v4 (CRv4)
 
 CRv4 fixed this by:
 - Using [Drand time-lock encryption](https://drand.love/docs/timelock-encryption/) for automatic reveals

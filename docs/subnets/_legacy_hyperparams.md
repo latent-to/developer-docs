@@ -105,7 +105,7 @@ Consider Subnet-1 where `max_weight_limit` is set to 455 and `min_allowed_weight
 : The interval, measured as a number of blocks, that elapses before unencrypted weights are revealed.
 
 **Value**
-: The commit reveal interval, as an integer count of blocks.
+: The Commit Reveal interval, as an integer count of blocks.
 
 **Setting**
 :  This parameter can be changed by the subnet owner, and must be tuned carefully for the subnet. It should always be greater than the [immunity period](#immunity_period) to avoid unintended miner deregistration&mdash;see [Commit Reveal and Immunity Period](./commit-reveal.md#commit-reveal-and-immunity-period).
@@ -131,7 +131,7 @@ Varies between subnets, for example 7200 blocks for Subnet-1.
 **Setting**
 : This parameter can be changed by the subnet owner, and must be tuned carefully for the subnet. 
 
-If [Commit Reveal](./commit-reveal.md) is enabled for the subnet, the value of the commit reveal interval should always be greater than the immunity period within the subnet, to avoid unintended miner deregistration&mdash;see [Commit Reveal and Immunity Period](./commit-reveal.md#commit-reveal-and-immunity-period).
+If [Commit Reveal](./commit-reveal.md) is enabled for the subnet, the value of the Commit Reveal interval should always be greater than the immunity period within the subnet, to avoid unintended miner deregistration&mdash;see [Commit Reveal and Immunity Period](./commit-reveal.md#commit-reveal-and-immunity-period).
 
 :::tip immunity period for a subnet
 

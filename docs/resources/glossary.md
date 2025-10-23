@@ -70,7 +70,7 @@ A combination of two keys, a coldkey for secure storage and high-risk operations
 
 ### Commit Reveal
 
-The commit reveal feature is designed to solve the weight-copying problem by giving would-be weight-copiers access only to stale weights. Copying stale weights should result in validators departing from consensus.
+The Commit Reveal feature is designed to solve the weight-copying problem by giving would-be weight-copiers access only to stale weights. Copying stale weights should result in validators departing from consensus.
 
 **See also:**
 - [Commit Reveal](../concepts/commit-reveal.md)
@@ -182,7 +182,7 @@ The process of removing a subnet miner or a subnet validator from the subnet due
 
 Drand provides **time-lock encryption**, a cryptographic technique that encrypts data so that it can only be decrypted *after a specific time has passed*. Drand provides this capability by regularly producing randomness "pulses" at fixed intervals. Data encrypted for a future Drand round cannot be decrypted until that round's randomness is published—even by the person who encrypted it.
 
-Key properties that make Drand suitable for applications in Bittensor, such as [commit reveal](#commit-reveal):
+Key properties that make Drand suitable for applications in Bittensor, such as [Commit Reveal](#commit-reveal):
 - **Decentralized**: No single entity controls the randomness generation
 - **Verifiable**: Anyone can verify that randomness was generated correctly
 - **Predictable timing**: Pulses are produced at regular intervals

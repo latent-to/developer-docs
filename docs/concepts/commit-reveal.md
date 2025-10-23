@@ -7,7 +7,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Commit Reveal
 
-This page describes the **commit reveal** feature: a configurable waiting period that elapses between when consensus weights set by subnet validators are first committed, and when they are revealed publicly and included in [Yuma Consensus](../learn/yuma-consensus).
+This page describes the **Commit Reveal** feature: a configurable waiting period that elapses between when consensus weights set by subnet validators are first committed, and when they are revealed publicly and included in [Yuma Consensus](../learn/yuma-consensus).
 
 
 ## Overview
@@ -17,26 +17,26 @@ In each Bittensor subnet, each validator scores&mdash;or _'weights'_&mdash;each 
 The weight matrix is public information, and must be, so that emissions in the Bittensor platform can be transparently fair. However, this transparency makes it possible for subnet validators to free-ride on the work of other validators by copying the latest consensus rather than independently evaluating subnet miners. This is unfair and potentially degrades the quality of validation work, undermining Bittensor's ability to incentivize the best miners and produce the best digital commodities overall. This is known as the **weight copying problem**.
 
 :::tip Learn more about weight copying
-For a detailed explanation of how weight copying works, why it's problematic, and how commit-reveal prevents it, see [The Weight Copying Problem](./weight-copying-in-bittensor.md).
+For a detailed explanation of how weight copying works, why it's problematic, and how Commit Reveal prevents it, see [The Weight Copying Problem](./weight-copying-in-bittensor.md).
 :::
 
-The commit reveal feature is designed to solve the **weight copying problem** by hiding weights until they are stale. Copying stale weights should result in validators departing from consensus.
+The Commit Reveal feature is designed to solve the **weight copying problem** by hiding weights until they are stale. Copying stale weights should result in validators departing from consensus.
 
 Commit reveal uses **[Drand time-lock encryption](https://drand.love/docs/timelock-encryption/)** to automatically reveal validator weights after a concealment period. When a validator sets weights, they are cryptographically encrypted and can only be decrypted after the configured number of tempos has passed. This automation eliminates the need for manual reveals and prevents selective revelation attacks.
 
-However, it is critical to note that this only works if the consensus weight matrix changes sufficiently on the time scale of the commit reveal interval. If the demands on miners are too static, and miner performance is very stable, weight copying will still be successful. The only solution for this is to demand continuous improvement from miners, requiring them to continuously evolve to maintain their scoring. Combined with a properly tuned Commit Reveal interval, this will keep validators honest, as well as producing the best digital commodities generally.
+However, it is critical to note that this only works if the consensus weight matrix changes sufficiently on the time scale of the Commit Reveal interval. If the demands on miners are too static, and miner performance is very stable, weight copying will still be successful. The only solution for this is to demand continuous improvement from miners, requiring them to continuously evolve to maintain their scoring. Combined with a properly tuned Commit Reveal interval, this will keep validators honest, as well as producing the best digital commodities generally.
 
 ## The Commit Reveal Flow
 
 ### Validator Sets Weights
 
-The sequence of events begins when a validator calls [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html), to commit their ratings of the subnet's miners. Validators do not need to do anything different whether or not commit reveal is operating.
+The sequence of events begins when a validator calls [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html), to commit their ratings of the subnet's miners. Validators do not need to do anything different whether or not Commit Reveal is operating.
 
 ### Automatic Commit with Time-Lock Encryption
 
-Without commit reveal, values are committed openly to the chain.
+Without Commit Reveal, values are committed openly to the chain.
 
-With commit reveal, the chain automatically:
+With Commit Reveal, the chain automatically:
 - Encrypts the weights using **[Drand time-lock encryption](https://drand.love/docs/timelock-encryption/)**
 - Commits the encrypted weights to the blockchain via an internal method called [`commit_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/commit_weights/index.html)
 - Calculates the target Drand round based on the current block and `commit_reveal_period`
@@ -55,7 +55,7 @@ After the `commit_reveal_period` has elapsed, the chain automatically decrypts a
 
 ### Consensus Processing
 
-The revealed weights are now publicly visible and input into Yuma Consensus for the next epoch calculation, just as if they had been submitted without commit reveal.
+The revealed weights are now publicly visible and input into Yuma Consensus for the next epoch calculation, just as if they had been submitted without Commit Reveal.
 
 
 <center>
@@ -80,14 +80,14 @@ This detailed sequence diagram shows the CRv4 process across three tempos. Key o
 
 ### Validators and Miners
 
-After a subnet owner enables commit reveal, validators and miners don't need to change anything. Validators continue calling [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html) as before. All encryption, time-locking, and revealing happens automatically at the chain level.
+After a subnet owner enables Commit Reveal, validators and miners don't need to change anything. Validators continue calling [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html) as before. All encryption, time-locking, and revealing happens automatically at the chain level.
 
 ### Subnet Owners
 
-As a subnet owner, you must enable and configure commit reveal using two hyperparameters:
+As a subnet owner, you must enable and configure Commit Reveal using two hyperparameters:
 
 1. **`commit_reveal_weights_enabled`** (boolean)
-   - Set to `True` to activate commit reveal for your subnet
+   - Set to `True` to activate Commit Reveal for your subnet
    - Default: `False` (disabled)
    - When enabled, all validator weights are automatically committed with time-lock encryption
 
@@ -105,20 +105,20 @@ See [Setting subnet hyperparameters](../subnets/subnet-hyperparameters.md#set-hy
 The [Immunity Period](../resources/glossary.md#immunity-period) for neurons is the interval (measured in blocks) during which a neuron (miner or validator) newly registered on a subnet is 'immune' from deregistration due to performance. The duration of this period value should always be larger than the Commit Reveal interval, otherwise the immunity period will expire before a given miner's scores are available, and they may be deregistered without having their work counted.
 
 :::danger
-Subnet owners must ensure that the miner immunity period is larger than the commit reveal interval.
+Subnet owners must ensure that the miner immunity period is larger than the Commit Reveal interval.
 :::
 
-When updating the immunity period or commit reveal interval hyperparameters for a subnet, use the following formula:
+When updating the immunity period or Commit Reveal interval hyperparameters for a subnet, use the following formula:
 
 $$
 
-\text{new immunity period} = \left( (\text{new commit reveal period} \times \text{tempo}) - (\text{old commit reveal period} \times \text{tempo}) \right) + \text{old immunity period}
+\text{new immunity period} = \left( (\text{new Commit Reveal period} \times \text{tempo}) - (\text{old Commit Reveal period} \times \text{tempo}) \right) + \text{old immunity period}
 
 $$
 
-## Automatic commit reveal (added in commit reveal 4)
+## Automatic Commit Reveal (added in Commit Reveal 4)
 
-Previous versions of commit reveal required validators to explicitly reveal their committed weights in order to input them to Yuma Consensus. This opened an exploit vector where validators could wait until after other weights are revealed, then decide whether or not to reveal their own previously submitted weights for the tempo based on whether or not it would hurt or help vtrust.
+Previous versions of Commit Reveal required validators to explicitly reveal their committed weights in order to input them to Yuma Consensus. This opened an exploit vector where validators could wait until after other weights are revealed, then decide whether or not to reveal their own previously submitted weights for the tempo based on whether or not it would hurt or help vtrust.
 
 The Drand-based automatic reveal system prevents that exploit, and more generally provides several important benefits:
 

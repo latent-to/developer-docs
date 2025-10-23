@@ -18,7 +18,7 @@ With this feature, a subnet validator's dividends are better correlated to the p
 
 A subnet owner can run the `weight_copy/liquid_alpha_diagnostic.ipynb` in the Python notebook below to experiment and choose the right values for the hyperparameters `alpha_low`, `alpha_high`, and `commit_reveal_interval`.
 
-- For commit reveal diagnostic: https://colab.research.google.com/github/opentensor/developer-docs/blob/main/static/weight_copy/commit_reveal_diagnostic.ipynb?authuser=5
+- For Commit Reveal diagnostic: https://colab.research.google.com/github/opentensor/developer-docs/blob/main/static/weight_copy/commit_reveal_diagnostic.ipynb?authuser=5
 - For liquid alpha diagnostic: https://colab.research.google.com/github/opentensor/developer-docs/blob/main/static/weight_copy/liquid_alpha_diagnostic.ipynb?authuser=5
 - [GitHub directory with Python notebooks](https://github.com/latent-to/developer-docs/tree/main/static/weight_copy/).
 
@@ -137,7 +137,7 @@ print(alpha_low_high_result)
 
 ### Example Python code
 
-Below is the example Python code showing how to use the above definitions for the commit reveal feature:
+Below is the example Python code showing how to use the above definitions for the Commit Reveal feature:
 
 ```python
 import bittensor as bt
