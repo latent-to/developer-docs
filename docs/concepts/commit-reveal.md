@@ -54,6 +54,14 @@ After the `commit_reveal_period` has elapsed, the chain automatically decrypts a
 
 The revealed weights are now publicly visible and input into Yuma Consensus for the next epoch calculation, just as if they had been submitted without Commit Reveal.
 
+
+
+The below diagram shows the commit reveal process across three tempos. Key things to note:
+- **Drand pulse** triggers automatic reveals at block 1005, 1105, 1205 (shortly after each tempo starts)
+- **Commit window** is blocks 1090-1099 of each tempo (last 10 blocks)
+- **Concealment period** protects weights during the tempo
+- **Epoch calculation** uses revealed weights at block 1100, 1200, etc.
+
 <center>
 <ThemedImage
 alt="'Commit Reveal v4 Sequence Diagram'"
@@ -65,12 +73,6 @@ style={{width: '100%', maxWidth: 900}}
 />
 </center>
 
-
-This detailed sequence diagram shows the CRv4 process across three tempos. Key observations:
-- **Drand pulse** triggers automatic reveals at block 1005, 1105, 1205 (shortly after each tempo starts)
-- **Commit window** is blocks 1090-1099 of each tempo (last 10 blocks)
-- **Concealment period** protects weights during the tempo
-- **Epoch calculation** uses revealed weights at block 1100, 1200, etc.
 
 ## Migrating to Commit Reveal
 
