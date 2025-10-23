@@ -15,7 +15,6 @@ The auto staking feature enables miners to set a destination validator where the
 
 When auto staking is set, as a miner earns emissions from your subnet participation, their emissions are automatically staked to a specified validator. This conveniently allows miners to grow their stake as they earn it, without the need for repetitive manual stake movement operations.
 
-
 ### How It Works On Chain
 
 On the Bittensor blockchain (Subtensor), the `AutoStakeDestination` chain state variable holds autostaking destination hotkeys for each netuid, for each wallet that sets them.
@@ -29,7 +28,6 @@ See [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/subt
 - A wallet
 - A target hotkey to receive the auto-staked TAO (can be any hotkey, including the miner's own hotkey)
 
-
 :::info Coldkey Swap Integration
 
 When a coldkey is swapped, the auto-stake destination is automatically transferred to the new coldkey, ensuring continuity of auto-staking functionality.
@@ -38,16 +36,14 @@ When a coldkey is swapped, the auto-stake destination is automatically transferr
 
 ## Managing Auto Staking
 
-<Tabs groupId="autostaking-method">
-<TabItem value="btcli" label="BTCLI">
-
-
-You can view and set auto-stake destinations directly from the CLI.
+You can view and set auto-stake destinations directly from the Bittensor CLI or Bittensor SDK.
 
 ### View current auto-stake destinations
 
 Shows the target hotkey per subnet for a given coldkey. If none is set, the output notes the default behavior.
 
+<Tabs groupId="autostaking-method">
+<TabItem value="btcli" label="BTCLI">
 
 ```bash
 # By wallet name (uses your configured wallet path)
@@ -56,7 +52,6 @@ btcli stake auto --wallet.name <wallet>
 # By coldkey SS58 address
 btcli stake auto --ss58 <coldkey-ss58>
 ```
-
 
 ```console
 btcli stake auto --wallet.name alice --network local
@@ -76,10 +71,41 @@ btcli stake auto --wallet.name alice --network local
 Total subnets: 3  Custom destinations: 0
 ```
 
+</TabItem>
+
+<TabItem value="sdk" label="Python SDK">
+
+```python
+import asyncio
+import bittensor as bt
+
+async def main():
+    async with bt.AsyncSubtensor(network="local") as subtensor:
+        coldkey_ss58 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"  # This is the Alice key, replace with your coldkey SS58
+        pairs = await subtensor.get_auto_stakes(coldkey_ss58=coldkey_ss58)
+        if not pairs:
+            print("No auto-stake destinations set.")
+        else:
+            for netuid, hotkey in pairs.items():
+                print(f"netuid {netuid}: {hotkey}")
+
+asyncio.run(main())
+```
+
+```shell
+netuid 1: 5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM
+netuid 2: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+```
+
+</TabItem>
+</Tabs>
+
 ### Set auto-stake destination
 
 Sets the destination hotkey for your coldkey on a specific subnet.
 
+<Tabs groupId="autostaking-method">
+<TabItem value="btcli" label="BTCLI">
 
 ```bash
 btcli stake set-auto --wallet.name <wallet> --netuid <netuid>
@@ -90,6 +116,7 @@ For example
 ```shell
 btcli stake set-auto --wallet.name alice --network local
 ```
+
 ```console
 Using the wallet path from config: /Users/michaeltrestman/.bittensor/wallets
 Enter the netuid to configure (1): 2
@@ -119,37 +146,9 @@ Set this auto-stake destination? [y/n] (y): y
 ✅Your extrinsic has been included as 20979-1
 ✅ Auto-stake destination set for netuid 2
 ```
+
 </TabItem>
 <TabItem value="sdk" label="Python SDK">
-<!-- ## Autostaking with Python SDK -->
-
-Use the asynchronous SDK to read and configure auto-stake.
-
-### View current auto-stake destinations
-
-```python
-import asyncio
-import bittensor as bt
-
-async def main():
-    async with bt.AsyncSubtensor(network="local") as subtensor:
-        coldkey_ss58 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"  # This is the Alice key, replace with your coldkey SS58
-        pairs = await subtensor.get_auto_stakes(coldkey_ss58=coldkey_ss58)
-        if not pairs:
-            print("No auto-stake destinations set.")
-        else:
-            for netuid, hotkey in pairs.items():
-                print(f"netuid {netuid}: {hotkey}")
-
-asyncio.run(main())
-```
-
-```shell
-netuid 1: 5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM
-netuid 2: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-```
-
-### Set auto-stake destination
 
 ```python
 import asyncio
@@ -158,7 +157,7 @@ import bittensor as bt
 async def main():
     async with bt.async_subtensor(network="local") as subtensor:
         wallet = bt.wallet(
-            name="Alice",            
+            name="Alice",
         )
         wallet.unlock_coldkey()
 
@@ -176,5 +175,6 @@ async def main():
 
 asyncio.run(main())
 ```
+
 </TabItem>
 </Tabs>
