@@ -1,4 +1,7 @@
-# Weight Copying in Bittensor
+---
+title: "The Weight Copying Problem"
+---
+# The Weight Copying Problem
 
 This page explains **weight copying**—a free-riding behavior where validators copy other validators' work instead of independently evaluating miners. This article covers how weight copying works, why it's problematic, how Bittensor's [commit-reveal](./commit-reveal.md) mechanism prevents it, and best practices for subnet owners.
 

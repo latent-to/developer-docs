@@ -1,9 +1,13 @@
+---
+title: "Commit Reveal"
+---
+
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Commit Reveal
 
-This page describes the **commit reveal** feature: a configurable waiting period that elapses between a) when consensus weights set by subnet validators are first committed, and b) when they are revealed publicly and included in Yuma Consensus.
+This page describes the **commit reveal** feature: a configurable waiting period that elapses between when consensus weights set by subnet validators are first committed, and when they are revealed publicly and included in Yuma Consensus.
 
 This feature was designed to address the issue of _weight copying_ by validators.
 
@@ -13,16 +17,14 @@ Commit reveal uses **[Drand time-lock encryption](https://drand.love/docs/timelo
 
 **For validators**: The commit reveal process is completely transparent. You continue to call [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html) exactly as you always have. All commit-reveal logic happens behind the scenes at the chain level.
 
-## Weight copying
-
 In each Bittensor subnet, each validator scores&mdash;or _'weights'_&mdash;each miner, producing what is referred to as a [weight vector](../resources/glossary.md#weight-vector). The weight vectors for each validator in a subnet are combined into a weight matrix. This matrix determines emissions to miners in the subnet based on the consensus evaluation of their performance, according to [Yuma Consensus](../resources/glossary.md#yuma-consensus).
 
 The weight matrix is public information, and must be, so that emissions in the Bittensor platform can be transparently fair. However, this transparency makes it possible for subnet validators to free-ride on the work of other validators by copying the latest consensus rather than independently evaluating subnet miners. This is unfair and potentially degrades the quality of validation work, undermining Bittensor's ability to incentivize the best miners and produce the best digital commodities overall.
 
-The commit reveal feature is designed to solve the weight copying problem by giving would-be weight copiers access only to stale weights. Copying stale weights should result in validators departing from consensus. However, it is critical to note that this only works if the consensus weight matrix changes sufficiently on the time scale of the commit reveal interval. If the demands on miners are too static, and miner performance is very stable, weight copying will still be successful. The only solution for this is to demand continuous improvement from miners, requiring them to continuously evolve to maintain their scoring. Combined with a properly tuned Commit Reveal interval, this will keep validators honest, as well as producing the best models.
+The commit reveal feature is designed to solve the **weight copying problem** by giving would-be weight copiers access only to stale weights. Copying stale weights should result in validators departing from consensus. However, it is critical to note that this only works if the consensus weight matrix changes sufficiently on the time scale of the commit reveal interval. If the demands on miners are too static, and miner performance is very stable, weight copying will still be successful. The only solution for this is to demand continuous improvement from miners, requiring them to continuously evolve to maintain their scoring. Combined with a properly tuned Commit Reveal interval, this will keep validators honest, as well as producing the best models.
 
 :::tip Learn more about weight copying
-For a detailed explanation of how weight copying works, why it's problematic, and how commit-reveal prevents it, see [Weight Copying in Bittensor](./weight-copying-in-bittensor.md).
+For a detailed explanation of how weight copying works, why it's problematic, and how commit-reveal prevents it, see [The Weight Copying Problem](./weight-copying-in-bittensor.md).
 :::
 
 ## Commit Reveal and Immunity Period

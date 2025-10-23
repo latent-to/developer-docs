@@ -72,11 +72,11 @@ A combination of two keys, a coldkey for secure storage and high-risk operations
 
 The commit reveal feature is designed to solve the weight-copying problem by giving would-be weight-copiers access only to stale weights. Copying stale weights should result in validators departing from consensus.
 
-**See also:** [Commit Reveal](../concepts/commit-reveal.md)
+**See also:**
+- [Commit Reveal](../concepts/commit-reveal.md)
+- [The Weight Copying Problem](../concepts/weight-copying-in-bittensor)
 
 ### Consensus Score
-
-<!-- To fix: immunity period -->
 
 The consensus score is calculated as the stake-weighted median of all weights assigned to a specific neuron by validators. This creates a consensus threshold that filters out outlier weights, ensuring that only weights near the median consensus are used in final rank calculations.
 
