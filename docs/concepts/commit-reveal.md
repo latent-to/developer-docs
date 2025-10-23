@@ -39,9 +39,16 @@ new_immunity_period = (new_commit_reveal_period x tempo - old_commit_reveal_peri
 
 See [Subnet Hyperparameters](../subnets/subnet-hyperparameters.md).
 
-## How commit reveal works
 
-When commit reveal is enabled for a subnet, the following process occurs automatically:
+## Migrating to Commit Reveal
+
+
+After a subnet owner enables commit reveal, validators don't need to change anything. They continue calling [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html) as always. All encryption, time-locking, and automatic revealing happens at the chain level.
+
+
+
+
+## The Commit Reveal Flow
 
 ### 1. Validator Sets Weights
 
@@ -66,23 +73,21 @@ A waiting interval, specified as a number of tempos, elapses. Subnet owners conf
 - The weights remain encrypted on-chain
 - No one can view or copy the weights
 - The validator does not need to take any action
+- One or more tempos may elapse; the weights remain encrypted and are not included in Yuma Consensus until the end of the concealment period
 
 ### 4. Automatic Reveal
 
 After the `commit_reveal_period` has elapsed, the chain automatically decrypts and reveals the weights at the beginning of the next tempo. This happens when the corresponding Drand randomness beacon pulse becomes available, providing the cryptographic key needed to unlock the time-locked encryption.
+<!-- TODO: fact check, is this really at beginning of tempo or what?  -->
 
-**Key security property**: The reveal timing is cryptographically guaranteed by the Drand network—a decentralized randomness beacon. No single party can prevent or delay the reveal once weights are committed.
+**Key security property**: The reveal timing is cryptographically guaranteed through the use of [Drand](https://github.com/drand), a decentralized randomness beacon.
 
 ### 5. Consensus Processing
 
 The revealed weights are now publicly visible and input into Yuma Consensus for the next epoch calculation, just as if they had been submitted without commit reveal.
 
-<br />
-:::tip Completely transparent to validators
-After a subnet owner enables commit reveal, validators don't need to change anything. They continue calling [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html) as always. All encryption, time-locking, and automatic revealing happens at the chain level.
-:::
 
-## Benefits of automatic commit reveal
+## Benefits of automatic commit reveal (added in commit reveal 4)
 
 The Drand-based automatic reveal system provides several important benefits:
 
@@ -103,7 +108,7 @@ style={{width: '100%', maxWidth: 900}}
 />
 </center>
 
-<br />
+
 
 This detailed sequence diagram shows the CRv4 process across three tempos. Key observations:
 - **Drand pulse** triggers automatic reveals at block 1005, 1105, 1205 (shortly after each tempo starts)
@@ -129,7 +134,7 @@ As a subnet owner, you can enable and configure commit reveal using two hyperpar
 
 See [Setting subnet hyperparameters](../subnets/subnet-hyperparameters.md#set-hyperparameters) for how to update these values.
 
-### Reveal timing example
+## Reveal timing example
 
 Weights will be revealed at the beginning of the tempo after the `commit_reveal_period` has elapsed. The Drand pulse triggers the automatic decryption shortly after the new tempo begins.
 
@@ -149,22 +154,6 @@ Validators don't see any of this timing complexity. They simply call `set_weight
 Ensure that your immunity period is **longer** than your commit reveal interval to avoid unintended miner deregistration. If the immunity period expires before weights are revealed, newly registered miners may be deregistered without having their performance evaluated. See [Commit Reveal and Immunity Period](#commit-reveal-and-immunity-period).
 :::
 
-<br />
-
-## What is Drand?
-
-[Drand](https://drand.love) (pronounced "dee-rand") is a distributed randomness beacon network that provides publicly verifiable, unpredictable, and unbiased random numbers. It is operated by the [League of Entropy](https://drand.love/league-of-entropy/), a consortium of independent organizations running Drand nodes.
-
-**Time-lock encryption** is a cryptographic technique where data is encrypted such that it can only be decrypted after a specific time has passed. Drand provides this capability by regularly producing randomness "pulses" at fixed intervals. Data encrypted for a future Drand round cannot be decrypted until that round's randomness is published—even by the person who encrypted it.
-
-Key properties that make Drand suitable for Bittensor:
-- **Decentralized**: No single entity controls the randomness generation
-- **Verifiable**: Anyone can verify that randomness was generated correctly
-- **Predictable timing**: Pulses are produced at regular intervals
-- **Industry adoption**: Used by multiple blockchain and cryptographic protocols
-- **Open source**: Fully transparent implementation
-
-Learn more: [Drand Time-Lock Encryption documentation](https://drand.love/docs/timelock-encryption/)
 
 
 ## Technical papers and blog

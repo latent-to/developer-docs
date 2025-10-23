@@ -175,6 +175,24 @@ The process of removing a subnet miner or a subnet validator from the subnet due
 
 **See also:** [Miner Deregistration](../miners/#miner-deregistration), [Subnet Miners](../miners/)
 
+
+### Drand/time-lock encryption
+
+[Drand](https://drand.love)) is a distributed randomness beacon network that provides publicly verifiable, unpredictable, and unbiased random numbers. It is operated by the [League of Entropy](https://drand.love/league-of-entropy/), a consortium of independent organizations running Drand nodes.
+
+Drand provides **time-lock encryption**, a cryptographic technique that encrypts data so that it can only be decrypted *after a specific time has passed*. Drand provides this capability by regularly producing randomness "pulses" at fixed intervals. Data encrypted for a future Drand round cannot be decrypted until that round's randomness is published—even by the person who encrypted it.
+
+Key properties that make Drand suitable for applications in Bittensor, such as [commit reveal](#commit-reveal):
+- **Decentralized**: No single entity controls the randomness generation
+- **Verifiable**: Anyone can verify that randomness was generated correctly
+- **Predictable timing**: Pulses are produced at regular intervals
+- **Industry adoption**: Used by multiple blockchain and cryptographic protocols
+- **Open source**: Fully transparent implementation
+
+Learn more:
+- [Drand Time-Lock Encryption documentation](https://drand.love/docs/timelock-encryption/)
+- [Commit Reveal](../concepts/commit-reveal)
+
 ## E
 
 ### EdDSA Cryptographic Keypairs
@@ -953,6 +971,12 @@ A unique identifier derived from the public key, used as a destination for sendi
 The directory path where the generated Bittensor wallets are stored locally on the user's machine.
 
 **See also:** [Wallets](../keys/wallets.md), [Installation](../getting-started/installation.md)
+
+### Weight Copying
+
+A free-riding exploit possible for validators, which can be guarded against using  
+
+
 
 ### Weight Matrix
 

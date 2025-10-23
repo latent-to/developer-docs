@@ -18,32 +18,32 @@ While this might seem like a minor optimization, it undermines the entire incent
 
 ## The problem with weight copying
 
-### 1. Degraded subnet quality
+### Degraded subnet quality
 
 Validators are the quality control mechanism for subnets. When validators copy weights instead of independently evaluating miners:
 - Bad miners can persist longer than they should
 - Good innovations from new miners take longer to be recognized
 - The subnet's ability to produce quality output degrades over time
 
-### 2. Unfair validator rewards
+### Unfair validator rewards
 
 Weight copiers earn dividends without doing the work. This creates several problems:
 - Honest validators who invest in good evaluation systems earn less per TAO staked
 - Delegators may unknowingly stake to weight copiers instead of honest validators
 - The economic incentive to build better validation systems is weakened
 
-### 3. Centralization pressure
+### Centralization pressure
 
 If weight copying is more profitable than honest validation, rational actors will copy weights. This can lead to:
 - Most validators becoming weight copiers
 - Only 1-2 validators doing real evaluation work
 - Effective centralization of subnet governance
 
-### 4. Consensus manipulation
+### Consensus manipulation
 
 Sophisticated weight copiers can actually shift consensus in harmful ways (explained below), potentially taking bribes from miners or extracting value through strategic weight setting.
 
-## How weight copying works: The optimized strategy
+## Optimized weight copying
 
 Weight copiers don't just blindly copy one validator—they use an **optimized strategy** that actually gives them *higher* returns than any single honest validator:
 
@@ -167,6 +167,8 @@ Since the deployment of CRv4 and increased subnet owner awareness, weight copyin
 
 ### Statistics (as of late 2024)
 
+<!-- TODO Do we have something to show for this? -->
+
 Weight copying validator collective:
 - **Alpha stake**: Decreased from ~8M TAO to ~4.5M TAO
 - **Subnet coverage**: Decreased from 50+ subnets to ~35 subnets
@@ -265,7 +267,7 @@ There's ongoing debate in the Bittensor community about whether commit-reveal sh
 
 ### Current status
 
-As of now, commit-reveal remains **optional**. However, the recommendation from core developers is to enable it unless you have a specific, well-understood reason not to.
+As of now, commit-reveal remains **optional**. However, the recommendation is to enable it unless you have a specific, well-understood reason not to.
 
 ## Detection and analysis
 
@@ -277,19 +279,12 @@ If you're delegating TAO, watch for these red flags:
 - Validator started earning immediately upon registration (no ramp-up period)
 - Declining stake over time as informed delegators move away
 
-### For researchers: Analysis tools
 
-The Bittensor blockchain is fully transparent. You can:
-- Analyze weight submission timing patterns
-- Compare validator weights to consensus over time
-- Calculate vtrust correlations across validators
-- Identify clusters of validators with suspiciously similar weight patterns
 
-## The bigger picture
+
+## Free-riding vs. value creation
 
 Weight copying is one example of a broader category of challenges in decentralized incentive mechanisms:
-
-### Free-riding vs. value creation
 
 Any system that rewards participation must:
 - Make it possible to verify that real work was done
@@ -304,7 +299,7 @@ Bittensor's approach has been:
 3. Add targeted defenses (like commit-reveal)
 4. Continue evolving as new patterns appear
 
-This is healthier than trying to design perfect mechanisms upfront, which often creates unnecessary complexity or misses real-world attack vectors.
+
 
 ## Related documentation
 
@@ -313,14 +308,3 @@ This is healthier than trying to design perfect mechanisms upfront, which often 
 - [Subnet Hyperparameters](../subnets/subnet-hyperparameters.md) - How to configure commit-reveal and immunity periods
 - [Weight Copying technical paper (PDF)](pathname:///papers/BT_Weight_Copier-29May2024.pdf) - Academic analysis
 - [Blog: Weight Copying in Bittensor](https://blog.bittensor.com/weight-copying-in-bittensor-422585ab8fa5) - Community-focused explanation
-
-## Summary
-
-Weight copying is a sophisticated free-riding strategy where validators earn rewards without doing evaluation work. Through stake-weighted consensus prediction, weight copiers historically earned higher returns than honest validators.
-
-**Commit-reveal v4 effectively neutralizes weight copying** by ensuring validators only have access to stale weights, making copying unprofitable as long as miner performance changes over time.
-
-**Subnet owners should enable commit-reveal** with appropriate concealment periods and ensure their subnets demand continuous miner improvement. This maintains the integrity of the incentive mechanism and ensures that validator rewards go to those doing real evaluation work.
-
-The decline of weight copying following CRv4 deployment demonstrates that well-designed cryptographic mechanisms can effectively solve economic attacks in decentralized systems.
-
