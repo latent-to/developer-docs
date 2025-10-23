@@ -7,9 +7,9 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Commit Reveal
 
-This page describes the **commit reveal** feature: a configurable waiting period that elapses between when consensus weights set by subnet validators are first committed, and when they are revealed publicly and included in Yuma Consensus.
+This page describes the **commit reveal** feature: a configurable waiting period that elapses between when consensus weights set by subnet validators are first committed, and when they are revealed publicly and included in [Yuma Consensus](../learn/yuma-consensus).
 
-This feature was designed to address the issue of _weight copying_ by validators.
+This feature was designed to address the issue of _weight copying_ by validators. See [The Weight Copying Problem](./weight-copying-in-bittensor).
 
 ## Overview
 
@@ -27,65 +27,36 @@ The commit reveal feature is designed to solve the **weight copying problem** by
 For a detailed explanation of how weight copying works, why it's problematic, and how commit-reveal prevents it, see [The Weight Copying Problem](./weight-copying-in-bittensor.md).
 :::
 
-## Commit Reveal and Immunity Period
-
-The [Immunity Period](../resources/glossary.md#immunity-period) is the interval (measured in blocks) during which a miner or validator newly registered on a subnet is 'immune' from deregistration due to performance. The duration of this period value should always be larger than the Commit Reveal interval, otherwise the immunity period will expire before a given miner's scores are available, and they may be deregistered without having their work counted.
-
-When creating a new subnet, ensure that the miner immunity period is larger than the commit reveal interval. When updating the immunity period or commit reveal interval hyperparameters for a subnet, use the following formula:
-
-```
-new_immunity_period = (new_commit_reveal_period x tempo - old_commit_reveal_period x tempo) + old_immunity_period
-```
-
-See [Subnet Hyperparameters](../subnets/subnet-hyperparameters.md).
-
-
-## Migrating to Commit Reveal
-
-
-After a subnet owner enables commit reveal, validators don't need to change anything. They continue calling [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html) as always. All encryption, time-locking, and automatic revealing happens at the chain level.
-
-
 
 
 ## The Commit Reveal Flow
 
-### 1. Validator Sets Weights
+### Validator Sets Weights
 
-A subnet validator calls [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html) exactly as they normally would. No code changes are required.
+A subnet validator calls [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html) exactly as they would without commit reveal.
 
-### 2. Automatic Commit with Time-Lock Encryption
+### Automatic Commit with Time-Lock Encryption
 
-Instead of publishing weights openly, the chain automatically:
+The chain automatically:
 - Encrypts the weights using **[Drand time-lock encryption](https://drand.love/docs/timelock-encryption/)**
 - Commits the encrypted weights to the blockchain via an internal method called [`commit_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/commit_weights/index.html)
 - Calculates the target Drand round based on the current block and `commit_reveal_period`
 
 The encrypted weights cannot be decrypted by anyone—including the validator who submitted them—until the designated Drand round is reached.
 
-:::tip Tempo is a hyperparameter
-The subnet's tempo is a hyperparameter. Subnet owners cannot modify this parameter, which defaults to `360` blocks.
-:::
+### Concealment Period
 
-### 3. Concealment Period
+A waiting interval, specified as a number of tempos, elapses. Subnet owners configure this interval with the `commit_reveal_period` hyperparameter. During this time, the weights remain encrypted on-chain and are therefor not included in Yuma Consensus.
 
-A waiting interval, specified as a number of tempos, elapses. Subnet owners configure this interval with the `commit_reveal_period` hyperparameter. During this time:
-- The weights remain encrypted on-chain
-- No one can view or copy the weights
-- The validator does not need to take any action
-- One or more tempos may elapse; the weights remain encrypted and are not included in Yuma Consensus until the end of the concealment period
+### Automatic Reveal
 
-### 4. Automatic Reveal
-
-After the `commit_reveal_period` has elapsed, the chain automatically decrypts and reveals the weights at the beginning of the next tempo. This happens when the corresponding Drand randomness beacon pulse becomes available, providing the cryptographic key needed to unlock the time-locked encryption.
-<!-- TODO: fact check, is this really at beginning of tempo or what?  -->
+After the `commit_reveal_period` has elapsed, the chain automatically decrypts and reveals the weights at the beginning of the next tempo. This happens when the corresponding Drand beacon pulse becomes available, providing the cryptographic key needed to unlock the time-locked encryption.
 
 **Key security property**: The reveal timing is cryptographically guaranteed through the use of [Drand](https://github.com/drand), a decentralized randomness beacon.
 
-### 5. Consensus Processing
+### Consensus Processing
 
 The revealed weights are now publicly visible and input into Yuma Consensus for the next epoch calculation, just as if they had been submitted without commit reveal.
-
 
 ## Benefits of automatic commit reveal (added in commit reveal 4)
 
@@ -116,9 +87,15 @@ This detailed sequence diagram shows the CRv4 process across three tempos. Key o
 - **Concealment period** protects weights during the tempo
 - **Epoch calculation** uses revealed weights at block 1100, 1200, etc.
 
-## Configuring commit reveal
+## Migrating to Commit Reveal
 
-As a subnet owner, you can enable and configure commit reveal using two hyperparameters:
+### Validators and Miners
+
+After a subnet owner enables commit reveal, validators and miners don't need to change anything. Validators continue calling [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html) as before. All encryption, time-locking, and revealing happens automatically at the chain level.
+
+### Subnet Owners
+
+As a subnet owner, you must enable and configure commit reveal using two hyperparameters:
 
 ### Hyperparameters
 
@@ -134,31 +111,19 @@ As a subnet owner, you can enable and configure commit reveal using two hyperpar
 
 See [Setting subnet hyperparameters](../subnets/subnet-hyperparameters.md#set-hyperparameters) for how to update these values.
 
-## Reveal timing example
+### Commit reveal and the neuron immunity period
 
-Weights will be revealed at the beginning of the tempo after the `commit_reveal_period` has elapsed. The Drand pulse triggers the automatic decryption shortly after the new tempo begins.
+:::danger
+Subnet owners must ensure that the miner immunity period is larger than the commit reveal interval.
+::::
 
-**Example**: If `commit_reveal_period` is set to `3`:
-- **Tempo 10**: Validator commits weights (encrypted)
-- **Tempo 11**: Weights remain concealed
-- **Tempo 12**: Weights remain concealed  
-- **Tempo 13**: Weights automatically revealed at tempo start
+The [Immunity Period](../resources/glossary.md#immunity-period) for neurons is the interval (measured in blocks) during which a neuron (miner or validator) newly registered on a subnet is 'immune' from deregistration due to performance. The duration of this period value should always be larger than the Commit Reveal interval, otherwise the immunity period will expire before a given miner's scores are available, and they may be deregistered without having their work counted.
 
-The current tempo when committing counts as tempo 1 in the calculation. Refer to the detailed sequence diagram above for a visual representation of this timing.
+When updating the immunity period or commit reveal interval hyperparameters for a subnet, use the following formula:
 
-:::tip Validator experience
-Validators don't see any of this timing complexity. They simply call `set_weights()` whenever they want to update their weights. The chain handles all commit-reveal timing automatically.
-:::
+$$
 
-:::danger Critical: Immunity period must be longer than commit reveal interval
-Ensure that your immunity period is **longer** than your commit reveal interval to avoid unintended miner deregistration. If the immunity period expires before weights are revealed, newly registered miners may be deregistered without having their performance evaluated. See [Commit Reveal and Immunity Period](#commit-reveal-and-immunity-period).
-:::
+\text{new immunity period} = \left( (\text{new commit reveal period} \times \text{tempo}) - (\text{old commit reveal period} \times \text{tempo}) \right) + \text{old immunity period}
 
-
-
-## Technical papers and blog
-
-- ACM CCS2024 Poster PDF [Solving the Free-rider Problem In Bittensor](pathname:///papers/ACM_CCS2024_Poster.pdf).
-- See [Weight Copying in Bittensor, a technical paper (PDF)](pathname:///papers/BT_Weight_Copier-29May2024.pdf).
-- Blog post, [Weight Copying in Bittensor](https://blog.bittensor.com/weight-copying-in-bittensor-422585ab8fa5).
+$$
 
