@@ -38,9 +38,10 @@ btcli [OPTIONS] COMMAND [ARGS]...
 - `sudo`: Sudo commands, alias: `su`
 - `subnets`: Subnets commands, alias: `s`, `subnet`
 - `weights`: Weights commands, aliases: `wt`, `weight`
+- `crowd`: Crowdloan commands, aliases: `cr`, `crowdloan`
+- `liquidity`: Liquidity commands, aliases: `l`
 - `utils`
 - `view`: HTML view commands
-- `liquidity`: Liquidity commands, aliases: `l`
 
 ## `btcli config`
 
@@ -439,7 +440,7 @@ alias: swap_check
 
 Regenerate a coldkey for a wallet on the Bittensor blockchain network.
 
-This command is used to create a new coldkey from an existing mnemonic, seed, or JSON file.
+This command is used to create a new instance of a coldkey from an existing mnemonic, seed, or JSON file.
 
 **Usage:**
 
@@ -1651,15 +1652,15 @@ The child hotkey take must be between 0 - 18%.
 
 To get the current take value, do not use the '--take' option:
 
-    ```
-    btcli stake child take --hotkey &lt;child_hotkey&gt; --netuid 1
-    ```
+```
+btcli stake child take --child-hotkey-ss58 <child_hotkey> --netuid 1
+```
 
 To set a new take value, use the '--take' option:
 
-    ```
-    btcli stake child take --hotkey &lt;child_hotkey&gt; --take 0.12 --netuid 1
-    ```
+```
+btcli stake child take --child-hotkey-ss58 <child_hotkey> --take 0.12 --netuid 1
+```
 
 **Usage**:
 
@@ -1677,6 +1678,7 @@ alias: children
 | `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                                | TEXT    | Name of the wallet.                                                                                            |
 | `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                                    | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                           |
 | `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`, `--hotkey-ss58` | TEXT    | Hotkey name or SS58 address of the hotkey                                                                      |
+| `--child-hotkey-ss58`                                                                      | TEXT    | The hotkey SS58 to designate as child (not specifying will use the provided wallet's hotkey)                   |
 | `--netuid`                                                                                 | INTEGER | The netuid of the subnet in the network.                                                                       |
 | `--all-netuids`, `--all`, `--allnetuids`                                                   |         | When this flag is used it sets child hotkeys on all the subnets.                                               |
 | `--take`                                                                                   | FLOAT   | Use to set the take value for your child hotkey. When not used, the command will fetch the current take value. |
@@ -2771,65 +2773,366 @@ btcli weights commit [OPTIONS]
 | `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                                                    |
 | `--help`                                                                    |         | Show this message and exit.                                                                                   |
 
-## `btcli utils`
+## `btcli crowd`
 
-**Usage**:
-
-```console
-btcli utils [OPTIONS] COMMAND [ARGS]...
-```
-
-**Options**:
-
-- `--help`: Show this message and exit.
-
-**Commands**:
-
-- `convert`: Allows for converting between tao and rao...
-- `latency`: This command will give you the latency of all finney-like network in additional to any additional networks you specify via the '--network' flag.
-
-### `btcli utils convert`
-
-Allows for converting between tao and rao using the specified flags
-
-**Usage**:
+**Usage:**
 
 ```sh
-btcli utils convert [OPTIONS]
+btcli crowdloan [OPTIONS] COMMAND [ARGS]...
+
+alias: cr, crowdloan
 ```
 
-**Options**:
+**Options:**
 
-| Option   | Type  | Description                 |
-| -------- | ----- | --------------------------- |
-| `--rao`  | TEXT  | Convert amount from Rao     |
-| `--tao`  | FLOAT | Convert amount from Tao     |
-| `--help` |       | Show this message and exit. |
+`--help`: Show this message and exit.
 
-### `btcli utils latency`
+**Commands:**
 
-This command will give you the latency of all finney-like network in addition to any additional networks you specify via the `--network` flag
+- `create`: Start a new crowdloan campaign for fundraising or subnet leasing.
+- `contribute` : Contribute TAO to an active crowdloan.
+- `withdraw` : Withdraw contributions from a non-finalized crowdloan.
+- `finalize` Finalize a successful crowdloan that has reached its cap.
+- `update` : Update one mutable field on a non-finalized crowdloan.
+- `refund`: Refund contributors of a non-finalized crowdloan.
+- `dissolve`: Dissolve a crowdloan after all contributors have been refunded.
+- `list`: List crowdloans together with their funding progress and key metadata.
+- `info`: Display detailed information about a specific crowdloan.
 
-The results are three-fold. One column is the overall time to initialise a connection, send the requests, and wait for the results. The second column measures single ping-pong speed once connected. The third makes a real world call to fetch the chain head.
+### `btcli crowd create`
 
-**Example:**
+Start a new crowdloan campaign for fundraising or subnet leasing.
 
-```sh
-btcli utils latency --network ws://189.234.12.45 --network wss://mysubtensor.duckdns.org
+Create a crowdloan that can either:
+
+1. Raise funds for a specific address (general fundraising)
+2. Create a new leased subnet where contributors receive emissions
+
+**EXAMPLES**
+
+General fundraising:
+
+```bash
+btcli crowd create --deposit 10 --cap 1000 --target-address 5D...
 ```
 
-**Usage**:
+Subnet leasing with 30% emissions for contributors:
 
-```sh
-btcli utils latency [OPTIONS]
+```bash
+btcli crowd create --subnet-lease --emissions-share 30
 ```
 
-**Options**:
+Subnet lease ending at block 500000:
 
-| Option      | Type | Description                                                |
-| ----------- | ---- | ---------------------------------------------------------- |
-| `--network` | TEXT | Network(s) to test for the best connection [default: None] |
-| `--help`    |      | Show this message and exit.                                |
+```bash
+btcli crowd create --subnet-lease --emissions-share 25 --lease-end-block 500000
+```
+
+**Usage:**
+
+```bash
+btcli crowd create [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--deposit`                                                                 | FLOAT   | Initial deposit in TAO to secure the crowdloan.                                      |
+| `--min-contribution`, `--min_contribution`                                  | FLOAT   | Minimum contribution amount in TAO.                                                  |
+| `--cap`                                                                     | INTEGER | Maximum amount in TAO the crowdloan will raise.                                      |
+| `--duration`                                                                | INTEGER | Crowdloan duration in blocks.                                                        |
+| `--target-address`, `--target`                                              | TEXT    | Optional target SS58 address to receive the raised funds (for fundraising type).     |
+| `--subnet-lease/--fundraising`                                              |         | Create a subnet leasing crowdloan (True) or general fundraising (False).             |
+| `--emissions-share`, `--emissions`                                          | INTEGER | Percentage of emissions for contributors (0-100) for subnet leasing.                 |
+| `--lease-end-block`, `--lease-end`                                          | INTEGER | Block number when subnet lease ends (omit for perpetual lease).                      |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+### `btcli crowd contribute`
+
+Contribute TAO to an active crowdloan.
+
+This command allows you to contribute TAO to a crowdloan that is currently accepting contributions.
+The contribution will be automatically adjusted if it would exceed the crowdloan's cap.
+
+**EXAMPLES**
+
+```bash
+btcli crowd contribute --id 0 --amount 100
+```
+
+```bash
+btcli crowd contribute --id 1
+```
+
+**Usage:**
+
+```bash
+btcli crowd contribute [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--crowdloan-id`, `--crowdloan_id`, `--id`                                  | INTEGER | The ID of the crowdloan to display                                                   |
+| `--amount`, `-a`                                                            | FLOAT   | Amount to contribute in TAO                                                          |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+### `btcli crowd withdraw`
+
+Withdraw contributions from a non-finalized crowdloan.
+
+:::info
+Non-creators can withdraw their full contribution. Creators can only withdraw amounts above their initial deposit.
+:::
+
+**Usage:**
+
+```bash
+btcli crowd withdraw [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--crowdloan-id`, `--crowdloan_id`, `--id`                                  | INTEGER | The ID of the crowdloan to withdraw from                                             |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+### `btcli crowd finalize`
+
+Finalize a successful crowdloan that has reached its cap.
+
+:::info
+Only the creator can finalize. This will transfer funds to the target
+address (if specified) and execute any attached call (e.g., subnet creation).
+:::
+
+**Usage:**
+
+```bash
+btcli crowd finalize [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--crowdloan-id`, `--crowdloan_id`, `--id`                                  | INTEGER | The ID of the crowdloan to finalize                                                  |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+### `btcli crowd update`
+
+Update one mutable field on a non-finalized crowdloan.
+
+:::info
+
+Only the creator can invoke this. You may change the minimum contribution, the end block, or the cap in a single call. When no flag is provided an interactive prompt guides you through the update and validates the input against the chain constants (absolute minimum contribution, block-duration
+bounds, etc.).
+:::
+
+**Usage:**
+
+```bash
+btcli crowd update [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--crowdloan-id`, `--crowdloan_id`, `--id`                                  | INTEGER | The ID of the crowdloan to update                                                    |
+| `--min-contribution`, `--min`                                               | FLOAT   | Update the minimum contribution amount (in TAO)                                      |
+| `--end`, `--end-block`                                                      | INTEGER | Update the end block number                                                          |
+| `--cap`                                                                     | FLOAT   | Update the cap amount (in TAO)                                                       |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+### `btcli crowd refund`
+
+Refund contributors of a non-finalized crowdloan.
+
+:::info
+The crowdloan creator may call this once the crowdloan is no longer wanted. Each call refunds up to the on-chain `RefundContributorsLimit` contributors (currently 50) excluding the creator. Run it repeatedly until everyone except the creator has been reimbursed.
+
+:::
+
+**Usage:**
+
+```bash
+btcli crowd refund [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--crowdloan-id`, `--crowdloan_id`, `--id`                                  | INTEGER | The ID of the crowdloan to refund                                                    |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+### `btcli crowd dissolve`
+
+Dissolve a crowdloan after all contributors have been refunded.
+
+Only the creator can dissolve. The crowdloan must be non-finalized and the raised balance must equal the creator's own contribution (i.e., all other contributions have been withdrawn or refunded). Dissolving returns the creator's deposit and removes the crowdloan from storage.
+
+:::info
+If there are funds still available other than the creator's contribution,
+you can run `btcli crowd refund` to refund the remaining contributors.
+:::
+
+**Usage:**
+
+```bash
+btcli crowd dissolve [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--crowdloan-id`, `--crowdloan_id`, `--id`                                  | INTEGER | The ID of the crowdloan to dissolve                                                  |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+### `btcli crowd list`
+
+List crowdloans together with their funding progress and key metadata.
+
+Shows every crowdloan on the selected network, including current status (Active, Funded, Closed, Finalized), whether it is a subnet leasing crowdloan, or a general fundraising crowdloan.
+
+Use `--verbose` for full-precision amounts and longer addresses.
+
+**EXAMPLES**
+
+```bash
+btcli crowd list
+```
+
+```bash
+btcli crowd list --verbose
+```
+
+**Usage:**
+
+```bash
+btcli crowd list [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type | Description                                           |
+| --------------------------------------------------------------------------- | ---- | ----------------------------------------------------- |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |      | The subtensor network to connect to. Default: finney. |
+| `--quiet`                                                                   |      | Display only critical information on the console.     |
+| `--verbose`                                                                 |      | Enable verbose output.                                |
+| `--json-output`, `--json-out`                                               |      | Outputs the result of the command as JSON.            |
+| `--help`                                                                    |      | Show this message and exit.                           |
+
+### `btcli crowd info`
+
+Display detailed information about a specific crowdloan.
+
+Includes funding progress, target account, and call details among other information.
+
+**EXAMPLES**
+
+```bash
+btcli crowd info --id 0
+```
+
+```bash
+btcli crowd info --id 1 --verbose
+```
+
+**Usage:**
+
+```bash
+btcli crowd info [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--crowdloan-id`, `--crowdloan_id`, `--id`                                  | INTEGER | The ID of the crowdloan to display                                                   |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
 
 ## `btcli liquidity`
 
@@ -2957,5 +3260,65 @@ btcli liquidity remove [OPTIONS]
 | `--verbose`                                                                 |         | Enable verbose output.                                                               |
 | `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
 | `--help`                                                                    |         | Show this message and exit.                                                          |
+
+## `btcli utils`
+
+**Usage**:
+
+```console
+btcli utils [OPTIONS] COMMAND [ARGS]...
+```
+
+**Options**:
+
+- `--help`: Show this message and exit.
+
+**Commands**:
+
+- `convert`: Allows for converting between tao and rao...
+- `latency`: This command will give you the latency of all finney-like network in additional to any additional networks you specify via the '--network' flag.
+
+### `btcli utils convert`
+
+Allows for converting between tao and rao using the specified flags
+
+**Usage**:
+
+```sh
+btcli utils convert [OPTIONS]
+```
+
+**Options**:
+
+| Option   | Type  | Description                 |
+| -------- | ----- | --------------------------- |
+| `--rao`  | TEXT  | Convert amount from Rao     |
+| `--tao`  | FLOAT | Convert amount from Tao     |
+| `--help` |       | Show this message and exit. |
+
+### `btcli utils latency`
+
+This command will give you the latency of all finney-like network in addition to any additional networks you specify via the `--network` flag
+
+The results are three-fold. One column is the overall time to initialise a connection, send the requests, and wait for the results. The second column measures single ping-pong speed once connected. The third makes a real world call to fetch the chain head.
+
+**Example:**
+
+```sh
+btcli utils latency --network ws://189.234.12.45 --network wss://mysubtensor.duckdns.org
+```
+
+**Usage**:
+
+```sh
+btcli utils latency [OPTIONS]
+```
+
+**Options**:
+
+| Option      | Type | Description                                                |
+| ----------- | ---- | ---------------------------------------------------------- |
+| `--network` | TEXT | Network(s) to test for the best connection [default: None] |
+| `--help`    |      | Show this message and exit.                                |
 
 ---
