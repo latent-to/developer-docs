@@ -88,8 +88,8 @@ When weights are concealed for one or more tempos, weight copiers only have acce
 <ThemedImage
 alt="'Commit Reveal v4 Sequence Diagram'"
 sources={{
-    light: useBaseUrl('/img/docs/cr4.svg'),
-    dark: useBaseUrl('/img/docs/cr4.svg'),
+    light: useBaseUrl('/img/docs/commit-reveal-v4.svg'),
+    dark: useBaseUrl('/img/docs/commit-reveal-v4.svg'),
 }}
 style={{width: '100%', maxWidth: 900}}
 />
@@ -98,7 +98,7 @@ style={{width: '100%', maxWidth: 900}}
 
 ### The caveat: Dynamic scoring required
 
-Commit-reveal only works if **miner performance actually changes** over the timescale of the concealment period. If miner rankings are static and, then even stale weights will be accurate, and weight copying can still work.
+Commit-reveal only works if **miner performance actually changes** over the timescale of the concealment period. If the ground truth about miner rankings is static, then even stale weights will be accurate, and weight copying can still work.
 
 Subnet owners should design subnets that demand continuous miner improvement, which is important generally for producing best-in-class digital commodities, and also ensures that weights from yesterday are less accurate than fresh evaluations today, preventing weight copying.
 

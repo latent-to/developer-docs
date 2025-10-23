@@ -62,13 +62,12 @@ The revealed weights are now publicly visible and input into Yuma Consensus for 
 <ThemedImage
 alt="'Commit Reveal v4 Sequence Diagram'"
 sources={{
-    light: useBaseUrl('/img/docs/commit-reveal-v4-sequence.png'),
-    dark: useBaseUrl('/img/docs/commit-reveal-v4-sequence.png'),
+    light: useBaseUrl('/img/docs/commit-reveal-v4.svg'),
+    dark: useBaseUrl('/img/docs/commit-reveal-v4.svg'),
 }}
 style={{width: '100%', maxWidth: 900}}
 />
 </center>
-
 
 
 This detailed sequence diagram shows the CRv4 process across three tempos. Key observations:
@@ -87,8 +86,6 @@ After a subnet owner enables commit reveal, validators and miners don't need to 
 
 As a subnet owner, you must enable and configure commit reveal using two hyperparameters:
 
-### Hyperparameters
-
 1. **`commit_reveal_weights_enabled`** (boolean)
    - Set to `True` to activate commit reveal for your subnet
    - Default: `False` (disabled)
@@ -101,13 +98,15 @@ As a subnet owner, you must enable and configure commit reveal using two hyperpa
 
 See [Setting subnet hyperparameters](../subnets/subnet-hyperparameters.md#set-hyperparameters) for how to update these values.
 
-### Commit reveal and the neuron immunity period
+#### Commit reveal and the neuron immunity period
+
+
+
+The [Immunity Period](../resources/glossary.md#immunity-period) for neurons is the interval (measured in blocks) during which a neuron (miner or validator) newly registered on a subnet is 'immune' from deregistration due to performance. The duration of this period value should always be larger than the Commit Reveal interval, otherwise the immunity period will expire before a given miner's scores are available, and they may be deregistered without having their work counted.
 
 :::danger
 Subnet owners must ensure that the miner immunity period is larger than the commit reveal interval.
-::::
-
-The [Immunity Period](../resources/glossary.md#immunity-period) for neurons is the interval (measured in blocks) during which a neuron (miner or validator) newly registered on a subnet is 'immune' from deregistration due to performance. The duration of this period value should always be larger than the Commit Reveal interval, otherwise the immunity period will expire before a given miner's scores are available, and they may be deregistered without having their work counted.
+:::
 
 When updating the immunity period or commit reveal interval hyperparameters for a subnet, use the following formula:
 
