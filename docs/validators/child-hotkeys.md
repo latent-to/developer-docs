@@ -1,5 +1,6 @@
 ---
 title: "Child Hotkeys"
+toc_max_heading_level: 2
 ---
 
 import ThemedImage from '@theme/ThemedImage';
@@ -64,10 +65,10 @@ The child hotkey features are as follows:
 
 The following rate limits apply for child hotkeys:
 
-- A child hotkey's take rate can only be adjusted once per 30 days.
-- One successful execution of `set_children` or `revoke_children` is allowed for every 720 blocks.
+- Setting or revoking children is allowed for every 150 blocks (~30 minutes).
+- A given child hotkey's take rate can only be adjusted once per 30 days.
 
-See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
+See [Rate Limits in Bittensor: Child hotkey operations rate limit](../learn/chain-rate-limits#child-hotkey-operations-rate-limit).
 
 ## Minimum stake requirement
 
@@ -84,49 +85,41 @@ The minimum stake requirement is:
 Query `subtensorModule.stakeThreshold()` to check the current threshold.
 :::
 
-
 ## Child hotkey commands
 
 Use the `btcli` command options described below to work with child hotkeys.
 
 ## Setting a child hotkey
 
-This command assigns a proportion of the parent hotkey's stake weight to the child hotkeys. Specific proportion for each child hotkey can be set. The parent hotkey must be registered on at least one `netuid`. This `netuid` need not be the same `netuid` used in this command. Only the stake TAO of the parent hotkey can be assigned to the child hotkeys.
+You can allocate a portion of the parent hotkey’s stake weight to its child hotkeys, specifying the exact proportion for each one. The parent hotkey must be registered on at least one netuid, but it doesn’t have to be registered on the same netuid where the child weights are being set. However, all child hotkeys assigned must be registered on the netuid specified in the command.
 
 ### Usage
 
 ```bash
-btcli stake set_children --netuid <netuid> --children <a list of SS58 child hotkeys>  --proportions <a list of decimal numbers> --hotkey <parent hotkey> --wallet.name <coldkey>
+btcli stake child set --netuid <netuid> --children <a list of SS58 child hotkeys>  --proportions <a list of decimal numbers> --hotkey <parent hotkey> --wallet.name <coldkey>
 ```
 
 ### Parameters
 
-- `--netuid:` Integer. Should be a single integer value representing a current subnet's `netuid`.
-  - Must be greater than `0` (`netuid 0` is not allowed).
-  - Integer values greater than the value of current subnet limit, i.e., greater than the value of `subtensorModule.subnetLimit()`, will be rejected with an error message and the command will stop.
-  - All child hotkeys used in this command must be already registered on this `netuid`.
-- `--children`: SS58. A comma-separated ordered list of SS58 hotkeys for child hotkeys.
+- `--netuid:` The netuid of the subnet in the network. Value must be greater than zero.
+- `--children`: A comma-separated ordered list of SS58 hotkeys for the child hotkeys.
+- `--proportions`: A comma-separated ordered list of the stake weight proportions for the child hotkeys listed in the `--children` parameter.
+- `--hotkey`: A single SS58 of the parent hotkey. This must be a delegate hotkey that is already registered in with any `netuid`.
+- `--wallet.name`: Name of the wallet or the SS58 of the coldkey. This coldkey must be matched with the parent hotkey SS58 of the `--hotkey`.
 
-  - There should be a maximum of five, 5, SS58 hotkeys in this comma-separated list. If there are more than five hotkeys, the command will issue an error message and stop.
-  - The number of list elements should match the number of elements passed in the `--proportions` parameter. If the number of list elements do not match, the command will issue an error and stop.
-  - All hotkeys used here must be already registered on the `netuid` used in this command.
+:::info
 
-- `--proportions`: Floating. A comma-separated ordered list of floating values. Each proportion value of the parent hotkey's stake weight will be assigned to the corresponding child hotkey in the `--children` parameter.
-  - Each floating value should be a number greater than zero and equal to or less than `1.0`.
-  - If a value is zero, the corresponding child hotkey will be revoked.
-  - If a value is greater than `1.0`, the command will issue an error message and stop.
-  - All the proportions for a given `netuid` must sum to less than or equal to `1.0`. If the proportions sum to greater than `1.0`, the command will issue an error message and stop.
-- `--hotkey`: SS58. A single SS58 of the parent hotkey. This must be a delegate hotkey that is already registered in with any `netuid`. This `netuid` need not be the same `netuid` used in this command.
-  - If this parent hotkey has zero stake, then the command will issue an error message and stop.
-  - Note that this `--hotkey` parameter expects parent hotkey whereas the `--hotkey` parameter of the [Setting child hotkey take](#parameters-1) expects child hotkey.
-- `--wallet.name`: String or SS58. Name of the wallet or the SS58 of the coldkey. This coldkey must be matched with the parent hotkey SS58 of the `--hotkey`. If the coldkey and the parent hotkey do not match, the command will issue an error message and stop.
+- The `--children` and `--proportions` parameters can each include up to five comma-separated values.
+- The sum of all proportion values for the child hotkeys should be less than or equal to 1.
+- All hotkeys listed in the `--children` parameter must be already registered on the `netuid` used in this command.
+- Only the staked TAO of the parent hotkey can be assigned to the child hotkeys. If the parent hotkey has zero stake, then the command will issue an error message and stop.
 
-### Examples
+  :::
 
 #### Setting a single child hotkey
 
 ```bash
-btcli stake set_children \
+btcli stake child set \
   --netuid 4 \
   --children 5HEXVAHY9gyavj5xnbov9Qoba4hPJYkkwwnq1MQFepLK7Gei \
   --proportions 0.5 \
@@ -137,144 +130,98 @@ btcli stake set_children \
 #### Setting multiple child hotkeys
 
 ```bash
-btcli stake set_children \
+btcli stake child set \
   --netuid 4 \
   --children 5Gx1CZ9jviC6V2KynBAcTpES4yK76riCagv5o5SFFZFYXj4s,5HEXVAHY9gyavj5xnbov9Qoba4hPJYkkwwnq1MQFepLK7Gei \
   --proportions 0.3,0.7 \
   --hotkey 5DqJdDLU23m7yf6rZSmbLTshU7Bfn9eCTBkduhF4r9i73B9Y \
-  --wallet.name Alice
+  --wallet.name Alice\
 ```
 
 ## Adding a new child hotkey
 
-If a parent hotkey has, for example, three child hotkeys: child hotkey A, child hotkey B and child hotkey C, then to add a fourth child hotkey D, you must run `set_children` command again with the parent hotkey and all four child hotkeys A, B, C and D.
+If a parent hotkey has, for example, three child hotkeys: `child hotkey A`, `child hotkey B` and `child hotkey C`, then to add a fourth—`child hotkey D`, you must run `btcli stake child set` command again with the parent hotkey and set the proportions for all four child hotkeys `A`, `B`, `C` and `D`.
 
-## Changing the proportions
+:::info Updating hotkey proportions
+When updating the proportion of a child hotkey, you must rerun the `btcli stake child set` command with the parent hotkey and all existing child hotkeys, including their updated proportions.
 
-If a parent hotkey has, for example, three child hotkeys:
-
-- child hotkey A with `0.2` proportion.
-- child hotkey B with `0.5` proportion.
-- child hotkey C with `0.1` proportion.
-
-Then to change the proportion of, for example, the child hotkey B from `0.5` to `0.3`, you must run `set_children` command again with the parent hotkey and all three child hotkeys A, B, and C set to `0.2`, `0.3` and `0.1` proportions.
+:::
 
 ## Getting the child hotkeys
 
-This command displays all the child hotkeys for a given parent hotkey.
-
-### Usage
+Run the following command to display all the child hotkeys for a given parent hotkey.
 
 ```bash
-btcli stake get_children --netuid <netuid> --hotkey <parent hotkey> --all
+btcli stake child get
 ```
 
-### Example
+### Example usage
 
 ```bash
-btcli stake get_children \
-  --netuid 4 \
-  --hotkey 5DqJdDLU23m7yf6rZSmbLTshU7Bfn9eCTBkduhF4r9i73B9Y \
-  --wallet.name Alice \
-  --all
+btcli stake child get --netuid <netuid> --hotkey <parent hotkey> --all
 ```
-
-or
-
-```bash
-btcli stake get_children
-```
-
-and follow the prompts.
 
 ## Revoking the child hotkeys
 
-This command revokes **all** the child hotkeys for a given parent hotkey.
+This is used to remove delegated authority from all child hotkeys, removing their position and influence on the subnet.
 
-:::danger Revoking a specific child hotkey is not allowed
-Currently it is not possible to revoke a specific child hotkey. However, if a parent hotkey has, for example, three child hotkeys: child hotkey A, child hotkey B and child hotkey C, then setting the parent hotkey again with only child hotkeys A and B will result in revoking the child hotkey C.
+:::info Revoking a specific child hotkey is not allowed
+It is not possible to revoke a specific child hotkey. However, if a parent hotkey has, for example, three child hotkeys: `child hotkey A`, `child hotkey B` and `child hotkey C`, then setting the parent hotkey again with only child hotkeys `A` and `B` will result in revoking `child hotkey C`.
 :::
 
 ### Usage
 
 ```bash
-btcli stake revoke_children \
-  --netuid <netuid> \
-  --hotkey <parent hotkey> \
-  --wallet.name <coldkey>
+btcli stake child revoke
 ```
 
 ### Example
 
 ```bash
-btcli stake revoke_children \
+btcli stake child revoke \
   --netuid 4 \
   --hotkey 5DqJdDLU23m7yf6rZSmbLTshU7Bfn9eCTBkduhF4r9i73B9Y \
   --wallet.name Alice
 ```
 
-or
+## Get and set child hotkey take
 
-```bash
-btcli stake revoke_children
-```
-
-and follow the prompts.
-
-## Setting child hotkey take
-
-This command sets the take percentage of the child hotkey for a given `netuid`. The `take` can be between `0` (0%) and `0.18` (18%).
-
-A child hotkey's `take` is subnet-specific, i.e., a child hotkey can have one `take` in one `netuid` and a different `take` in another `netuid`.
-
-The child hotkey take rate is an attribute of the child hotkey and this take rate applies to all the parent hotkeys for which this hotkey is the child hotkey.
+Each child hotkey can have a defined take percentage that determines the portion of rewards it receives on a given netuid. The take value can range from `0` (0%) to `0.18` (18%). This configuration is subnet-specific meaning that a child hotkey may have one take percentage on one netuid and a different value on another.
 
 The child hotkey can also set its delegate take separately from the child hotkey take. That is, a child hotkey can carry two separate take rates: the child hotkey take rate and the delegate take rate. For the delegate take rate, see [Set delegate take](../btcli/btcli.md#btcli-sudo-set-take).
 
 ### Usage
 
 ```bash
-btcli stake set_childkey_take \
+btcli stake child take
+```
+
+:::info
+Running the command without the `--take` flag only retrieves the child hotkey's take on the subnet. To set the child hotkey take, you must run the command with the `--take` flag.
+:::
+
+To set child hotkey take, run the following command:
+
+```bash
+btcli stake child take \
   --netuid <netuid> \
-  --hotkey <child hotkey> \
+  --child-hotkey-ss58 <child hotkey> \
   --take <decimal number> \
   --wallet.name <coldkey>
 ```
 
 ### Parameters
 
-- `--hotkey`: SS58. A single SS58 of the child hotkey. Note that this `--hotkey` parameter expects child hotkey whereas the `--hotkey` parameter of the [Setting a child hotkey](#parameters) expects parent hotkey.
-- `--take`: Floating. A value between `0` (0%) and `0.18` (18%). Default value is `0`.
-- `--netuid`: Integer. The `netuid` in which this child hotkey's `take` is applicable. Note that a child hotkey's `take` is subnet-specific, i.e., a child hotkey can have one `take` in one `netuid` and a different `take` in another `netuid`.
+- `--child-hotkey-ss58 `: A single SS58 of the child hotkey. If not provided, it assigns the take value to the hotkey of the signing wallet.
+- `--take`: A value between `0` (0%) and `0.18` (18%). Default value is `0`.
+- `--netuid`: The `netuid` in which this child hotkey's `take` is applicable. Note that a child hotkey's `take` is subnet-specific, i.e., a child hotkey can have one `take` in one `netuid` and a different `take` in another `netuid`.
 
 ### Example
 
 ```bash
-btcli stake set_childkey_take \
+btcli stake take child take \
   --netuid 4 \
   --hotkey 5DqJdDLU23m7yf6rZSmbLTshU7Bfn9eCTBkduhF4r9i73B9Y \
   --take 0.09 \
   --wallet.name Alice
-```
-
-## Getting child hotkey take
-
-This command displays the take percentage of a given child hotkey and `netuid`.
-
-### Usage
-
-```bash
-btcli stake get_childkey_take \
-  --netuid <netuid> \
-  --hotkey <child hotkey> \
-  --wallet.name <coldkey>
-```
-
-### Example
-
-```bash
-btcli stake get_childkey_take \
-  --netuid 4 \
-  --hotkey 5Gx1CZ9jviC6V2KynBAcTpES4yK76riCagv5o5SFFZFYXj4s \
-  --wallet.name Bob
 ```
