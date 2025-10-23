@@ -37,7 +37,7 @@ style={{width: '100%', maxWidth: 900}}
 />
 </center>
 
-## The problem with weight copying
+## The problems with weight copying
 
 ### Degraded subnet quality
 
@@ -57,11 +57,10 @@ Therefore, it can be seen as subnet owners' responsibility to the community, as 
 
 Historically, many large weight copiers used an optimized strategy which we can call the stake-weighted averaging attack, that actually gives them *higher* returns than any single honest validator:
 
-1. **Read the current weight matrix**: Weight copiers wait for weights to be publicly revealed.
-2. **Calculate stake-weighted consensus**: They compute what Yuma Consensus will calculate as the "center" of opinion. See [Glossary: Consensus Score](../resources/glossary#consensus-score).
-3. **Submit consensus-matching weights**: By submitting weights that match the predicted consensus, they maximize their vtrust (validator trust score).
-4. **Earn maximum dividends**: Higher vtrust → higher dividends per TAO staked → higher APY.
-
+1. Weight copiers wait for weights to be publicly revealed.
+2. They compute what weights they can submit that Yuma Consensus will judge as maximally in consensus, by giving the stake-weighted median of validators' weight scores for each miner. See [Glossary: Consensus Score](../resources/glossary#consensus-score).
+3. By submitting weights that match the predicted consensus, they maximize their vtrust (validator trust score).
+4. Higher vtrust → higher dividends per TAO staked → higher APY.
 
 This works because in Yuma Consensus, validators are rewarded based on how well their weights align with the emerging consensus. By calculating the stake-weighted median, weight copiers can predict consensus better than any individual honest validator who might have some disagreement with others. As a result, optimized weight copiers achieve higher validator dividends per stake than honest validators, making weight copying more profitable than honest work.
 
@@ -82,7 +81,6 @@ When weights are concealed for one or more tempos, weight copiers only have acce
 5. Revealed weights are then used in Yuma Consensus calculations
 
 
-
 <center>
 <ThemedImage
 alt="'Commit Reveal v4 Sequence Diagram'"
@@ -95,37 +93,8 @@ style={{width: '100%', maxWidth: 900}}
 </center>
 
 
-### The caveat: Dynamic scoring required
+## The caveat: Dynamic scoring required
 
-Commit reveal only works if **miner performance actually changes** over the timescale of the concealment period. If the ground truth about miner rankings is static, then even stale weights will be accurate, and weight copying can still work.
+Commit reveal only prevents weight copying if **miner performance actually changes** over the timescale of the concealment period. If the ground truth about miner rankings is overly static, then even stale weights will be accurate enough to be profitable, and in this case, nothing can prevent weight copying.
 
 Subnet owners should design subnets that demand continuous miner improvement, which is important generally for producing best-in-class digital commodities, and also ensures that weights from yesterday are less accurate than fresh evaluations today, preventing weight copying.
-
-## History of Commit Reveal: The CRv3 bug
-
-Understanding how weight copying evolved helps explain why the current system works the way it does.
-
-### Commit reveal v3 (CRv3): The same-tempo vulnerability
-
-In the third version of Commit Reveal:
-- Validators committed weights (encrypted)
-- Validators revealed weights (decrypted) **in the same tempo**
-- Both operations happened before the epoch calculation
-
-### The exploit
-
-Weight copiers discovered they could:
-1. Wait for honest validators to reveal their weights (still in the same tempo)
-2. Quickly calculate the stake-weighted consensus
-3. Submit their own weights before the epoch calculation at the end of the tempo
-4. Still achieve higher vtrust than honest validators
-
-Despite weights being "concealed," the same-tempo reveal gave weight copiers enough time to copy and submit.
-
-### The fix: Commit reveal v4 (CRv4)
-
-CRv4 fixed this by:
-- Using [Drand time-lock encryption](https://drand.love/docs/timelock-encryption/) for automatic reveals
-- Ensuring reveals happen at the *start* of the next tempo
-- Making the reveal timing cryptographically guaranteed (no manual validator action)
-- Eliminating the window for weight copiers to act

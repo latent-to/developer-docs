@@ -49,14 +49,11 @@ A waiting interval, specified as a number of tempos, elapses. Subnet owners conf
 
 ### Automatic Reveal
 
-After the `commit_reveal_period` has elapsed, the chain automatically decrypts and reveals the weights at the beginning of the next tempo. This happens when the corresponding Drand beacon pulse becomes available, providing the cryptographic key needed to unlock the time-locked encryption.
-
-**Key security property**: The reveal timing is cryptographically guaranteed through the use of [Drand](https://github.com/drand), a decentralized randomness beacon.
+After the `commit_reveal_period` has elapsed, the chain automatically decrypts and reveals the weights at the beginning of the next tempo. This happens when the corresponding Drand beacon pulse becomes available, providing the cryptographic key needed to unlock the time-locked encryption. This use of Drand as the reveal mechanism gives commit reveal a strong cryptographic guarantee.
 
 ### Consensus Processing
 
 The revealed weights are now publicly visible and input into Yuma Consensus for the next epoch calculation, just as if they had been submitted without Commit Reveal.
-
 
 <center>
 <ThemedImage
