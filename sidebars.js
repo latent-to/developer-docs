@@ -58,6 +58,7 @@ const sidebars = {
         "learn/ema",
         "learn/yuma-consensus",
         "learn/yc3-blog",
+        "concepts/weight-copying-in-bittensor",
         "learn/yuma3-migration-guide",
         "learn/fees",
         "learn/chain-rate-limits",
@@ -216,7 +217,6 @@ const sidebars = {
       items: [
         "concepts/bittensor-networks",
         "concepts/commit-reveal",
-        "concepts/weight-copying-in-bittensor",
         "concepts/consensus-based-weights",
         "concepts/bt-logging-levels",
         "resources/utilities",
