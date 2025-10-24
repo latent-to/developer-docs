@@ -974,7 +974,7 @@ The directory path where the generated Bittensor wallets are stored locally on t
 
 ### Weight Copying
 
-A free-riding exploit possible for validators, which can be guarded against using  
+A free-riding exploit possible for validators, which can be guarded against using Commit Reveal.
 
 
 
