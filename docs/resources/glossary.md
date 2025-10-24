@@ -180,7 +180,7 @@ The process of removing a subnet miner or a subnet validator from the subnet due
 
 [Drand](https://drand.love)) is a distributed randomness beacon network that provides publicly verifiable, unpredictable, and unbiased random numbers. It is operated by the [League of Entropy](https://drand.love/league-of-entropy/), a consortium of independent organizations running Drand nodes.
 
-Drand provides **time-lock encryption**, a cryptographic technique that encrypts data so that it can only be decrypted *after a specific time has passed*. Drand provides this capability by regularly producing randomness "pulses" at fixed intervals. Data encrypted for a future Drand round cannot be decrypted until that round's randomness is published—even by the person who encrypted it.
+Drand provides **time-lock encryption**, a cryptographic technique that encrypts data so that it can only be decrypted *after a specific time has passed*. Drand provides this capability by regularly producing randomness "pulses" at fixed intervals. Data encrypted for a future Drand round cannot be decrypted—even by the person who encrypted it—until that round's randomness is published.
 
 Key properties that make Drand suitable for applications in Bittensor, such as [Commit Reveal](#commit-reveal):
 - **Decentralized**: No single entity controls the randomness generation
