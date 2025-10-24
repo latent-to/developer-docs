@@ -52,7 +52,7 @@ Weight copiers earn dividends without doing the work, in a sense free-riding or 
 
 If weight copying is more profitable than honest validation, rational actors will copy weights. Another way of thinking about this is that validators must actually pay a cost to validate honestly. Therefore, when weight copying is profitable, the incentive system driving Bittensor is distorted, weakening its ability to fulfill its purpose: producing the best digital commodities in the world.
 
-Therefore, it can be seen as subnet owners' responsibility to the community, as well as being in their own interests, to prevent ensure that weight copying is not profitable in their subnets. The best way to do this is by enabling and properly configuring [Commit Reveal](./commit-reveal).
+Therefore, it can be seen as the subnet owners' responsibility to the community, as well as being in their own interests, to ensure that weight copying is not profitable in their subnets. The best way to do this is by enabling and properly configuring [Commit Reveal](./commit-reveal).
 
 
 Historically, many large weight copiers used an optimized strategy which we can call the stake-weighted averaging attack, that actually gives them *higher* returns than any single honest validator:
