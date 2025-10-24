@@ -44,7 +44,7 @@ The encrypted weights cannot be decrypted by anyone—including the validator wh
 
 ### Concealment Period
 
-A waiting interval, specified as a number of tempos, elapses. Subnet owners configure this interval with the `commit_reveal_period` hyperparameter. During this time, the weights remain encrypted on-chain and are therefor not included in Yuma Consensus.
+A waiting interval, specified as a number of tempos, elapses. Subnet owners configure this interval with the `commit_reveal_period` hyperparameter. During this time, the weights remain encrypted on-chain and are therefore not included in Yuma Consensus.
 
 ### Automatic Reveal
 
