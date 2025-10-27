@@ -212,8 +212,6 @@ Determines whether or not bonds are reset-enabled.
 
 **Type**: u16
 
-<!-- fact check ^^ for some reason I could not identify this in https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1038 -->
-
 **Default**: 1
 
 **`btcli` setter**: `btcli sudo set --param commit_reveal_period`
@@ -224,9 +222,11 @@ Determines whether or not bonds are reset-enabled.
 
 **Description**:
 
-How long, in blocks, the consensus weights for a subnet remain time-lock encrypted, preventing weight-copying.
+The number of **tempos** (epochs) that must elapse before validator weights are revealed from time-lock encryption. Prevents weight-copying.
 
-See [Commit Reveal](../concepts/commit-reveal)
+**Important**: This is measured in **tempos** (not blocks, as you might expect). A tempo equals the subnet's `tempo` hyperparameter (typically 360 blocks). For example, f you set `commit_reveal_period` to 3 and your `tempo` is 360, weights will be revealed after 3 tempos = 1080 blocks.
+
+See [Commit Reveal](../concepts/commit-reveal) for details on how commit reveal works.
 
 ### CommitRevealWeightsEnabled
 
