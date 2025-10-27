@@ -100,19 +100,31 @@ See [Setting subnet hyperparameters](../subnets/subnet-hyperparameters.md#set-hy
 
 
 
-The [Immunity Period](../resources/glossary.md#immunity-period) for neurons is the interval (measured in blocks) during which a neuron (miner or validator) newly registered on a subnet is 'immune' from deregistration due to performance. The duration of this period value should always be larger than the Commit Reveal interval, otherwise the immunity period will expire before a given miner's scores are available, and they may be deregistered without having their work counted.
+The [Immunity Period](../resources/glossary.md#immunity-period) for neurons is the interval (measured in blocks) during which a neuron (miner or validator) newly registered on a subnet is 'immune' from deregistration due to performance. The duration of this period (in blocks) should always be larger than the Commit Reveal interval (in blocks), otherwise the immunity period will expire before a given miner's scores are available, and they may be deregistered without having their work counted.
+
+Note: To compare these values, multiply the `commit_reveal_period` by the `tempo` to get the reveal interval in blocks.
 
 :::danger
-Subnet owners must ensure that the miner immunity period is larger than the Commit Reveal interval.
+Subnet owners must ensure that the miner immunity period (in blocks) is larger than the Commit Reveal interval converted to blocks (commit_reveal_period × tempo).
 :::
 
 When updating the immunity period or Commit Reveal interval hyperparameters for a subnet, use the following formula:
 
-$$
-
-\text{new immunity period} = \left( (\text{new Commit Reveal period} \times \text{tempo}) - (\text{old Commit Reveal period} \times \text{tempo}) \right) + \text{old immunity period}
+**Note**: Both values are in blocks after conversion.
 
 $$
+\begin{align}
+\text{new immunity period}_{\text{blocks}} &= (\text{new commit\_reveal\_period}_{\text{tempos}} \times \text{tempo}) \\
+&\quad - (\text{old commit\_reveal\_period}_{\text{tempos}} \times \text{tempo}) \\
+&\quad + \text{old immunity\_period}_{\text{blocks}}
+\end{align}
+$$
+
+Where:
+- $\text{tempo}$ is the subnet's tempo hyperparameter (typically 360 blocks per tempo)
+- Values are converted to blocks for the calculation
+- Both input and output for immunity_period are in blocks
+- Both input and output for commit_reveal_period must be multiplied by tempo to convert to blocks
 
 ## Automatic Commit Reveal (added in Commit Reveal 4)
 
@@ -125,3 +137,15 @@ The Drand-based automatic reveal system prevents that exploit, and more generall
 3. **Cryptographic guarantees**: Time-lock encryption ensures weights are revealed on schedule
 4. **Reduced transaction costs**: No separate reveal transaction is needed
 5. **Trustless operation**: Drand is a decentralized network; no single party controls reveal timing
+
+<center>
+<ThemedImage
+alt="'Commit Reveal v2 Sequence Diagram'"
+sources={{
+    light: useBaseUrl('/img/docs/commit-reveal-v2.svg'),
+    dark: useBaseUrl('/img/docs/commit-reveal-v2.svg'),
+}}
+style={{width: '100%', maxWidth: 900}}
+/>
+</center>
+

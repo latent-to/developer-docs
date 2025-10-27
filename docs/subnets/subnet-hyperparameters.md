@@ -224,7 +224,7 @@ Determines whether or not bonds are reset-enabled.
 
 The number of **tempos** (epochs) that must elapse before validator weights are revealed from time-lock encryption. Prevents weight-copying.
 
-**Important**: This is measured in **tempos** (not blocks, as you might expect). A tempo equals the subnet's `tempo` hyperparameter (typically 360 blocks). For example, f you set `commit_reveal_period` to 3 and your `tempo` is 360, weights will be revealed after 3 tempos = 1080 blocks.
+**Important**: This is measured in **tempos** (not blocks, as you might expect). A tempo equals the subnet's `tempo` hyperparameter (typically 360 blocks). For example, if you set `commit_reveal_period` to 3 and your `tempo` is 360, weights will be revealed after 3 tempos = 1080 blocks.
 
 See [Commit Reveal](../concepts/commit-reveal) for details on how commit reveal works.
 
