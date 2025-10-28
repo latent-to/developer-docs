@@ -1,16 +1,16 @@
 ---
-title: Subtensor API
+title: SubtensorAPI
 ---
 
 # Subtensor API
 
 ## Overview
 
-The SubtensorApi is a unified interface for the Bittensor blockchain. It wraps both the synchronous and asynchronous Subtensor implementations, providing modular access to chain subsystems like wallets, delegates, neurons, and more.
+The `SubtensorAPI` is a unified interface for the Bittensor blockchain. It wraps both the synchronous and asynchronous Subtensor implementations, providing modular access to chain subsystems like wallets, delegates, neurons, and more.
 
 ### Modules
 
-All methods are grouped into logical modules for better organization and readability. Some methods may belong to more than one group if they span multiple functional areas. This does not compromise the internal logic — rather, it enhances discoverability and cohesion. Method equivalence between `SubtensorApi` and the original `Subtensor` is automatically verified by test coverage on every pull request (PR).
+All methods are grouped into logical modules for better organization and readability. Some methods may belong to more than one group if they span multiple functional areas. This does not compromise the internal logic — rather, it enhances discoverability and cohesion. Method equivalence between `SubtensorAPI` and the original `Subtensor` is automatically verified by test coverage on every pull request (PR).
 
 <details>
   <summary>Subsystem modules</summary>
@@ -32,7 +32,7 @@ All methods are grouped into logical modules for better organization and readabi
 
 ### Configuration
 
-The behavior of the `SubtensorApi` object is configured with the following parameters.
+The behavior of the `SubtensorAPI` object is configured with the following parameters.
 
 <details>
   <summary>Parameters</summary>

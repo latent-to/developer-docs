@@ -108,31 +108,36 @@ See below the Python definitions for the consensus-based weights feature:
 
 ```python
 import bittensor as bt
+from bittensor.core.extrinsics.utils import sudo_call_extrinsic
 
-wallet = bt.wallet(name=<my_coldkey>)
-subtensor = bt.subtensor(network="127.0.0.1:9946")
+wallet = bt.Wallet(name=<my_coldkey>)
+subtensor = bt.Subtensor(network="127.0.0.1:9944")
 
 # Enable consensus-based weights (liquid alpha) feature
-enabled_result = subtensor.set_hyperparameter(
-wallet=wallet,
-netuid=<your_preferred_netuid>,
-parameter="liquid_alpha_enabled",
-value=value,
-wait_for_inclusion=True,
-wait_for_finalization=True,
+result = sudo_call_extrinsic(
+    subtensor=subtensor,
+    wallet=wallet,
+    call_function="sudo_set_liquid_alpha_enabled",
+    call_params={"netuid": <your_preferred_netuid>, "enabled": True},
+    call_module="AdminUtils",
+    root_call=True
 )
-print(enabled_result)
+print(f"Set liquid alpha enabled: {result.success}")
 
 # Set alpha_values as a list of integers passed to "value" parameter in this order: alpha_low, alpha_high
-alpha_low_high_result = subtensor.set_hyperparameter(
-wallet=wallet,
-netuid=<your_preferred_netuid>,
-parameter="alpha_values",
-value=[], # decimal 0.1 for alpha_low and 0.8 for alpha_high
-wait_for_inclusion=True,
-wait_for_finalization=True,
+result = sudo_call_extrinsic(
+    subtensor=subtensor,
+    wallet=wallet,
+    call_function="sudo_set_alpha_values",
+    call_params={
+        "netuid": <your_preferred_netuid>,
+        "alpha_low": 6553,  # 0.1 in fixed-point
+        "alpha_high": 53083  # 0.8 in fixed-point
+    },
+    call_module="AdminUtils",
+    root_call=True
 )
-print(alpha_low_high_result)
+print(f"Set alpha values: {result.success}")
 ```
 
 ### Example Python code
@@ -141,31 +146,35 @@ Below is the example Python code showing how to use the above definitions for th
 
 ```python
 import bittensor as bt
+from bittensor.core.extrinsics.utils import sudo_call_extrinsic
 
-wallet = bt.wallet(name="test-coldkey")
-subtensor = bt.subtensor(network="127.0.0.1:9946")
+wallet = bt.Wallet(name="SN_OWNER_COLDKEY")
+subtensor = bt.Subtensor(network="127.0.0.1:9945")
 
-# Enable consensus-based weights (liquid alpha) feature
-enabled_result = subtensor.set_hyperparameter(
-wallet=wallet,
-netuid=1,
-parameter="liquid_alpha_enabled",
-value=True,
-wait_for_inclusion=True,
-wait_for_finalization=True,
+result = sudo_call_extrinsic(
+    subtensor=subtensor,
+    wallet=wallet,
+    call_function="sudo_set_liquid_alpha_enabled",
+    call_params={"netuid": 2, "enabled": True},
+    call_module="AdminUtils",
+    root_call=True
 )
-print(enabled_result)
+print(f"Set liquid alpha enabled: {result.success}")
 
-# Set alpha low and high values
-alpha_low_high_result = subtensor.set_hyperparameter(
-wallet=wallet,
-netuid=1,
-parameter="alpha_values",
-value=[6554, 52428], # decimal 0.1 for alpha_low and 0.8 for alpha_high
-wait_for_inclusion=True,
-wait_for_finalization=True,
+# Set alpha values as subnet owner
+result = sudo_call_extrinsic(
+    subtensor=subtensor,
+    wallet=wallet,
+    call_function="sudo_set_alpha_values",
+    call_params={
+        "netuid": 2,
+        "alpha_low": 6553,
+        "alpha_high": 53083
+    },
+    call_module="AdminUtils",
+    root_call=True
 )
-print(alpha_low_high_result)
+print(f"Set alpha values: {result.success}")
 ```
 
 :::danger you must always set alpha_low and alpha_high together

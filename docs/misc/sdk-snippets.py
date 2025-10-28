@@ -361,3 +361,75 @@ def main():
 if __name__ == "__main__":
     main()
 
+
+# setting hyperparams
+
+import bittensor as bt
+from bittensor.core.extrinsics.utils import sudo_call_extrinsic
+
+wallet = bt.Wallet(name="SN_OWNER_COLDKEY")
+subtensor = bt.Subtensor(network="127.0.0.1:9945")
+
+result = sudo_call_extrinsic(
+    subtensor=subtensor,
+    wallet=wallet,
+    call_function="sudo_set_liquid_alpha_enabled",
+    call_params={"netuid": 2, "enabled": True},
+    call_module="AdminUtils",
+    root_call=True
+)
+print(f"Set liquid alpha enabled: {result.success}")
+
+# Set alpha values as subnet owner
+result = sudo_call_extrinsic(
+    subtensor=subtensor,
+    wallet=wallet,
+    call_function="sudo_set_alpha_values",
+    call_params={
+        "netuid": 2,
+        "alpha_low": 6553,
+        "alpha_high": 53083
+    },
+    call_module="AdminUtils",
+    root_call=True
+)
+print(f"Set alpha values: {result.success}")
+
+## SubtensorAPI
+
+import bittensor as bt
+
+sub = bt.SubtensorApi()
+netuid = 2
+
+count = sub.subnets.get_mechanism_count(netuid=netuid)
+split = sub.subnets.get_mechanism_emission_split(netuid=netuid)
+
+# Set weights for mechanism 1
+ok, msg = sub.extrinsics.set_weights(
+    wallet=bt.Wallet(name="alice", hotkey="alice"),
+    netuid=netuid,
+    mechid=1,
+    uids=[0,1,2],
+    weights=[1,1,1],
+)
+
+print(msg)
+
+# Asyncio
+
+import asyncio
+import time
+from bittensor.core.async_subtensor import AsyncSubtensor
+
+async def main():
+    async with AsyncSubtensor(network="test") as subtensor:
+        start = time.time()
+        total_subnets = await subtensor.get_total_subnets()
+        neurons = await asyncio.gather(*[
+            subtensor.neurons(netuid=x)
+            for x in range(1, total_subnets + 1)
+        ])
+        print(time.time() - start)
+
+asyncio.run(main())
