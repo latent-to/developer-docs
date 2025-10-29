@@ -13,7 +13,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `5000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -30,7 +30,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -47,7 +47,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `100`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -65,7 +65,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -83,7 +84,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `(45875, 58982)`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -98,7 +99,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `30`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'AvgTempo')
@@ -115,13 +116,14 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `None`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
     hotkey = Keypair.create_from_uri('//Alice').ss58_address
     result = substrate.query('SubtensorModule', 'Axons', [netuid, hotkey])
-    print(result.value)
+    print(result)
     ```
 
 ## 8. BlockAtRegistration
@@ -134,7 +136,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -150,7 +152,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1000000000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'BlockEmission')
@@ -166,7 +168,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -184,7 +186,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -202,7 +204,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `900000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -219,7 +221,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -236,7 +238,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1000000000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -253,7 +255,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -271,7 +273,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     hotkey = Keypair.create_from_uri('//Alice').ss58_address
@@ -290,7 +293,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     parent = Keypair.create_from_uri('//Alice').ss58_address
@@ -306,7 +310,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `36000` (approx. 5 days at 12s blocks)
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'ColdkeySwapScheduleDuration')
@@ -322,7 +326,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `false`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -339,7 +343,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -357,7 +361,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -375,7 +379,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `11796`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     hotkey = Keypair.create_from_uri('//Alice').ss58_address
@@ -392,7 +397,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `10000000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -407,7 +412,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `36000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'DissolveNetworkScheduleDuration')
@@ -423,7 +428,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -438,7 +443,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'DynamicBlock')
@@ -454,7 +459,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -471,7 +476,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -488,7 +493,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `false`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     key = b"migrate_identities"
@@ -505,12 +510,13 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `None`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     coldkey = Keypair.create_from_uri('//Charlie').ss58_address
     result = substrate.query('SubtensorModule', 'IdentitiesV2', [coldkey])
-    print(result.value)
+    print(result)
     ```
 
 ## 31. ImmunityPeriod
@@ -522,7 +528,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `4096`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -539,7 +545,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -557,7 +563,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `false`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     hotkey = Keypair.create_from_uri('//Alice').ss58_address
@@ -575,7 +582,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `32767`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -593,7 +600,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `AccountId` derived from trailing zeroes
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -612,7 +619,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     hotkey = Keypair.create_from_uri('//Alice').ss58_address
@@ -630,7 +638,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -648,7 +656,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `None`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     coldkey = Keypair.create_from_uri('//Alice').ss58_address
@@ -668,7 +677,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     hotkey = Keypair.create_from_uri('//Alice').ss58_address
@@ -687,7 +697,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     hotkey = Keypair.create_from_uri('//Alice').ss58_address
@@ -705,7 +716,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     hotkey = Keypair.create_from_uri('//Alice').ss58_address
@@ -723,7 +735,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -740,7 +752,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     key = Keypair.create_from_uri('//Alice').ss58_address
@@ -757,7 +770,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     key = Keypair.create_from_uri('//Alice').ss58_address
@@ -774,7 +788,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     key = Keypair.create_from_uri('//Alice').ss58_address
@@ -791,7 +806,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -808,7 +823,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `false`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -825,12 +840,12 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `None`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
     result = substrate.query('SubtensorModule', 'LoadedEmission', [netuid])
-    print(result.value)
+    print(result)
     ```
 
 ## 49. MaxAllowedUids
@@ -842,7 +857,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `4096`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -859,7 +874,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `128`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -876,7 +891,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `100000000000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -891,7 +906,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `11796`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'MaxChildkeyTake')
@@ -905,7 +920,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `11796`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'MaxDelegateTake')
@@ -921,7 +936,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `u64::MAX / 4`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -938,7 +953,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     block = 100
@@ -953,7 +968,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `30`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'MaxTempo')
@@ -969,11 +984,26 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
     result = substrate.query('SubtensorModule', 'MaxWeightsLimit', [netuid])
+    print(result.value)
+    ```
+
+## 69. MinAllowedUids
+
+- **Description**: Minimum allowed UIDs for networks (global).
+- **Query Type**: `u16`
+- **Default Value**: `128`
+- **Python Example**:
+    ```python
+    from async_substrate_interface import SubstrateInterface
+    substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
+
+    netuid = 1
+    result = substrate.query('SubtensorModule', 'MinAllowedUids', [netuid])
     print(result.value)
     ```
 
@@ -986,7 +1016,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1024`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1003,7 +1033,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1000000000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1018,7 +1048,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'MinChildkeyTake')
@@ -1032,7 +1062,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'MinDelegateTake')
@@ -1048,7 +1078,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `10000000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1063,7 +1093,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `500000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'MinStake')
@@ -1077,7 +1107,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `50400`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'NetworkImmunityPeriod')
@@ -1091,7 +1121,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1000000000000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'NetworkLastLockCost')
@@ -1105,7 +1135,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'NetworkLastRegistered')
@@ -1119,7 +1149,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `100800`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'NetworkLockReductionInterval')
@@ -1135,25 +1165,11 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `18446744073709551615`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
     result = substrate.query('SubtensorModule', 'NetworkMaxStake', [netuid])
-    print(result.value)
-    ```
-
-## 69. NetworkMinAllowedUids
-
-- **Description**: Minimum allowed UIDs for networks (global).
-- **Query Type**: `u16`
-- **Default Value**: `128`
-- **Python Example**:
-    ```python
-    from substrateinterface import SubstrateInterface
-    substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
-
-    result = substrate.query('SubtensorModule', 'NetworkMinAllowedUids')
     print(result.value)
     ```
 
@@ -1164,7 +1180,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1000000000000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'NetworkMinLockCost')
@@ -1180,7 +1196,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1197,7 +1213,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `false`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1212,7 +1228,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `7200`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'NetworkRateLimit')
@@ -1228,7 +1244,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1245,7 +1261,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `false`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1262,7 +1278,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `false`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1279,7 +1295,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1294,7 +1310,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'NominatorMinRequiredStake')
@@ -1310,12 +1326,13 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `AccountId` derived from trailing zeroes
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     hotkey = Keypair.create_from_uri('//Alice').ss58_address
     result = substrate.query('SubtensorModule', 'Owner', [hotkey])
-    print(result.value)
+    print(result)
     ```
 
 ## 80. OwnedHotkeys
@@ -1327,7 +1344,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     coldkey = Keypair.create_from_uri('//Bob').ss58_address
@@ -1345,7 +1363,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     child = Keypair.create_from_uri('//Alice').ss58_address
@@ -1364,7 +1383,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `( [], 0 )`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     parent = Keypair.create_from_uri('//Alice').ss58_address
@@ -1382,7 +1402,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1399,7 +1419,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     hotkey = Keypair.create_from_uri('//Alice').ss58_address
@@ -1416,7 +1437,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1433,7 +1454,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1450,7 +1471,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1467,7 +1488,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1484,7 +1505,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1501,7 +1522,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1518,7 +1539,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `10`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1535,7 +1556,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `50`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1550,7 +1571,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'SenateRequiredStakePercentage')
@@ -1566,7 +1587,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `50`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1581,7 +1602,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `50000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'StakingFee')
@@ -1597,7 +1618,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     coldkey = Keypair.create_from_uri('//Bob').ss58_address
@@ -1614,7 +1636,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1631,7 +1653,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1648,7 +1670,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1665,7 +1687,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1682,7 +1704,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1699,7 +1721,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1716,12 +1738,12 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `None`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
     result = substrate.query('SubtensorModule', 'SubnetIdentitiesV2', [netuid])
-    print(result.value)
+    print(result)
     ```
 
 ## 104. SubnetLimit
@@ -1731,7 +1753,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `12`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'SubnetLimit')
@@ -1747,7 +1769,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1764,7 +1786,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1779,11 +1801,11 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0.000003`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'SubnetMovingAlpha')
-    print(result.value)
+    print(result)
     ```
 
 ## 108. SubnetMovingPrice
@@ -1795,12 +1817,12 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0.0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
     result = substrate.query('SubtensorModule', 'SubnetMovingPrice', [netuid])
-    print(result.value)
+    print(result)
     ```
 
 ## 109. SubnetName
@@ -1812,7 +1834,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `𝜏`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1829,12 +1851,12 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `AccountId` derived from trailing zeroes
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
     result = substrate.query('SubtensorModule', 'SubnetOwner', [netuid])
-    print(result.value)
+    print(result)
     ```
 
 ## 111. SubnetOwnerCut
@@ -1844,7 +1866,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `11796`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'SubnetOwnerCut')
@@ -1860,7 +1882,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1877,7 +1899,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1894,7 +1916,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1912,7 +1934,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1928,7 +1951,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `971718665099567868`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'TaoWeight')
@@ -1944,7 +1967,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `2`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1959,7 +1982,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'TargetStakesPerInterval')
@@ -1975,7 +1998,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `99`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -1992,7 +2015,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `"\xF0\x9D\x9C\x8F"`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -2009,7 +2032,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     coldkey = Keypair.create_from_uri('//Bob').ss58_address
@@ -2026,7 +2050,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     hotkey = Keypair.create_from_uri('//Alice').ss58_address
@@ -2041,7 +2066,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'TotalIssuance')
@@ -2055,7 +2080,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'TotalNetworks')
@@ -2069,7 +2094,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'TotalStake')
@@ -2085,7 +2110,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -2104,7 +2129,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     hotkey = Keypair.create_from_uri('//Alice').ss58_address
@@ -2123,7 +2149,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -2138,7 +2164,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0` or chain-defined
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'TxChildkeyTakeRateLimit')
@@ -2152,7 +2178,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `216000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'TxDelegateTakeRateLimit')
@@ -2166,7 +2192,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'TxRateLimit')
@@ -2183,7 +2209,8 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `None`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -2201,7 +2228,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     key = b"some_key"
@@ -2218,7 +2245,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -2235,7 +2262,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -2252,7 +2279,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -2269,7 +2296,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `1000`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -2287,13 +2314,14 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `None`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface, Keypair
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
     who = Keypair.create_from_uri('//Alice').ss58_address
     result = substrate.query('SubtensorModule', 'WeightCommits', [netuid, who])
-    print(result.value)
+    print(result)
     ```
 
 ## 139. Weights
@@ -2306,7 +2334,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `[]`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -2322,7 +2350,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     result = substrate.query('SubtensorModule', 'WeightsMinStake')
@@ -2338,7 +2366,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `100`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
@@ -2355,7 +2383,7 @@ title: "Subtensor Storage Query Examples"
 - **Default Value**: `0`
 - **Python Example**:
     ```python
-    from substrateinterface import SubstrateInterface
+    from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
     netuid = 1
