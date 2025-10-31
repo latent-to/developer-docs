@@ -124,7 +124,7 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       link: { type: "doc", id: "miners/index" },
-      items: ["miners/index", "miners/miners-btcli-guide"],
+      items: ["miners/index", "miners/miners-btcli-guide", "miners/autostaking"],
     },
 
     {
