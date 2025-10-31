@@ -433,3 +433,23 @@ async def main():
         print(time.time() - start)
 
 asyncio.run(main())
+
+# subtensor query examples
+
+from async_substrate_interface import SubstrateInterface
+substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
+
+netuid = 1
+result = substrate.query('SubtensorModule', 'SubnetIdentitiesV2', [netuid])
+print(result)
+
+# Subtensor query examples (Keypair)
+from async_substrate_interface import SubstrateInterface
+substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
+
+from bittensor_wallet import Keypair
+hotkey = Keypair.create_from_uri('//Alice').ss58_address
+coldkey = Keypair.create_from_uri('//Bob').ss58_address
+netuid = 1
+result = substrate.query('SubtensorModule', 'Alpha', [hotkey, coldkey, netuid])
+print(result)
