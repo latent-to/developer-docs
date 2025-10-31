@@ -15,7 +15,7 @@ Emission is the economic heartbeat of Bittensor—the process that continuously 
 
 See:
 - [How this affects TAO injection into subnets](#tao-reserve-injection).
-- [Rationale for the Transition in Tao Injection model](rationale-for-the-transition-in-tao-injection-model)
+- [Rationale for the Transition in Tao Injection model](#rationale-for-the-transition-in-tao-injection-model)
 :::
 
 ## Understanding the Two-Stage Process
