@@ -9,7 +9,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # The Weight Copying Problem
 
-This page explains **weight copying**—a free-riding behavior where validators copy other validators' work instead of independently evaluating miners. This article covers how weight copying works, why it is problematic, and how subnet owners can prevent weight copying on their subnets using Bittensor's [Commit Reveal](./commit-reveal.md) mechanism.
+This page explains **weight copying**—a free-riding behavior where validators copy other validators' work instead of independently evaluating miners. This article covers how weight copying works, why it is problematic, and how subnet owners can prevent weight copying on their subnets using Bittensor's [Commit Reveal](./commit-reveal.md) feature.
 
 See also:
 - [Opentensor Weight Copying technical paper (PDF)](pathname:///papers/BT_Weight_Copier-29May2024.pdf)
@@ -64,11 +64,11 @@ Historically, many large weight copiers used an optimized strategy which we can 
 
 This works because in Yuma Consensus, validators are rewarded based on how well their weights align with the emerging consensus. By calculating the stake-weighted median, weight copiers can predict consensus better than any individual honest validator who might have some disagreement with others. As a result, optimized weight copiers achieve higher validator dividends per stake than honest validators, making weight copying more profitable than honest work.
 
-This is a fundamental incentive problem for Bittensor subnet owners: if validators are needed to do validation work rather than weight copy, the validation work itself must be incentivized more than weight-copying. Fortunately, the Commit Reveal mechanism exists to make weight copying impossible.
+This is a fundamental incentive problem for Bittensor subnet owners: if validators are needed to do validation work rather than weight copy, the validation work itself must be incentivized more than weight-copying. Fortunately, the Commit Reveal feature exists to make weight copying impossible.
 
 ## How Commit Reveal prevents weight copying
 
-Bittensor's [Commit Reveal mechanism](./commit-reveal.md) solves weight copying by introducing a time delay between when weights are set and when they're publicly visible.
+Bittensor's [Commit Reveal feature](./commit-reveal.md) solves weight copying by introducing a time delay between when weights are set and when they're publicly visible.
 
 When weights are concealed for one or more tempos, weight copiers only have access to **stale weights** from previous tempos. If miner performance has changed since those old weights were set, the old weights are inaccurate, and copying them will put the copiers far from consensus. This will wreck their vtrust and their emissions, making weight copying unprofitable.
 
@@ -95,6 +95,6 @@ style={{width: '100%', maxWidth: 900}}
 
 ## The caveat: Dynamic scoring required
 
-Commit reveal only prevents weight copying if **miner performance actually changes** over the timescale of the concealment period. If the ground truth about miner rankings is overly static, then even stale weights will be accurate enough to be profitable, and in this case, nothing can prevent weight copying.
+Commit Reveal only prevents weight copying if **miner performance actually changes** over the timescale of the concealment period. If the ground truth about miner rankings is overly static, then even stale weights will be accurate enough to be profitable, and in this case, nothing can prevent weight copying.
 
-Subnet owners should design subnets that demand continuous miner improvement, which is important generally for producing best-in-class digital commodities, and also ensures that weights from yesterday are less accurate than fresh evaluations today, preventing weight copying.
+Subnet owners should design subnets that demand continuous miner improvement, which is important generally for producing best-in-class digital commodities, and also ensures that weights from yesterday are less accurate than fresh evaluations today, preventing weight copying. Alternatively, even if weights change infrequently (such as once per week), Liquid Alpha 2 can be used to deregister weight copiers.

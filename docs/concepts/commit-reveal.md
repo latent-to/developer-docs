@@ -21,9 +21,9 @@ See [The Weight Copying Problem](./weight-copying-in-bittensor.md).
 
 The Commit Reveal feature is designed to solve the **weight copying problem** by hiding weights until they are stale. Copying stale weights should result in validators departing from consensus.
 
-Commit reveal uses **[Drand time-lock encryption](https://drand.love/docs/timelock-encryption/)** to automatically reveal validator weights after a concealment period. When a validator sets weights, they are cryptographically encrypted and can only be decrypted after the configured number of tempos has passed. This automation eliminates the need for manual reveals and prevents selective revelation attacks.
+The Commit Reveal feature uses **[Drand time-lock encryption](https://drand.love/docs/timelock-encryption/)** to automatically reveal validator weights after a concealment period. When a validator sets weights, they are cryptographically encrypted and can only be decrypted after the configured number of tempos has passed. This automation eliminates the need for manual reveals and prevents selective revelation attacks.
 
-However, it is critical to note that this only works if the consensus weight matrix changes sufficiently on the time scale of the Commit Reveal interval. If the demands on miners are too static, and miner performance is very stable, weight copying will still be successful. The only solution for this is to demand continuous improvement from miners, requiring them to continuously evolve to maintain their scoring. Combined with a properly tuned Commit Reveal interval, this will keep validators honest, as well as producing the best digital commodities generally.
+However, it is critical to note that this only works if the consensus weight matrix changes sufficiently on the time scale of the Commit Reveal interval. If the demands on miners are too static, and miner performance is very stable, weight copying will still be successful. The primary solution for this is to demand continuous improvement from miners, requiring them to continuously evolve to maintain their scoring. Combined with a properly tuned Commit Reveal interval, this will keep validators honest, as well as producing the best digital commodities generally. If weights change relatively infrequently (such as once per week), Liquid Alpha 2 can be used to deregister weight copiers.
 
 ## The Commit Reveal Flow
 
@@ -48,7 +48,7 @@ A waiting interval, specified as a number of tempos, elapses. Subnet owners conf
 
 ### Automatic Reveal
 
-After the `commit_reveal_period` has elapsed, the chain automatically decrypts and reveals the weights at the beginning of the next tempo. This happens when the corresponding Drand beacon pulse becomes available, providing the cryptographic key needed to unlock the time-locked encryption. This use of Drand as the reveal mechanism gives commit reveal a strong cryptographic guarantee.
+After the `commit_reveal_period` has elapsed, the chain automatically decrypts and reveals the weights at the beginning of the next tempo. This happens when the corresponding Drand beacon pulse becomes available, providing the cryptographic key needed to unlock the time-locked encryption. This use of Drand as the reveal feature gives Commit Reveal a strong cryptographic guarantee.
 
 ### Consensus Processing
 
@@ -56,9 +56,9 @@ The revealed weights are now publicly visible and input into Yuma Consensus for 
 
 
 
-The below diagram shows the commit reveal process across three tempos. Key things to note:
+The below diagram shows the Commit Reveal process across three tempos. Key things to note:
 - **Drand pulse** triggers automatic reveals at block 1005, 1105, 1205 (shortly after each tempo starts)
-- **Commit window** is blocks 1090-1099 of each tempo (last 10 blocks)
+- **Commit window** is blocks 1090-1099, 1190-1199, 1290-1299 (last 10 blocks of each tempo)
 - **Concealment period** protects weights during the tempo
 - **Epoch calculation** uses revealed weights at block 1100, 1200, etc.
 
@@ -82,7 +82,7 @@ After a subnet owner enables Commit Reveal, validators and miners don't need to 
 
 ### Subnet Owners
 
-As a subnet owner, you must enable and configure Commit Reveal using two hyperparameters:
+As a subnet owner, you must enable and configure the Commit Reveal feature using two hyperparameters:
 
 1. **`commit_reveal_weights_enabled`** (boolean)
    - Set to `True` to activate Commit Reveal for your subnet
@@ -96,7 +96,7 @@ As a subnet owner, you must enable and configure Commit Reveal using two hyperpa
 
 See [Setting subnet hyperparameters](../subnets/subnet-hyperparameters.md#set-hyperparameters) for how to update these values.
 
-#### Commit reveal and the neuron immunity period
+#### Commit Reveal and the neuron immunity period
 
 
 
@@ -121,7 +121,7 @@ $$
 $$
 
 Where:
-- $\text{tempo}$ is the subnet's tempo hyperparameter (typically 360 blocks per tempo)
+- $\text{tempo}$ is the subnet's tempo hyperparameter (typically 361 blocks per tempo)
 - Values are converted to blocks for the calculation
 - Both input and output for immunity_period are in blocks
 - Both input and output for commit_reveal_period must be multiplied by tempo to convert to blocks
