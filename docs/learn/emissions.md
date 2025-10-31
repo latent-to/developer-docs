@@ -9,12 +9,14 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 Emission is the economic heartbeat of Bittensor—the process that continuously distributes newly created [TAO](../resources/glossary.md#tao-τ) and subnet-specific alpha tokens to network participants who contribute value through [mining](../resources/glossary.md#subnet-miner), [validation](../resources/glossary.md#validator), [staking](../resources/glossary.md#staking), and [subnet creation](../resources/glossary.md#subnet-creator).
 
-:::info Tokenomics in Transition
-**November 2025 - December 2025**: Bittensor is transitioning from price-based to flow-based subnet emissions over a 30-day period. Starting early November 2025, emissions will gradually shift from being determined entirely by subnet token prices to being based on net TAO inflows (staking activity). By early December 2025, emissions will be 100% flow-based. This creates stronger incentives for subnets to attract and retain genuine user engagement rather than just token price speculation.
 
-[Learn more about the transition below](#tao-reserve-injection).
+:::tip Tokenomics in Transition
+**November 2025 - December 2025**: Bittensor is transitioning from price-based to flow-based model for injection of emissions to subnets, unfolding over a 30-day period. Starting early November 2025, emissions will gradually shift from being determined entirely by subnet token prices to being based on net TAO inflows (staking activity). By early December 2025, emissions will be 100% flow-based.
+
+See:
+- [How this affects TAO injection into subnets](#tao-reserve-injection).
+- [Rationale for the Transition in Tao Injection model](rationale-for-the-transition-in-tao-injection-model)
 :::
-
 
 ## Understanding the Two-Stage Process
 
@@ -153,6 +155,7 @@ $$
 
 This ensures total emissions remain constant at 1 TAO per block (when at least one subnet has positive share).
 
+
 #### Alpha reserve injection
 
 Alpha is then injected in proportion to the price of the token, so that growth of a subnet's liquidity pools does not not change the price of the alpha token.
@@ -275,3 +278,41 @@ style={{width: 650}}
 </center>
 
 <br />
+
+
+## Rationale for the Transition in Tao Injection model
+
+The transition from price-based to flow-based emissions addresses several fundamental issues with the original model as explained by Bittensor co-founder Jacob Steeves (a.k.a., Const) in the [October 30, 2025 episode of Novelty Search](https://www.youtube.com/live/40ug9nbYW9U?si=H6mTnO2pwqwtE25U):
+
+### Leveling the Playing Field
+
+The new model measures emissions contribution "per unit liquidity" to eliminate structural advantages:
+
+- **Old model problem**: Small subnets with low liquidity are devastated by minor sell pressure, while large subnets with high liquidity can absorb massive selling with minimal emission impact
+- **New model solution**: All subnets are evaluated by their net TAO flows relative to their size, creating fair competition regardless of existing liquidity
+
+### Preventing "TAO Treasury" Gaming
+
+The price-based model enabled a specific exploit pattern:
+
+1. Projects artificially pump their token price by building "TAO treasuries"
+2. They pay for initial liquidity buildup using emissions from the inflated price
+3. They let the price "slow burn" downward while collecting emissions the entire time
+
+Under the new model, this exploit is not workable as the price would decrease very rapidly.
+
+### Anti-Manipulation by Design
+
+The flow-based system is designed to be manipulation-resistant:
+
+- Net flows reflect actual user behavior (staking/unstaking decisions)
+- 30-day EMA prevents short-term gaming
+- Registration burns are excluded from inflows
+- Power normalization amplifies sustained positive flows over temporary spikes
+
+### Note: De-registration Remains Price-Based
+
+Emissions and de-registration are **intentionally decoupled**:
+
+- De-registration continues to be based on lowest token price
+- Subnets with zero emissions (due to negative net flows) are **not** automatically de-registered
