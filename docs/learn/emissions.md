@@ -258,27 +258,6 @@ At the end of each tempo (360 blocks), the quantity of alpha accumulated over ea
 
     See [Core Dynamic TAO Concepts: Validator stake weight](../subnets/understanding-subnets#validator-stake-weight)
 
-### Note on evolution of Bittensor token economy
-
-At the initialization of Dynamic TAO, there was no alpha in circulation, so validator's stake weights were initially determined by their share of TAO stake.
-
-But far more alpha than TAO is emitted into circulation every block. As a result, over time there will be more alpha relative to TAO in overall circulation, and the relative weight of a validator in a given subnet will depend more on their alpha stake share relative to their share of the TAO stake on Subnet Zero.
-
-In order to hasten the process of alpha gaining the majority of stake power in the network, the contribution of TAO stake to a validator's stake weight is reduced by a global parameter called _TAO weight_. Currently, this is planned to be **18%**, in order to achieve a weight parity between TAO and total alpha in approximately 100 days.
-
-<center>
-<ThemedImage
-alt="Curves"
-sources={{
-    light: useBaseUrl('/img/docs/dynamic-tao/curves.png'),
-    dark: useBaseUrl('/img/docs/dynamic-tao/curves.png'),
-  }}
-style={{width: 650}}
-/>
-</center>
-
-<br />
-
 
 ## Rationale for the Transition in Tao Injection model
 
@@ -316,3 +295,25 @@ Emissions and de-registration are **intentionally decoupled**:
 
 - De-registration continues to be based on lowest token price
 - Subnets with zero emissions (due to negative net flows) are **not** automatically de-registered
+
+### Note on evolution of Bittensor token economy
+
+At the initialization of Dynamic TAO, there was no alpha in circulation, so validator's stake weights were initially determined by their share of TAO stake.
+
+But far more alpha than TAO is emitted into circulation every block. As a result, over time there will be more alpha relative to TAO in overall circulation, and the relative weight of a validator in a given subnet will depend more on their alpha stake share relative to their share of the TAO stake on Subnet Zero.
+
+In order to hasten the process of alpha gaining the majority of stake power in the network, the contribution of TAO stake to a validator's stake weight is reduced by a global parameter called _TAO weight_. Currently, this is planned to be **18%**, in order to achieve a weight parity between TAO and total alpha in approximately 100 days.
+
+<center>
+<ThemedImage
+alt="Curves"
+sources={{
+    light: useBaseUrl('/img/docs/dynamic-tao/curves.png'),
+    dark: useBaseUrl('/img/docs/dynamic-tao/curves.png'),
+  }}
+style={{width: 650}}
+/>
+</center>
+
+<br />
+
