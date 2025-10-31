@@ -19,7 +19,7 @@ This page tracks recent and upcoming changes to the Bittensor protocol and other
 
 ## Bittensor SDK v10
 
-**Status**: In development
+**Status**: Pre-release (Bittensor SDK v10.0.0rc2)
 
 - **What**: A new major version of the Bittensor SDK is in development and will introduce breaking changes.
 - **Key Features**:
@@ -27,7 +27,7 @@ This page tracks recent and upcoming changes to the Bittensor protocol and other
   - New standardized extrinsic response class with success status, error objects, receipts, and transaction fees in TAO and alpha.
   - Amount handling standardized to balance type only for consistent calculations.
 
-<!-- For detailed information, see: [Bittensor SDK v10 Migration guide](../subnets/understanding-multiple-mech-subnets). -->
+For detailed information, see: [Bittensor SDK v10 Migration guide](../sdk/migration-guide).
 
 ## Subnet UID trimming
 
