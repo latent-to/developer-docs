@@ -110,6 +110,16 @@ const sidebars = {
         "staking-and-delegation/stakers-btcli-guide",
         "staking-and-delegation/managing-stake-btcli",
         "staking-and-delegation/managing-stake-sdk",
+        {
+          type: "category",
+          label: "Root claims",
+          collapsible: true,
+          collapsed: true,
+          items: [
+            "staking-and-delegation/root-claims/index",
+            "staking-and-delegation/root-claims/managing-root-claims",
+          ],
+        },
         "learn/price-protection",
         "learn/slippage",
         "staking-and-delegation/staking-polkadot-js",
@@ -121,8 +131,11 @@ const sidebars = {
       label: "Mining",
       collapsible: true,
       collapsed: true,
-      link: { type: "doc", id: "miners/index" },
-      items: ["miners/miners-btcli-guide", "miners/autostaking"],
+      items: [
+        "miners/index",
+        "miners/miners-btcli-guide",
+        "miners/autostaking",
+      ],
     },
 
     {

@@ -76,6 +76,7 @@ The following table shows the available `ProxyType` options and their descriptio
 | `SudoUncheckedSetCode`   | Restricted to a single privileged call form.                                        |
 | `SwapHotkey`             | Allows hotkey swap operations.                                                      |
 | `SubnetLeaseBeneficiary` | Allows management of leased subnets.                                                |
+| `RootClaim`              | Allows managing of root claim operations.                                           |
 
 See [source code: ProxyType enum definition](https://github.com/opentensor/subtensor/blob/main/common/src/lib.rs#L144-L162) and [source code: proxy filtering implementation](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L678-L884).
 
