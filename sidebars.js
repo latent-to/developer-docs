@@ -84,7 +84,7 @@ const sidebars = {
       collapsed: true,
       items: [
         "keys/wallets",
-        "keys/working-with-keys",        
+        "keys/working-with-keys",
         "keys/handle-seed-phrase",
         "keys/coldkey-hotkey-security",
         "keys/address-poisoning-scams",
@@ -112,6 +112,16 @@ const sidebars = {
         "staking-and-delegation/stakers-btcli-guide",
         "staking-and-delegation/managing-stake-btcli",
         "staking-and-delegation/managing-stake-sdk",
+        {
+          type: "category",
+          label: "Root claims",
+          collapsible: true,
+          collapsed: true,
+          items: [
+            "staking-and-delegation/root-claims/index",
+            "staking-and-delegation/root-claims/managing-root-claims",
+          ],
+        },
         "learn/price-protection",
         "learn/slippage",
         "staking-and-delegation/staking-polkadot-js",
@@ -124,7 +134,11 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       link: { type: "doc", id: "miners/index" },
-      items: ["miners/index", "miners/miners-btcli-guide", "miners/autostaking"],
+      items: [
+        "miners/index",
+        "miners/miners-btcli-guide",
+        "miners/autostaking",
+      ],
     },
 
     {
@@ -207,7 +221,7 @@ const sidebars = {
         "sdk/managing-subtensor-connections",
       ],
     },
-    
+
     {
       type: "category",
       label: "Tools and Special Features",
