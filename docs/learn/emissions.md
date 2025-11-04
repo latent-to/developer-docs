@@ -224,7 +224,7 @@ To maintain positive emissions, subnet owners should focus on:
 
 ### Distribution
 
-At the end of each tempo (360 blocks), the quantity of alpha accumulated over each block of the tempo is distributed network participants in the following proportions:
+At the end of each tempo (361 blocks), the quantity of alpha accumulated over each block of the tempo is distributed network participants in the following proportions:
 
 1.  18% by subnet owner
 1.  41% of emissions go to miners. The allocation to particular miners is determined by [Yuma Consensus: Miner emissions#miner-emissions](./yuma-consensus).
