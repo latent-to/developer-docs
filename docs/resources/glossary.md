@@ -540,9 +540,8 @@ The process of registering keys with a subnet and purchasing a UID slot.
 
 ### Root Proportion
 
-A per-subnet metric that determines what fraction of dividends to stakers on the Root Subnet  are converted to TAO versus remaining as alpha. Root proportion is calculated based on the relative weight of TAO staked in the root subnet compared to the total issuance for that specific subnet's alpha token.
+A per-subnet metric that determines the ratio of dividends to stakers on Subnet Zero that are emitted in TAO or in the subnet's alpha token. Root proportion is calculated based on the relative weight of TAO staked in the root subnet compared to the total issuance for that specific subnet's alpha token.
 
-It determines the ratio of dividends to stakers on Subnet Zero that are emitted in TAO or in the subnet's alpha token.
 
 **Properties:**
 - **Range**: [0, 1] representing the proportion of dividends going to root stakers
