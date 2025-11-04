@@ -59,27 +59,38 @@ TAO emissions across subnets are now determined by a **flow-based model**:
 
 #### TAO reserve injection
 
-A subnet's TAO reserve injection is determined by its **emission share**, calculated using the flow-based model:
+A subnet's TAO reserve injection is determined by its **emission share**, calculated based on net flow of TAO in and out of the subnet's TAO liquidity pool due to staking/unstaking.
 
 <details>
   <summary><strong>How it's calculated</strong></summary>
 
-The flow-based model uses an Exponential Moving Average (EMA) of net TAO flows (staking minus unstaking), with a  30-day half-life, resulting in an EMA window of approximately ~86.8 days:
+The flow-based model uses an Exponential Moving Average (EMA) of net TAO flows (staking minus unstaking):
 
 1. **Track net flows**: Each block, record TAO inflows from staking and outflows from unstaking:
    $$\text{net\_flow}_i = \sum \text{TAO staked} - \sum \text{TAO unstaked}$$
 
 2. **Calculate EMA**: Update the 30-day EMA of net flows (smoothing factor $\alpha \approx 0.000003209$):
    $$S_i = (1 - \alpha) \cdot S_{i-1} + \alpha \cdot \text{net\_flow}_i$$
+   
+   The EMA smooths out short-term fluctuations. With a very small α (~0.000003209), the EMA changes slowly—99.9997% comes from the previous EMA value and only 0.0003% from the current block's flow. This creates a 30-day half-life, meaning it takes about 30 days for the EMA to move halfway toward a new sustained flow level.
+   This results in an EMA window (duration over which old values still affect the running EMA) of approximately ~86.8 days.
 
 3. **Apply offset and clipping**: Calculate offset flows by subtracting the lower limit $L$:
    $$z_i = \max(S_i - L, 0)$$
    where $L = \max(\text{FlowCutoff}, \min_{j} \min(S_j, 0))$
    
-   Subnets with $S_i \leq L$ (i.e., subnets with negative net flows) receive zero emissions .
+   This step ensures subnets with negative net flows get zero emissions. The lower limit $L$ is set to the most negative EMA across all subnets (or FlowCutoff if higher). By subtracting this from each subnet's EMA, we "lift" all values so the worst-performing subnet gets 0.
 
 4. **Power normalization**: Apply power $p$ to adjust distribution characteristics:
    $$\text{share}_{\text{flow}}(i) = \frac{z_i^p}{\sum_{j \in \mathbb{S}} z_j^p}$$
+   
+   This converts the offset flows into proportions that sum to 1 (100%). With $p = 1$ (default), this is just dividing each subnet's offset flow by the total across all subnets, creating a linear relationship. Higher $p$ values favor subnets with stronger flows.   
+
+5. **Final TAO injection**: Multiply the share by total block emission to get actual TAO amount:
+   $$\Delta\tau_i = \Delta\bar{\tau} \times \text{share}(i)$$
+   
+   This converts the proportions into actual TAO amounts. The total block emission $\Delta\bar{\tau}$ is 1 TAO per block.
+   
 
 With the default $p = 1$ ([source](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1293-L1295)), this creates **linear/proportional distribution**: a subnet with 2× the flow receives exactly 2× the emissions. The parameter can be adjusted to create winner-takes-more dynamics if desired (e.g., with $p = 1.5$, a subnet with 2× flow would get 2.83× emissions).
 
@@ -102,15 +113,6 @@ See [Calculating root proportion](../navigating-subtensor/emissions-coinbase#6-c
 
 
 </details>
-
-**Final TAO injection** to subnet $i$:
-
-$$
-\Delta\tau_i = \Delta\bar{\tau} \times \text{share}(i)
-$$
-
-This ensures total emissions remain constant at 1 TAO per block (when at least one subnet has positive share).
-
 
 #### Alpha reserve injection
 
