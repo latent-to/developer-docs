@@ -545,7 +545,7 @@ A per-subnet metric that determines the ratio of dividends to stakers on Subnet 
 
 **Properties:**
 - **Range**: [0, 1] representing the proportion of dividends going to root stakers
-- **Higher root proportion**: More dividends converted to TAO for root subnet stakers
+- **Higher root proportion**: More of the total stake in the subnet is held by stakers in root, rather than directly in the subnet.
 - **Lower root proportion**: More dividends remain as alpha for subnet stakers
 
 **Mathematical Definition:**
