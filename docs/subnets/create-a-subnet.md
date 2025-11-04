@@ -62,7 +62,7 @@ One option for subnet owners is to ask one of the root network (subnet 0) valida
 
 ### Subnet creation rate limits
 
-Subnet creations are limited to **one subnet creation per 7200 blocks** (approximately one per day). The cost to register a new subnet is also dynamic. For these reason, picking the right time to create your subnet requires planning.
+Subnet creations are limited to **one subnet creation per 28800 blocks** (approximately one every four days). The cost to register a new subnet is also dynamic. For these reason, picking the right time to create your subnet requires planning.
 
 ## Prerequisites
 

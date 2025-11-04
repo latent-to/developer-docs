@@ -46,7 +46,6 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "learn/introduction",
         "resources/questions-and-answers",
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
@@ -108,7 +107,6 @@ const sidebars = {
       collapsed: true,
       link: { type: "doc", id: "staking-and-delegation/delegation" },
       items: [
-        "staking-and-delegation/delegation",
         "staking-and-delegation/stakers-btcli-guide",
         "staking-and-delegation/managing-stake-btcli",
         "staking-and-delegation/managing-stake-sdk",
@@ -147,11 +145,7 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       link: { type: "doc", id: "validators/index" },
-      items: [
-        "validators/index",
-        "validators/child-hotkeys",
-        "validators/validators-btcli-guide",
-      ],
+      items: ["validators/child-hotkeys", "validators/validators-btcli-guide"],
     },
     {
       type: "category",
@@ -244,7 +238,6 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "local-build/deploy",
         "local-build/provision-wallets",
         "local-build/create-subnet",
         "local-build/mine-validate",
@@ -270,7 +263,6 @@ const sidebars = {
       label: "Bittensor EVM",
       link: { type: "doc", id: "evm-tutorials/index" },
       items: [
-        "evm-tutorials/index",
         "evm-tutorials/subtensor-networks",
         "evm-tutorials/bridge-vtao",
         "evm-tutorials/evm-testnet-with-metamask-wallet",
@@ -287,7 +279,6 @@ const sidebars = {
       link: { type: "doc", id: "evm-tutorials/examples" },
       label: "Bittensor EVM: Examples and Precompiles",
       items: [
-        "evm-tutorials/examples",
         "evm-tutorials/convert-h160-to-ss58",
         "evm-tutorials/transfer-from-metamask-to-ss58",
         "evm-tutorials/transfer-between-two-h160-accounts",
@@ -337,12 +328,7 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       link: { type: "doc", id: "errors/index" },
-      items: [
-        "errors/index",
-        "errors/custom",
-        "errors/subtensor",
-        "errors/troubleshooting",
-      ],
+      items: ["errors/custom", "errors/subtensor", "errors/troubleshooting"],
     },
     "resources/glossary",
     "resources/community-links",
