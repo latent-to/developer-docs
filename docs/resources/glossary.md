@@ -538,6 +538,34 @@ The process of registering keys with a subnet and purchasing a UID slot.
 
 **See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/), [Working with Subnets](../subnets/working-with-subnets.md)
 
+### Root Proportion
+
+A per-subnet metric that determines what fraction of validator dividends (41% of alpha emissions) are converted to TAO and distributed to stakers on the root subnet versus remaining as alpha for subnet stakers. Root proportion is calculated based on the relative weight of TAO staked in the root subnet compared to the total issuance for that specific subnet's alpha token.
+
+It determines the ratio of dividends to stakers on Subnet Zero that are emitted in TAO or in the subnet's alpha token.
+
+**Properties:**
+- **Range**: [0, 1] representing the proportion of dividends going to root stakers
+- **Higher root proportion**: More dividends converted to TAO for root subnet stakers
+- **Lower root proportion**: More dividends remain as alpha for subnet stakers
+
+**Mathematical Definition:**
+
+$$
+\text{Root proportion} = \frac{\text{Root TAO} \times \text{TAO weight}}{\text{Root TAO} \times \text{TAO weight} + \text{alpha issuance}}
+$$
+
+Where:
+- `Root TAO`: Total TAO staked in Root Subnet
+- `TAO weight`: Global parameter ([TAO Weight](#tao-weight)) determining TAO vs alpha influence (currently 0.18)
+
+
+See also:
+- [Root Subnet/Subnet Zero](#root-subnetsubnet-zero)
+- [TAO Weight](#tao-weight)
+- [Coinbase Implementation](../navigating-subtensor/emissions-coinbase.md#6-calculating-root-proportion)
+- [Emissions](../learn/emissions.md)
+
 ### Root Subnet/Subnet Zero
 
 Subnet Zero a.k.a. the root subnet is a special subnet. No miners can register on subnet zero, and no validation work is performed. However validators can register, and $\tau$-holders can stake to those validators, as with any other subnet. This offers a mechanism for $\tau$-holders to stake $\tau$ into validators in a subnet-agnostic way. This works because the weight of a validator in a subnet includes both their share of that subnet's $\alpha$ and their share of staked TAO in Subnet Zero.
