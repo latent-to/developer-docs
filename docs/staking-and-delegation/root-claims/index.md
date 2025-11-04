@@ -1,4 +1,8 @@
-# Root Claims
+---
+title: "Root Claim"
+---
+
+# Root Claim
 
 The root claim feature in Bittensor allows stakers who stake to validators on the [Root Subnet (a.k.a. Subnet Zero)](../subnets/understanding-subnets#subnet-zero) to choose for their staking dividends to accumulate as alpha or be converted immediately to TAO.
 
