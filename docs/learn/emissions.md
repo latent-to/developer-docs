@@ -116,8 +116,9 @@ The power parameter creates winner-takes-more dynamics: a subnet with 2× the fl
 
 **Implementation**: Flow tracking occurs in [`record_tao_inflow()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L35-L47) and [`record_tao_outflow()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L49-L59), called during stake and unstake operations.
 
-:::info note
+:::info Exceptions to Inflows/Outflows
 Flow tracking does not include root proportion.
+While stake/unstake operations are recorded as inflows or outflows, swaps like the `burned_register` (UID registration) and  the root claim are excluded.
 
 See [Calculating root proportion](../navigating-subtensor/emissions-coinbase#6-calculating-root-proportion).
 :::
