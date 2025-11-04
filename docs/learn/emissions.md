@@ -111,7 +111,7 @@ The power parameter creates winner-takes-more dynamics: a subnet with 2× the fl
 
 **Key Parameters** ([source](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1278-L1348)):
 - EMA half-life: 216,000 blocks (30 days)
-- Power exponent: $p = 1.5$
+- Power exponent: $p = 1.0$
 - Flow cutoff: 0 (only negative flows clipped by default)
 
 **Implementation**: Flow tracking occurs in [`record_tao_inflow()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L35-L47) and [`record_tao_outflow()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L49-L59), called during stake and unstake operations.
