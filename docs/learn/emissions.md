@@ -269,7 +269,7 @@ The transition from price-based to flow-based emissions addresses several fundam
 The new model measures emissions contribution "per unit liquidity" to eliminate structural advantages:
 
 - **Old model problem**: Small subnets with low liquidity are devastated by minor sell pressure, while large subnets with high liquidity can absorb massive selling with minimal emission impact
-- **New model solution**: All subnets are evaluated by their net TAO flows relative to their size, creating fair competition regardless of existing liquidity
+- **New model solution**: All subnets are evaluated by their net TAO flow, which does favor subnets with larger total liquidity pools
 
 ### Preventing "TAO Treasury" Gaming
 
