@@ -28,8 +28,14 @@ There are two ways to process claims:
 Your configured `Keep` or `Swap` setting is applied automatically to both manual and automatic claims. To change this, you must call the `set_root_claim_type` extrinsic.
 
 :::info claim threshold
-Automatic claims are only processed when the accumulated amount exceeds the minimum threshold of `0.0005` alpha. This prevents small, frequent transactions from increasing network load. The threshold is configurable per subnet, allowing subnet owners to adjust it as needed.
+Automatic claims are only processed when the accumulated alpha dividends exceed the minimum threshold of 500,000 RAO (0.0005 TAO equivalent). This prevents small, frequent transactions from increasing network load. The threshold is configurable per subnet by the subnet owner or root via the `sudo_set_root_claim_threshold` extrinsic.
 
-Manual claims, however, can be made at any time — even for smaller amounts.
+Manual claims bypass this threshold check and can claim any amount.
 
+:::
+
+:::note Flow-based emissions
+Root claim swaps (when using **Swap** mode) do not count as TAO outflows for the purpose of subnet flow-based emissions calculations. This means claiming and converting alpha dividends to TAO does not negatively impact a subnet's emission allocation.
+
+See [Emissions: Exceptions to Inflows/Outflows](../learn/emissions#tao-reserve-injection) for details.
 :::
