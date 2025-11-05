@@ -13,6 +13,7 @@ This page covers how to configure, monitor, and claim root dividends, i.e. divid
 
 - A coldkey with TAO staked on the root network (subnet 0).
 - A hotkey that's registered and staked on one or more subnets.
+- To set your Root Claim preference requires a transaction fee, so you must be able to cover the cost of the fee.
 
 ## Set a claim type
 
@@ -57,7 +58,62 @@ Decrypting...
 
 
   </TabItem>
-  <!-- <TabItem value="sdk" label="Bittensor SDK"></TabItem> -->
+  <TabItem value="sdk" label="Bittensor SDK">
+
+Use the `set_root_claim_type()` method to set your root claim type:
+
+```python
+import asyncio
+from bittensor_wallet import Wallet
+from bittensor.core.async_subtensor import AsyncSubtensor
+
+async def main():
+    # Initialize wallet and subtensor
+    wallet = Wallet(name="validator", hotkey="default")
+    async with AsyncSubtensor(network="local") as subtensor:
+        # Set claim type to 'Keep' to retain Alpha tokens
+        response = await subtensor.set_root_claim_type(
+            wallet=wallet,
+            new_root_claim_type="Keep",  # or "Swap" for TAO accumulation
+            wait_for_finalization=True
+        )
+        
+        if response.success:
+            print(f"✅ Successfully set root claim type to 'Keep'")
+            if response.extrinsic_receipt:
+                print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
+        else:
+            print(f"❌ Failed to set root claim type: {response.message}")
+
+asyncio.run(main())
+```
+
+```
+Enter your password:
+Decrypting...
+✅ Successfully set root claim type to 'Keep'
+Transaction hash: 0xe3a387589b0ae6abfd7172088cc7853224f304e0bc4c3688b335a6f6e8f9a508
+```
+
+You can also query the current claim type:
+
+```python
+import asyncio
+from bittensor_wallet import Wallet
+from bittensor.core.async_subtensor import AsyncSubtensor
+
+async def main():
+    wallet = Wallet(name="my_wallet", hotkey="my_hotkey")
+    async with AsyncSubtensor(network="finney") as subtensor:
+        claim_type = await subtensor.get_root_claim_type(
+            coldkey_ss58=wallet.coldkeypub.ss58_address
+        )
+        print(f"Current root claim type: {claim_type}")
+
+asyncio.run(main())
+```
+
+  </TabItem>
   <TabItem value="polkadot-app" label="Polkadot app">
 
   1. Navigate to **Developer** → **Extrinsics**
@@ -171,7 +227,66 @@ Estimated extrinsic fee: 0.000046377 τ
 Do you want to proceed? [y/n]: 
 ```
   </TabItem>
-  <!-- <TabItem value="sdk" label="Bittensor SDK"></TabItem> -->
+  <TabItem value="sdk" label="Bittensor SDK">
+
+Use the `claim_root()` method to manually claim your accumulated root network emissions:
+
+```python
+import asyncio
+from bittensor_wallet import Wallet
+from bittensor.core.async_subtensor import AsyncSubtensor
+
+async def main():
+    # Initialize wallet and subtensor
+    wallet = Wallet(name="my_wallet", hotkey="my_hotkey")
+    async with AsyncSubtensor(network="finney") as subtensor:
+        # Specify the subnets to claim from (up to 5 at once)
+        netuids = [1, 2, 3, 4, 5]
+        
+        # Claim root emissions
+        response = await subtensor.claim_root(
+            wallet=wallet,
+            netuids=netuids,
+            wait_for_finalization=True
+        )
+        
+        if response.success:
+            print(f"✅ Successfully claimed root emissions from subnets {netuids}")
+            if response.extrinsic_receipt:
+                print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
+        else:
+            print(f"❌ Failed to claim root emissions: {response.message}")
+
+asyncio.run(main())
+```
+
+You can also check claimable amounts before claiming:
+
+```python
+import asyncio
+from bittensor_wallet import Wallet
+from bittensor.core.async_subtensor import AsyncSubtensor
+
+async def main():
+    wallet = Wallet(name="my_wallet", hotkey="my_hotkey")
+    async with AsyncSubtensor(network="finney") as subtensor:
+        # Get stake info which includes claimable amounts
+        stake_info = await subtensor.get_stake_info_for_coldkey(
+            coldkey_ss58=wallet.coldkeypub.ss58_address
+        )
+        
+        if stake_info:
+            print("Claimable emissions by subnet:")
+            for info in stake_info:
+                if hasattr(info, 'claimable') and info.claimable > 0:
+                    print(f"  Subnet {info.netuid}: {info.claimable}")
+        else:
+            print("No claimable emissions found")
+
+asyncio.run(main())
+```
+
+  </TabItem>
   <TabItem value="polkadot-app" label="Polkadot app">
 
   1. Navigate to **Developer** → **Extrinsics**
