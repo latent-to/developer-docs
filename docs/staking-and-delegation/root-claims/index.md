@@ -27,7 +27,7 @@ There are two ways to process claims:
 
 Your configured `Keep` or `Swap` setting is applied automatically to both manual and automatic claims. To change this, you must call the `set_root_claim_type` extrinsic.
 
-<!-- See [Managing Root Claims](./managing-root-claims). -->
+See [Managing Root Claims](../../staking-and-delegation/root-claims/managing-root-claims).
 
 :::info claim threshold
 Automatic claims are only processed when the accumulated alpha dividends exceed the minimum threshold of 500,000 RAO (0.0005 TAO equivalent). This prevents small, frequent transactions from increasing network load. The threshold is configurable per subnet by the subnet owner or root via the `sudo_set_root_claim_threshold` extrinsic.
