@@ -167,7 +167,7 @@ The cap or _alpha emission rate_ $\Delta\bar{\alpha_i}$ for subnet $i$, starts a
 Each block, liquidity is also set aside to be emitted to participants (validators, miners, stakers, and subnet creator). The quantity per block is equal to the _alpha emission rate_ $\Delta\bar{\alpha_i}$ for subnet $i$.
 
 :::warning Important for Subnet Owners
-Under the new flow-based model, subnets with negative net TAO flows (more unstaking than staking) will receive **zero TAO emissions** and consequently **zero alpha injection**. This means:
+Under the new flow-based model, subnets that have negative net TAO flows (more unstaking than staking) for sufficiently long will receive **zero TAO emissions** and consequently **zero alpha injection**. This means:
 
 - No liquidity growth for the subnet pool
 - Higher slippage for users trying to stake
