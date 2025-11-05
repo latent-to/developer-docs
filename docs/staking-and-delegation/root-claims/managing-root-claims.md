@@ -103,7 +103,7 @@ from bittensor_wallet import Wallet
 from bittensor.core.async_subtensor import AsyncSubtensor
 
 async def main():
-    wallet = Wallet(name="my_wallet", hotkey="my_hotkey")
+    wallet = Wallet(name="validator", hotkey="default")
     async with AsyncSubtensor(network="finney") as subtensor:
         claim_type = await subtensor.get_root_claim_type(
             coldkey_ss58=wallet.coldkeypub.ss58_address
@@ -167,25 +167,94 @@ btcli stake list --live
 
 ### Query claimable ALPHA
 
-Currently this can only be done with the Polkadot.js app. To see how much you can claim from a specific subnet:
+<Tabs groupId="root-claim">
+  <TabItem value="sdk" label="Bittensor SDK">
 
-    1. Navigate to **Developer** → **Chain State**
-    2. Select the storage query: `subtensorModule` → `rootClaimable(AccountId)`
-    3. Enter your hotkey address
-    4. Click the **+** button to query
+Using the following methods, you can query the claimable stake for a specific subnet.
+
+You can also view the **rate** for your claimable stakes on each subnet, i.e., the price conversion in $\tau$/$\alpha$ that is applied to your alpha ($\alpha$) stake when it is converted to TAO ($\tau$).
+
+```python
+import asyncio
+from bittensor_wallet import Wallet
+from bittensor.core.async_subtensor import AsyncSubtensor
+
+async def main():
+    wallet = Wallet(name="validator", hotkey="default")
+    async with AsyncSubtensor(network="local") as subtensor:
+        # Get claimable stake for a specific subnet
+        netuid = 1
+        claimable_stake = await subtensor.get_root_claimable_stake(
+            coldkey_ss58=wallet.coldkeypub.ss58_address,
+            hotkey_ss58=wallet.hotkey.ss58_address,
+            netuid=netuid
+        )
+        print(f"Claimable stake for subnet {netuid}: {claimable_stake}")
+        
+        # Get claimable rates for all subnets
+        all_rates = await subtensor.get_root_claimable_all_rates(
+            hotkey_ss58=wallet.hotkey.ss58_address
+        )
+        print(f"Claimable rates for all subnets: {all_rates}")
+
+asyncio.run(main())
+```
+
+  </TabItem>
+  <TabItem value="polkadot-app" label="Polkadot app">
+
+To see how much you can claim from a specific subnet:
+
+1. Navigate to **Developer** → **Chain State**
+2. Select the storage query: `subtensorModule` → `rootClaimable(AccountId)`
+3. Enter your hotkey address
+4. Click the **+** button to query
+
+  </TabItem>
+</Tabs>
   
 ### Check claimed ALPHA
 
-Currently this can only be done with the Polkadot.js app. To see how much you've already claimed from a subnet:
+<Tabs groupId="root-claim">
+  <TabItem value="sdk" label="Bittensor SDK">
 
+You can check how much you've already claimed from a subnet:
 
-    1. Navigate to **Developer** → **Chain State**
-    2. Select the storage query: `subtensorModule` → `rootClaimed(AccountId, AccountId, u16)`
-    3. Fill the parameters:
-        - `AccountId`: Enter the account hotkey.
-        - `AccountId`: Enter the account coldkey.
-        - `u16`: Enter the subnet uid.
-    4. Click the **+** button to query
+```python
+import asyncio
+from bittensor_wallet import Wallet
+from bittensor.core.async_subtensor import AsyncSubtensor
+
+async def main():
+    wallet = Wallet(name="validator", hotkey="default")
+    async with AsyncSubtensor(network="finney") as subtensor:
+        # Get already claimed stake for a specific subnet
+        netuid = 1
+        claimed_stake = await subtensor.get_root_claimed(
+            coldkey_ss58=wallet.coldkeypub.ss58_address,
+            hotkey_ss58=wallet.hotkey.ss58_address,
+            netuid=netuid
+        )
+        print(f"Already claimed stake for subnet {netuid}: {claimed_stake}")
+
+asyncio.run(main())
+```
+
+  </TabItem>
+  <TabItem value="polkadot-app" label="Polkadot app">
+
+To see how much you've already claimed from a subnet:
+
+1. Navigate to **Developer** → **Chain State**
+2. Select the storage query: `subtensorModule` → `rootClaimed(AccountId, AccountId, u16)`
+3. Fill the parameters:
+    - `AccountId`: Enter the account hotkey.
+    - `AccountId`: Enter the account coldkey.
+    - `u16`: Enter the subnet uid.
+4. Click the **+** button to query
+
+  </TabItem>
+</Tabs>
 
 ## Trigger a manual claim
 
