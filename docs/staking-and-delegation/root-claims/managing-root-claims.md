@@ -13,6 +13,7 @@ This page covers how to configure, monitor, and claim root dividends, i.e. divid
 
 - A coldkey with TAO staked on the root network (subnet 0).
 - A hotkey that's registered and staked on one or more subnets.
+- To set your Root Claim preference requires a transaction fee, so you must be able to cover the cost of the fee.
 
 ## Set a claim type
 
@@ -57,7 +58,62 @@ Decrypting...
 
 
   </TabItem>
-  <!-- <TabItem value="sdk" label="Bittensor SDK"></TabItem> -->
+  <TabItem value="sdk" label="Bittensor SDK">
+
+Use the `set_root_claim_type()` method to set your root claim type:
+
+```python
+import asyncio
+from bittensor_wallet import Wallet
+from bittensor.core.async_subtensor import AsyncSubtensor
+
+async def main():
+    # Initialize wallet and subtensor
+    wallet = Wallet(name="validator", hotkey="default")
+    async with AsyncSubtensor(network="local") as subtensor:
+        # Set claim type to 'Keep' to retain Alpha tokens
+        response = await subtensor.set_root_claim_type(
+            wallet=wallet,
+            new_root_claim_type="Keep",  # or "Swap" for TAO accumulation
+            wait_for_finalization=True
+        )
+        
+        if response.success:
+            print(f"✅ Successfully set root claim type to 'Keep'")
+            if response.extrinsic_receipt:
+                print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
+        else:
+            print(f"❌ Failed to set root claim type: {response.message}")
+
+asyncio.run(main())
+```
+
+```
+Enter your password:
+Decrypting...
+✅ Successfully set root claim type to 'Keep'
+Transaction hash: 0xe3a387589b0ae6abfd7172088cc7853224f304e0bc4c3688b335a6f6e8f9a508
+```
+
+You can also query the current claim type:
+
+```python
+import asyncio
+from bittensor_wallet import Wallet
+from bittensor.core.async_subtensor import AsyncSubtensor
+
+async def main():
+    wallet = Wallet(name="validator", hotkey="default")
+    async with AsyncSubtensor(network="finney") as subtensor:
+        claim_type = await subtensor.get_root_claim_type(
+            coldkey_ss58=wallet.coldkeypub.ss58_address
+        )
+        print(f"Current root claim type: {claim_type}")
+
+asyncio.run(main())
+```
+
+  </TabItem>
   <TabItem value="polkadot-app" label="Polkadot app">
 
   1. Navigate to **Developer** → **Extrinsics**
@@ -111,25 +167,86 @@ btcli stake list --live
 
 ### Query claimable ALPHA
 
-Currently this can only be done with the Polkadot.js app. To see how much you can claim from a specific subnet:
+<Tabs groupId="root-claim">
+  <TabItem value="sdk" label="Bittensor SDK">
 
-    1. Navigate to **Developer** → **Chain State**
-    2. Select the storage query: `subtensorModule` → `rootClaimable(AccountId)`
-    3. Enter your hotkey address
-    4. Click the **+** button to query
+Using the following methods, you can query the claimable stake for a specific subnet.
+
+```python
+import asyncio
+from bittensor_wallet import Wallet
+from bittensor.core.async_subtensor import AsyncSubtensor
+
+async def main():
+    wallet = Wallet(name="validator", hotkey="default")
+    async with AsyncSubtensor(network="local") as subtensor:
+        # Get claimable stake for a specific subnet
+        netuid = 2
+        claimable_stake = await subtensor.get_root_claimable_stake(
+            coldkey_ss58=wallet.coldkeypub.ss58_address,
+            hotkey_ss58=wallet.hotkey.ss58_address,
+            netuid=netuid
+        )
+        print(f"Claimable stake for subnet {netuid}: {claimable_stake}")
+
+asyncio.run(main())
+```
+
+  </TabItem>
+  <TabItem value="polkadot-app" label="Polkadot app">
+
+To see how much you can claim from a specific subnet:
+
+1. Navigate to **Developer** → **Chain State**
+2. Select the storage query: `subtensorModule` → `rootClaimable(AccountId)`
+3. Enter your hotkey address
+4. Click the **+** button to query
+
+  </TabItem>
+</Tabs>
   
 ### Check claimed ALPHA
 
-Currently this can only be done with the Polkadot.js app. To see how much you've already claimed from a subnet:
+<Tabs groupId="root-claim">
+  <TabItem value="sdk" label="Bittensor SDK">
 
+You can check how much you've already claimed from a subnet:
 
-    1. Navigate to **Developer** → **Chain State**
-    2. Select the storage query: `subtensorModule` → `rootClaimed(AccountId, AccountId, u16)`
-    3. Fill the parameters:
-        - `AccountId`: Enter the account hotkey.
-        - `AccountId`: Enter the account coldkey.
-        - `u16`: Enter the subnet uid.
-    4. Click the **+** button to query
+```python
+import asyncio
+from bittensor_wallet import Wallet
+from bittensor.core.async_subtensor import AsyncSubtensor
+
+async def main():
+    wallet = Wallet(name="validator", hotkey="default")
+    async with AsyncSubtensor(network="local") as subtensor:
+        # Get already claimed stake for a specific subnet
+        netuid = 2
+        claimed_stake = await subtensor.get_root_claimed(
+            coldkey_ss58=wallet.coldkeypub.ss58_address,
+            hotkey_ss58=wallet.hotkey.ss58_address,
+            netuid=netuid
+        )
+        print(f"Already claimed stake for subnet {netuid}: {claimed_stake}")
+
+asyncio.run(main())
+```
+
+  </TabItem>
+  <TabItem value="polkadot-app" label="Polkadot app">
+
+To see how much you've already claimed from a subnet:
+
+1. Navigate to **Developer** → **Chain State**
+2. Select the storage query: `subtensorModule` → `rootClaimed(AccountId, AccountId, u16)`
+3. Fill the parameters:
+    - `AccountId`: Enter the account hotkey.
+    - `AccountId`: Enter the account coldkey.
+    - `u16`: Enter the subnet uid.
+4. Click the **+** button to query
+
+  </TabItem>
+</Tabs>
 
 ## Trigger a manual claim
 
@@ -171,7 +288,72 @@ Estimated extrinsic fee: 0.000046377 τ
 Do you want to proceed? [y/n]: 
 ```
   </TabItem>
-  <!-- <TabItem value="sdk" label="Bittensor SDK"></TabItem> -->
+  <TabItem value="sdk" label="Bittensor SDK">
+
+Use the `claim_root()` method to manually claim your accumulated root network emissions:
+
+```python
+import asyncio
+from bittensor_wallet import Wallet
+from bittensor.core.async_subtensor import AsyncSubtensor
+
+async def main():
+    # Initialize wallet and subtensor
+    wallet = Wallet(name="validator", hotkey="default")
+    async with AsyncSubtensor(network="local") as subtensor:
+        # Specify the subnets to claim from (up to 5 at once)
+        netuids = [1, 2, 3]
+        
+        # Claim root emissions
+        response = await subtensor.claim_root(
+            wallet=wallet,
+            netuids=netuids,
+            wait_for_finalization=True
+        )
+        
+        if response.success:
+            print(f"✅ Successfully claimed root emissions from subnets {netuids}")
+            if response.extrinsic_receipt:
+                print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
+        else:
+            print(f"❌ Failed to claim root emissions: {response.message}")
+
+asyncio.run(main())
+```
+
+```console
+Enter your password:
+Decrypting...
+✅ Successfully claimed root emissions from subnets [1, 2, 3]
+Transaction hash: 0x0e153ac52f63dde1be1854f00daf09f643d1491c6e6b4103cdd5b04591921e3f
+```
+You can also check claimable amounts before claiming:
+
+```python
+import asyncio
+from bittensor_wallet import Wallet
+from bittensor.core.async_subtensor import AsyncSubtensor
+
+async def main():
+    wallet = Wallet(name="validator", hotkey="default")
+    async with AsyncSubtensor(network="finney") as subtensor:
+        # Get stake info which includes claimable amounts
+        stake_info = await subtensor.get_stake_info_for_coldkey(
+            coldkey_ss58=wallet.coldkeypub.ss58_address
+        )
+        
+        if stake_info:
+            print("Claimable emissions by subnet:")
+            for info in stake_info:
+                if hasattr(info, 'claimable') and info.claimable > 0:
+                    print(f"  Subnet {info.netuid}: {info.claimable}")
+        else:
+            print("No claimable emissions found")
+
+asyncio.run(main())
+```
+
+  </TabItem>
   <TabItem value="polkadot-app" label="Polkadot app">
 
   1. Navigate to **Developer** → **Extrinsics**
@@ -187,100 +369,13 @@ Do you want to proceed? [y/n]:
 </Tabs>
 
 
-### View claim types on root network
+## Inspecting the Metagraph: View claim types for registered neurons
 
-When viewing the root network (subnet 0) metagraph, you can see each validator's claim type setting:
-
-```bash
-btcli subnets metagraph --netuid 0
-```
-This displays a **Claim Type** column showing whether each validator has configured `Swap` or `Keep` for their root emissions.
-
-```console
-                                                 Root Network
-                                               Network: finney
-
- Position ┃   Tao (τ) ┃ Emission (Τ/block) ┃ Hotkey ┃ Coldkey ┃ Identity                         ┃ Claim Type
-━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━
-    1     │ τ 754.29k │      0.0000 τ      │ 5E2LP6 │ 5GsbTg  │ tao.bot                          │    Swap
-    2     │ τ 657.96k │      0.0000 τ      │ 5GKH9F │ 5GcCZ2  │ Taostats                         │    Swap
-    3     │ τ 539.39k │      0.0000 τ      │ 5G3wMP │ 5HBtpw  │ Openτensor Foundaτion            │    Swap
-    4     │ τ 482.47k │      0.0000 τ      │ 5DXdHi │ 5E9fVY  │ Yuma, a DCG Company              │    Swap
-    5     │ τ 369.34k │      0.0000 τ      │ 5Ckaof │ 5FHxxe  │ Kraken                           │    Swap
-    6     │ τ 332.16k │      0.0000 τ      │ 5FxcZr │ 5GP8N5  │ Polychain                        │    Swap
-    7     │ τ 332.07k │      0.0000 τ      │ 5Gq2gs │ 5GZSAg  │ RoundTable21                     │    Swap
-    8     │ τ 293.72k │      0.0000 τ      │ 5Dd8ga │ 5GBkWR  │                                  │    Swap
-    9     │ τ 289.69k │      0.0000 τ      │ 5HmkM6 │ 5Eq8b9  │ Crucible Labs                    │    Swap
-    10    │ τ 278.70k │      0.0000 τ      │ 5CsvRJ │ 5EJAqc  │ tao5                             │    Swap
-    31    │  τ 12.89k │      0.0000 τ      │ 5ELREh │ 5EP7UG  │ Taofu Protocol                   │    Swap
-    32    │  τ 11.39k │      0.0000 τ      │ 5CszMV │ 5CMUVy  │ MUV                              │    Swap
-    33    │   τ 9.94k │      0.0000 τ      │ 5Gmvye │ 5Cyfk5  │ Neural Internet                  │    Swap
-    34    │   τ 2.30k │      0.0000 τ      │ 5FsGZa │ 5FS3iG  │                                  │    Swap
-    35    │   τ 1.80k │      0.0000 τ      │ 5HeKSH │ 5GRPcZ  │ TaoStation                       │    Swap
-    36    │   τ 1.64k │      0.0000 τ      │ 5FFSBk │ 5GP1VN  │ Kooltek68                        │    Swap
-    37    │   τ 1.05k │      0.0000 τ      │ 5Hpmsk │ 5CP6HR  │ Kiln                             │    Swap
-    38    │   τ 1.04k │      0.0000 τ      │ 5GHn5a │ 5FLLWE  │                                  │    Swap
-    39    │   τ 1.03k │      0.0000 τ      │ 5HZ7yq │ 5H3Jyk  │                                  │    Swap
-    40    │  τ 936.87 │      0.0000 τ      │ 5Hmh4D │ 5C7Nud  │ InfStones                        │    Swap
-    41    │  τ 744.29 │      0.0000 τ      │ 5GcBK8 │ 5EsyFE  │ Tensor.Exchange                  │    Swap
-    42    │  τ 319.48 │      0.0000 τ      │ 5H6BgK │ 5HEmke  │ TaoPolishNode                    │    Swap
-    43    │  τ 213.74 │      0.0000 τ      │ 5ECvRL │ 5Gdq5d  │ Vune                             │    Swap
-    44    │  τ 204.73 │      0.0000 τ      │ 5GUC4K │ 5EXAUB  │ Hand of Midas                    │    Swap
-    45    │  τ 199.00 │      0.0000 τ      │ 5FFBEv │ 5F721c  │ HODL.Validators                  │    Swap
-    46    │  τ 110.79 │      0.0000 τ      │ 5ED6jw │ 5CrBAG  │ Giga Corporation                 │    Swap
-    47    │  τ 101.94 │      0.0000 τ      │ 5C5JU5 │ 5GMu9V  │                                  │    Swap
-    48    │   τ 66.61 │      0.0000 τ      │ 5FcXnz │ 5HeQuP  │ Lucrosus Capital                 │    Swap
-    49    │   τ 33.31 │      0.0000 τ      │ 5HRB5x │ 5HYgaf  │ P2P.org                          │    Swap
-    50    │   τ 32.83 │      0.0000 τ      │ 5H9XxR │ 5DjkmY  │                                  │    Swap
-    51    │   τ 27.05 │      0.0000 τ      │ 5DyMK7 │ 5CzLtK  │ TaoStake                         │    Swap
-    52    │   τ 22.51 │      0.0000 τ      │ 5CBDhk │ 5DRnT7  │ Unit 410                         │    Swap
-    53    │   τ 22.40 │      0.0000 τ      │ 5D4oo3 │ 5HnDZj  │                                  │    Swap
-    54    │   τ 21.57 │      0.0000 τ      │ 5FLKnb │ 5HiveM  │ Tao Bridge                       │    Swap
-    55    │   τ 18.75 │      0.0000 τ      │ 5CPzGD │ 5CLWeY  │ Chat with Hal                    │    Swap
-    56    │   τ 17.88 │      0.0000 τ      │ 5FqPJM │ 5Dcihs  │ Exchange Listings                │    Swap
-    57    │   τ 16.75 │      0.0000 τ      │ 5FWiXL │ 5GEoS1  │ Chutes / SN128 Primary Validator │    Swap
-    58    │   τ 10.55 │      0.0000 τ      │ 5FnBaS │ 5GVv9t  │                                  │    Swap
-    59    │   τ 10.55 │      0.0000 τ      │ 5CV93B │ 5CY4Lp  │ ShiftLayer                       │    Swap
-    60    │   τ 10.17 │      0.0000 τ      │ 5Ehv5X │ 5Cwo4h  │ Dale Cooper                      │    Swap
-    61    │   τ 10.00 │      0.0000 τ      │ 5FpsgU │ 5GgMeL  │ Owner128                         │    Swap
-    62    │   τ 10.00 │      0.0000 τ      │ 5E4eKP │ 5HVdRa  │ MMO.AI                           │    Swap
-    63    │    τ 8.00 │      0.0000 τ      │ 5EAMc5 │ 5H6tB2  │ Taoillium                        │    Swap
-    64    │    τ 1.28 │      0.0000 τ      │ 5Cibb5 │ 5HZ6qd  │                                  │    Swap
-──────────┼───────────┼────────────────────┼────────┼─────────┼──────────────────────────────────┼────────────
-          │   5.50m τ │                    │        │         │                                  │
-
-
-Root Network (Subnet 0)
-  Rate: 1.00 τ/τ
-  Emission: τ 0
-  TAO Pool: τ 5.51m
-  Stake: τ 4.95m
-  Tempo: 1897340/100
-
-    Description:
-        The table displays the root subnet participants and their metrics.
-        The columns are as follows:
-            - Position: The sorted position of the hotkey by total TAO.
-            - TAO: The sum of all TAO balances for this hotkey across all subnets.
-            - Stake: The stake balance of this hotkey on root (measured in TAO).
-            - Emission: The emission accrued to this hotkey across all subnets every block measured in TAO.
-            - Hotkey: The hotkey ss58 address.
-            - Coldkey: The coldkey ss58 address.
-            - Root Claim: The root claim type for this coldkey. 'Swap' converts Alpha to TAO every epoch. 'Keep' keeps
-Alpha emissions.
-```
-
-### View claim types on subnets
-
-When viewing any subnet's metagraph, the **Claim Type** column shows the claim setting for neurons who have stake on root:
+When viewing any subnet's metagraph, the **Claim Type** column shows the claim setting for registered neurons who have stake:
 
 ```bash
 btcli subnets metagraph --netuid 14
 ```
-
-Only neurons with stake on the root network will have their claim type displayed.
-
-
 
 ```console
 
