@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Managing Root Claims
 
-This guide covers how to configure, monitor, and claim root dividends in the Bittensor network.
+This page covers how to configure, monitor, and claim root dividends, i.e. dividends from staking to validators on the Root Subnet. See [Root Claim](./index)
 
 ## Prerequisites
 
@@ -75,11 +75,7 @@ Decrypting...
 
 ### View claimable amounts with stake list
 
-
-<Tabs groupId="root-claim">
-  <TabItem value="btcli" label="BTCLI">
-  <!-- <TabItem value="sdk" label="Bittensor SDK"></TabItem> -->
-The `btcli stake list` command now includes a **Claimable** column showing accumulated emissions for each subnet:
+Output from the `btcli stake list` command includes a **Claimable** column, which shows the amount of unclaimed, accumulated ALPHA emissions available for manual claiming from each subnet.
 
 ```bash
 btcli stake list
@@ -91,36 +87,19 @@ For a live-updating view:
 btcli stake list --live
 ```
 
-The **Claimable** column displays the amount of unclaimed, accumulated ALPHA emissions available for manual claiming from each subnet.
-  </TabItem>
-</Tabs>
-
 ### Query claimable ALPHA
 
-To see how much you can claim from a specific subnet:
+Currently this can only be done with the Polkadot.js app. To see how much you can claim from a specific subnet:
 
-<Tabs groupId="root-claim">
-  <!-- <TabItem value="btcli" label="BTCLI"> -->
-  
-  
-  <!-- </TabItem> -->
-  <!-- <TabItem value="sdk" label="Bittensor SDK"></TabItem> -->
-  <TabItem value="polkadot-app" label="Polkadot app">
     1. Navigate to **Developer** → **Chain State**
     2. Select the storage query: `subtensorModule` → `rootClaimable(AccountId)`
     3. Enter your hotkey address
     4. Click the **+** button to query
-  </TabItem>
-</Tabs>
-
+  
 ### Check claimed ALPHA
 
-To see how much you've already claimed from a subnet:
+Currently this can only be done with the Polkadot.js app. To see how much you've already claimed from a subnet:
 
-<Tabs groupId="root-claim">
-  <!-- <TabItem value="btcli" label="BTCLI"></TabItem>
-  <TabItem value="sdk" label="Bittensor SDK"></TabItem> -->
-  <TabItem value="polkadot-app" label="Polkadot app">
 
     1. Navigate to **Developer** → **Chain State**
     2. Select the storage query: `subtensorModule` → `rootClaimed(AccountId, AccountId, u16)`
@@ -129,9 +108,6 @@ To see how much you've already claimed from a subnet:
         - `AccountId`: Enter the account coldkey.
         - `u16`: Enter the subnet uid.
     4. Click the **+** button to query
-
-   </TabItem>
-   </Tabs>
 
 ## Trigger a manual claim
 
