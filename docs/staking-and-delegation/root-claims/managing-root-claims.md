@@ -71,15 +71,39 @@ Decrypting...
   </TabItem>
 </Tabs>
 
-## Query claimable ALPHA
+## Monitor claim status and types
+
+### View claimable amounts with stake list
+
+
+<Tabs groupId="root-claim">
+  <TabItem value="btcli" label="BTCLI">
+  <!-- <TabItem value="sdk" label="Bittensor SDK"></TabItem> -->
+The `btcli stake list` command now includes a **Claimable** column showing accumulated emissions for each subnet:
+
+```bash
+btcli stake list
+```
+
+For a live-updating view:
+
+```bash
+btcli stake list --live
+```
+
+The **Claimable** column displays the amount of unclaimed, accumulated ALPHA emissions available for manual claiming from each subnet.
+  </TabItem>
+</Tabs>
+
+### Query claimable ALPHA
 
 To see how much you can claim from a specific subnet:
 
 <Tabs groupId="root-claim">
-  <TabItem value="btcli" label="BTCLI">
+  <!-- <TabItem value="btcli" label="BTCLI"> -->
   
   
-  </TabItem>
+  <!-- </TabItem> -->
   <!-- <TabItem value="sdk" label="Bittensor SDK"></TabItem> -->
   <TabItem value="polkadot-app" label="Polkadot app">
     1. Navigate to **Developer** → **Chain State**
@@ -89,13 +113,13 @@ To see how much you can claim from a specific subnet:
   </TabItem>
 </Tabs>
 
-## Check claimed ALPHA
+### Check claimed ALPHA
 
 To see how much you've already claimed from a subnet:
 
-<!-- <Tabs groupId="root-claim">
-  <TabItem value="btcli" label="BTCLI"></TabItem>
-  <TabItem value="sdk" label="Bittensor SDK"></TabItem>
+<Tabs groupId="root-claim">
+  <!-- <TabItem value="btcli" label="BTCLI"></TabItem>
+  <TabItem value="sdk" label="Bittensor SDK"></TabItem> -->
   <TabItem value="polkadot-app" label="Polkadot app">
 
     1. Navigate to **Developer** → **Chain State**
@@ -107,19 +131,13 @@ To see how much you've already claimed from a subnet:
     4. Click the **+** button to query
 
    </TabItem>
-   </Tabs> -->
-
-1. Navigate to **Developer** → **Chain State**
-1. Select the storage query: `subtensorModule` → `rootClaimed(AccountId, AccountId, u16)`
-1. Fill the parameters:
-   - `AccountId`: Enter the account hotkey.
-   - `AccountId`: Enter the account coldkey.
-   - `u16`: Enter the subnet uid.
-1. Click the **+** button to query
+   </Tabs>
 
 ## Trigger a manual claim
 
-Trigger a manual claim to collect accumulated ALPHA without waiting for auto-claim. To manually trigger a claim:
+The network will eventually process your pending emissions automatically. However, you can choose to manually claim your accumulated ALPHA without waiting, for a small extrinsic fee. See [Transaction Fees](../learn/fees).
+
+To manually trigger a claim:
 
 <Tabs groupId="root-claim">
   <TabItem value="btcli" label="BTCLI">
@@ -135,16 +153,6 @@ Claim from specific netuids (up to 5 at once):
 ```bash
 btcli stake process-claim --netuids 1,2,3
 ```
-
-With a specific wallet:
-
-```bash
-btcli stake process-claim --netuids 1,2 --wallet-name my_wallet
-```
-
-:::note
-The network will eventually process your pending emissions automatically. However, you can choose to manually claim your emissions with a small extrinsic fee.
-:::
 
   </TabItem>
   <!-- <TabItem value="sdk" label="Bittensor SDK"></TabItem> -->
@@ -162,23 +170,6 @@ The network will eventually process your pending emissions automatically. Howeve
   </TabItem>
 </Tabs>
 
-## Monitor claim status and types
-
-### View claimable amounts with stake list
-
-The `btcli stake list` command now includes a **Claimable** column showing accumulated emissions for each subnet:
-
-```bash
-btcli stake list
-```
-
-For a live-updating view:
-
-```bash
-btcli stake list --live
-```
-
-This column displays the amount of unclaimed ALPHA emissions available for manual claiming from each subnet.
 
 ### View claim types on root network
 
@@ -187,8 +178,81 @@ When viewing the root network (subnet 0) metagraph, you can see each validator's
 ```bash
 btcli subnets metagraph --netuid 0
 ```
-
 This displays a **Claim Type** column showing whether each validator has configured `Swap` or `Keep` for their root emissions.
+
+```console
+                                                 Root Network
+                                               Network: finney
+
+ Position ┃   Tao (τ) ┃ Emission (Τ/block) ┃ Hotkey ┃ Coldkey ┃ Identity                         ┃ Claim Type
+━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━
+    1     │ τ 754.29k │      0.0000 τ      │ 5E2LP6 │ 5GsbTg  │ tao.bot                          │    Swap
+    2     │ τ 657.96k │      0.0000 τ      │ 5GKH9F │ 5GcCZ2  │ Taostats                         │    Swap
+    3     │ τ 539.39k │      0.0000 τ      │ 5G3wMP │ 5HBtpw  │ Openτensor Foundaτion            │    Swap
+    4     │ τ 482.47k │      0.0000 τ      │ 5DXdHi │ 5E9fVY  │ Yuma, a DCG Company              │    Swap
+    5     │ τ 369.34k │      0.0000 τ      │ 5Ckaof │ 5FHxxe  │ Kraken                           │    Swap
+    6     │ τ 332.16k │      0.0000 τ      │ 5FxcZr │ 5GP8N5  │ Polychain                        │    Swap
+    7     │ τ 332.07k │      0.0000 τ      │ 5Gq2gs │ 5GZSAg  │ RoundTable21                     │    Swap
+    8     │ τ 293.72k │      0.0000 τ      │ 5Dd8ga │ 5GBkWR  │                                  │    Swap
+    9     │ τ 289.69k │      0.0000 τ      │ 5HmkM6 │ 5Eq8b9  │ Crucible Labs                    │    Swap
+    10    │ τ 278.70k │      0.0000 τ      │ 5CsvRJ │ 5EJAqc  │ tao5                             │    Swap
+    31    │  τ 12.89k │      0.0000 τ      │ 5ELREh │ 5EP7UG  │ Taofu Protocol                   │    Swap
+    32    │  τ 11.39k │      0.0000 τ      │ 5CszMV │ 5CMUVy  │ MUV                              │    Swap
+    33    │   τ 9.94k │      0.0000 τ      │ 5Gmvye │ 5Cyfk5  │ Neural Internet                  │    Swap
+    34    │   τ 2.30k │      0.0000 τ      │ 5FsGZa │ 5FS3iG  │                                  │    Swap
+    35    │   τ 1.80k │      0.0000 τ      │ 5HeKSH │ 5GRPcZ  │ TaoStation                       │    Swap
+    36    │   τ 1.64k │      0.0000 τ      │ 5FFSBk │ 5GP1VN  │ Kooltek68                        │    Swap
+    37    │   τ 1.05k │      0.0000 τ      │ 5Hpmsk │ 5CP6HR  │ Kiln                             │    Swap
+    38    │   τ 1.04k │      0.0000 τ      │ 5GHn5a │ 5FLLWE  │                                  │    Swap
+    39    │   τ 1.03k │      0.0000 τ      │ 5HZ7yq │ 5H3Jyk  │                                  │    Swap
+    40    │  τ 936.87 │      0.0000 τ      │ 5Hmh4D │ 5C7Nud  │ InfStones                        │    Swap
+    41    │  τ 744.29 │      0.0000 τ      │ 5GcBK8 │ 5EsyFE  │ Tensor.Exchange                  │    Swap
+    42    │  τ 319.48 │      0.0000 τ      │ 5H6BgK │ 5HEmke  │ TaoPolishNode                    │    Swap
+    43    │  τ 213.74 │      0.0000 τ      │ 5ECvRL │ 5Gdq5d  │ Vune                             │    Swap
+    44    │  τ 204.73 │      0.0000 τ      │ 5GUC4K │ 5EXAUB  │ Hand of Midas                    │    Swap
+    45    │  τ 199.00 │      0.0000 τ      │ 5FFBEv │ 5F721c  │ HODL.Validators                  │    Swap
+    46    │  τ 110.79 │      0.0000 τ      │ 5ED6jw │ 5CrBAG  │ Giga Corporation                 │    Swap
+    47    │  τ 101.94 │      0.0000 τ      │ 5C5JU5 │ 5GMu9V  │                                  │    Swap
+    48    │   τ 66.61 │      0.0000 τ      │ 5FcXnz │ 5HeQuP  │ Lucrosus Capital                 │    Swap
+    49    │   τ 33.31 │      0.0000 τ      │ 5HRB5x │ 5HYgaf  │ P2P.org                          │    Swap
+    50    │   τ 32.83 │      0.0000 τ      │ 5H9XxR │ 5DjkmY  │                                  │    Swap
+    51    │   τ 27.05 │      0.0000 τ      │ 5DyMK7 │ 5CzLtK  │ TaoStake                         │    Swap
+    52    │   τ 22.51 │      0.0000 τ      │ 5CBDhk │ 5DRnT7  │ Unit 410                         │    Swap
+    53    │   τ 22.40 │      0.0000 τ      │ 5D4oo3 │ 5HnDZj  │                                  │    Swap
+    54    │   τ 21.57 │      0.0000 τ      │ 5FLKnb │ 5HiveM  │ Tao Bridge                       │    Swap
+    55    │   τ 18.75 │      0.0000 τ      │ 5CPzGD │ 5CLWeY  │ Chat with Hal                    │    Swap
+    56    │   τ 17.88 │      0.0000 τ      │ 5FqPJM │ 5Dcihs  │ Exchange Listings                │    Swap
+    57    │   τ 16.75 │      0.0000 τ      │ 5FWiXL │ 5GEoS1  │ Chutes / SN128 Primary Validator │    Swap
+    58    │   τ 10.55 │      0.0000 τ      │ 5FnBaS │ 5GVv9t  │                                  │    Swap
+    59    │   τ 10.55 │      0.0000 τ      │ 5CV93B │ 5CY4Lp  │ ShiftLayer                       │    Swap
+    60    │   τ 10.17 │      0.0000 τ      │ 5Ehv5X │ 5Cwo4h  │ Dale Cooper                      │    Swap
+    61    │   τ 10.00 │      0.0000 τ      │ 5FpsgU │ 5GgMeL  │ Owner128                         │    Swap
+    62    │   τ 10.00 │      0.0000 τ      │ 5E4eKP │ 5HVdRa  │ MMO.AI                           │    Swap
+    63    │    τ 8.00 │      0.0000 τ      │ 5EAMc5 │ 5H6tB2  │ Taoillium                        │    Swap
+    64    │    τ 1.28 │      0.0000 τ      │ 5Cibb5 │ 5HZ6qd  │                                  │    Swap
+──────────┼───────────┼────────────────────┼────────┼─────────┼──────────────────────────────────┼────────────
+          │   5.50m τ │                    │        │         │                                  │
+
+
+Root Network (Subnet 0)
+  Rate: 1.00 τ/τ
+  Emission: τ 0
+  TAO Pool: τ 5.51m
+  Stake: τ 4.95m
+  Tempo: 1897340/100
+
+    Description:
+        The table displays the root subnet participants and their metrics.
+        The columns are as follows:
+            - Position: The sorted position of the hotkey by total TAO.
+            - TAO: The sum of all TAO balances for this hotkey across all subnets.
+            - Stake: The stake balance of this hotkey on root (measured in TAO).
+            - Emission: The emission accrued to this hotkey across all subnets every block measured in TAO.
+            - Hotkey: The hotkey ss58 address.
+            - Coldkey: The coldkey ss58 address.
+            - Root Claim: The root claim type for this coldkey. 'Swap' converts Alpha to TAO every epoch. 'Keep' keeps
+Alpha emissions.
+```
 
 ### View claim types on subnets
 
@@ -199,3 +263,46 @@ btcli subnets metagraph --netuid 14
 ```
 
 Only neurons with stake on the root network will have their claim type displayed.
+
+
+
+```console
+
+
+                                                             Subnet 14: TAOHash
+                                                       Network: finney • Mechanism 0
+
+ UID ┃  Stake (ξ) ┃  Alpha (ξ) ┃    Tao (τ) ┃ Dividends ┃ Incentive ┃ Emissions (ξ) ┃ Hotkey ┃ Coldkey ┃ Identity              ┃ Claim Type
+━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━
+ 29  │ 475.38k テ │ 395.29k テ │   τ 80.09k │ 0.265568  │ 0.999588  │ 187.260435 テ │ 5Cf4LP │ 5CKhH8  │ Owner14 (*Owner)      │    Swap
+  3  │ 784.52k テ │ 294.40k テ │  τ 490.12k │ 0.438437  │ 0.000000  │ 64.894660 テ  │ 5C59tt │ 5GZSAg  │ RoundTable21          │    Swap
+ 243 │ 155.00k テ │  44.71k テ │  τ 110.29k │ 0.086595  │ 0.000000  │ 12.817256 テ  │ 5Ev8Zs │ 5HBtpw  │ Openτensor Foundaτion │    Swap
+ 147 │ 138.50k テ │  51.49k テ │   τ 87.01k │ 0.077363  │ 0.000000  │ 11.450874 テ  │ 5DfmoR │ 5E9fVY  │ Yuma, a DCG Company   │    Swap
+ 191 │  66.50k テ │   17.62 テ │   τ 66.48k │ 0.060868  │ 0.000000  │  9.010114 テ  │ 5GYfuc │ 5FHxxe  │ Kraken                │    Swap
+ 99  │  53.92k テ │   1.77k テ │   τ 52.14k │ 0.030121  │ 0.000000  │  4.458510 テ  │ 5HmkM6 │ 5Eq8b9  │ Crucible Labs         │    Swap
+  4  │  50.66k テ │  26.55k テ │   τ 24.10k │ 0.028290  │ 0.000000  │  4.188392 テ  │ 5GRhNw │ 5Fuzgv  │ Rizzo (Insured)       │    Swap
+ 70  │  10.85k テ │   1.16k テ │    τ 9.69k │ 0.006058  │ 0.000000  │  0.897160 テ  │ 5G9hfk │ 5Ek8i6  │ 1T1B.AI               │    Swap
+ 235 │   9.38k テ │    0.77 テ │    τ 9.38k │ 0.005234  │ 0.000000  │  0.775315 テ  │ 5HbScN │ 5F4Xca  │ ~                     │    Swap
+ 89  │   5.00k テ │    0.02 テ │    τ 5.00k │ 0.000000  │ 0.000000  │  0.000000 テ  │ 5GKH9F │ 5GcCZ2  │ Taostats              │    Swap
+ 59  │   2.54k テ │  484.57 テ │    τ 2.05k │ 0.001404  │ 0.000000  │  0.209705 テ  │ 5FZGu1 │ 5CMUVy  │ MUV                   │    Swap
+ 207 │  533.28 テ │  533.28 テ │     τ 0.00 │ 0.000000  │ 0.000000  │  0.000000 テ  │ 5HTSgd │ 5GNE4s  │ tao5 (taohash key)    │     -
+ 21  │  350.18 テ │  350.18 テ │     τ 0.00 │ 0.000000  │ 0.000000  │  0.000000 テ  │ 5GND7u │ 5FNRRL  │ ~                     │     -
+ 134 │  116.72 テ │  116.72 テ │     τ 0.00 │ 0.000000  │ 0.000000  │  0.000000 テ  │ 5Esg46 │ 5ECNhc  │ ~                     │     -
+
+...
+
+─────┼────────────┼────────────┼────────────┼───────────┼───────────┼───────────────┼────────┼─────────┼───────────────────────┼────────────
+     │   1.75m テ │ 816.98k テ │ 936.37k テ │   1.000   │           │  296.0217 ξ   │        │         │                       │
+
+
+Subnet 14: TAOHash
+  Total mechanisms: 1
+  Owner: 5CKhH8nKAhXLmqxwaXzFtVFgxqwwnyckXG8qLpmGtzVJH9Ri (Owner14)
+  Rate: 0.0104 τ/テ
+  EMA TAO Inflow: τ 0.0102
+  Emission: τ 0.0099
+  TAO Pool: τ 21.15k
+  Alpha Pool: 2.04m テ
+  Tempo: 150/360
+  Registration cost (recycled): τ 0.0005
+```
