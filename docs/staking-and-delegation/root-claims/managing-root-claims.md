@@ -238,8 +238,8 @@ from bittensor.core.async_subtensor import AsyncSubtensor
 
 async def main():
     # Initialize wallet and subtensor
-    wallet = Wallet(name="my_wallet", hotkey="my_hotkey")
-    async with AsyncSubtensor(network="finney") as subtensor:
+    wallet = Wallet(name="validator", hotkey="default")
+    async with AsyncSubtensor(network="local") as subtensor:
         # Specify the subnets to claim from (up to 5 at once)
         netuids = [1, 2, 3, 4, 5]
         
@@ -260,6 +260,12 @@ async def main():
 asyncio.run(main())
 ```
 
+```console
+Enter your password:
+Decrypting...
+✅ Successfully claimed root emissions from subnets [1, 2, 3, 4, 5]
+Transaction hash: 0x5d7297cbee7bb08b65df0b8911c9b0bf25e908de939cf52862702ef9a261b572
+```
 You can also check claimable amounts before claiming:
 
 ```python
@@ -268,7 +274,7 @@ from bittensor_wallet import Wallet
 from bittensor.core.async_subtensor import AsyncSubtensor
 
 async def main():
-    wallet = Wallet(name="my_wallet", hotkey="my_hotkey")
+    wallet = Wallet(name="validator", hotkey="default")
     async with AsyncSubtensor(network="finney") as subtensor:
         # Get stake info which includes claimable amounts
         stake_info = await subtensor.get_stake_info_for_coldkey(
