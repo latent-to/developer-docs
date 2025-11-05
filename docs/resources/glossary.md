@@ -694,7 +694,7 @@ A global parameter (currently set to 0.18) that determines the relative influenc
 
 ### Tempo
 
-A 360-block period during which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo occurs every 4320 seconds or 72 minutes.
+A 360-block period over which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo passes every 4320 seconds or ~72 minutes.
 
 **See also:** [Yuma Consensus](../learn/yuma-consensus.md), [Emissions](../learn/emissions.md)
 
