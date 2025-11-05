@@ -32,7 +32,6 @@ See [Managing Root Claims](../../staking-and-delegation/root-claims/managing-roo
 :::info claim threshold
 Automatic claims are only processed when the accumulated alpha dividends exceed the minimum threshold of 500,000 RAO (0.0005 TAO equivalent). This prevents small, frequent transactions from increasing network load. The threshold is configurable per subnet by the subnet owner or root via the `sudo_set_root_claim_threshold` extrinsic.
 
-Manual claims bypass this threshold check and can claim any amount.
 
 :::
 
