@@ -87,6 +87,28 @@ For a live-updating view:
 btcli stake list --live
 ```
 
+```console                                                                                                                         
+                            Hotkey: Example (...)                            
+                                                     Network: finney                                                     
+                                                                                                                         
+                                                                                                                         
+        ┃                        ┃     Value ┃           ┃    Price    ┃            ┃  Emission ┃  Emission ┃  Claimable 
+ Netuid ┃ Name                   ┃ (α x τ/α) ┃ Stake (α) ┃ (τ_in/α_in) ┃ Registered ┃ (α/block) ┃ (Τ/block) ┃        (α) 
+━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━
+ 0      │ τ root                 │   τ 46.93 │  Τ 46.93  │ 1.0000 τ/Τ  │        YES │  Τ 0.0000 │  0.0000 τ │          - 
+ 4      │ δ Targon               │    τ 0.30 │  6.88 δ   │ 0.0437 τ/δ  │        YES │  0.0012 δ │  0.0000 τ │  0.00031 δ 
+ 120    │ ⲃ Affine               │    τ 0.00 │  0.01 ⲃ   │ 0.0551 τ/ⲃ  │         NO │  0.0013 ⲃ │  0.0000 τ │  0.00107 ⲃ 
+ 119    │ Ⲃ Akihabara            │    τ 0.00 │  0.01 Ⲃ   │ 0.0176 τ/Ⲃ  │         NO │  0.0017 Ⲃ │  0.0000 τ │  0.00199 Ⲃ 
+ 62     │ ز Ridges               │    τ 0.00 │  0.00 ز   │ 0.0676 τ/ز  │         NO │  0.0011 ز │  0.0000 τ │  0.00050 ز 
+ 64     │ ش Chutes               │    τ 0.00 │  0.00 ش   │ 0.0783 τ/ش  │         NO │  0.0008 ش │  0.0000 τ │  0.00025 ش 
+ 115    │ Ѕ SoulX                │    τ 0.00 │  0.01 Ѕ   │ 0.0125 τ/Ѕ  │         NO │  0.0015 Ѕ │  0.0000 τ │  0.00190 Ѕ 
+ 51     │ ת lium.io              │    τ 0.00 │  0.00 ת   │ 0.0548 τ/ת  │         NO │  0.0004 ת │  0.0000 τ │  0.00039 ת 
+ 41     │ נ Sportstensor         │    τ 0.00 │  0.00 נ   │ 0.0320 τ/נ  │         NO │  0.0009 נ │  0.0000 τ │  0.00045 נ 
+ 8      │ θ Proprietary Tradi... │    τ 0.00 │  0.00 θ   │ 0.0286 τ/θ  │         NO │  0.0004 θ │  0.0000 τ │  0.00050 θ 
+```
+
+
+
 ### Query claimable ALPHA
 
 Currently this can only be done with the Polkadot.js app. To see how much you can claim from a specific subnet:
@@ -120,16 +142,34 @@ To manually trigger a claim:
 
 Use the `btcli stake process-claim` command to manually claim your accumulated root network emissions:
 
-```bash
-btcli stake process-claim
+```console
+btcli st process-claim --verbose
 ```
 
-Claim from specific netuids (up to 5 at once):
+```                                                                                                               
+               Claimable emissions
+                                                                                                               
+ Netuid   Current Stake   Claimable   Hotkey                                             Identity              
+ ───────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+   1           0.0035 α    0.0005 α   5CoZxgtfhcJKX2HmkwnsN18KbaT9aih9eF3b6qVPTgAUbifj   TAO.app               
+               0.0015 α    0.0002 α   5G3wMP3g3d775hauwmAZioYFVZYnvw6eY46wkFy8hEWD5KP3   Openτensor Foundaτion 
+   2           0.0036 β    0.0005 β   5CoZxgtfhcJKX2HmkwnsN18KbaT9aih9eF3b6qVPTgAUbifj   TAO.app               
+               0.0015 β    0.0002 β   5G3wMP3g3d775hauwmAZioYFVZYnvw6eY46wkFy8hEWD5KP3   Openτensor Foundaτion 
+   3           0.0033 γ    0.0005 γ   5CoZxgtfhcJKX2HmkwnsN18KbaT9aih9eF3b6qVPTgAUbifj   TAO.app               
+               2.6817 γ    0.0002 γ   5G3wMP3g3d775hauwmAZioYFVZYnvw6eY46wkFy8hEWD5KP3   Openτensor Foundaτion 
+   4           6.8791 δ    0.0003 δ   5CoZxgtfhcJKX2HmkwnsN18KbaT9aih9eF3b6qVPTgAUbifj   TAO.app               
+               0.0020 δ    0.0003 δ   5G3wMP3g3d775hauwmAZioYFVZYnvw6eY46wkFy8hEWD5KP3   Openτensor Foundaτion 
+   5           0.0033 ε    0.0004 ε   5CoZxgtfhcJKX2HmkwnsN18KbaT9aih9eF3b6qVPTgAUbifj   TAO.app               
+               0.0014 ε    0.0002 ε   5G3wMP3g3d775hauwmAZioYFVZYnvw6eY46wkFy8hEWD5KP3   Openτensor Foundaτion 
 
-```bash
-btcli stake process-claim --netuids 1,2,3
+...
+
+Enter up to 5 netuids to claim from (comma-separated) 
+(1,2,3,4,5): 1,2,3,4,5
+
+Estimated extrinsic fee: 0.000046377 τ
+Do you want to proceed? [y/n]: 
 ```
-
   </TabItem>
   <!-- <TabItem value="sdk" label="Bittensor SDK"></TabItem> -->
   <TabItem value="polkadot-app" label="Polkadot app">
