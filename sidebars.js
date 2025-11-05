@@ -42,10 +42,10 @@ const sidebars = {
     {
       type: "category",
       label: "Understand Bittensor",
-      link: { type: "doc", id: "learn/introduction" },
       collapsible: true,
       collapsed: true,
       items: [
+        "learn/introduction",
         "resources/questions-and-answers",
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
@@ -105,8 +105,8 @@ const sidebars = {
       label: "Staking/Delegation",
       collapsible: true,
       collapsed: true,
-      link: { type: "doc", id: "staking-and-delegation/delegation" },
       items: [
+        "staking-and-delegation/delegation",
         "staking-and-delegation/stakers-btcli-guide",
         "staking-and-delegation/managing-stake-btcli",
         "staking-and-delegation/managing-stake-sdk",
@@ -121,8 +121,11 @@ const sidebars = {
       label: "Mining",
       collapsible: true,
       collapsed: true,
-      link: { type: "doc", id: "miners/index" },
-      items: ["miners/miners-btcli-guide", "miners/autostaking"],
+      items: [
+        "miners/index",
+        "miners/miners-btcli-guide",
+        "miners/autostaking",
+      ],
     },
 
     {
@@ -130,8 +133,11 @@ const sidebars = {
       label: "Validating",
       collapsible: true,
       collapsed: true,
-      link: { type: "doc", id: "validators/index" },
-      items: ["validators/child-hotkeys", "validators/validators-btcli-guide"],
+      items: [
+        "validators/index",
+        "validators/child-hotkeys",
+        "validators/validators-btcli-guide",
+      ],
     },
     {
       type: "category",
@@ -220,10 +226,10 @@ const sidebars = {
     {
       type: "category",
       label: "Local Development",
-      link: { type: "doc", id: "local-build/deploy" },
       collapsible: true,
       collapsed: true,
       items: [
+        "local-build/deploy",
         "local-build/provision-wallets",
         "local-build/create-subnet",
         "local-build/mine-validate",
@@ -247,8 +253,8 @@ const sidebars = {
     {
       type: "category",
       label: "Bittensor EVM",
-      link: { type: "doc", id: "evm-tutorials/index" },
       items: [
+        "evm-tutorials/index",
         "evm-tutorials/subtensor-networks",
         "evm-tutorials/bridge-vtao",
         "evm-tutorials/evm-testnet-with-metamask-wallet",
@@ -313,8 +319,12 @@ const sidebars = {
       label: "Errors and Troubleshooting",
       collapsible: true,
       collapsed: true,
-      link: { type: "doc", id: "errors/index" },
-      items: ["errors/custom", "errors/subtensor", "errors/troubleshooting"],
+      items: [
+        "errors/index",
+        "errors/custom",
+        "errors/subtensor",
+        "errors/troubleshooting",
+      ],
     },
     "resources/glossary",
     "resources/community-links",
