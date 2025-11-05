@@ -181,7 +181,7 @@ async def main():
     wallet = Wallet(name="validator", hotkey="default")
     async with AsyncSubtensor(network="local") as subtensor:
         # Get claimable stake for a specific subnet
-        netuid = 1
+        netuid = 2
         claimable_stake = await subtensor.get_root_claimable_stake(
             coldkey_ss58=wallet.coldkeypub.ss58_address,
             hotkey_ss58=wallet.hotkey.ss58_address,
@@ -221,7 +221,7 @@ async def main():
     wallet = Wallet(name="validator", hotkey="default")
     async with AsyncSubtensor(network="local") as subtensor:
         # Get already claimed stake for a specific subnet
-        netuid = 1
+        netuid = 2
         claimed_stake = await subtensor.get_root_claimed(
             coldkey_ss58=wallet.coldkeypub.ss58_address,
             hotkey_ss58=wallet.hotkey.ss58_address,
