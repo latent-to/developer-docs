@@ -172,8 +172,6 @@ btcli stake list --live
 
 Using the following methods, you can query the claimable stake for a specific subnet.
 
-You can also view the **rate** for your claimable stakes on each subnet, i.e., the price conversion in $\tau$/$\alpha$ that is applied to your alpha ($\alpha$) stake when it is converted to TAO ($\tau$).
-
 ```python
 import asyncio
 from bittensor_wallet import Wallet
@@ -190,12 +188,6 @@ async def main():
             netuid=netuid
         )
         print(f"Claimable stake for subnet {netuid}: {claimable_stake}")
-        
-        # Get claimable rates for all subnets
-        all_rates = await subtensor.get_root_claimable_all_rates(
-            hotkey_ss58=wallet.hotkey.ss58_address
-        )
-        print(f"Claimable rates for all subnets: {all_rates}")
 
 asyncio.run(main())
 ```
