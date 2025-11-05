@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Managing Root Claims
 
-This page covers how to configure, monitor, and claim root dividends, i.e. dividends from staking to validators on the Root Subnet. See [Root Claim](./index)
+This page covers how to configure, monitor, and claim root dividends, i.e. dividends from staking to validators on the Root Subnet. See [Root Claim](./)
 
 ## Prerequisites
 
