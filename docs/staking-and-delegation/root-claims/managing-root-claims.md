@@ -135,7 +135,7 @@ To see how much you've already claimed from a subnet:
 
 ## Trigger a manual claim
 
-The network will eventually process your pending emissions automatically. However, you can choose to manually claim your accumulated ALPHA without waiting, for a small extrinsic fee. See [Transaction Fees](../learn/fees).
+The network will eventually process your pending emissions automatically. However, you can choose to manually claim your accumulated ALPHA without waiting, for a small extrinsic fee. See [Transaction Fees](../../learn/fees).
 
 To manually trigger a claim:
 
