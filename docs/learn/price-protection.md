@@ -139,7 +139,7 @@ import bittensor as bt
 subtensor = bt.Subtensor()
 wallet = bt.Wallet("my_wallet")
 
-success = subtensor.add_stake(
+response = subtensor.add_stake(
     wallet=wallet,
     hotkey_ss58="5F...",
     netuid=1,
@@ -153,7 +153,7 @@ success = subtensor.add_stake(
 #### Partial Mode (execute what fits within tolerance)
 
 ```python
-success = subtensor.add_stake(
+response = subtensor.add_stake(
     wallet=wallet,
     hotkey_ss58="5F...",
     netuid=1,
@@ -167,7 +167,7 @@ success = subtensor.add_stake(
 #### Unsafe Mode (ignore price protection)
 
 ```python
-success = subtensor.add_stake(
+response = subtensor.add_stake(
     wallet=wallet,
     hotkey_ss58="5F...",
     netuid=1,
@@ -292,7 +292,7 @@ def demonstrate_protection_modes():
 
     try:
         print(f"\nStaking {stake_amount} TAO with NO protection...")
-        success = subtensor.add_stake(
+        response = subtensor.add_stake(
             wallet=wallet,
             hotkey_ss58=target_hotkey,
             netuid=netuid,
@@ -300,7 +300,7 @@ def demonstrate_protection_modes():
             safe_staking=False  # No protection
         )
 
-        if success:
+        if response.success:
             print("✅ Unsafe staking successful")
         else:
             print("❌ Unsafe staking failed")
@@ -328,7 +328,7 @@ def demonstrate_protection_modes():
         print(f"\nStaking {large_stake_amount} TAO with SAFE protection (tolerance: {strict_tolerance:.2%})...")
         print(f"Transaction should FAIL if final price > {price_ceiling:.6f} TAO/α")
 
-        success = subtensor.add_stake(
+        response = subtensor.add_stake(
             wallet=wallet,
             hotkey_ss58=target_hotkey,
             netuid=netuid,
@@ -338,7 +338,7 @@ def demonstrate_protection_modes():
             allow_partial_stake=False
         )
 
-        if success:
+        if response.success:
             print("❌ UNEXPECTED: Safe staking succeeded despite strict tolerance")
             # Check if it should have failed
             post_subnet_info = subtensor.subnet(netuid=netuid)
@@ -377,7 +377,7 @@ def demonstrate_protection_modes():
     try:
         print(f"\nStaking {normal_amount} TAO with SAFE protection (tolerance: {reasonable_tolerance:.2%})...")
 
-        success = subtensor.add_stake(
+        response = subtensor.add_stake(
             wallet=wallet,
             hotkey_ss58=target_hotkey,
             netuid=netuid,
@@ -387,7 +387,7 @@ def demonstrate_protection_modes():
             allow_partial_stake=False
         )
 
-        if success:
+        if response.success:
             print("✅ Safe staking successful with reasonable tolerance")
         else:
             print("❌ Safe staking failed")
@@ -414,7 +414,7 @@ def demonstrate_protection_modes():
 
     try:
         print(f"\nStaking {very_large_amount} TAO with PARTIAL protection (tolerance: {partial_strict_tolerance:.2%})...")
-        success = subtensor.add_stake(
+        response = subtensor.add_stake(
             wallet=wallet,
             hotkey_ss58=target_hotkey,
             netuid=netuid,
@@ -428,7 +428,7 @@ def demonstrate_protection_modes():
         balance_after = subtensor.get_balance(wallet.coldkey.ss58_address)
         actual_amount_executed = balance_before.tao - balance_after.tao
 
-        if success:
+        if response.success:
             print("✅ Partial staking completed")
             print(f"Amount requested: {very_large_amount} TAO")
             print(f"Amount actually executed: {actual_amount_executed:.3f} TAO")
@@ -475,7 +475,7 @@ def demonstrate_protection_modes():
 
         try:
             print(f"\nUnstaking with SAFE protection (tolerance: {unstake_tolerance:.2%})...")
-            success = subtensor.unstake(
+            response = subtensor.unstake(
                 wallet=wallet,
                 hotkey_ss58=target_hotkey,
                 netuid=netuid,
@@ -485,7 +485,7 @@ def demonstrate_protection_modes():
                 allow_partial_stake=False
             )
 
-            if success:
+            if response.success:
                 print("✅ Protected unstaking successful")
             else:
                 print("❌ Protected unstaking failed")

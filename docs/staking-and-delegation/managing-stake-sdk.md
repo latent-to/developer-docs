@@ -108,7 +108,7 @@ You must create some environment variables before running the following script. 
 ```python
 import os
 
-os.environ['WALLET'] = 'STAKE_WALLET'
+os.environ['BT_WALLET_NAME'] = 'STAKE_WALLET'
 os.environ['TOTAL_TAO_TO_STAKE'] = '1'
 os.environ['NUM_SUBNETS_TO_STAKE_IN'] = '3'
 os.environ['NUM_VALIDATORS_PER_SUBNET'] = '3'
@@ -124,7 +124,7 @@ import time
 from bittensor import tao
 
 # Load environmental variables
-wallet_name=os.environ.get('WALLET')
+wallet_name=os.environ.get('BT_WALLET_NAME')
 total_to_stake=os.environ.get('TOTAL_TAO_TO_STAKE')
 num_subnets= os.environ.get('NUM_SUBNETS_TO_STAKE_IN')
 validators_per_subnet = os.environ.get('NUM_VALIDATORS_PER_SUBNET')
@@ -366,7 +366,7 @@ async def main():
         success_count = sum(results)
         print(f"\n🎯 Unstake complete. Success: {success_count}/{len(stakes)}")
 
-wallet_name = os.environ.get('WALLET')
+wallet_name = os.environ.get('BT_WALLET_NAME')
 total_to_unstake = os.environ.get('TOTAL_TAO_TO_UNSTAKE')
 max_stakes_to_unstake = os.environ.get('MAX_STAKES_TO_UNSTAKE')
 

@@ -19,6 +19,7 @@ All methods are grouped into logical modules for better organization and readabi
 | ----------- | ------------------------------------ |
 | chain       | Blockchain interaction methods       |
 | commitments | Commitment and reveal logic          |
+| crowdloans  | Crowdloan management operations      |
 | delegates   | Delegate management tools            |
 | extrinsics  | Transaction construction and signing |
 | metagraphs  | Metagraph data and operations        |
