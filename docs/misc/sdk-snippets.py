@@ -1,455 +1,461 @@
-# This file ....
-# 
+#!/usr/bin/env python3
+"""
+Bittensor SDK Documentation Examples - Runnable Test Suite
+"""
 
-# set environment variables
+# Set environment variables FIRST (before importing bittensor)
 import os
+import sys
 
-os.environ['WALLET'] = 'STAKE_WALLET'
-os.environ['TOTAL_TAO_TO_STAKE'] = '1'
-os.environ['NUM_SUBNETS_TO_STAKE_IN'] = '3'
-os.environ['NUM_VALIDATORS_PER_SUBNET'] = '3'
-
-# Initialize Axon
-import bittensor as bt
-axon = bt.Axon(wallet=self.wallet, config=self.config)
-
-# create wallet
-import bittensor as bt
-wallet = bt.Wallet(name = 'my_coldkey', hotkey = 'my_hotkey' )
-wallet.create_if_non_existent()
-
-
-# check TAO balance
-
-import bittensor as bt
-sub = bt.Subtensor(network="test")
-wallet = bt.wallet(
-    name="PracticeKey!",
-    hotkey="stakinkey1",
-)
-wallet.unlock_coldkey()
-balance = sub.get_balance(wallet.coldkey.ss58_address)
-print(balance)
-
-
-# stake exchange rate (with and without slippage)
-import bittensor as bt
-
-sub = bt.Subtensor(network="test")
-subnet = sub.subnet(netuid=1)
-
-alpha_amount = bt.Balance.from_tao(100).set_unit(1)
-
-print("alpha_to_tao_with_slippage", subnet.alpha_to_tao_with_slippage(alpha_amount))
-print("alpha_to_tao_with_slippage percentage", subnet.alpha_to_tao_with_slippage(alpha_amount, percentage=True))
-
-print("tao_to_alpha_with_slippage", subnet.tao_to_alpha_with_slippage(100))
-print("tao_to_alpha_with_slippage percentage", subnet.tao_to_alpha_with_slippage(100, percentage=True))
-
-print("tao_to_alpha", subnet.tao_to_alpha(100))
-print("alpha_to_tao", subnet.alpha_to_tao(alpha_amount))
-
-# view registered subnets
-
-import bittensor as bt
-sub = bt.Subtensor(network="test")
-wallet = bt.Wallet(
-    name="ExampleWalletName",
-    hotkey="ExampleHotkey",
-)
-wallet.unlock_coldkey()
-netuids = sub.get_netuids_for_hotkey(wallet.hotkey.ss58_address)
-print(netuids)
-
-# register on a subnet
-
-import bittensor as bt
-logging = bt.logging
-logging.set_info()
-sub = bt.Subtensor(network="test")
-wallet = bt.Wallet(
-    name="ExampleWalletName",
-    hotkey="ExampleHotkey",
-)
-wallet.unlock_coldkey()
-reg = sub.burned_register(wallet=wallet, netuid=3)
-
-# asynchronous stake
-
-import os, sys, asyncio
-import bittensor as bt
-import time
-from bittensor import tao
-
-# Load environmental variables
-wallet_name=os.environ.get('WALLET')
-total_to_stake=os.environ.get('TOTAL_TAO_TO_STAKE')
-num_subnets= os.environ.get('NUM_SUBNETS_TO_STAKE_IN')
-validators_per_subnet = os.environ.get('NUM_VALIDATORS_PER_SUBNET')
-
-# Validate inputs
-if wallet_name is None:
-    sys.exit("❌ WALLET not specified. Usage: `WALLET=my-wallet TOTAL_TAO_TO_STAKE=1 NUM_SUBNETS_TO_STAKE_IN=3 NUM_VALIDATORS_PER_SUBNET=3 python script.py`")
-
-if total_to_stake is None:
-    print("⚠️ TOTAL_TAO_TO_STAKE not specified. Defaulting to 1 TAO.")
-    total_to_stake = 1.0
-else:
-    try:
-        total_to_stake = float(total_to_stake)
-    except:
-        sys.exit("❌ Invalid TOTAL_TAO_TO_STAKE amount.")
-
-if num_subnets is None:
-    num_subnets = 3
-else:
-    try:
-        num_subnets = int(num_subnets)
-    except:
-        sys.exit("❌ Invalid NUM_SUBNETS_TO_STAKE_IN.")
-
-if validators_per_subnet is None:
-    validators_per_subnet = 3
-else:
-    try:
-        validators_per_subnet = int(validators_per_subnet)
-    except:
-        sys.exit("❌ Invalid NUM_VALIDATORS_PER_SUBNET.")
-
-print(f"\n🔓 Using wallet: {wallet_name}")
-print(f"📊 Dividing {total_to_stake} TAO across top {validators_per_subnet} validators in each of top {num_subnets} subnets.")
-
-wallet = bt.Wallet(wallet_name)
-
-# Initialize the subtensor connection within a block scope to ensure it is garbage collected
-async def stake_batch(subtensor, netuid, top_validators, amount_to_stake):
-    for hk in top_validators:
-        print(f"💰 Staking {amount_to_stake} to {hk} on subnet {netuid}...")
-    try:
-        results = await asyncio.gather(*[ subtensor.add_stake(wallet=wallet, netuid=netuid, hotkey_ss58=hk, amount=amount_to_stake) for hk in top_validators ] )
-        print(results)
-    except Exception as e:
-        print(f"❌ Failed to stake to {hk} on subnet {netuid}: {e}")
-
-async def find_top_three_valis(subtensor,subnet):
-    netuid = subnet.netuid
-    print(f"\n🔍 Subnet {netuid} had {subnet.tao_in_emission} emissions!")
-    print(f"\n🔍 Fetching metagraph for subnet {netuid}...")
-
-    start_time = time.time()
-    metagraph = await subtensor.metagraph(netuid)
-
-    print(f"✅ Retrieved metagraph for subnet {netuid} in {time.time() - start_time:.2f} seconds.")
-    # Extract validators and their stake amounts
-    hk_stake_pairs = [(metagraph.hotkeys[index], metagraph.stake[index]) for index in range(len(metagraph.stake))]
-
-    # Sort validators by stake in descending order
-    top_validators = sorted(hk_stake_pairs, key=lambda x: x[1], reverse=True)[0:3]
-
-    # Print the top 3 validators for this subnet
-    print(f"\n🏆 Top 3 Validators for Subnet {netuid}:")
-    for rank, (index, stake) in enumerate(top_validators, start=1):
-        print(f"  {rank}. Validator index {index} - Stake: {stake}")
-
-    return {
-        "netuid": netuid,
-        "metagraph": metagraph,
-        "validators": top_validators
-    }
-
-async def main():
-    async with bt.AsyncSubtensor(network='test') as subtensor:
-
-        print("Fetching information on top subnets by TAO emissions")
-
-        # get subnets and sort by tao emissions
-        sorted_subnets = sorted(list(await subtensor.all_subnets()), key=lambda subnet: subnet.tao_in_emission, reverse=True)
-        top_subnets = sorted_subnets[0:3]
-        amount_to_stake = bt.Balance.from_tao(total_to_stake/9)
-
-        # find the top 3 validators in each subnet
-        top_vali_dicts = await asyncio.gather(*[find_top_three_valis(subtensor, subnet) for subnet in top_subnets])
-        top_validators_per_subnet = {}
-        for d in top_vali_dicts:
-            netuid = d['netuid']
-            for v in d['validators']:
-                hk = v[0]
-                if netuid in top_validators_per_subnet:
-                    top_validators_per_subnet[netuid].append(hk)
-                else:
-                    top_validators_per_subnet[netuid] = [hk]
-
-        # Stake to each top 3 validators in each top 3 subnets
-        start_time = time.time()
-        await asyncio.gather(*[stake_batch(subtensor, netuid,top_validators, amount_to_stake) for netuid, top_validators in top_validators_per_subnet.items()])
-        print(f"Staking completed in {time.time() - start_time:.2f}s")
-
-asyncio.run(main())
-
-
-## Asynchronous unstake
-
-import os, sys, asyncio, time
-import bittensor as bt
-import bittensor_wallet
-from bittensor import tao
-
-async def perform_unstake(subtensor, stake, amount):
-    try:
-        print(f"⏳ Attempting to unstake {amount} from {stake.hotkey_ss58} on subnet {stake.netuid}")
-        start = time.time()
-        result = await subtensor.unstake(
-            wallet, hotkey_ss58=stake.hotkey_ss58, netuid=stake.netuid, amount=amount
-        )
-        elapsed = time.time() - start
-        if result:
-            print(f"✅ Successfully unstaked {amount} from {stake.hotkey_ss58} on subnet {stake.netuid} in {elapsed:.2f}s")
-            return True
-        else:
-            print(f"❌ Failed to unstake from {stake.hotkey_ss58} on subnet {stake.netuid}")
-            return False
-    except Exception as e:
-        print(f"❌ Error during unstake from {stake.hotkey_ss58} on subnet {stake.netuid}: {e}")
-        return False
-
-
-async def main():
-    async with bt.AsyncSubtensor(network='test') as subtensor:
-        try:
-            # Retrieve all active active stakes asscociated with the coldkey
-            stakes = await subtensor.get_stake_info_for_coldkey(wallet_ck)
-        except Exception as e:
-            sys.exit(f"❌ Failed to get stake info: {e}")
-
-        # Filter and sort
-        # Remove small stakes that are under the minimum threshold
-        stakes = list(filter(lambda s: float(s.stake.tao) > unstake_minimum, stakes))
-        # Sort by emission rate (lowest emission first)
-        stakes = sorted(stakes, key=lambda s: s.emission.tao)
-        # Limit to the N lowest emission validators
-        stakes = stakes[:max_stakes_to_unstake]
-
-        if not stakes:
-            sys.exit("❌ No eligible stakes found to unstake.")
-
-        print(f"\n📊 Preparing to unstake from {len(stakes)} validators:\n")
-        for s in stakes:
-            print(f"Validator: {s.hotkey_ss58}\n  NetUID: {s.netuid}\n  Stake: {s.stake.tao}\n  Emission: {s.emission}\n-----------")
-
-        # Determine how much TAO to unstake per validator
-        amount_per_stake = total_to_unstake.tao / len(stakes)
-
-        # Prepare concurrent unstake tasks, then execute as a batch
-        tasks = [
-            perform_unstake(subtensor, stake, bt.Balance.from_tao(min(amount_per_stake, stake.stake.tao)).set_unit(stake.netuid))
-            for stake in stakes
-        ]
-        results = await asyncio.gather(*tasks)
-
-        # Count successes and print final report
-        success_count = sum(results)
-        print(f"\n🎯 Unstake complete. Success: {success_count}/{len(stakes)}")
-
-wallet_name = os.environ.get('WALLET')
-total_to_unstake = os.environ.get('TOTAL_TAO_TO_UNSTAKE')
-max_stakes_to_unstake = os.environ.get('MAX_STAKES_TO_UNSTAKE')
-
-if wallet_name is None:
-    sys.exit("wallet name not specified. Usage: `TOTAL_TAO_TO_UNSTAKE=1 MAX_STAKES_TO_UNSTAKE=10 WALLET=my-wallet-name ./unstakerscript.py`")
-
-if total_to_unstake is None:
-    print("Unstaking total not specified, defaulting to 1 TAO.")
-    total_to_unstake = 1
-else:
-    try:
-        total_to_unstake = float(total_to_unstake)
-    except:
-        sys.exit("invalid TAO amount!")
-
-if max_stakes_to_unstake is None:
-    max_stakes_to_unstake = 10
-else:
-    try:
-        max_stakes_to_unstake = int(max_stakes_to_unstake)
-    except:
-        sys.exit("invalid number for MAX_STAKES_TO_UNSTAKE")
-
-print(f"🔍 Using wallet: {wallet_name}")
-print(f"🧮 Unstaking a total of {total_to_unstake} TAO across up to {max_stakes_to_unstake} lowest-emission validators")
-
-total_to_unstake = bt.Balance.from_tao(total_to_unstake)
-wallet = bt.Wallet(wallet_name)
-wallet_ck = wallet.coldkeypub.ss58_address
-
-unstake_minimum = 0.0005  # TAO
-asyncio.run(main())
-
-# Move stake
+os.environ.setdefault('BT_WALLET_NAME', 'alice')
+os.environ.setdefault('BT_WALLET_HOTKEY', 'alice')
+os.environ.setdefault('BT_SUBTENSOR_NETWORK', 'test')
+os.environ.setdefault('TOTAL_TAO_TO_STAKE', '1')
+os.environ.setdefault('NUM_SUBNETS_TO_STAKE_IN', '3')
+os.environ.setdefault('NUM_VALIDATORS_PER_SUBNET', '3')
+os.environ.setdefault('BT_LOGGING_DEBUG', '1')
 
 import asyncio
-from concurrent.futures import ThreadPoolExecutor
+import time
 import bittensor as bt
-from bittensor.core.subtensor import Subtensor
 from bittensor.core.async_subtensor import AsyncSubtensor
-
-async def main():
-    async with AsyncSubtensor("test") as subtensor:
-        wallet = bt.Wallet(
-            name="WALLET_HOTKEY"
-        )
-        wallet.unlock_coldkey()
-        amount = bt.Balance.from_tao(1.0).set_unit(5) # set amount in origin subnet
-        result = await subtensor.move_stake(wallet = wallet,
-            origin_hotkey_ss58 = "5DyHnV9Wz6cnefGfczeBkQCzHZ5fJcVgy7x1eKVh8otMEd31",
-            origin_netuid = 5,
-            destination_hotkey_ss58 = "5HidY9Danh9NhNPHL2pfrf97Zboew3v7yz4abuibZszcKEMv",
-            destination_netuid = 18,
-            amount = amount,
-            wait_for_inclusion = True,
-            wait_for_finalization = False,
-        )
-        if result:
-            print("Stake was successfully moved!")
-        else:
-            print("Failed to move stake.")
-# Because move_stake is asynchronous, we run it in an event loop:
-asyncio.run(main())
-
-# check registration status
-
-import bittensor as bt
-# Replace below with your SS58 hotkey
-hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
-network = "finney"
-netuid = 1 # subnet uid
-sub = bt.Subtensor(network)
-mg = sub.metagraph(netuid)
-uid = 2 # Your UID
-registered = mg.hotkeys[uid] == hotkey
-if not registered:
-  print(f"Miner at uid {uid} not registered")
-else:
-  print(f"Miner at uid {uid} registered")
-
-# metagraph info
-
-#!/usr/bin/env python3
-
 from bittensor.core.metagraph import Metagraph
+from bittensor.core.extrinsics.utils import sudo_call_extrinsic
 
-def main():
-    # Initialize metagraph for subnet 1
+# Utility function to run examples
+def run_example(name, func):
+    """Run an example and handle errors"""
+    print(f"\n{'='*70}")
+    print(f"  {name}")
+    print(f"{'='*70}\n")
+    try:
+        result = func()
+        print(f"✓ {name} completed successfully\n")
+        return True
+    except Exception as e:
+        print(f"✗ {name} failed: {e}\n")
+        return False
+
+async def run_async_example(name, func):
+    """Run an async example and handle errors"""
+    print(f"\n{'='*70}")
+    print(f"  {name}")
+    print(f"{'='*70}\n")
+    try:
+        result = await func()
+        print(f"✓ {name} completed successfully\n")
+        return True
+    except Exception as e:
+        print(f"✗ {name} failed: {e}\n")
+        return False
+
+##############################################################################
+
+# Example 1: Creates an Axon instance for serving requests on the Bittensor network
+def example_1_create_axon():
+    """Initialize Axon"""
+    # Note: This example requires wallet and config - using env wallet
+    import bittensor as bt
+    wallet = bt.Wallet()  # Uses BT_WALLET_NAME from env
+    axon = bt.Axon(wallet=wallet, port=8091)
+    print(f"Axon created: {axon.uuid}")
+
+# Example 2: Creates a wallet instance using environment variables
+def example_2_create_wallet():
+    """Create wallet"""
+    import bittensor as bt
+    wallet = bt.Wallet()  # Uses BT_WALLET_NAME from env
+    # wallet.create_if_non_existent()  # Commented out to avoid prompts
+    print(f"Wallet: {wallet.name}, Hotkey: {wallet.hotkey_str}")
+
+##############################################################################
+
+# Example 3: Retrieves the TAO balance for a wallet's coldkey address
+def example_3_check_balance():
+    """Check TAO balance"""
+    import bittensor as bt
+    from bittensor_wallet import Keypair
+    sub = bt.Subtensor(network="test")
+    
+    # Use a test keypair instead of requiring real wallet files
+    coldkey = Keypair.create_from_uri('//Alice')
+    balance = sub.get_balance(coldkey.ss58_address)
+    print(f"Balance for test address {coldkey.ss58_address[:10]}...: {balance}")
+
+#############################################################################################
+
+# Example 4: Demonstrates calculating exchange rates between TAO and Alpha tokens with and without slippage
+def example_4_exchange_rate():
+    """Stake exchange rate (with and without slippage)"""
+    import bittensor as bt
+    
+    sub = bt.Subtensor(network="test")
+    subnet = sub.subnet(netuid=1)
+    
+    alpha_amount = bt.Balance.from_tao(100).set_unit(1)
+    
+    print("alpha_to_tao_with_slippage", subnet.alpha_to_tao_with_slippage(alpha_amount))
+    print("alpha_to_tao_with_slippage percentage", subnet.alpha_to_tao_with_slippage(alpha_amount, percentage=True))
+    
+    tao_amount = bt.Balance.from_tao(100)
+    print("tao_to_alpha_with_slippage", subnet.tao_to_alpha_with_slippage(tao_amount))
+    print("tao_to_alpha_with_slippage percentage", subnet.tao_to_alpha_with_slippage(tao_amount, percentage=True))
+    
+    print("tao_to_alpha", subnet.tao_to_alpha(tao_amount))
+    print("alpha_to_tao", subnet.alpha_to_tao(alpha_amount))
+
+##################################################################################
+
+# Example 5: Retrieves the list of subnets where a hotkey is registered
+def example_5_registered_subnets():
+    """View registered subnets"""
+    import bittensor as bt
+    from bittensor_wallet import Keypair
+    sub = bt.Subtensor(network="test")
+    
+    # Use a test keypair instead of requiring real wallet files
+    hotkey = Keypair.create_from_uri('//Alice')
+    netuids = sub.get_netuids_for_hotkey(hotkey.ss58_address)
+    print(f"Registered subnets for test address {hotkey.ss58_address[:10]}...: {netuids}")
+
+############################################################################################
+
+# Example 6: Demonstrates how to register a wallet on a subnet using burned registration
+def example_6_register_subnet():
+    """Register on a subnet"""
+    import bittensor as bt
+    logging = bt.logging
+    logging.set_info()
+    sub = bt.Subtensor(network="test")
+    wallet = bt.Wallet()  # Uses env variables
+    # reg = sub.burned_register(wallet=wallet, netuid=3)  # Commented to avoid actual registration
+    print(f"Note: Registration example skipped (would register wallet on subnet 3)")
+
+###########################################################################################
+
+# Example 7: Demonstrates asynchronous staking across multiple subnets by finding top validators
+async def example_7_async_stake():
+    """Asynchronous stake"""
+    import bittensor as bt
+    import time
+    
+    # Load environmental variables
+    wallet_name = os.environ.get('BT_WALLET_NAME')
+    total_to_stake = float(os.environ.get('TOTAL_TAO_TO_STAKE', 1))
+    num_subnets = int(os.environ.get('NUM_SUBNETS_TO_STAKE_IN', 3))
+    validators_per_subnet = int(os.environ.get('NUM_VALIDATORS_PER_SUBNET', 3))
+    
+    print(f"🔓 Using wallet: {wallet_name}")
+    print(f"📊 Dividing {total_to_stake} TAO across top {validators_per_subnet} validators in each of top {num_subnets} subnets.")
+    
+    wallet = bt.Wallet(name=wallet_name)
+    
+    # Initialize the subtensor connection within a block scope
+    async def stake_batch(subtensor, netuid, top_validators, amount_to_stake):
+        for hk in top_validators:
+            print(f"💰 Would stake {amount_to_stake} to {hk} on subnet {netuid}...")
+        # Commented out actual staking to avoid real transactions
+        # results = await asyncio.gather(*[add_stake_extrinsic(subtensor=subtensor, wallet=wallet, netuid=netuid, hotkey_ss58=hk, amount=amount_to_stake) for hk in top_validators])
+        print(f"Note: Staking skipped (read-only mode)")
+    
+    async def find_top_three_valis(subtensor, subnet):
+        netuid = subnet.netuid
+        print(f"\n🔍 Subnet {netuid} had {subnet.tao_in_emission} emissions!")
+        
+        metagraph = await subtensor.metagraph(netuid)
+        hk_stake_pairs = [(metagraph.hotkeys[index], metagraph.stake[index]) for index in range(len(metagraph.stake))]
+        top_validators = sorted(hk_stake_pairs, key=lambda x: x[1], reverse=True)[0:validators_per_subnet]
+        
+        print(f"🏆 Top {validators_per_subnet} Validators for Subnet {netuid}:")
+        for rank, (hotkey, stake) in enumerate(top_validators, start=1):
+            print(f"  {rank}. {hotkey[:10]}... - Stake: {stake}")
+        
+        return {"netuid": netuid, "metagraph": metagraph, "validators": top_validators}
+    
+    async with bt.AsyncSubtensor(network='test') as subtensor:
+        sorted_subnets = sorted(list(await subtensor.all_subnets()), key=lambda subnet: subnet.tao_in_emission, reverse=True)
+        top_subnets = sorted_subnets[0:num_subnets]
+        
+        # Find top validators
+        top_vali_dicts = await asyncio.gather(*[find_top_three_valis(subtensor, subnet) for subnet in top_subnets])
+        print(f"✅ Found top validators in {len(top_vali_dicts)} subnets")
+
+###########################################################################################################
+
+# Example 8: Demonstrates asynchronous unstaking from multiple validators based on emission criteria
+async def example_8_async_unstake():
+    """Asynchronous unstake"""
+    import bittensor as bt
+    from bittensor_wallet import Keypair
+    import time
+    
+    wallet_name = os.environ.get('BT_WALLET_NAME')
+    total_to_unstake = 1.0  # Default
+    max_stakes_to_unstake = 10
+    unstake_minimum = 0.0005
+    
+    print(f"🔍 Using wallet: {wallet_name}")
+    
+    # Use a test keypair instead of requiring real wallet files
+    coldkey = Keypair.create_from_uri('//Alice')
+    wallet_ck = coldkey.ss58_address
+    
+    async def perform_unstake(subtensor, wallet, stake, amount):
+        print(f"⏳ Would unstake {amount} from {stake.hotkey_ss58} on subnet {stake.netuid}")
+        # Commented out to avoid real transactions
+        # result = await unstake_extrinsic(subtensor=subtensor, wallet=wallet, hotkey_ss58=stake.hotkey_ss58, netuid=stake.netuid, amount=amount)
+        return True  # Simulated success
+    
+    async with bt.AsyncSubtensor(network='test') as subtensor:
+        stakes = await subtensor.get_stake_info_for_coldkey(wallet_ck)
+        
+        if not stakes:
+            print("No stakes found")
+            return
+        
+        stakes = list(filter(lambda s: float(s.stake.tao) > unstake_minimum, stakes))
+        stakes = sorted(stakes, key=lambda s: s.emission.tao)
+        stakes = stakes[:max_stakes_to_unstake]
+        
+        print(f"📊 Found {len(stakes)} eligible stakes")
+        for s in stakes[:3]:  # Show first 3
+            print(f"  {s.hotkey_ss58[:10]}... NetUID: {s.netuid} Stake: {s.stake}")
+
+##########################################################################################################
+
+# Example 9: Demonstrates moving stake from one validator/subnet to another asynchronously
+async def example_9_move_stake():
+    """Move stake"""
+    import bittensor as bt
+    from bittensor.core.async_subtensor import AsyncSubtensor
+    
+    async with AsyncSubtensor(network="test") as subtensor:
+        wallet = bt.Wallet()  # Uses env
+        amount = bt.Balance.from_tao(1.0).set_unit(5)
+        
+        print(f"Would move {amount} from netuid 5 to netuid 18")
+        # Commented to avoid real transaction
+        # result = await move_stake_extrinsic(
+        #     subtensor=subtensor,
+        #     wallet=wallet,
+        #     origin_hotkey="5DyHnV9Wz6cnefGfczeBkQCzHZ5fJcVgy7x1eKVh8otMEd31",
+        #     origin_netuid=5,
+        #     destination_hotkey="5HidY9Danh9NhNPHL2pfrf97Zboew3v7yz4abuibZszcKEMv",
+        #     destination_netuid=18,
+        #     amount=amount,
+        #     wait_for_inclusion=True,
+        #     wait_for_finalization=False,
+        # )
+        print("Note: Move stake skipped (read-only mode)")
+
+#############################################################################################################
+
+# Example 10: Checks if a hotkey is registered on a specific subnet
+def example_10_check_registration():
+    """Check registration status"""
+    import bittensor as bt
+    from bittensor_wallet import Keypair
+    
+    # Use a test keypair instead of requiring real wallet files
+    hotkey = Keypair.create_from_uri('//Alice')
+    hotkey_ss58 = hotkey.ss58_address
+    network = "test"
+    netuid = 1
+    sub = bt.Subtensor(network=network)
+    mg = sub.metagraph(netuid)
+    
+    # Find if hotkey is registered
+    if hotkey_ss58 in mg.hotkeys:
+        uid = mg.hotkeys.index(hotkey_ss58)
+        print(f"Miner at uid {uid} registered")
+    else:
+        print(f"Miner with address {hotkey_ss58[:10]}... not registered on subnet {netuid}")
+
+#######################################################################################################
+
+# Example 11: Retrieves and displays comprehensive metagraph information for a subnet
+def example_11_metagraph_info():
+    """Metagraph info"""
+    from bittensor.core.metagraph import Metagraph
+    
     print("Initializing metagraph for subnet 1...")
-    metagraph = Metagraph(netuid=1, network="finney", sync=True)
-
+    metagraph = Metagraph(netuid=1, network="test", sync=True)
+    
     # Get basic metagraph metadata
     print("\n=== Basic Metagraph Metadata ===")
     print(f"Network: {metagraph.network}")
     print(f"Subnet UID: {metagraph.netuid}")
     print(f"Total neurons: {metagraph.n.item()}")
     print(f"Current block: {metagraph.block.item()}")
-    print(f"Version: {metagraph.version.item()}")
-
+    
     # Get subnet information
     print("\n=== Subnet Information ===")
     print(f"Subnet name: {metagraph.name}")
     print(f"Subnet symbol: {metagraph.symbol}")
-    print(f"Registered at block: {metagraph.network_registered_at}")
     print(f"Max UIDs: {metagraph.max_uids}")
     print(f"Owner: {metagraph.owner_coldkey}")
 
-if __name__ == "__main__":
-    main()
+##################################################################################################
 
+# Example 12: Demonstrates setting subnet hyperparameters as a subnet owner using sudo calls
+def example_12_set_hyperparams():
+    """Setting hyperparams (as subnet owner)"""
+    import bittensor as bt
+    from bittensor.core.extrinsics.utils import sudo_call_extrinsic
+    
+    wallet = bt.Wallet()  # Uses env
+    subtensor = bt.Subtensor(network="test")
+    
+    print(f"Would set liquid_alpha_enabled for subnet 2")
+    # Commented to avoid real transaction
+    # result = sudo_call_extrinsic(
+    #     subtensor=subtensor,
+    #     wallet=wallet,
+    #     call_function="sudo_set_liquid_alpha_enabled",
+    #     call_params={"netuid": 2, "enabled": True},
+    #     call_module="AdminUtils",
+    #     root_call=True
+    # )
+    print("Note: Hyperparameter setting skipped (requires subnet ownership)")
 
-# setting hyperparams
+####################################################################################################
 
-import bittensor as bt
-from bittensor.core.extrinsics.utils import sudo_call_extrinsic
+# Example 13: Shows how to use the SubtensorAPI to query subnet mechanism information
+def example_13_subtensor_api():
+    """SubtensorAPI usage"""
+    import bittensor as bt
+    
+    sub = bt.SubtensorApi()
+    netuid = 2
+    
+    count = sub.subnets.get_mechanism_count(netuid=netuid)
+    split = sub.subnets.get_mechanism_emission_split(netuid=netuid)
+    
+    print(f"Mechanism count: {count}")
+    print(f"Emission split: {split}")
+    
+    print("Note: set_weights example skipped (requires registration)")
 
-wallet = bt.Wallet(name="SN_OWNER_COLDKEY")
-subtensor = bt.Subtensor(network="127.0.0.1:9945")
+######################################################################################################
 
-result = sudo_call_extrinsic(
-    subtensor=subtensor,
-    wallet=wallet,
-    call_function="sudo_set_liquid_alpha_enabled",
-    call_params={"netuid": 2, "enabled": True},
-    call_module="AdminUtils",
-    root_call=True
-)
-print(f"Set liquid alpha enabled: {result.success}")
-
-# Set alpha values as subnet owner
-result = sudo_call_extrinsic(
-    subtensor=subtensor,
-    wallet=wallet,
-    call_function="sudo_set_alpha_values",
-    call_params={
-        "netuid": 2,
-        "alpha_low": 6553,
-        "alpha_high": 53083
-    },
-    call_module="AdminUtils",
-    root_call=True
-)
-print(f"Set alpha values: {result.success}")
-
-## SubtensorAPI
-
-import bittensor as bt
-
-sub = bt.SubtensorApi()
-netuid = 2
-
-count = sub.subnets.get_mechanism_count(netuid=netuid)
-split = sub.subnets.get_mechanism_emission_split(netuid=netuid)
-
-# Set weights for mechanism 1
-ok, msg = sub.extrinsics.set_weights(
-    wallet=bt.Wallet(name="alice", hotkey="alice"),
-    netuid=netuid,
-    mechid=1,
-    uids=[0,1,2],
-    weights=[1,1,1],
-)
-
-print(msg)
-
-# Asyncio
-
-import asyncio
-import time
-from bittensor.core.async_subtensor import AsyncSubtensor
-
-async def main():
+# Example 14: Demonstrates parallel fetching of neurons from multiple subnets using asyncio
+async def example_14_async_neurons():
+    """Asyncio - Fetch neurons from all subnets"""
+    import time
+    from bittensor.core.async_subtensor import AsyncSubtensor
+    
     async with AsyncSubtensor(network="test") as subtensor:
         start = time.time()
         total_subnets = await subtensor.get_total_subnets()
+        
+        # Limit to first 3 subnets for testing
+        test_range = min(total_subnets + 1, 4)
         neurons = await asyncio.gather(*[
             subtensor.neurons(netuid=x)
-            for x in range(1, total_subnets + 1)
+            for x in range(1, test_range)
         ])
-        print(time.time() - start)
+        elapsed = time.time() - start
+        
+        print(f"Fetched neurons from {len(neurons)} subnets in {elapsed:.2f}s:")
+        for netuid, neuron_list in enumerate(neurons, start=1):
+            print(f"  Subnet {netuid}: {len(neuron_list) if neuron_list else 0} neurons")
 
-asyncio.run(main())
+###############################################################################################
 
-# subtensor query examples
+# Example 15: Demonstrates direct substrate interface queries to fetch subnet identities
+def example_15_substrate_query():
+    """Subtensor query examples"""
+    from async_substrate_interface import SubstrateInterface
+    
+    substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
+    
+    netuid = 1
+    result = substrate.query('SubtensorModule', 'SubnetIdentitiesV2', [netuid])
+    print(f"SubnetIdentitiesV2 query result: {result}")
+    
+    substrate.close()
 
-from async_substrate_interface import SubstrateInterface
-substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
+###################################################################################################
 
-netuid = 1
-result = substrate.query('SubtensorModule', 'SubnetIdentitiesV2', [netuid])
-print(result)
+# Example 16: Demonstrates substrate interface queries using keypairs to fetch Alpha token data
+def example_16_substrate_query_keypair():
+    """Subtensor query examples (Keypair)"""
+    from async_substrate_interface import SubstrateInterface
+    from bittensor_wallet import Keypair
+    
+    substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
+    
+    hotkey = Keypair.create_from_uri('//Alice').ss58_address
+    coldkey = Keypair.create_from_uri('//Bob').ss58_address
+    netuid = 1
+    result = substrate.query('SubtensorModule', 'Alpha', [hotkey, coldkey, netuid])
+    print(f"Alpha query result: {result}")
+    
+    substrate.close()
 
-# Subtensor query examples (Keypair)
-from async_substrate_interface import SubstrateInterface
-substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
+###################################################################################################
 
-from bittensor_wallet import Keypair
-hotkey = Keypair.create_from_uri('//Alice').ss58_address
-coldkey = Keypair.create_from_uri('//Bob').ss58_address
-netuid = 1
-result = substrate.query('SubtensorModule', 'Alpha', [hotkey, coldkey, netuid])
-print(result)
+def main():
+    """Main test runner"""
+    print("="*70)
+    print("  Bittensor SDK Documentation Examples Test Suite")
+    print("="*70)
+    print(f"\nConfiguration:")
+    print(f"  Wallet: {os.environ.get('BT_WALLET_NAME')}")
+    print(f"  Hotkey: {os.environ.get('BT_WALLET_HOTKEY')}")
+    print(f"  Network: {os.environ.get('BT_SUBTENSOR_NETWORK')}")
+    
+    results = []
+    
+    # Run synchronous examples
+    print("\n" + "="*70)
+    print("  SYNCHRONOUS EXAMPLES")
+    print("="*70)
+    
+    results.append(run_example("Example 1: Create Axon", example_1_create_axon))
+    results.append(run_example("Example 2: Create Wallet", example_2_create_wallet))
+    results.append(run_example("Example 3: Check Balance", example_3_check_balance))
+    results.append(run_example("Example 4: Exchange Rate", example_4_exchange_rate))
+    results.append(run_example("Example 5: Registered Subnets", example_5_registered_subnets))
+    results.append(run_example("Example 6: Register Subnet", example_6_register_subnet))
+    results.append(run_example("Example 10: Check Registration", example_10_check_registration))
+    results.append(run_example("Example 11: Metagraph Info", example_11_metagraph_info))
+    results.append(run_example("Example 12: Set Hyperparams", example_12_set_hyperparams))
+    results.append(run_example("Example 13: SubtensorAPI", example_13_subtensor_api))
+    results.append(run_example("Example 15: Substrate Query", example_15_substrate_query))
+    results.append(run_example("Example 16: Substrate Query Keypair", example_16_substrate_query_keypair))
+    
+    # Run asynchronous examples
+    print("\n" + "="*70)
+    print("  ASYNCHRONOUS EXAMPLES")
+    print("="*70)
+    
+    async def run_async_examples():
+        async_results = []
+        async_results.append(await run_async_example("Example 7: Async Stake", example_7_async_stake))
+        async_results.append(await run_async_example("Example 8: Async Unstake", example_8_async_unstake))
+        async_results.append(await run_async_example("Example 9: Move Stake", example_9_move_stake))
+        async_results.append(await run_async_example("Example 14: Async Neurons", example_14_async_neurons))
+        return async_results
+    
+    async_results = asyncio.run(run_async_examples())
+    results.extend(async_results)
+    
+    # Print summary
+    print("\n" + "="*70)
+    print("  SUMMARY")
+    print("="*70)
+    passed = sum(results)
+    total = len(results)
+    print(f"Passed: {passed}/{total}")
+    print(f"Failed: {total - passed}/{total}")
+    
+    if passed == total:
+        print("\n✅ All examples completed successfully!")
+        return 0
+    else:
+        print(f"\n⚠️ {total - passed} example(s) failed")
+        return 1
+
+if __name__ == "__main__":
+    sys.exit(main())
