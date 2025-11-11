@@ -12,7 +12,7 @@ Pure proxies are **keyless, non-deterministic accounts** that are created fresh 
 - The proxy can **only act through its delegator**—all operations must be initiated by the delegator
 - The account is **completely isolated** and cannot escalate its own permissions
 
-Unlike standard proxies, where the delegate can access the delegator’s funds to execute calls on their behalf, pure proxies operate differently. A pure proxy account must hold its own funds, while the real account acts as an _any proxy_ for it—signing and authorizing transactions on the proxy’s behalf.
+Unlike standard proxies, where the delegate can access the delegator’s funds to execute calls on their behalf, pure proxies operate differently. A pure proxy account must hold its own funds, while the real account acts as an _Any proxy_ for it—signing and authorizing transactions on the proxy’s behalf.
 
 :::info When to use pure proxies
 Pure proxies are valuable when you want to keep your real account secure by reducing direct key exposure to the blockchain. They provide a keyless, flexible account that enables permissionless management and are especially effective for multisigs, since they allow updates to membership or thresholds without changing the account address.
@@ -20,12 +20,12 @@ Pure proxies are valuable when you want to keep your real account secure by redu
 
 ## Transaction flow in pure proxies
 
-All transactions involving a pure proxy must be signed by the delegator account. Once signed, the transaction is executed on-chain as if it originated directly from the pure proxy. Unlike standard proxies, a pure proxy must hold its own funds to cover fees or transfers. The delegator then acts as an _any proxy_, handling the signing and authorization of calls, but the balance used comes from the pure proxy's account.
+All transactions involving a pure proxy must be signed by the delegator account. Once signed, the transaction is executed on-chain as if it originated directly from the pure proxy. Unlike standard proxies, a pure proxy must hold its own funds to cover fees or transfers. The delegator then acts as an _Any proxy_, handling the signing and authorization of calls, but the balance used comes from the pure proxy's account.
 
 When submitting calls with the `proxy(real, forceProxyType, call)` extrinsic, the pure proxy account is passed as the `real` argument, while the delegator signs the transaction. This effectively reverses the usual proxy relationship where the proxy account only authorizes the transaction, while the real account appears as the origin on chain.
 
 :::info
-You can modify who signs for a pure proxy by assigning another account as its _any proxy_. This is done by executing a proxy call that creates a standard proxy with the `Any` proxy type. The new account can then sign on behalf of the pure proxy—for example, when updating signers in a multisig wallet. See [source code: pure proxy account generation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L827-L850).
+You can modify who signs for a pure proxy by assigning another account as its _Any proxy_. This is done by executing a proxy call that creates a standard proxy with the `Any` proxy type. The new account can then sign on behalf of the pure proxy—for example, when updating signers in a multisig wallet. See [source code: pure proxy account generation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L827-L850).
 :::
 
 ## Prerequisites
@@ -90,7 +90,7 @@ Importing the proxy account makes it selectable in the Polkadot-JS web app UI.
 - Ensure the pure proxy account holds enough funds to cover both the transfer and associated fees.
   :::
 
-### Kill a pure proxy
+## Kill a pure proxy
 
 Pure proxies are killed using the `killPure` extrinsic as shown. See [source code: `killPure` implementation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L380-L406):
 
@@ -106,6 +106,10 @@ Pure proxies are killed using the `killPure` extrinsic as shown. See [source cod
 5. Click **Submit Transaction** and sign the transaction from the delegate account.
 
 Ensure that all parameters are correct before making this call. The call will fail with a `Proxy.NoPermission` error if any parameter is invalid or if the origin account lacks permission to perform the action.
+
+:::warning
+Killing a pure proxy deletes the account the proxy account from the blockchain. Any funds in the account are permanently lost.
+:::
 
 :::info Removing vs. Killing a Pure Proxy
 Killing a pure proxy permanently deletes the account and releases its reserved deposit. Removing a proxy, on the other hand, only detaches it from the account that initiates the transaction. The pure proxy remains on-chain and can still be used if it has other proxies linked to it, but it becomes inactive once all proxy relationships are removed. For more information on how to remove a proxy, see [Remove a proxy](create-proxy.md#step-4-remove-a-proxy).
