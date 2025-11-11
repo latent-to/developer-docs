@@ -225,6 +225,12 @@ An optional security measure for the hotkey.
 
 **See also:** [Coldkey-Hotkey Security](../keys/coldkey-hotkey-security.md), [Working with Keys](../keys/working-with-keys.md)
 
+### Epoch
+
+An epoch in Bittensor is the period during which a subnet executes its consensus mechanism. Its is determined number of blocks defined by the subnet's [tempo](#tempo) hyperparameter.
+
+**See also:** [Tempo](#tempo), [Yuma Consensus](../learn/yuma-consensus.md)
+
 ### Exponential Moving Average (EMA)
 
 A weighted moving average that prioritizes recent observations while exponentially decreasing the weight of older data points. In Bittensor, EMA is used in two critical stability mechanisms:
@@ -722,7 +728,7 @@ A global parameter (currently set to 0.18) that determines the relative influenc
 
 ### Tempo
 
-A 360-block period over which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo passes every 4320 seconds or ~72 minutes.
+Tempo is a subnet-specific hyperparameter that determines how frequently epochs run. It is a 360-block period over which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo passes every 4320 seconds or ~72 minutes.
 
 **See also:** [Yuma Consensus](../learn/yuma-consensus.md), [Emissions](../learn/emissions.md)
 
