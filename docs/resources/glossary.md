@@ -73,6 +73,7 @@ A combination of two keys, a coldkey for secure storage and high-risk operations
 The Commit Reveal feature is designed to solve the weight-copying problem by giving would-be weight-copiers access only to stale weights. Copying stale weights should result in validators departing from consensus.
 
 **See also:**
+
 - [Commit Reveal](../concepts/commit-reveal.md)
 - [The Weight Copying Problem](../concepts/weight-copying-in-bittensor)
 
@@ -175,14 +176,14 @@ The process of removing a subnet miner or a subnet validator from the subnet due
 
 **See also:** [Miner Deregistration](../miners/#miner-deregistration), [Subnet Miners](../miners/)
 
-
 ### Drand/time-lock encryption
 
 [Drand](https://drand.love)) is a distributed randomness beacon network that provides publicly verifiable, unpredictable, and unbiased random numbers. It is operated by the [League of Entropy](https://drand.love/league-of-entropy/), a consortium of independent organizations running Drand nodes.
 
-Drand provides **time-lock encryption**, a cryptographic technique that encrypts data so that it can only be decrypted *after a specific time has passed*. Drand provides this capability by regularly producing randomness "pulses" at fixed intervals. Data encrypted for a future Drand round cannot be decrypted—even by the person who encrypted it—until that round's randomness is published.
+Drand provides **time-lock encryption**, a cryptographic technique that encrypts data so that it can only be decrypted _after a specific time has passed_. Drand provides this capability by regularly producing randomness "pulses" at fixed intervals. Data encrypted for a future Drand round cannot be decrypted—even by the person who encrypted it—until that round's randomness is published.
 
 Key properties that make Drand suitable for applications in Bittensor, such as [Commit Reveal](#commit-reveal):
+
 - **Decentralized**: No single entity controls the randomness generation
 - **Verifiable**: Anyone can verify that randomness was generated correctly
 - **Predictable timing**: Pulses are produced at regular intervals
@@ -190,6 +191,7 @@ Key properties that make Drand suitable for applications in Bittensor, such as [
 - **Open source**: Fully transparent implementation
 
 Learn more:
+
 - [Drand Time-Lock Encryption documentation](https://drand.love/docs/timelock-encryption/)
 - [Commit Reveal](../concepts/commit-reveal)
 
@@ -222,6 +224,12 @@ Emissions are protected from manipulation through [Exponential Moving Average (E
 An optional security measure for the hotkey.
 
 **See also:** [Coldkey-Hotkey Security](../keys/coldkey-hotkey-security.md), [Working with Keys](../keys/working-with-keys.md)
+
+### Epoch
+
+An epoch in Bittensor is the period during which a subnet executes its consensus mechanism. Its is determined number of blocks defined by the subnet's [tempo](#tempo) hyperparameter.
+
+**See also:** [Tempo](#tempo), [Yuma Consensus](../learn/yuma-consensus.md)
 
 ### Exponential Moving Average (EMA)
 
@@ -382,19 +390,17 @@ Neurons participate in the network through axon servers (miners) and dendrite cl
 
 **See also:** [Understanding Neurons](../learn/neurons.md), [Subnet Validators](../validators/), [Subnet Miners](../miners/), [NeuronInfo class](pathname:///python-api/html/autoapi/bittensor/core/chain_data/neuron_info/index.html)
 
-## N
-
 ### Nominate
 
-The process of a delegate registering themselves as a candidate for others to stake their $TAO to.
+The process of a staking TAO on a validator's hotkey. Nomination allows token holders to participate in subnet emissions by staking their TAO to active validators, earning proportional rewards based on the validator's performance.
+
+**See also:** [Staking and delegation](../staking-and-delegation/delegation.md)
 
 ### Nominator
 
-Another term for a delegator. A subnet validator who nominates their own hotkey as a delegate, allowing others to delegate their TAO to the nominator's hotkey.
+An account that stakes TAO on a validator's hotkey. Nominators are token holders who nominate their TAO to validators/delegates to participate in subnet's consensus and earn dividends while keeping control of their tokens.
 
-### Nominator (Delegator)
-
-A TAO holder who delegates their stake.
+**See also:** [Staking and delegation](../staking-and-delegation/delegation.md)
 
 ### Non-fast blocks
 
@@ -542,8 +548,8 @@ The process of registering keys with a subnet and purchasing a UID slot.
 
 For a given subnet, the relative weight of TAO staked to validators on that subnet through staking to the Root Subnet (rather than directly to the subnet). Mathematically it is the ratio of stake on Root to the total issuance of the subnet's alpha token.
 
-
 **Properties:**
+
 - **Range**: [0, 1] representing the proportion of dividends going to root stakers
 - **Higher root proportion**: More of the total stake in the subnet is held by stakers in root, rather than directly in the subnet.
 - **Lower root proportion**: More dividends remain as alpha for subnet stakers
@@ -555,11 +561,12 @@ $$
 $$
 
 Where:
+
 - `Root TAO`: Total TAO staked in Root Subnet
 - `TAO weight`: Global parameter ([TAO Weight](#tao-weight)) determining TAO vs alpha influence (currently 0.18)
 
-
 See also:
+
 - [Root Subnet/Subnet Zero](#root-subnetsubnet-zero)
 - [TAO Weight](#tao-weight)
 - [Coinbase Implementation](../navigating-subtensor/emissions-coinbase.md#6-calculating-root-proportion)
@@ -721,7 +728,7 @@ A global parameter (currently set to 0.18) that determines the relative influenc
 
 ### Tempo
 
-A 360-block period over which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo passes every 4320 seconds or ~72 minutes.
+Tempo is a subnet-specific hyperparameter that determines how frequently epochs run. It is a 360-block period over which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo passes every 4320 seconds or ~72 minutes.
 
 **See also:** [Yuma Consensus](../learn/yuma-consensus.md), [Emissions](../learn/emissions.md)
 
@@ -1002,8 +1009,6 @@ The directory path where the generated Bittensor wallets are stored locally on t
 ### Weight Copying
 
 A free-riding exploit possible for validators, which can be guarded against using Commit Reveal.
-
-
 
 ### Weight Matrix
 
