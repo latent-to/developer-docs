@@ -396,9 +396,9 @@ The process of a staking TAO on a validator's hotkey. Nomination allows token ho
 
 **See also:** [Staking and delegation](../staking-and-delegation/delegation.md)
 
-### Nominator (Delegator)
+### Nominator
 
-An account that stakes TAO on a validator's hotkey. Nominators are token holders who delegate their TAO to validators/delegates to participate in network consensus and earn subnet emissions while keeping control of their tokens.
+An account that stakes TAO on a validator's hotkey. Nominators are token holders who nominate their TAO to validators/delegates to participate in subnet's consensus and earn dividends while keeping control of their tokens.
 
 **See also:** [Staking and delegation](../staking-and-delegation/delegation.md)
 
