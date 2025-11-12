@@ -1,3 +1,7 @@
+---
+title: "Understanding Pure Proxies"
+---
+
 # Understanding Pure Proxies
 
 Pure proxies are a specialized type of proxy account in Bittensor that provide enhanced security and isolation for complex delegation scenarios. Unlike standard proxies that use existing accounts, pure proxies create new, keyless accounts that can only operate through their delegator relationship.
