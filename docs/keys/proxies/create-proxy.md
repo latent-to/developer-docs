@@ -1,5 +1,6 @@
 ---
 toc_max_heading_level: 2
+title: "Create a Proxy Account"
 ---
 
 # Create a Proxy Account

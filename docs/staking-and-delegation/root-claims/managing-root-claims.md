@@ -80,7 +80,7 @@ async def main():
             new_root_claim_type="Keep",  # or "Swap" for TAO accumulation
             wait_for_finalization=True
         )
-        
+
         if response.success:
             print(f"✅ Successfully set root claim type to 'Keep'")
             if response.extrinsic_receipt:
@@ -129,6 +129,8 @@ asyncio.run(main())
 
   </TabItem>
 </Tabs>
+
+---
 
 ## Monitor claim status and types
 
@@ -210,7 +212,9 @@ To see how much you can claim from a specific subnet:
 
   </TabItem>
 </Tabs>
-  
+
+---
+
 ### Check claimed ALPHA
 
 <Tabs groupId="root-claim">
@@ -246,13 +250,15 @@ To see how much you've already claimed from a subnet:
 1. Navigate to **Developer** → **Chain State**
 2. Select the storage query: `subtensorModule` → `rootClaimed(AccountId, AccountId, u16)`
 3. Fill the parameters:
-    - `AccountId`: Enter the account hotkey.
-    - `AccountId`: Enter the account coldkey.
-    - `u16`: Enter the subnet uid.
+   - `AccountId`: Enter the account hotkey.
+   - `AccountId`: Enter the account coldkey.
+   - `u16`: Enter the subnet uid.
 4. Click the **+** button to query
 
   </TabItem>
 </Tabs>
+
+---
 
 ## Trigger a manual claim
 
@@ -315,14 +321,14 @@ async def main():
     async with AsyncSubtensor(network="local") as subtensor:
         # Specify the subnets to claim from (up to 5 at once)
         netuids = [1, 2, 3]
-        
+
         # Claim root emissions
         response = await subtensor.claim_root(
             wallet=wallet,
             netuids=netuids,
             wait_for_finalization=True
         )
-        
+
         if response.success:
             print(f"✅ Successfully claimed root emissions from subnets {netuids}")
             if response.extrinsic_receipt:
@@ -339,6 +345,7 @@ Decrypting...
 ✅ Successfully claimed root emissions from subnets [1, 2, 3]
 Transaction hash: 0x0e153ac52f63dde1be1854f00daf09f643d1491c6e6b4103cdd5b04591921e3f
 ```
+
 You can also check claimable amounts before claiming:
 
 ```python
@@ -353,7 +360,7 @@ async def main():
         stake_info = await subtensor.get_stake_info_for_coldkey(
             coldkey_ss58=wallet.coldkeypub.ss58_address
         )
-        
+
         if stake_info:
             print("Claimable emissions by subnet:")
             for info in stake_info:
@@ -380,6 +387,7 @@ asyncio.run(main())
   </TabItem>
 </Tabs>
 
+---
 
 ## Inspecting the Metagraph: View claim types for registered neurons
 
@@ -391,6 +399,7 @@ btcli subnets metagraph --netuid 14
 
 <details>
 <summary><strong>Show Sample Output</strong></summary>
+
 ```console
 
 
