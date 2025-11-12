@@ -198,7 +198,6 @@ const sidebars = {
         "btcli/btcli-playground",
         "btcli/btcli-permissions",
         "btcli/btcli",
-        "staking-and-delegation/managing-stake-btcli",
       ],
     },
     {
