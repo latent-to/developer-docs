@@ -24,6 +24,7 @@ Bittensor SDK v10.0 is a **major breaking release** with significant improvement
 
 - **Multiple Incentive Mechanisms** - Full SDK support for running multiple evaluation mechanisms per subnet with independent weight matrices and emissions ([details](#multiple-incentive-mechanisms-support))
 - **Root claim implementation**: Adds support for setting and managing root claims directly through the SDK
+- **Proxy implementation**: Provides complete support for creating, managing, and interacting with proxy accounts directly through the SDK.
 - **Crowdloan implementation**: Adds support for creating, managing, and interacting with crowdloans directly through the SDK
 - **Transaction simulation** - `sim_swap()` calculates exact token yields without executing transactions ([details](#simulate-token-swaps))
 - **Fee estimation** - `get_extrinsic_fee()` estimates blockchain transaction costs before submission ([details](#estimate-transaction-fees))
