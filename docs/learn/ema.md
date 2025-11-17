@@ -8,7 +8,7 @@ The exponential moving average (EMA) is a [mathematical technique](https://en.wi
 
 Bittensor uses EMAs to smooth two critical dynamical values during the emission process:
 
-- Emissions to each subnet are determined by an EMA-smoothed representation of subnet price each tempo. This protects emissions from price volatility or intentional manipulation.
+- Emissions to each subnet are determined by an EMA-smoothed representation of net TAO flows (staking minus unstaking activity). This protects emissions from short-term fluctuations and manipulation attempts.
 
 - Emissions to participants of each subnet are determined by EMAs of instantaneous validator-miner bond-strengths. This plays an important role in ensuring that validators and miners are fairly rewarded for innovation, as measured by eventual consensus (rather than immediate consensus) about miner weights.
 
@@ -30,25 +30,36 @@ The alpha parameter controls how quickly the EMA responds to changes:
 Note that this alpha parameter is distinct from and unrelated to the usage of 'alpha' to refer to subnet-specific currencies.
 :::
 
-## Subnet Price Emission Smoothing
+## Subnet Flow Emission Smoothing
 
-This use of EMA smoothing protects the network's economic model from price manipulation by making emissions extremely slow to respond to price changes.
+This use of EMA smoothing protects the network's economic model from manipulation by making emissions extremely slow to respond to changes in staking activity.
 
 **How It Works**:
-The price EMA uses a dynamic alpha calculation to ensure that new subnets have even slower price adaptation than mature ones.
+The flow-based model uses an EMA to track net TAO flows (staking minus unstaking) over time, with a 30-day half-life (~86.8 day effective window):
 
 $$
-\alpha = \frac{ \mathrm{base\_alpha} \times  \mathrm{blocks\_since\_start}}{\mathrm{blocks\_since\_start} + \mathrm{halving\_blocks}}
+S_i = (1 - \alpha) \cdot S_{i-1} + \alpha \cdot \text{net\_flow}_i
 $$
 
-:::info
-The value for **base_alpha** in the above is currently ~0.0003 for Bittensor mainnet ("finney").
+**Key Parameters**:
+- **Smoothing factor ($\alpha$)**: ~0.000003209 (creates 30-day half-life)
+- **EMA window**: ~86.8 days (effective duration over which old values still affect the running EMA)
+- **Response characteristic**: Very slow - 99.9997% from previous EMA, only 0.0003% from current block
+
+This extremely slow EMA prevents:
+- Short-term gaming through temporary staking spikes
+- Price manipulation through wash trading
+- Flash attacks on emissions
+
+Subnets with negative net flows (more unstaking than staking) receive zero emissions after the EMA reflects sustained negative flow.
+
+:::tip Flow-Based Model Active
+As of November 2025, emissions are based on EMA of TAO flows rather than token prices. See [Emissions](./emissions.md) for complete details.
 :::
 
 See:
-
-- [Yuma Consensus/Coinbase emission source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L223)
-- [Default alpha value for subnet price smoothing](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L828)
+- [Flow-based emission implementation](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs)
+- [EMA smoothing factor](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1302-L1308)
 
 ## Validator-Miner Bond Smoothing
 

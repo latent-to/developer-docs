@@ -29,7 +29,7 @@ The following concepts define how proxy relationships are set up and managed:
 Proxies enable secure delegation of account responsibilities. Below are common scenarios where proxies are used effectively:
 
 - **Operational delegation**: run operational tasks (e.g., staking, subnet operations) from a hot wallet while securing funds in a cold wallet.
-- **Least-privilege permissions**: only allow a constrained set of calls (e.g., small transfers, staking-only, governance-only).
+- **Least-privilege permissions**: only allow a constrained set of calls (e.g., small transfers, staking-only, registration-only).
 - **Automated agents**: let bots/services act with limited authority.
 
 ## How it works
@@ -58,42 +58,50 @@ Pure proxies are _keyless_, _non-deterministic_ accounts. They have no private k
 
 2. **`ProxyType`**
 
-This defines what the proxy is allowed to do on behalf of the real account. It describes the capabilities of that proxy (e.g., staking-only, governance-only, transfer-only, etc.).
+This defines what the proxy is allowed to do on behalf of the real account. It describes the capabilities of that proxy (e.g., staking-only, transfer-only, registration-only, etc.).
 
 The following table shows the available `ProxyType` options and their descriptions:
 
 | `ProxyType`              | Description                                                                         |
 | ------------------------ | ----------------------------------------------------------------------------------- |
-| `Any`                    | Grants full permissions. This is the most permissive `ProxyType`; use with caution. |
-| `Owner`                  | Allows subnet owner operations.                                                     |
-| `NonCritical`            | Allows only non-critical operations.                                                |
-| `NonTransfer`            | Blocks all transfer operations.                                                     |
-| `Senate`                 | Allows senate governance operations.                                                |
-| `NonFungibile` (sic)     | Blocks all TAO transfer or movement.                                                |
-| `Triumvirate`            | Allows triumvirate governance operations.                                           |
-| `Governance`             | Covers both senate and triumvirate governance operations.                           |
-| `Staking`                | Allows staking-related operations.                                                  |
-| `Registration`           | Allows registration-related operations.                                             |
-| `Transfer`               | Allows unrestricted transfer operations.                                            |
-| `SmallTransfer`          | Allows transfers capped at 0.5 TAO.                                                 |
-| `ChildKeys`              | Allows child key operations.                                                        |
-| `SudoUncheckedSetCode`   | Restricted to a single privileged call form.                                        |
-| `SwapHotkey`             | Allows hotkey swap operations.                                                      |
-| `SubnetLeaseBeneficiary` | Allows management of leased subnets.                                                |
-| `RootClaim`              | Allows managing of root claim operations.                                           |
+| `Any`                    | Grants full permissions to execute any call on behalf of the real account. This is the most permissive `ProxyType`; use with caution. |
+| `Owner`                  | Allows subnet identity and settings management. Permitted operations: AdminUtils calls (except `sudo_set_sn_owner_hotkey`), `set_subnet_identity`, `update_symbol`. |
+| `NonCritical`            | Allows all operations except critical ones that could harm the account. Prohibited operations: `dissolve_network`, `root_register`, `burned_register`, Sudo calls. |
+| `NonTransfer`            | Allows all operations except token transfers. Prohibited operations: all Balances module calls, `transfer_stake`, `schedule_swap_coldkey`, `swap_coldkey`. |
+| `NonFungible`            | Allows all operations except token-related operations and registrations. Prohibited operations: all Balances module calls, all staking operations (`add_stake`, `remove_stake`, `unstake_all`, `swap_stake`, `move_stake`, `transfer_stake`), registration operations (`burned_register`, `root_register`), key swap operations (`schedule_swap_coldkey`, `swap_coldkey`, `swap_hotkey`). |
+| `Staking`                | Allows only staking-related operations: `add_stake`, `add_stake_limit`, `remove_stake`, `remove_stake_limit`, `remove_stake_full_limit`, `unstake_all`, `unstake_all_alpha`, `swap_stake`, `swap_stake_limit`, `move_stake`. |
+| `Registration`           | Allows only neuron registration operations: `burned_register`, `register`. |
+| `Transfer`               | Allows only token transfer operations: `transfer_keep_alive`, `transfer_allow_death`, `transfer_all`, `transfer_stake`. |
+| `SmallTransfer`          | Allows only small token transfers below 0.5 TAO. Permitted operations: `transfer_keep_alive`, `transfer_allow_death` (if value < 0.5 TAO), `transfer_stake` (if alpha_amount < 0.5 TAO). |
+| `ChildKeys`              | Allows only child key management operations: `set_children`, `set_childkey_take`. |
+| `SudoUncheckedSetCode`   | Allows only runtime code updates: `sudo_unchecked_weight` with inner call `System::set_code`. |
+| `SwapHotkey`             | Allows only hotkey swap operations: `swap_hotkey`. |
+| `SubnetLeaseBeneficiary` | Allows subnet management and configuration operations: `start_call`, multiple `AdminUtils.sudo_set_*` calls for subnet parameters, network settings, weights, alpha values, etc. |
+| `RootClaim`              | Allows only root claim operations: `claim_root`. |
 
-See [source code: ProxyType enum definition](https://github.com/opentensor/subtensor/blob/main/common/src/lib.rs#L144-L162) and [source code: proxy filtering implementation](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L678-L884).
+### Deprecated Proxy Types
+
+The following proxy types are deprecated and should not be used for new proxy configurations:
+
+| `ProxyType`   | Status     | Note                                          |
+| ------------- | ---------- | --------------------------------------------- |
+| `Senate`      | Deprecated | Previously used for senate governance operations |
+| `Triumvirate` | Deprecated | Previously used for triumvirate governance operations |
+| `Governance`  | Deprecated | Previously covered both senate and triumvirate governance operations |
+| `RootWeights` | Deprecated | Previously used for root weight operations |
+
+See [source code: ProxyType enum definition](https://github.com/opentensor/subtensor/blob/main/common/src/lib.rs#L144-L162)
 
 ### Choosing the Right `ProxyType`
 
 When setting up proxies, always follow the principle of least privilege. Choose the narrowest `ProxyType` that covers the intended actions instead of defaulting to broad permissions. For example:
 
 - Operational tasks: `Staking`, `Registration`, `ChildKeys`, `SwapHotkey`.
-- Governance actions: `Triumvirate`, `Senate`, or `Governance` (broader).
 - Funds movement: `Transfer` or `SmallTransfer` (with per-transfer limit).
-- Subnet leasing: `SubnetLeaseBeneficiary`.
+- Subnet management: `Owner` (for identity and settings), `SubnetLeaseBeneficiary` (for leased subnets).
+- Root claims: `RootClaim`.
 
-Only use the unrestricted `Any` type when no other option fits. If a proxy call fails with `proxy.Unproxyable` or `system.CallFiltered`, it usually means the selected `ProxyType` doesn’t permit that call. In such cases, switch to a more suitable type or create a separate proxy with proper scope.
+Only use the unrestricted `Any` type when no other option fits. If a proxy call fails with `proxy.Unproxyable` or `system.CallFiltered`, it usually means the selected `ProxyType` doesn't permit that call. In such cases, switch to a more suitable type or create a separate proxy with proper scope.
 
 ## Proxy Usage Limits
 
