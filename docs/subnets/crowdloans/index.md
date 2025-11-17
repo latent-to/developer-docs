@@ -63,7 +63,7 @@ These constants define crowdloan requirements and operational limits in the runt
 Implications:
 
 - **Refund batching**: Up to 50 contributors are processed per `refund` call.
-- **Duration bounds**: Ensures campaigns are neither too short nor too long.
+- **Duration bounds**: Campaigns must last between 7 days (50,400 blocks) and 60 days (432,000 blocks) on production chains.
 - **Contribution floor**: Enforces a minimum "ticket size" for contributors.
 
 ## FAQ

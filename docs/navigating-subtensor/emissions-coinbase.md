@@ -57,27 +57,38 @@ let subnets_to_emit_to: Vec<NetUid> = subnets
 - **Emission Readiness**: Only subnets that have been started (and hence been assigned a `FirstEmissionBlockNumber`) receive emissions.
 ### 2. Emission Allocation to Subnets
 
-Each subnet's share of the block's TAO emission depends on its alpha token's price, smoothed with an [exponential moving average (EMA)](../learn/ema) function to prevent price manipulation while maintaining market responsiveness.
+:::tip Flow-Based Emissions Active
+As of November 2025, subnet emissions are determined by net TAO flows (staking minus unstaking) rather than token prices. This section describes the current flow-based model.
+:::
 
-```rust
-let mut total_moving_prices = U96F32::saturating_from_num(0.0);
-for netuid_i in subnets_to_emit_to.iter() {
-    total_moving_prices = total_moving_prices
-        .saturating_add(Self::get_moving_alpha_price(*netuid_i));
-}
-```
+Each subnet's share of the block's TAO emission depends on its net TAO flow, smoothed with an [exponential moving average (EMA)](../learn/ema) to prevent manipulation while maintaining responsiveness to genuine user engagement.
 
-**EMA Price Smoothing Implementation:**
-The moving price for each subnet is calculated using a custom [EMA](../learn/ema) that adapts its responsiveness based on subnet maturity. This creates a **double-smoothing effect**: new subnets have extremely slow price adaptation (preventing launch manipulation), while mature subnets respond more quickly to legitimate market signals.
-
-**Price-Driven Distribution:**
-Each subnet receives TAO emissions proportional to its EMA-smoothed alpha token price:
+**Flow-Based Distribution:**
+The system tracks TAO inflows and outflows for each subnet, calculating an EMA of net flows with a 30-day half-life (~86.8 day effective window):
 
 $$
-\text{tao\_allocation}_i = \text{block\_emission} \times \frac{\text{moving\_price}_i}{\sum_{j} \text{moving\_price}_j}
+S_i = (1 - \alpha) \cdot S_{i-1} + \alpha \cdot \text{net\_flow}_i
 $$
 
-**EMA Update Timing:** The EMA is updated **after** being used for emission calculations in each `run_coinbase()` call ([Line 246](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/run_coinbase.rs#L246)), ensuring that current block emissions are based on the previous block's smoothed prices while continuously updating the moving average for future calculations.
+where $\alpha \approx 0.000003209$ (smoothing factor).
+
+Each subnet receives TAO emissions proportional to its offset flow share:
+
+$$
+\text{tao\_allocation}_i = \text{block\_emission} \times \frac{z_i^p}{\sum_{j} z_j^p}
+$$
+
+where $z_i = \max(S_i - L, 0)$ and $L$ is the lower limit ensuring subnets with negative net flows receive zero emissions.
+
+**Implementation:**
+- Flow tracking: `record_tao_inflow()` and `record_tao_outflow()` called during stake/unstake operations
+- Share calculation: `get_shares()` → `get_shares_flow()` 
+- See [Emissions](../learn/emissions.md#tao-reserve-injection) for complete mathematical details
+
+**Key Characteristics:**
+- Subnets with sustained negative flows (more unstaking than staking) receive zero emissions
+- Rewards genuine user engagement rather than just accumulated liquidity
+- Prevents "TAO treasury" gaming strategies that were possible under the previous price-based model
 
 ### 3. Token Pool Injections and Emissions
 
