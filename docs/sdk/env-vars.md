@@ -30,7 +30,7 @@ The SDK uses `False ` if the variable is not set.
 
 ## Subtensor
 
-### `BT_CHAIN_ENDPOINT`
+### `BT_SUBTENSOR_CHAIN_ENDPOINT`
 
 The Subtensor node (RPC endpoint) URL to connect to Bittensor (overrides the default chain address).
 
@@ -38,7 +38,7 @@ The SDK uses `bittensor.core.settings.DEFAULT_ENDPOINT ` if the variable is not 
 
 See [Bittensor Networks](../concepts/bittensor-networks)
 
-### `BT_NETWORK`
+### `BT_SUBTENSOR_NETWORK`
 
 The default Subtensor network name. Allows selecting the network (e.g., `finney` or `testnet`) during Subtensor initialization without specifying an explicit endpoint.<br/>
 The SDK uses `bittensor.core.settings.DEFAULT_NETWORK ` if the variable is not set.

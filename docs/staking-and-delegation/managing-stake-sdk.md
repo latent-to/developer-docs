@@ -52,14 +52,16 @@ import bittensor as bt
 sub = bt.Subtensor(network="test")
 subnet = sub.subnet(netuid=1)
 
-print("alpha_to_tao_with_slippage", subnet.alpha_to_tao_with_slippage(100))
-print("alpha_to_tao_with_slippage percentage", subnet.alpha_to_tao_with_slippage(100, percentage=True))
+alpha_amount = bt.Balance.from_tao(100).set_unit(1)
+
+print("alpha_to_tao_with_slippage", subnet.alpha_to_tao_with_slippage(alpha_amount))
+print("alpha_to_tao_with_slippage percentage", subnet.alpha_to_tao_with_slippage(alpha_amount, percentage=True))
 
 print("tao_to_alpha_with_slippage", subnet.tao_to_alpha_with_slippage(100))
 print("tao_to_alpha_with_slippage percentage", subnet.tao_to_alpha_with_slippage(100, percentage=True))
 
 print("tao_to_alpha", subnet.tao_to_alpha(100))
-print("alpha_to_tao", subnet.alpha_to_tao(100))
+print("alpha_to_tao", subnet.alpha_to_tao(alpha_amount))
 ```
 
 ## Register on a subnet
@@ -103,6 +105,21 @@ Note that it uses asynchronous calls to the Bittensor blockchain via the `async_
 
 See [Working with Concurrency](/subnets/asyncio).
 
+:::info
+You must create some environment variables before running the following script. To do this, paste the following in your Python environment:
+
+```python
+import os
+
+os.environ['BT_WALLET_NAME'] = 'STAKE_WALLET'
+os.environ['TOTAL_TAO_TO_STAKE'] = '1'
+os.environ['NUM_SUBNETS_TO_STAKE_IN'] = '3'
+os.environ['NUM_VALIDATORS_PER_SUBNET'] = '3'
+```
+
+Replace `STAKE_WALLET` with the name of the funded wallet you intend to use.
+:::
+
 ```python
 import os, sys, asyncio
 import bittensor as bt
@@ -110,7 +127,7 @@ import time
 from bittensor import tao
 
 # Load environmental variables
-wallet_name=os.environ.get('WALLET')
+wallet_name=os.environ.get('BT_WALLET_NAME')
 total_to_stake=os.environ.get('TOTAL_TAO_TO_STAKE')
 num_subnets= os.environ.get('NUM_SUBNETS_TO_STAKE_IN')
 validators_per_subnet = os.environ.get('NUM_VALIDATORS_PER_SUBNET')
@@ -186,7 +203,7 @@ async def find_top_three_valis(subtensor,subnet):
     }
 
 async def main():
-    async with bt.async_subtensor(network='test') as subtensor:
+    async with bt.AsyncSubtensor(network='test') as subtensor:
 
         print("Fetching information on top subnets by TAO emissions")
 
@@ -214,6 +231,9 @@ async def main():
 
 asyncio.run(main())
 ```
+
+<details>
+  <summary><strong>Show sample response!</strong></summary>
 
 ```console
   Using wallet: PracticeKey!
@@ -337,9 +357,26 @@ ExtrinsicResponse:
 	data: None
 	error: None
 ```
+</details>
+
 ## Asynchronously unstake from low-emissions validators
 
 The more advanced script below will unstake from the delegations (stakes) to validators on particular subnets that have yielded the least emissions in the last tempo.
+
+:::info
+You must create some environment variables before running the following script. To do this, paste the following in your Python environment:
+
+```python
+import os
+
+os.environ['WALLET'] = 'STAKE_WALLET'
+os.environ['TOTAL_TAO_TO_STAKE'] = '1'
+os.environ['NUM_SUBNETS_TO_STAKE_IN'] = '3'
+os.environ['NUM_VALIDATORS_PER_SUBNET'] = '3'
+```
+
+Replace `STAKE_WALLET` with the name of the funded wallet you intend to use.
+:::
 
 ```python
 import os, sys, asyncio, time
@@ -367,10 +404,10 @@ async def perform_unstake(subtensor, stake, amount):
 
 
 async def main():
-    async with bt.async_subtensor(network='test') as subtensor:
+    async with bt.AsyncSubtensor(network='test') as subtensor:
         try:
             # Retrieve all active active stakes asscociated with the coldkey
-            stakes = await subtensor.get_stake_for_coldkey(wallet_ck)
+            stakes = await subtensor.get_stake_info_for_coldkey(wallet_ck)
         except Exception as e:
             sys.exit(f"❌ Failed to get stake info: {e}")
 
@@ -390,11 +427,11 @@ async def main():
             print(f"Validator: {s.hotkey_ss58}\n  NetUID: {s.netuid}\n  Stake: {s.stake.tao}\n  Emission: {s.emission}\n-----------")
 
         # Determine how much TAO to unstake per validator
-        amount_per_stake = total_to_unstake / len(stakes)
+        amount_per_stake = total_to_unstake.tao / len(stakes)
 
         # Prepare concurrent unstake tasks, then execute as a batch
         tasks = [
-            perform_unstake(subtensor, stake, min(amount_per_stake, stake.stake))
+            perform_unstake(subtensor, stake, bt.Balance.from_tao(min(amount_per_stake, stake.stake.tao)).set_unit(stake.netuid))
             for stake in stakes
         ]
         results = await asyncio.gather(*tasks)
@@ -403,7 +440,7 @@ async def main():
         success_count = sum(results)
         print(f"\n  Unstake complete. Success: {success_count}/{len(stakes)}")
 
-wallet_name = os.environ.get('WALLET')
+wallet_name = os.environ.get('BT_WALLET_NAME')
 total_to_unstake = os.environ.get('TOTAL_TAO_TO_UNSTAKE')
 max_stakes_to_unstake = os.environ.get('MAX_STAKES_TO_UNSTAKE')
 
@@ -438,6 +475,9 @@ unstake_minimum = 0.0005  # TAO
 asyncio.run(main())
 
 ```
+
+<details>
+  <summary><strong>Show sample response!</strong></summary>
 
 ```console
 Unstaking total not specified, defaulting to 1 TAO.
@@ -522,6 +562,8 @@ Decrypting...
   Unstake complete. Success: 10/10
 ```
 
+</details>
+
 ## Move stake
 
 This stake moves stake from one delegate to another.
@@ -535,16 +577,15 @@ from bittensor.core.async_subtensor import AsyncSubtensor
 
 async def main():
     async with AsyncSubtensor("test") as subtensor:
-        wallet = bt.Wallet(
-            name="PracticeKey!"
-        )
+        wallet = bt.Wallet()
         wallet.unlock_coldkey()
+        amount = bt.Balance.from_tao(1.0).set_unit(5) # set amount in origin subnet
         result = await subtensor.move_stake(wallet = wallet,
-            origin_hotkey = "5DyHnV9Wz6cnefGfczeBkQCzHZ5fJcVgy7x1eKVh8otMEd31",
+            origin_hotkey_ss58 = "5DyHnV9Wz6cnefGfczeBkQCzHZ5fJcVgy7x1eKVh8otMEd31",
             origin_netuid = 5,
-            destination_hotkey = "5HidY9Danh9NhNPHL2pfrf97Zboew3v7yz4abuibZszcKEMv",
+            destination_hotkey_ss58 = "5HidY9Danh9NhNPHL2pfrf97Zboew3v7yz4abuibZszcKEMv",
             destination_netuid = 18,
-            amount = bt.Balance.from_tao(1.0),
+            amount = amount,
             wait_for_inclusion = True,
             wait_for_finalization = False,
         )
@@ -556,3 +597,7 @@ async def main():
 asyncio.run(main())
 
 ```
+
+:::info
+Replace `WALLET_NAME` with the name of the funded wallet you intend to use.
+:::

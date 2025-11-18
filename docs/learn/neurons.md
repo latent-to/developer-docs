@@ -104,15 +104,16 @@ sources={{
 
 ### Axon
 
-The `axon` module in the Bittensor API uses the FastAPI library to create and run API servers. For example, when a subnet miner calls,
+The `Axon` module in the Bittensor API uses the FastAPI library to create and run API servers. For example, when a subnet miner calls,
 
 ```python
-axon = bt.axon(wallet=self.wallet, config=self.config)
+import bittensor as bt
+axon = bt.Axon(wallet=self.wallet, config=self.config)
 ```
 
-then an API server with the name `axon` is created on the subnet miner node. This `axon` API server receives incoming Synapse objects from subnet validators, i.e., the `axon` starts to serve on behalf of the subnet miner.
+then an API server with the name `Axon` is created on the subnet miner node. This `Axon` API server receives incoming Synapse objects from subnet validators, i.e., the `Axon` starts to serve on behalf of the subnet miner.
 
-Similarly, in your subnet miner code you must use the `axon` API to create an API server to receive incoming Synapse objects from the subnet validators.
+Similarly, in your subnet miner code you must use the `Axon` API to create an API server to receive incoming Synapse objects from the subnet validators.
 
 ### Dendrite
 

@@ -138,7 +138,7 @@ The amount of TAO needed to acquire a validator permit depends on how the other 
 
 ```python
 import bittensor as bt
-subnet = bt.Metagraph(1)
+subnet = bt.Metagraph(14)
 top_64_stake = sorted(subnet.S)[-64:]
 print (f'Current requirement for validator permits based on the top 64 stake stands at {min(top_64_stake)} tao')
 ```
@@ -150,7 +150,11 @@ This information can be obtained from the metagraph using your UID.
 
 ```python
 import bittensor as bt
+<<<<<<< HEAD
 subnet = bt.Metagraph(1)
+=======
+subnet = bt.Metagraph(NETUID)
+>>>>>>> v10-audit
 wallet = bt.Wallet( name = 'my_coldkey', hotkey = 'my_validator_hotkey' )
 my_uid = subnet.hotkeys.index( wallet.hotkey.ss58_address )
 print(f'Validator permit: {subnet.validator_permit[my_uid]}')

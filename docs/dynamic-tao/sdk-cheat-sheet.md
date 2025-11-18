@@ -195,15 +195,17 @@ import bittensor as bt
 
 sub = bt.Subtensor(network="test")
 subnet = sub.subnet(netuid=1)
+netuid = 1
 
-print("alpha_to_tao_with_slippage", subnet.alpha_to_tao_with_slippage(100))
-print("alpha_to_tao_with_slippage percentage", subnet.alpha_to_tao_with_slippage(100, percentage=True))
+alpha_100 = bt.Balance.from_tao(100).set_unit(netuid)
+print("alpha_to_tao_with_slippage", subnet.alpha_to_tao_with_slippage(alpha_100))
+print("alpha_to_tao_with_slippage %", subnet.alpha_to_tao_with_slippage(alpha_100, percentage=True))
+print("alpha_to_tao", subnet.alpha_to_tao(alpha_100))
 
-print("tao_to_alpha_with_slippage", subnet.tao_to_alpha_with_slippage(100))
-print("tao_to_alpha_with_slippage percentage", subnet.tao_to_alpha_with_slippage(100, percentage=True))
-
-print("tao_to_alpha", subnet.tao_to_alpha(100))
-print("alpha_to_tao", subnet.alpha_to_tao(100))
+tao_100 = bt.Balance.from_tao(100)
+print("tao_to_alpha_with_slippage", subnet.tao_to_alpha_with_slippage(tao_100))
+print("tao_to_alpha_with_slippage %", subnet.tao_to_alpha_with_slippage(tao_100, percentage=True))
+print("tao_to_alpha", subnet.tao_to_alpha(tao_100))
 ```
 
 ## Managing stake
@@ -317,6 +319,7 @@ The following script incrementally stakes 3 TAO into several subnets over many b
 ```python
 
 import bittensor as bt
+
 sub = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="ExampleWalletName")
 wallet.unlock_coldkey()
@@ -326,26 +329,40 @@ increment = 0.01 # amount of TAO to stake
 total_spend = 0 # total amount of TAO spent
 stake = {} # dictionary to store the stake for each netuid
 
+# Convert increment to Balance object
+amount_balance = bt.Balance.from_tao(increment)
+
 while total_spend < 3:
     for netuid in to_buy:
         subnet = sub.subnet(netuid)
-        print(f"slippage for subnet {netuid}", subnet.slippage(increment))
-        sub.add_stake(
-            wallet = wallet,
-            netuid = netuid,
-            hotkey = subnet.owner_hotkey,
-            tao_amount = increment,
+        print(f"slippage for subnet {netuid}", subnet.slippage(amount_balance))
+
+        result = sub.add_stake(
+            wallet=wallet,
+            netuid=netuid,
+            hotkey_ss58=subnet.owner_hotkey,
+            amount=amount_balance,
         )
 
+        if not result.success:
+            print(f"Failed to stake to netuid {netuid}: {result.message}")
+            continue
+
         current_stake = sub.get_stake(
-            coldkey_ss58 = wallet.coldkeypub.ss58_address,
-            hotkey_ss58 = subnet.owner_hotkey,
-            netuid = netuid,
+            coldkey_ss58=wallet.coldkeypub.ss58_address,
+            hotkey_ss58=subnet.owner_hotkey,
+            netuid=netuid,
         )
         stake[netuid] = current_stake
         total_spend += increment
-        print (f'netuid {netuid} price {subnet.price} stake {current_stake}')
-    sub.wait_for_block()
+        print(f'netuid {netuid} price {subnet.price} stake {current_stake}')
+
+    try:
+        sub.wait_for_block()
+    except AttributeError:
+
+        import time
+        time.sleep(6)  # Wait ~6 seconds for next block
 ```
 
 ```console
@@ -376,6 +393,7 @@ The below script will reverse the effects of the above, by incrementally unstaki
 ```python
 
 import bittensor as bt
+
 sub = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="ExampleWalletName")
 wallet.unlock_coldkey()
@@ -388,23 +406,36 @@ stake = {} # dictionary to store the stake for each netuid
 while total_sell < 3:
     for netuid in to_sell:
         subnet = sub.subnet(netuid)
-        print(f"slippage for subnet {netuid}", subnet.alpha_slippage(increment))
 
-        sub.remove_stake(
-            wallet = wallet,
-            netuid = netuid,
-            hotkey = subnet.owner_hotkey,
-            amount = increment,
+        alpha_amount = bt.Balance.from_tao(increment).set_unit(netuid)
+
+        print(f"slippage for subnet {netuid}", subnet.alpha_slippage(alpha_amount))
+
+        result = sub.unstake(
+            wallet=wallet,
+            netuid=netuid,
+            hotkey_ss58=subnet.owner_hotkey,
+            amount=alpha_amount,
         )
+
+        if not result.success:
+            print(f"Failed to unstake from netuid {netuid}: {result.message}")
+            continue
+
         current_stake = sub.get_stake(
-            coldkey_ss58 = wallet.coldkeypub.ss58_address,
-            hotkey_ss58 = subnet.owner_hotkey,
-            netuid = netuid,
+            coldkey_ss58=wallet.coldkeypub.ss58_address,
+            hotkey_ss58=subnet.owner_hotkey,
+            netuid=netuid,
         )
         stake[netuid] = current_stake
         total_sell += increment
-        print (f'netuid {netuid} price {subnet.price} stake {current_stake}')
-    sub.wait_for_block()
+        print(f'netuid {netuid} price {subnet.price} stake {current_stake}')
+
+    try:
+        sub.wait_for_block()
+    except AttributeError:
+        import time
+        time.sleep(6)
 ```
 
 ```console
