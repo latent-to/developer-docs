@@ -318,7 +318,7 @@ The following script incrementally stakes 3 TAO into several subnets over many b
 
 import bittensor as bt
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(name="ExampleWalletName")
+wallet = bt.Wallet(name="ExampleWalletName")
 wallet.unlock_coldkey()
 
 to_buy = [119, 277, 18, 5] # list of netuids to stake into
@@ -377,7 +377,7 @@ The below script will reverse the effects of the above, by incrementally unstaki
 
 import bittensor as bt
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(name="ExampleWalletName")
+wallet = bt.Wallet(name="ExampleWalletName")
 wallet.unlock_coldkey()
 
 to_sell = [119, 277, 18, 5] # list of netuids to unstake from
@@ -461,7 +461,7 @@ import bittensor as bt
 logging = bt.logging
 logging.set_info()
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(
+wallet = bt.Wallet(
     name="ExampleWalletName",
     hotkey="ExampleHotkey",
 )
@@ -491,7 +491,7 @@ Example usage:
 ```python
 import bittensor as bt
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(
+wallet = bt.Wallet(
     name="ExampleWalletName",
     hotkey="ExampleHotkey",
 )

@@ -78,7 +78,7 @@ For example, to sync with a specific block number `12345` that is older than the
 
 ```python
 import bittensor as bt
-meta = bt.subtensor('archive').metagraph(netuid=18, block=12345)
+meta = bt.Subtensor('archive').metagraph(netuid=18, block=12345)
 print(meta)
 ```
 

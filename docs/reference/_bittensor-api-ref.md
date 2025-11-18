@@ -12,16 +12,16 @@ The `Subtensor` is utilized for managing interactions with the subtensor chain. 
 
 ```python dark
 # Creating a default chain connection to remote finney instance.
-sub = bt.subtensor()
+sub = bt.Subtensor()
 
 # Parsing --subtensor.network and --network from the command line
-sub = bt.subtensor( config = bt.subtensor.config() )
+sub = bt.Subtensor( config = bt.Subtensor.config() )
 
 # Connecting subtensor's default local entrypoint "ws://127.0.0.1:9944"
-sub = bt.subtensor( network = 'local' )
+sub = bt.Subtensor( network = 'local' )
 
 # Connecting to a specific endpoint
-sub = bt.subtensor( chain_endpoint = "ws://127.0.0.1:9944" )
+sub = bt.Subtensor( chain_endpoint = "ws://127.0.0.1:9944" )
 ```
 
 ### Methods 
@@ -620,13 +620,13 @@ To initialize an instance of the `Subtensor` class, you'll need to provide three
 
 ```python dark
 import bittensor as bt
-obj = bt.subtensor( config, network, chain_endpoint )
+obj = bt.Subtensor( config, network, chain_endpoint )
 ```
 
 ### Arguments 
 
-- `config (bt.Config, optional, defaults=bt.subtensor.config())`:
-    Subtensor config object containing arguments from bt.subtensor.config() which are automatically parsed from command line and ENV vars.
+- `config (bt.Config, optional, defaults=bt.Subtensor.config())`:
+    Subtensor config object containing arguments from bt.Subtensor.config() which are automatically parsed from command line and ENV vars.
 - `network (str, optional, default='finney')`:
     The subtensor network flag. The likely choices are:
             -- local (local running network)
@@ -650,16 +650,16 @@ The `Metagraph` class holds the chain state of a particular subnetwork at a spec
 import bittensor as bt
 
 # Creating metagraph and sync state from a netuid parameter, defaults to connecting to network `finney`
-metagraph = bt.metagraph( netuid = 1 )
+metagraph = bt.Metagraph( netuid = 1 )
 
 # Create metagraph and sync with lite = False to sync weights and bonds matrices.
-metagraph = bt.metagraph( netuid = 1, lite = False)
+metagraph = bt.Metagraph( netuid = 1, lite = False)
 
 # Create metagraph and sync state from local entrypoint, assuming a subtensor chain is currently running.
-metagraph = bt.metagraph( netuid = 1, network = 'local' )
+metagraph = bt.Metagraph( netuid = 1, network = 'local' )
 
 # Create an empty metagraph object with no state syncing.
-metagraph = bt.metagraph( netuid = 1, sync = False )
+metagraph = bt.Metagraph( netuid = 1, sync = False )
 
 # Sync the metagraph at a particular block
 metagraph.sync( block = 100000 )

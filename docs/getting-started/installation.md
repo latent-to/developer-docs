@@ -200,7 +200,7 @@ Next, enter the following lines in the Python interpreter:
 
 ```python
 import bittensor as bt
-metagraph = bt.metagraph(1)
+metagraph = bt.Metagraph(1)
 metagraph.axons[:10]
 ```
 

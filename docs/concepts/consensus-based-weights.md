@@ -102,8 +102,8 @@ See below the Python definitions for the consensus-based weights feature:
 ```python
 import bittensor as bt
 
-wallet = bt.wallet(name=<my_coldkey>)
-subtensor = bt.subtensor(network="127.0.0.1:9946")
+wallet = bt.Wallet(name=<my_coldkey>)
+subtensor = bt.Subtensor(network="127.0.0.1:9946")
 
 # Enable consensus-based weights (liquid alpha) feature
 enabled_result = subtensor.set_hyperparameter(
@@ -135,8 +135,8 @@ Below is the example Python code showing how to use the above definitions for th
 ```python
 import bittensor as bt
 
-wallet = bt.wallet(name="test-coldkey")
-subtensor = bt.subtensor(network="127.0.0.1:9946")
+wallet = bt.Wallet(name="test-coldkey")
+subtensor = bt.Subtensor(network="127.0.0.1:9946")
 
 # Enable consensus-based weights (liquid alpha) feature
 enabled_result = subtensor.set_hyperparameter(

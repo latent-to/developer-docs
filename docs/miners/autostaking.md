@@ -156,7 +156,7 @@ import bittensor as bt
 
 async def main():
     async with bt.async_subtensor(network="local") as subtensor:
-        wallet = bt.wallet(
+        wallet = bt.Wallet(
             name="Alice",
         )
         wallet.unlock_coldkey()

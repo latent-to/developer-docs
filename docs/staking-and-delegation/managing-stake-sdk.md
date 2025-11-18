@@ -33,7 +33,7 @@ Test network tokens have no real value. Before managing liquidity on Bittensor m
 ```python
 import bittensor as bt
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(
+wallet = bt.Wallet(
     name="PracticeKey!",
     hotkey="stakinkey1",
 )
@@ -71,7 +71,7 @@ import bittensor as bt
 logging = bt.logging
 logging.set_info()
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(
+wallet = bt.Wallet(
     name="ExampleWalletName",
     hotkey="ExampleHotkey",
 )
@@ -84,7 +84,7 @@ reg = sub.burned_register(wallet=wallet, netuid=3)
 ```python
 import bittensor as bt
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(
+wallet = bt.Wallet(
     name="ExampleWalletName",
     hotkey="ExampleHotkey",
 )
@@ -147,7 +147,7 @@ else:
 print(f"\n🔓 Using wallet: {wallet_name}")
 print(f"  Dividing {total_to_stake} TAO across top {validators_per_subnet} validators in each of top {num_subnets} subnets.")
 
-wallet = bt.wallet(wallet_name)
+wallet = bt.Wallet(wallet_name)
 
 # Initialize the subtensor connection within a block scope to ensure it is garbage collected
 async def stake_batch(subtensor, netuid, top_validators, amount_to_stake):
@@ -304,7 +304,7 @@ import bittensor as bt
 
 async def main():
     async with bt.async_subtensor(network='test') as subtensor:
-        wallet = bt.wallet(name="ExampleWallet")
+        wallet = bt.Wallet(name="ExampleWallet")
         wallet.unlock_coldkey()
         
         # Unstake all from this validator
@@ -431,7 +431,7 @@ print(f"  Using wallet: {wallet_name}")
 print(f"  Unstaking a total of {total_to_unstake} TAO across up to {max_stakes_to_unstake} lowest-emission validators")
 
 total_to_unstake = bt.Balance.from_tao(total_to_unstake)
-wallet = bt.wallet(wallet_name)
+wallet = bt.Wallet(wallet_name)
 wallet_ck = wallet.coldkeypub.ss58_address
 
 unstake_minimum = 0.0005  # TAO
@@ -535,7 +535,7 @@ from bittensor.core.async_subtensor import AsyncSubtensor
 
 async def main():
     async with AsyncSubtensor("test") as subtensor:
-        wallet = bt.wallet(
+        wallet = bt.Wallet(
             name="PracticeKey!"
         )
         wallet.unlock_coldkey()

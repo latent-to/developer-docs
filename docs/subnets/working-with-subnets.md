@@ -21,11 +21,11 @@ btcli subnets list
 
 ## Viewing state
 
-To display fine-grained information about each subnetwork use [bt.metagraph](pathname:///python-api/html/autoapi/bittensor/core/metagraph/index.html):
+To display fine-grained information about each subnetwork use [bt.Metagraph](pathname:///python-api/html/autoapi/bittensor/core/metagraph/index.html):
 
 ```python
 import bittensor as bt
-subnet = bt.metagraph( netuid = 1 )             # Get the current state.
+subnet = bt.Metagraph( netuid = 1 )             # Get the current state.
 assert subnet.netuid == 1
 subnet.sync( block = 101010 )                   # Sync the state with a particular block.
 assert subnet.block == 101010
@@ -35,7 +35,7 @@ assert subnet.block == 101010
 
 ```python
 import bittensor as bt
-subnet = bt.metagraph( netuid = 1 )
+subnet = bt.Metagraph( netuid = 1 )
 assert subnet.uids.tolist() == [ 0, 1, 2, ... 1022, 1023 ]
 ```
 
@@ -43,7 +43,7 @@ assert subnet.uids.tolist() == [ 0, 1, 2, ... 1022, 1023 ]
 
 ```python
 import bittensor as bt
-subnet = bt.metagraph( netuid = 1 )
+subnet = bt.Metagraph( netuid = 1 )
 uid = 123
 print ('uid', uid, ' owned by hotkey:', subnet.hotkeys[ uid ], 'associated with coldkey': subnet.coldkey[ uid ] )
 ```
@@ -54,7 +54,7 @@ The below code prints stake `S` on the subnet and the weights `W` set by the sub
 
 ```python numbered dark
 import bittensor as bt
-subnet = bt.metagraph( netuid = 1, lite = False)
+subnet = bt.Metagraph( netuid = 1, lite = False)
 print ('subnet 1 validator stake', subnet.S )
 print ('subnet 1 validator weights', subnet.W )
 ```
@@ -65,6 +65,6 @@ The below code prints the subnet validator dividends, `D`.
 
 ```python
 import bittensor as bt
-subnet = bt.metagraph( netuid = 1 )
+subnet = bt.Metagraph( netuid = 1 )
 print ('subnet 1 validator dividends', subnet.D )
 ```

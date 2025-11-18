@@ -243,7 +243,7 @@ def demonstrate_protection_modes():
     print(f"TAO in reserve: {subnet_info.tao_in}")
     
     # Initialize wallet
-    wallet = bt.wallet(name="Alice")
+    wallet = bt.Wallet(name="Alice")
     
     try:
         wallet.unlock_coldkey()

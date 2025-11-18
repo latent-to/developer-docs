@@ -159,7 +159,7 @@ To create a wallet with Python, copy and paste the following three lines into yo
 
 ```python showLineNumbers
 import bittensor as bt
-wallet = bt.wallet(name = 'my_coldkey', hotkey = 'my_hotkey' )
+wallet = bt.Wallet(name = 'my_coldkey', hotkey = 'my_hotkey' )
 wallet.create_if_non_existent()
 ```
 
@@ -167,7 +167,7 @@ You will see a terminal output like this for an example wallet with `name` as `t
 
 ```text
 >>> import bittensor as bt
->>> wallet = bt.wallet(name = 'test-coldkey', hotkey = 'test-hotkey')
+>>> wallet = bt.Wallet(name = 'test-coldkey', hotkey = 'test-hotkey')
 >>> wallet.create_if_non_existent()
 
 IMPORTANT: Store this mnemonic in a secure (preferable offline place), as anyone who has possession of this mnemonic can use it to regenerate the key and access your tokens.
@@ -188,7 +188,7 @@ Since the coldkey is encrypted by default, the command above only encrypts the n
 
 ```python showLineNumbers
 import bittensor as bt
-wallet = bt.wallet(name = 'my_coldkey', hotkey = 'my_hotkey')
+wallet = bt.Wallet(name = 'my_coldkey', hotkey = 'my_hotkey')
 wallet.create_if_non_existent(hotkey_use_password=True)
 ```
 
@@ -203,7 +203,7 @@ Copy and paste the following lines into your Python interpreter. Replace the str
 
 ```python showLineNumbers
 import bittensor as bt
-wallet = bt.wallet(name = 'my_coldkey')
+wallet = bt.Wallet(name = 'my_coldkey')
 wallet.create_new_coldkey()
 ```
 
@@ -224,7 +224,7 @@ Before creating a hotkey, you must have created a coldkey as described in the [c
 
 ```python showLineNumbers
 import bittensor as bt
-wallet = bt.wallet(name = 'my_coldkey')
+wallet = bt.Wallet(name = 'my_coldkey')
 wallet.create_new_hotkey()
 ```
 
@@ -233,7 +233,7 @@ To encrypt your hotkey when creating a wallet, include the `use_password=True` p
 
 ```python showLineNumbers
 import bittensor as bt
-wallet = bt.wallet(name = 'my_coldkey')
+wallet = bt.Wallet(name = 'my_coldkey')
 wallet.create_new_hotkey(use_password=True)
 ```
 

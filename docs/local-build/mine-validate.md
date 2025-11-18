@@ -164,9 +164,9 @@ Input the following lines in your Python environment, replacing `NETUID`, `WALLE
 
 ```python
 import bittensor as bt
-network=bt.subtensor(network="local")
+network=bt.Subtensor(network="local")
 subnet = network.metagraph(NETUID)
-wallet = bt.wallet( name = 'WALLET_NAME', hotkey = 'HOTKEY' )
+wallet = bt.Wallet( name = 'WALLET_NAME', hotkey = 'HOTKEY' )
 my_uid = subnet.hotkeys.index( wallet.hotkey.ss58_address )
 print(f'Validator permit: {subnet.validator_permit[my_uid]}')
 ```

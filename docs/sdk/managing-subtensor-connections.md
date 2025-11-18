@@ -23,7 +23,7 @@ You don't need to both a `with`-statement context manager and `.close()`, just o
 
 ```python
 import bittensor as bt
-sub = bt.subtensor("finney")
+sub = bt.Subtensor("finney")
 # calls to subtensor
 
 # no close
@@ -37,7 +37,7 @@ sub = bt.subtensor("finney")
 ### Sync
 ```python
 import bittensor as bt
-sub = bt.subtensor("finney")
+sub = bt.Subtensor("finney")
 # subtensor calls
 sub.close()
 # instance and connection are terminated.
@@ -60,7 +60,7 @@ await sub.close()
 ### Sync
 ```python
 import bittensor as bt
-with bt.subtensor("finney") as sub:
+with bt.Subtensor("finney") as sub:
     # all calls to subtensor instance inside this block
 
 

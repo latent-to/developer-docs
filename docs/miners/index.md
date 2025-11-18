@@ -192,7 +192,7 @@ import bittensor as bt
 # Replace below with your SS58 hotkey
 hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
 network = "finney"
-sub = bt.subtensor(network)
+sub = bt.Subtensor(network)
 print(f"Registration status for hotkey {hotkey} is: {sub.is_hotkey_registered(hotkey)}")
 ```
 
@@ -204,7 +204,7 @@ import bittensor as bt
 hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
 network = "finney"
 netuid = 1 # subnet uid
-sub = bt.subtensor(network)
+sub = bt.Subtensor(network)
 mg = sub.metagraph(netuid)
 if hotkey not in mg.hotkeys:
   print(f"Hotkey {hotkey} deregistered")
@@ -220,7 +220,7 @@ import bittensor as bt
 hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
 network = "finney"
 netuid = 1 # subnet uid
-sub = bt.subtensor(network)
+sub = bt.Subtensor(network)
 mg = sub.metagraph(netuid)
 uid = 2 # Your UID
 registered = mg.hotkeys[uid] == hotkey
