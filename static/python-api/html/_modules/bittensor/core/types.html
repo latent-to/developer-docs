@@ -149,6 +149,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../autoapi/bittensor/index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../autoapi/bittensor/core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/core/chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/core/config/index.html">bittensor.core.config</a></li>
@@ -585,8 +586,6 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="AxonServeCallParams.dict">
-<a class="viewcode-back" href="../../../autoapi/bittensor/core/types/index.html#bittensor.core.types.AxonServeCallParams.dict">[docs]</a>
     <span class="k">def</span> <span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a dict representation of this object. If `self.certificate` is `None`,</span>
@@ -607,7 +606,6 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">certificate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;certificate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">certificate</span>
         <span class="k">return</span> <span class="n">d</span></div>
-</div>
 
 
 
@@ -624,12 +622,9 @@
 
 
 
-<div class="viewcode-block" id="ParamWithTypes">
-<a class="viewcode-back" href="../../../autoapi/bittensor/core/types/index.html#bittensor.core.types.ParamWithTypes">[docs]</a>
 <span class="k">class</span> <span class="nc">ParamWithTypes</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Name of the parameter.</span>
-    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># ScaleType string of the parameter.</span></div>
-
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># ScaleType string of the parameter.</span>
 </pre></div>
 
                 </article>

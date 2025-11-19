@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>bittensor.core.extrinsics.params.move_stake &#8212; Bittensor SDK Docs  documentation</title>
+    <title>bittensor.core.extrinsics.pallets.sudo &#8212; Bittensor SDK Docs  documentation</title>
   
   
   
@@ -45,11 +45,11 @@
     <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/extrinsics/params/move_stake/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/extrinsics/pallets/sudo/index';</script>
     <link rel="index" title="Index" href="../../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../../search.html" />
-    <link rel="next" title="bittensor.core.extrinsics.params.registration" href="../registration/index.html" />
-    <link rel="prev" title="bittensor.core.extrinsics.params.liquidity" href="../liquidity/index.html" />
+    <link rel="next" title="bittensor.core.extrinsics.pallets.swap" href="../swap/index.html" />
+    <link rel="prev" title="bittensor.core.extrinsics.pallets.subtensor_module" href="../subtensor_module/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -150,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../../../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../config/index.html">bittensor.core.config</a></li>
@@ -266,7 +267,7 @@
       
       
       
-      <li><a href="https://github.com/opentensor/btcli/blob/main/autoapi/bittensor/core/extrinsics/params/move_stake/index.rst?plain=1" target="_blank"
+      <li><a href="https://github.com/opentensor/btcli/blob/main/autoapi/bittensor/core/extrinsics/pallets/sudo/index.rst?plain=1" target="_blank"
    class="btn btn-sm btn-source-file-button dropdown-item"
    title="Show source"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -283,7 +284,7 @@
       
       
       
-      <li><a href="https://github.com/opentensor/btcli/issues/new?title=Issue%20on%20page%20%2Fautoapi/bittensor/core/extrinsics/params/move_stake/index.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/opentensor/btcli/issues/new?title=Issue%20on%20page%20%2Fautoapi/bittensor/core/extrinsics/pallets/sudo/index.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -313,7 +314,7 @@
       
       
       
-      <li><a href="../../../../../../_sources/autoapi/bittensor/core/extrinsics/params/move_stake/index.rst" target="_blank"
+      <li><a href="../../../../../../_sources/autoapi/bittensor/core/extrinsics/pallets/sudo/index.rst" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -389,7 +390,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>bittensor.core.extrinsics.params.move_stake</h1>
+    <h1>bittensor.core.extrinsics.pallets.sudo</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -401,11 +402,8 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams"><code class="docutils literal notranslate"><span class="pre">MoveStakeParams</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams.move_stake"><code class="docutils literal notranslate"><span class="pre">MoveStakeParams.move_stake()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams.swap_stake"><code class="docutils literal notranslate"><span class="pre">MoveStakeParams.swap_stake()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams.swap_stake_limit"><code class="docutils literal notranslate"><span class="pre">MoveStakeParams.swap_stake_limit()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams.transfer_stake"><code class="docutils literal notranslate"><span class="pre">MoveStakeParams.transfer_stake()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.sudo.Sudo"><code class="docutils literal notranslate"><span class="pre">Sudo</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.sudo.Sudo.sudo"><code class="docutils literal notranslate"><span class="pre">Sudo.sudo()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -421,14 +419,14 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-bittensor.core.extrinsics.params.move_stake">
-<span id="bittensor-core-extrinsics-params-move-stake"></span><h1>bittensor.core.extrinsics.params.move_stake<a class="headerlink" href="#module-bittensor.core.extrinsics.params.move_stake" title="Link to this heading">#</a></h1>
+  <section id="module-bittensor.core.extrinsics.pallets.sudo">
+<span id="bittensor-core-extrinsics-pallets-sudo"></span><h1>bittensor.core.extrinsics.pallets.sudo<a class="headerlink" href="#module-bittensor.core.extrinsics.pallets.sudo" title="Link to this heading">#</a></h1>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams" title="bittensor.core.extrinsics.params.move_stake.MoveStakeParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MoveStakeParams</span></code></a></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.pallets.sudo.Sudo" title="bittensor.core.extrinsics.pallets.sudo.Sudo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sudo</span></code></a></p></td>
+<td><p>Factory class for creating GenericCall objects for Sudo pallet functions.</p></td>
 </tr>
 </tbody>
 </table>
@@ -437,86 +435,37 @@
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="bittensor.core.extrinsics.params.move_stake.MoveStakeParams">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.params.move_stake.</span></span><span class="sig-name descname"><span class="pre">MoveStakeParams</span></span><a class="headerlink" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams" title="Link to this definition">#</a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="bittensor.core.extrinsics.params.move_stake.MoveStakeParams.move_stake">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">move_stake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams.move_stake" title="Link to this definition">#</a></dt>
-<dd><p>Returns the parameters for the <cite>move_stake</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
-<li><p><strong>origin_hotkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
-<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
-<li><p><strong>destination_hotkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
-<li><p><strong>amount</strong> (<a class="reference internal" href="../../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.sudo.Sudo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.pallets.sudo.</span></span><span class="sig-name descname"><span class="pre">Sudo</span></span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.sudo.Sudo" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.CallBuilder" title="bittensor.core.extrinsics.pallets.base.CallBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bittensor.core.extrinsics.pallets.base.CallBuilder</span></code></a></p>
+<p>Factory class for creating GenericCall objects for Sudo pallet functions.</p>
+<p>This class provides methods to create GenericCall instances for all Sudo pallet extrinsics.</p>
+<p>Works with both sync (Subtensor) and async (AsyncSubtensor) instances. For async operations, pass an AsyncSubtensor
+instance and await the result.</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p># Nested sync calls (e.g., with Sudo)
+inner_call = SubtensorModule(subtensor).set_pending_childkey_cooldown(cooldown=100)
+sudo_call = Sudo(subtensor).sudo(call=inner_call)
+response = subtensor.sign_and_send_extrinsic(call=sudo_call, …)</p>
+<p># Nested async calls (e.g., with Sudo)
+inner_call = await SubtensorModule(subtensor).set_pending_childkey_cooldown(cooldown=100)
+sudo_call = await Sudo(subtensor).sudo(call=inner_call)
+response = subtensor.sign_and_send_extrinsic(call=sudo_call, …)</p>
+</div>
 <dl class="py method">
-<dt class="sig sig-object py" id="bittensor.core.extrinsics.params.move_stake.MoveStakeParams.swap_stake">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">swap_stake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams.swap_stake" title="Link to this definition">#</a></dt>
-<dd><p>Returns the parameters for the <cite>swap_stake</cite>.</p>
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.sudo.Sudo.sudo">
+<span class="sig-name descname"><span class="pre">sudo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">call</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.sudo.Sudo.sudo" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function Sudo.sudo.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>hotkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
-<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
-<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
-<li><p><strong>amount</strong> (<a class="reference internal" href="../../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a>)</p></li>
-</ul>
+<dd class="field-odd"><p><strong>call</strong> (<em>scalecodec.GenericCall</em>) – The call to be executed as sudo.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
 </dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="bittensor.core.extrinsics.params.move_stake.MoveStakeParams.swap_stake_limit">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">swap_stake_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_partial_stake</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_tolerance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_pool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_pool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams.swap_stake_limit" title="Link to this definition">#</a></dt>
-<dd><p>Returns the parameters for the <cite>swap_stake_limit</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>hotkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
-<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
-<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
-<li><p><strong>amount</strong> (<a class="reference internal" href="../../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a>)</p></li>
-<li><p><strong>allow_partial_stake</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
-<li><p><strong>rate_tolerance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
-<li><p><strong>origin_pool</strong> (<em>bittensor.core.chain_data.DynamicInfo</em>)</p></li>
-<li><p><strong>destination_pool</strong> (<em>bittensor.core.chain_data.DynamicInfo</em>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="bittensor.core.extrinsics.params.move_stake.MoveStakeParams.transfer_stake">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">transfer_stake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">destination_coldkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams.transfer_stake" title="Link to this definition">#</a></dt>
-<dd><p>Returns the parameters for the <cite>transfer_stake</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>destination_coldkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
-<li><p><strong>hotkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
-<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
-<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
-<li><p><strong>amount</strong> (<a class="reference internal" href="../../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
 </dd>
 </dl>
 </dd></dl>
@@ -538,20 +487,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../liquidity/index.html"
+       href="../subtensor_module/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">bittensor.core.extrinsics.params.liquidity</p>
+        <p class="prev-next-title">bittensor.core.extrinsics.pallets.subtensor_module</p>
       </div>
     </a>
     <a class="right-next"
-       href="../registration/index.html"
+       href="../swap/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">bittensor.core.extrinsics.params.registration</p>
+        <p class="prev-next-title">bittensor.core.extrinsics.pallets.swap</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -574,11 +523,8 @@
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams"><code class="docutils literal notranslate"><span class="pre">MoveStakeParams</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams.move_stake"><code class="docutils literal notranslate"><span class="pre">MoveStakeParams.move_stake()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams.swap_stake"><code class="docutils literal notranslate"><span class="pre">MoveStakeParams.swap_stake()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams.swap_stake_limit"><code class="docutils literal notranslate"><span class="pre">MoveStakeParams.swap_stake_limit()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.move_stake.MoveStakeParams.transfer_stake"><code class="docutils literal notranslate"><span class="pre">MoveStakeParams.transfer_stake()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.sudo.Sudo"><code class="docutils literal notranslate"><span class="pre">Sudo</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.sudo.Sudo.sudo"><code class="docutils literal notranslate"><span class="pre">Sudo.sudo()</span></code></a></li>
 </ul>
 </li>
 </ul>

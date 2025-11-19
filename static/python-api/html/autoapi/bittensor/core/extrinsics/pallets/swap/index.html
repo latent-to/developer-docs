@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>bittensor.core.extrinsics.params.start_call &#8212; Bittensor SDK Docs  documentation</title>
+    <title>bittensor.core.extrinsics.pallets.swap &#8212; Bittensor SDK Docs  documentation</title>
   
   
   
@@ -45,11 +45,11 @@
     <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/extrinsics/params/start_call/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/extrinsics/pallets/swap/index';</script>
     <link rel="index" title="Index" href="../../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../../search.html" />
-    <link rel="next" title="bittensor.core.extrinsics.params.take" href="../take/index.html" />
-    <link rel="prev" title="bittensor.core.extrinsics.params.staking" href="../staking/index.html" />
+    <link rel="next" title="bittensor.core.extrinsics.proxy" href="../../proxy/index.html" />
+    <link rel="prev" title="bittensor.core.extrinsics.pallets.sudo" href="../sudo/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -150,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../../../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../config/index.html">bittensor.core.config</a></li>
@@ -266,7 +267,7 @@
       
       
       
-      <li><a href="https://github.com/opentensor/btcli/blob/main/autoapi/bittensor/core/extrinsics/params/start_call/index.rst?plain=1" target="_blank"
+      <li><a href="https://github.com/opentensor/btcli/blob/main/autoapi/bittensor/core/extrinsics/pallets/swap/index.rst?plain=1" target="_blank"
    class="btn btn-sm btn-source-file-button dropdown-item"
    title="Show source"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -283,7 +284,7 @@
       
       
       
-      <li><a href="https://github.com/opentensor/btcli/issues/new?title=Issue%20on%20page%20%2Fautoapi/bittensor/core/extrinsics/params/start_call/index.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/opentensor/btcli/issues/new?title=Issue%20on%20page%20%2Fautoapi/bittensor/core/extrinsics/pallets/swap/index.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -313,7 +314,7 @@
       
       
       
-      <li><a href="../../../../../../_sources/autoapi/bittensor/core/extrinsics/params/start_call/index.rst" target="_blank"
+      <li><a href="../../../../../../_sources/autoapi/bittensor/core/extrinsics/pallets/swap/index.rst" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -389,7 +390,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>bittensor.core.extrinsics.params.start_call</h1>
+    <h1>bittensor.core.extrinsics.pallets.swap</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -401,8 +402,11 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.start_call.StartCallParams"><code class="docutils literal notranslate"><span class="pre">StartCallParams</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.start_call.StartCallParams.start_call"><code class="docutils literal notranslate"><span class="pre">StartCallParams.start_call()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.swap.Swap"><code class="docutils literal notranslate"><span class="pre">Swap</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.swap.Swap.add_liquidity"><code class="docutils literal notranslate"><span class="pre">Swap.add_liquidity()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.swap.Swap.modify_position"><code class="docutils literal notranslate"><span class="pre">Swap.modify_position()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.swap.Swap.remove_liquidity"><code class="docutils literal notranslate"><span class="pre">Swap.remove_liquidity()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.swap.Swap.toggle_user_liquidity"><code class="docutils literal notranslate"><span class="pre">Swap.toggle_user_liquidity()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -418,14 +422,14 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-bittensor.core.extrinsics.params.start_call">
-<span id="bittensor-core-extrinsics-params-start-call"></span><h1>bittensor.core.extrinsics.params.start_call<a class="headerlink" href="#module-bittensor.core.extrinsics.params.start_call" title="Link to this heading">#</a></h1>
+  <section id="module-bittensor.core.extrinsics.pallets.swap">
+<span id="bittensor-core-extrinsics-pallets-swap"></span><h1>bittensor.core.extrinsics.pallets.swap<a class="headerlink" href="#module-bittensor.core.extrinsics.pallets.swap" title="Link to this heading">#</a></h1>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.params.start_call.StartCallParams" title="bittensor.core.extrinsics.params.start_call.StartCallParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StartCallParams</span></code></a></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.pallets.swap.Swap" title="bittensor.core.extrinsics.pallets.swap.Swap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Swap</span></code></a></p></td>
+<td><p>Factory class for creating GenericCall objects for Swap pallet functions.</p></td>
 </tr>
 </tbody>
 </table>
@@ -434,18 +438,104 @@
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="bittensor.core.extrinsics.params.start_call.StartCallParams">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.params.start_call.</span></span><span class="sig-name descname"><span class="pre">StartCallParams</span></span><a class="headerlink" href="#bittensor.core.extrinsics.params.start_call.StartCallParams" title="Link to this definition">#</a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="bittensor.core.extrinsics.params.start_call.StartCallParams.start_call">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.params.start_call.StartCallParams.start_call" title="Link to this definition">#</a></dt>
-<dd><p>Returns the parameters for the <cite>start_call</cite>.</p>
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.swap.Swap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.pallets.swap.</span></span><span class="sig-name descname"><span class="pre">Swap</span></span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.swap.Swap" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.CallBuilder" title="bittensor.core.extrinsics.pallets.base.CallBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bittensor.core.extrinsics.pallets.base.CallBuilder</span></code></a></p>
+<p>Factory class for creating GenericCall objects for Swap pallet functions.</p>
+<p>This class provides methods to create GenericCall instances for all Swap pallet extrinsics.</p>
+<p>Works with both sync (Subtensor) and async (AsyncSubtensor) instances. For async operations, pass an AsyncSubtensor
+instance and await the result.</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p># Sync usage
+call = Swap(subtensor).toggle_user_liquidity(netuid=14, enable=True)
+response = subtensor.sign_and_send_extrinsic(call=call, …)</p>
+<p># Async usage
+call = await Swap(subtensor).toggle_user_liquidity(netuid=14, enable=True)
+response = await async_subtensor.sign_and_send_extrinsic(call=call, …)</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.swap.Swap.add_liquidity">
+<span class="sig-name descname"><span class="pre">add_liquidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">liquidity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.swap.Swap.add_liquidity" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function Swap.add_liquidity.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The UID of the target subnet for which the call is being initiated.</p></li>
+<li><p><strong>liquidity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The amount of liquidity in RAO to be added.</p></li>
+<li><p><strong>tick_low</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The lower bound of the price tick range.</p></li>
+<li><p><strong>tick_high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The upper bound of the price tick range.</p></li>
+<li><p><strong>hotkey</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The hotkey with staked TAO in Alpha. If not passed then the wallet hotkey is used.</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.swap.Swap.modify_position">
+<span class="sig-name descname"><span class="pre">modify_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">liquidity_delta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.swap.Swap.modify_position" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function Swap.modify_position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The UID of the target subnet for which the call is being initiated.</p></li>
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey with staked TAO in Alpha. If not passed then the wallet hotkey is used.</p></li>
+<li><p><strong>position_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The id of the position record in the pool.</p></li>
+<li><p><strong>liquidity_delta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The amount of liquidity in RAO to be added or removed (could be positive or negative).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.swap.Swap.remove_liquidity">
+<span class="sig-name descname"><span class="pre">remove_liquidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.swap.Swap.remove_liquidity" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function Swap.remove_liquidity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The UID of the target subnet for which the call is being initiated.</p></li>
+<li><p><strong>position_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The id of the position record in the pool.</p></li>
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey with staked TAO in Alpha. If not passed then the wallet hotkey is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.swap.Swap.toggle_user_liquidity">
+<span class="sig-name descname"><span class="pre">toggle_user_liquidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.swap.Swap.toggle_user_liquidity" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function Swap.toggle_user_liquidity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The UID of the target subnet for which the call is being initiated.</p></li>
+<li><p><strong>enable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Boolean indicating whether to enable user liquidity.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
 </dd>
 </dl>
 </dd></dl>
@@ -467,20 +557,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../staking/index.html"
+       href="../sudo/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">bittensor.core.extrinsics.params.staking</p>
+        <p class="prev-next-title">bittensor.core.extrinsics.pallets.sudo</p>
       </div>
     </a>
     <a class="right-next"
-       href="../take/index.html"
+       href="../../proxy/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">bittensor.core.extrinsics.params.take</p>
+        <p class="prev-next-title">bittensor.core.extrinsics.proxy</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -503,8 +593,11 @@
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.start_call.StartCallParams"><code class="docutils literal notranslate"><span class="pre">StartCallParams</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.params.start_call.StartCallParams.start_call"><code class="docutils literal notranslate"><span class="pre">StartCallParams.start_call()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.swap.Swap"><code class="docutils literal notranslate"><span class="pre">Swap</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.swap.Swap.add_liquidity"><code class="docutils literal notranslate"><span class="pre">Swap.add_liquidity()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.swap.Swap.modify_position"><code class="docutils literal notranslate"><span class="pre">Swap.modify_position()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.swap.Swap.remove_liquidity"><code class="docutils literal notranslate"><span class="pre">Swap.remove_liquidity()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.swap.Swap.toggle_user_liquidity"><code class="docutils literal notranslate"><span class="pre">Swap.toggle_user_liquidity()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -149,6 +149,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../autoapi/bittensor/index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../autoapi/bittensor/core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/core/chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/bittensor/core/config/index.html">bittensor.core.config</a></li>
@@ -1150,8 +1151,6 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_block_hash</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Subtensor.encode_params">
-<a class="viewcode-back" href="../../../autoapi/bittensor/core/subtensor/index.html#bittensor.core.subtensor.Subtensor.encode_params">[docs]</a>
     <span class="k">def</span> <span class="nf">encode_params</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">call_definition</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;ParamWithTypes&quot;</span><span class="p">]],</span>
@@ -1170,8 +1169,7 @@
 
                 <span class="n">param_data</span> <span class="o">+=</span> <span class="n">scale_obj</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]])</span>
 
-        <span class="k">return</span> <span class="n">param_data</span><span class="o">.</span><span class="n">to_hex</span><span class="p">()</span></div>
-
+        <span class="k">return</span> <span class="n">param_data</span><span class="o">.</span><span class="n">to_hex</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Subtensor.get_hyperparameter">
 <a class="viewcode-back" href="../../../autoapi/bittensor/core/subtensor/index.html#bittensor.core.subtensor.Subtensor.get_hyperparameter">[docs]</a>

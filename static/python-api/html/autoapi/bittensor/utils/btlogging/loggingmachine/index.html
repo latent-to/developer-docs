@@ -150,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/config/index.html">bittensor.core.config</a></li>
@@ -405,6 +406,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.CUSTOM_LOGGER_METHOD_STACK_LEVEL"><code class="docutils literal notranslate"><span class="pre">CUSTOM_LOGGER_METHOD_STACK_LEVEL</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig"><code class="docutils literal notranslate"><span class="pre">LoggingConfig</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig.debug"><code class="docutils literal notranslate"><span class="pre">LoggingConfig.debug</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig.enable_third_party_loggers"><code class="docutils literal notranslate"><span class="pre">LoggingConfig.enable_third_party_loggers</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig.info"><code class="docutils literal notranslate"><span class="pre">LoggingConfig.info</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig.logging_dir"><code class="docutils literal notranslate"><span class="pre">LoggingConfig.logging_dir</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig.record_log"><code class="docutils literal notranslate"><span class="pre">LoggingConfig.record_log</span></code></a></li>
@@ -537,6 +539,11 @@ Default, Debug, Trace, and Disabled.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.btlogging.loggingmachine.LoggingConfig.debug">
 <span class="sig-name descname"><span class="pre">debug</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><a class="headerlink" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig.debug" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.utils.btlogging.loggingmachine.LoggingConfig.enable_third_party_loggers">
+<span class="sig-name descname"><span class="pre">enable_third_party_loggers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><a class="headerlink" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig.enable_third_party_loggers" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -747,10 +754,10 @@ Default, Debug, Trace, and Disabled.</p>
 <dd><p>Get config from the argument parser.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>config object</p>
+<dd class="field-odd"><p>Configuration object with settings from command-line arguments.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>config (<a class="reference internal" href="../../../core/config/index.html#bittensor.core.config.Config" title="bittensor.core.config.Config">bittensor.core.config.Config</a>)</p>
+<dd class="field-even"><p><a class="reference internal" href="../../../core/config/index.html#bittensor.core.config.Config" title="bittensor.core.config.Config">bittensor.core.config.Config</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1070,6 +1077,7 @@ loggers. A queue handler is also associated with it.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.CUSTOM_LOGGER_METHOD_STACK_LEVEL"><code class="docutils literal notranslate"><span class="pre">CUSTOM_LOGGER_METHOD_STACK_LEVEL</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig"><code class="docutils literal notranslate"><span class="pre">LoggingConfig</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig.debug"><code class="docutils literal notranslate"><span class="pre">LoggingConfig.debug</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig.enable_third_party_loggers"><code class="docutils literal notranslate"><span class="pre">LoggingConfig.enable_third_party_loggers</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig.info"><code class="docutils literal notranslate"><span class="pre">LoggingConfig.info</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig.logging_dir"><code class="docutils literal notranslate"><span class="pre">LoggingConfig.logging_dir</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.btlogging.loggingmachine.LoggingConfig.record_log"><code class="docutils literal notranslate"><span class="pre">LoggingConfig.record_log</span></code></a></li>

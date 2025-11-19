@@ -49,7 +49,7 @@
     <link rel="index" title="Index" href="../../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../../search.html" />
     <link rel="next" title="bittensor.core.extrinsics.asyncex.move_stake" href="../move_stake/index.html" />
-    <link rel="prev" title="bittensor.core.extrinsics.asyncex.children" href="../children/index.html" />
+    <link rel="prev" title="bittensor.core.extrinsics.asyncex.crowdloan" href="../crowdloan/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -150,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../../../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../config/index.html">bittensor.core.config</a></li>
@@ -449,7 +450,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>subtensor</strong> (<em>bittensor.core.async_subtensor.AsyncSubtensor</em>) – The Subtensor client instance used for blockchain interaction.</p></li>
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>) – The Subtensor client instance used for blockchain interaction.</p></li>
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – The wallet used to sign the extrinsic (must be unlocked).</p></li>
 <li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The UID of the target subnet for which the call is being initiated.</p></li>
 <li><p><strong>liquidity</strong> (<a class="reference internal" href="../../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><em>bittensor.utils.balance.Balance</em></a>) – The amount of liquidity to be added.</p></li>
@@ -482,7 +483,7 @@ think of it as an expiration date for the transaction.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>subtensor</strong> (<em>bittensor.core.async_subtensor.AsyncSubtensor</em>) – The Subtensor client instance used for blockchain interaction.</p></li>
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>) – The Subtensor client instance used for blockchain interaction.</p></li>
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – The wallet used to sign the extrinsic (must be unlocked).</p></li>
 <li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The UID of the target subnet for which the call is being initiated.</p></li>
 <li><p><strong>position_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The id of the position record in the pool.</p></li>
@@ -516,7 +517,7 @@ think of it as an expiration date for the transaction.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>subtensor</strong> (<em>bittensor.core.async_subtensor.AsyncSubtensor</em>) – The Subtensor client instance used for blockchain interaction.</p></li>
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>) – The Subtensor client instance used for blockchain interaction.</p></li>
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – The wallet used to sign the extrinsic (must be unlocked).</p></li>
 <li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The UID of the target subnet for which the call is being initiated.</p></li>
 <li><p><strong>position_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The id of the position record in the pool.</p></li>
@@ -547,7 +548,7 @@ think of it as an expiration date for the transaction.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>subtensor</strong> (<em>bittensor.core.async_subtensor.AsyncSubtensor</em>) – The Subtensor client instance used for blockchain interaction.</p></li>
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>) – The Subtensor client instance used for blockchain interaction.</p></li>
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – The wallet used to sign the extrinsic (must be unlocked).</p></li>
 <li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The UID of the target subnet for which the call is being initiated.</p></li>
 <li><p><strong>enable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Boolean indicating whether to enable user liquidity.</p></li>
@@ -583,12 +584,12 @@ think of it as an expiration date for the transaction.</p></li>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../children/index.html"
+       href="../crowdloan/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">bittensor.core.extrinsics.asyncex.children</p>
+        <p class="prev-next-title">bittensor.core.extrinsics.asyncex.crowdloan</p>
       </div>
     </a>
     <a class="right-next"

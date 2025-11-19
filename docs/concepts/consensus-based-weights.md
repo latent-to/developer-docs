@@ -100,22 +100,20 @@ Hence, for example:
 See below the Python definitions for the consensus-based weights feature:
 
 ```python
+
 import bittensor as bt
 from bittensor.core.extrinsics.utils import sudo_call_extrinsic
 
-wallet = bt.Wallet(name=<my_coldkey>)
-subtensor = bt.Subtensor(network="127.0.0.1:9946")
-
+subtensor = bt.Subtensor('local')
 # Enable consensus-based weights (liquid alpha) feature
 result = sudo_call_extrinsic(
     subtensor=subtensor,
     wallet=wallet,
     call_function="sudo_set_liquid_alpha_enabled",
-    call_params={"netuid": <your_preferred_netuid>, "enabled": True},
-    call_module="AdminUtils",
-    root_call=True
+    call_params={"netuid": 2, "enabled": True},
+    call_module="AdminUtils"
 )
-print(f"Set liquid alpha enabled: {result.success}")
+print(f"Set liquid alpha enabled: {result}")
 
 # Set alpha_values as a list of integers passed to "value" parameter in this order: alpha_low, alpha_high
 result = sudo_call_extrinsic(
@@ -123,14 +121,15 @@ result = sudo_call_extrinsic(
     wallet=wallet,
     call_function="sudo_set_alpha_values",
     call_params={
-        "netuid": <your_preferred_netuid>,
+        "netuid": 2,
         "alpha_low": 6553,  # 0.1 in fixed-point
         "alpha_high": 53083  # 0.8 in fixed-point
     },
-    call_module="AdminUtils",
-    root_call=True
+    call_module="AdminUtils"
 )
-print(f"Set alpha values: {result.success}")
+print(f"Set alpha values: {result}")
+
+print(subtensor.get_subnet_hyperparameters(netuid=2))
 ```
 
 ### Example Python code
@@ -149,10 +148,9 @@ result = sudo_call_extrinsic(
     wallet=wallet,
     call_function="sudo_set_liquid_alpha_enabled",
     call_params={"netuid": 2, "enabled": True},
-    call_module="AdminUtils",
-    root_call=True
+    call_module="AdminUtils"
 )
-print(f"Set liquid alpha enabled: {result.success}")
+print(result)
 
 # Set alpha values as subnet owner
 result = sudo_call_extrinsic(
@@ -164,10 +162,9 @@ result = sudo_call_extrinsic(
         "alpha_low": 6553,
         "alpha_high": 53083
     },
-    call_module="AdminUtils",
-    root_call=True
+    call_module="AdminUtils"
 )
-print(f"Set alpha values: {result.success}")
+print(result)
 ```
 
 :::danger you must always set alpha_low and alpha_high together

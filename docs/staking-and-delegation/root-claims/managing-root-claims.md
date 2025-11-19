@@ -81,12 +81,9 @@ async def main():
             wait_for_finalization=True
         )
 
-        if response.success:
-            print(f"✅ Successfully set root claim type to 'Keep'")
-            if response.extrinsic_receipt:
-                print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
-        else:
-            print(f"❌ Failed to set root claim type: {response.message}")
+        print(response)
+        if response.extrinsic_receipt:
+            print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
 
 asyncio.run(main())
 ```
@@ -329,12 +326,9 @@ async def main():
             wait_for_finalization=True
         )
 
-        if response.success:
-            print(f"✅ Successfully claimed root emissions from subnets {netuids}")
-            if response.extrinsic_receipt:
-                print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
-        else:
-            print(f"❌ Failed to claim root emissions: {response.message}")
+        print(response)
+        if response.extrinsic_receipt:
+            print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
 
 asyncio.run(main())
 ```

@@ -93,15 +93,13 @@ Use the sudo extrinsic to increase the mechanism count to 2 for your subnet owne
 
 ```python
 # Increase mechanism count to 2
-ok, err = sudo_set_mechanism_count_extrinsic(
+response = sudo_set_mechanism_count_extrinsic(
     subtensor=subtensor,
     wallet=wallet,
     netuid=netuid,
     mech_count=2,
 )
-print("Set mech count success:", ok)
-if not ok:
-    print("Error:", err)
+print(response)
 
 # Verify the change
 new_count = subtensor.get_mechanism_count(netuid=netuid)
@@ -126,16 +124,14 @@ split:
 ```python
 new_split = [60, 40]
 
-ok, err = sudo_set_mechanism_emission_split_extrinsic(
+response = sudo_set_mechanism_emission_split_extrinsic(
     subtensor=subtensor,
     wallet=wallet,
     netuid=netuid,
     maybe_split=new_split,
 )
 
-print("Update success:", ok)
-if not ok:
-    print("Error:", err)
+print(response)
 ```
 
 ```text

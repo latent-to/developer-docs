@@ -150,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../core/chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../core/config/index.html">bittensor.core.config</a></li>
@@ -411,9 +412,9 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.commitments"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.commitments</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.compose_call"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.compose_call</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.config"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.config</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.crowdloans"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.crowdloans</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.delegates"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.delegates</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.determine_block_hash"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.determine_block_hash</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.encode_params"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.encode_params</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.extrinsics"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.extrinsics</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.help"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.help</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.initialize"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.initialize</span></code></a></li>
@@ -423,6 +424,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.metagraphs"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.metagraphs</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.network"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.network</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.neurons"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.neurons</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.proxies"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.proxies</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.queries"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.queries</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.setup_config"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.setup_config</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.sign_and_send_extrinsic"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.sign_and_send_extrinsic</span></code></a></li>
@@ -455,10 +457,12 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="chain/index.html">bittensor.extras.subtensor_api.chain</a></li>
 <li class="toctree-l1"><a class="reference internal" href="commitments/index.html">bittensor.extras.subtensor_api.commitments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crowdloans/index.html">bittensor.extras.subtensor_api.crowdloans</a></li>
 <li class="toctree-l1"><a class="reference internal" href="delegates/index.html">bittensor.extras.subtensor_api.delegates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extrinsics/index.html">bittensor.extras.subtensor_api.extrinsics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="metagraphs/index.html">bittensor.extras.subtensor_api.metagraphs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="neurons/index.html">bittensor.extras.subtensor_api.neurons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy/index.html">bittensor.extras.subtensor_api.proxy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="queries/index.html">bittensor.extras.subtensor_api.queries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="staking/index.html">bittensor.extras.subtensor_api.staking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="subnets/index.html">bittensor.extras.subtensor_api.subnets</a></li>
@@ -579,6 +583,12 @@ print(subtensor.block)</p>
 <dd></dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.SubtensorApi.crowdloans">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">crowdloans</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.SubtensorApi.crowdloans" title="Link to this definition">#</a></dt>
+<dd><p>Property to access crowdloans methods.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="bittensor.extras.subtensor_api.SubtensorApi.delegates">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delegates</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.SubtensorApi.delegates" title="Link to this definition">#</a></dt>
 <dd><p>Property to access delegates methods.</p>
@@ -587,11 +597,6 @@ print(subtensor.block)</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.extras.subtensor_api.SubtensorApi.determine_block_hash">
 <span class="sig-name descname"><span class="pre">determine_block_hash</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.SubtensorApi.determine_block_hash" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.SubtensorApi.encode_params">
-<span class="sig-name descname"><span class="pre">encode_params</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.SubtensorApi.encode_params" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -640,6 +645,12 @@ print(subtensor.block)</p>
 <dt class="sig sig-object py" id="bittensor.extras.subtensor_api.SubtensorApi.neurons">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">neurons</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.SubtensorApi.neurons" title="Link to this definition">#</a></dt>
 <dd><p>Property to access neurons methods.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.SubtensorApi.proxies">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">proxies</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.SubtensorApi.proxies" title="Link to this definition">#</a></dt>
+<dd><p>Property to access subtensor proxy methods.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -754,9 +765,9 @@ print(subtensor.block)</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.commitments"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.commitments</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.compose_call"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.compose_call</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.config"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.config</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.crowdloans"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.crowdloans</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.delegates"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.delegates</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.determine_block_hash"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.determine_block_hash</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.encode_params"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.encode_params</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.extrinsics"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.extrinsics</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.help"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.help</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.initialize"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.initialize</span></code></a></li>
@@ -766,6 +777,7 @@ print(subtensor.block)</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.metagraphs"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.metagraphs</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.network"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.network</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.neurons"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.neurons</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.proxies"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.proxies</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.queries"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.queries</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.setup_config"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.setup_config</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.SubtensorApi.sign_and_send_extrinsic"><code class="docutils literal notranslate"><span class="pre">SubtensorApi.sign_and_send_extrinsic</span></code></a></li>

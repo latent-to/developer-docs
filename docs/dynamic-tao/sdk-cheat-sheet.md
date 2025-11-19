@@ -231,43 +231,66 @@ Parameters:
 #### `add_stake`
 
 ```python
-async add_stake(
+add_stake(
     wallet,
-    hotkey: str,
     netuid: int,
-    tao_amount: Union[float, bittensor.Balance, int]
-)
+    hotkey_ss58: str,
+    amount: bittensor.Balance,
+    safe_staking: bool = False,
+    allow_partial_stake: bool = False,
+    rate_tolerance: float = 0.005,
+    wait_for_inclusion: bool = True,
+    wait_for_finalization: bool = True
+) -> ExtrinsicResponse
 ```
 
-Description: Adds (stakes) an amount of TAO (tao_amount) to a specific subnet (netuid) under the provided hotkey.
+Description: Adds (stakes) an amount of TAO to a specific subnet (netuid) under the provided hotkey.
 
 Parameters:
 
 - wallet: Your Bittensor wallet object.
-- hotkey: The SS58 address (hotkey) to be staked.
 - netuid: Unique ID of the subnet on which you want to stake.
-- tao_amount: Amount to stake, can be a float, integer, or bittensor.Balance object.
+- hotkey_ss58: The SS58 address (hotkey) to be staked.
+- amount: Amount to stake as a `bittensor.Balance` object (required).
+- safe_staking: Enable price protection (default: False).
+- allow_partial_stake: Allow partial execution if price moves (default: False).
+- rate_tolerance: Maximum price deviation tolerance (default: 0.005 = 0.5%).
+- wait_for_inclusion: Wait for transaction inclusion in block (default: True).
+- wait_for_finalization: Wait for transaction finalization (default: True).
+
+Returns: `ExtrinsicResponse` object with `success`, `message`, `extrinsic_fee`, and other transaction details.
 
 #### `unstake`
 
 ```python
 unstake(
     wallet,
-    hotkey: str,
     netuid: int,
-    amount: Union[float, bittensor.Balance, int]
-)
-
+    hotkey_ss58: str,
+    amount: bittensor.Balance,
+    safe_unstaking: bool = False,
+    allow_partial_stake: bool = False,
+    rate_tolerance: float = 0.005,
+    wait_for_inclusion: bool = True,
+    wait_for_finalization: bool = True
+) -> ExtrinsicResponse
 ```
 
-Description: Unstakes amount of TAO from the specified hotkey on a given netuid.
+Description: Unstakes amount of alpha tokens from the specified hotkey on a given netuid, converting them back to TAO.
 
 Parameters:
 
 - wallet: Your Bittensor wallet object.
-- hotkey: The SS58 address (hotkey) from which you want to remove stake.
 - netuid: Unique ID of the subnet.
-- amount: Amount to unstake.
+- hotkey_ss58: The SS58 address (hotkey) from which you want to remove stake.
+- amount: Amount to unstake as a `bittensor.Balance` object with the appropriate unit set (required).
+- safe_unstaking: Enable price protection (default: False).
+- allow_partial_stake: Allow partial execution if price moves (default: False).
+- rate_tolerance: Maximum price deviation tolerance (default: 0.005 = 0.5%).
+- wait_for_inclusion: Wait for transaction inclusion in block (default: True).
+- wait_for_finalization: Wait for transaction finalization (default: True).
+
+Returns: `ExtrinsicResponse` object with `success`, `message`, `extrinsic_fee`, and other transaction details.
 
 #### `get_balance`
 
@@ -309,7 +332,16 @@ Description: Waits for the next block to arrive or waits until a specified block
 Update: we have added proper nonce protection allowing you to run gather operations on stake/unstake/transfers, such as:
 
 ```python
-scatter_stake = await asyncio.gather(*[ sub.add_stake( hotkey, coldkey, netuid, amount ) for netuid in range(64) ] )
+# For async operations
+scatter_stake = await asyncio.gather(*[ 
+    sub.add_stake(
+        wallet=wallet,
+        netuid=netuid,
+        hotkey_ss58=hotkey_ss58,
+        amount=bt.Balance.from_tao(amount)
+    ) 
+    for netuid in range(64) 
+])
 ```
 
 ### Staking
@@ -344,8 +376,8 @@ while total_spend < 3:
             amount=amount_balance,
         )
 
+        print(result)
         if not result.success:
-            print(f"Failed to stake to netuid {netuid}: {result.message}")
             continue
 
         current_stake = sub.get_stake(
@@ -418,6 +450,7 @@ while total_sell < 3:
             amount=alpha_amount,
         )
 
+        print(result)
         if not result.success:
             print(f"Failed to unstake from netuid {netuid}: {result.message}")
             continue
@@ -471,19 +504,21 @@ You can register your hotkey on a subnet using the `burned_register` method. Thi
 burned_register(
     wallet,
     netuid: int,
-) -> bool
+    wait_for_inclusion: bool = True,
+    wait_for_finalization: bool = True
+) -> ExtrinsicResponse
 ```
 
-Description: Registers a hotkey on a subnet.
+Description: Registers a hotkey on a subnet by burning TAO.
 
 Parameters:
 
 - wallet: Your Bittensor wallet object.
 - netuid: Unique ID of the subnet.
+- wait_for_inclusion: Wait for transaction inclusion in block (default: True).
+- wait_for_finalization: Wait for transaction finalization (default: True).
 
-Returns:
-
-- bool: True if the registration was successful, False otherwise.
+Returns: `ExtrinsicResponse` object with `success`, `message`, `extrinsic_fee`, and `data` containing `{"uid": int}` for the assigned neuron UID.
 
 Sample script:
 

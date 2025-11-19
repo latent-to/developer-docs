@@ -392,12 +392,9 @@ async def perform_unstake(subtensor, stake, amount):
             wallet, hotkey_ss58=stake.hotkey_ss58, netuid=stake.netuid, amount=amount
         )
         elapsed = time.time() - start
-        if result:
-            print(f"✅ Successfully unstaked {amount} from {stake.hotkey_ss58} on subnet {stake.netuid} in {elapsed:.2f}s")
-            return True
-        else:
-            print(f"❌ Failed to unstake from {stake.hotkey_ss58} on subnet {stake.netuid}")
-            return False
+        print(result)
+        print(f"Time elapsed: {elapsed:.2f}s")
+        return result.success
     except Exception as e:
         print(f"❌ Error during unstake from {stake.hotkey_ss58} on subnet {stake.netuid}: {e}")
         return False
@@ -566,7 +563,7 @@ Decrypting...
 
 ## Move stake
 
-This stake moves stake from one delegate to another.
+This operation moves stake from one delegate to another.
 
 ```python
 import asyncio
@@ -589,10 +586,7 @@ async def main():
             wait_for_inclusion = True,
             wait_for_finalization = False,
         )
-        if result:
-            print("Stake was successfully moved!")
-        else:
-            print("Failed to move stake.")
+        print(result)
 # Because move_stake is asynchronous, we run it in an event loop:
 asyncio.run(main())
 

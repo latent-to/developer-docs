@@ -300,10 +300,7 @@ def demonstrate_protection_modes():
             safe_staking=False  # No protection
         )
 
-        if response.success:
-            print("✅ Unsafe staking successful")
-        else:
-            print("❌ Unsafe staking failed")
+        print(response)
 
     except Exception as e:
         print(f"❌ Unsafe staking failed: {e}")
@@ -338,8 +335,9 @@ def demonstrate_protection_modes():
             allow_partial_stake=False
         )
 
+        print(response)
+        
         if response.success:
-            print("❌ UNEXPECTED: Safe staking succeeded despite strict tolerance")
             # Check if it should have failed
             post_subnet_info = subtensor.subnet(netuid=netuid)
             post_safe_price = post_subnet_info.price.tao
@@ -351,8 +349,6 @@ def demonstrate_protection_modes():
             else:
                 print(f"Price stayed within tolerance: {post_safe_price:.6f} ≤ {price_ceiling:.6f}")
                 print(f"Actual price increase: {((post_safe_price - pre_safe_price) / pre_safe_price) * 100:.3f}%")
-        else:
-            print("✅ EXPECTED: Safe staking failed due to strict tolerance")
 
     except Exception as e:
         if "Price exceeded tolerance limit" in str(e) or "exceeded tolerance" in str(e) or "tolerance" in str(e).lower():
@@ -387,10 +383,7 @@ def demonstrate_protection_modes():
             allow_partial_stake=False
         )
 
-        if response.success:
-            print("✅ Safe staking successful with reasonable tolerance")
-        else:
-            print("❌ Safe staking failed")
+        print(response)
 
     except Exception as e:
         print(f"❌ Safe staking failed: {e}")
@@ -428,8 +421,9 @@ def demonstrate_protection_modes():
         balance_after = subtensor.get_balance(wallet.coldkey.ss58_address)
         actual_amount_executed = balance_before.tao - balance_after.tao
 
+        print(response)
+        
         if response.success:
-            print("✅ Partial staking completed")
             print(f"Amount requested: {very_large_amount} TAO")
             print(f"Amount actually executed: {actual_amount_executed:.3f} TAO")
             execution_percentage = (actual_amount_executed / very_large_amount) * 100
@@ -439,8 +433,6 @@ def demonstrate_protection_modes():
                 print(f"🎯 SUCCESS: PARTIAL execution detected! Only {execution_percentage:.1f}% executed due to price protection")
             else:
                 print(f"🤔 Unexpected: Near-full execution despite strict tolerance")
-        else:
-            print("❌ Partial staking failed completely")
 
     except Exception as e:
         print(f"❌ Partial staking failed: {e}")
@@ -485,10 +477,7 @@ def demonstrate_protection_modes():
                 allow_partial_stake=False
             )
 
-            if response.success:
-                print("✅ Protected unstaking successful")
-            else:
-                print("❌ Protected unstaking failed")
+            print(response)
 
         except Exception as e:
             if "Price exceeded tolerance limit" in str(e) or "exceeded tolerance" in str(e):
