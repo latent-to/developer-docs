@@ -2,7 +2,7 @@
 title: "Consensus-based Weights/Liquid alpha"
 ---
 
-# Consensus-based Weights
+# Consensus-based Weights/Liquid Alpha
 
 This guide describes how to use the **consensus-based weights** feature (also called "liquid alpha").
 
@@ -45,11 +45,9 @@ Using the new subnet hyperparameters that are described below, a subnet owner sh
 
 The consensus-based weights feature is available in Bittensor 7.3.0 and later versions. To use this feature, make sure you update to the `7.3.0` version.
 
----
-
 ## Using test consensus-based weights feature
 
-### Summary steps
+### Steps
 
 Here are summary steps to use the consensus-based weights feature. A subnet owner typically executes these steps:
 
@@ -59,10 +57,6 @@ Here are summary steps to use the consensus-based weights feature. A subnet own
 :::danger Set alpha low and high together
 You must set `alpha_low` and `alpha_high` together using `alpha_values`. See below.
 :::
-
----
-
-## Default values, allowed ranges and value format
 
 ### Default values
 
@@ -91,91 +85,8 @@ Hence, for example:
 - If you want `alpha_low` to be `0.1`, then you would pass `6554`, which is the rounded up value of `0.1 * 65535`.
 - If you want `alpha_high` to be `0.8`, then you would pass `52428`, which is the value of `0.8 * 65535`.
 
----
 
-## Detailed steps using Python code
-
-### Method signatures
-
-See below the Python definitions for the consensus-based weights feature:
-
-```python
-
-import bittensor as bt
-from bittensor.core.extrinsics.utils import sudo_call_extrinsic
-
-subtensor = bt.Subtensor('local')
-# Enable consensus-based weights (liquid alpha) feature
-result = sudo_call_extrinsic(
-    subtensor=subtensor,
-    wallet=wallet,
-    call_function="sudo_set_liquid_alpha_enabled",
-    call_params={"netuid": 2, "enabled": True},
-    call_module="AdminUtils"
-)
-print(f"Set liquid alpha enabled: {result}")
-
-# Set alpha_values as a list of integers passed to "value" parameter in this order: alpha_low, alpha_high
-result = sudo_call_extrinsic(
-    subtensor=subtensor,
-    wallet=wallet,
-    call_function="sudo_set_alpha_values",
-    call_params={
-        "netuid": 2,
-        "alpha_low": 6553,  # 0.1 in fixed-point
-        "alpha_high": 53083  # 0.8 in fixed-point
-    },
-    call_module="AdminUtils"
-)
-print(f"Set alpha values: {result}")
-
-print(subtensor.get_subnet_hyperparameters(netuid=2))
-```
-
-### Example Python code
-
-Below is the example Python code showing how to use the above definitions for the Commit Reveal feature:
-
-```python
-import bittensor as bt
-from bittensor.core.extrinsics.utils import sudo_call_extrinsic
-
-wallet = bt.Wallet(name="test-coldkey")
-subtensor = bt.Subtensor(network="127.0.0.1:9946")
-
-result = sudo_call_extrinsic(
-    subtensor=subtensor,
-    wallet=wallet,
-    call_function="sudo_set_liquid_alpha_enabled",
-    call_params={"netuid": 2, "enabled": True},
-    call_module="AdminUtils"
-)
-print(result)
-
-# Set alpha values as subnet owner
-result = sudo_call_extrinsic(
-    subtensor=subtensor,
-    wallet=wallet,
-    call_function="sudo_set_alpha_values",
-    call_params={
-        "netuid": 2,
-        "alpha_low": 6553,
-        "alpha_high": 53083
-    },
-    call_module="AdminUtils"
-)
-print(result)
-```
-
-:::danger you must always set alpha_low and alpha_high together
-You must set the values for both `alpha_low` and `alpha_high` together. Current functionality does not allow setting a value to only one of `alpha_low` or `alpha_high`.
-
-For example, if you want to set a new value to `alpha_low` but do not want to change the `alpha_high` value, you must pass the new value of `alpha_low`, and also the current, unchanging value of `alpha_high`, while setting the `alpha_values`.
-:::
-
----
-
-## Detailed steps using `btcli`
+## Using `btcli`
 
 ### Set the subnet hyperparameters
 
@@ -252,3 +163,48 @@ Use the current value of `alpha_low` from the above display and the new desired 
 ```bash
 btcli sudo set --netuid 1 --param alpha_values --value 6554,55706
 ```
+
+
+## Using Bittensor Python SDK
+
+
+Below is example Python code showing how to use the Commit Reveal feature:
+
+```python
+import bittensor as bt
+from bittensor.core.extrinsics.utils import sudo_call_extrinsic
+
+wallet = bt.Wallet(name="test-coldkey")
+subtensor = bt.Subtensor(network="127.0.0.1:9946")
+
+result = sudo_call_extrinsic(
+    subtensor=subtensor,
+    wallet=wallet,
+    call_function="sudo_set_liquid_alpha_enabled",
+    call_params={"netuid": 2, "enabled": True},
+    call_module="AdminUtils"
+)
+print(result)
+
+# Set alpha values as subnet owner
+result = sudo_call_extrinsic(
+    subtensor=subtensor,
+    wallet=wallet,
+    call_function="sudo_set_alpha_values",
+    call_params={
+        "netuid": 2,
+        "alpha_low": 6553,
+        "alpha_high": 53083
+    },
+    call_module="AdminUtils"
+)
+print(result)
+```
+
+:::danger you must always set alpha_low and alpha_high together
+You must set the values for both `alpha_low` and `alpha_high` together. Current functionality does not allow setting a value to only one of `alpha_low` or `alpha_high`.
+
+For example, if you want to set a new value to `alpha_low` but do not want to change the `alpha_high` value, you must pass the new value of `alpha_low`, and also the current, unchanging value of `alpha_high`, while setting the `alpha_values`.
+:::
+
+
