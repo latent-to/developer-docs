@@ -69,11 +69,10 @@ The flow-based model uses an Exponential Moving Average (EMA) of net TAO flows (
 1. **Track net flows**: Each block, record TAO inflows from staking and outflows from unstaking:
    $$\text{net\_flow}_i = \sum \text{TAO staked} - \sum \text{TAO unstaked}$$
 
-2. **Calculate EMA**: Update the 30-day EMA of net flows (smoothing factor $\alpha \approx 0.000003209$):
+2. **Calculate EMA**: Update the 86.8-day EMA of net flows (smoothing factor $\alpha \approx 0.000003209$):
    $$S_i = (1 - \alpha) \cdot S_{i-1} + \alpha \cdot \text{net\_flow}_i$$
    
-   The EMA smooths out short-term fluctuations. With a very small α (~0.000003209), the EMA changes slowly—99.9997% comes from the previous EMA value and only 0.0003% from the current block's flow. This creates a 30-day half-life, meaning it takes about 30 days for the EMA to move halfway toward a new sustained flow level.
-   This results in an EMA window (duration over which old values still affect the running EMA) of approximately ~86.8 days.
+   The EMA smooths out short-term fluctuations. With a very small α (~0.000003209), the EMA changes slowly 99.9999968% comes from the previous EMA value and only 0.0000032% from the current block's flow. This creates a 30-day half-life, meaning it takes about 30 days for the EMA to move halfway toward a new sustained flow level. This results in an EMA window of approximately ~86.8 days.
 
 3. **Apply offset and clipping**: Calculate offset flows by subtracting the lower limit $L$:
    $$z_i = \max(S_i - L, 0)$$
