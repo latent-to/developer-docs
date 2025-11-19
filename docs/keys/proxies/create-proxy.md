@@ -62,6 +62,10 @@ else:
 
 ```
 
+:::info
+The proxy type can be provided either by importing and using the ProxyType enum or by passing the proxy type as a string.
+:::
+
   </TabItem>
 
 <TabItem value="polkadot-app" label="Polkadot app">
@@ -102,6 +106,8 @@ real_account = bt.Wallet(name="WALLET_NAME")
 proxies, deposit = subtensor.get_proxies_for_real_account(
    real_account_ss58=real_account.coldkey.ss58_address
  )
+
+print(f"Proxies: {proxies}")
 ```
 
   </TabItem>
@@ -164,6 +170,25 @@ if response.success:
 else:
    print(f"✗ Failed: {response.message}")
 ```
+
+:::info Building a call
+
+Before executing a proxy through the SDK, you must first build the inner call that represents the action you want the chain—or proxy—to perform. This can be done by creating a generic call manually (for example using `subtensor.compose_call()`) or by using the SDK’s built-in call builders from the relevant pallet.
+
+To build a call using the SDK call builder, import the relevant pallet class (e.g., `Proxy`, `Balances`, `SubtensorModule`) from `bittensor.core.extrinsics.pallets`, instantiate it with your subtensor instance, then call the method for the extrinsic you need. For example:
+
+```py
+from bittensor.core.extrinsics.pallets import Proxy
+from bittensor.core.extrinsics.pallets import Balances
+
+# using the Proxy pallet class
+Proxy(subtensor).add_proxy(...)
+
+# using the Balances pallet class
+Balances(subtensor).transfer_keep_alive(...)
+```
+
+:::
 
 :::warning
 The delegate account must hold enough funds to cover transaction fees, which are approximately 25 µTAO (0.000025 TAO).
