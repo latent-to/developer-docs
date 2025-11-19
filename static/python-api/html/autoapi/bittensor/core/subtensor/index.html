@@ -1628,13 +1628,11 @@ Each validator can have multiple revealed commitments (up to 10 most recent).</p
 </dl>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY&quot;</span><span class="p">:</span> <span class="p">(</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;Alice message 1&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">152</span><span class="p">,</span> <span class="s2">&quot;Alice message 2&quot;</span><span class="p">)</span> <span class="p">),</span>
+    <span class="s2">&quot;5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty&quot;</span><span class="p">:</span> <span class="p">(</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;Bob message 1&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">147</span><span class="p">,</span> <span class="s2">&quot;Bob message 2&quot;</span><span class="p">)</span> <span class="p">),</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<blockquote>
-<div><p>“5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY”: ( (12, “Alice message 1”), (152, “Alice message 2”) ),
-“5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty”: ( (12, “Bob message 1”), (147, “Bob message 2”) ),</p>
-</div></blockquote>
-<p>}</p>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
 <ul class="simple">
@@ -4934,10 +4932,10 @@ can think of it as an expiration date for the transaction.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p># Commit some data to subnet 1
-success = await subtensor.commit(wallet=my_wallet, netuid=1, data=”Hello Bittensor!”)</p>
-<p># Commit with custom period
-success = await subtensor.commit(wallet=my_wallet, netuid=1, data=”Model update v2.0”, period=100)</p>
+<p># Commit some data to subnet 1</p>
+<p>response = await subtensor.commit(wallet=my_wallet, netuid=1, data=”Hello Bittensor!”)</p>
+<p># Commit with custom period</p>
+<p>response = await subtensor.commit(wallet=my_wallet, netuid=1, data=”Model update v2.0”, period=100)</p>
 </div>
 <p>Note: See &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p>
 </dd></dl>
@@ -5851,10 +5849,8 @@ waits for the next block.</p>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>import bittensor as bt
-subtensor = bt.Subtensor()</p>
-<p>subtensor.wait_for_block() # Waits for the next block
-subtensor.wait_for_block(block=1234) # Waits for a specific block</p>
+<p># Waits for a specific block</p>
+<p>subtensor.wait_for_block(block=1234)</p>
 </div>
 </dd></dl>
 
