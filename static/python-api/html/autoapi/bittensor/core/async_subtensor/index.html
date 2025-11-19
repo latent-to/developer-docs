@@ -650,9 +650,9 @@ validation).</p></li>
 <li><p><strong>TAO</strong>: The base network token; subnet 0 stake is in TAO</p></li>
 <li><p><strong>Alpha</strong>: Subnet-specific token representing some quantity of TAO staked into a subnet.</p></li>
 <li><p><strong>Rao</strong>: Smallest unit of TAO (1 TAO = 1e9 Rao)</p></li>
+<li><p>Bittensor Glossary &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary">https://docs.learnbittensor.org/glossary</a>&gt;</p></li>
+<li><p>Wallets, Coldkeys and Hotkeys in Bittensor &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/wallets">https://docs.learnbittensor.org/keys/wallets</a>&gt;</p></li>
 </ul>
-<p>See: Bittensor Glossary &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary">https://docs.learnbittensor.org/glossary</a>&gt;
-See: Wallets, Coldkeys and Hotkeys in Bittensor &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/wallets">https://docs.learnbittensor.org/keys/wallets</a>&gt;</p>
 </div>
 <p>Initializes an AsyncSubtensor instance for blockchain interaction.</p>
 <dl class="field-list simple">
@@ -787,6 +787,13 @@ You can think of it as an expiration date for the transaction.</p></li>
 <p>This function enables neurons to increase their stake in the network, enhancing their influence and potential.
 When safe_staking is enabled, it provides protection against price fluctuations during the time stake is
 executed and the time it is actually processed by the chain.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Price Protection: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/price-protection">https://docs.learnbittensor.org/learn/price-protection</a>&gt;</p></li>
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits">https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits</a>&gt;</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -816,8 +823,13 @@ can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
 </dd>
 </dl>
-<p>This function is essential for managing stakes across multiple neurons, reflecting the dynamic and collaborative
-nature of the Bittensor network.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Price Protection: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/price-protection">https://docs.learnbittensor.org/learn/price-protection</a>&gt;</p></li>
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits">https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits</a>&gt;</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -909,7 +921,9 @@ subnet.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#epoch">https://docs.learnbittensor.org/glossary#epoch</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#epoch">https://docs.learnbittensor.org/glossary#epoch</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1035,6 +1049,12 @@ can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
 </dd>
 </dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#registration-rate-limits">https://docs.learnbittensor.org/learn/chain-rate-limits#registration-rate-limits</a>&gt;</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -1107,8 +1127,10 @@ collection.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See also: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;
-See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/subnet-hyperparameters">https://docs.learnbittensor.org/subnets/subnet-hyperparameters</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p></li>
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/subnet-hyperparameters">https://docs.learnbittensor.org/subnets/subnet-hyperparameters</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1147,7 +1169,10 @@ You can think of it as an expiration date for the transaction.</p></li>
 point in time, creating a foundation of transparency and accountability for the Bittensor network.</p>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See also: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p></li>
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#weights-setting-rate-limit">https://docs.learnbittensor.org/learn/chain-rate-limits#weights-setting-rate-limit</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1208,10 +1233,9 @@ to fit the remaining amount. Once the cap is reached, further contributions are 
 <li><p>Contributions can be withdrawn before finalization via <code class="docutils literal notranslate"><span class="pre">withdraw_crowdloan</span></code>.</p></li>
 <li><p>If the campaign does not reach its cap by the end block, contributors can be refunded via <code class="docutils literal notranslate"><span class="pre">refund_crowdloan</span></code>.</p></li>
 <li><p>Contributions are counted toward <code class="docutils literal notranslate"><span class="pre">MaxContributors</span></code> limit per crowdloan.</p></li>
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+<li><p>Crowdloan Tutorial: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-4-contribute-to-the-crowdloan">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-4-contribute-to-the-crowdloan</a>&gt;</p></li>
 </ul>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;
-- Crowdloan Tutorial: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-4-contribute-to-the-crowdloan">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-4-contribute-to-the-crowdloan</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -1251,11 +1275,9 @@ You can think of it as an expiration date for the transaction.</p></li>
 <li><p>Creator cannot update <code class="docutils literal notranslate"><span class="pre">call</span></code> or <code class="docutils literal notranslate"><span class="pre">target_address</span></code> after creation.</p></li>
 <li><p>Creator can update <code class="docutils literal notranslate"><span class="pre">cap</span></code>, <code class="docutils literal notranslate"><span class="pre">end</span></code>, and <code class="docutils literal notranslate"><span class="pre">min_contribution</span></code> before finalization via <code class="docutils literal notranslate"><span class="pre">update_*</span></code> methods.</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">get_crowdloan_next_id</span></code> to determine the ID that will be assigned to the new crowdloan.</p></li>
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+<li><p>Crowdloan Tutorial: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-3-create-a-crowdloan">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-3-create-a-crowdloan</a>&gt;</p></li>
 </ul>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;
-- Crowdloan Tutorial: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-3-create-a-crowdloan">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-3-create-a-crowdloan</a>&gt;
-- Leasing: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle">https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -1332,7 +1354,9 @@ ValueError if the two do not match.</p></li>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#block">https://docs.learnbittensor.org/glossary#block</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#block">https://docs.learnbittensor.org/glossary#block</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1364,10 +1388,11 @@ ValueError if the two do not match.</p></li>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
 <p>Burn registration is much more common on Bittensor subnets currently, compared to POW registration.</p>
-<p>See also:
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/subnet-hyperparameters">https://docs.learnbittensor.org/subnets/subnet-hyperparameters</a>&gt;
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/validators#validator-registration">https://docs.learnbittensor.org/validators#validator-registration</a>&gt;
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/miners#miner-registration">https://docs.learnbittensor.org/miners#miner-registration</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/subnet-hyperparameters">https://docs.learnbittensor.org/subnets/subnet-hyperparameters</a>&gt;</p></li>
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/validators#validator-registration">https://docs.learnbittensor.org/validators#validator-registration</a>&gt;</p></li>
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/miners#miner-registration">https://docs.learnbittensor.org/miners#miner-registration</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1404,10 +1429,9 @@ block).</p>
 <li><p>All non-creator contributors must be refunded first via <code class="docutils literal notranslate"><span class="pre">refund_crowdloan</span></code>.</p></li>
 <li><p>The creator’s deposit (and any remaining contribution above deposit) is returned.</p></li>
 <li><p>After dissolution, the crowdloan is permanently removed from chain storage.</p></li>
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+<li><p>Refund and Dissolve: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#alternative-path-refund-and-dissolve">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#alternative-path-refund-and-dissolve</a>&gt;</p></li>
 </ul>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;
-- Refund and Dissolve: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#alternative-path-refund-and-dissolve">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#alternative-path-refund-and-dissolve</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -1438,7 +1462,9 @@ for unused hotkeys. This method returns <code class="docutils literal notranslat
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#hotkey">https://docs.learnbittensor.org/glossary#hotkey</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#hotkey">https://docs.learnbittensor.org/glossary#hotkey</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1502,11 +1528,10 @@ and contributor shares are recorded for emissions.</p>
 <li><p>Finalization requires <code class="docutils literal notranslate"><span class="pre">raised</span> <span class="pre">==</span> <span class="pre">cap</span></code> and <code class="docutils literal notranslate"><span class="pre">current_block</span> <span class="pre">&gt;=</span> <span class="pre">end</span></code>.</p></li>
 <li><p>For subnet leases, emissions are swapped to TAO and distributed to contributors’ coldkeys during the lease.</p></li>
 <li><p>Leftover cap (after subnet lock + proxy deposit) is refunded to contributors pro-rata.</p></li>
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+<li><p>Crowdloan Tutorial: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-5-finalize-the-crowdloan">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-5-finalize-the-crowdloan</a>&gt;</p></li>
+<li><p>Emissions Distribution: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#emissions-distribution-during-a-lease">https://docs.learnbittensor.org/subnets/crowdloans#emissions-distribution-during-a-lease</a>&gt;</p></li>
 </ul>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;
-- Crowdloan Tutorial: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-5-finalize-the-crowdloan">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-5-finalize-the-crowdloan</a>&gt;
-- Emissions Distribution: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#emissions-distribution-during-a-lease">https://docs.learnbittensor.org/subnets/crowdloans#emissions-distribution-during-a-lease</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -1535,7 +1560,9 @@ administrative actions right before validators submit weights at the epoch bound
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#administrative-freeze-window">https://docs.learnbittensor.org/learn/chain-rate-limits#administrative-freeze-window</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#administrative-freeze-window">https://docs.learnbittensor.org/learn/chain-rate-limits#administrative-freeze-window</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1627,7 +1654,9 @@ Subnet 0 (root network) does not have an EMA TAO flow value.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See also: See &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#metagraph">https://docs.learnbittensor.org/glossary#metagraph</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#metagraph">https://docs.learnbittensor.org/glossary#metagraph</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1655,8 +1684,8 @@ that have registered certificates.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>This method is used for certificate discovery to establish mutual TLS communication between neurons.</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/neuron-tls-certificates">https://docs.learnbittensor.org/subnets/neuron-tls-certificates</a>&gt;</p>
+<p>This method is used for certificate discovery to establish mutual TLS communication between neurons.
+- &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/neuron-tls-certificates">https://docs.learnbittensor.org/subnets/neuron-tls-certificates</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -1691,8 +1720,9 @@ Each validator can have multiple revealed commitments (up to 10 most recent).</p
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See also:
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1767,7 +1797,9 @@ its diversity and scale.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/miners/autostaking">https://docs.learnbittensor.org/miners/autostaking</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/miners/autostaking">https://docs.learnbittensor.org/miners/autostaking</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1843,7 +1875,9 @@ trustworthiness of the blockchain.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See also: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#block">https://docs.learnbittensor.org/glossary#block</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#block">https://docs.learnbittensor.org/glossary#block</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1920,7 +1954,9 @@ distribution.</p>
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/validators/child-hotkeys">https://docs.learnbittensor.org/validators/child-hotkeys</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/validators/child-hotkeys">https://docs.learnbittensor.org/validators/child-hotkeys</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1956,7 +1992,9 @@ approval or in a cooldown period. These are children that have been proposed but
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/validators/child-hotkeys">https://docs.learnbittensor.org/validators/child-hotkeys</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/validators/child-hotkeys">https://docs.learnbittensor.org/validators/child-hotkeys</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -1988,7 +2026,9 @@ the commit-reveal mechanism for secure weight setting and other network operatio
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2040,8 +2080,9 @@ Returns <code class="docutils literal notranslate"><span class="pre">None</span>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p>
+<ul class="simple">
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2079,8 +2120,9 @@ Otherwise, all known constants defined in <cite>CrowdloanConstants.field_names()
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
 <p>These constants enforce contribution floors, duration bounds, and refund batching limits.</p>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p>
+<ul class="simple">
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2109,9 +2151,10 @@ Returns empty dictionary if the crowdloan has no contributions or does not exist
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
 <p>Contributions are clipped to the remaining cap. Once the cap is reached, no further contributions are accepted.</p>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;
-- Crowdloan Tutorial: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-4-contribute-to-the-crowdloan">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-4-contribute-to-the-crowdloan</a>&gt;</p>
+<ul class="simple">
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+<li><p>Crowdloan Tutorial: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-4-contribute-to-the-crowdloan">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#step-4-contribute-to-the-crowdloan</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2138,9 +2181,10 @@ assigned to the next crowdloan created via <code class="docutils literal notrans
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;
-- Crowdloan Tutorial: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#get-the-crowdloan-id">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#get-the-crowdloan-id</a>&gt;</p>
+<ul class="simple">
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+<li><p>Crowdloan Tutorial: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#get-the-crowdloan-id">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#get-the-crowdloan-id</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2170,9 +2214,10 @@ Returns empty list if no crowdloans exist.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;
-- Crowdloan Lifecycle: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle">https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle</a>&gt;</p>
+<ul class="simple">
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+<li><p>Crowdloan Lifecycle: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle">https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2180,9 +2225,7 @@ Returns empty list if no crowdloans exist.</p>
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.get_current_block">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_current_block</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.get_current_block"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_current_block" title="Link to this definition">#</a></dt>
 <dd><p>Returns the current block number on the Bittensor blockchain.</p>
-<p>This function provides the latest block number, indicating the most recent state of the blockchain. Knowing
-the current block number is essential for querying real-time data and performing time-sensitive operations on
-the blockchain. It serves as a reference point for network activities and data synchronization.</p>
+<p>This function provides the latest block number, indicating the most recent state of the blockchain.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The current chain block number.</p>
@@ -2193,7 +2236,9 @@ the blockchain. It serves as a reference point for network activities and data s
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See also: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#block">https://docs.learnbittensor.org/glossary#block</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#block">https://docs.learnbittensor.org/glossary#block</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2222,11 +2267,10 @@ distribution.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>This function is essential for understanding the roles and influence of delegate neurons within the Bittensor
-network’s consensus and governance structures.</p>
-<p>See also:
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#delegate">https://docs.learnbittensor.org/glossary#delegate</a>&gt;
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#nominator">https://docs.learnbittensor.org/glossary#nominator</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#delegate">https://docs.learnbittensor.org/glossary#delegate</a>&gt;</p></li>
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#nominator">https://docs.learnbittensor.org/glossary#nominator</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2255,7 +2299,9 @@ and other metadata they have set.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/delegation">https://docs.learnbittensor.org/staking-and-delegation/delegation</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/delegation">https://docs.learnbittensor.org/staking-and-delegation/delegation</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2283,7 +2329,9 @@ percentage of rewards that the delegate claims from its nominators’ stakes.</p
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/delegation">https://docs.learnbittensor.org/staking-and-delegation/delegation</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/delegation">https://docs.learnbittensor.org/staking-and-delegation/delegation</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2314,7 +2362,9 @@ delegations exist for the coldkey.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/delegation">https://docs.learnbittensor.org/staking-and-delegation/delegation</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/delegation">https://docs.learnbittensor.org/staking-and-delegation/delegation</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2344,7 +2394,9 @@ delegates are registered.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/delegation">https://docs.learnbittensor.org/staking-and-delegation/delegation</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/delegation">https://docs.learnbittensor.org/staking-and-delegation/delegation</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2407,7 +2459,9 @@ blockchain bloat from dust accounts.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#existential-deposit">https://docs.learnbittensor.org/glossary#existential-deposit</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#existential-deposit">https://docs.learnbittensor.org/glossary#existential-deposit</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2445,7 +2499,7 @@ blockchain. The fee is returned in Rao (the smallest unit of TAO, where 1 TAO = 
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
 <p>To create the GenericCall object, use the <code class="docutils literal notranslate"><span class="pre">compose_call</span></code> method with proper parameters.
-See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/fees">https://docs.learnbittensor.org/learn/fees</a>&gt;</p>
+- &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/fees">https://docs.learnbittensor.org/learn/fees</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -2473,10 +2527,11 @@ specified block hash, it returns <code class="docutils literal notranslate"><spa
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See also:
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#hotkey">https://docs.learnbittensor.org/glossary#hotkey</a>&gt;
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#subnet">https://docs.learnbittensor.org/glossary#subnet</a>&gt;
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#neuron">https://docs.learnbittensor.org/glossary#neuron</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#hotkey">https://docs.learnbittensor.org/glossary#hotkey</a>&gt;</p></li>
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#subnet">https://docs.learnbittensor.org/glossary#subnet</a>&gt;</p></li>
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#neuron">https://docs.learnbittensor.org/glossary#neuron</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2512,7 +2567,9 @@ by parameter (int, float, bool, or Balance).</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/subnet-hyperparameters">https://docs.learnbittensor.org/subnets/subnet-hyperparameters</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/subnet-hyperparameters">https://docs.learnbittensor.org/subnets/subnet-hyperparameters</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2586,9 +2643,10 @@ Calculates associated fee rewards based on current global and tick-level fee dat
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See also:
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/liquidity-positions/">https://docs.learnbittensor.org/liquidity-positions/</a>
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/liquidity-positions/managing-liquidity-positions">https://docs.learnbittensor.org/liquidity-positions/managing-liquidity-positions</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/liquidity-positions/">https://docs.learnbittensor.org/liquidity-positions/</a></p></li>
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/liquidity-positions/managing-liquidity-positions">https://docs.learnbittensor.org/liquidity-positions/managing-liquidity-positions</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2614,7 +2672,9 @@ Calculates associated fee rewards based on current global and tick-level fee dat
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/understanding-multiple-mech-subnets">https://docs.learnbittensor.org/subnets/understanding-multiple-mech-subnets</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/understanding-multiple-mech-subnets">https://docs.learnbittensor.org/subnets/understanding-multiple-mech-subnets</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2641,7 +2701,9 @@ whole numbers). Returns None if emission is evenly split or if the data is unava
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/understanding-multiple-mech-subnets">https://docs.learnbittensor.org/subnets/understanding-multiple-mech-subnets</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/understanding-multiple-mech-subnets">https://docs.learnbittensor.org/subnets/understanding-multiple-mech-subnets</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2694,8 +2756,9 @@ If not provided, all available fields will be returned.</p></li>
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See also:
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/metagraph">https://docs.learnbittensor.org/subnets/metagraph</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/metagraph">https://docs.learnbittensor.org/subnets/metagraph</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2736,8 +2799,9 @@ specific subnets within the Bittensor network where the neuron associated with t
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See also:
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#hotkey">https://docs.learnbittensor.org/glossary#hotkey</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#hotkey">https://docs.learnbittensor.org/glossary#hotkey</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2819,7 +2883,9 @@ tempo (i.e., blocks per epoch). The result is the block number at which the next
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See also: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#tempo">https://docs.learnbittensor.org/glossary#tempo</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#tempo">https://docs.learnbittensor.org/glossary#tempo</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2870,9 +2936,10 @@ storage function to get the children and formats them before returning as a tupl
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See also:
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/validators/child-hotkeys">https://docs.learnbittensor.org/validators/child-hotkeys</a>&gt;
-- <cite>get_children()</cite> for retrieving child keys</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/validators/child-hotkeys">https://docs.learnbittensor.org/validators/child-hotkeys</a>&gt;</p></li>
+<li><p><cite>get_children()</cite> for retrieving child keys</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -3074,7 +3141,9 @@ block.</p>
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -3103,7 +3172,9 @@ block.</p>
 <p># TODO: add example to clarify return ordering and units; &#64;roman can you help w this?
 .. admonition:: Notes</p>
 <blockquote>
-<div><p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p>
+<div><ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p></li>
+</ul>
 </div></blockquote>
 </dd></dl>
 
@@ -3133,7 +3204,9 @@ block.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/root-claims">https://docs.learnbittensor.org/staking-and-delegation/root-claims</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/root-claims">https://docs.learnbittensor.org/staking-and-delegation/root-claims</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -3286,7 +3359,9 @@ or reuse_block</p></li>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/fees">https://docs.learnbittensor.org/learn/fees</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/fees">https://docs.learnbittensor.org/learn/fees</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -3383,7 +3458,9 @@ or reuse_block</p></li>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/fees">https://docs.learnbittensor.org/learn/fees</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/fees">https://docs.learnbittensor.org/learn/fees</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -3585,7 +3662,9 @@ in the commit-reveal mechanism.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -3646,7 +3725,7 @@ via <cite>WeightCommitInfo</cite>.</p>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
 <p>The list may be empty if there are no commits found.
-See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#commit-reveal">https://docs.learnbittensor.org/resources/glossary#commit-reveal</a>&gt;</p>
+- &lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#commit-reveal">https://docs.learnbittensor.org/resources/glossary#commit-reveal</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -3676,7 +3755,9 @@ milliseconds (Unix timestamp in milliseconds), which is automatically converted 
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#block">https://docs.learnbittensor.org/resources/glossary#block</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#block">https://docs.learnbittensor.org/resources/glossary#block</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -3731,10 +3812,9 @@ deposit) or not.</p></li>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>Estimating the transfer fee is essential for planning and executing token transactions, ensuring that the
-wallet has sufficient funds to cover both the transfer amount and the associated costs. This function provides
-a crucial tool for managing financial operations within the Bittensor network.</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/fees">https://docs.learnbittensor.org/learn/fees</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/fees">https://docs.learnbittensor.org/learn/fees</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -3786,7 +3866,9 @@ governance activities on a particular subnet.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/fees">https://docs.learnbittensor.org/learn/fees</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/fees">https://docs.learnbittensor.org/learn/fees</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -3884,7 +3966,9 @@ transaction timing and network synchronization.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#fast-blocks">https://docs.learnbittensor.org/resources/glossary#fast-blocks</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#fast-blocks">https://docs.learnbittensor.org/resources/glossary#fast-blocks</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -3965,7 +4049,6 @@ and incentive distribution based on its registration status.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
 </dd>
 </dl>
-<p>This function is essential for determining the network-wide presence and participation of a neuron.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -3993,7 +4076,9 @@ and incentive distribution based on its registration status.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#hotkey">https://docs.learnbittensor.org/glossary#hotkey</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#hotkey">https://docs.learnbittensor.org/glossary#hotkey</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -4047,7 +4132,9 @@ may exist but not be active until the subnet owner calls <code class="docutils l
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/working-with-subnets">https://docs.learnbittensor.org/subnets/working-with-subnets</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/working-with-subnets">https://docs.learnbittensor.org/subnets/working-with-subnets</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -4125,7 +4212,9 @@ timing for weight reveals.</p>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#drandtime-lock-encryption">https://docs.learnbittensor.org/resources/glossary#drandtime-lock-encryption</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#drandtime-lock-encryption">https://docs.learnbittensor.org/resources/glossary#drandtime-lock-encryption</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -4301,6 +4390,13 @@ can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
 </dd>
 </dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Price Protection: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/price-protection">https://docs.learnbittensor.org/learn/price-protection</a>&gt;</p></li>
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits">https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits</a>&gt;</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -4711,8 +4807,6 @@ that is effectively recycled within the Bittensor network.</p>
 <dd class="field-odd"><p>Optional[<a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance">bittensor.utils.balance.Balance</a>]</p>
 </dd>
 </dl>
-<p>Understanding the ‘Burn’ rate is essential for analyzing the network registration usage, particularly how it is
-correlated with user activity and the overall cost of participation in a given subnet.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -4743,10 +4837,11 @@ refunded; the creator’s deposit remains until dissolution via <code class="doc
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;
-- Crowdloan Lifecycle: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle">https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle</a>&gt;
-- Refund and Dissolve: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#alternative-path-refund-and-dissolve">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#alternative-path-refund-and-dissolve</a>&gt;</p>
+<ul class="simple">
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+<li><p>Crowdloan Lifecycle: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle">https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle</a>&gt;</p></li>
+<li><p>Refund and Dissolve: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#alternative-path-refund-and-dissolve">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#alternative-path-refund-and-dissolve</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -4787,6 +4882,12 @@ can think of it as an expiration date for the transaction.</p></li>
 </dl>
 <p>This function facilitates the entry of new neurons into the network, supporting the decentralized growth and
 scalability of the Bittensor ecosystem.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#registration-rate-limits">https://docs.learnbittensor.org/learn/chain-rate-limits#registration-rate-limits</a>&gt;</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -4812,6 +4913,12 @@ You can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
 </dd>
 </dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#network-registration-rate-limit">https://docs.learnbittensor.org/learn/chain-rate-limits#network-registration-rate-limit</a>&gt;</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -5024,7 +5131,10 @@ can think of it as an expiration date for the transaction.</p></li>
 accountability within the Bittensor network.</p>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See also: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p></li>
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#weights-setting-rate-limit">https://docs.learnbittensor.org/learn/chain-rate-limits#weights-setting-rate-limit</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -5051,6 +5161,12 @@ can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
 </dd>
 </dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#registration-rate-limits">https://docs.learnbittensor.org/learn/chain-rate-limits#registration-rate-limits</a>&gt;</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -5115,6 +5231,12 @@ the external IP and port that were registered.</p>
 <dd class="field-odd"><p><a class="reference internal" href="../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">bittensor.core.types.ExtrinsicResponse</a></p>
 </dd>
 </dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#serving-rate-limits">https://docs.learnbittensor.org/learn/chain-rate-limits#serving-rate-limits</a>&gt;</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -5190,6 +5312,12 @@ and be rejected. You can think of it as an expiration date for the transaction.<
 </ul>
 </dd>
 </dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#child-hotkey-operations-rate-limit">https://docs.learnbittensor.org/learn/chain-rate-limits#child-hotkey-operations-rate-limit</a>&gt;</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -5217,8 +5345,10 @@ wait_for_finalization: Whether to wait for the finalization of the transaction.<
 </dd>
 <dt>Notes:</dt><dd><p>The data is automatically encoded as bytes before submission. There may be size limits on metadata
 payloads enforced by the chain.</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#commit-reveal">https://docs.learnbittensor.org/resources/glossary#commit-reveal</a>&gt;
-See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/concepts/commit-reveal">https://docs.learnbittensor.org/concepts/commit-reveal</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#commit-reveal">https://docs.learnbittensor.org/resources/glossary#commit-reveal</a>&gt;</p></li>
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/concepts/commit-reveal">https://docs.learnbittensor.org/concepts/commit-reveal</a>&gt;</p></li>
+</ul>
 </dd>
 </dl>
 </div></blockquote>
@@ -5280,6 +5410,12 @@ with the hotkey account.</p></li>
 </dl>
 <p>The delegate take is a critical parameter in the network’s incentive structure, influencing the distribution of
 rewards among neurons and their nominators.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#delegate-take-rate-limit">https://docs.learnbittensor.org/learn/chain-rate-limits#delegate-take-rate-limit</a>&gt;</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -5318,9 +5454,11 @@ wait_for_finalization: Whether to wait for the finalization of the transaction.<
 </dd>
 <dt>Notes:</dt><dd><p>A commitment can be set once per subnet epoch and is reset at the next epoch automatically. The timelock
 encryption ensures the data cannot be revealed before the specified drand round.</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#commit-reveal">https://docs.learnbittensor.org/resources/glossary#commit-reveal</a>&gt;
-See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#drandtime-lock-encryption">https://docs.learnbittensor.org/resources/glossary#drandtime-lock-encryption</a>&gt;
-See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/concepts/commit-reveal">https://docs.learnbittensor.org/concepts/commit-reveal</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#commit-reveal">https://docs.learnbittensor.org/resources/glossary#commit-reveal</a>&gt;</p></li>
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#drandtime-lock-encryption">https://docs.learnbittensor.org/resources/glossary#drandtime-lock-encryption</a>&gt;</p></li>
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/concepts/commit-reveal">https://docs.learnbittensor.org/concepts/commit-reveal</a>&gt;</p></li>
+</ul>
 </dd>
 </dl>
 </dd>
@@ -5453,9 +5591,11 @@ transaction is not included in a block within that number of blocks, it will exp
 <p class="admonition-title">Notes</p>
 <p>This function is crucial in the Yuma Consensus mechanism, where each validator’s weight vector contributes
 to the overall weight matrix used to calculate emissions and maintain network consensus.</p>
-<p>See:
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#yuma-consensus">https://docs.learnbittensor.org/resources/glossary#yuma-consensus</a>&gt;
-- &lt;<a class="reference external" href="https://docs.learnbittensor.org/concepts/commit-reveal">https://docs.learnbittensor.org/concepts/commit-reveal</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#yuma-consensus">https://docs.learnbittensor.org/resources/glossary#yuma-consensus</a>&gt;</p></li>
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/concepts/commit-reveal">https://docs.learnbittensor.org/concepts/commit-reveal</a>&gt;</p></li>
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#weights-setting-rate-limit">https://docs.learnbittensor.org/learn/chain-rate-limits#weights-setting-rate-limit</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -5536,10 +5676,9 @@ representing the swap fees and output amounts.</p>
 <li><p><strong>Alpha</strong>: Subnet-specific stake token (dynamic TAO)</p></li>
 <li><p><strong>TAO</strong>: Base network token; subnet 0 uses TAO directly</p></li>
 <li><p>The returned fees do NOT include the extrinsic transaction fee</p></li>
+<li><p>Transaction Fees: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/fees">https://docs.learnbittensor.org/learn/fees</a>&gt;</p></li>
+<li><p>Glossary: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary">https://docs.learnbittensor.org/glossary</a>&gt;</p></li>
 </ul>
-<p>See:
-- Transaction Fees: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/fees">https://docs.learnbittensor.org/learn/fees</a>&gt;
-- Glossary: &lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary">https://docs.learnbittensor.org/glossary</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -5573,7 +5712,9 @@ transaction is not included in a block within that number of blocks, it will exp
 <p class="admonition-title">Notes</p>
 <p>Only the subnet owner can call this method. After successful execution, the subnet becomes active and
 eligible for TAO emissions.</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/create-a-subnet">https://docs.learnbittensor.org/subnets/create-a-subnet</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/create-a-subnet">https://docs.learnbittensor.org/subnets/create-a-subnet</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -5731,8 +5872,10 @@ When <code class="docutils literal notranslate"><span class="pre">safe_swapping<
 <ul class="simple">
 <li><p>With <code class="docutils literal notranslate"><span class="pre">allow_partial_stake=True</span></code>: A partial amount will be swapped up to the point where the price ratio
 would increase by <code class="docutils literal notranslate"><span class="pre">rate_tolerance</span></code>.</p></li>
+<li><p>Price Protection: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/price-protection">https://docs.learnbittensor.org/learn/price-protection</a>&gt;</p></li>
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits">https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits</a>&gt;</p></li>
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/navigating-subtensor/swap-stake">https://docs.learnbittensor.org/navigating-subtensor/swap-stake</a>&gt;</p></li>
 </ul>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/navigating-subtensor/swap-stake">https://docs.learnbittensor.org/navigating-subtensor/swap-stake</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -5791,7 +5934,9 @@ transaction is not included in a block within that number of blocks, it will exp
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
 <p>Only the subnet owner can execute this call successfully.</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/liquidity-positions/liquidity-positions">https://docs.learnbittensor.org/liquidity-positions/liquidity-positions</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/liquidity-positions/liquidity-positions">https://docs.learnbittensor.org/liquidity-positions/liquidity-positions</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -5835,8 +5980,10 @@ transaction is not included in a block within that number of blocks, it will exp
 <p class="admonition-title">Notes</p>
 <p>The existential deposit is the minimum balance required to keep an account alive on the chain. Use
 <cite>get_existential_deposit()</cite> to query the current value.</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#existential-deposit">https://docs.learnbittensor.org/resources/glossary#existential-deposit</a>&gt;
-See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#transfer">https://docs.learnbittensor.org/resources/glossary#transfer</a>&gt;</p>
+<ul class="simple">
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#existential-deposit">https://docs.learnbittensor.org/resources/glossary#existential-deposit</a>&gt;</p></li>
+<li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/resources/glossary#transfer">https://docs.learnbittensor.org/resources/glossary#transfer</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -5868,6 +6015,13 @@ You can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
 </dd>
 </dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Price Protection: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/price-protection">https://docs.learnbittensor.org/learn/price-protection</a>&gt;</p></li>
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits">https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits</a>&gt;</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -5931,6 +6085,13 @@ You can think of it as an expiration date for the transaction.</p></li>
 </dl>
 <p>This function supports flexible stake management, allowing neurons to adjust their network participation and
 potential reward accruals.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Price Protection: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/price-protection">https://docs.learnbittensor.org/learn/price-protection</a>&gt;</p></li>
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits">https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits</a>&gt;</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -6005,10 +6166,12 @@ transaction is not included in a block within that number of blocks, it will exp
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See:
-- Slippage: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/slippage">https://docs.learnbittensor.org/learn/slippage</a>&gt;
-- Price Protection: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/price-protection">https://docs.learnbittensor.org/learn/price-protection</a>&gt;
-- Managing Stake with SDK: &lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/managing-stake-sdk">https://docs.learnbittensor.org/staking-and-delegation/managing-stake-sdk</a>&gt;</p>
+<ul class="simple">
+<li><p>Slippage: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/slippage">https://docs.learnbittensor.org/learn/slippage</a>&gt;</p></li>
+<li><p>Price Protection: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/price-protection">https://docs.learnbittensor.org/learn/price-protection</a>&gt;</p></li>
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits">https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits</a>&gt;</p></li>
+<li><p>Managing Stake with SDK: &lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/managing-stake-sdk">https://docs.learnbittensor.org/staking-and-delegation/managing-stake-sdk</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -6042,10 +6205,12 @@ You can think of it as an expiration date for the transaction.</p></li>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See:
-- Slippage: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/slippage">https://docs.learnbittensor.org/learn/slippage</a>&gt;
-- Price Protection: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/price-protection">https://docs.learnbittensor.org/learn/price-protection</a>&gt;
-- Managing Stake with SDK: &lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/managing-stake-sdk">https://docs.learnbittensor.org/staking-and-delegation/managing-stake-sdk</a>&gt;</p>
+<ul class="simple">
+<li><p>Slippage: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/slippage">https://docs.learnbittensor.org/learn/slippage</a>&gt;</p></li>
+<li><p>Price Protection: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/price-protection">https://docs.learnbittensor.org/learn/price-protection</a>&gt;</p></li>
+<li><p>Rate Limits: &lt;<a class="reference external" href="https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits">https://docs.learnbittensor.org/learn/chain-rate-limits#staking-operations-rate-limits</a>&gt;</p></li>
+<li><p>Managing Stake with SDK: &lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/managing-stake-sdk">https://docs.learnbittensor.org/staking-and-delegation/managing-stake-sdk</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -6081,10 +6246,9 @@ on contributor feedback or changing subnet costs.</p>
 <li><p>Only the creator can update the cap.</p></li>
 <li><p>The crowdloan must not be finalized.</p></li>
 <li><p>The new cap must be <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code> the total funds already raised.</p></li>
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+<li><p>Update Parameters: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle">https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle</a>&gt;</p></li>
 </ul>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;
-- Update Parameters: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle">https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -6122,10 +6286,9 @@ sufficient contributions.</p>
 <li><p>Only the creator can update the end block.</p></li>
 <li><p>The crowdloan must not be finalized.</p></li>
 <li><p>The new end block must respect duration bounds (<code class="docutils literal notranslate"><span class="pre">MinimumBlockDuration</span></code> to <code class="docutils literal notranslate"><span class="pre">MaximumBlockDuration</span></code>).</p></li>
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+<li><p>Update Parameters: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle">https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle</a>&gt;</p></li>
 </ul>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;
-- Update Parameters: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle">https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -6161,10 +6324,9 @@ requirements based on the number of expected contributors or campaign strategy.<
 <li><p>Only the creator can update the minimum contribution.</p></li>
 <li><p>The crowdloan must not be finalized.</p></li>
 <li><p>The new minimum must be <code class="docutils literal notranslate"><span class="pre">&gt;=</span> <span class="pre">AbsoluteMinimumContribution</span></code> (check via <code class="docutils literal notranslate"><span class="pre">get_crowdloan_constants</span></code>).</p></li>
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+<li><p>Update Parameters: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle">https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle</a>&gt;</p></li>
 </ul>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;
-- Update Parameters: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle">https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -6307,10 +6469,11 @@ transaction fails.</p></li>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See:
-- Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;
-- Crowdloan Lifecycle: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle">https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle</a>&gt;
-- Withdraw: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#optional-withdraw">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#optional-withdraw</a>&gt;</p>
+<ul class="simple">
+<li><p>Crowdloans Overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans">https://docs.learnbittensor.org/subnets/crowdloans</a>&gt;</p></li>
+<li><p>Crowdloan Lifecycle: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle">https://docs.learnbittensor.org/subnets/crowdloans#crowdloan-lifecycle</a>&gt;</p></li>
+<li><p>Withdraw: &lt;<a class="reference external" href="https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#optional-withdraw">https://docs.learnbittensor.org/subnets/crowdloans/crowdloans-tutorial#optional-withdraw</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
