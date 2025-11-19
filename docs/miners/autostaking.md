@@ -164,14 +164,14 @@ async def main():
         netuid = 2  # subnet to configure
         hotkey_ss58 = "5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM"  # validator hotkey to auto-stake to
 
-        success, msg = await subtensor.set_auto_stake(
+        response = await subtensor.set_auto_stake(
             wallet=wallet,
             netuid=netuid,
             hotkey_ss58=hotkey_ss58,
             wait_for_inclusion=True,
             wait_for_finalization=False,
         )
-        print("Success" if success else f"Failed: {msg}")
+        print(response)
 
 asyncio.run(main())
 ```
