@@ -89,8 +89,8 @@ else:
 
 :::tip
 
-- Record the block number and extrinsic index where the pure proxy was created. These values are required to kill the proxy.
-- The proxy type can be provided either by importing and using the ProxyType enum or by passing the proxy type as a string.
+- Record the block number and extrinsic index where the pure proxy was created. These values are required to kill the proxy. You can also retrieve the block height and extrinsic details by searching your transaction on the [Tao.app block explorer](https://www.tao.app/blocks).
+- The proxy type can be provided either by importing and using the `ProxyType` enum or by passing the proxy type as a string.
   :::
 
 </TabItem>
@@ -224,6 +224,8 @@ Ensure the pure proxy account holds enough funds to cover both the transfer and 
 ---
 
 ## Kill a pure proxy
+
+Killing a pure proxy requires the proxy account address, the spawner account, and the proxy's complete creation details—the block height, extrinsic index, and disambiguation index. Once executed, the pure proxy is permanently removed, and any funds remaining in the proxy account are lost.
 
 Pure proxies are killed using the `killPure` extrinsic as shown. See [source code: `killPure` implementation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L380-L406):
 

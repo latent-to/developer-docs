@@ -63,7 +63,7 @@ else:
 ```
 
 :::info
-The proxy type can be provided either by importing and using the ProxyType enum or by passing the proxy type as a string.
+The proxy type can be provided either by importing and using the `ProxyType` enum or by passing the proxy type as a string.
 :::
 
   </TabItem>
