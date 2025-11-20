@@ -127,6 +127,8 @@ Importing the proxy account makes it selectable in the Polkadot-JS web app UI.
 
 ---
 
+Creating a pure proxy adds the spawner account as the first delegate for that proxy. Additional delegates can also be added by [registering new proxy entries](create-proxy.md#add-a-proxy) from the pure proxy account, each specifying the delegate account, proxy type, etc.
+
 ## Executing calls via a pure proxy
 
 When executing a pure proxy, the proxy account initiates the transaction, but it is signed and authorized by the spawner account. In practice, the proxy account is treated as the _real account_ during execution.
@@ -256,9 +258,9 @@ response = subtensor.kill_pure_proxy(
     pure_proxy_ss58=proxy_address,
     spawner=spawner_address.coldkeypub.ss58_address,  # Valid only when the spawner account signs the extrinsic
     proxy_type=proxy_type,
-    index=index,
-    height=height,
-    ext_index=ext_index,
+    index=index,    # the disambiguation index
+    height=height,    # the block height where the proxy was created
+    ext_index=ext_index,  # the extrinsic index of the `Proxy.PureCreated` transaction
 )
 
 if response.success:
