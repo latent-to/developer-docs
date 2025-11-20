@@ -257,13 +257,13 @@ btcli stake remove
 ```
 
 You'll see a confirmation screen showing:
+
 - The amount you're unstaking (in alpha)
 - The current exchange rate
 - How much TAO you'll receive
 - The slippage percentage
 
 ```console
-Key!):
 Enter the hotkey name or ss58 address to unstake from (or Press Enter to view existing staked hotkeys):
 Using the wallet path from config: /Users/michaeltrestman/.bittensor/wallets
 Using the specified network test from config
@@ -366,7 +366,6 @@ Total expected return: 252.0030 τ
 
 Do you want to proceed with unstaking everything? [y/n]:
 ```
-
 
 ## Transferring stake
 

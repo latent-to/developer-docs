@@ -94,6 +94,11 @@ The SDK uses `False` if the variable is not set.
 Specifies the directory path for storing log files.
 The SDK uses `bittensor.core.settings.MINERS_DIR` if the variable is not set.
 
+### `BT_LOGGING_ENABLE_THIRD_PARTY_LOGGERS`
+
+When set to `true` or `1`, enables third-party loggers.<br/>
+The SDK logger always acts as the primary logger. Whether enabled or not, messages from third-party loggers are still filtered according to the SDK’s configured logging level.
+
 ## PriorityThreadPoolExecutor
 
 ### `BT_PRIORITY_MAX_WORKERS`

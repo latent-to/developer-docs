@@ -17,7 +17,7 @@ Always double-check the package name and origin before installation. Use links a
 
 ## Supported Python versions
 
-- bittensor (SDK): Python 3.10-3.13 (reference: https://github.com/opentensor/bittensor/blob/master/pyproject.toml#L14)
+- bittensor (SDK): Python 3.10-3.15 (reference: https://github.com/opentensor/bittensor/blob/master/pyproject.toml#L14)
 - bittensor-cli: Python 3.9-3.13 (reference: https://github.com/opentensor/btcli/blob/main/pyproject.toml#L15 )
 - bittensor-wallet: Python 3.9-3.13 (reference: https://github.com/opentensor/btwallet/blob/main/pyproject.toml#L11)
 
