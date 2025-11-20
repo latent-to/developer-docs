@@ -896,18 +896,16 @@ restricts what operations the proxy can perform.</p>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
 <ul class="simple">
-<li><p>The permissions described above may change over time as the Subtensor runtime evolves. For the most up-to-date</p></li>
-</ul>
-<dl class="simple">
-<dt>and authoritative information about proxy type permissions, refer to the Subtensor source code at:</dt><dd><p>&lt;<a class="github reference external" href="https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs">opentensor/subtensor</a>&gt;
+<li><p>The permissions described above may change over time as the Subtensor runtime evolves. For the most up-to-date
+and authoritative information about proxy type permissions, refer to the Subtensor source code at:
+&lt;<a class="github reference external" href="https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs">opentensor/subtensor</a>&gt;
 Specifically, look for the <code class="docutils literal notranslate"><span class="pre">impl</span> <span class="pre">InstanceFilter&lt;RuntimeCall&gt;</span> <span class="pre">for</span> <span class="pre">ProxyType</span></code> implementation which defines the
-exact filtering logic for each proxy type.</p>
-</dd>
-</dl>
-<ul class="simple">
+exact filtering logic for each proxy type.</p></li>
 <li><p>The values match exactly with the ProxyType enum defined in the Subtensor runtime. Any changes to the
 runtime enum must be reflected here.</p></li>
-<li><p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies">https://docs.learnbittensor.org/keys/proxies</a>&gt;</p></li>
+<li><p>Proxy overview: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies">https://docs.learnbittensor.org/keys/proxies</a>&gt;</p></li>
+<li><p>Creating and managing proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
+<li><p>Pure proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/pure-proxies">https://docs.learnbittensor.org/keys/proxies/pure-proxies</a>&gt;</p></li>
 </ul>
 </div>
 <p>Initialize self.  See help(type(self)) for accurate signature.</p>

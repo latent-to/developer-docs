@@ -724,10 +724,13 @@ can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>A deposit is required when adding a proxy. The deposit amount is determined by runtime constants and is
-returned when the proxy is removed. Use <cite>get_proxy_constants()</cite> to check current deposit requirements.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>A deposit is required when adding a proxy. The deposit amount is determined by runtime constants and is
+returned when the proxy is removed. Use <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.get_proxy_constants" title="bittensor.core.subtensor.Subtensor.get_proxy_constants"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_proxy_constants()</span></code></a> to check current deposit requirements.</p></li>
+<li><p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -837,8 +840,8 @@ a subnet, or None if the query fails.</p>
 <span class="sig-name descname"><span class="pre">announce_proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_account_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_PERIOD</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.subtensor.Subtensor.announce_proxy" title="Link to this definition">#</a></dt>
 <dd><p>Announces a future call that will be executed through a proxy.</p>
 <p>This method allows a proxy account to declare its intention to execute a specific call on behalf of a real
-account after a delay period. The real account can review and either approve (via <cite>proxy_announced()</cite>) or reject
-(via <cite>reject_proxy_announcement()</cite>) the announcement.</p>
+account after a delay period. The real account can review and either approve (via <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.proxy_announced" title="bittensor.core.subtensor.Subtensor.proxy_announced"><code class="xref py py-meth docutils literal notranslate"><span class="pre">proxy_announced()</span></code></a>) or reject
+(via <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.reject_proxy_announcement" title="bittensor.core.subtensor.Subtensor.reject_proxy_announcement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reject_proxy_announcement()</span></code></a>) the announcement.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -860,10 +863,13 @@ can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>A deposit is required when making an announcement. The deposit is returned when the announcement is
-executed, rejected, or removed. The announcement can be executed after the delay period has passed.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>A deposit is required when making an announcement. The deposit is returned when the announcement is</p></li>
+</ul>
+<p>executed, rejected, or removed. The announcement can be executed after the delay period has passed.
+- See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies">https://docs.learnbittensor.org/keys/proxies</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -1278,11 +1284,18 @@ can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The pure proxy account address can be extracted from the “PureCreated” event in the response. Store the
-spawner address, proxy_type, index, height, and ext_index as they are required to kill the pure proxy later
-via <cite>kill_pure_proxy()</cite>.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>The pure proxy account address can be extracted from the “PureCreated” event in the response. Store the</p></li>
+</ul>
+<dl class="simple">
+<dt>spawner address, proxy_type, index, height, and ext_index as they are required to kill the pure proxy later</dt><dd><p>via <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.kill_pure_proxy" title="bittensor.core.subtensor.Subtensor.kill_pure_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kill_pure_proxy()</span></code></a>.</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/pure-proxies">https://docs.learnbittensor.org/keys/proxies/pure-proxies</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2053,7 +2066,7 @@ Returns empty dictionary if the crowdloan has no contributions or does not exist
 <span class="sig-name descname"><span class="pre">get_crowdloan_next_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.subtensor.Subtensor.get_crowdloan_next_id" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the next available crowdloan identifier.</p>
 <p>Crowdloan IDs are allocated sequentially starting from 0. This method returns the ID that will be
-assigned to the next crowdloan created via <code class="docutils literal notranslate"><span class="pre">create_crowdloan</span></code>.</p>
+assigned to the next crowdloan created via <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.create_crowdloan" title="bittensor.core.subtensor.Subtensor.create_crowdloan"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_crowdloan()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>block</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The blockchain block number for the query. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, queries the current chain head.</p>
@@ -2747,7 +2760,7 @@ storage function to get the children and formats them before returning as a tupl
 <p class="admonition-title">Notes</p>
 <ul class="simple">
 <li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/validators/child-hotkeys">https://docs.learnbittensor.org/validators/child-hotkeys</a>&gt;</p></li>
-<li><p><cite>get_children()</cite> for retrieving child keys</p></li>
+<li><p><a class="reference internal" href="#bittensor.core.subtensor.Subtensor.get_children" title="bittensor.core.subtensor.Subtensor.get_children"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_children()</span></code></a> for retrieving child keys</p></li>
 </ul>
 </div>
 </dd></dl>
@@ -2773,10 +2786,13 @@ account (delegator) to its list of proxy relationships.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[bittensor.core.chain_data.ProxyInfo]]</p>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This method queries all proxy relationships on the chain, which may be resource-intensive for large
-networks. Consider using <cite>get_proxies_for_real_account()</cite> for querying specific accounts.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>This method queries all proxy relationships on the chain, which may be resource-intensive for large
+networks. Consider using <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.get_proxies_for_real_account" title="bittensor.core.subtensor.Subtensor.get_proxies_for_real_account"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_proxies_for_real_account()</span></code></a> for querying specific accounts.</p></li>
+<li><p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies">https://docs.learnbittensor.org/keys/proxies</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2812,6 +2828,13 @@ where this real account is the delegator. It also returns the deposit amount res
 <dd class="field-odd"><p>Tuple containing</p>
 </dd>
 </dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>If the account has no proxies, returns an empty list and a zero balance.</p></li>
+<li><p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -2839,9 +2862,12 @@ period.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[bittensor.core.chain_data.ProxyAnnouncementInfo]</p>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If the delegate has no announcements, returns an empty list.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>If the delegate has no announcements, returns an empty list.</p></li>
+<li><p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies">https://docs.learnbittensor.org/keys/proxies</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2863,10 +2889,13 @@ Each ProxyAnnouncementInfo contains the real account address, call hash, and blo
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[bittensor.core.chain_data.ProxyAnnouncementInfo]]</p>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This method queries all announcements on the chain, which may be resource-intensive for large networks.
-Consider using <cite>get_proxy_announcement()</cite> for querying specific delegates.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>This method queries all announcements on the chain, which may be resource-intensive for large networks.
+Consider using <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.get_proxy_announcement" title="bittensor.core.subtensor.Subtensor.get_proxy_announcement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_proxy_announcement()</span></code></a> for querying specific delegates.</p></li>
+<li><p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies">https://docs.learnbittensor.org/keys/proxies</a>&gt;</p></li>
+</ul>
 </div>
 </dd></dl>
 
@@ -2899,10 +2928,13 @@ If <cite>as_dict</cite> is True: Dictionary mapping constant names to their valu
 <dd class="field-odd"><p>If <cite>as_dict</cite> is False</p>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>All Balance amounts are returned in RAO. Constants reflect the current chain configuration at the specified
-block.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>All Balance amounts are returned in RAO. Constants reflect the current chain configuration at the specified</p></li>
+</ul>
+<p>block.
+- See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies">https://docs.learnbittensor.org/keys/proxies</a>&gt;</p>
 </div>
 </dd></dl>
 
@@ -3831,19 +3863,19 @@ may exist but not be active until the subnet owner calls <code class="docutils l
 <dt class="sig sig-object py" id="bittensor.core.subtensor.Subtensor.kill_pure_proxy">
 <span class="sig-name descname"><span class="pre">kill_pure_proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pure_proxy_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spawner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_proxy_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ProxyType.Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_PERIOD</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.subtensor.Subtensor.kill_pure_proxy" title="Link to this definition">#</a></dt>
 <dd><p>Kills (removes) a pure proxy account.</p>
-<p>This method removes a pure proxy account that was previously created via <cite>create_pure_proxy()</cite>. The <cite>kill_pure</cite>
+<p>This method removes a pure proxy account that was previously created via <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.create_pure_proxy" title="bittensor.core.subtensor.Subtensor.create_pure_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy()</span></code></a>. The <cite>kill_pure</cite>
 call must be executed through the pure proxy account itself, with the spawner acting as an “Any” proxy. This
-method automatically handles this by executing the call via <cite>proxy()</cite>.</p>
+method automatically handles this by executing the call via <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.proxy" title="bittensor.core.subtensor.Subtensor.proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">proxy()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object. The wallet.coldkey.ss58_address must be the spawner of the pure proxy (the
-account that created it via <cite>create_pure_proxy()</cite>). The spawner must have an “Any” proxy relationship
+account that created it via <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.create_pure_proxy" title="bittensor.core.subtensor.Subtensor.create_pure_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy()</span></code></a>). The spawner must have an “Any” proxy relationship
 with the pure proxy.</p></li>
 <li><p><strong>pure_proxy_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the pure proxy account to be killed. This is the address that was
-returned in the <cite>create_pure_proxy()</cite> response.</p></li>
+returned in the <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.create_pure_proxy" title="bittensor.core.subtensor.Subtensor.create_pure_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy()</span></code></a> response.</p></li>
 <li><p><strong>spawner</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the spawner account (the account that originally created the pure proxy via
-<cite>create_pure_proxy()</cite>). This should match wallet.coldkey.ss58_address.</p></li>
+<a class="reference internal" href="#bittensor.core.subtensor.Subtensor.create_pure_proxy" title="bittensor.core.subtensor.Subtensor.create_pure_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy()</span></code></a>). This should match wallet.coldkey.ss58_address.</p></li>
 <li><p><strong>proxy_type</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>bittensor.core.chain_data.ProxyType</em><em>]</em>) – The type of proxy permissions. Can be a string or ProxyType enum value. Must match the
 proxy_type used when creating the pure proxy.</p></li>
 <li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The disambiguation index originally passed to <cite>create_pure</cite>.</p></li>
@@ -3871,11 +3903,14 @@ can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <cite>kill_pure</cite> call must be executed through the pure proxy account itself, with the spawner acting as an
-“Any” proxy. This method automatically handles this by executing the call via <cite>proxy()</cite>. The spawner must
-have an “Any” proxy relationship with the pure proxy for this to work.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">kill_pure</span></code> call must be executed through the pure proxy account itself, with the spawner acting as
+an <code class="docutils literal notranslate"><span class="pre">Any</span></code> proxy. This method automatically handles this by executing the call via <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.proxy" title="bittensor.core.subtensor.Subtensor.proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">proxy()</span></code></a>. The spawner
+must have an <code class="docutils literal notranslate"><span class="pre">Any</span></code> proxy relationship with the pure proxy for this to work.</p></li>
+<li><p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/pure-proxies">https://docs.learnbittensor.org/keys/proxies/pure-proxies</a>&gt;</p></li>
+</ul>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -4227,7 +4262,7 @@ calls. The delay period must also have passed since the proxy was added.</p>
 <dt class="sig sig-object py" id="bittensor.core.subtensor.Subtensor.proxy_announced">
 <span class="sig-name descname"><span class="pre">proxy_announced</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delegate_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_account_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_proxy_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_PERIOD</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.subtensor.Subtensor.proxy_announced" title="Link to this definition">#</a></dt>
 <dd><p>Executes an announced call on behalf of the real account through a proxy.</p>
-<p>This method executes a call that was previously announced via <cite>announce_proxy()</cite>. The call must match the
+<p>This method executes a call that was previously announced via <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.announce_proxy" title="bittensor.core.subtensor.Subtensor.announce_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">announce_proxy()</span></code></a>. The call must match the
 call_hash that was announced, and the delay period must have passed since the announcement was made. The real
 account has the opportunity to review and reject the announcement before execution.</p>
 <dl class="field-list simple">
@@ -4647,7 +4682,7 @@ You can think of it as an expiration date for the transaction.</p></li>
 <span class="sig-name descname"><span class="pre">remove_proxies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_PERIOD</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.subtensor.Subtensor.remove_proxies" title="Link to this definition">#</a></dt>
 <dd><p>Removes all proxy relationships for the account in a single transaction.</p>
 <p>This method removes all proxy relationships for the signing account in a single call, which is more efficient
-than removing them one by one using <cite>remove_proxy()</cite>. The deposit for all proxies will be returned to the
+than removing them one by one using <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.remove_proxy" title="bittensor.core.subtensor.Subtensor.remove_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_proxy()</span></code></a>. The deposit for all proxies will be returned to the
 account.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -4672,7 +4707,7 @@ can think of it as an expiration date for the transaction.</p></li>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This removes all proxy relationships for the account, regardless of proxy type or delegate. Use
-<cite>remove_proxy()</cite> if you need to remove specific proxy relationships selectively.</p>
+<a class="reference internal" href="#bittensor.core.subtensor.Subtensor.remove_proxy" title="bittensor.core.subtensor.Subtensor.remove_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_proxy()</span></code></a> if you need to remove specific proxy relationships selectively.</p>
 </div>
 </dd></dl>
 
@@ -4681,7 +4716,7 @@ can think of it as an expiration date for the transaction.</p></li>
 <span class="sig-name descname"><span class="pre">remove_proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delegate_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_PERIOD</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.subtensor.Subtensor.remove_proxy" title="Link to this definition">#</a></dt>
 <dd><p>Removes a specific proxy relationship.</p>
 <p>This method removes a single proxy relationship between the real account and a delegate. The parameters must
-exactly match those used when the proxy was added via <cite>add_proxy()</cite>. The deposit for this proxy will be returned
+exactly match those used when the proxy was added via <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.add_proxy" title="bittensor.core.subtensor.Subtensor.add_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_proxy()</span></code></a>. The deposit for this proxy will be returned
 to the account.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -4708,7 +4743,7 @@ can think of it as an expiration date for the transaction.</p></li>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The delegate_ss58, proxy_type, and delay parameters must exactly match those used when the proxy was added.
-Use <cite>get_proxies_for_real_account()</cite> to retrieve the exact parameters for existing proxies.</p>
+Use <a class="reference internal" href="#bittensor.core.subtensor.Subtensor.get_proxies_for_real_account" title="bittensor.core.subtensor.Subtensor.get_proxies_for_real_account"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_proxies_for_real_account()</span></code></a> to retrieve the exact parameters for existing proxies.</p>
 </div>
 </dd></dl>
 
@@ -4743,7 +4778,7 @@ can think of it as an expiration date for the transaction.</p></li>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Only the proxy account that made the announcement can remove it. The real account can reject it via
-<cite>reject_proxy_announcement()</cite>, but cannot remove it directly.</p>
+<a class="reference internal" href="#bittensor.core.subtensor.Subtensor.reject_proxy_announcement" title="bittensor.core.subtensor.Subtensor.reject_proxy_announcement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reject_proxy_announcement()</span></code></a>, but cannot remove it directly.</p>
 </div>
 </dd></dl>
 
