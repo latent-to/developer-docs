@@ -125,8 +125,6 @@ Importing the proxy account makes it selectable in the Polkadot-JS web app UI.
 </TabItem>
 </Tabs>
 
----
-
 Creating a pure proxy adds the spawner account as the first delegate for that proxy. Additional delegates can also be added by [registering new proxy entries](create-proxy.md#add-a-proxy) from the pure proxy account, each specifying the delegate account, proxy type, etc.
 
 ## Executing calls via a pure proxy
