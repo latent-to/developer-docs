@@ -68,8 +68,8 @@ spawner = bt.Wallet(name="WALLET_NAME")
 response = subtensor.create_pure_proxy(
     wallet=spawner,
     proxy_type=ProxyType.Any,
-    delay=0,
-    index=0,
+    delay=0,  # delay in blocks
+    index=0,  # the disambiguation index, leave as zero
 )
 
 if response.success:
@@ -102,7 +102,7 @@ else:
 4. Fill the parameters:
    - `proxyType`: select `Any`; this grants full permissions to the proxy, including the ability to make transfers and kill the proxy.
    - `delay`: optionally, include a delay in blocks.
-   - `index`: leave as zero.
+   - `index`: this is the disambiguation index; leave as zero.
 5. Click **Submit Transaction** and sign with the _delegator_ account.
 
 ### Retrieve and import the proxy account
