@@ -727,11 +727,13 @@ long as the proxy relationship exists.</p>
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object.</p></li>
 <li><p><strong>delegate_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the delegate proxy account.</p></li>
 <li><p><strong>proxy_type</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>bittensor.core.chain_data.ProxyType</em><em>]</em>) – The type of proxy permissions (e.g., “Any”, “NonTransfer”, “Governance”, “Staking”). Can be a
-string or ProxyType enum value.</p></li>
-<li><p><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of blocks that must elapse between announcing and executing a proxied transaction. A delay
-of <code class="docutils literal notranslate"><span class="pre">0</span></code> means the proxy can be used immediately without announcements. A non-zero delay creates a
-time-lock, requiring the proxy to announce calls via <a class="reference internal" href="#bittensor.core.async_subtensor.AsyncSubtensor.announce_proxy" title="bittensor.core.async_subtensor.AsyncSubtensor.announce_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">announce_proxy()</span></code></a> before execution, giving the
-real account time to review and reject unwanted operations via <a class="reference internal" href="#bittensor.core.async_subtensor.AsyncSubtensor.reject_proxy_announcement" title="bittensor.core.async_subtensor.AsyncSubtensor.reject_proxy_announcement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reject_proxy_announcement()</span></code></a>.</p></li>
+string or ProxyType enum value. For available proxy types and their permissions, see the documentation
+link in the Notes section below.</p></li>
+<li><p><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Optionally, include a delay in blocks. The number of blocks that must elapse between announcing and
+executing a proxied transaction. A delay of <code class="docutils literal notranslate"><span class="pre">0</span></code> means the proxy can be used immediately without
+announcements. A non-zero delay creates a time-lock, requiring the proxy to announce calls via
+<a class="reference internal" href="#bittensor.core.async_subtensor.AsyncSubtensor.announce_proxy" title="bittensor.core.async_subtensor.AsyncSubtensor.announce_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">announce_proxy()</span></code></a> before execution, giving the real account time to review and reject unwanted
+operations via <a class="reference internal" href="#bittensor.core.async_subtensor.AsyncSubtensor.reject_proxy_announcement" title="bittensor.core.async_subtensor.AsyncSubtensor.reject_proxy_announcement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reject_proxy_announcement()</span></code></a>.</p></li>
 <li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
 transaction is not included in a block within that number of blocks, it will expire and be rejected. You
 can think of it as an expiration date for the transaction.</p></li>
@@ -752,9 +754,14 @@ can think of it as an expiration date for the transaction.</p></li>
 <ul class="simple">
 <li><p>A deposit is required when adding a proxy. The deposit amount is determined by runtime constants and is
 returned when the proxy is removed. Use <a class="reference internal" href="#bittensor.core.async_subtensor.AsyncSubtensor.get_proxy_constants" title="bittensor.core.async_subtensor.AsyncSubtensor.get_proxy_constants"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_proxy_constants()</span></code></a> to check current deposit requirements.</p></li>
+<li><p>For available proxy types and their specific permissions, see: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies#types-of-proxies">https://docs.learnbittensor.org/keys/proxies#types-of-proxies</a>&gt;</p></li>
 <li><p>Bittensor proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
-<li><p>Polkadot proxy types: &lt;<a class="reference external" href="https://wiki.polkadot.network/docs/learn-proxies#proxy-types">https://wiki.polkadot.network/docs/learn-proxies#proxy-types</a>&gt;</p></li>
 </ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;Any&quot;</span></code> proxy type is dangerous as it grants full permissions to the proxy, including the ability to make
+transfers and manage the account completely. Use with extreme caution.</p>
 </div>
 </dd></dl>
 
@@ -1316,14 +1323,18 @@ pure proxy address is deterministically generated based on the spawner account, 
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object.</p></li>
-<li><p><strong>proxy_type</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>bittensor.core.chain_data.ProxyType</em><em>]</em>) – The type of proxy permissions for the pure proxy. Can be a string or ProxyType enum value.</p></li>
-<li><p><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The number of blocks that must elapse between announcing and executing a proxied transaction. A delay
-of <code class="docutils literal notranslate"><span class="pre">0</span></code> means the pure proxy can be used immediately without any announcement period. A non-zero delay
-creates a time-lock, requiring announcements before execution to give the spawner time to review/reject.</p></li>
-<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – A disambiguation index (u16) that allows creating multiple pure proxies with the same parameters. For
-example, using <code class="docutils literal notranslate"><span class="pre">index=0</span></code> and <code class="docutils literal notranslate"><span class="pre">index=1</span></code> with the same <code class="docutils literal notranslate"><span class="pre">proxy_type</span></code> and <code class="docutils literal notranslate"><span class="pre">delay</span></code> will generate two
-different pure proxy addresses. This allows the spawner to create multiple independent pure proxies. The
-valid range is <code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">65535</span></code>.</p></li>
+<li><p><strong>proxy_type</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>bittensor.core.chain_data.ProxyType</em><em>]</em>) – The type of proxy permissions for the pure proxy. Can be a string or ProxyType enum value. For
+available proxy types and their permissions, see the documentation link in the Notes section below.</p></li>
+<li><p><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Optionally, include a delay in blocks. The number of blocks that must elapse between announcing and
+executing a proxied transaction. A delay of <code class="docutils literal notranslate"><span class="pre">0</span></code> means the pure proxy can be used immediately without any
+announcement period. A non-zero delay creates a time-lock, requiring announcements before execution to give
+the spawner time to review/reject.</p></li>
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – A salt value (u16, range <code class="docutils literal notranslate"><span class="pre">0-65535</span></code>) used to generate unique pure proxy addresses. This should generally
+be left as <code class="docutils literal notranslate"><span class="pre">0</span></code> unless you are creating batches of proxies. When creating multiple pure proxies with
+identical parameters (same <code class="docutils literal notranslate"><span class="pre">proxy_type</span></code> and <code class="docutils literal notranslate"><span class="pre">delay</span></code>), different index values will produce different SS58
+addresses. This is not a sequential counter—you can use any unique values (e.g., 0, 100, 7, 42) in any
+order. The index must be preserved as it’s required for <a class="reference internal" href="#bittensor.core.async_subtensor.AsyncSubtensor.kill_pure_proxy" title="bittensor.core.async_subtensor.AsyncSubtensor.kill_pure_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kill_pure_proxy()</span></code></a>. If creating multiple pure
+proxies in a single batch transaction, each must have a unique index value.</p></li>
 <li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
 transaction is not included in a block within that number of blocks, it will expire and be rejected. You
 can think of it as an expiration date for the transaction.</p></li>
@@ -1345,9 +1356,14 @@ can think of it as an expiration date for the transaction.</p></li>
 <li><p>The pure proxy account address can be extracted from the “PureCreated” event in the response. Store the
 spawner address, proxy_type, index, height, and ext_index as they are required to kill the pure proxy later
 via <a class="reference internal" href="#bittensor.core.async_subtensor.AsyncSubtensor.kill_pure_proxy" title="bittensor.core.async_subtensor.AsyncSubtensor.kill_pure_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kill_pure_proxy()</span></code></a>.</p></li>
+<li><p>For available proxy types and their specific permissions, see: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies#types-of-proxies">https://docs.learnbittensor.org/keys/proxies#types-of-proxies</a>&gt;</p></li>
 <li><p>Bittensor proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/pure-proxies">https://docs.learnbittensor.org/keys/proxies/pure-proxies</a>&gt;</p></li>
-<li><p>Polkadot proxy documentation: &lt;<a class="reference external" href="https://wiki.polkadot.network/docs/learn-proxies">https://wiki.polkadot.network/docs/learn-proxies</a>&gt;</p></li>
 </ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;Any&quot;</span></code> proxy type is dangerous as it grants full permissions to the proxy, including the ability to make
+transfers and kill the proxy. Use with extreme caution.</p>
 </div>
 </dd></dl>
 
@@ -4295,9 +4311,9 @@ returned in the <a class="reference internal" href="#bittensor.core.async_subten
 <a class="reference internal" href="#bittensor.core.async_subtensor.AsyncSubtensor.create_pure_proxy" title="bittensor.core.async_subtensor.AsyncSubtensor.create_pure_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy()</span></code></a>). This should match wallet.coldkey.ss58_address.</p></li>
 <li><p><strong>proxy_type</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>bittensor.core.chain_data.ProxyType</em><em>]</em>) – The type of proxy permissions. Can be a string or ProxyType enum value. Must match the
 proxy_type used when creating the pure proxy.</p></li>
-<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The disambiguation index (u16, range <code class="docutils literal notranslate"><span class="pre">0-65535</span></code>) originally passed to <a class="reference internal" href="#bittensor.core.async_subtensor.AsyncSubtensor.create_pure_proxy" title="bittensor.core.async_subtensor.AsyncSubtensor.create_pure_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy()</span></code></a>. This
-value, combined with <code class="docutils literal notranslate"><span class="pre">proxy_type</span></code>, <code class="docutils literal notranslate"><span class="pre">delay</span></code>, and <code class="docutils literal notranslate"><span class="pre">spawner</span></code>, uniquely identifies the pure proxy to be
-killed. Must match exactly the index used during creation.</p></li>
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The salt value (u16, range <code class="docutils literal notranslate"><span class="pre">0-65535</span></code>) originally used in <a class="reference internal" href="#bittensor.core.async_subtensor.AsyncSubtensor.create_pure_proxy" title="bittensor.core.async_subtensor.AsyncSubtensor.create_pure_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy()</span></code></a> to generate this
+pure proxy’s address. This value, combined with <code class="docutils literal notranslate"><span class="pre">proxy_type</span></code>, <code class="docutils literal notranslate"><span class="pre">delay</span></code>, and <code class="docutils literal notranslate"><span class="pre">spawner</span></code>, uniquely
+identifies the pure proxy to be killed. Must match exactly the index used during creation.</p></li>
 <li><p><strong>height</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The block number at which the pure proxy was created. This is returned in the “PureCreated” event from
 <a class="reference internal" href="#bittensor.core.async_subtensor.AsyncSubtensor.create_pure_proxy" title="bittensor.core.async_subtensor.AsyncSubtensor.create_pure_proxy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy()</span></code></a> and is required to identify the exact creation transaction.</p></li>
 <li><p><strong>ext_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The extrinsic index within the block at which the pure proxy was created. This is returned in the

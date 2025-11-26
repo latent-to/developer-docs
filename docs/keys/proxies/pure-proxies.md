@@ -91,8 +91,8 @@ else:
 :::tip
 
 - Record the block number and extrinsic index where the pure proxy was created. These values are required to kill the proxy. You can also retrieve the block height and extrinsic details by searching your transaction on the [Tao.app block explorer](https://www.tao.app/blocks).
-- The `index` parameter is a disambiguation index (u16, range 0-65535) that allows creating multiple pure proxies with the same `proxy_type` and `delay`. Different index values generate different pure proxy addresses, enabling you to create multiple independent pure proxies.
-- The proxy type can be provided either by importing and using the `ProxyType` enum or by passing the proxy type as a string.
+- The `index` parameter is a disambiguation index/salt value (u16, range 0-65535) used to generate unique pure proxy addresses, used to disambiguate proxies that have identical parameters otherwise. This should generally be left as `0` unless you are creating batches of proxies. When creating multiple pure proxies with identical `proxy_type` and `delay`, different index values will produce different addresses. This is not a sequential counter—you can use any unique values (e.g., 0, 100, 7, 42) in any order. The index must be preserved as it's required for killing the pure proxy later. If creating multiple pure proxies in a single batch transaction, each must have a unique index value.
+- The proxy type can be provided either by importing and using the `ProxyType` enum or by passing the proxy type as a string. For available proxy types and their permissions, see [Proxy Types](https://docs.learnbittensor.org/keys/proxies#types-of-proxies).
   :::
 
 </TabItem>
@@ -103,8 +103,8 @@ else:
 3. Under “submit the following extrinsic”, choose the `proxy` pallet and call `createPure(proxyType, delay, index)`.
 4. Fill the parameters:
    - `proxyType`: select `Any`; this grants full permissions to the proxy, including the ability to make transfers and kill the proxy.
-   - `delay`: the time-lock period in blocks. A delay of `0` means immediate execution. A non-zero value requires announcements before execution.
-   - `index`: disambiguation index (0-65535). Use `0` for the first pure proxy with these parameters, or increment to create additional pure proxies with the same `proxyType` and `delay`.
+   - `delay`: optionally, include a delay in blocks. The time-lock period in blocks. A delay of `0` means immediate execution. A non-zero value requires announcements before execution.
+   - `index`: a disambiguation index/salt value (0-65535) used to generate unique pure proxy addresses. This should generally be left as `0` unless you are creating batches of proxies. When creating multiple pure proxies with the same `proxyType` and `delay`, use different index values to generate different addresses. This is not a sequential counter—you can use any unique values (e.g., 0, 100, 7, 42). The index must be preserved as it's required for killing the pure proxy later.
 5. Click **Submit Transaction** and sign with the _delegator_ account.
 
 ### Retrieve and import the proxy account
@@ -227,7 +227,7 @@ Ensure the pure proxy account holds enough funds to cover both the transfer and 
 
 ## Kill a pure proxy
 
-Killing a pure proxy requires the proxy account address, the spawner account, and the proxy's complete creation details—the block height, extrinsic index, and disambiguation index. Once executed, the pure proxy is permanently removed, and any funds remaining in the proxy account are lost.
+Killing a pure proxy requires the proxy account address, the spawner account, and the proxy's complete creation details—the block height, extrinsic index, and the disambiguation index used during creation. Once executed, the pure proxy is permanently removed, and any funds remaining in the proxy account are lost.
 
 Pure proxies are killed using the `killPure` extrinsic as shown. See [source code: `killPure` implementation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L380-L406):
 
@@ -258,7 +258,7 @@ response = subtensor.kill_pure_proxy(
     pure_proxy_ss58=proxy_address,
     spawner=spawner_address.coldkeypub.ss58_address,  # Valid only when the spawner account signs the extrinsic
     proxy_type=proxy_type,
-    index=index,    # the disambiguation index
+    index=index,    # the disambiguation index/salt value used during creation (must match exactly)
     height=height,    # the block height where the proxy was created
     ext_index=ext_index,  # the extrinsic index of the `Proxy.PureCreated` transaction
 )
@@ -282,8 +282,8 @@ else:
 3. Select the `proxy` pallet and choose `killPure(spawner, proxyType, index, height, extIndex)`.
 4. Fill the parameters:
    - `spawner`: select the account that created the proxy from the UI.
-   - `proxyType`: select the proxy type.
-   - `index`: leave as `0`.
+   - `proxyType`: select the proxy type (must match the value used during creation).
+   - `index`: enter the disambiguation index/salt value used during creation (typically `0` unless you created multiple pure proxies with identical parameters). Must match exactly the index used in `createPure`.
    - `height`: input the block number that the proxy was created at.
    - `extIndex`: input the extrinsic index of the `proxy.PureCreated` event.
 5. Click **Submit Transaction** and sign the transaction from the delegate account.
