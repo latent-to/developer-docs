@@ -499,6 +499,14 @@ can think of it as an expiration date for the transaction.</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="../../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
 </dd>
 </dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">wait_for_inclusion=False</span></code> or when <code class="docutils literal notranslate"><span class="pre">block_hash</span></code> is not available, the extrinsic receipt may not contain
+triggered events. This means that any data that would normally be extracted from blockchain events (such as
+proxy relationship details) will not be available in the response. To ensure complete event data is available,
+either pass <code class="docutils literal notranslate"><span class="pre">wait_for_inclusion=True</span></code> when calling this function, or retrieve the data manually from the
+blockchain using the extrinsic hash.</p>
+</div>
 </dd></dl>
 
 <dl class="py function">

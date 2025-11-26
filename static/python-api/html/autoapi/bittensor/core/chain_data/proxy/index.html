@@ -497,23 +497,27 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.proxy.</span></span><span class="sig-name descname"><span class="pre">ProxyAnnouncementInfo</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo" title="Link to this definition">#</a></dt>
 <dd><p>Dataclass representing proxy announcement information.</p>
 <p>This class contains information about a pending proxy announcement. Announcements are used when a proxy account
-with a delay period (time-lock) wants to declare its intention to execute a call on behalf of the real account.
-The announcement must be made before the actual call can be executed, allowing the real account time to review
-and potentially cancel the operation before it takes effect.</p>
+with a non-zero delay period (time-lock) wants to declare its intention to execute a call on behalf of the real
+account. The announcement must be made before the actual call can be executed, allowing the real account time to
+review and potentially reject the operation via <code class="docutils literal notranslate"><span class="pre">reject_proxy_announcement</span></code> before it takes effect. After the
+delay period passes, the proxy can execute the announced call via <code class="docutils literal notranslate"><span class="pre">proxy_announced</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>real</strong> – The SS58 address of the real account on whose behalf the call will be made.</p></li>
-<li><p><strong>call_hash</strong> – The hash of the call that will be executed in the future (hex string with <code class="docutils literal notranslate"><span class="pre">0x</span></code> prefix).</p></li>
-<li><p><strong>height</strong> – The block height at which the announcement was made.</p></li>
+<li><p><strong>call_hash</strong> – The hash of the call that will be executed in the future (hex string with <code class="docutils literal notranslate"><span class="pre">0x</span></code> prefix). This hash
+must match the actual call when it is executed via <code class="docutils literal notranslate"><span class="pre">proxy_announced</span></code>.</p></li>
+<li><p><strong>height</strong> – The block height at which the announcement was made. The delay period is calculated from this block.</p></li>
 </ul>
 </dd>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>Announcements are required when using delayed proxies, providing an additional security layer for time-locked
-operations.</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies">https://docs.learnbittensor.org/keys/proxies</a>&gt;</p>
+<ul class="simple">
+<li><p>Announcements are required when using delayed proxies (non-zero delay), providing an additional security
+layer for time-locked operations.</p></li>
+<li><p>Bittensor proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies">https://docs.learnbittensor.org/keys/proxies</a>&gt;</p></li>
+</ul>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.call_hash">
@@ -700,17 +704,20 @@ defined by the proxy type and a delay period.</p>
 <li><p><strong>delegate</strong> – The SS58 address of the delegate proxy account that can act on behalf of the real account.</p></li>
 <li><p><strong>proxy_type</strong> – The type of proxy permissions granted to the delegate (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;Any&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;NonTransfer&quot;</span></code>,
 <code class="docutils literal notranslate"><span class="pre">&quot;ChildKeys&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;Staking&quot;</span></code>). This determines what operations the delegate can perform.</p></li>
-<li><p><strong>delay</strong> – The number of blocks that must elapse between announcing a call and executing it. A delay of 0 allows
-immediate execution without announcements. Non-zero delays require the delegate to announce the call first,
-wait for the delay period, then execute it, giving the real account time to review and potentially reject
-the call.</p></li>
+<li><p><strong>delay</strong> – The number of blocks that must elapse between announcing a call and executing it (time-lock period). A
+delay of <code class="docutils literal notranslate"><span class="pre">0</span></code> allows immediate execution without announcements. Non-zero delays require the delegate to
+announce the call first via <code class="docutils literal notranslate"><span class="pre">announce_proxy</span></code>, wait for the delay period to pass, then execute it via
+<code class="docutils literal notranslate"><span class="pre">proxy_announced</span></code>, giving the real account time to review and potentially reject the call via
+<code class="docutils literal notranslate"><span class="pre">reject_proxy_announcement</span></code> before execution.</p></li>
 </ul>
 </dd>
 </dl>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
-<p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies">https://docs.learnbittensor.org/keys/proxies</a>&gt;
-See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p>
+<ul class="simple">
+<li><p>Bittensor proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies">https://docs.learnbittensor.org/keys/proxies</a>&gt;</p></li>
+<li><p>Creating proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
+</ul>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyInfo.delay">

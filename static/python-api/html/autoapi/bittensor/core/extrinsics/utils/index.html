@@ -402,6 +402,7 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.apply_pure_proxy_data"><code class="docutils literal notranslate"><span class="pre">apply_pure_proxy_data()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_old_stakes"><code class="docutils literal notranslate"><span class="pre">get_old_stakes()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_transfer_fn_params"><code class="docutils literal notranslate"><span class="pre">get_transfer_fn_params()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.sudo_call_extrinsic"><code class="docutils literal notranslate"><span class="pre">sudo_call_extrinsic()</span></code></a></li>
@@ -425,13 +426,16 @@
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.get_old_stakes" title="bittensor.core.extrinsics.utils.get_old_stakes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_old_stakes</span></code></a>(wallet, hotkey_ss58s, netuids, all_stakes)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.apply_pure_proxy_data" title="bittensor.core.extrinsics.utils.apply_pure_proxy_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_pure_proxy_data</span></code></a>(response, triggered_events, ...)</p></td>
+<td><p>Apply pure proxy data to the response object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.get_old_stakes" title="bittensor.core.extrinsics.utils.get_old_stakes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_old_stakes</span></code></a>(wallet, hotkey_ss58s, netuids, all_stakes)</p></td>
 <td><p>Retrieve the previous staking balances for a wallet's hotkeys across given netuids.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.get_transfer_fn_params" title="bittensor.core.extrinsics.utils.get_transfer_fn_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_transfer_fn_params</span></code></a>(amount, destination_ss58, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.get_transfer_fn_params" title="bittensor.core.extrinsics.utils.get_transfer_fn_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_transfer_fn_params</span></code></a>(amount, destination_ss58, ...)</p></td>
 <td><p>Helper function to get the transfer call function and call params, depending on the value and keep_alive flag</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.sudo_call_extrinsic" title="bittensor.core.extrinsics.utils.sudo_call_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sudo_call_extrinsic</span></code></a>(subtensor, wallet, call_function, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.sudo_call_extrinsic" title="bittensor.core.extrinsics.utils.sudo_call_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sudo_call_extrinsic</span></code></a>(subtensor, wallet, call_function, ...)</p></td>
 <td><p>Execute a sudo call extrinsic.</p></td>
 </tr>
 </tbody>
@@ -440,6 +444,29 @@
 </section>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.utils.apply_pure_proxy_data">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.utils.</span></span><span class="sig-name descname"><span class="pre">apply_pure_proxy_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">triggered_events</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extrinsic_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.utils.apply_pure_proxy_data" title="Link to this definition">#</a></dt>
+<dd><p>Apply pure proxy data to the response object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>response</strong> (<a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse"><em>bittensor.core.types.ExtrinsicResponse</em></a>) – The response object to update.</p></li>
+<li><p><strong>triggered_events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – The triggered events of the transaction.</p></li>
+<li><p><strong>block_number</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The block number of the transaction.</p></li>
+<li><p><strong>extrinsic_idx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The index of the extrinsic in the transaction.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to raise an error if the data cannot be applied successfully.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the data was applied successfully, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">bittensor.core.types.ExtrinsicResponse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.core.extrinsics.utils.get_old_stakes">
 <span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.utils.</span></span><span class="sig-name descname"><span class="pre">get_old_stakes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey_ss58s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_stakes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bittensor/core/extrinsics/utils.html#get_old_stakes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.extrinsics.utils.get_old_stakes" title="Link to this definition">#</a></dt>
@@ -571,6 +598,7 @@ think of it as an expiration date for the transaction.</p></li>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.apply_pure_proxy_data"><code class="docutils literal notranslate"><span class="pre">apply_pure_proxy_data()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_old_stakes"><code class="docutils literal notranslate"><span class="pre">get_old_stakes()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_transfer_fn_params"><code class="docutils literal notranslate"><span class="pre">get_transfer_fn_params()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.sudo_call_extrinsic"><code class="docutils literal notranslate"><span class="pre">sudo_call_extrinsic()</span></code></a></li>
