@@ -10,11 +10,12 @@ import TabItem from '@theme/TabItem';
 
 This page covers creating a pure proxy and executing a call using a pure proxy.
 
----
 
 Pure proxies are a specialized type of proxy account in Bittensor that provide enhanced security and isolation for complex delegation scenarios. Unlike standard proxies that use existing accounts, pure proxies create new, keyless accounts that can only operate through their delegator relationship.
 
 This page walks you through creating a pure proxy account, executing a transfer through it, and eventually removing it using the Polkadot.js web app. You will set up a new delegate account, add it to your Polkadot.js accounts, and use it to execute transactions on the blockchain.
+
+See also: [Polkadot.js Substrate Proxy Docs](https://wiki.polkadot.com/learn/learn-proxies/)
 
 ## Overview of pure proxies
 
@@ -90,6 +91,7 @@ else:
 :::tip
 
 - Record the block number and extrinsic index where the pure proxy was created. These values are required to kill the proxy. You can also retrieve the block height and extrinsic details by searching your transaction on the [Tao.app block explorer](https://www.tao.app/blocks).
+- The `index` parameter is a disambiguation index (u16, range 0-65535) that allows creating multiple pure proxies with the same `proxy_type` and `delay`. Different index values generate different pure proxy addresses, enabling you to create multiple independent pure proxies.
 - The proxy type can be provided either by importing and using the `ProxyType` enum or by passing the proxy type as a string.
   :::
 
@@ -101,8 +103,8 @@ else:
 3. Under “submit the following extrinsic”, choose the `proxy` pallet and call `createPure(proxyType, delay, index)`.
 4. Fill the parameters:
    - `proxyType`: select `Any`; this grants full permissions to the proxy, including the ability to make transfers and kill the proxy.
-   - `delay`: optionally, include a delay in blocks.
-   - `index`: this is the disambiguation index; leave as zero.
+   - `delay`: the time-lock period in blocks. A delay of `0` means immediate execution. A non-zero value requires announcements before execution.
+   - `index`: disambiguation index (0-65535). Use `0` for the first pure proxy with these parameters, or increment to create additional pure proxies with the same `proxyType` and `delay`.
 5. Click **Submit Transaction** and sign with the _delegator_ account.
 
 ### Retrieve and import the proxy account
@@ -266,6 +268,11 @@ if response.success:
 else:
     print(f"✗ Failed: {response.message}")
 ```
+
+:::info Parameter requirements
+- The `index`, `proxy_type`, and `delay` (from creation) must exactly match those used when creating the pure proxy.
+- `height` and `ext_index` uniquely identify the creation transaction. Together, they specify exactly when and where in the blockchain the pure proxy was created. These values are returned in the `PureCreated` event from `create_pure_proxy()`.
+:::
 
   </TabItem>
 <TabItem value="polkadot-app" label="Polkadot app">

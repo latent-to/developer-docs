@@ -9,7 +9,6 @@ import TabItem from '@theme/TabItem';
 
 This page covers creating a standard proxy and executing a call from the proxy account.
 
----
 
 A standard proxy links a _delegator_ to a known account. The delegator specifies:
 
@@ -75,7 +74,7 @@ The proxy type can be provided either by importing and using the `ProxyType` enu
 4. Fill the parameters:
       - `delegate`: select the imported delegate account from the _Accounts_ dropdown.
       - `proxyType`: select `SmallTransfer`; this should allow us to transfer amounts that do not exceed 0.5τ.
-      - `delay`: optionally, include a delay in blocks.
+      - `delay`: the time-lock period in blocks. A delay of `0` means immediate execution without announcements. A non-zero value requires the delegate to announce calls first and wait for the delay period before execution.
 5. Click **Submit Transaction** and sign with the _delegator_ account.
 
 </TabItem>
@@ -445,7 +444,7 @@ response = subtensor.remove_proxy(
     wallet=real_account,
     delegate_ss58=delegate_address,
     proxy_type=ProxyType.Any,
-    delay=0,
+    delay=0,  # must match the delay value set when the proxy was added
 )
 
 if response.success:
@@ -470,7 +469,7 @@ else:
 </Tabs>
 
 :::info
-The parameters for the proxy being removed must exactly match the proxy type and delay specified when it was added.
+The `delegate_ss58`, `proxy_type`, and `delay` parameters must exactly match those used when the proxy was added. The `delay` parameter is an identifier for the specific proxy relationship, not a delay before removal takes effect (removal is immediate). Use `get_proxies_for_real_account()` to retrieve the exact parameters for existing proxies.
 :::
 
 ### Remove all proxies

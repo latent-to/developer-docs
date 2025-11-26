@@ -4,9 +4,9 @@ title: "Proxies: Overview"
 
 # Proxies: Overview
 
-This page introduces the proxy pattern used in Bittensor and explains how it enables secure delegation of account permissions for specific classes of calls.
+This page introduces the proxy pattern used in Bittensor (and other Substrate-based chains, as it is inherited from the Substrate layer) and explains how it enables secure delegation of account permissions for specific classes of calls.
 
----
+
 
 ## What is a proxy?
 
@@ -15,6 +15,8 @@ A proxy lets one account (the delegator, or "real" account) authorize another ac
 
 The permission scope is determined by the `ProxyType` call filter. This call filter allows the delegator account to set the roles and limitations of the delegate account. Optionally, actions can require an on-chain announcement period—`delay`, giving the delegator time to reject a call made by a delegate.
 
+See also: [Polkadot.js Substrate Proxy Docs](https://wiki.polkadot.com/learn/learn-proxies/)
+
 ## Proxy terminology
 
 The following concepts define how proxy relationships are set up and managed:
@@ -22,7 +24,7 @@ The following concepts define how proxy relationships are set up and managed:
 - **Real account**: The account whose identity and funds are at stake.
 - **Delegate account**: The account with access to tokens in the real account and allowed to perform certain actions for the real account.
 - **ProxyType**: A call filter that restricts which calls can be made by the delegate account.
-- **Delay/announcement**: Optional time window before a proxy action can be executed.
+- **Delay/announcement**: Optional time-lock period (in blocks) before a proxy action can be executed. A delay of `0` means the proxy can be used immediately without announcements. A non-zero delay requires the delegate to announce calls first, wait for the delay period to pass, then execute them, giving the real account time to review and reject unwanted operations.
 
 ## Common use cases
 
