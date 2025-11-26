@@ -81,18 +81,6 @@ The following table shows the available `ProxyType` options and their descriptio
 | `SubnetLeaseBeneficiary` | Allows subnet management and configuration operations: `start_call`, multiple `AdminUtils.sudo_set_*` calls for subnet parameters, network settings, weights, alpha values, etc. |
 | `RootClaim`              | Allows only root claim operations: `claim_root`. |
 
-### Deprecated Proxy Types
-
-The following proxy types are deprecated and should not be used for new proxy configurations:
-
-| `ProxyType`   | Status     | Note                                          |
-| ------------- | ---------- | --------------------------------------------- |
-| `Senate`      | Deprecated | Previously used for senate governance operations |
-| `Triumvirate` | Deprecated | Previously used for triumvirate governance operations |
-| `Governance`  | Deprecated | Previously covered both senate and triumvirate governance operations |
-| `RootWeights` | Deprecated | Previously used for root weight operations |
-
-See [source code: ProxyType enum definition](https://github.com/opentensor/subtensor/blob/main/common/src/lib.rs#L144-L162)
 
 ### Choosing the Right `ProxyType`
 
