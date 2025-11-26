@@ -93,7 +93,11 @@ const sidebars = {
           collapsible: true,
           collapsed: true,
           link: { type: "doc", id: "keys/proxies/index" },
-          items: ["keys/proxies/create-proxy", "keys/proxies/pure-proxies"],
+          items: [
+          "keys/proxies/create-proxy",
+          "keys/proxies/pure-proxies",
+          "keys/proxies/staking-with-proxy"
+          ],
         },
         "keys/multisig",
         "keys/schedule-coldkey-swap",
