@@ -4,6 +4,9 @@ title: "Install Wallet SDK"
 
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 :::warning Install from Verified Sources
 Always double-check the package name and origin before installation. Use links and commands directly from our docs or official release announcements to avoid malicious lookalikes.
 :::
@@ -14,9 +17,9 @@ The Bittensor Wallet SDK is a Python interface for a powerful Rust-based Bittens
 
 ## Supported Python versions
 
-- bittensor (SDK): Python 3.9-3.11 (reference: https://github.com/opentensor/bittensor/blob/master/setup.py#L86-L88)
-- bittensor-cli: Python 3.9-3.12 (reference: https://github.com/opentensor/btcli/blob/main/setup.py#L91-L94 )
-- bittensor-wallet: Python 3.9-3.12 (reference: https://github.com/opentensor/btwallet/blob/main/pyproject.toml#L34-L37)
+- bittensor (SDK): Python 3.19-3.15 (reference: https://github.com/opentensor/bittensor/blob/master/pyproject.toml#L14)
+- bittensor-cli: Python 3.9-3.14 (reference: https://github.com/opentensor/btcli/blob/main/pyproject.toml#L15 )
+- bittensor-wallet: Python 3.9-3.12 (reference: https://github.com/opentensor/btwallet/blob/main/pyproject.toml#L11)
 
 ## Developer reference
 
@@ -26,27 +29,28 @@ For a full developer reference, see the [Bittensor Wallet SDK section](pathname:
 
 ## Compatibility notes
 
-- If you installed either Bittensor SDK version `8.2.0` or BTCLI version `8.2.0` then the Wallet SDK `2.0.2` is already installed. The below installation steps are only for a standalone installation of the Wallet SDK `2.0.2` package.
+- If you are using Bittensor SDK `10.x.x`or BTCLI `9.x.x`, then your environment already includes Wallet SDK version `4.0.0` or newer. The following steps apply only when installing the Wallet SDK `4.0.0` or a later version as a standalone package.
 
-- The Bittensor SDK version `8.2.0` and later versions and BTCLI version `8.2.0` and later versions are compatible only with the Wallet SDK versions `>=2.0.2`.
+- The Bittensor SDK version `10.0.0` and later versions and BTCLI version `9.0.0` and later versions are compatible only with the Wallet SDK versions `>=4.0.0`.
 
 ## Install
 
 Follow the below steps to install the Bittensor Wallet SDK:
 
-### From PyPI
-
-Use this option if you want to use the Wallet SDK.
+<Tabs value="pypi" label="Python Package Indexer" default>
+<TabItem value="pypi" label="Python Package Indexer" default>
+Use this option if you want to use the Wallet SDK. Run the following commands in your terminal:
 
 ```bash
-$ python3 -m venv btwallet-venv  # create a virtual env
-$ source btwallet-venv/bin/activate  # activate the env
-$ pip install bittensor-wallet  # install bittensor-wallet
+python3 -m venv btwallet-venv  # create a virtual env
+source btwallet-venv/bin/activate  # activate the env
+pip install bittensor-wallet  # install bittensor-wallet
 ```
 
-### From source
+</TabItem>
 
-Use this option if you want to develop your application using the Wallet SDK.
+<TabItem value="source" label="Install from source" >
+Use this option if you want to develop your application using the Wallet SDK. Run the following commands in your terminal:
 
 ```bash
 python3 -m venv btwallet-venv  # create a virtual env
@@ -65,23 +69,23 @@ pip list
 
 You will see `bittensor-wallet` in the list on installed packages. This means the installation was successful.
 
+</TabItem>
+
+</Tabs>
+
 ---
 
 ## Verify your installation
 
-In the `python3` interpreter, run the below code to verify that your installation was successful. See an example output below:
+In the `python3` virtual environment, run the below code to verify that your installation was successful.
 
-```bash
-python3
-Python 3.12.4 (v3.12.4:8e8a4baf65, Jun  6 2024, 17:33:18) [Clang 13.0.0 (clang-1300.0.29.30)] on darwin
-Type "help", "copyright", "credits" or "license" for more information.
->>> import bittensor_wallet
->>> print(bittensor_wallet.__version__)
-2.0.0
->>>
+```bash showLineNumbers
+# python3
+import bittensor_wallet
+print(bittensor_wallet.__version__)
 ```
 
-The above will print the Wallet SDK version you just installed, i.e., `2.0.0`, confirming that the installation was successful.
+The above will print the Wallet SDK version you just installed, confirming that the installation was successful.
 
 ---
 
