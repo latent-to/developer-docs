@@ -9,8 +9,8 @@ This guide demonstrates how to use proxy accounts to perform staking operations 
 
 See also:
 
-- [Proxies: Overview](./index): Learn about proxy types and how proxies work
-- [Working with Proxies](./create-proxy): Create and manage standard proxies
+- [Proxies: Overview](../../keys/proxies/): Learn about proxy types and how proxies work
+- [Working with Proxies](create-proxy): Create and manage standard proxies
 - [Managing Stake with SDK](../../staking-and-delegation/managing-stake-sdk): General staking operations with the Python SDK
 - [Managing Stake with BTCLI](../../staking-and-delegation/managing-stake-btcli): General staking operations with the CLI
 

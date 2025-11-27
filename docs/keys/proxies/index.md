@@ -30,7 +30,7 @@ The following concepts define how proxy relationships are set up and managed:
 
 Proxies enable secure delegation of account responsibilities. Below are common scenarios where proxies are used effectively:
 
-- **Staking operations**: Keep your coldkey secure in cold storage while using a proxy to manage staking operations. See [Staking with a Proxy](./staking-with-proxy) for a complete tutorial.
+- **Staking operations**: Keep your coldkey secure in cold storage while using a proxy to manage staking operations. See [Staking with a Proxy](../../keys/proxies/staking-with-proxy.md) for a complete tutorial.
 - **Operational delegation**: run operational tasks (e.g., subnet operations) from a hot wallet while securing funds in a cold wallet.
 - **Least-privilege permissions**: only allow a constrained set of calls (e.g., small transfers, registration-only).
 - **Automated agents**: let bots/services act with limited authority.
