@@ -206,11 +206,11 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Bittensor Python SDK",
-      link: { type: "doc", id: "sdk/index" },
+      label: "Bittensor Python SDK",      
       collapsible: true,
       collapsed: true,
       items: [
+        "sdk/index",
         "getting-started/installation",
         "sdk/env-vars",
         "sdk/bt-api-ref",
