@@ -50,10 +50,10 @@ from bittensor.core.chain_data.proxy import ProxyType
 subtensor = bittensor.Subtensor()
 
 # Load your coldkey (main account that holds the TAO)
-coldkey_wallet = bittensor.Wallet(name="my_coldkey", path='.')
+coldkey_wallet = bittensor.Wallet(name="Alice")
 
 # Load your proxy wallet (delegate that will perform operations)
-proxy_wallet = bittensor.Wallet(name="my_proxy_wallet", path='.')
+proxy_wallet = bittensor.Wallet(name="PracticeKey!")
 
 # Create the staking proxy relationship
 response = subtensor.add_proxy(
@@ -79,8 +79,8 @@ Before performing staking operations, verify that the proxy relationship was cre
 ```python
 import bittensor
 
-subtensor = bittensor.Subtensor()
-coldkey_wallet = bittensor.Wallet(name="my_coldkey", path='.')
+subtensor = bittensor.Subtensor('local')
+coldkey_wallet = bittensor.Wallet(name="Alice")
 
 # Get all proxies for your coldkey
 proxies, deposit = subtensor.get_proxies_for_real_account(
@@ -115,7 +115,7 @@ from bittensor.core.extrinsics.pallets import SubtensorModule
 subtensor = bittensor.Subtensor()
 
 # Load the proxy wallet (delegate account)
-proxy = bittensor.Wallet(name='my_proxy_wallet', path='.')
+proxy = bittensor.Wallet(name='PracticeKey!')
 
 # Save the wallet password to environment (for automated operations)
 proxy.coldkey_file.save_password_to_env("<password>")

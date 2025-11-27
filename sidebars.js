@@ -207,6 +207,7 @@ const sidebars = {
     {
       type: "category",
       label: "Bittensor Python SDK",
+      link: { type: "doc", id: "sdk/index" },
       collapsible: true,
       collapsed: true,
       items: [
