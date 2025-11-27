@@ -39,7 +39,7 @@ Before setting up a staking proxy, ensure you have:
 
 ## Create a Staking Proxy
 
-First, establish the proxy relationship by authorizing the proxy wallet to perform staking operations on behalf of your coldkey:
+First, establish the proxy relationship by authorizing the proxy wallet to perform staking operations on behalf of your coldkey. You'll need to enter the password for each wallet.
 
 
 ```python
@@ -47,13 +47,13 @@ import bittensor
 from bittensor.core.chain_data.proxy import ProxyType
 
 # Initialize connection to the network
-subtensor = bittensor.Subtensor()
+subtensor = bittensor.Subtensor('test')
 
 # Load your coldkey (main account that holds the TAO)
-coldkey_wallet = bittensor.Wallet(name="Alice")
+coldkey_wallet = bittensor.Wallet(name="PracticeKey!")
 
 # Load your proxy wallet (delegate that will perform operations)
-proxy_wallet = bittensor.Wallet(name="PracticeKey!")
+proxy_wallet = bittensor.Wallet(name="PracticeProxy")
 
 # Create the staking proxy relationship
 response = subtensor.add_proxy(
@@ -66,25 +66,73 @@ response = subtensor.add_proxy(
 print(response)
 ```
 
+Example output:
+```console
+Enter your password:
+Decrypting...
+Enter your password:
+Decrypting...
+ExtrinsicResponse:
+    success: True
+    message: Success
+    extrinsic_function: add_proxy_extrinsic
+    extrinsic: {'account_id': '0xb0fec20486c9cf366c90bf1c93ad1bbc6b50596653f8832ee6c40483aa73d851', 'signature': {'Sr25519': '0xb06d00647f20259df5e6e67ac78dd4cc96710176b798b605794890521868a122b8cc434f6d8841204de9cbedecaaedd84d0444ae1b644cb217629b0be3f7958c'}, 'call_function': 'add_proxy', 'call_module': 'Proxy', 'call_args': {'delegate': '5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe', 'proxy_type': 'Staking', 'delay': 0}, 'nonce': 653, 'era': {'period': 128, 'current': 5910360}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0xb0fec20486c9cf366c90bf1c93ad1bbc6b50596653f8832ee6c40483aa73d851', 'call': {'call_function': 'add_proxy', 'call_module': 'Proxy', 'call_args': {'delegate': '5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe', 'proxy_type': 'Staking', 'delay': 0}}}
+    extrinsic_fee: τ0.000013270
+    extrinsic_receipt: ExtrinsicReceipt<hash:0xcd5ded2dfc505152870610233532646f6ebdd930793fa82f999d9bda2b79c2b5>
+    transaction_tao_fee: None
+    transaction_alpha_fee: None
+    data: None
+    error: None
+```
 
 :::info Proxy deposit
 Creating a proxy requires a deposit that is held as long as the proxy relationship exists. This deposit is returned when you remove the proxy. You can check current deposit requirements using `subtensor.get_proxy_constants()`.
 :::
 
-## Verify the Proxy
+## Transfer TAO to Proxy Wallet
 
-Before performing staking operations, verify that the proxy relationship was created successfully:
-
+After creating the proxy relationship, transfer a small amount of TAO to the proxy wallet to cover transaction fees. The proxy wallet needs funds to sign and submit transactions on behalf of the coldkey:
 
 ```python
 import bittensor
 
-subtensor = bittensor.Subtensor('local')
-coldkey_wallet = bittensor.Wallet(name="Alice")
+# Initialize connection to the network
+subtensor = bittensor.Subtensor('test')
+
+# Load your main coldkey wallet
+coldkey_wallet = bittensor.Wallet(name="PracticeKey!")
+
+# Load the proxy wallet (to get its address)
+proxy = bittensor.Wallet(name='PracticeProxy')
+
+# Transfer TAO to the proxy wallet
+# This covers transaction fees for proxy operations
+response = subtensor.transfer(
+    wallet=coldkey_wallet,                            # Sending from coldkey
+    destination_ss58=proxy.coldkey.ss58_address,      # Sending to proxy wallet
+    amount=bittensor.Balance.from_tao(1),             # Transfer 1 TAO for fees
+    wait_for_inclusion=True,
+    wait_for_finalization=False,
+)
+
+print(response)
+```
+
+## Verify the Proxy
+
+Before performing staking operations, verify that the proxy relationship was created successfully:
+
+```python
+import bittensor
+
+# Your coldkey SS58 address
+real_account_ss58 = '5XyZ123...'  # Your coldkey SS58 address
+
+subtensor = bittensor.Subtensor('test')
 
 # Get all proxies for your coldkey
 proxies, deposit = subtensor.get_proxies_for_real_account(
-    real_account=coldkey_wallet.coldkey.ss58_address
+    real_account_ss58=real_account_ss58
 )
 
 if proxies:
@@ -98,41 +146,166 @@ else:
     print("✗ No proxies found for this account")
 ```
 
+Example output:
+```console
+✓ Found 1 proxy relationship(s):
 
+  Delegate: 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe
+  Type: Staking
+  Delay: 0 blocks
 
-## Perform Staking Operations with Proxy
+Total deposit held: τ0.093000000 RAO
+```
 
-Once your staking proxy is set up, you can perform staking operations on behalf of the coldkey using the proxy wallet. Here's a complete example of moving stake between subnets using a proxy:
+## Find Validators to Stake To
 
+Before staking, query the metagraph to find validators with the most stake. We'll find validators on subnet 0 (root network) and subnet 14:
 
+```python
+import bittensor
+
+# Initialize connection to the network
+subtensor = bittensor.Subtensor('test')
+
+# Get metagraph for subnet 0 (root network)
+metagraph_subnet0 = subtensor.metagraph(netuid=0)
+
+# Find validator with most stake on subnet 0
+max_stake_idx = metagraph_subnet0.S.argmax()
+subnet0_validator = metagraph_subnet0.hotkeys[max_stake_idx]
+subnet0_stake = metagraph_subnet0.S[max_stake_idx]
+
+print(f"Subnet 0 - Top validator: {subnet0_validator}")
+print(f"Subnet 0 - Current stake: {subnet0_stake} TAO")
+
+# Get metagraph for subnet 14
+metagraph_subnet14 = subtensor.metagraph(netuid=14)
+
+# Find validator with most stake on subnet 14
+max_stake_idx_14 = metagraph_subnet14.S.argmax()
+subnet14_validator = metagraph_subnet14.hotkeys[max_stake_idx_14]
+subnet14_stake = metagraph_subnet14.S[max_stake_idx_14]
+
+print(f"\nSubnet 14 - Top validator: {subnet14_validator}")
+print(f"Subnet 14 - Current stake: {subnet14_stake} TAO")
+```
+
+Example output:
+
+```console
+Subnet 0 - Top validator: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+Subnet 0 - Current stake: 125000.5 TAO
+
+Subnet 14 - Top validator: 5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2
+Subnet 14 - Current stake: 89432.3 TAO
+```
+
+:::tip Metagraph Properties
+- **`S`**: Stake tensor - contains the stake amounts for all neurons in the subnet
+- **`hotkeys`**: List of hotkey addresses for all neurons in the subnet
+- **`argmax()`**: Returns the index of the neuron with the maximum stake
+:::
+
+## Add Stake with Proxy
+
+Add stake to a validator on behalf of your coldkey using the proxy wallet. We'll stake to the top validator on subnet 0 that we found in the previous step:
 
 ```python
 import bittensor
 from bittensor.core.chain_data.proxy import ProxyType
 from bittensor.core.extrinsics.pallets import SubtensorModule
 
+# Your coldkey SS58 address (no private key needed)
+real_account_ss58 = '5XyZ123...'  # Your coldkey SS58 address
+
 # Initialize connection to the network
-subtensor = bittensor.Subtensor()
+subtensor = bittensor.Subtensor('test')
 
-# Load the proxy wallet (delegate account)
-proxy = bittensor.Wallet(name='PracticeKey!')
+# Load proxy wallet
+proxy = bittensor.Wallet(name='PracticeProxy')
 
-# Save the wallet password to environment (for automated operations)
-proxy.coldkey_file.save_password_to_env("<password>")
+# Use the top validator from subnet 0 (from previous step)
+subnet0_validator = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
 
-# Create the move_stake call using SubtensorModule
-move_stake_call = SubtensorModule(subtensor).move_stake(
-    origin_netuid=0,                                    # Source subnet (0 = root network)
-    origin_hotkey_ss58='<validator hotkey>',            # Source validator hotkey
-    destination_netuid=1,                               # Destination subnet
-    destination_hotkey_ss58='<validator hotkey>',       # Destination validator hotkey
-    alpha_amount=bittensor.Balance.from_tao(1),         # Amount to move (in TAO)
+# Create the add_stake call using SubtensorModule
+add_stake_call = SubtensorModule(subtensor).add_stake(
+    netuid=0,                                          # Subnet to stake on (0 = root network)
+    hotkey=subnet0_validator,                          # Validator hotkey (top validator on subnet 0)
+    amount_staked=bittensor.Balance.from_tao(100).rao, # Amount to stake (in RAO)
 )
 
 # Execute the call through the proxy
 response = subtensor.proxy(
-    wallet=proxy,                                       # Proxy wallet signs the transaction
-    real_account_ss58='<the main account coldkey>',    # Real account (coldkey) being proxied
+    wallet=proxy,                                      # Proxy wallet signs the transaction
+    real_account_ss58=real_account_ss58,               # Real account (coldkey) being proxied
+    force_proxy_type=ProxyType.Staking,                # Must match the proxy relationship
+    call=add_stake_call,
+)
+
+print(response)
+```
+
+:::tip Important Parameters
+- **`netuid`**: The subnet ID where you want to stake (0 = root network in this example)
+- **`hotkey`**: The validator hotkey to stake to (subnet 0 top validator from metagraph)
+- **`amount_staked`**: The amount to stake in RAO, use `Balance.from_tao(amount).rao` to convert
+- **`force_proxy_type`**: Must match the proxy type that was set when creating the proxy relationship
+:::
+
+Verify the stake was added:
+
+```python
+import bittensor
+
+# Your coldkey SS58 address
+real_account_ss58 = '5XyZ123...'  # Your coldkey SS58 address
+
+subtensor = bittensor.Subtensor('test')
+
+# Get all stake for your coldkey
+stake_info = subtensor.get_stake_info_for_coldkey(
+    coldkey_ss58=real_account_ss58
+)
+
+for stake in stake_info:
+    print(f"Subnet {stake.netuid}: {stake.stake} TAO staked to {stake.hotkey_ss58}")
+```
+
+## Move Stake with Proxy
+
+Move stake between subnets using the proxy. We'll move stake from subnet 0 to subnet 14, using the top validators we found earlier:
+
+```python
+import bittensor
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import SubtensorModule
+
+# Your coldkey SS58 address (no private key needed)
+real_account_ss58 = '5XyZ123...'  # Your coldkey SS58 address
+
+# Initialize connection to the network
+subtensor = bittensor.Subtensor('test')
+
+# Load proxy wallet
+proxy = bittensor.Wallet(name='PracticeProxy')
+
+# Get the top validators from each subnet (from previous step)
+subnet0_validator = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
+subnet14_validator = '5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2'
+
+# Create the move_stake call using SubtensorModule
+move_stake_call = SubtensorModule(subtensor).move_stake(
+    origin_netuid=0,                                   # Source subnet (0 = root network)
+    origin_hotkey_ss58=subnet0_validator,              # Source validator hotkey
+    destination_netuid=14,                             # Destination subnet (subnet 14)
+    destination_hotkey_ss58=subnet14_validator,        # Destination validator hotkey
+    alpha_amount=bittensor.Balance.from_tao(50),       # Amount to move (in TAO)
+)
+
+# Execute the call through the proxy
+response = subtensor.proxy(
+    wallet=proxy,                                      # Proxy wallet signs the transaction
+    real_account_ss58=real_account_ss58,               # Real account (coldkey) being proxied
     force_proxy_type=ProxyType.Staking,                # Must match the proxy relationship
     call=move_stake_call,
 )
@@ -141,46 +314,75 @@ print(response)
 ```
 
 :::tip Important Parameters
-- **`origin_netuid`**: The subnet ID where the stake is currently located (0 = root network)
-- **`origin_hotkey_ss58`**: The validator hotkey where the stake is currently staked
-- **`destination_netuid`**: The subnet ID where you want to move the stake
-- **`destination_hotkey_ss58`**: The validator hotkey where you want to stake
-- **`alpha_amount`**: The amount of stake to move, specified using `Balance.from_tao()`
+- **`origin_netuid`**: The subnet ID where the stake is currently located (0 = root network in this example)
+- **`origin_hotkey_ss58`**: The validator hotkey where the stake is currently staked (subnet 0 top validator)
+- **`destination_netuid`**: The subnet ID where you want to move the stake (14 in this example)
+- **`destination_hotkey_ss58`**: The validator hotkey where you want to stake (subnet 14 top validator)
+- **`alpha_amount`**: The amount of stake to move, use `Balance.from_tao(amount)` (Balance object is automatically converted)
 - **`force_proxy_type`**: Must match the proxy type that was set when creating the proxy relationship
 :::
 
-### Other Staking Operations
+Verify the stake was moved:
 
-You can perform other staking operations using the same pattern. Here are additional examples:
-
-**Add Stake**
 ```python
+import bittensor
+
+# Your coldkey SS58 address
+real_account_ss58 = '5XyZ123...'  # Your coldkey SS58 address
+
+subtensor = bittensor.Subtensor('test')
+
+# Get all stake for your coldkey
+stake_info = subtensor.get_stake_info_for_coldkey(
+    coldkey_ss58=real_account_ss58
+)
+
+for stake in stake_info:
+    print(f"Subnet {stake.netuid}: {stake.stake} TAO staked to {stake.hotkey_ss58}")
+```
+
+## Remove Stake with Proxy
+
+Remove stake from a validator on behalf of your coldkey using the proxy wallet. We'll unstake from the subnet 14 validator:
+
+```python
+import bittensor
+from bittensor.core.chain_data.proxy import ProxyType
 from bittensor.core.extrinsics.pallets import SubtensorModule
 
-add_stake_call = SubtensorModule(subtensor).add_stake(
-    hotkey_ss58='<validator hotkey>',
-    alpha_amount=bittensor.Balance.from_tao(100),
-)
+# Your coldkey SS58 address (no private key needed)
+real_account_ss58 = '5XyZ123...'  # Your coldkey SS58 address
 
-response = subtensor.proxy(
-    wallet=proxy,
-    real_account_ss58='<coldkey address>',
-    force_proxy_type=ProxyType.Staking,
-    call=add_stake_call,
-)
-```
+# Initialize connection to the network
+subtensor = bittensor.Subtensor('test')
 
-**Remove Stake**
-```python
+# Load proxy wallet
+proxy = bittensor.Wallet(name='PracticeProxy')
+
+# Use the top validator from subnet 14 (from earlier step)
+subnet14_validator = '5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2'
+
+# Create the remove_stake call using SubtensorModule
 remove_stake_call = SubtensorModule(subtensor).remove_stake(
-    hotkey_ss58='<validator hotkey>',
-    alpha_amount=bittensor.Balance.from_tao(50),
+    netuid=14,                                         # Subnet to unstake from (subnet 14)
+    hotkey=subnet14_validator,                         # Validator hotkey (top validator on subnet 14)
+    amount_unstaked=bittensor.Balance.from_tao(25).rao, # Amount to unstake (in RAO)
 )
 
+# Execute the call through the proxy
 response = subtensor.proxy(
-    wallet=proxy,
-    real_account_ss58='<coldkey address>',
-    force_proxy_type=ProxyType.Staking,
+    wallet=proxy,                                      # Proxy wallet signs the transaction
+    real_account_ss58=real_account_ss58,               # Real account (coldkey) being proxied
+    force_proxy_type=ProxyType.Staking,                # Must match the proxy relationship
     call=remove_stake_call,
 )
+
+print(response)
 ```
+
+:::tip Important Parameters
+- **`netuid`**: The subnet ID where you want to unstake from (14 in this example)
+- **`hotkey`**: The validator hotkey to unstake from (subnet 14 top validator from metagraph)
+- **`amount_unstaked`**: The amount to unstake in RAO, use `Balance.from_tao(amount).rao` to convert
+- **`force_proxy_type`**: Must match the proxy type that was set when creating the proxy relationship
+:::
