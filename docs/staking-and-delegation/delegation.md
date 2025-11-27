@@ -15,8 +15,9 @@ Staking and unstaking operations incur transaction fees. See [Transaction Fees i
 
 See also:
 
-- [Staking with Polkadot JS](./staking-polkadot-js.md).
-- See also [Validators: Acquiring stake](../validators/index.md#acquiring-stake).
+- [Staking with a Proxy](../keys/proxies/staking-with-proxy) - Keep your coldkey secure while managing staking operations
+- [Staking with Polkadot JS](./staking-polkadot-js.md)
+- [Validators: Acquiring stake](../validators/index.md#acquiring-stake)
 
 :::tip tips
 Validators/delegates can configure their take. The default value is 18%. See [`btcli sudo set-take`](../btcli#btcli-sudo-set-take).

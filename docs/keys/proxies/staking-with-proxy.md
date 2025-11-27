@@ -7,6 +7,14 @@ title: "Staking with a Proxy"
 
 This guide demonstrates how to use proxy accounts to perform staking operations on the Bittensor network. Using a proxy for staking allows you to keep your high-value coldkey secure in cold storage while using a hot wallet to manage day-to-day staking operations.
 
+See also:
+
+- [Proxies: Overview](./index): Learn about proxy types and how proxies work
+- [Working with Proxies](./create-proxy): Create and manage standard proxies
+- [Managing Stake with SDK](../../staking-and-delegation/managing-stake-sdk): General staking operations with the Python SDK
+- [Managing Stake with BTCLI](../../staking-and-delegation/managing-stake-btcli): General staking operations with the CLI
+
+
 ## Overview
 
 A staking proxy is a specialized proxy type that grants limited permissions specifically for staking-related operations. The `Staking` proxy type allows the delegate to:

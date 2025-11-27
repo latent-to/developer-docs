@@ -96,7 +96,6 @@ const sidebars = {
           items: [
           "keys/proxies/create-proxy",
           "keys/proxies/pure-proxies",
-          "keys/proxies/staking-with-proxy"
           ],
         },
         "keys/multisig",
@@ -114,6 +113,7 @@ const sidebars = {
         "staking-and-delegation/stakers-btcli-guide",
         "staking-and-delegation/managing-stake-btcli",
         "staking-and-delegation/managing-stake-sdk",
+        "keys/proxies/staking-with-proxy",
         {
           type: "category",
           label: "Root claims",
