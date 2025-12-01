@@ -51,6 +51,12 @@ Use proxies to delegate account permissions securely while keeping your coldkey 
 - **Proxy transfers**: Use `ProxyType.Transfer` or `ProxyType.SmallTransfer` (see [Create Proxy](../keys/proxies/create-proxy.md))
 - **Other proxy operations**: Execute any permitted call through a proxy (see [Working with Proxies](../keys/proxies/create-proxy.md))
 
+## Advanced: Working with Blockchain Calls
+
+Compose and execute complex blockchain transactions using `GenericCall` and pallet-specific builders.
+
+- [Working with Blockchain Calls](call): Create, compose, and execute calls with `GenericCall` and `CallBuilder` - essential for proxies, crowdloans, MEV protection, and fee estimation
+
 ## Subnet Operations
 
 Create, manage, and interact with subnets.

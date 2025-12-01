@@ -16,6 +16,7 @@ See also:
 - [Understanding pricing and anticipating slippage](../learn/slippage)
 - [Price protection when staking](../learn/price-protection)
 - [Staking with a Proxy](../keys/proxies/staking-with-proxy): Advanced technique for performing staking operations while keeping your coldkey in cold storage
+- [Working with Blockchain Calls](../sdk/call): Advanced guide to composing blockchain calls with GenericCall and CallBuilder
 
 :::tip
 Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.0005 TAO.
