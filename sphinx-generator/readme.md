@@ -72,7 +72,7 @@ open build/html/index.html
 The `source/` directory contains different index files for different documentation types:
 
 - `index.rst` - Main index (currently configured for Bittensor SDK)
-- `index.rst.btwallet` - For Wallet SDK documentation
+- `index.rst.btsdk` - For Bittensor SDK documentation
 - `index.rst.legacy` - For legacy documentation
 
 To switch documentation types, copy the appropriate index file:
