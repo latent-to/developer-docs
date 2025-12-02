@@ -2,6 +2,8 @@
 title: "Staking with a Proxy"
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Staking with a Proxy
 
@@ -10,7 +12,7 @@ This guide demonstrates how to use proxy accounts to perform staking operations 
 See also:
 
 - [Proxies: Overview](../../keys/proxies/): Learn about proxy types and how proxies work
-- [Working with Proxies](create-proxy): Create and manage standard proxies
+- [Working with Proxies](working-with-proxies): Create and manage standard proxies
 - [Managing Stake with SDK](../../staking-and-delegation/managing-stake-sdk): General staking operations with the Python SDK
 - [Managing Stake with BTCLI](../../staking-and-delegation/managing-stake-btcli): General staking operations with the CLI
 
@@ -49,6 +51,41 @@ Before setting up a staking proxy, ensure you have:
 
 First, establish the proxy relationship by authorizing the proxy wallet to perform staking operations on behalf of your coldkey. You'll need to enter the password for each wallet.
 
+<Tabs groupId="staking-proxy">
+<TabItem value="btcli" label="BTCLI">
+
+```bash
+btcli proxy add \
+  --wallet.name PracticeKey \
+  --delegate PROXY_WALLET_SS58_ADDRESS \
+  --proxy-type Staking \
+  --delay 0
+```
+
+**Example with actual address:**
+```bash
+btcli proxy add \
+  --wallet.name my_coldkey \
+  --delegate 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
+  --proxy-type Staking \
+  --delay 0
+```
+
+After creating the proxy, you'll be prompted to save it to your address book for easy reference:
+
+```bash
+# Save to address book when prompted, or manually:
+btcli config add-proxy \
+  --name staking-proxy \
+  --address 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
+  --proxy-type Staking \
+  --spawner YOUR_COLDKEY_ADDRESS \
+  --delay 0
+```
+
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
 
 ```python
 import bittensor
@@ -73,6 +110,9 @@ response = subtensor.add_proxy(
 
 print(response)
 ```
+
+</TabItem>
+</Tabs>
 
 Example output:
 ```console
@@ -101,6 +141,30 @@ Creating a proxy requires a deposit that is held as long as the proxy relationsh
 
 After creating the proxy relationship, transfer a small amount of TAO to the proxy wallet to cover transaction fees. The proxy wallet needs funds to sign and submit transactions on behalf of the coldkey:
 
+<Tabs groupId="staking-proxy">
+<TabItem value="btcli" label="BTCLI">
+
+```bash
+btcli wallet transfer \
+  --wallet.name my_coldkey \
+  --dest PROXY_WALLET_SS58_ADDRESS \
+  --amount 1.0
+```
+
+**Example:**
+```bash
+btcli wallet transfer \
+  --wallet.name PracticeKey \
+  --dest 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
+  --amount 1.0
+```
+
+This transfers 1 TAO to the proxy wallet to cover transaction fees for future staking operations.
+
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
+
 ```python
 import bittensor
 
@@ -126,9 +190,31 @@ response = subtensor.transfer(
 print(response)
 ```
 
+</TabItem>
+</Tabs>
+
 ## Verify the Proxy
 
 Before performing staking operations, verify that the proxy relationship was created successfully:
+
+<Tabs groupId="staking-proxy">
+<TabItem value="btcli" label="BTCLI">
+
+View your locally saved proxies:
+
+```bash
+btcli config proxies
+```
+
+This displays all proxies you've saved to your local address book.
+
+:::info On-chain verification
+BTCLI does not currently provide a command to query on-chain proxy state directly. To verify the on-chain proxy relationship, use the SDK's `get_proxies_for_real_account()` method or query via Polkadot.js Apps (**Developer** → **Chain state** → **proxy.proxies**).
+:::
+
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
 
 ```python
 import bittensor
@@ -154,6 +240,9 @@ else:
     print("✗ No proxies found for this account")
 ```
 
+</TabItem>
+</Tabs>
+
 Example output:
 ```console
 ✓ Found 1 proxy relationship(s):
@@ -168,6 +257,31 @@ Total deposit held: τ0.093000000 RAO
 ## Find Validators to Stake To
 
 Before staking, query the metagraph to find validators with the most stake. We'll find validators on subnet 0 (root network) and subnet 14:
+
+<Tabs groupId="staking-proxy">
+<TabItem value="btcli" label="BTCLI">
+
+View the metagraph for a subnet to find validators:
+
+```bash
+# View subnet 0 (root network) metagraph
+btcli subnets metagraph --netuid 0
+
+# View subnet 14 metagraph
+btcli subnets metagraph --netuid 14
+```
+
+This displays a table showing all validators on the subnet, including their hotkeys, stake amounts, and other metrics. Look for validators with high stake amounts to delegate to.
+
+You can also use the wallet overview to see validators you're already staking to:
+
+```bash
+btcli wallet overview --wallet.name my_coldkey
+```
+
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
 
 ```python
 import bittensor
@@ -198,6 +312,9 @@ print(f"\nSubnet 14 - Top validator: {subnet14_validator}")
 print(f"Subnet 14 - Current stake: {subnet14_stake} TAO")
 ```
 
+</TabItem>
+</Tabs>
+
 Example output:
 
 ```console
@@ -217,6 +334,50 @@ Subnet 14 - Current stake: 89432.3 TAO
 ## Add Stake with Proxy
 
 Add stake to a validator on behalf of your coldkey using the proxy wallet. We'll stake to the top validator on subnet 0 that we found in the previous step:
+
+<Tabs groupId="staking-proxy">
+<TabItem value="btcli" label="BTCLI">
+
+```bash
+btcli stake add \
+  --wallet.name proxy_wallet \
+  --proxy COLDKEY_SS58_ADDRESS \
+  --netuid 0 \
+  --hotkey VALIDATOR_HOTKEY \
+  --amount 100.0
+```
+
+**Example using saved proxy:**
+```bash
+# Using proxy address directly
+btcli stake add \
+  --wallet.name PracticeProxy \
+  --proxy 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY \
+  --netuid 0 \
+  --hotkey 5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2 \
+  --amount 100.0
+
+# Or using saved proxy name from address book
+btcli stake add \
+  --wallet.name PracticeProxy \
+  --proxy my-coldkey \
+  --netuid 0 \
+  --hotkey 5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2 \
+  --amount 100.0
+```
+
+**Parameters:**
+- `--wallet.name`: The proxy wallet that signs the transaction
+- `--proxy`: Your coldkey's SS58 address (or saved proxy name)
+- `--netuid`: The subnet ID (0 for root network)
+- `--hotkey`: The validator's hotkey address
+- `--amount`: Amount of TAO to stake
+
+The stake will be added from your coldkey's balance to the specified validator.
+
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
 
 ```python
 import bittensor
@@ -253,6 +414,9 @@ response = subtensor.proxy(
 print(response)
 ```
 
+</TabItem>
+</Tabs>
+
 :::tip Important Parameters
 - **`netuid`**: The subnet ID where you want to stake (0 = root network in this example)
 - **`hotkey`**: The validator hotkey to stake to (subnet 0 top validator from metagraph)
@@ -261,6 +425,21 @@ print(response)
 :::
 
 Verify the stake was added:
+
+<Tabs groupId="staking-proxy">
+<TabItem value="btcli" label="BTCLI">
+
+```bash
+# View overview of all your stakes
+btcli wallet overview --wallet.name my_coldkey
+
+# Or list stakes specifically
+btcli stake list --wallet.name my_coldkey
+```
+
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
 
 ```python
 import bittensor
@@ -279,9 +458,51 @@ for stake in stake_info:
     print(f"Subnet {stake.netuid}: {stake.stake} TAO staked to {stake.hotkey_ss58}")
 ```
 
+</TabItem>
+</Tabs>
+
 ## Move Stake with Proxy
 
 Move stake between subnets using the proxy. We'll move stake from subnet 0 to subnet 14, using the top validators we found earlier:
+
+<Tabs groupId="staking-proxy">
+<TabItem value="btcli" label="BTCLI">
+
+```bash
+btcli stake move \
+  --wallet.name proxy_wallet \
+  --proxy COLDKEY_SS58_ADDRESS \
+  --origin-netuid 0 \
+  --origin-hotkey SUBNET0_VALIDATOR \
+  --dest-netuid 14 \
+  --dest-hotkey SUBNET14_VALIDATOR \
+  --amount 50.0
+```
+
+**Example:**
+```bash
+btcli stake move \
+  --wallet.name PracticeProxy \
+  --proxy my-coldkey \
+  --origin-netuid 0 \
+  --origin-hotkey 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY \
+  --dest-netuid 14 \
+  --dest-hotkey 5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2 \
+  --amount 50.0
+```
+
+**Parameters:**
+- `--wallet.name`: The proxy wallet that signs the transaction
+- `--proxy`: Your coldkey's SS58 address (or saved proxy name)
+- `--origin-netuid`: Source subnet ID
+- `--origin-hotkey`: Source validator hotkey
+- `--dest-netuid`: Destination subnet ID
+- `--dest-hotkey`: Destination validator hotkey
+- `--amount`: Amount of TAO to move
+
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
 
 ```python
 import bittensor
@@ -321,6 +542,9 @@ response = subtensor.proxy(
 print(response)
 ```
 
+</TabItem>
+</Tabs>
+
 :::tip Important Parameters
 - **`origin_netuid`**: The subnet ID where the stake is currently located (0 = root network in this example)
 - **`origin_hotkey_ss58`**: The validator hotkey where the stake is currently staked (subnet 0 top validator)
@@ -331,6 +555,17 @@ print(response)
 :::
 
 Verify the stake was moved:
+
+<Tabs groupId="staking-proxy">
+<TabItem value="btcli" label="BTCLI">
+
+```bash
+btcli wallet overview --wallet.name my_coldkey
+```
+
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
 
 ```python
 import bittensor
@@ -349,9 +584,47 @@ for stake in stake_info:
     print(f"Subnet {stake.netuid}: {stake.stake} TAO staked to {stake.hotkey_ss58}")
 ```
 
+</TabItem>
+</Tabs>
+
 ## Remove Stake with Proxy
 
 Remove stake from a validator on behalf of your coldkey using the proxy wallet. We'll unstake from the subnet 14 validator:
+
+<Tabs groupId="staking-proxy">
+<TabItem value="btcli" label="BTCLI">
+
+```bash
+btcli stake remove \
+  --wallet.name proxy_wallet \
+  --proxy COLDKEY_SS58_ADDRESS \
+  --netuid 14 \
+  --hotkey VALIDATOR_HOTKEY \
+  --amount 25.0
+```
+
+**Example:**
+```bash
+btcli stake remove \
+  --wallet.name PracticeProxy \
+  --proxy my-coldkey \
+  --netuid 14 \
+  --hotkey 5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2 \
+  --amount 25.0
+```
+
+**Parameters:**
+- `--wallet.name`: The proxy wallet that signs the transaction
+- `--proxy`: Your coldkey's SS58 address (or saved proxy name)
+- `--netuid`: The subnet ID to unstake from
+- `--hotkey`: The validator's hotkey address
+- `--amount`: Amount of TAO to unstake
+
+The unstaked TAO will be returned to your coldkey's free balance.
+
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
 
 ```python
 import bittensor
@@ -387,6 +660,9 @@ response = subtensor.proxy(
 
 print(response)
 ```
+
+</TabItem>
+</Tabs>
 
 :::tip Important Parameters
 - **`netuid`**: The subnet ID where you want to unstake from (14 in this example)

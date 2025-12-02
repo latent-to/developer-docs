@@ -459,6 +459,54 @@ To set weights with `commit`, a validator must meet several requirements. See [R
 
 </details>
 
+### `proxy`
+
+The `proxy` command group allows you to create and manage proxy accounts for secure delegation of account permissions.
+
+#### Read/permissionless commands
+
+There are no read-only proxy commands in btcli. To view proxies associated with an account, use the SDK's `get_proxies_for_real_account()` method or query chain state directly via Polkadot.js.
+
+#### Write commands (require coldkey)
+
+- **`proxy create`**: Creates a new pure proxy account. This generates a keyless account that can only be controlled through the proxy relationship. Requires the spawner's coldkey.
+- **`proxy add`**: Adds a standard proxy relationship, authorizing a delegate account to perform specific operations on behalf of the real account. Requires the real account's coldkey.
+- **`proxy remove`**: Removes a proxy relationship, revoking the delegate's permissions. Requires the real account's coldkey.
+- **`proxy kill`**: Permanently destroys a pure proxy account. **Warning**: All funds in the pure proxy will be permanently lost. Requires the spawner's coldkey.
+
+#### Proxy execution commands
+
+- **`proxy execute`**: Executes a previously announced proxy call after the delay period has passed. This is used with delayed proxies (non-zero delay).
+
+:::tip Address book management
+The `btcli config` commands provide convenient local address book management for proxies:
+- `btcli config add-proxy` - Save a proxy to your local address book
+- `btcli config proxies` - List all proxies in your address book
+- `btcli config remove-proxy` - Remove a proxy from your address book (local only, does not affect on-chain state)
+- `btcli config update-proxy` - Update a proxy entry in your address book
+:::
+
+:::info Using proxies with other commands
+Many btcli commands support the `--proxy` flag, allowing you to execute operations through a proxy account. You can specify either:
+- The proxy's SS58 address directly: `--proxy 5ABC...`
+- The proxy's name from your address book: `--proxy my-staking-proxy`
+
+For delayed proxies, use the `--announce-only` flag to announce a call without executing it immediately.
+:::
+
+See also: [Proxies Documentation](../keys/proxies/)
+
+<details>
+  <summary>`btcli proxy`</summary>
+
+#### `btcli proxy create`
+#### `btcli proxy add`
+#### `btcli proxy remove`
+#### `btcli proxy kill`
+#### `btcli proxy execute`
+
+</details>
+
 ### `utils`
 
 #### `btcli utils convert`

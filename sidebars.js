@@ -91,10 +91,10 @@ const sidebars = {
           type: "category",
           label: "Proxies",
           collapsible: true,
-          collapsed: true,
-          link: { type: "doc", id: "keys/proxies/index" },
+          collapsed: true,          
           items: [
-          "keys/proxies/create-proxy",
+          "keys/proxies/index",
+          "keys/proxies/working-with-proxies",
           "keys/proxies/pure-proxies",
           ],
         },

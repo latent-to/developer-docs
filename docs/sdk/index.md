@@ -42,14 +42,13 @@ Manage your TAO stake across validators and subnets.
 
 Use proxies to delegate account permissions securely while keeping your coldkey offline.
 
-- [Create and Manage Proxies](../keys/proxies/create-proxy.md): Set up standard proxy relationships
+- [Create and Manage Proxies](../keys/proxies/working-with-proxies.md): Set up standard proxy relationships
 - [Pure Proxies](../keys/proxies/pure-proxies.md): Create and use keyless pure proxy accounts
 - [Staking with a Proxy](../keys/proxies/staking-with-proxy.md): Perform staking operations through a proxy
 
 **By proxy type:**
 - **Proxy staking**: See [Staking with a Proxy](../keys/proxies/staking-with-proxy.md)
-- **Proxy transfers**: Use `ProxyType.Transfer` or `ProxyType.SmallTransfer` (see [Create Proxy](../keys/proxies/create-proxy.md))
-- **Other proxy operations**: Execute any permitted call through a proxy (see [Working with Proxies](../keys/proxies/create-proxy.md))
+- **Other proxy operations**: Execute any permitted call through a proxy (see [Working with Proxies](../keys/proxies/working-with-proxies.md))
 
 ## Subnet Operations
 

@@ -7,7 +7,9 @@ import TabItem from '@theme/TabItem';
 
 # Working with Proxies
 
-This page covers creating a standard proxy and executing a call from the proxy account.
+This page covers the use of proxy wallets as a security feature for Bittensor operations.
+
+See [Proxies: Overview](./index.md)
 
 
 A standard proxy links a _delegator_ to a known account. The delegator specifies:
@@ -22,7 +24,11 @@ The delegate has access to funds in the real account and can then execute calls 
 Delegating through a standard proxy is a good option when you want to entrust control to trusted individuals or organizations who can act on your behalf. In this setup, the delegate maintains their own independent signing capability, which allows them to initiate and authorize actions without relying on your key. This approach provides maximum operational flexibility while also making the delegate responsible for managing the security of their own keys.
 :::
 
-## Prerequisites
+## Prerequisites and setup
+
+To follow along with the below examples, you will need to [Run a Local Bittensor Blockchain Instance].
+
+Once you have practiced on a local chain, and you are ready to execute these operations on Bittensor main network (`finney`), you will two wallets, one with TAO to cover some small fees:
 
 - Real (delegator) account that controls funds and adds the proxy.
 - Delegate account to perform allowed actions.
@@ -33,8 +39,48 @@ You can add a proxy to authorize another account to perform actions on your beha
 
 <Tabs groupId="proxy">
 
-  <!-- <TabItem value="btcli" label="BTCLI">
-  </TabItem> -->
+<TabItem value="btcli" label="BTCLI">
+
+```bash
+btcli proxy add \
+  --wallet.name WALLET_NAME \
+  --delegate DELEGATE_ADDRESS \
+  --proxy-type Any \
+  --delay 0
+```
+
+**Parameters:**
+- `--wallet.name`: Your wallet name (the real account that will authorize the proxy)
+- `--delegate`: The SS58 address of the delegate account
+- `--proxy-type`: The type of proxy (e.g., `Staking`, `Transfer`, `Any`, etc.)
+- `--delay`: Optional delay in blocks (0 for immediate execution)
+
+**Example:**
+
+```bash
+btcli proxy add \
+  --wallet.name my_coldkey \
+  --delegate 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
+  --proxy-type Staking \
+  --delay 0
+```
+
+:::tip Save to address book
+After adding a proxy, you can save it to your local address book for easy reference:
+
+```bash
+btcli config add-proxy \
+  --name my-staking-proxy \
+  --address 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
+  --proxy-type Staking \
+  --spawner MY_COLDKEY_ADDRESS \
+  --delay 0
+```
+
+View all saved proxies with: `btcli config proxies`
+:::
+
+</TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
 
@@ -65,7 +111,7 @@ else:
 The proxy type can be provided either by importing and using the `ProxyType` enum or by passing the proxy type as a string.
 :::
 
-  </TabItem>
+</TabItem>
 
 <TabItem value="polkadot-app" label="Polkadot app">
 1. In the navbar menu, navigate to **Developers** → **Extrinsics**.
@@ -94,8 +140,21 @@ You can check which proxies are associated with an account to see their delegate
 
 <Tabs groupId="proxy">
 
-  <!-- <TabItem value="btcli" label="BTCLI">
-  </TabItem> -->
+<TabItem value="btcli" label="BTCLI">
+
+To check proxies in BTCLI, you can view your local address book:
+
+```bash
+btcli config proxies
+```
+
+This displays all proxies you've saved to your local address book.
+
+:::info On-chain proxy query
+BTCLI does not currently provide a command to query on-chain proxy state directly. To view all proxies registered on-chain for an account, use the SDK's `get_proxies_for_real_account()` method or query via Polkadot.js Apps.
+:::
+
+</TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
 
@@ -132,8 +191,48 @@ The following example shows how to execute a transfer call using a proxy. To do 
 
 <Tabs groupId="proxy">
 
-  <!-- <TabItem value="btcli" label="BTCLI">
-  </TabItem> -->
+<TabItem value="btcli" label="BTCLI">
+
+Most btcli commands support the `--proxy` flag to execute operations through a proxy:
+
+```bash
+# Example: Add stake through a proxy
+btcli stake add \
+  --wallet.name Alice \
+  --proxy 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
+  --netuid 0 \
+  --amount 1.0
+```
+
+**Using the proxy flag:**
+- `--wallet.name`: The delegate/proxy wallet that signs the transaction
+- `--proxy`: The real account's SS58 address (or proxy name from address book)
+- The operation will be executed on behalf of the real account
+
+**Common commands that support proxies:**
+- `btcli stake add --proxy <real_account>`
+- `btcli stake remove --proxy <real_account>`
+- `btcli stake move --proxy <real_account>`
+- `btcli wallet transfer --proxy <real_account>`
+- And many other commands...
+
+:::info Using saved proxies
+If you saved a proxy to your address book with `btcli config add-proxy`, you can reference it by name:
+
+```bash
+btcli stake add \
+  --wallet.name proxy_wallet \
+  --proxy my-coldkey \
+  --netuid 0 \
+  --amount 1.0
+```
+:::
+
+:::warning Delegate account fees
+The delegate account (proxy wallet) must hold enough TAO to cover transaction fees (approximately 0.000025 TAO).
+:::
+
+</TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
 
@@ -236,8 +335,21 @@ Announcing a delayed proxy call requires the hash of the call that you intend to
 
 <Tabs groupId="proxy">
 
-  <!-- <TabItem value="btcli" label="BTCLI">
-  </TabItem> -->
+<TabItem value="btcli" label="BTCLI">
+
+When using `--announce-only`, BTCLI automatically generates and stores the call hash for you. You don't need to manually generate it.
+
+```bash
+# The call hash is automatically generated and saved
+btcli stake add \
+  --wallet.name proxy_wallet \
+  --proxy MY_COLDKEY_ADDRESS \
+  --netuid 0 \
+  --amount 1.0 \
+  --announce-only
+```
+
+</TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
 
@@ -290,8 +402,32 @@ Announcing a proxy call publishes the hash of a proxy-call that will be made in 
 
 <Tabs groupId="proxy">
 
-  <!-- <TabItem value="btcli" label="BTCLI">
-  </TabItem> -->
+<TabItem value="btcli" label="BTCLI">
+
+For delayed proxies, first announce the call using the `--announce-only` flag:
+
+```bash
+# Announce a staking operation
+btcli stake add \
+  --wallet.name proxy_wallet \
+  --proxy MY_COLDKEY_ADDRESS \
+  --netuid 0 \
+  --amount 1.0 \
+  --announce-only
+```
+
+**What this does:**
+- Creates and announces the call on-chain
+- Saves the announcement details to your local database
+- Does NOT execute the operation immediately
+- The real account can reject it during the delay period
+
+**After announcing:**
+1. Wait for the configured delay period (in blocks) to pass
+2. The real account has the option to reject the announcement
+3. Execute the call after the delay expires (see next step)
+
+</TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
 
@@ -357,8 +493,41 @@ After the announcement waiting period has passed, the delegate account can now e
 
 <Tabs groupId="proxy">
 
-  <!-- <TabItem value="btcli" label="BTCLI">
-  </TabItem> -->
+<TabItem value="btcli" label="BTCLI">
+
+After the delay period has passed, execute the announced call:
+
+```bash
+btcli proxy execute \
+  --wallet.name proxy_wallet \
+  --proxy MY_PROXY_NAME_OR_ADDRESS \
+  --real MY_COLDKEY_ADDRESS
+```
+
+**How it works:**
+- Retrieves the previously announced call from your local database
+- Verifies the delay period has passed
+- Executes the call on-chain
+- Clears the announcement
+
+**Manual execution:**
+If you need to specify call details manually:
+
+```bash
+btcli proxy execute \
+  --wallet.name proxy_wallet \
+  --proxy MY_PROXY_ADDRESS \
+  --real MY_COLDKEY_ADDRESS \
+  --delegate DELEGATE_ADDRESS \
+  --call-hash 0xabc123... \
+  --delay 10
+```
+
+:::tip Automatic tracking
+BTCLI automatically tracks announcements you make with `--announce-only` in a local database, making execution easier.
+:::
+
+</TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
 
@@ -371,7 +540,7 @@ subtensor = bt.Subtensor()
 
 delegate_address = bt.Wallet(name="PROXY_WALLET")
 real_account = "REAL_ACCOUNT_ADDRESS"
-recipient_address = "RECIPIENT_ADDRES>"
+recipient_address = "RECIPIENT_ADDRESS"
 
 transfer_amount = bt.Balance.from_tao(1.0)
 transfer_call = Balances(subtensor).transfer_keep_alive(
@@ -426,8 +595,37 @@ Removing a proxy revokes the delegate’s permission to act on behalf of the pri
 
 <Tabs groupId="proxy">
 
-  <!-- <TabItem value="btcli" label="BTCLI">
-  </TabItem> -->
+<TabItem value="btcli" label="BTCLI">
+
+```bash
+btcli proxy remove \
+  --wallet.name WALLET_NAME \
+  --delegate DELEGATE_ADDRESS \
+  --proxy-type Staking \
+  --delay 0
+```
+
+**Parameters:**
+- `--wallet.name`: Your wallet name (the real account that authorized the proxy)
+- `--delegate`: The SS58 address of the delegate account to remove
+- `--proxy-type`: Must match the proxy type used when adding
+- `--delay`: Must match the delay value used when adding
+
+**Example:**
+
+```bash
+btcli proxy remove \
+  --wallet.name my_coldkey \
+  --delegate 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
+  --proxy-type Staking \
+  --delay 0
+```
+
+:::info Removal is immediate
+Unlike delayed execution, removing a proxy takes effect immediately, regardless of any delay configured on the proxy.
+:::
+
+</TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
 
@@ -478,8 +676,15 @@ Use this to remove all proxies associated with an account.
 
 <Tabs groupId="proxy">
 
-  <!-- <TabItem value="btcli" label="BTCLI">
-  </TabItem> -->
+<TabItem value="btcli" label="BTCLI">
+
+BTCLI does not currently provide a single command to remove all proxies at once. You must remove each proxy individually using `btcli proxy remove`.
+
+:::tip SDK alternative
+To remove all proxies in one operation, use the SDK's `remove_proxies()` method.
+:::
+
+</TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
 

@@ -10,6 +10,9 @@ import TabItem from '@theme/TabItem';
 
 This page covers creating a pure proxy and executing a call using a pure proxy.
 
+See: 
+- [Proxies Overview](./)
+- [Working with Proxies](./working-with-proxies)
 
 Pure proxies are a specialized type of proxy account in Bittensor that provide enhanced security and isolation for complex delegation scenarios. Unlike standard proxies that use existing accounts, pure proxies create new, keyless accounts that can only operate through their delegator relationship.
 
@@ -53,8 +56,56 @@ Use this operation to generate a pure proxy account:
 
 <Tabs groupId="proxy">
 
-  <!-- <TabItem value="btcli" label="BTCLI">
-  </TabItem> -->
+<TabItem value="btcli" label="BTCLI">
+
+```bash
+btcli proxy create \
+  --wallet.name WALLET_NAME \
+  --proxy-type Any \
+  --delay 0 \
+  --index 0
+```
+
+**Parameters:**
+- `--wallet.name`: Your wallet name (the spawner account that will control the proxy)
+- `--proxy-type`: The type of proxy (e.g., `Any`, `Staking`, `Transfer`, etc.)
+- `--delay`: Optional delay in blocks (0 for immediate execution)
+- `--index`: Disambiguation index for creating unique addresses (usually 0)
+
+**Example output:**
+```console
+Created pure '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty' 
+from spawner '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY' 
+with proxy type 'Any' with delay 0.
+
+Extrinsic hash: 0xcd5ded2dfc505152870610233532646f6ebdd930793fa82f999d9bda2b79c2b5
+Block: 1234567
+Extrinsic index: 2
+```
+
+:::tip Save creation details
+**Record the following values** from the output—you'll need them to kill the proxy later:
+- Pure proxy address
+- Block number (height)
+- Extrinsic index
+- The index value you used
+- The proxy type you chose
+
+BTCLI will prompt you to save this to your address book for convenience.
+:::
+
+**Save to address book:**
+```bash
+# Optionally add to your local address book
+btcli config add-proxy \
+  --name my-pure-proxy \
+  --address 5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty \
+  --proxy-type Any \
+  --spawner 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY \
+  --delay 0
+```
+
+</TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
 
@@ -127,7 +178,7 @@ Importing the proxy account makes it selectable in the Polkadot-JS web app UI.
 </TabItem>
 </Tabs>
 
-Creating a pure proxy adds the spawner account as the first delegate for that proxy. Additional delegates can also be added by [registering new proxy entries](create-proxy.md#add-a-proxy) from the pure proxy account, each specifying the delegate account, proxy type, etc.
+Creating a pure proxy adds the spawner account as the first delegate for that proxy. Additional delegates can also be added by [registering new proxy entries](working-with-proxies.md#add-a-proxy) from the pure proxy account, each specifying the delegate account, proxy type, etc.
 
 ## Executing calls via a pure proxy
 
@@ -137,8 +188,58 @@ The following example shows how to execute a transfer call using a pure proxy. T
 
 <Tabs groupId="proxy">
 
-  <!-- <TabItem value="btcli" label="BTCLI">
-  </TabItem> -->
+<TabItem value="btcli" label="BTCLI">
+
+With pure proxies in BTCLI, use the `--proxy` flag with the **pure proxy address** as the value, and sign with the **spawner wallet**:
+
+```bash
+# Example: Transfer funds from the pure proxy
+btcli wallet transfer \
+  --wallet.name spawner_wallet \
+  --proxy PURE_PROXY_ADDRESS \
+  --dest RECIPIENT_ADDRESS \
+  --amount 1.0
+```
+
+**How it works:**
+- `--wallet.name spawner_wallet`: The spawner wallet signs the transaction
+- `--proxy PURE_PROXY_ADDRESS`: The pure proxy account acts as the origin
+- The transfer will appear to come from the pure proxy address
+- Funds are deducted from the pure proxy's balance
+
+**Using saved proxies:**
+If you saved the pure proxy to your address book:
+
+```bash
+btcli wallet transfer \
+  --wallet.name spawner_wallet \
+  --proxy my-pure-proxy \
+  --dest RECIPIENT_ADDRESS \
+  --amount 1.0
+```
+
+:::warning Pure proxy must be funded
+Ensure the pure proxy account has enough funds to cover both the transfer amount and transaction fees. Transfer funds to the pure proxy first using a regular transfer.
+:::
+
+**Other operations through pure proxies:**
+```bash
+# Add stake through pure proxy
+btcli stake add \
+  --wallet.name spawner_wallet \
+  --proxy PURE_PROXY_ADDRESS \
+  --netuid 0 \
+  --amount 10.0
+
+# Remove stake through pure proxy
+btcli stake remove \
+  --wallet.name spawner_wallet \
+  --proxy PURE_PROXY_ADDRESS \
+  --netuid 0 \
+  --amount 5.0
+```
+
+</TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
 
@@ -233,8 +334,64 @@ Pure proxies are killed using the `killPure` extrinsic as shown. See [source cod
 
 <Tabs groupId="proxy">
 
-  <!-- <TabItem value="btcli" label="BTCLI">
-  </TabItem> -->
+<TabItem value="btcli" label="BTCLI">
+
+```bash
+btcli proxy kill \
+  --wallet.name SPAWNER_WALLET \
+  --height BLOCK_NUMBER \
+  --ext-index EXTRINSIC_INDEX \
+  --proxy-type Any \
+  --index 0 \
+  --spawner SPAWNER_ADDRESS
+```
+
+**Required Parameters:**
+- `--wallet.name`: The spawner wallet that created the proxy
+- `--height`: The block number where the pure proxy was created
+- `--ext-index`: The extrinsic index of the creation transaction
+- `--proxy-type`: Must match the type used when creating (e.g., `Any`)
+- `--index`: Must match the index used when creating (usually `0`)
+- `--spawner`: The SS58 address of the spawner account
+
+**Example:**
+```bash
+btcli proxy kill \
+  --wallet.name my_wallet \
+  --height 1234567 \
+  --ext-index 2 \
+  --proxy-type Any \
+  --index 0 \
+  --spawner 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+```
+
+:::danger Permanent deletion
+This permanently deletes the pure proxy account. **Any funds remaining in the account will be permanently lost.** Make sure to transfer all funds out before killing the proxy.
+
+BTCLI will prompt you for confirmation with the text "KILL" to proceed.
+:::
+
+**Using delayed proxies:**
+If the pure proxy has a delay, you can optionally use the `--announce-only` flag to announce the kill operation:
+
+```bash
+# Announce the kill (for delayed proxies)
+btcli proxy kill \
+  --wallet.name my_wallet \
+  --height 1234567 \
+  --ext-index 2 \
+  --proxy-type Any \
+  --index 0 \
+  --spawner 5GrwvaEF... \
+  --announce-only
+
+# Then execute after delay expires
+btcli proxy execute \
+  --wallet.name my_wallet \
+  --proxy PURE_PROXY_ADDRESS
+```
+
+</TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
 
@@ -297,7 +454,7 @@ Killing a pure proxy deletes the account the proxy account from the blockchain. 
 :::
 
 :::info Removing vs. Killing a Pure Proxy
-Killing a pure proxy permanently deletes the account and releases its reserved deposit. Removing a proxy, on the other hand, only detaches it from the account that initiates the transaction. The pure proxy remains on-chain and can still be used if it has other proxies linked to it, but it becomes inactive once all proxy relationships are removed. For more information on how to remove a proxy, see [Remove a proxy](create-proxy.md#step-4-remove-a-proxy).
+Killing a pure proxy permanently deletes the account and releases its reserved deposit. Removing a proxy, on the other hand, only detaches it from the account that initiates the transaction. The pure proxy remains on-chain and can still be used if it has other proxies linked to it, but it becomes inactive once all proxy relationships are removed. For more information on how to remove a proxy, see [Remove a proxy](working-with-proxies.md#step-4-remove-a-proxy).
 :::
 
 ## Troubleshooting
