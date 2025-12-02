@@ -4,6 +4,10 @@ _build/
 
 # Python virtual environments
 sphinx_venv/
+venv/
+env/
+ENV/
+.venv
 
 # Python cache files
 __pycache__/

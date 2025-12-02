@@ -6,7 +6,7 @@ This guide explains how to build and publish the Bittensor Python API reference 
 
 - Python 3.9 or higher
 - Access to the Bittensor repository
-- Write access to the [`developer-docs` repository](https://github.com/opentensor/developer-docs) (for publishing)
+- Write access to the [developer-docs repository](https://github.com/opentensor/developer-docs) (for publishing)
 
 ## Quick Start
 
@@ -197,7 +197,6 @@ For literal blocks (code examples), use `::` directive:
 
 ```python
     Example::
-
         {
             "key": "value"
         }
@@ -240,7 +239,6 @@ Add blank lines between sections:
     Parameters:
         param1: Description.
         param2: Description.
-
     Returns:
         Description of return value.
 ```
