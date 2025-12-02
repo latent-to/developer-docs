@@ -57,7 +57,7 @@ This folder contains the Sphinx configuration for generating documentation for t
 
 ## Publishing Workflow
 
-1. (Optional) remove previous `rm -rf build/html/`
+1. (Optional) remove previous build `rm -rf build/html/`
 
 2. Copy output into developer-docs, e.g.
 
