@@ -11,74 +11,107 @@ This page covers the use of proxy wallets as a security feature for Bittensor op
 
 See [Proxies: Overview](./index.md)
 
+## Introduction
 
-A standard proxy links a _delegator_ to a known account. The delegator specifies:
+### Security Considerations
 
-- The _delegate_ account.
-- The allowed `ProxyType` (scope of permissions).
-- An optional delay.
+Because whole point of proxy wallets is to add security to the protected safe wallet, it is critical to observe good workstation security when handling proxies. When one wallet serves as proxy for another (the 'safe wallet'), both the safe wallet and the proxy wallet has its own a full coldkey keypair (the public key which goes into the wallet's address, and the private key, which is recoverable using the seed phrase), and must be handled with proper care. 
 
-The delegate has access to funds in the real account and can then execute calls on behalf of the real account within the constraints of the specified `ProxyType`.
+Generally, the safe wallet should be given the maximum security possible, whereas the proxy wallet (if it is carefully limited in its permissions), can be handled in a more convenient, less secure way. For example, a proxy might be loaded into a less trusted compute runtime, whereas the safe wallet's coldkey private key/seed phrase should *never* be loaded into any but the most absolutely secure device). However, depending on the proxy's configuration, compromise of a proxy wallet's coldkey can still be disastrous. For example, a proxy with `ProxyType`:`any` and `delay`:`0` can immediately perform any operation on behalf of the safe wallet, so leaking such a proxy key is just as bad as leaking the safe wallet key.
 
-:::info When to use standard proxies
-Delegating through a standard proxy is a good option when you want to entrust control to trusted individuals or organizations who can act on your behalf. In this setup, the delegate maintains their own independent signing capability, which allows them to initiate and authorize actions without relying on your key. This approach provides maximum operational flexibility while also making the delegate responsible for managing the security of their own keys.
-:::
+Before executing any operations with any coldkeys holding TAO on Bittensor main network, carefully think through the desired end result and the steps required to achieve it.
 
-## Prerequisites and setup
+See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security).
 
-To follow along with the below examples, you will need to [Run a Local Bittensor Blockchain Instance].
+### Prerequisites
 
-Once you have practiced on a local chain, and you are ready to execute these operations on Bittensor main network (`finney`), you will two wallets, one with TAO to cover some small fees:
+#### Practice/Dev
 
-- Real (delegator) account that controls funds and adds the proxy.
-- Delegate account to perform allowed actions.
+To follow along with the below examples for practice, you have two options: 
+
+- [Run a Local Bittensor Blockchain Instance](../../local-build/deploy).
+- Follow along on test network, if you have some test TAO.
+
+#### Main network
+
+Once you have practiced on a local or test chain, and you are ready to execute these operations on Bittensor main network (`finney`), you will need two wallets and enough TAO to cover some small fees:
+
+- The safe wallet or 'real account' that will be protected by the proxy.
+- The proxy wallet, which will act on behalf of the safe wallet.
 
 ## Add a Proxy
 
-You can add a proxy to authorize another account to perform actions on your behalf. To do this:
+Add a proxy record on the blockchain to designate a proxy wallet for your safe wallet.
+
+:::note consider security!
+Note that this operation requires the safe wallet's coldkey private key, which is a maximally sensitive and valuable cryptographic secret.
+
+For any wallet with real-value TAO (i.e. TAO on Bittensor's main network, `finney`), coldkey private keys and seed phrases should be handled with utmost care, only on dedicated coldkey workstations.
+
+See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security).
+:::
 
 <Tabs groupId="proxy">
 
 <TabItem value="btcli" label="BTCLI">
 
+### Add the on-chain proxy relationship
+
+Run `btcli proxy add` to create a proxy relationship between existing wallets on-chain.
+
+Note that `--wallet.name` specifies the *safe wallet*, since the private key must be loaded in for the safe wallet, not the proxy. This makes sense because it is the safe wallet that is *delegating* the authority to order transactions to the proxy wallet, so it must be authenticated with the private key using its encryption password.
+
+
 ```bash
 btcli proxy add \
-  --wallet.name WALLET_NAME \
-  --delegate DELEGATE_ADDRESS \
-  --proxy-type Any \
-  --delay 0
+  --wallet.name SAFE_WALLET_NAME \
+  --delegate PROXY_WALLET_COLDKEY_ss58 \ # Proxy wallet's coldkey
+  --proxy-type PROXY_TYPE \
 ```
 
 **Parameters:**
 - `--wallet.name`: Your wallet name (the real account that will authorize the proxy)
-- `--delegate`: The SS58 address of the delegate account
-- `--proxy-type`: The type of proxy (e.g., `Staking`, `Transfer`, `Any`, etc.)
+- `--delegate`: The SS58 address of the proxy (i.e. the delegate of transaction power)
+- `--proxy-type`: The type of proxy relationship (e.g., `Staking`, `Transfer`, `Any`, etc.)
 - `--delay`: Optional delay in blocks (0 for immediate execution)
 
-**Example:**
+
+For our example, we'll use two wallets called `PracticeSafeWallet` and `PracticeProxy`. To follow along, create two new wallets with these names and substitute their coldkey ss58 addresses:
+
+- PracticeSafeWallet: `5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt`
+- PracticeProxy: `5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe`
+
+
+To give PracticeProxy the ability to order small transfers from PracticeSafeWallet's balance, we'll use the following comand:
 
 ```bash
 btcli proxy add \
-  --wallet.name my_coldkey \
+  --wallet.name PracticeSafeWallet \
   --delegate 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
-  --proxy-type Staking \
-  --delay 0
+  --proxy-type SmallTransfer \
+  --network test
 ```
 
-:::tip Save to address book
-After adding a proxy, you can save it to your local address book for easy reference:
+```console
+✅ Your extrinsic has been included as 5951841-6
+Added proxy delegatee '5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe' from delegator
+'5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt' with proxy type 'SmallTransfer' with delay 0.
+Would you like to add this to your address book? [y/n]: y
+```
+
+### BTCLI's proxy address book
+
+You can manage records of proxy relationships in your local BTCLI config's address book.
+
+View all saved proxies with: `btcli config proxies`:
+
 
 ```bash
-btcli config add-proxy \
-  --name my-staking-proxy \
-  --address 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
-  --proxy-type Staking \
-  --spawner MY_COLDKEY_ADDRESS \
-  --delay 0
+ Name                    Address                 Spawner/Delegator       Proxy Type      Delay   Note
+ ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  practice-proxying                 5CngkPSSnhK7ot6zFv3Q…   5GrwvaEF5zXb26Fz9rcQ…   Any             0       always be awesome  
+  practice-small-transfers   5GrwvaEF5zXb26Fz9rcQ…   5FLSigC9HGRKVhB9FiEo…   SmallTransfer   0       small transfers only
 ```
-
-View all saved proxies with: `btcli config proxies`
-:::
 
 </TabItem>
 
@@ -126,7 +159,6 @@ The proxy type can be provided either by importing and using the `ProxyType` enu
 </TabItem>
 </Tabs>
 
----
 
 Your delegate wallet is now authorized to execute small transfers on behalf of the real account.
 
@@ -176,16 +208,18 @@ print(f"Proxies: {proxies}")
 3. Select the account used to create the proxy.
 4. Click the **+** icon to run the query.
 
+This returns all the proxies associated to the account and their information—`delegate`, `proxyType`, and `delay`.
 </TabItem>
 </Tabs>
 
----
-
-This returns all the proxies associated to the account and their information—`delegate`, `proxyType`, and `delay`.
 
 ## Execute a Proxy Call
 
 Use this operation to perform a transaction or call on behalf of another account through an active proxy. When executing a standard proxy, the real account initiates the transaction, but it is signed and authorized by the delegate account.
+
+:::note consider security!
+Recall that this this operation, by design, will be run in a coldkey workstation that is set up for the proxy, not the safe wallet. In this proxy workstation, the safe wallet's coldkey private key should *never* be loaded, otherwise we undermine the security advantage of the proxy. The safe wallet's coldkey private key/seed phrase should only be loaded into dedicated, highly secure, code environments provisioned specifically for that purpose.
+:::
 
 The following example shows how to execute a transfer call using a proxy. To do this:
 
@@ -193,16 +227,35 @@ The following example shows how to execute a transfer call using a proxy. To do 
 
 <TabItem value="btcli" label="BTCLI">
 
-Most btcli commands support the `--proxy` flag to execute operations through a proxy:
+Most btcli commands support the `--proxy` flag to proxy an operation on behalf of another wallet.
+
+Note that the language here may be counter-intuitive, in that the `--proxy` flag specifies the wallet *being* proxied. The wallet specified by `--wallet.name` is actually the wallet we normally call "the proxy", and `--proxy` specifies the safe wallet. It makes more sense if you think of the `--proxy` flag as specifying that the operation is being called *by* proxy for the wallet that follows, i.e., the safe wallet.
+
+More to the point, we can remember that it *must* be the case that `--wallet.name` is the proxy, and the ss58 supplied must refer to the safe wallet, since this command is meant to be run by the proxy, protecting the safe wallet; therefore the proxy's private key must be present and unlocked, not the safe wallet's.
+
+This command will transfer 18 TAO from PracticeSafeWallet to a third wallet, Miner.
+
+```bash
+
+btcli wallet transfer \
+  --wallet.name PracticeProxy \
+  --proxy 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt \
+  --destination 5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV \
+  --amount 0.333 \
+  --network test
+```
 
 ```bash
 # Example: Add stake through a proxy
 btcli stake add \
   --wallet.name Alice \
-  --proxy 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
+  --proxy 5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y \
   --netuid 0 \
-  --amount 1.0
+  --amount 0.1 \
+  --network test
+
 ```
+
 
 **Using the proxy flag:**
 - `--wallet.name`: The delegate/proxy wallet that signs the transaction
@@ -615,12 +668,15 @@ btcli proxy remove \
 
 ```bash
 btcli proxy remove \
-  --wallet.name my_coldkey \
+  --wallet.name PracticeSafeWallet \
   --delegate 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
-  --proxy-type Staking \
+  --proxy-type SmallTransfer \
   --delay 0
 ```
 
+```console
+✅Success!
+```
 :::info Removal is immediate
 Unlike delayed execution, removing a proxy takes effect immediately, regardless of any delay configured on the proxy.
 :::
