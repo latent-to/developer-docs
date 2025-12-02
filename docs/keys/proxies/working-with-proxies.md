@@ -213,7 +213,9 @@ This returns all the proxies associated to the account and their information—`
 </Tabs>
 
 
-## Execute a Proxy Call
+## Execute a 0-Delay Proxy Call
+
+A proxy wallet that is set up with a delay of 0 can execute transactions allowed by its proxy type simply by declaring which real account they are acting as proxy for. 
 
 Use this operation to perform a transaction or call on behalf of another account through an active proxy. When executing a standard proxy, the real account initiates the transaction, but it is signed and authorized by the delegate account.
 
