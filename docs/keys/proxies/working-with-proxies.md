@@ -39,6 +39,12 @@ Once you have practiced on a local or test chain, and you are ready to execute t
 - The safe wallet or 'real account' that will be protected by the proxy.
 - The proxy wallet, which will act on behalf of the safe wallet.
 
+:::warning fee
+The delegate account must hold enough funds to cover transaction fees, which are approximately 25 Rao (0.000025 TAO).
+
+See: [Fees](../../learn/fees)
+:::
+
 ## Add a Proxy
 
 Add a proxy record on the blockchain to designate a proxy wallet for your safe wallet.
@@ -51,6 +57,10 @@ For any wallet with real-value TAO (i.e. TAO on Bittensor's main network, `finne
 See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security).
 :::
 
+
+:::info
+Multiple proxy relationships can exist between a pair of wallets, as long as each proxy entry uses a different `ProxyType`. Attempting to register a duplicate entry with the same delegate and `ProxyType` will result in a `proxy.Duplicate` error.
+:::
 <Tabs groupId="proxy">
 
 <TabItem value="btcli" label="BTCLI">
@@ -60,7 +70,6 @@ See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security).
 Run `btcli proxy add` to create a proxy relationship between existing wallets on-chain.
 
 Note that `--wallet.name` specifies the *safe wallet*, since the private key must be loaded in for the safe wallet, not the proxy. This makes sense because it is the safe wallet that is *delegating* the authority to order transactions to the proxy wallet, so it must be authenticated with the private key using its encryption password.
-
 
 ```bash
 btcli proxy add \
@@ -82,7 +91,7 @@ For our example, we'll use two wallets called `PracticeSafeWallet` and `Practice
 - PracticeProxy: `5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe`
 
 
-To give PracticeProxy the ability to order small transfers from PracticeSafeWallet's balance, we'll use the following comand:
+To give PracticeProxy the ability to order small transfers from PracticeSafeWallet's balance immediately (with 0 delay), we'll use the following comand:
 
 ```bash
 btcli proxy add \
@@ -101,12 +110,19 @@ Would you like to add this to your address book? [y/n]: y
 
 ### BTCLI's proxy address book
 
-You can manage records of proxy relationships in your local BTCLI config's address book.
 
-View all saved proxies with: `btcli config proxies`:
+Use ` btcli config add-proxy` to configure your local BTCLI with a proxy relationship. Make sure to follow the instructions carefully depending on whether:
+1. You are using a proxy relationship between pre-existing wallets, as described on this page. This covers most use cases for proxies.
+1. You are using a pure proxy. See [pure proxies](./pure-proxies).
 
+View all saved proxies with: 
 
 ```bash
+btcli config proxies
+```
+
+
+```console
  Name                    Address                 Spawner/Delegator       Proxy Type      Delay   Note
  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   practice-proxying                 5CngkPSSnhK7ot6zFv3Q…   5GrwvaEF5zXb26Fz9rcQ…   Any             0       always be awesome  
@@ -133,10 +149,7 @@ response = subtensor.add_proxy(
    delay=0,    # optional delay in blocks
 )
 
-if response.success:
-   print(f"✓ Proxy added successfully!")
-else:
-   print(f"✗ Failed: {response.message}")
+print(response)
 
 ```
 
@@ -159,12 +172,6 @@ The proxy type can be provided either by importing and using the `ProxyType` enu
 </TabItem>
 </Tabs>
 
-
-Your delegate wallet is now authorized to execute small transfers on behalf of the real account.
-
-:::info
-A delegator can assign multiple proxies to the same delegate account. However, each proxy entry must use a unique `ProxyType`. Attempting to register a duplicate entry with the same delegate and `ProxyType` will result in a `proxy.Duplicate` error.
-:::
 
 ### Check an Account’s Proxies
 
@@ -223,6 +230,8 @@ Use this operation to perform a transaction or call on behalf of another account
 Recall that this this operation, by design, will be run in a coldkey workstation that is set up for the proxy, not the safe wallet. In this proxy workstation, the safe wallet's coldkey private key should *never* be loaded, otherwise we undermine the security advantage of the proxy. The safe wallet's coldkey private key/seed phrase should only be loaded into dedicated, highly secure, code environments provisioned specifically for that purpose.
 :::
 
+
+
 The following example shows how to execute a transfer call using a proxy. To do this:
 
 <Tabs groupId="proxy">
@@ -245,46 +254,41 @@ btcli wallet transfer \
   --destination 5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV \
   --amount 0.333 \
   --network test
-```
-
-```bash
-# Example: Add stake through a proxy
-btcli stake add \
-  --wallet.name Alice \
-  --proxy 5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y \
-  --netuid 0 \
-  --amount 0.1 \
-  --network test
 
 ```
-
-
-**Using the proxy flag:**
-- `--wallet.name`: The delegate/proxy wallet that signs the transaction
+**Proxy params:**
+- `--wallet.name`: The proxy wallet that signs the transaction on behalf of the real account.
 - `--proxy`: The real account's SS58 address (or proxy name from address book)
-- The operation will be executed on behalf of the real account
 
-**Common commands that support proxies:**
-- `btcli stake add --proxy <real_account>`
-- `btcli stake remove --proxy <real_account>`
-- `btcli stake move --proxy <real_account>`
-- `btcli wallet transfer --proxy <real_account>`
-- And many other commands...
+```console
+Initiating transfer on network: test
+Do you want to transfer:
+  amount: 0.3330 τ
+  from: PracticeProxy : 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe
+  to: 5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV
+  for fee: 0.0000 τ
+Transferring is not the same as staking. To instead stake, use btcli stake add instead.
+Proceed with transfer? [y/n]: y
+Enter your password:
+Decrypting...
+✅ Finalized
+Block Hash: 0xc8f8cba3395cd34d6dd2e2bc3b8e1b5e6b6eeb60754dac398b08bca735a6a32d
+Balance:
+  98.7739 τ ➡ 98.4409 τ
+```
 
-:::info Using saved proxies
+
+:::tip Using saved proxies
 If you saved a proxy to your address book with `btcli config add-proxy`, you can reference it by name:
 
 ```bash
-btcli stake add \
-  --wallet.name proxy_wallet \
-  --proxy my-coldkey \
-  --netuid 0 \
-  --amount 1.0
+btcli wallet transfer \
+  --wallet.name PracticeProxy \
+  --proxy PracticeSafeWallet \
+  --destination 5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV \
+  --amount 0.333 \
+  --network test
 ```
-:::
-
-:::warning Delegate account fees
-The delegate account (proxy wallet) must hold enough TAO to cover transaction fees (approximately 0.000025 TAO).
 :::
 
 </TabItem>
@@ -368,281 +372,8 @@ The runtime verifies that the call is permitted by the proxy filter and that any
 After submitting the transaction, check the Polkadot.JS web app's **Explorer** page for a `balances.Transfer` event. Notice the sender is the delegator account.
 :::
 
-:::warning
-
-- With the SmallTransfer proxy type, transfers are limited to less than 0.5 TAO (500,000,000 RAO). Use the Transfer proxy type for amounts above this limit. See [source code: SmallTransfer limit definition](https://github.com/opentensor/subtensor/blob/main/common/src/lib.rs#L43).
-- The delegate account must hold enough funds to cover transaction fees, which are approximately 25 µTAO (0.000025 TAO).
-  :::
-
 </TabItem>
 </Tabs>
-
----
-
-## Handle delayed proxies
-
-If you configured a non-zero delay when creating a proxy, you must first make an announcement before executing the proxy call. Attempting to execute a proxy call before announcing returns a `proxy.Unannounced` error.
-
-<details>
-<summary><strong>Generate call hash</strong></summary>
-
-Announcing a delayed proxy call requires the hash of the call that you intend to execute. Therefore, you must first generate the call hash of the transaction you want to carry out. To generate the call hash:
-
-<Tabs groupId="proxy">
-
-<TabItem value="btcli" label="BTCLI">
-
-When using `--announce-only`, BTCLI automatically generates and stores the call hash for you. You don't need to manually generate it.
-
-```bash
-# The call hash is automatically generated and saved
-btcli stake add \
-  --wallet.name proxy_wallet \
-  --proxy MY_COLDKEY_ADDRESS \
-  --netuid 0 \
-  --amount 1.0 \
-  --announce-only
-```
-
-</TabItem>
-
-<TabItem value="sdk" label="Bittensor SDK">
-
-```python
-import bittensor as bt
-from bittensor.core.extrinsics.pallets import Balances
-
-subtensor = bt.Subtensor()
-
-recipient_address = "RECIPIENT_WALLET"
-
-# Create the call you want to execute later
-transfer_amount = bt.Balance.from_tao(1.0)
-transfer_call = Balances(subtensor).transfer_keep_alive(
-   dest=recipient_address,
-   value=transfer_amount.rao,
-)
-
-# Get the call hash
-call_hash = "0x" + transfer_call.call_hash.hex()
-
-if response.success:
-   print(f"  Call hash: {call_hash}")
-else:
-   print(f"✗ Failed: {response.message}")
-```
-
-  </TabItem>
-<TabItem value="polkadot-app" label="Polkadot app">
-1. Go to **Developer** → **Extrinsics**.
-2. Under “**using the selected account**”, pick the delegate account.
-3. Under “**submit the following extrinsic**”, choose the `balances` pallet and call the `transferKeepAlive(dest, value)` extrinsic.
-4. Fill the parameters:
-      - `dest`: select the recipient account.
-      - `value`: input the amount to be transferred in RAO—1 TAO = 1<sup>9</sup>RAO.
-5. Copy the hex code shown in the **encoded call data** field. You will use this to announce the call in the next step.
-
-:::info
-Do not submit the transaction after entering the parameters. Only copy the encoded call data once all parameters are provided.
-:::
-
-</TabItem>
-</Tabs>
-
-</details>
-
-### Announce a proxy call
-
-Announcing a proxy call publishes the hash of a proxy-call that will be made in the future. To announce a delayed call:
-
-<Tabs groupId="proxy">
-
-<TabItem value="btcli" label="BTCLI">
-
-For delayed proxies, first announce the call using the `--announce-only` flag:
-
-```bash
-# Announce a staking operation
-btcli stake add \
-  --wallet.name proxy_wallet \
-  --proxy MY_COLDKEY_ADDRESS \
-  --netuid 0 \
-  --amount 1.0 \
-  --announce-only
-```
-
-**What this does:**
-- Creates and announces the call on-chain
-- Saves the announcement details to your local database
-- Does NOT execute the operation immediately
-- The real account can reject it during the delay period
-
-**After announcing:**
-1. Wait for the configured delay period (in blocks) to pass
-2. The real account has the option to reject the announcement
-3. Execute the call after the delay expires (see next step)
-
-</TabItem>
-
-<TabItem value="sdk" label="Bittensor SDK">
-
-```python
-import bittensor as bt
-from bittensor.core.chain_data.proxy import ProxyType
-from bittensor.core.extrinsics.pallets import Balances
-
-subtensor = bt.Subtensor()
-
-delegate_address = bt.Wallet(name="PROXY_WALLET")
-real_account = "REAL_ACCOUNT_ADDRESS"
-recipient_address = "RECIPIENT_WALLET"
-
-# Create the call you want to execute later
-transfer_amount = bt.Balance.from_tao(1.0)
-transfer_call = Balances(subtensor).transfer_keep_alive(
-    dest=recipient_address,
-    value=transfer_amount.rao,
-)
-
-# Get the call hash
-call_hash = "0x" + transfer_call.call_hash.hex()
-
-# Announce the call
-response = subtensor.announce_proxy(
-    wallet=delegate_address,
-    real_account_ss58=real_account,
-    call_hash=call_hash,
-)
-
-if response.success:
-    print("✓ Proxy call announced!")
-    print(f"  Call hash: {call_hash}")
-else:
-    print(f"✗ Failed: {response.message}")
-```
-
-:::info
-Next, wait for the duration of the configured delay before executing the call. During the waiting period, the delegate can cancel the announcement—`subtensor.remove_proxy_announcement()`, while the real account retains final authority to reject it—`subtensor.reject_proxy_announcement()`.
-:::
-</TabItem>
-<TabItem value="polkadot-app" label="Polkadot app">
-
-1. Go to **Developer** → **Extrinsics** tab.
-2. Choose the `proxy` pallet and select the `announce(real, call_hash)` extrinsic.
-3. Fill the parameters:
-   - `real`: select the real account used to create the proxy.
-   - `callHash`: paste the call hash of the transaction to be executed.
-4. Click **Submit Transaction** and sign the transaction from the delegate account.
-
-:::info
-Next, wait for the duration of the configured delay before executing the call. During the waiting period, the delegate can cancel the announcement—`removeAnnouncement(real, callHash)`, while the real account retains final authority to reject it—`rejectAnnouncement(delegate, callHash)`.
-:::
-</TabItem>
-</Tabs>
-
----
-
-### Execute a delayed proxy call
-
-After the announcement waiting period has passed, the delegate account can now execute the proxy if the real account did not reject it. Attempting to execute the proxy before the waiting period passes returns a `proxy.Unannounced` error. To execute a delayed proxy call:
-
-<Tabs groupId="proxy">
-
-<TabItem value="btcli" label="BTCLI">
-
-After the delay period has passed, execute the announced call:
-
-```bash
-btcli proxy execute \
-  --wallet.name proxy_wallet \
-  --proxy MY_PROXY_NAME_OR_ADDRESS \
-  --real MY_COLDKEY_ADDRESS
-```
-
-**How it works:**
-- Retrieves the previously announced call from your local database
-- Verifies the delay period has passed
-- Executes the call on-chain
-- Clears the announcement
-
-**Manual execution:**
-If you need to specify call details manually:
-
-```bash
-btcli proxy execute \
-  --wallet.name proxy_wallet \
-  --proxy MY_PROXY_ADDRESS \
-  --real MY_COLDKEY_ADDRESS \
-  --delegate DELEGATE_ADDRESS \
-  --call-hash 0xabc123... \
-  --delay 10
-```
-
-:::tip Automatic tracking
-BTCLI automatically tracks announcements you make with `--announce-only` in a local database, making execution easier.
-:::
-
-</TabItem>
-
-<TabItem value="sdk" label="Bittensor SDK">
-
-```python
-import bittensor as bt
-from bittensor.core.chain_data.proxy import ProxyType
-from bittensor.core.extrinsics.pallets import Balances
-
-subtensor = bt.Subtensor()
-
-delegate_address = bt.Wallet(name="PROXY_WALLET")
-real_account = "REAL_ACCOUNT_ADDRESS"
-recipient_address = "RECIPIENT_ADDRESS"
-
-transfer_amount = bt.Balance.from_tao(1.0)
-transfer_call = Balances(subtensor).transfer_keep_alive(
-    dest=recipient_address,
-    value=transfer_amount.rao,
-)
-
-# Execute the announced call
-response = subtensor.proxy_announced(
-    wallet=delegate_address,
-    delegate_ss58=delegate_address.coldkeypub.ss58_address,
-    real_account_ss58=real_account,
-    force_proxy_type=ProxyType.Any,
-    call=transfer_call,
-)
-
-if response.success:
-    print("✓ Delayed proxy executed successfully!")
-else:
-    print(f"✗ Failed: {response.message}")
-```
-
-  </TabItem>
-<TabItem value="polkadot-app" label="Polkadot app">
-1. Go to **Developer** → **Extrinsics**.
-2. Under “using the selected account”, choose the delegate account.
-3. Select the `proxy` pallet and choose `proxyAnnounced(delegate, real, forceProxyType, call)`.
-4. Fill the parameters:
-   - `delegate`: select the delegate account.
-   - `real`: select the real account used to create the proxy.
-   - `forceProxyType`: leave option unchecked.
-   - `call`: the call to be made by the delegate account. Fill the following parameters:
-   - Select the `balances` pallet and choose the `transferKeepAlive(dest, value)` extrinsic.
-      - `dest`: select the recipient account.
-      - `value`: input the amount to be transferred in RAO—1 TAO = 1<sup>9</sup>RAO.
-5. Click **Submit Transaction** and sign the transaction from the delegate account.
-
-</TabItem>
-</Tabs>
-
----
-
-:::info
-
-- The call details on the executed proxy must exactly match the original announcement. Any change to the call or call hash will result in a `proxy.Unannounced` error.
-- Once a delayed proxy call is executed, its announcement is cleared. To execute another proxy with the same details, you must create a new announcement and wait for the waiting period to pass.
-  :::
 
 ## Remove a Proxy
 
@@ -666,7 +397,7 @@ btcli proxy remove \
 - `--proxy-type`: Must match the proxy type used when adding
 - `--delay`: Must match the delay value used when adding
 
-**Example:**
+For example, let's remove the 0-delay SmallTransfer proxy relationship we established above between our PracticeSafeWallet and PracticeProxy wallets.
 
 ```bash
 btcli proxy remove \
@@ -677,6 +408,8 @@ btcli proxy remove \
 ```
 
 ```console
+This will remove a proxy of type SmallTransfer for delegate 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe.Do you want
+to proceed? [y/n]: y
 ✅Success!
 ```
 :::info Removal is immediate
@@ -772,7 +505,363 @@ else:
 </TabItem>
 </Tabs>
 
+## Announce and Execute a Delayed Proxy Call
+
+If a proxy wallet has been given proxy powers to make a transaction with a delay, they must announce the call beforehand, and then wait the delay interval (specified by the `delay` parameter when the proxy relationship is created).
+
+For example, the following command gives PracticeProxy the ability to make large transfers, but only after an announcement-delay period of 100 blocks:
+
+<Tabs groupId="proxy">
+<TabItem value="btcli" label="BTCLI">
+```bash
+btcli proxy add \
+  --wallet.name PracticeSafeWallet \
+  --delegate 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
+  --proxy-type Transfer \
+  --delay 100 \
+  --network test
+```
+
+```console
+Added proxy delegatee '5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe' from delegator
+'5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt' with proxy type 'Transfer' with delay 100.
+```
+
+</TabItem>
+<TabItem value="sdk" label="Bittensor SDK">
+
+```python
+import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
+
+subtensor = bt.Subtensor()
+
+real_account = bt.Wallet(name="WALLET_NAME") # Your real account
+delegate_address = "DELEGATE_ADDRESS" # Your delegate wallet address
+
+response = subtensor.add_proxy(
+   wallet=real_account,
+   delegate_ss58=delegate_address,
+   proxy_type=ProxyType.Any,
+   delay=100,    # optional delay in blocks
+)
+
+print(response)
+
+```
+
+
+</TabItem>
+</Tabs>
+
+
+### Generate call hash
+
+Announcing a delayed proxy call requires the hash of the call that you intend to execute. Therefore, you must first generate the call hash of the transaction you want to carry out. To generate the call hash:
+
+<Tabs groupId="proxy">
+
+<TabItem value="btcli" label="BTCLI">
+
+When using `--announce-only`, BTCLI automatically generates and stores the call hash for you. You don't need to manually generate it.
+
+```bash
+# The call hash is automatically generated and saved
+btcli wallet transfer \
+  --wallet.name PracticeProxy \
+  --proxy 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt \
+  --destination 5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV \
+  --amount 0.333 \
+  --network test \
+  --announce-only
+
+  
+```
+```console
+Do you want to transfer:
+  amount: 0.3330 τ
+  from: PracticeProxy : 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe
+  to: 5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV
+  for fee: 0.0000 τ
+Transferring is not the same as staking. To instead stake, use btcli stake add instead.
+Proceed with transfer? [y/n]: y
+Enter your password:
+Decrypting...
+Added entry b'D\x99-\x9d\xa2:BqnQ\xb7\xb6\x99M\xc8\xe1\xd6;\xb2\x810\x15\x82y\xb3XLD\x90#\xd92' at block 5953000 to your
+ProxyAnnouncements address book.
+✅ Finalized
+Block Hash: 0x1c6378ee38b8c27f161b646125ec301f1aa52bffd63b090ec0c0876c9cc56ba5
+Balance:
+  98.4409 τ ➡ 98.4409 τ
+```
+
+Now that the announcement has been you have to finalize it...
+
+
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
+
+```python
+import bittensor as bt
+from bittensor.core.extrinsics.pallets import Balances
+
+subtensor = bt.Subtensor()
+
+recipient_address = "RECIPIENT_WALLET"
+
+# Create the call you want to execute later
+transfer_amount = bt.Balance.from_tao(1.0)
+transfer_call = Balances(subtensor).transfer_keep_alive(
+   dest=recipient_address,
+   value=transfer_amount.rao,
+)
+
+# Get the call hash
+call_hash = "0x" + transfer_call.call_hash.hex()
+
+print(response)
+```
+
+</TabItem>
+
+<TabItem value="polkadot-app" label="Polkadot app">
+1. Go to **Developer** → **Extrinsics**.
+2. Under “**using the selected account**”, pick the delegate account.
+3. Under “**submit the following extrinsic**”, choose the `balances` pallet and call the `transferKeepAlive(dest, value)` extrinsic.
+4. Fill the parameters:
+      - `dest`: select the recipient account.
+      - `value`: input the amount to be transferred in RAO—1 TAO = 1<sup>9</sup>RAO.
+5. Copy the hex code shown in the **encoded call data** field. You will use this to announce the call in the next step.
+
+:::info
+Do not submit the transaction after entering the parameters. Only copy the encoded call data once all parameters are provided.
+:::
+
+</TabItem>
+</Tabs>
+
+
+### Announce a proxy call
+
+Announcing a proxy call publishes the hash of a proxy-call that will be made in the future. To announce a delayed call:
+
+<Tabs groupId="proxy">
+
+<TabItem value="btcli" label="BTCLI">
+
+For delayed proxies, first announce the call using the `--announce-only` flag:
+
+```bash
+# Announce a staking operation
+btcli wallet transfer \
+  --wallet.name proxy_wallet \
+  --proxy MY_COLDKEY_ADDRESS \
+  --netuid 0 \
+  --amount 1.0 \
+  --announce-only
+```
+
+**What this does:**
+- Creates and announces the call on-chain
+- Saves the announcement details to your local database
+- Does NOT execute the operation immediately
+- The real account can reject it during the delay period
+
+**After announcing:**
+1. Wait for the configured delay period (in blocks) to pass
+2. The real account has the option to reject the announcement
+3. Execute the call after the delay expires (see next step)
+
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
+
+```python
+import bittensor as bt
+from bittensor.core.extrinsics.pallets import Balances
+
+subtensor = bt.Subtensor(network="test")
+
+# The proxy wallet (delegate) - this wallet signs the announcement
+delegate_wallet = bt.Wallet(name="PracticeProxy")
+
+# The real account (safe wallet) being proxied
+real_account_ss58 = "5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt"
+
+# Recipient of the transfer
+recipient_address = "5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV"
+
+# Create the call you want to execute later
+# IMPORTANT: Remember these exact parameters - you must use them when executing
+transfer_amount = bt.Balance.from_tao(7.0)
+transfer_call = Balances(subtensor).transfer_keep_alive(
+    dest=recipient_address,
+    value=transfer_amount.rao,
+)
+
+# Get the call hash
+call_hash = "0x" + transfer_call.call_hash.hex()
+print(f"Call hash to announce: {call_hash}")
+
+# Announce the call
+response = subtensor.announce_proxy(
+    wallet=delegate_wallet,
+    real_account_ss58=real_account_ss58,
+    call_hash=call_hash,
+)
+
+print(response)
+# Save the call_hash - you'll need it to execute after the delay
+```
+
+:::info
+Next, wait for the duration of the configured delay before executing the call. During the waiting period, the delegate can cancel the announcement—`subtensor.remove_proxy_announcement()`, while the real account retains final authority to reject it—`subtensor.reject_proxy_announcement()`.
+:::
+</TabItem>
+<TabItem value="polkadot-app" label="Polkadot app">
+
+1. Go to **Developer** → **Extrinsics** tab.
+2. Choose the `proxy` pallet and select the `announce(real, call_hash)` extrinsic.
+3. Fill the parameters:
+   - `real`: select the real account used to create the proxy.
+   - `callHash`: paste the call hash of the transaction to be executed.
+4. Click **Submit Transaction** and sign the transaction from the delegate account.
+
+:::info
+Next, wait for the duration of the configured delay before executing the call. During the waiting period, the delegate can cancel the announcement—`removeAnnouncement(real, callHash)`, while the real account retains final authority to reject it—`rejectAnnouncement(delegate, callHash)`.
+:::
+</TabItem>
+</Tabs>
+
 ---
+
+### Execute a delayed proxy call
+
+After the announcement waiting period has passed, the delegate account can now execute the proxy if the real account did not reject it. Attempting to execute the proxy before the waiting period passes returns a `proxy.Unannounced` error. To execute a delayed proxy call:
+
+<Tabs groupId="proxy">
+
+<TabItem value="btcli" label="BTCLI">
+
+After the delay period has passed, execute the announced call:
+
+```bash
+btcli proxy execute \
+  --wallet.name PracticeProxy \
+  --proxy 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt \
+  --real 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt
+  --network test 
+
+  btcli wallet transfer \
+  --wallet.name PracticeProxy \
+  --proxy 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt \
+  --destination 5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV \
+  --amount 0.333 \
+  --network test \
+  --announce-only
+```
+
+**How it works:**
+- Retrieves the previously announced call from your local database
+- Verifies the delay period has passed
+- Executes the call on-chain
+- Clears the announcement
+
+**Manual execution:**
+If you need to specify call details manually:
+
+```bash
+btcli proxy execute \
+  --wallet.name PracticeProxy \
+  --proxy 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt \
+  --real 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt \
+  --delegate 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
+  --call-hash 0x1c6378ee38b8c27f161b646125ec301f1aa52bffd63b090ec0c0876c9cc56ba5 \
+  --network test
+```
+
+:::tip Automatic tracking
+BTCLI automatically tracks announcements you make with `--announce-only` in a local database, making execution easier.
+:::
+
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
+
+```python
+import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import Balances
+
+subtensor = bt.Subtensor(network="test")
+
+# The proxy wallet (delegate) - this wallet signs the transaction
+delegate_wallet = bt.Wallet(name="PracticeProxy")
+
+# The real account (safe wallet) being proxied
+real_account_ss58 = "5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt"
+
+# Recipient of the transfer
+recipient_address = "5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV"
+
+# IMPORTANT: The call must EXACTLY match the announced call (same amount, same recipient)
+transfer_amount = bt.Balance.from_tao(7.0)
+transfer_call = Balances(subtensor).transfer_keep_alive(
+    dest=recipient_address,
+    value=transfer_amount.rao,
+)
+
+# Verify the call hash matches what was announced
+print(f"Call hash: 0x{transfer_call.call_hash.hex()}")
+
+# Execute the announced call
+response = subtensor.proxy_announced(
+    wallet=delegate_wallet,
+    delegate_ss58=delegate_wallet.coldkeypub.ss58_address,
+    real_account_ss58=real_account_ss58,
+    force_proxy_type=ProxyType.Any,
+    call=transfer_call,
+)
+
+print(response)
+# ExtrinsicResponse:
+#   success: True
+#   message: Success
+```
+
+:::warning Call hash must match
+The call you execute **must have the exact same parameters** as the call you announced. Different amount = different call hash = `Unannounced` error.
+:::
+
+  </TabItem>
+<TabItem value="polkadot-app" label="Polkadot app">
+1. Go to **Developer** → **Extrinsics**.
+2. Under "using the selected account", choose the delegate account.
+3. Select the `proxy` pallet and choose `proxyAnnounced(delegate, real, forceProxyType, call)`.
+4. Fill the parameters:
+   - `delegate`: select the delegate account.
+   - `real`: select the real account used to create the proxy.
+   - `forceProxyType`: leave option unchecked.
+   - `call`: the call to be made by the delegate account. Fill the following parameters:
+   - Select the `balances` pallet and choose the `transferKeepAlive(dest, value)` extrinsic.
+      - `dest`: select the recipient account.
+      - `value`: input the amount to be transferred in RAO—1 TAO = 1<sup>9</sup>RAO.
+5. Click **Submit Transaction** and sign the transaction from the delegate account.
+
+</TabItem>
+</Tabs>
+
+---
+
+:::info
+
+- The call details on the executed proxy must exactly match the original announcement. Any change to the call or call hash will result in a `proxy.Unannounced` error.
+- Once a delayed proxy call is executed, its announcement is cleared. To execute another proxy with the same details, you must create a new announcement and wait for the waiting period to pass.
+  :::
+
+
+
 
 ## Troubleshooting
 
