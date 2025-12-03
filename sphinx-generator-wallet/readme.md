@@ -14,8 +14,8 @@ This folder contains the Sphinx configuration for generating documentation for t
 
    ```bash
    cd sphinx-generator-wallet
-   python3 -m venv venv
-   source venv/bin/activate
+   python3 -m venv sphinx_venv
+   source sphinx_venv/bin/activate
    ```
 
 2. **Install Sphinx dependencies**

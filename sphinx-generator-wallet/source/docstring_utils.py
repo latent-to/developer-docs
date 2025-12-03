@@ -43,7 +43,13 @@ PARAM_RE = re.compile(
     r"^`?(?P<name>[a-zA-Z0-9_\.]+)`?\s*(?:\((?P<type>[^)]+)\))?\s*[:\-]\s*(?P<desc>.+)$"
 )
 
-IGNORED_HEADERS = {"arguments:", "args:", "# arguments", "# args", "# arguments:", "# args:", "returns:", "# returns", "# returns:", "# returns", "arguments", "args", "returns"}
+IGNORED_HEADERS = {
+    "arguments:", "args:", "# arguments", "# args", "# arguments:", "# args:",
+    "returns:", "# returns", "# returns:", "# returns", 
+    "arguments", "args", "returns",
+    "raises:", "raised:", "# raises", "# raised", "# raises:", "# raised:",
+    "raises", "raised"
+}
 
 
 def load_rust_docstrings() -> Dict[str, str]:
@@ -106,6 +112,35 @@ def _parse_param_line(line: str) -> List[str]:
     return parts
 
 
+def _parse_raises_line(line: str) -> List[str]:
+    """Parse a raises/exceptions line into Sphinx format."""
+    stripped = line.strip().lstrip("*- ")
+    
+    # Handle markdown-style: `* `ExceptionName` - description`
+    if stripped.startswith("`") and "`" in stripped[1:]:
+        parts = stripped.split("`", 2)
+        if len(parts) >= 3:
+            exc_name = parts[1].strip()
+            desc = parts[2].lstrip("- ").strip()
+            return [f":raises {exc_name}: {desc}"]
+    
+    # Handle format: `* ExceptionName: description` or `ExceptionName - description`
+    if ":" in stripped or "-" in stripped:
+        # Split on first : or -
+        sep = ":" if ":" in stripped else "-"
+        parts = stripped.split(sep, 1)
+        if len(parts) == 2:
+            exc_name = parts[0].strip()
+            desc = parts[1].strip()
+            # Remove "Raised if" prefix from description if present
+            if desc.lower().startswith("raised if"):
+                desc = desc[9:].strip().capitalize()
+            return [f":raises {exc_name}: {desc}"]
+    
+    # Default: treat the whole line as a raises entry
+    return [f":raises: {stripped}"] if stripped else []
+
+
 def format_docstring(text: str) -> List[str]:
     lines = text.strip().splitlines()
     result: List[str] = []
@@ -141,6 +176,13 @@ def format_docstring(text: str) -> List[str]:
             content = " ".join(s for s in content_parts if s.strip())
             if content:
                 result.append(f":returns: {content}")
+        elif state == "raises":
+            # Ensure there's a blank line before raises field
+            if result and result[-1] != "":
+                result.append("")
+            # Parse raises entries similar to params
+            for entry in buffer:
+                result.extend(_parse_raises_line(entry))
         else:
             result.extend(buffer)
         buffer = []
@@ -160,7 +202,13 @@ def format_docstring(text: str) -> List[str]:
                 flush()
                 if result and result[-1] != "":
                     result.append("")
-                state = "params" if ("arguments" in lower or "args" in lower) else "returns"
+                # Determine state based on header type
+                if "arguments" in lower or "args" in lower:
+                    state = "params"
+                elif "raises" in lower or "raised" in lower:
+                    state = "raises"
+                else:
+                    state = "returns"
                 header_match = True
                 break
         if header_match:
