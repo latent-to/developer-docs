@@ -21,7 +21,7 @@ Generally, the safe wallet should be given the maximum security possible, wherea
 
 Before executing any operations with any coldkeys holding TAO on Bittensor main network, carefully think through the desired end result and the steps required to achieve it.
 
-See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security).
+See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
 
 ### Prerequisites
 
@@ -54,7 +54,7 @@ Note that this operation requires the safe wallet's coldkey private key, which i
 
 For any wallet with real-value TAO (i.e. TAO on Bittensor's main network, `finney`), coldkey private keys and seed phrases should be handled with utmost care, only on dedicated coldkey workstations.
 
-See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security).
+See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
 :::
 
 
