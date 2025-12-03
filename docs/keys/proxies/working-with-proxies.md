@@ -224,25 +224,23 @@ This returns all the proxies associated to the account and their information—`
 
 A proxy wallet that is set up with a delay of 0 can execute transactions allowed by its proxy type simply by declaring which real account they are acting as proxy for. 
 
-Use this operation to perform a transaction or call on behalf of another account through an active proxy. When executing a standard proxy, the real account initiates the transaction, but it is signed and authorized by the delegate account.
-
 :::note consider security!
-Recall that this this operation, by design, will be run in a coldkey workstation that is set up for the proxy, not the safe wallet. In this proxy workstation, the safe wallet's coldkey private key should *never* be loaded, otherwise we undermine the security advantage of the proxy. The safe wallet's coldkey private key/seed phrase should only be loaded into dedicated, highly secure, code environments provisioned specifically for that purpose.
+This operation will be run in a coldkey workstation that is set up for the *proxy wallet*, not the *safe wallet/real account*. For main network (`finney`) wallets, the safe wallet's coldkey private key should *never* be loaded onto the proxy workstation, otherwise we undermine the security advantage of the proxy relationship. The safe wallet's coldkey private key/seed phrase should be kept in cold storage as muchas possible, and should only be loaded into dedicated, highly secure, code environments provisioned specifically for that purpose.
 :::
-
-
-
-The following example shows how to execute a transfer call using a proxy. To do this:
 
 <Tabs groupId="proxy">
 
 <TabItem value="btcli" label="BTCLI">
 
-Most btcli commands support the `--proxy` flag to proxy an operation on behalf of another wallet.
+Many `btcli` commands support the `--proxy` flag to proxy an operation on behalf of another wallet.
 
-Note that the language here may be counter-intuitive, in that the `--proxy` flag specifies the wallet *being* proxied. The wallet specified by `--wallet.name` is actually the wallet we normally call "the proxy", and `--proxy` specifies the safe wallet. It makes more sense if you think of the `--proxy` flag as specifying that the operation is being called *by* proxy for the wallet that follows, i.e., the safe wallet.
+:::note terminology and parameter names
+The language here may be counter-intuitive, in that the `--proxy` flag specifies the wallet *being* proxied.
 
-More to the point, we can remember that it *must* be the case that `--wallet.name` is the proxy, and the ss58 supplied must refer to the safe wallet, since this command is meant to be run by the proxy, protecting the safe wallet; therefore the proxy's private key must be present and unlocked, not the safe wallet's.
+The wallet specified by `--wallet.name` is actually the wallet we normally call "the proxy", and `--proxy` specifies the safe wallet or 'real account'. It makes more sense if you think of the `--proxy` flag as specifying that the operation is being called *by* proxy for the wallet that follows, i.e., the safe wallet.
+
+More to the point, we can logically infer that it *must* be the case that `--wallet.name` refers to the proxy, and the ss58 supplied (in the `--proxy` field) must refer to the safe wallet, since this command is meant to be run by the proxy, protecting the safe wallet. Therefore, the proxy's private key must be present and unlocked, not the safe wallet's, which should remain in cold storage.
+:::
 
 This command will transfer 18 TAO from PracticeSafeWallet to a third wallet, Miner.
 
