@@ -456,6 +456,17 @@ document.write(`
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">check_and_update_encryption</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">print_result</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_prompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Check the version of keyfile and update if needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>print_result</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, prints the result of the encryption check.</p></li>
+<li><p><strong>no_prompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, skips user prompts during the update process.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the keyfile was successfully updated to the latest encryption method.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -468,12 +479,22 @@ document.write(`
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">decrypt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Decrypts the file under the path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password used to decrypt the data. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">encrypt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Encrypts the file under the path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password used to encrypt the data. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -497,6 +518,14 @@ document.write(`
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">get_keypair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Returns the keypair from path, decrypts data if the file is encrypted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password used to decrypt the data. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Keypair loaded from the file.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -542,7 +571,8 @@ document.write(`
 <dl class="py attribute">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">path</span></span></dt>
-<dd></dd></dl>
+<dd><p>Returns the wallet path.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py">
@@ -554,12 +584,30 @@ document.write(`
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">save_password_to_env</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Saves the key’s password to the associated local environment variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password to save. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The base64-encoded encrypted password.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">set_keypair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keypair</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encrypt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Writes the keypair to the file and optionally encrypts data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keypair</strong> (<em>Keypair</em>) – The keypair object to be stored.</p></li>
+<li><p><strong>encrypt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, encrypts the keyfile data.</p></li>
+<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, overwrites existing file without prompting.</p></li>
+<li><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password used to encrypt the data. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -569,8 +617,11 @@ document.write(`
 <span class="sig-prename descclassname"><span class="pre">bittensor_wallet.keyfile.</span></span><span class="sig-name descname"><span class="pre">ask_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validation_required</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Prompts the user to enter a password for key encryption.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The valid password entered by the user.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>validation_required</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, validates the password against policy requirements.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The valid password entered by the user.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -602,7 +653,10 @@ document.write(`
 <dd class="field-odd"><p><strong>keyfile_data</strong> (<em>PyBytes</em>) – The keyfile data to be loaded.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The Keypair loaded from bytes. Raises: KeyFileError: Raised if the passed PyBytes cannot construct a keypair object.</p>
+<dd class="field-even"><p>The Keypair loaded from bytes.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>KeyFileError</strong> – The passed pybytes cannot construct a keypair object.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -683,10 +737,10 @@ document.write(`
 <dd><p>Returns true if the keyfile data is ansible encrypted.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>keyfile_data</strong> – The bytes to validate.</p>
+<dd class="field-odd"><p><strong>validate.</strong> (<em>keyfile_data - The bytes to</em>)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><cite>is_ansible</cite> - True if the data is ansible encrypted.</p>
+<dd class="field-even"><p><cite>is_ansible</cite> - <code class="docutils literal notranslate"><span class="pre">True</span></code> if the data is ansible encrypted.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -697,7 +751,7 @@ document.write(`
 <dd><p>Returns true if the keyfile data is legacy encrypted.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>keyfile_data</strong> – The bytes to validate.</p>
+<dd class="field-odd"><p><strong>validate.</strong> (<em>keyfile_data - The bytes to</em>)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><cite>is_legacy</cite> - <cite>true</cite> if the data is legacy encrypted.</p>
@@ -709,10 +763,14 @@ document.write(`
 <dt class="sig sig-object py">
 <span class="sig-prename descclassname"><span class="pre">bittensor_wallet.keyfile.</span></span><span class="sig-name descname"><span class="pre">keyfile_data_is_encrypted_nacl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyfile_data</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Returns <cite>true</cite> if the keyfile data is NaCl encrypted.</p>
-<ul class="simple">
-<li><p><cite>keyfile_data</cite> - Bytes to validate</p></li>
-<li><p><cite>is_nacl</cite> - <cite>true</cite> if the data is ansible encrypted.</p></li>
-</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>validate</strong> (<em>keyfile_data - Bytes to</em>)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><cite>is_nacl</cite> - <cite>true</cite> if the data is ansible encrypted.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -769,18 +827,39 @@ document.write(`
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">check_and_update_encryption</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">print_result</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_prompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Check the version of keyfile and update if needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>print_result</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, prints the result of the encryption check.</p></li>
+<li><p><strong>no_prompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, skips user prompts during the update process.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the keyfile was successfully updated to the latest encryption method.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">decrypt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Decrypts the file under the path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password used to decrypt the data. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">encrypt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Encrypts the file under the path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password used to encrypt the data. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -804,6 +883,14 @@ document.write(`
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">get_keypair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Returns the keypair from path, decrypts data if the file is encrypted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password used to decrypt the data. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Keypair loaded from the file.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -844,6 +931,16 @@ document.write(`
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">set_keypair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keypair</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encrypt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Writes the keypair to the file and optionally encrypts data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keypair</strong> (<em>Keypair</em>) – The keypair object to be stored.</p></li>
+<li><p><strong>encrypt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, encrypts the keyfile data.</p></li>
+<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, overwrites existing file without prompting.</p></li>
+<li><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password used to encrypt the data. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -856,6 +953,17 @@ document.write(`
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">check_and_update_encryption</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">print_result</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_prompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Check the version of keyfile and update if needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>print_result</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, prints the result of the encryption check.</p></li>
+<li><p><strong>no_prompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, skips user prompts during the update process.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the keyfile was successfully updated to the latest encryption method.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -868,12 +976,22 @@ document.write(`
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">decrypt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Decrypts the file under the path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password used to decrypt the data. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">encrypt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Encrypts the file under the path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password used to encrypt the data. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -897,6 +1015,14 @@ document.write(`
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">get_keypair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Returns the keypair from path, decrypts data if the file is encrypted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password used to decrypt the data. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Keypair loaded from the file.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -942,7 +1068,8 @@ document.write(`
 <dl class="py attribute">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">path</span></span></dt>
-<dd></dd></dl>
+<dd><p>Returns the wallet path.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py">
@@ -954,12 +1081,30 @@ document.write(`
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">save_password_to_env</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Saves the key’s password to the associated local environment variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password to save. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The base64-encoded encrypted password.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">set_keypair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keypair</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encrypt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Writes the keypair to the file and optionally encrypts data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keypair</strong> (<em>Keypair</em>) – The keypair object to be stored.</p></li>
+<li><p><strong>encrypt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, encrypts the keyfile data.</p></li>
+<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, overwrites existing file without prompting.</p></li>
+<li><p><strong>password</strong> (<em>Option&lt;String&gt;</em>) – The password used to encrypt the data. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, asks for user input.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

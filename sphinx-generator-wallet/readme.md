@@ -59,7 +59,7 @@ This folder contains the Sphinx configuration for generating documentation for t
 
 1. (Optional) remove previous build `rm -rf build/html/`
 
-2. Copy output into developer-docs, e.g.
+2. Copy output into `developer-docs`. The generated docs must be copied to the `static/btwallet-api/html` folder within your `develoer docs` directory e.g.
 
    ```bash
    rm -rf /path/to/developer-docs/static/btwallet-api/html
