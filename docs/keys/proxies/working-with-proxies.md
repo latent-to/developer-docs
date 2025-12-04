@@ -563,38 +563,6 @@ Announcing a delayed proxy call requires the hash of the call that you intend to
 
 When using `--announce-only`, BTCLI automatically generates and stores the call hash for you. You don't need to manually generate it.
 
-```bash
-# The call hash is automatically generated and saved
-btcli wallet transfer \
-  --wallet.name PracticeProxy \
-  --proxy 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt \
-  --destination 5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV \
-  --amount 0.333 \
-  --network test \
-  --announce-only
-
-  
-```
-```console
-Do you want to transfer:
-  amount: 0.3330 τ
-  from: PracticeProxy : 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe
-  to: 5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV
-  for fee: 0.0000 τ
-Transferring is not the same as staking. To instead stake, use btcli stake add instead.
-Proceed with transfer? [y/n]: y
-Enter your password:
-Decrypting...
-Added entry b'D\x99-\x9d\xa2:BqnQ\xb7\xb6\x99M\xc8\xe1\xd6;\xb2\x810\x15\x82y\xb3XLD\x90#\xd92' at block 5953000 to your
-ProxyAnnouncements address book.
-✅ Finalized
-Block Hash: 0x1c6378ee38b8c27f161b646125ec301f1aa52bffd63b090ec0c0876c9cc56ba5
-Balance:
-  98.4409 τ ➡ 98.4409 τ
-```
-
-Now that the announcement has been you have to finalize it...
-
 
 </TabItem>
 
@@ -651,14 +619,35 @@ Announcing a proxy call publishes the hash of a proxy-call that will be made in 
 For delayed proxies, first announce the call using the `--announce-only` flag:
 
 ```bash
-# Announce a staking operation
+# The call hash is automatically generated and saved
 btcli wallet transfer \
-  --wallet.name proxy_wallet \
-  --proxy MY_COLDKEY_ADDRESS \
-  --netuid 0 \
-  --amount 1.0 \
+  --wallet.name PracticeProxy \
+  --proxy 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt \
+  --destination 5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV \
+  --amount 0.333 \
+  --network test \
   --announce-only
+
+  
 ```
+```console
+Do you want to transfer:
+  amount: 0.3330 τ
+  from: PracticeProxy : 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe
+  to: 5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV
+  for fee: 0.0000 τ
+Transferring is not the same as staking. To instead stake, use btcli stake add instead.
+Proceed with transfer? [y/n]: y
+Enter your password:
+Decrypting...
+Added entry b'D\x99-\x9d\xa2:BqnQ\xb7\xb6\x99M\xc8\xe1\xd6;\xb2\x810\x15\x82y\xb3XLD\x90#\xd92' at block 5953000 to your
+ProxyAnnouncements address book.
+✅ Finalized
+Block Hash: 0x1c6378ee38b8c27f161b646125ec301f1aa52bffd63b090ec0c0876c9cc56ba5
+Balance:
+  98.4409 τ ➡ 98.4409 τ
+```
+
 
 **What this does:**
 - Creates and announces the call on-chain
@@ -731,8 +720,6 @@ Next, wait for the duration of the configured delay before executing the call. D
 :::
 </TabItem>
 </Tabs>
-
----
 
 ### Execute a delayed proxy call
 
@@ -850,7 +837,6 @@ The call you execute **must have the exact same parameters** as the call you ann
 </TabItem>
 </Tabs>
 
----
 
 :::info
 
