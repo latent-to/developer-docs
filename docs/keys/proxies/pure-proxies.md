@@ -319,18 +319,23 @@ Ensure the pure proxy account holds enough funds to cover both the transfer and 
 
 - After submitting the transaction, check the Polkadot.JS web app's **Explorer** page for a `balances.Transfer` event. Notice the sender is the pure proxy account.
 - Ensure the pure proxy account holds enough funds to cover both the transfer and transaction fees.
-  :::
+:::
 
 </TabItem>
 </Tabs>
 
----
 
 ## Kill a pure proxy
 
 Killing a pure proxy requires the proxy account address, the spawner account, and the proxy's complete creation details—the block height, extrinsic index, and the disambiguation index used during creation. Once executed, the pure proxy is permanently removed, and any funds remaining in the proxy account are lost.
 
 Pure proxies are killed using the `killPure` extrinsic as shown. See [source code: `killPure` implementation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L380-L406):
+
+:::danger Permanent deletion
+Killing a pure proxy permanently deletes the pure proxy account. **Any funds remaining in the account will be permanently lost.** Make sure to transfer all funds out before killing the proxy.
+
+BTCLI will prompt you for confirmation with the text "KILL" to proceed.
+:::
 
 <Tabs groupId="proxy">
 
@@ -355,42 +360,37 @@ btcli proxy kill \
 - `--spawner`: The SS58 address of the spawner account
 
 **Example:**
+
+Suppose we created a pure proxy and received output as follows:
+```console
+ btcli proxy create \
+  --wallet.name PracticeSafeWallet \
+  --proxy-type Transfer \
+  --delay 0 \
+  --index 0
+
+This will create a Pure Proxy of type Transfer. Do you want to proceed? [y/n]: y
+Enter your password:
+Decrypting...
+l✅ Your extrinsic has been included as 5960138-7
+Created pure '5DvEUipraHsk26renzART8NKuskd3yacsJq64wKHRGTpncCn' from spawner '5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt' with proxy type 'Transfer' with delay 0.
+```
+We use the block number/extrinsic index as follows when identifying the pure proxy to kill:
 ```bash
 btcli proxy kill \
-  --wallet.name my_wallet \
-  --height 1234567 \
-  --ext-index 2 \
-  --proxy-type Any \
-  --index 0 \
-  --spawner 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+  --wallet.name PracticeSafeWallet \
+  --proxy-type Transfer \
+  --spawner 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt
+
+Enter the block number at which the proxy was created: 5960138
+Enter the extrinsic index of the `btcli proxy create` event.: 5960138
+
+This will kill a Pure Proxy account of type Transfer.
+All access to this account will be lost. Any funds held in it will be inaccessible.To proceed, enter KILL: KILL
+Enter your password:
+Decrypting...
+✅Success!
 ```
-
-:::danger Permanent deletion
-This permanently deletes the pure proxy account. **Any funds remaining in the account will be permanently lost.** Make sure to transfer all funds out before killing the proxy.
-
-BTCLI will prompt you for confirmation with the text "KILL" to proceed.
-:::
-
-**Using delayed proxies:**
-If the pure proxy has a delay, you can optionally use the `--announce-only` flag to announce the kill operation:
-
-```bash
-# Announce the kill (for delayed proxies)
-btcli proxy kill \
-  --wallet.name my_wallet \
-  --height 1234567 \
-  --ext-index 2 \
-  --proxy-type Any \
-  --index 0 \
-  --spawner 5GrwvaEF... \
-  --announce-only
-
-# Then execute after delay expires
-btcli proxy execute \
-  --wallet.name my_wallet \
-  --proxy PURE_PROXY_ADDRESS
-```
-
 </TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
@@ -449,13 +449,7 @@ Ensure that all parameters are correct before making this call. The call will fa
 </TabItem>
 </Tabs>
 
-:::warning
-Killing a pure proxy deletes the account the proxy account from the blockchain. Any funds in the account are permanently lost.
-:::
 
-:::info Removing vs. Killing a Pure Proxy
-Killing a pure proxy permanently deletes the account and releases its reserved deposit. Removing a proxy, on the other hand, only detaches it from the account that initiates the transaction. The pure proxy remains on-chain and can still be used if it has other proxies linked to it, but it becomes inactive once all proxy relationships are removed. For more information on how to remove a proxy, see [Remove a proxy](working-with-proxies.md#step-4-remove-a-proxy).
-:::
 
 ## Troubleshooting
 
