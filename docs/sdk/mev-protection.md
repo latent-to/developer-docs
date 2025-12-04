@@ -10,9 +10,9 @@ The SDK provides comprehensive support for MEV Shield protection, allowing you t
 2. **MEV protection parameter** - Add `mev_protection=True` to any supported extrinsic
 
 
-## Changes
+## SDK Implementation
 
-### Core MEV Shield Implementation
+### Core MEV Shield
 
 - **Added `submit_encrypted_extrinsic`** (sync & async): Core extrinsic function that encrypts and submits transactions through the MEV Shield pallet
 - **Added `mev_submit_encrypted`** to `Subtensor` and `AsyncSubtensor`: High-level wrapper method for submitting encrypted transactions
@@ -22,7 +22,7 @@ The SDK provides comprehensive support for MEV Shield protection, allowing you t
   - `get_mev_shield_submission`: Retrieves a specific encrypted submission
   - `get_mev_shield_submissions`: Retrieves all encrypted submissions for an account
 
-### Extrinsic Updates
+### Extrinsic Functions
 
 All extrinsic functions now support MEV protection via the `mev_protection` parameter:
 
@@ -41,7 +41,7 @@ All extrinsic functions now support MEV protection via the `mev_protection` para
 - **Transfer**: `transfer_extrinsic`
 - **Start Call**: `start_call_extrinsic`
 
-### API Updates
+### API
 
 - **`Subtensor` and `AsyncSubtensor` methods**: All methods that call the above extrinsics now accepts:
   - `mev_protection: bool = DEFAULT_MEV_PROTECTION` as a keyword-only argument
@@ -49,7 +49,7 @@ All extrinsic functions now support MEV protection via the `mev_protection` para
 - **`ExtrinsicResponse`**: Added `mev_extrinsic_receipt` field to store the receipt of the revealed (decrypted and executed) MEV Shield extrinsic
 - **`BT_MEV_PROTECTION`**: Environment variable to enable MEV protection by default. See [Environment Variables](./env-vars.md#bt_mev_protection).
 
----
+
 
 ## Usage
 
