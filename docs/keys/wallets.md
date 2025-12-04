@@ -14,6 +14,12 @@ For detailed procedures for handling wallets and keys, see: [Working with keys](
 
 For detailed security considerations, see: [Coldkey and Hotkey Workstation Security](./coldkey-hotkey-security.md)
 
+:::tip Protect your coldkey with proxies
+For operations you perform regularly (like staking), consider using **proxy wallets** to keep your coldkey in secure cold storage. Proxies allow limited, delayed operations on behalf of your main wallet—if a proxy is compromised, delays give you time to reject unauthorized transactions, and restricted permissions limit the damage.
+
+See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey with least-privilege proxy relationships.
+:::
+
 ## What are wallets and keys?
 
 There are many different _wallet applications_, but the core of your wallet is one or more cryptographic key-pairs, referred to as **coldkey** and **hotkey**.

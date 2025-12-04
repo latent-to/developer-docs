@@ -417,12 +417,12 @@ print(response)
 </TabItem>
 </Tabs>
 
-:::tip Important Parameters
+**Parameters**:
 - **`netuid`**: The subnet ID where you want to stake (0 = root network in this example)
 - **`hotkey`**: The validator hotkey to stake to (subnet 0 top validator from metagraph)
 - **`amount_staked`**: The amount to stake in RAO, use `Balance.from_tao(amount).rao` to convert
 - **`force_proxy_type`**: Must match the proxy type that was set when creating the proxy relationship
-:::
+
 
 Verify the stake was added:
 
@@ -545,14 +545,14 @@ print(response)
 </TabItem>
 </Tabs>
 
-:::tip Important Parameters
+**Parameters**:
 - **`origin_netuid`**: The subnet ID where the stake is currently located (0 = root network in this example)
 - **`origin_hotkey_ss58`**: The validator hotkey where the stake is currently staked (subnet 0 top validator)
 - **`destination_netuid`**: The subnet ID where you want to move the stake (14 in this example)
 - **`destination_hotkey_ss58`**: The validator hotkey where you want to stake (subnet 14 top validator)
 - **`alpha_amount`**: The amount of stake to move, use `Balance.from_tao(amount)` (Balance object is automatically converted)
 - **`force_proxy_type`**: Must match the proxy type that was set when creating the proxy relationship
-:::
+
 
 Verify the stake was moved:
 

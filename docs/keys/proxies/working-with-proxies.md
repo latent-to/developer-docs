@@ -16,13 +16,13 @@ This page covers each step in the use of proxy wallets as a security feature for
 
 See:
 - [Proxies: Overview](./index.md)
-- [Staking with a Proxy](./staking-with-proxy.md): Learn about proxy types and how proxies work
+- [Staking with a Proxy](./staking-with-proxy.md)
 
 ## Introduction
 
 ### Security Considerations
 
-Because whole point of proxy wallets is to add security to the protected safe wallet, it is critical to observe good workstation security when handling proxies. When one wallet serves as proxy for another (the 'safe wallet'), both the safe wallet and the proxy wallet has its own a full coldkey keypair (the public key which goes into the wallet's address, and the private key, which is recoverable using the seed phrase), and must be handled with proper care. 
+Proxy wallets are a powerful security feature, but to get the full benefits, it is critical to observe good key security. When one wallet serves as proxy for another (the 'safe wallet'), both the safe wallet and the proxy wallet have their own full coldkey keypair (the public key which goes into the wallet's address, and the private key, which is recoverable using the seed phrase), and must be handled with proper care. 
 
 Generally, the safe wallet should be given the maximum security possible, whereas the proxy wallet (if it is carefully limited in its permissions), can be handled in a more convenient, less secure way. For example, a proxy might be loaded into a less trusted compute runtime, whereas the safe wallet's coldkey private key/seed phrase should *never* be loaded into any but the most absolutely secure device). However, depending on the proxy's configuration, compromise of a proxy wallet's coldkey can still be disastrous. For example, a proxy with `ProxyType`:`any` and `delay`:`0` can immediately perform any operation on behalf of the safe wallet, so leaking such a proxy key is just as bad as leaking the safe wallet key.
 
