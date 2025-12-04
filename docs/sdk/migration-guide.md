@@ -24,8 +24,9 @@ Bittensor SDK v10.0 is a **major breaking release** with significant improvement
 
 - **Multiple Incentive Mechanisms** - Full SDK support for running multiple evaluation mechanisms per subnet with independent weight matrices and emissions ([details](#multiple-incentive-mechanisms-support))
 - **Root claim implementation**: Adds support for setting and managing root claims directly through the SDK
-- **Proxy implementation**: Provides complete support for creating, managing, and interacting with proxy accounts directly through the SDK.
+- **Proxy implementation**: Complete SDK support for creating, managing, and executing calls through proxy accounts ([details](#proxy-support))
 - **Crowdloan implementation**: Adds support for creating, managing, and interacting with crowdloans directly through the SDK
+- **MEV Shield protection**: Encrypt transactions to protect against front-running and MEV attacks ([details](./mev-protection.md))
 - **Transaction simulation** - `sim_swap()` calculates exact token yields without executing transactions ([details](#simulate-token-swaps))
 - **Fee estimation** - `get_extrinsic_fee()` estimates blockchain transaction costs before submission ([details](#estimate-transaction-fees))
 - **BlockInfo class** - Rich blockchain block information objects ([details](#blockinfo-class))
@@ -90,6 +91,12 @@ mechanism2_response = subtensor.set_weights(wallet, netuid=1, uids, weights2, me
 ```
 
 #### Querying Mechanism-Specific Data on the Metagraph:
+
+### Proxy Support
+
+Full SDK support for **proxy accounts** is now implemented. Proxies allow one wallet to perform Bittensor operations on behalf of another, enabling enhanced security by keeping your main coldkey in cold storage while a proxy handles day-to-day operations.
+
+See [Proxies: Overview](../keys/proxies/index.md) and [Working with Proxies](../keys/proxies/working-with-proxies.md) for complete documentation.
 
 All metagraph queries now accept a `mechid` parameter:
 
@@ -565,6 +572,49 @@ This ensures the SDK function response correctly reflects the blockchain transac
 :::note
 When `raise_error=False`, extrinsic functions do not raise exceptions; all error information is captured inside the returned `ExtrinsicResponse` object. Set `raise_error=True` if you prefer exceptions to be raised directly for error cases.
 :::
+
+### Keyword-Only Arguments
+
+All extrinsics and related `Subtensor` methods now use **keyword-only arguments** (indicated by `*,` in the function signature). This means that certain parameters must be passed by name rather than position, improving code clarity and preventing accidental argument misplacement.
+
+The `*` symbol in Python function signatures creates a boundary: all parameters after `*` must be passed as keyword arguments. This helps prevent bugs from positional argument confusion, especially when functions have many parameters.
+
+#### Example: Keyword-Only Arguments
+
+```python
+# Before (positional arguments could cause confusion):
+subtensor.add_stake(
+    wallet, 
+    1, 
+    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", 
+    amount, 
+    False, 
+    False, 
+    0.005, 
+    False, 
+    None, 
+    False, 
+    True, 
+    True
+)
+# Which parameter is which? Hard to tell!
+
+# After (keyword-only arguments enforce clarity):
+subtensor.add_stake(
+    wallet, 
+    1, 
+    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", 
+    amount, 
+    False, 
+    False, 
+    0.005, 
+    mev_protection=True,  # Must be passed by name if provided
+    period=None,  # Must be passed by name if provided
+    raise_error=False,  # Must be passed by name if provided
+    wait_for_inclusion=True,  # Must be passed by name if provided
+    wait_for_finalization=True  # Must be passed by name if provided
+)
+```
 
 ### ExtrinsicResponse Return Type
 

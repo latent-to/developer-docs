@@ -50,7 +50,6 @@ All extrinsic functions now support MEV protection via the `mev_protection` para
 - **`BT_MEV_PROTECTION`**: Environment variable to enable MEV protection by default. See [Environment Variables](./env-vars.md#bt_mev_protection).
 
 
-
 ## Usage
 
 ### 1. Direct MEV Shield Submission
@@ -152,47 +151,3 @@ response = sub.register_subnet(
 
 print(response)
 ```
-
-### 3. Keyword-Only Arguments
-
-All extrinsics and related `Subtensor` methods now use **keyword-only arguments** (indicated by `*,` in the function signature). This means that certain parameters must be passed by name rather than position, improving code clarity and preventing accidental argument misplacement.
-
-The `*` symbol in Python function signatures creates a boundary: all parameters after `*` must be passed as keyword arguments. This helps prevent bugs from positional argument confusion, especially when functions have many parameters.
-
-#### Example: Keyword-Only Arguments
-
-```python
-# Before (positional arguments could cause confusion):
-subtensor.add_stake(
-    wallet, 
-    1, 
-    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", 
-    amount, 
-    False, 
-    False, 
-    0.005, 
-    False, 
-    None, 
-    False, 
-    True, 
-    True
-)
-# Which parameter is which? Hard to tell!
-
-# After (keyword-only arguments enforce clarity):
-subtensor.add_stake(
-    wallet, 
-    1, 
-    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", 
-    amount, 
-    False, 
-    False, 
-    0.005, 
-    mev_protection=True,  # Must be passed by name if provided
-    period=None,  # Must be passed by name if provided
-    raise_error=False,  # Must be passed by name if provided
-    wait_for_inclusion=True,  # Must be passed by name if provided
-    wait_for_finalization=True  # Must be passed by name if provided
-)
-```
----
