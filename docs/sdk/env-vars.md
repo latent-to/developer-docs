@@ -127,6 +127,16 @@ The SDK uses `default` if the variable is not set,
 
 The SDK uses `bittensor.core.settings.WALLETS_DIR` if the variable is not set.
 
+## MEV Protection
+
+### `BT_MEV_PROTECTION`
+
+When set to `true` or `1`, enables MEV Shield protection by default for all supported extrinsics. When enabled, transactions are automatically encrypted and submitted through the MEV Shield pallet to protect against front-running and MEV attacks.
+
+The SDK uses `False` if the variable is not set.
+
+See [MEV Shield Protection](./mev-protection.md) for details on using MEV protection.
+
 ## Testing
 
 ### `FAST_BLOCKS`

@@ -219,6 +219,7 @@ const sidebars = {
         "sdk/migration-guide",
         "subnets/asyncio",
         "sdk/managing-subtensor-connections",
+        "sdk/mev-protection",
       ],
     },
 

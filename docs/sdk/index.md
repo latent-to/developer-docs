@@ -85,6 +85,12 @@ Perform operations asynchronously for better performance.
 - [Working with Concurrency](../subnets/asyncio.md): Use async/await patterns with the SDK
 - [Managing Subtensor Connections](./managing-subtensor-connections.md): Handle async connections
 
+## MEV Protection
+
+Protect your transactions from front-running and MEV attacks using the MEV Shield.
+
+- [MEV Shield Protection](./mev-protection.md): Encrypt transactions to prevent MEV attacks on staking, registration, and other operations
+
 ## API Reference
 
 - [Bittensor API Reference](./bt-api-ref.md): Complete API documentation

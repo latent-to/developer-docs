@@ -15,7 +15,8 @@ See also:
 - [Staking/delegation overview](./delegation)
 - [Understanding pricing and anticipating slippage](../learn/slippage)
 - [Price protection when staking](../learn/price-protection)
-- [Staking with a Proxy](../keys/proxies/staking-with-proxy): Perform staking operations while keeping your coldkey in cold storage
+- [MEV Shield Protection](../sdk/mev-protection.md)
+- [Staking with a Proxy](../keys/proxies/staking-with-proxy)storage
 
 :::tip
 Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.0005 TAO.
