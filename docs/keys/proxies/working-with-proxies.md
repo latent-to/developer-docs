@@ -7,7 +7,12 @@ import TabItem from '@theme/TabItem';
 
 # Working with Proxies
 
-This page covers the use of proxy wallets as a security feature for Bittensor operations.
+This page covers each step in the use of proxy wallets as a security feature for Bittensor operations:
+
+- Creating proxy relationships between existing wallets
+- Executing transactions with 0-day proxy wallets.
+- Announcing and then executing transactions with a non-zero delay period.
+- Removing proxy relationships
 
 See [Proxies: Overview](./index.md)
 
@@ -32,7 +37,7 @@ To follow along with the below examples for practice, you have two options:
 - [Run a Local Bittensor Blockchain Instance](../../local-build/deploy).
 - Follow along on test network, if you have some test TAO.
 
-#### Main network
+#### Main Network
 
 Once you have practiced on a local or test chain, and you are ready to execute these operations on Bittensor main network (`finney`), you will need two wallets and enough TAO to cover some small fees:
 
@@ -45,7 +50,7 @@ The delegate account must hold enough funds to cover transaction fees, which are
 See: [Fees](../../learn/fees)
 :::
 
-## Add a Proxy
+## Add a Proxy Relationship
 
 Add a proxy record on the blockchain to designate a proxy wallet for your safe wallet.
 
