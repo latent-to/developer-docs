@@ -1,0 +1,1223 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>bittensor.core.extrinsics.pallets.subtensor_module &#8212; Bittensor SDK Docs  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/bittensor-custom.css?v=c1dfe055" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/extrinsics/pallets/subtensor_module/index';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="bittensor.core.extrinsics.pallets.sudo" href="../sudo/index.html" />
+    <link rel="prev" title="bittensor.core.extrinsics.pallets.proxy" href="../proxy/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/logo.svg" class="logo__image only-light" alt="Bittensor SDK Docs  documentation - Home"/>
+    <img src="../../../../../../_static/logo-dark-mode.svg" class="logo__image only-dark pst-js-only" alt="Bittensor SDK Docs  documentation - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 current active has-children"><a class="reference internal" href="../../../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../axon/index.html">bittensor.core.axon</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../chain_data/index.html">bittensor.core.chain_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../config/index.html">bittensor.core.config</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../dendrite/index.html">bittensor.core.dendrite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../errors/index.html">bittensor.core.errors</a></li>
+<li class="toctree-l4 current active"><a class="reference internal" href="../../index.html">bittensor.core.extrinsics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../metagraph/index.html">bittensor.core.metagraph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../settings/index.html">bittensor.core.settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../stream/index.html">bittensor.core.stream</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../subtensor/index.html">bittensor.core.subtensor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../synapse/index.html">bittensor.core.synapse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tensor/index.html">bittensor.core.tensor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../threadpool/index.html">bittensor.core.threadpool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../types/index.html">bittensor.core.types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../utils/index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/axon_utils/index.html">bittensor.utils.axon_utils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/balance/index.html">bittensor.utils.balance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/btlogging/index.html">bittensor.utils.btlogging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/formatting/index.html">bittensor.utils.formatting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/networking/index.html">bittensor.utils.networking</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/registration/index.html">bittensor.utils.registration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/version/index.html">bittensor.utils.version</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/weight_utils/index.html">bittensor.utils.weight_utils</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/opentensor/btcli" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/opentensor/btcli/blob/main/autoapi/bittensor/core/extrinsics/pallets/subtensor_module/index.rst?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/opentensor/btcli/issues/new?title=Issue%20on%20page%20%2Fautoapi/bittensor/core/extrinsics/pallets/subtensor_module/index.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/autoapi/bittensor/core/extrinsics/pallets/subtensor_module/index.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>bittensor.core.extrinsics.pallets.subtensor_module</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule"><code class="docutils literal notranslate"><span class="pre">SubtensorModule</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.add_stake"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.add_stake()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.add_stake_limit"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.add_stake_limit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.burned_register"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.burned_register()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.claim_root"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.claim_root()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.commit_mechanism_weights"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.commit_mechanism_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.commit_timelocked_mechanism_weights"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.commit_timelocked_mechanism_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.decrease_take"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.decrease_take()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.increase_take"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.increase_take()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.move_stake"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.move_stake()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.register"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.register()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.register_network"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.register_network()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.remove_stake"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.remove_stake()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.remove_stake_full_limit"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.remove_stake_full_limit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.remove_stake_limit"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.remove_stake_limit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.reveal_mechanism_weights"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.reveal_mechanism_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.root_register"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.root_register()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.serve_axon"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.serve_axon()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.serve_axon_tls"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.serve_axon_tls()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_children"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.set_children()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_coldkey_auto_stake_hotkey"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.set_coldkey_auto_stake_hotkey()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_mechanism_weights"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.set_mechanism_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_pending_childkey_cooldown"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.set_pending_childkey_cooldown()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_root_claim_type"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.set_root_claim_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_subnet_identity"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.set_subnet_identity()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.start_call"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.start_call()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.swap_stake"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.swap_stake()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.swap_stake_limit"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.swap_stake_limit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.transfer_stake"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.transfer_stake()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-bittensor.core.extrinsics.pallets.subtensor_module">
+<span id="bittensor-core-extrinsics-pallets-subtensor-module"></span><h1>bittensor.core.extrinsics.pallets.subtensor_module<a class="headerlink" href="#module-bittensor.core.extrinsics.pallets.subtensor_module" title="Link to this heading">#</a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule" title="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubtensorModule</span></code></a></p></td>
+<td><p>Factory class for creating GenericCall objects for SubtensorModule pallet functions.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.pallets.subtensor_module.</span></span><span class="sig-name descname"><span class="pre">SubtensorModule</span></span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.CallBuilder" title="bittensor.core.extrinsics.pallets.base.CallBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bittensor.core.extrinsics.pallets.base.CallBuilder</span></code></a></p>
+<p>Factory class for creating GenericCall objects for SubtensorModule pallet functions.</p>
+<p>This class provides methods to create GenericCall instances for all SubtensorModule pallet extrinsics.</p>
+<p>Works with both sync (Subtensor) and async (AsyncSubtensor) instances. For async operations, pass an AsyncSubtensor
+instance and await the result.</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p># Sync usage
+call = SubtensorModule(subtensor).start_call(netuid=14)
+response = subtensor.sign_and_send_extrinsic(call=call, …)</p>
+<p># Async usage
+call = await SubtensorModule(async_subtensor).start_call(netuid=14)
+response = await async_subtensor.sign_and_send_extrinsic(call=call, …)</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.add_stake">
+<span class="sig-name descname"><span class="pre">add_stake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount_staked</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.add_stake" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.add_stake.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the subnet to add stake to.</p></li>
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey SS58 address associated with validator.</p></li>
+<li><p><strong>amount_staked</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Amount of stake in RAO to add.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.add_stake_limit">
+<span class="sig-name descname"><span class="pre">add_stake_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount_staked</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_price</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_partial</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.add_stake_limit" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.add_stake_limit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the subnet to add stake to.</p></li>
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey SS58 address associated with validator.</p></li>
+<li><p><strong>amount_staked</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Amount of stake in RAO to add.</p></li>
+<li><p><strong>limit_price</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The limit price expressed in units of RAO per one Alpha.</p></li>
+<li><p><strong>allow_partial</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, allows partial unstaking if price tolerance exceeded.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.burned_register">
+<span class="sig-name descname"><span class="pre">burned_register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.burned_register" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.burned_register.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the subnet to register on.</p></li>
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey SS58 address associated with the neuron.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.claim_root">
+<span class="sig-name descname"><span class="pre">claim_root</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subnets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.claim_root" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.claim_root.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>subnets</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The netuids of the subnets to claim root for. Think about it as netuids.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.commit_mechanism_weights">
+<span class="sig-name descname"><span class="pre">commit_mechanism_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mecid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit_hash</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.commit_mechanism_weights" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.commit_mechanism_weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The unique identifier of the subnet.</p></li>
+<li><p><strong>mecid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The subnet mechanism unique identifier.</p></li>
+<li><p><strong>commit_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hash of the commitment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.commit_timelocked_mechanism_weights">
+<span class="sig-name descname"><span class="pre">commit_timelocked_mechanism_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mecid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reveal_round</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit_reveal_version</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.commit_timelocked_mechanism_weights" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.commit_mechanism_weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The unique identifier of the subnet.</p></li>
+<li><p><strong>mecid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The subnet mechanism unique identifier.</p></li>
+<li><p><strong>commit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><em>bytes</em></a>) – Raw bytes of the encrypted and compressed uids &amp; weights values for setting weights.</p></li>
+<li><p><strong>reveal_round</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Drand round number when weights have to be revealed. Based on Drand Quicknet network.</p></li>
+<li><p><strong>commit_reveal_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The version of the commit-reveal in the chain.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.decrease_take">
+<span class="sig-name descname"><span class="pre">decrease_take</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">take</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.decrease_take" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.decrease_take.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – SS58 address of the hotkey to set take for.</p></li>
+<li><p><strong>take</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The percentage of rewards that the delegate claims from nominators.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.increase_take">
+<span class="sig-name descname"><span class="pre">increase_take</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">take</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.increase_take" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.increase_take.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – SS58 address of the hotkey to set take for.</p></li>
+<li><p><strong>take</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The percentage of rewards that the delegate claims from nominators.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.move_stake">
+<span class="sig-name descname"><span class="pre">move_stake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.move_stake" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.move_stake.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the source subnet.</p></li>
+<li><p><strong>origin_hotkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the source hotkey.</p></li>
+<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the destination subnet.</p></li>
+<li><p><strong>destination_hotkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the destination hotkey.</p></li>
+<li><p><strong>alpha_amount</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Amount of origin Balance to move.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coldkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonce</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">work</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.register" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.register.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the subnet to register on.</p></li>
+<li><p><strong>coldkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The coldkey SS58 address associated with the neuron.</p></li>
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey SS58 address associated with the neuron.</p></li>
+<li><p><strong>block_number</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – POW block number.</p></li>
+<li><p><strong>nonce</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – POW nonce.</p></li>
+<li><p><strong>work</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – List representation of POW seal.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.register_network">
+<span class="sig-name descname"><span class="pre">register_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.register_network" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.register_network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey SS58 address associated with the subnet owner.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.remove_stake">
+<span class="sig-name descname"><span class="pre">remove_stake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount_unstaked</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.remove_stake" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.remove_stake.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the subnet to remove stake from.</p></li>
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey SS58 address associated with validator.</p></li>
+<li><p><strong>amount_unstaked</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Amount of stake in RAO to remove/unstake from the validator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.remove_stake_full_limit">
+<span class="sig-name descname"><span class="pre">remove_stake_full_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_price</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.remove_stake_full_limit" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.remove_stake_full_limit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the subnet to remove stake from.</p></li>
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey SS58 address associated with validator.</p></li>
+<li><p><strong>limit_price</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>]</em>) – The limit price expressed in units of RAO per one Alpha.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.remove_stake_limit">
+<span class="sig-name descname"><span class="pre">remove_stake_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount_unstaked</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_price</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_partial</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.remove_stake_limit" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.remove_stake_full.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the subnet to remove stake from.</p></li>
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey SS58 address associated with validator.</p></li>
+<li><p><strong>amount_unstaked</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Amount of stake in RAO to remove/unstake from the validator.</p></li>
+<li><p><strong>limit_price</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The limit price expressed in units of RAO per one Alpha.</p></li>
+<li><p><strong>allow_partial</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Allows partial stake execution of the amount.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.reveal_mechanism_weights">
+<span class="sig-name descname"><span class="pre">reveal_mechanism_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mecid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">salt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.reveal_mechanism_weights" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.reveal_mechanism_weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The unique identifier of the subnet.</p></li>
+<li><p><strong>mecid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The subnet mechanism unique identifier.</p></li>
+<li><p><strong>uids</strong> (<em>bittensor.core.types.UIDs</em>) – List of neuron UIDs for which weights are being revealed. Think like UIDs.</p></li>
+<li><p><strong>values</strong> (<em>bittensor.core.types.Weights</em>) – List of weight values corresponding to each UID. Think like Weights.</p></li>
+<li><p><strong>salt</strong> (<em>bittensor.core.types.Salt</em>) – The salt used to generate the hash.</p></li>
+<li><p><strong>version_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Version key for compatibility with the network.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.root_register">
+<span class="sig-name descname"><span class="pre">root_register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.root_register" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.root_register.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey SS58 address associated with the neuron.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.serve_axon">
+<span class="sig-name descname"><span class="pre">serve_axon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.serve_axon" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.serve_axon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The network uid to serve on.</p></li>
+<li><p><strong>version</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The bittensor version identifier.</p></li>
+<li><p><strong>ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Integer representation of endpoint ip.</p></li>
+<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Endpoint port number i.e., <code class="docutils literal notranslate"><span class="pre">9221</span></code>.</p></li>
+<li><p><strong>ip_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The endpoint ip version.</p></li>
+<li><p><strong>protocol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – An <code class="docutils literal notranslate"><span class="pre">int</span></code> representation of the protocol.</p></li>
+<li><p><strong>placeholder1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Placeholder for further extra params.</p></li>
+<li><p><strong>placeholder2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Placeholder for further extra params.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.serve_axon_tls">
+<span class="sig-name descname"><span class="pre">serve_axon_tls</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">certificate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.serve_axon_tls" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.serve_axon_tls.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The network uid to serve on.</p></li>
+<li><p><strong>version</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The bittensor version identifier.</p></li>
+<li><p><strong>ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Integer representation of endpoint ip.</p></li>
+<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Endpoint port number i.e., <code class="docutils literal notranslate"><span class="pre">9221</span></code>.</p></li>
+<li><p><strong>ip_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The endpoint ip version.</p></li>
+<li><p><strong>protocol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – An <code class="docutils literal notranslate"><span class="pre">int</span></code> representation of the protocol.</p></li>
+<li><p><strong>placeholder1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Placeholder for further extra params.</p></li>
+<li><p><strong>placeholder2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Placeholder for further extra params.</p></li>
+<li><p><strong>certificate</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../../../../utils/index.html#bittensor.utils.Certificate" title="bittensor.utils.Certificate"><em>bittensor.utils.Certificate</em></a><em>]</em>) – Certificate to use for TLS. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, no TLS will be used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_children">
+<span class="sig-name descname"><span class="pre">set_children</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_children" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.set_children.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey SS58 address associated with the neuron.</p></li>
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the subnet to set children for.</p></li>
+<li><p><strong>children</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em><em>]</em>) – List of tuples containing the proportion of stake to assign to each child hotkey.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_coldkey_auto_stake_hotkey">
+<span class="sig-name descname"><span class="pre">set_coldkey_auto_stake_hotkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_coldkey_auto_stake_hotkey" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.set_coldkey_auto_stake_hotkey.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the subnet to set auto stake hotkey for.</p></li>
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey SS58 address associated with the validator neuron.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_mechanism_weights">
+<span class="sig-name descname"><span class="pre">set_mechanism_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mecid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dests</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_mechanism_weights" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.set_mechanism_weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The unique identifier of the subnet.</p></li>
+<li><p><strong>mecid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The subnet mechanism unique identifier.</p></li>
+<li><p><strong>dests</strong> (<em>bittensor.core.types.UIDs</em>) – List of neuron UIDs for which weights are being revealed. Think like UIDs.</p></li>
+<li><p><strong>weights</strong> (<em>bittensor.core.types.Weights</em>) – List of weight values corresponding to each UID.</p></li>
+<li><p><strong>version_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Version key for compatibility with the network.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_pending_childkey_cooldown">
+<span class="sig-name descname"><span class="pre">set_pending_childkey_cooldown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cooldown</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_pending_childkey_cooldown" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.set_pending_childkey_cooldown.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cooldown</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The pending childkey cooldown period in seconds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_root_claim_type">
+<span class="sig-name descname"><span class="pre">set_root_claim_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_root_claim_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_root_claim_type" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.set_root_claim_type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_root_claim_type</strong> (<em>Literal</em><em>[</em><em>'Swap'</em><em>, </em><em>'Keep'</em><em>] </em><em>| </em><em>dict</em>) – The new root claim type. Can be:
+- String: “Swap” or “Keep”
+- Dict: {“KeepSubnets”: {“subnets”: [1, 2, 3]}}</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_subnet_identity">
+<span class="sig-name descname"><span class="pre">set_subnet_identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subnet_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">github_repo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subnet_contact</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subnet_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logo_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_subnet_identity" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.set_subnet_identity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the subnet to set identity for.</p></li>
+<li><p><strong>subnet_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the subnet.</p></li>
+<li><p><strong>github_repo</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The GitHub repository URL of the subnet.</p></li>
+<li><p><strong>subnet_contact</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The contact information of the subnet owner.</p></li>
+<li><p><strong>subnet_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The URL of the subnet.</p></li>
+<li><p><strong>logo_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The URL of the subnet logo.</p></li>
+<li><p><strong>discord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The Discord server URL of the subnet.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The description of the subnet.</p></li>
+<li><p><strong>additional</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Additional information about the subnet.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.start_call">
+<span class="sig-name descname"><span class="pre">start_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.start_call" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.start_call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The netuid of the subnet to to be activated.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.swap_stake">
+<span class="sig-name descname"><span class="pre">swap_stake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.swap_stake" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.swap_stake.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey SS58 address associated with the stake.</p></li>
+<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The source subnet UID.</p></li>
+<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The destination subnet UID.</p></li>
+<li><p><strong>alpha_amount</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Amount of stake in RAO to swap.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.swap_stake_limit">
+<span class="sig-name descname"><span class="pre">swap_stake_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_price</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_partial</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.swap_stake_limit" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.swap_stake_limit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hotkey SS58 address associated with the stake.</p></li>
+<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The source subnet UID.</p></li>
+<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The destination subnet UID.</p></li>
+<li><p><strong>alpha_amount</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The amount of stake in RAO to swap.</p></li>
+<li><p><strong>allow_partial</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If true, allows partial stake swaps when the full amount would exceed the price
+tolerance.</p></li>
+<li><p><strong>limit_price</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Maximum allowed increase in a price ratio (0.005 = 0.5%).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.transfer_stake">
+<span class="sig-name descname"><span class="pre">transfer_stake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">destination_coldkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.transfer_stake" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.transfer_stake.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>destination_coldkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – SS58 address of the destination coldkey.</p></li>
+<li><p><strong>hotkey</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – SS58 address of the hotkey associated with the stake.</p></li>
+<li><p><strong>origin_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Network UID of the origin subnet.</p></li>
+<li><p><strong>destination_netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Network UID of the destination subnet.</p></li>
+<li><p><strong>alpha_amount</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The amount of stake in RAO to transfer as a <cite>Balance</cite> object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GenericCall instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../proxy/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">bittensor.core.extrinsics.pallets.proxy</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../sudo/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">bittensor.core.extrinsics.pallets.sudo</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule"><code class="docutils literal notranslate"><span class="pre">SubtensorModule</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.add_stake"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.add_stake()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.add_stake_limit"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.add_stake_limit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.burned_register"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.burned_register()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.claim_root"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.claim_root()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.commit_mechanism_weights"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.commit_mechanism_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.commit_timelocked_mechanism_weights"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.commit_timelocked_mechanism_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.decrease_take"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.decrease_take()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.increase_take"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.increase_take()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.move_stake"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.move_stake()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.register"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.register()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.register_network"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.register_network()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.remove_stake"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.remove_stake()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.remove_stake_full_limit"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.remove_stake_full_limit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.remove_stake_limit"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.remove_stake_limit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.reveal_mechanism_weights"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.reveal_mechanism_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.root_register"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.root_register()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.serve_axon"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.serve_axon()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.serve_axon_tls"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.serve_axon_tls()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_children"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.set_children()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_coldkey_auto_stake_hotkey"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.set_coldkey_auto_stake_hotkey()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_mechanism_weights"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.set_mechanism_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_pending_childkey_cooldown"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.set_pending_childkey_cooldown()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_root_claim_type"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.set_root_claim_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.set_subnet_identity"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.set_subnet_identity()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.start_call"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.start_call()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.swap_stake"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.swap_stake()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.swap_stake_limit"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.swap_stake_limit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.subtensor_module.SubtensorModule.transfer_stake"><code class="docutils literal notranslate"><span class="pre">SubtensorModule.transfer_stake()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Opentensor Foundation
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Opentensor Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
