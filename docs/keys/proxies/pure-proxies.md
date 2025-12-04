@@ -8,17 +8,12 @@ toc_max_heading_level: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This page covers creating a pure proxy and executing a call using a pure proxy.
+This page covers creating a pure proxy and executing a call using a pure proxy. The primary use case for pure proxies is constructing multisignature wallets (multisigs) with swappable members. For most other applications requiring wallet indirection, regular proxy wallets are the correct solution.
 
 See: 
 - [Proxies Overview](./)
 - [Working with Proxies](./working-with-proxies)
-
-Pure proxies are a specialized type of proxy account in Bittensor that provide enhanced security and isolation for complex delegation scenarios. Unlike standard proxies that use existing accounts, pure proxies create new, keyless accounts that can only operate through their delegator relationship.
-
-This page walks you through creating a pure proxy account, executing a transfer through it, and eventually removing it using the Polkadot.js web app. You will set up a new delegate account, add it to your Polkadot.js accounts, and use it to execute transactions on the blockchain.
-
-See also: [Polkadot.js Substrate Proxy Docs](https://wiki.polkadot.com/learn/learn-proxies/)
+- [Secure a Coldkey with a Multisig Wallet](../multisig)
 
 ## Overview of pure proxies
 
@@ -28,21 +23,45 @@ Pure proxies are **keyless, non-deterministic accounts** that are created fresh 
 - The proxy can **only act through its delegator**—all operations must be initiated by the delegator
 - The account is **completely isolated** and cannot escalate its own permissions
 
-Unlike standard proxies, where the delegate can access the delegator’s funds to execute calls on their behalf, pure proxies operate differently. A pure proxy account must hold its own funds, while the spawner account acts as an _Any proxy_ for it—signing and authorizing transactions on the proxy’s behalf.
+Pure proxies are unlike standard proxies, where the proxy can access the real account's funds to execute calls on their behalf. A pure proxy account must hold its own funds, while the spawner account acts as an _Any proxy_ for it, signing and authorizing transactions on the proxy's behalf.
 
-:::info When to use pure proxies
-Pure proxies are valuable when you want to keep your real account secure by reducing direct key exposure to the blockchain. They provide a keyless, flexible account that enables permissionless management and are especially effective for multisigs, since they allow updates to membership or thresholds without changing the account address.
-:::
+It is critical to understand that pure proxies do not offer the security advantage of regular proxy wallets, which is to allow a single, less sensitive wallet to perform operations on behalf of a more valuable wallet, allowing the more sensitive wallet to remain protected behind more stringent access security. Instead, the main application of pure proxies is to solve an operational problem posed by multisig wallets, as described below.
 
-## Transaction flow in pure proxies
+### Transaction flow in pure proxies
 
 All transactions involving a pure proxy must be signed by the spawner account. Once signed, the transaction is executed on-chain as if it originated directly from the pure proxy. Unlike standard proxies, a pure proxy must hold its own funds to cover fees or transfers. The spawner then acts as an _Any proxy_, handling the signing and authorization of calls, but the balance used comes from the pure proxy's account.
 
-When submitting calls with the `proxy(real, forceProxyType, call)` extrinsic, the pure proxy account is passed as the `real` argument, while the delegator signs the transaction. This effectively reverses the usual proxy relationship where the proxy account only authorizes the transaction, while the real account appears as the origin on chain.
+### Multisigs and Pure Proxies
 
-:::info
-You can modify who signs for a pure proxy by assigning another account as its _Any proxy_. This is done by executing a proxy call that creates a standard proxy with the `Any` proxy type. The new account can then sign on behalf of the pure proxy—for example, when updating signers in a multisig wallet. See [source code: pure proxy account generation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L827-L850).
-:::
+Multisignature wallets offer a unique security advantage (see [Secure a Coldkey with a Multisig Wallet](../multisig)). However, the unique mechanism that underlies them cryptographically presents an operational difficulty. A multisig address is deterministically derived from its members. If you create a 2-of-3 multisig with Alice, Bob, and Charlie, you get a specific address. Therefore, if Charlie leaves and Dave joins, you must create an entirely new multisig with a new address—then transfer all funds and update all references.
+
+
+Pure proxies offer a workaround; instead of basing the multisig on people's coldkeys directly, you can base it off or pure proxies controlled by the  members of a multisig, you can make **pure proxies** the members:
+
+```
+Multisig (Any 2 of 3 signatures required to sign transaction)
+├── Pure Proxy A ← controlled by Alice
+├── Pure Proxy B ← controlled by Bob  
+└── Pure Proxy C ← controlled by Charlie
+```
+
+When Charlie leaves and Dave joins:
+1. Charlie transfers control of Pure Proxy C to Dave
+2. Dave now controls Pure Proxy C, allowing him to co-sign transactions with either Alice or Bob. Charlie's key is now unable to co-sign.
+3. **The multisig itself never changes**—same address, same members (the pure proxies)
+
+This approach means you never need to recreate the multisig or transfer funds when team members change. The pure proxy addresses remain constant; only who controls each pure proxy changes.
+
+
+### Transferring control of a pure proxy
+
+You can transfer control of a pure proxy to a new account by:
+
+1. Adding the new account as an _Any_ type proxy for the pure proxy
+2. Removing the old controller as proxy
+
+This is how you swap members in a multisig-of-pure-proxies setup: the outgoing member adds the incoming member as a proxy for their pure proxy, then removes themselves. See [source code: pure proxy account generation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L827-L850).
+
 
 ## Prerequisites
 
