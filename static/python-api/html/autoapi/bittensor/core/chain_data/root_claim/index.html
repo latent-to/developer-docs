@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>bittensor.core.extrinsics.asyncex &#8212; Bittensor SDK Docs  documentation</title>
+    <title>bittensor.core.chain_data.root_claim &#8212; Bittensor SDK Docs  documentation</title>
   
   
   
@@ -45,11 +45,11 @@
     <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/extrinsics/asyncex/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/chain_data/root_claim/index';</script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" />
-    <link rel="next" title="bittensor.core.extrinsics.asyncex.children" href="children/index.html" />
-    <link rel="prev" title="bittensor.core.extrinsics" href="../index.html" />
+    <link rel="next" title="bittensor.core.chain_data.scheduled_coldkey_swap_info" href="../scheduled_coldkey_swap_info/index.html" />
+    <link rel="prev" title="bittensor.core.chain_data.proxy" href="../proxy/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -152,11 +152,11 @@
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="../../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../axon/index.html">bittensor.core.axon</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../chain_data/index.html">bittensor.core.chain_data</a></li>
+<li class="toctree-l4 current active"><a class="reference internal" href="../index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../config/index.html">bittensor.core.config</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../dendrite/index.html">bittensor.core.dendrite</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../errors/index.html">bittensor.core.errors</a></li>
-<li class="toctree-l4 current active"><a class="reference internal" href="../index.html">bittensor.core.extrinsics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../extrinsics/index.html">bittensor.core.extrinsics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../metagraph/index.html">bittensor.core.metagraph</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../settings/index.html">bittensor.core.settings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../stream/index.html">bittensor.core.stream</a></li>
@@ -267,7 +267,7 @@
       
       
       
-      <li><a href="https://github.com/opentensor/btcli/blob/main/autoapi/bittensor/core/extrinsics/asyncex/index.rst?plain=1" target="_blank"
+      <li><a href="https://github.com/opentensor/btcli/blob/main/autoapi/bittensor/core/chain_data/root_claim/index.rst?plain=1" target="_blank"
    class="btn btn-sm btn-source-file-button dropdown-item"
    title="Show source"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -284,7 +284,7 @@
       
       
       
-      <li><a href="https://github.com/opentensor/btcli/issues/new?title=Issue%20on%20page%20%2Fautoapi/bittensor/core/extrinsics/asyncex/index.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/opentensor/btcli/issues/new?title=Issue%20on%20page%20%2Fautoapi/bittensor/core/chain_data/root_claim/index.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -314,7 +314,7 @@
       
       
       
-      <li><a href="../../../../../_sources/autoapi/bittensor/core/extrinsics/asyncex/index.rst" target="_blank"
+      <li><a href="../../../../../_sources/autoapi/bittensor/core/chain_data/root_claim/index.rst" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -390,7 +390,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>bittensor.core.extrinsics.asyncex</h1>
+    <h1>bittensor.core.chain_data.root_claim</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -400,7 +400,22 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor"><code class="docutils literal notranslate"><span class="pre">KeepSubnetsDescriptor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor.subnets"><code class="docutils literal notranslate"><span class="pre">KeepSubnetsDescriptor.subnets</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor.to_dict"><code class="docutils literal notranslate"><span class="pre">KeepSubnetsDescriptor.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.RootClaimType"><code class="docutils literal notranslate"><span class="pre">RootClaimType</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.RootClaimType.Keep"><code class="docutils literal notranslate"><span class="pre">RootClaimType.Keep</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.RootClaimType.KeepSubnets"><code class="docutils literal notranslate"><span class="pre">RootClaimType.KeepSubnets</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.RootClaimType.Swap"><code class="docutils literal notranslate"><span class="pre">RootClaimType.Swap</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.RootClaimType.normalize"><code class="docutils literal notranslate"><span class="pre">RootClaimType.normalize()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -412,31 +427,102 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-bittensor.core.extrinsics.asyncex">
-<span id="bittensor-core-extrinsics-asyncex"></span><h1>bittensor.core.extrinsics.asyncex<a class="headerlink" href="#module-bittensor.core.extrinsics.asyncex" title="Link to this heading">#</a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="children/index.html">bittensor.core.extrinsics.asyncex.children</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crowdloan/index.html">bittensor.core.extrinsics.asyncex.crowdloan</a></li>
-<li class="toctree-l1"><a class="reference internal" href="liquidity/index.html">bittensor.core.extrinsics.asyncex.liquidity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mev_shield/index.html">bittensor.core.extrinsics.asyncex.mev_shield</a></li>
-<li class="toctree-l1"><a class="reference internal" href="move_stake/index.html">bittensor.core.extrinsics.asyncex.move_stake</a></li>
-<li class="toctree-l1"><a class="reference internal" href="proxy/index.html">bittensor.core.extrinsics.asyncex.proxy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="registration/index.html">bittensor.core.extrinsics.asyncex.registration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="root/index.html">bittensor.core.extrinsics.asyncex.root</a></li>
-<li class="toctree-l1"><a class="reference internal" href="serving/index.html">bittensor.core.extrinsics.asyncex.serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="staking/index.html">bittensor.core.extrinsics.asyncex.staking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="start_call/index.html">bittensor.core.extrinsics.asyncex.start_call</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sudo/index.html">bittensor.core.extrinsics.asyncex.sudo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="take/index.html">bittensor.core.extrinsics.asyncex.take</a></li>
-<li class="toctree-l1"><a class="reference internal" href="transfer/index.html">bittensor.core.extrinsics.asyncex.transfer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="unstaking/index.html">bittensor.core.extrinsics.asyncex.unstaking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils/index.html">bittensor.core.extrinsics.asyncex.utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="weights/index.html">bittensor.core.extrinsics.asyncex.weights</a></li>
-</ul>
+  <section id="module-bittensor.core.chain_data.root_claim">
+<span id="bittensor-core-chain-data-root-claim"></span><h1>bittensor.core.chain_data.root_claim<a class="headerlink" href="#module-bittensor.core.chain_data.root_claim" title="Link to this heading">#</a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor" title="bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KeepSubnetsDescriptor</span></code></a></p></td>
+<td><p>Descriptor that allows callable syntax for KeepSubnets variant.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.chain_data.root_claim.RootClaimType" title="bittensor.core.chain_data.root_claim.RootClaimType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RootClaimType</span></code></a></p></td>
+<td><p>Enumeration of root claim types in the Bittensor network.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.root_claim.</span></span><span class="sig-name descname"><span class="pre">KeepSubnetsDescriptor</span></span><a class="headerlink" href="#bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor" title="Link to this definition">#</a></dt>
+<dd><p>Descriptor that allows callable syntax for KeepSubnets variant.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor.subnets">
+<span class="sig-name descname"><span class="pre">subnets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor.subnets" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Converts the descriptor to the required dictionary format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.root_claim.RootClaimType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.root_claim.</span></span><span class="sig-name descname"><span class="pre">RootClaimType</span></span><a class="headerlink" href="#bittensor.core.chain_data.root_claim.RootClaimType" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>Enumeration of root claim types in the Bittensor network.</p>
+<p>This enum defines how coldkeys manage their root alpha emissions:
+- Swap: Swap any alpha emission for TAO
+- Keep: Keep all alpha emission
+- KeepSubnets: Keep alpha emission for specified subnets, swap everything else</p>
+<p>The values match exactly with the RootClaimTypeEnum defined in the Subtensor runtime.</p>
+<p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.root_claim.RootClaimType.Keep">
+<span class="sig-name descname"><span class="pre">Keep</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Keep'</span></em><a class="headerlink" href="#bittensor.core.chain_data.root_claim.RootClaimType.Keep" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.root_claim.RootClaimType.KeepSubnets">
+<span class="sig-name descname"><span class="pre">KeepSubnets</span></span><a class="headerlink" href="#bittensor.core.chain_data.root_claim.RootClaimType.KeepSubnets" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.root_claim.RootClaimType.Swap">
+<span class="sig-name descname"><span class="pre">Swap</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Swap'</span></em><a class="headerlink" href="#bittensor.core.chain_data.root_claim.RootClaimType.Swap" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.chain_data.root_claim.RootClaimType.normalize">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.root_claim.RootClaimType.normalize" title="Link to this definition">#</a></dt>
+<dd><p>Normalizes a root claim type to a format suitable for Substrate calls.</p>
+<p>This method handles various input formats:
+- String values (“Swap”, “Keep”) → returns string
+- Enum values (RootClaimType.Swap) → returns string
+- Dict values ({“KeepSubnets”: {“subnets”: [1, 2, 3]}}) → returns dict as-is
+- Callable KeepSubnets([1, 2, 3]) → returns dict</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Literal</em><em>[</em><em>'Swap'</em><em>, </em><em>'Keep'</em><em>] </em><em>| </em><em>RootClaimType</em><em> | </em><em>dict</em>) – The root claim type in any supported format.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Normalized value - string for Swap/Keep or dict for KeepSubnets.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If the value is not a valid root claim type or KeepSubnets has no subnets.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.14)"><strong>TypeError</strong></a> – If the value type is not supported.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -452,20 +538,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../index.html"
+       href="../proxy/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">bittensor.core.extrinsics</p>
+        <p class="prev-next-title">bittensor.core.chain_data.proxy</p>
       </div>
     </a>
     <a class="right-next"
-       href="children/index.html"
+       href="../scheduled_coldkey_swap_info/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">bittensor.core.extrinsics.asyncex.children</p>
+        <p class="prev-next-title">bittensor.core.chain_data.scheduled_coldkey_swap_info</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -486,7 +572,22 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor"><code class="docutils literal notranslate"><span class="pre">KeepSubnetsDescriptor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor.subnets"><code class="docutils literal notranslate"><span class="pre">KeepSubnetsDescriptor.subnets</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.KeepSubnetsDescriptor.to_dict"><code class="docutils literal notranslate"><span class="pre">KeepSubnetsDescriptor.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.RootClaimType"><code class="docutils literal notranslate"><span class="pre">RootClaimType</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.RootClaimType.Keep"><code class="docutils literal notranslate"><span class="pre">RootClaimType.Keep</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.RootClaimType.KeepSubnets"><code class="docutils literal notranslate"><span class="pre">RootClaimType.KeepSubnets</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.RootClaimType.Swap"><code class="docutils literal notranslate"><span class="pre">RootClaimType.Swap</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.chain_data.root_claim.RootClaimType.normalize"><code class="docutils literal notranslate"><span class="pre">RootClaimType.normalize()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

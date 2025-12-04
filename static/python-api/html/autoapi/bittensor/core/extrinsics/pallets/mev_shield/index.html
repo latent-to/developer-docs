@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>bittensor.core.extrinsics.asyncex.take &#8212; Bittensor SDK Docs  documentation</title>
+    <title>bittensor.core.extrinsics.pallets.mev_shield &#8212; Bittensor SDK Docs  documentation</title>
   
   
   
@@ -45,11 +45,11 @@
     <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/extrinsics/asyncex/take/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/extrinsics/pallets/mev_shield/index';</script>
     <link rel="index" title="Index" href="../../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../../search.html" />
-    <link rel="next" title="bittensor.core.extrinsics.asyncex.transfer" href="../transfer/index.html" />
-    <link rel="prev" title="bittensor.core.extrinsics.asyncex.sudo" href="../sudo/index.html" />
+    <link rel="next" title="bittensor.core.extrinsics.pallets.proxy" href="../proxy/index.html" />
+    <link rel="prev" title="bittensor.core.extrinsics.pallets.crowdloan" href="../crowdloan/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -267,7 +267,7 @@
       
       
       
-      <li><a href="https://github.com/opentensor/btcli/blob/main/autoapi/bittensor/core/extrinsics/asyncex/take/index.rst?plain=1" target="_blank"
+      <li><a href="https://github.com/opentensor/btcli/blob/main/autoapi/bittensor/core/extrinsics/pallets/mev_shield/index.rst?plain=1" target="_blank"
    class="btn btn-sm btn-source-file-button dropdown-item"
    title="Show source"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -284,7 +284,7 @@
       
       
       
-      <li><a href="https://github.com/opentensor/btcli/issues/new?title=Issue%20on%20page%20%2Fautoapi/bittensor/core/extrinsics/asyncex/take/index.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/opentensor/btcli/issues/new?title=Issue%20on%20page%20%2Fautoapi/bittensor/core/extrinsics/pallets/mev_shield/index.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -314,7 +314,7 @@
       
       
       
-      <li><a href="../../../../../../_sources/autoapi/bittensor/core/extrinsics/asyncex/take/index.rst" target="_blank"
+      <li><a href="../../../../../../_sources/autoapi/bittensor/core/extrinsics/pallets/mev_shield/index.rst" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -390,7 +390,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>bittensor.core.extrinsics.asyncex.take</h1>
+    <h1>bittensor.core.extrinsics.pallets.mev_shield</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -400,9 +400,12 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.asyncex.take.set_take_extrinsic"><code class="docutils literal notranslate"><span class="pre">set_take_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.mev_shield.MevShield"><code class="docutils literal notranslate"><span class="pre">MevShield</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.mev_shield.MevShield.submit_encrypted"><code class="docutils literal notranslate"><span class="pre">MevShield.submit_encrypted()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -416,14 +419,14 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-bittensor.core.extrinsics.asyncex.take">
-<span id="bittensor-core-extrinsics-asyncex-take"></span><h1>bittensor.core.extrinsics.asyncex.take<a class="headerlink" href="#module-bittensor.core.extrinsics.asyncex.take" title="Link to this heading">#</a></h1>
-<section id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
+  <section id="module-bittensor.core.extrinsics.pallets.mev_shield">
+<span id="bittensor-core-extrinsics-pallets-mev-shield"></span><h1>bittensor.core.extrinsics.pallets.mev_shield<a class="headerlink" href="#module-bittensor.core.extrinsics.pallets.mev_shield" title="Link to this heading">#</a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.asyncex.take.set_take_extrinsic" title="bittensor.core.extrinsics.asyncex.take.set_take_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_take_extrinsic</span></code></a>(subtensor, wallet, hotkey_ss58, ...)</p></td>
-<td><p>Sets the delegate 'take' percentage for a neuron identified by its hotkey.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.pallets.mev_shield.MevShield" title="bittensor.core.extrinsics.pallets.mev_shield.MevShield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MevShield</span></code></a></p></td>
+<td><p>Factory class for creating GenericCall objects for MevShield pallet functions.</p></td>
 </tr>
 </tbody>
 </table>
@@ -431,37 +434,64 @@
 </section>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="bittensor.core.extrinsics.asyncex.take.set_take_extrinsic">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.asyncex.take.</span></span><span class="sig-name descname"><span class="pre">set_take_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">take</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.asyncex.take.set_take_extrinsic" title="Link to this definition">#</a></dt>
-<dd><p>Sets the delegate ‘take’ percentage for a neuron identified by its hotkey.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.mev_shield.MevShield">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.pallets.mev_shield.</span></span><span class="sig-name descname"><span class="pre">MevShield</span></span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.mev_shield.MevShield" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.CallBuilder" title="bittensor.core.extrinsics.pallets.base.CallBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bittensor.core.extrinsics.pallets.base.CallBuilder</span></code></a></p>
+<p>Factory class for creating GenericCall objects for MevShield pallet functions.</p>
+<p>This class provides methods to create GenericCall instances for all MevShield pallet extrinsics.</p>
+<p>Works with both sync (Subtensor) and async (AsyncSubtensor) instances. For async operations, pass an AsyncSubtensor
+instance and await the result.</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p># Sync usage
+call = MevShield(subtensor).submit_encrypted(</p>
+<blockquote>
+<div><p>commitment=”0x1234…”,
+ciphertext=b”encrypted_data…”</p>
+</div></blockquote>
+<p>)
+response = subtensor.sign_and_send_extrinsic(call=call, …)</p>
+<p># Async usage
+call = await MevShield(async_subtensor).submit_encrypted(</p>
+<blockquote>
+<div><p>commitment=”0x1234…”,
+ciphertext=b”encrypted_data…”</p>
+</div></blockquote>
+<p>)
+response = await async_subtensor.sign_and_send_extrinsic(call=call, …)</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.mev_shield.MevShield.submit_encrypted">
+<span class="sig-name descname"><span class="pre">submit_encrypted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commitment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ciphertext</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.mev_shield.MevShield.submit_encrypted" title="Link to this definition">#</a></dt>
+<dd><p>Returns GenericCall instance for MevShield function submit_encrypted.</p>
+<p>This function submits an encrypted extrinsic to the MEV Shield pallet. The extrinsic remains encrypted in the
+transaction pool until it is included in a block and decrypted by validators.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>) – The Subtensor instance.</p></li>
-<li><p><strong>wallet</strong> (<em>bittensor_wallet.bittensor_wallet.Wallet</em>) – The wallet to sign the extrinsic.</p></li>
-<li><p><strong>hotkey_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – SS58 address of the hotkey to set take for.</p></li>
-<li><p><strong>take</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The percentage of rewards that the delegate claims from nominators.</p></li>
-<li><p><strong>action</strong> (<em>Literal</em><em>[</em><em>'increase_take'</em><em>, </em><em>'decrease_take'</em><em>]</em>) – The call function to use to set the take. Can be either “increase_take” or “decrease_take”.</p></li>
-<li><p><strong>mev_protection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, encrypts and submits the transaction through the MEV Shield pallet to protect
-against front-running and MEV attacks. The transaction remains encrypted in the mempool until validators
-decrypt and execute it. If False, submits the transaction directly without encryption.</p></li>
-<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
-transaction is not included in a block within that number of blocks, it will expire and be rejected. You can
-think of it as an expiration date for the transaction.</p></li>
-<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
-<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
-<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
-<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the revealed execution of transaction if mev_protection used.</p></li>
+<li><p><strong>commitment</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The blake2_256 hash of the payload_core (signer + nonce + SCALE(call)). Must be a hex string
+with “0x” prefix.</p></li>
+<li><p><strong>ciphertext</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><em>bytes</em></a>) – The encrypted blob containing the payload and signature.
+Format: [u16 kem_len LE][kem_ct][nonce24][aead_ct]
+Maximum size: 8192 bytes.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The result object of the extrinsic execution.</p>
+<dd class="field-even"><p>GenericCall instance ready for extrinsic submission.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The commitment is used to verify the ciphertext’s content at decryption time. The ciphertext is encrypted
+using ML-KEM-768 + XChaCha20Poly1305 with the public key from the NextKey storage item, which rotates every
+block.</p>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -479,20 +509,20 @@ think of it as an expiration date for the transaction.</p></li>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../sudo/index.html"
+       href="../crowdloan/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">bittensor.core.extrinsics.asyncex.sudo</p>
+        <p class="prev-next-title">bittensor.core.extrinsics.pallets.crowdloan</p>
       </div>
     </a>
     <a class="right-next"
-       href="../transfer/index.html"
+       href="../proxy/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">bittensor.core.extrinsics.asyncex.transfer</p>
+        <p class="prev-next-title">bittensor.core.extrinsics.pallets.proxy</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -513,9 +543,12 @@ think of it as an expiration date for the transaction.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.asyncex.take.set_take_extrinsic"><code class="docutils literal notranslate"><span class="pre">set_take_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.mev_shield.MevShield"><code class="docutils literal notranslate"><span class="pre">MevShield</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.pallets.mev_shield.MevShield.submit_encrypted"><code class="docutils literal notranslate"><span class="pre">MevShield.submit_encrypted()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

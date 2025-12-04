@@ -400,11 +400,19 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.MEV_EXECUTED_EVENT"><code class="docutils literal notranslate"><span class="pre">MEV_EXECUTED_EVENT</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.MEV_SUBMITTED_EVENT"><code class="docutils literal notranslate"><span class="pre">MEV_SUBMITTED_EVENT</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.MEV_UNSUCCESSFUL_EVENTS"><code class="docutils literal notranslate"><span class="pre">MEV_UNSUCCESSFUL_EVENTS</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.POST_SUBMIT_MEV_EVENTS"><code class="docutils literal notranslate"><span class="pre">POST_SUBMIT_MEV_EVENTS</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.apply_pure_proxy_data"><code class="docutils literal notranslate"><span class="pre">apply_pure_proxy_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_event_attributes_by_event_name"><code class="docutils literal notranslate"><span class="pre">get_event_attributes_by_event_name()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_mev_commitment_and_ciphertext"><code class="docutils literal notranslate"><span class="pre">get_mev_commitment_and_ciphertext()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_old_stakes"><code class="docutils literal notranslate"><span class="pre">get_old_stakes()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_transfer_fn_params"><code class="docutils literal notranslate"><span class="pre">get_transfer_fn_params()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.post_process_mev_response"><code class="docutils literal notranslate"><span class="pre">post_process_mev_response()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.sudo_call_extrinsic"><code class="docutils literal notranslate"><span class="pre">sudo_call_extrinsic()</span></code></a></li>
 </ul>
 </li>
@@ -422,6 +430,26 @@
   <section id="module-bittensor.core.extrinsics.utils">
 <span id="bittensor-core-extrinsics-utils"></span><h1>bittensor.core.extrinsics.utils<a class="headerlink" href="#module-bittensor.core.extrinsics.utils" title="Link to this heading">#</a></h1>
 <p>Module with helper functions for extrinsics.</p>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.MEV_EXECUTED_EVENT" title="bittensor.core.extrinsics.utils.MEV_EXECUTED_EVENT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MEV_EXECUTED_EVENT</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.MEV_SUBMITTED_EVENT" title="bittensor.core.extrinsics.utils.MEV_SUBMITTED_EVENT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MEV_SUBMITTED_EVENT</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.MEV_UNSUCCESSFUL_EVENTS" title="bittensor.core.extrinsics.utils.MEV_UNSUCCESSFUL_EVENTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MEV_UNSUCCESSFUL_EVENTS</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.POST_SUBMIT_MEV_EVENTS" title="bittensor.core.extrinsics.utils.POST_SUBMIT_MEV_EVENTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">POST_SUBMIT_MEV_EVENTS</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
@@ -429,13 +457,22 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.apply_pure_proxy_data" title="bittensor.core.extrinsics.utils.apply_pure_proxy_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_pure_proxy_data</span></code></a>(response, triggered_events, ...)</p></td>
 <td><p>Apply pure proxy data to the response object.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.get_event_attributes_by_event_name" title="bittensor.core.extrinsics.utils.get_event_attributes_by_event_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_event_attributes_by_event_name</span></code></a>(events, event_name)</p></td>
+<td><p>Extracts event data from triggered events by event ID.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.get_mev_commitment_and_ciphertext" title="bittensor.core.extrinsics.utils.get_mev_commitment_and_ciphertext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_mev_commitment_and_ciphertext</span></code></a>(call, ...)</p></td>
+<td><p>Builds MEV Shield payload and encrypts it using ML-KEM-768 + XChaCha20Poly1305.</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.get_old_stakes" title="bittensor.core.extrinsics.utils.get_old_stakes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_old_stakes</span></code></a>(wallet, hotkey_ss58s, netuids, all_stakes)</p></td>
 <td><p>Retrieve the previous staking balances for a wallet's hotkeys across given netuids.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.get_transfer_fn_params" title="bittensor.core.extrinsics.utils.get_transfer_fn_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_transfer_fn_params</span></code></a>(amount, destination_ss58, ...)</p></td>
 <td><p>Helper function to get the transfer call function and call params, depending on the value and keep_alive flag</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.sudo_call_extrinsic" title="bittensor.core.extrinsics.utils.sudo_call_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sudo_call_extrinsic</span></code></a>(subtensor, wallet, call_function, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.post_process_mev_response" title="bittensor.core.extrinsics.utils.post_process_mev_response"><code class="xref py py-obj docutils literal notranslate"><span class="pre">post_process_mev_response</span></code></a>(response, revealed_name, ...)</p></td>
+<td><p>Post-processes the result of a MEV Shield extrinsic submission by updating the response object based on the revealed</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.utils.sudo_call_extrinsic" title="bittensor.core.extrinsics.utils.sudo_call_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sudo_call_extrinsic</span></code></a>(subtensor, wallet, call_function, ...)</p></td>
 <td><p>Execute a sudo call extrinsic.</p></td>
 </tr>
 </tbody>
@@ -444,6 +481,26 @@
 </section>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.utils.MEV_EXECUTED_EVENT">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.utils.</span></span><span class="sig-name descname"><span class="pre">MEV_EXECUTED_EVENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mevShield.DecryptedExecuted'</span></em><a class="headerlink" href="#bittensor.core.extrinsics.utils.MEV_EXECUTED_EVENT" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.utils.MEV_SUBMITTED_EVENT">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.utils.</span></span><span class="sig-name descname"><span class="pre">MEV_SUBMITTED_EVENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mevShield.EncryptedSubmitted'</span></em><a class="headerlink" href="#bittensor.core.extrinsics.utils.MEV_SUBMITTED_EVENT" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.utils.MEV_UNSUCCESSFUL_EVENTS">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.utils.</span></span><span class="sig-name descname"><span class="pre">MEV_UNSUCCESSFUL_EVENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['mevShield.DecryptedRejected',</span> <span class="pre">'mevShield.DecryptionFailed']</span></em><a class="headerlink" href="#bittensor.core.extrinsics.utils.MEV_UNSUCCESSFUL_EVENTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.utils.POST_SUBMIT_MEV_EVENTS">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.utils.</span></span><span class="sig-name descname"><span class="pre">POST_SUBMIT_MEV_EVENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['mevShield.DecryptedExecuted',</span> <span class="pre">'mevShield.DecryptedRejected',</span> <span class="pre">'mevShield.DecryptionFailed']</span></em><a class="headerlink" href="#bittensor.core.extrinsics.utils.POST_SUBMIT_MEV_EVENTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.core.extrinsics.utils.apply_pure_proxy_data">
 <span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.utils.</span></span><span class="sig-name descname"><span class="pre">apply_pure_proxy_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">triggered_events</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extrinsic_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.utils.apply_pure_proxy_data" title="Link to this definition">#</a></dt>
@@ -463,6 +520,63 @@
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">bittensor.core.types.ExtrinsicResponse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.utils.get_event_attributes_by_event_name">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.utils.</span></span><span class="sig-name descname"><span class="pre">get_event_attributes_by_event_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.utils.get_event_attributes_by_event_name" title="Link to this definition">#</a></dt>
+<dd><p>Extracts event data from triggered events by event ID.</p>
+<p>Searches through a list of triggered events and returns the attributes dictionary for the first event matching the
+specified event_id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – List of event dictionaries, typically from ExtrinsicReceipt.triggered_events. Each event should have an
+“module_id”. “event_id” key and an “attributes” key.</p></li>
+<li><p><strong>event_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The events identifier to search for (e.g. “mevShield.EncryptedSubmitted”, etc).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The attributes dictionary of the matching event, or None if no matching event is found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.utils.get_mev_commitment_and_ciphertext">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.utils.</span></span><span class="sig-name descname"><span class="pre">get_mev_commitment_and_ciphertext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">call</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signer_keypair</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genesis_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ml_kem_768_public_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.utils.get_mev_commitment_and_ciphertext" title="Link to this definition">#</a></dt>
+<dd><p>Builds MEV Shield payload and encrypts it using ML-KEM-768 + XChaCha20Poly1305.</p>
+<p>This function constructs the payload structure required for MEV Shield encryption and performs the encryption
+process. The payload binds the transaction to a specific key epoch using the key_hash, which replaces nonce-based
+replay protection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>call</strong> (<em>scalecodec.types.GenericCall</em>) – The GenericCall object representing the inner call to be encrypted and executed.</p></li>
+<li><p><strong>signer_keypair</strong> (<em>bittensor_wallet.keypair.Keypair</em>) – The Keypair used for signing the inner call payload. The signer’s AccountId32 (32 bytes) is
+embedded in the payload_core.</p></li>
+<li><p><strong>genesis_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The genesis block hash as a hex string (with or without “0x” prefix). Used for chain-bound
+signature domain separation.</p></li>
+<li><p><strong>ml_kem_768_public_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><em>bytes</em></a>) – The ML-KEM-768 public key bytes (1184 bytes) from NextKey storage. This key is used for
+encryption and its hash binds the transaction to the key epoch.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>commitment_hex (str): Hex string of the Blake2-256 hash of payload_core (32 bytes).</p></li>
+<li><p>ciphertext (bytes): Encrypted blob containing plaintext.</p></li>
+<li><p>payload_core (bytes): Raw payload bytes before encryption.</p></li>
+<li><p>signature (bytes): MultiSignature (64 bytes for sr25519).</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple containing</p>
 </dd>
 </dl>
 </dd></dl>
@@ -510,6 +624,43 @@ provided.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a>]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.utils.post_process_mev_response">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.utils.</span></span><span class="sig-name descname"><span class="pre">post_process_mev_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">revealed_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">revealed_extrinsic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.utils.post_process_mev_response" title="Link to this definition">#</a></dt>
+<dd><p>Post-processes the result of a MEV Shield extrinsic submission by updating the response object based on the revealed
+extrinsic execution status.</p>
+<p>This function analyzes the revealed extrinsic (execute_revealed) that was found after the initial encrypted
+submission and updates the response object accordingly. It handles cases where the revealed extrinsic was not found,
+where it failed (DecryptedRejected or DecryptionFailed events), and propagates errors if requested.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>response</strong> (<a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse"><em>bittensor.core.types.ExtrinsicResponse</em></a>) – The ExtrinsicResponse object from the initial submit_encrypted call. This object will be modified
+in-place with the revealed extrinsic receipt and updated success/error status.</p></li>
+<li><p><strong>revealed_name</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The name of the event found in the revealed extrinsic (e.g., “mevShield.DecryptedExecuted”,
+“mevShield.DecryptedRejected”, “mevShield.DecryptionFailed”).</p></li>
+<li><p><strong>revealed_extrinsic</strong> (<em>Optional</em><em>[</em><em>ExtrinsicReceipt</em><em> | </em><em>AsyncExtrinsicReceipt</em><em>]</em>) – The ExtrinsicReceipt or AsyncExtrinsicReceipt object for the execute_revealed transaction,
+if found. None if the revealed extrinsic was not found in the expected blocks. This receipt contains the
+triggered events and execution details.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, raises the error immediately if the response contains an error. If False, the error is
+stored in response.error but not raised. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>response.mev_extrinsic_receipt: The revealed extrinsic receipt</p></li>
+<li><p>response.success: False if revealed extrinsic not found or failed, otherwise True.</p></li>
+<li><p>response.message: Error message describing the failure if failure.</p></li>
+<li><p>response.error: RuntimeError with the response.message.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None. The function modifies the response object in-place by setting</p>
 </dd>
 </dl>
 </dd></dl>
@@ -596,11 +747,19 @@ think of it as an expiration date for the transaction.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.MEV_EXECUTED_EVENT"><code class="docutils literal notranslate"><span class="pre">MEV_EXECUTED_EVENT</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.MEV_SUBMITTED_EVENT"><code class="docutils literal notranslate"><span class="pre">MEV_SUBMITTED_EVENT</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.MEV_UNSUCCESSFUL_EVENTS"><code class="docutils literal notranslate"><span class="pre">MEV_UNSUCCESSFUL_EVENTS</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.POST_SUBMIT_MEV_EVENTS"><code class="docutils literal notranslate"><span class="pre">POST_SUBMIT_MEV_EVENTS</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.apply_pure_proxy_data"><code class="docutils literal notranslate"><span class="pre">apply_pure_proxy_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_event_attributes_by_event_name"><code class="docutils literal notranslate"><span class="pre">get_event_attributes_by_event_name()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_mev_commitment_and_ciphertext"><code class="docutils literal notranslate"><span class="pre">get_mev_commitment_and_ciphertext()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_old_stakes"><code class="docutils literal notranslate"><span class="pre">get_old_stakes()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.get_transfer_fn_params"><code class="docutils literal notranslate"><span class="pre">get_transfer_fn_params()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.post_process_mev_response"><code class="docutils literal notranslate"><span class="pre">post_process_mev_response()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.utils.sudo_call_extrinsic"><code class="docutils literal notranslate"><span class="pre">sudo_call_extrinsic()</span></code></a></li>
 </ul>
 </li>

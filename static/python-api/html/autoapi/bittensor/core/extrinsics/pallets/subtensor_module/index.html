@@ -953,7 +953,9 @@ response = await async_subtensor.sign_and_send_extrinsic(call=call, …)</p>
 <dd><p>Returns GenericCall instance for Subtensor function SubtensorModule.set_root_claim_type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>new_root_claim_type</strong> (<em>Literal</em><em>[</em><em>'Swap'</em><em>, </em><em>'Keep'</em><em>]</em>) – The new root claim type.</p>
+<dd class="field-odd"><p><strong>new_root_claim_type</strong> (<em>Literal</em><em>[</em><em>'Swap'</em><em>, </em><em>'Keep'</em><em>] </em><em>| </em><em>dict</em>) – The new root claim type. Can be:
+- String: “Swap” or “Keep”
+- Dict: {“KeepSubnets”: {“subnets”: [1, 2, 3]}}</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>GenericCall instance.</p>
