@@ -14,7 +14,9 @@ This page covers each step in the use of proxy wallets as a security feature for
 - Announcing and then executing transactions with a non-zero delay period.
 - Removing proxy relationships
 
-See [Proxies: Overview](./index.md)
+See:
+- [Proxies: Overview](./index.md)
+- [Staking with a Proxy](./staking-with-proxy.md): Learn about proxy types and how proxies work
 
 ## Introduction
 
