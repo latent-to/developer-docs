@@ -528,7 +528,7 @@ Tokens are recycled in several cases in Bittensor operations:
 
 Subnet-specific alpha tokens are burned in several contexts:
 
-- **Creator emissions burning**: Alpha emissions for mining on a subnet are automatically burned if they are emitted to the hotkey with creator permissions on the subnet. This allows validators to burn some or all of the subnet's emissions to prevent token inflation (by weighting the subnet creator hotkey).
+- **Creator emissions burning**: Alpha emissions for mining on a subnet are automatically burned if they are emitted to the hotkey with creator permissions on the subnet, or if they are emitted to a hotkey controlled by the subnet owner's coldkey. This allows validators to burn some or all of the subnet's emissions to prevent token inflation (by weighting the subnet creator hotkey).
 - **Extrinsic transaction**: Alpha can be burned on demand using the `burn_alpha` Subtensor extrinsic. Unlike recycling, burning does not reduce `SubnetAlphaOut`.
 - **Root Subnet automated burning**: Subnet Zero (Root Subnet) alpha tokens are burned under specific economic conditions to maintain system stability.
 
