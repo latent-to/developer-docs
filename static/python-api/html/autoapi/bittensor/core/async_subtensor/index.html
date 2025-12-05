@@ -774,7 +774,7 @@ returned when the proxy is removed. Use <a class="reference internal" href="#bit
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The <cite>“Any”</cite> proxy type is dangerous as it grants full permissions to the proxy, including the ability to make
+<p>The <cite>Any</cite> proxy type is dangerous as it grants full permissions to the proxy, including the ability to make
 transfers and manage the account completely. Use with extreme caution.</p>
 </div>
 </dd></dl>
@@ -1138,7 +1138,7 @@ not included in a block within this window, it will expire and be rejected.</p><
 <p class="admonition-title">Notes</p>
 <ul class="simple">
 <li><p>Only Alpha dividends are claimed; the underlying TAO stake on the Root Subnet remains unchanged.</p></li>
-<li><p>The current root claim type (<cite>“Swap”</cite> or <cite>“Keep”</cite>) determines whether claimed Alpha is converted to
+<li><p>The current root claim type (<cite>Swap</cite> or <cite>Keep</cite>) determines whether claimed Alpha is converted to
 TAO and restaked on root or left as Alpha on the originating subnets.</p></li>
 <li><p>See: &lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/root-claims">https://docs.learnbittensor.org/staking-and-delegation/root-claims</a>&gt;</p></li>
 <li><p>See also: &lt;<a class="reference external" href="https://docs.learnbittensor.org/staking-and-delegation/root-claims/managing-root-claims">https://docs.learnbittensor.org/staking-and-delegation/root-claims/managing-root-claims</a>&gt;</p></li>
@@ -1411,7 +1411,7 @@ via <a class="reference internal" href="#bittensor.core.async_subtensor.AsyncSub
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The <cite>“Any”</cite> proxy type is dangerous as it grants full permissions to the proxy, including the ability to make
+<p>The <cite>Any</cite> proxy type is dangerous as it grants full permissions to the proxy, including the ability to make
 transfers and kill the proxy. Use with extreme caution.</p>
 </div>
 </dd></dl>
@@ -1830,11 +1830,12 @@ Each validator can have multiple revealed commitments (up to 10 most recent).</p
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<dl class="simple">
-<dt>{</dt><dd><p>“5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY”: ( (12, “Alice message 1”), (152, “Alice message 2”) ),
+<p># sample return value
+{</p>
+<blockquote>
+<div><p>“5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY”: ( (12, “Alice message 1”), (152, “Alice message 2”) ),
 “5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty”: ( (12, “Bob message 1”), (147, “Bob message 2”) ),</p>
-</dd>
-</dl>
+</div></blockquote>
 <p>}</p>
 </div>
 <div class="admonition-notes admonition">
@@ -3501,8 +3502,8 @@ It is updated during block emission distribution when root alpha is distributed 
 <p>The root claim type controls how dividends from staking to the Root Subnet (subnet 0) are processed when they
 are claimed:</p>
 <ul class="simple">
-<li><p><cite>“Swap”</cite> (default): Alpha dividends are swapped to TAO at claim time and restaked on the root subnet.</p></li>
-<li><p><cite>“Keep”</cite>: Alpha dividends remain as Alpha on the originating subnets.</p></li>
+<li><p><cite>Swap</cite> (default): Alpha dividends are swapped to TAO at claim time and restaked on the root subnet.</p></li>
+<li><p><cite>Keep</cite>: Alpha dividends remain as Alpha on the originating subnets.</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -3515,7 +3516,7 @@ are claimed:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The root claim type as a string, either <cite>“Swap”</cite> or <cite>“Keep”</cite>,
+<dd class="field-even"><p>The root claim type as a string, either <cite>Swap</cite> or <cite>Keep</cite>,
 or dict for “KeepSubnets” in format {“KeepSubnets”: {“subnets”: [1, 2, 3]}}.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -5076,8 +5077,8 @@ be accessed through other, standard getter methods.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the module containing the constant (e.g., <cite>“Balances”</cite>, <cite>“SubtensorModule”</cite>).</p></li>
-<li><p><strong>constant_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the constant to retrieve (e.g., <cite>“ExistentialDeposit”</cite>).</p></li>
+<li><p><strong>module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the module containing the constant (e.g., <cite>Balances</cite>, <cite>SubtensorModule</cite>).</p></li>
+<li><p><strong>constant_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the constant to retrieve (e.g., <cite>ExistentialDeposit</cite>).</p></li>
 <li><p><strong>block</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The block number to query. Do not specify if using <cite>block_hash</cite> or <cite>reuse_block</cite>.</p></li>
 <li><p><strong>block_hash</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The block hash at which to check the parameter. Do not set if using <cite>block</cite> or
 <cite>reuse_block</cite>.</p></li>
@@ -6027,8 +6028,8 @@ encryption ensures the data cannot be revealed before the specified drand round.
 <p>The root claim type determines how future Alpha dividends from subnets are handled when they are claimed for
 the wallet’s coldkey:</p>
 <ul class="simple">
-<li><p><cite>“Swap”</cite>: Alpha dividends are swapped to TAO at claim time and restaked on the Root Subnet (default).</p></li>
-<li><p><cite>“Keep”</cite>: Alpha dividends remain as Alpha on the originating subnets.</p></li>
+<li><p><cite>Swap</cite>: Alpha dividends are swapped to TAO at claim time and restaked on the Root Subnet (default).</p></li>
+<li><p><cite>Keep</cite>: Alpha dividends remain as Alpha on the originating subnets.</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -7117,8 +7118,8 @@ This is useful when you don’t want to manually call <cite>await subtensor.init
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>network</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The network name to connect to (e.g., <cite>“finney”</cite> for Bittensor mainnet, <cite>“test”</cite> for test network,
-<cite>“local”</cite> for a locally deployed blockchain). If <cite>None</cite>, uses the default network from config.</p></li>
+<li><p><strong>network</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The network name to connect to (e.g., <cite>finney</cite> for Bittensor mainnet, <cite>test</cite> for test network,
+<cite>local</cite> for a locally deployed blockchain). If <cite>None</cite>, uses the default network from config.</p></li>
 <li><p><strong>config</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../config/index.html#bittensor.core.config.Config" title="bittensor.core.config.Config"><em>bittensor.core.config.Config</em></a><em>]</em>) – Configuration object for the AsyncSubtensor instance. If <cite>None</cite>, uses the default configuration.</p></li>
 <li><p><strong>mock</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether this is a mock instance. FOR TESTING ONLY.</p></li>
 <li><p><strong>log_verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Enables or disables verbose logging.</p></li>
