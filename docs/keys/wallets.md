@@ -22,8 +22,9 @@ See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey
 
 ## What are wallets and keys?
 
-There are many different _wallet applications_, but the core of your wallet is one or more cryptographic key-pairs, referred to as **coldkey** and **hotkey**.
-Each is actually a cryptographic [key-pair](https://en.wikipedia.org/wiki/Public-key_cryptography), a private and a public key.
+The core of your wallet is one or more cryptographic key-pairs, referred to as **coldkey** and **hotkey**. Your wallet essentially consists of the records associated with your key-pairs on the blockchain, including your balances of TAO and alpha currencies, and your history of transactions and interactions with subnets and other wallets (such as mining or validating).
+
+Each coldkey or hotkey is actually a cryptographic [key-pair](https://en.wikipedia.org/wiki/Public-key_cryptography)with a private and a public key.
 The public key is mathematically derived from the private key.
 The private key is a closely held secret: it allows the owner to sign transactions and decrypt secrets, essentially serving as a cryptographic authentication or identity.
 This is a general feature of decentralized, trustless systems like distributed ledgers/blockchains: your private key _is_ your identity, in that theft or loss of your key results in _unrecoverable_ loss of access.
@@ -33,6 +34,15 @@ In Bittensor, the coldkey and hotkey are used for different operations. In short
 The coldkey private key is needed to authorize highly sensitive operations involved in transferring TAO balances and managing stake, operations related to subnet management and governance, and management of hotkeys. The hotkey private key is needed to authorize miners to serve requests in subnets, and by validators to send requests to miners and to submit weights to the blockchain.
 
 The coldkey public key uniquely identifies a wallet on the network and serves as its address for transactions. To transfer ownership of TAO or alpha stake from one wallet to another, the sender needs only the public key of the recipient, and their own private key.
+
+:::info Existential deposit
+
+An existential deposit is the minumum required TAO in a wallet (i.e., in a coldkey).
+If a wallet balance goes below the existential deposit, then this wallet account is deactivated and the remaining TAO in it is destroyed.
+**This is set to 500 RAO for any Bittensor wallet**.
+
+See also [What is the Existential Deposit?](https://support.polkadot.network/support/solutions/articles/65000168651-what-is-the-existential-deposit-).
+:::
 
 ## Wallets and wallet applications
 
@@ -136,13 +146,6 @@ style={{width: 750}}
 
 <br /> -->
 
-### Existential deposit
-
-An existential deposit is the minumum required TAO in a wallet (i.e., in a coldkey).
-If a wallet balance goes below the existential deposit, then this wallet account is deactivated and the remaining TAO in it is destroyed.
-**This is set to 500 RAO for any Bittensor wallet**.
-
-See also [What is the Existential Deposit?](https://support.polkadot.network/support/solutions/articles/65000168651-what-is-the-existential-deposit-).
 
 ## Hotkey details
 

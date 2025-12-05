@@ -274,6 +274,14 @@ A weighted moving average that prioritizes recent observations while exponential
 
 **See also:** [Understanding Exponential Moving Averages](../learn/ema.md), [Consensus-based Weights](../concepts/consensus-based-weights.md), [Validator-Miner Bonds](#validator-miner-bonds), [Emission](#emission)
 
+### Existential deposit
+
+An existential deposit is the minumum required TAO in a wallet (i.e., in a coldkey).
+If a wallet balance goes below the existential deposit, then this wallet account is deactivated and the remaining TAO in it is destroyed.
+**This is set to 500 RAO for any Bittensor wallet**.
+
+See also [What is the Existential Deposit?](https://support.polkadot.network/support/solutions/articles/65000168651-what-is-the-existential-deposit-).
+
 ### External Wallet
 
 A Bittensor wallet created through the Bittensor website or using a tool like [subkey](https://docs.substrate.io/reference/command-line-tools/subkey/), allowing users to use TAO without installing Bittensor.
