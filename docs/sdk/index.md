@@ -54,7 +54,7 @@ Use proxies to delegate account permissions securely while keeping your coldkey 
 
 Compose and execute complex blockchain transactions using `GenericCall` and pallet-specific builders.
 
-- [Working with Blockchain Calls](call): Create, compose, and execute calls with `GenericCall` and `CallBuilder` - essential for proxies, crowdloans, MEV protection, and fee estimation
+- [Working with Blockchain Calls](../sdk/call): Create, compose, and execute calls with `GenericCall` and `CallBuilder` - essential for proxies, crowdloans, MEV protection, and fee estimation
 
 ## Subnet Operations
 
