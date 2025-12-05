@@ -72,6 +72,34 @@ print("tao_to_alpha", subnet.tao_to_alpha(100))
 print("alpha_to_tao", subnet.alpha_to_tao(alpha_amount))
 ```
 
+## View top validators in a subnet
+
+Use the metagraph to view validators and their stakes within a subnet. This helps you identify top validators before deciding where to stake.
+
+```python
+import bittensor as bt
+
+sub = bt.Subtensor(network="test")
+netuid = 14  # Change to your desired subnet
+
+# Fetch the metagraph for the subnet
+metagraph = sub.metagraph(netuid=netuid)
+
+# Get validator hotkeys and their stakes
+validators = []
+for uid in range(len(metagraph.hotkeys)):
+    hotkey = metagraph.hotkeys[uid]
+    stake = metagraph.stake[uid]
+    validators.append((uid, hotkey, stake))
+
+# Sort by stake (highest first) and show top 10
+top_validators = sorted(validators, key=lambda x: x[2], reverse=True)[:10]
+
+print(f"Top 10 Validators in Subnet {netuid}:")
+for rank, (uid, hotkey, stake) in enumerate(top_validators, start=1):
+    print(f"  {rank}. UID {uid} | Stake: {stake:.4f} | Hotkey: {hotkey}")
+```
+
 ## Register on a subnet
 
 You can register your hotkey on a subnet using the `burned_register` method. This is necessary for staking, mining or validating.
