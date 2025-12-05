@@ -438,7 +438,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_receipt"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.extrinsic_receipt</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.from_exception"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.from_exception()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.message"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.message</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.mev_extrinsic_receipt"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.mev_extrinsic_receipt</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.mev_extrinsic"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.mev_extrinsic</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.success"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.success</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.transaction_alpha_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.transaction_alpha_fee</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.transaction_tao_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.transaction_tao_fee</span></code></a></li>
@@ -701,11 +701,11 @@ submitted to the chain.</p></li>
 contains the most detailed execution data available, including the block number and hash, triggered events,
 extrinsic index, execution phase, and other low-level details. This allows deep debugging or post-analysis
 of on-chain execution.</p></li>
-<li><p><strong>mev_extrinsic_receipt</strong> – The receipt object of the revealed (decrypted and executed) MEV Shield extrinsic. This is
+<li><p><strong>mev_extrinsic</strong> – The extrinsic object of the revealed (decrypted and executed) MEV Shield extrinsic. This is
 populated when using MEV Shield protection (<code class="docutils literal notranslate"><span class="pre">with_mev_protection=True</span></code>) and contains the execution details
-of the second extrinsic that decrypts and executes the originally encrypted call. Contains triggered events
-such as <code class="docutils literal notranslate"><span class="pre">DecryptedExecuted</span></code> or <code class="docutils literal notranslate"><span class="pre">DecryptedRejected</span></code>, block information, and other execution metadata. Set
-to <code class="docutils literal notranslate"><span class="pre">None</span></code> for non-MEV Shield transactions or when the revealed extrinsic receipt is not available.</p></li>
+of the second extrinsic that decrypts and executes the originally encrypted call. Contains triggered events,
+block information, and other execution metadata. Set to <code class="docutils literal notranslate"><span class="pre">None</span></code> for non-MEV Shield transactions or when the
+revealed extrinsic receipt is not available.</p></li>
 <li><p><strong>transaction_tao_fee</strong> – TAO fee charged by the transaction in TAO (e.g., fee for add_stake), if available.</p></li>
 <li><p><strong>transaction_alpha_fee</strong> – Alpha fee charged by the transaction (e.g., fee for transfer_stake), if available.</p></li>
 <li><p><strong>error</strong> – Captures the underlying exception if the extrinsic failed, otherwise <cite>None</cite>.</p></li>
@@ -735,7 +735,7 @@ extrinsic_function: register_subnet_extrinsic
 extrinsic: {‘account_id’: ‘0xd43593c715fdd31c…
 transaction_fee: τ1.0
 extrinsic_receipt: Extrinsic Receipt data of of the submitted extrinsic
-mev_extrinsic_receipt: None
+mev_extrinsic: None
 transaction_tao_fee: τ1.0
 transaction_alpha_fee: 1.0β
 error: None
@@ -819,8 +819,8 @@ print(response[1])
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.mev_extrinsic_receipt">
-<span class="sig-name descname"><span class="pre">mev_extrinsic_receipt</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AsyncExtrinsicReceipt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ExtrinsicReceipt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.mev_extrinsic_receipt" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.mev_extrinsic">
+<span class="sig-name descname"><span class="pre">mev_extrinsic</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AsyncExtrinsicReceipt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ExtrinsicReceipt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.mev_extrinsic" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1122,7 +1122,7 @@ Subtensor.add_args(parser)</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_receipt"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.extrinsic_receipt</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.from_exception"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.from_exception()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.message"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.message</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.mev_extrinsic_receipt"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.mev_extrinsic_receipt</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.mev_extrinsic"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.mev_extrinsic</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.success"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.success</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.transaction_alpha_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.transaction_alpha_fee</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.transaction_tao_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.transaction_tao_fee</span></code></a></li>

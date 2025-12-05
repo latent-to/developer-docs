@@ -441,7 +441,7 @@
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.subtensor_api.proxy.Proxy" title="bittensor.extras.subtensor_api.proxy.Proxy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Proxy</span></code></a></p></td>
-<td><p>Class for managing proxy operations on the Bittensor network.</p></td>
+<td><p>Class for managing proxy operations.</p></td>
 </tr>
 </tbody>
 </table>
@@ -452,21 +452,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.extras.subtensor_api.proxy.Proxy">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.extras.subtensor_api.proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.extras.subtensor_api.proxy.Proxy" title="Link to this definition">#</a></dt>
-<dd><p>Class for managing proxy operations on the Bittensor network.</p>
-<p>This class provides access to all proxy-related operations, including creating and managing both standard and pure
-proxy relationships, handling proxy announcements, and querying proxy data. It works with both synchronous
-<cite>Subtensor</cite> and asynchronous <cite>AsyncSubtensor</cite> instances.</p>
-<p>Proxies enable secure delegation of account permissions by allowing a delegate account to perform certain operations
-on behalf of a real account, with restrictions defined by the proxy type and optional time-lock delays.</p>
-<div class="admonition-notes admonition">
-<p class="admonition-title">Notes</p>
-<ul class="simple">
-<li><p>For comprehensive documentation on proxies, see: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies">https://docs.learnbittensor.org/keys/proxies</a>&gt;</p></li>
-<li><p>For creating and managing proxies, see: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
-<li><p>For pure proxy documentation, see: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/pure-proxies">https://docs.learnbittensor.org/keys/proxies/pure-proxies</a>&gt;</p></li>
-<li><p>For available proxy types and their permissions, see: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies#types-of-proxies">https://docs.learnbittensor.org/keys/proxies#types-of-proxies</a>&gt;</p></li>
-</ul>
-</div>
+<dd><p>Class for managing proxy operations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>subtensor</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../../../core/subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>, </em><a class="reference internal" href="../../../core/async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>]</em>)</p>

@@ -402,8 +402,8 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.asyncex.mev_shield.find_revealed_extrinsic"><code class="docutils literal notranslate"><span class="pre">find_revealed_extrinsic()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.asyncex.mev_shield.submit_encrypted_extrinsic"><code class="docutils literal notranslate"><span class="pre">submit_encrypted_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.asyncex.mev_shield.wait_for_extrinsic_by_hash"><code class="docutils literal notranslate"><span class="pre">wait_for_extrinsic_by_hash()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -424,11 +424,11 @@
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.asyncex.mev_shield.find_revealed_extrinsic" title="bittensor.core.extrinsics.asyncex.mev_shield.find_revealed_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_revealed_extrinsic</span></code></a>(subtensor, event_names, ...[, ...])</p></td>
-<td><p>Searches for an extrinsic containing a specific MEV Shield event in subsequent blocks.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.asyncex.mev_shield.submit_encrypted_extrinsic" title="bittensor.core.extrinsics.asyncex.mev_shield.submit_encrypted_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">submit_encrypted_extrinsic</span></code></a>(subtensor, wallet, call[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.asyncex.mev_shield.submit_encrypted_extrinsic" title="bittensor.core.extrinsics.asyncex.mev_shield.submit_encrypted_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">submit_encrypted_extrinsic</span></code></a>(subtensor, wallet, call[, ...])</p></td>
 <td><p>Submits an encrypted extrinsic to the MEV Shield pallet.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.asyncex.mev_shield.wait_for_extrinsic_by_hash" title="bittensor.core.extrinsics.asyncex.mev_shield.wait_for_extrinsic_by_hash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wait_for_extrinsic_by_hash</span></code></a>(subtensor, extrinsic_hash, ...)</p></td>
+<td><p>Wait for the result of a MeV Shield encrypted extrinsic.</p></td>
 </tr>
 </tbody>
 </table>
@@ -437,39 +437,8 @@
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="bittensor.core.extrinsics.asyncex.mev_shield.find_revealed_extrinsic">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.asyncex.mev_shield.</span></span><span class="sig-name descname"><span class="pre">find_revealed_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_hash_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_block_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks_ahead</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.asyncex.mev_shield.find_revealed_extrinsic" title="Link to this definition">#</a></dt>
-<dd><p>Searches for an extrinsic containing a specific MEV Shield event in subsequent blocks.</p>
-<p>This function iterates through blocks starting from the specified block hash and searches for extrinsics that
-contain a MEV Shield event (DecryptedExecuted or DecryptedRejected) matching the provided wrapper_id and signer. It
-checks each extrinsic’s triggered events to find the matching event.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>) – The Subtensor instance used for blockchain queries.</p></li>
-<li><p><strong>event_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The event identifiers to search for. Typically “DecryptedExecuted” or “DecryptedRejected” for MEV
-Shield transactions.</p></li>
-<li><p><strong>event_hash_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The wrapper_id (hash of (author, commitment, ciphertext)) to match. This uniquely identifies a
-specific MEV Shield submission.</p></li>
-<li><p><strong>start_block_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hash of the block where the search should begin. Usually the block where submit_encrypted
-was included.</p></li>
-<li><p><strong>blocks_ahead</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Maximum number of blocks to search ahead from the start block. Defaults to 5 blocks. The function
-will check blocks from start_block + 1 to start_block + blocks_ahead (the start block itself is not checked,
-as execute_revealed will be in subsequent blocks).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Tuple with event name and ExtrinsicReceipt object.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, async_substrate_interface.AsyncExtrinsicReceipt] | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[None, None]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="bittensor.core.extrinsics.asyncex.mev_shield.submit_encrypted_extrinsic">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.asyncex.mev_shield.</span></span><span class="sig-name descname"><span class="pre">submit_encrypted_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signer_keypair</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.asyncex.mev_shield.submit_encrypted_extrinsic" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.asyncex.mev_shield.</span></span><span class="sig-name descname"><span class="pre">submit_encrypted_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sign_with</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coldkey'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.asyncex.mev_shield.submit_encrypted_extrinsic" title="Link to this definition">#</a></dt>
 <dd><p>Submits an encrypted extrinsic to the MEV Shield pallet.</p>
 <p>This function encrypts a call using ML-KEM-768 + XChaCha20Poly1305 and submits it to the MevShield pallet. The
 extrinsic remains encrypted in the transaction pool until it is included in a block and decrypted by validators.</p>
@@ -479,17 +448,17 @@ extrinsic remains encrypted in the transaction pool until it is included in a bl
 <li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>) – The Subtensor client instance used for blockchain interaction.</p></li>
 <li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – The wallet used to sign the extrinsic (must be unlocked, coldkey will be used for signing).</p></li>
 <li><p><strong>call</strong> (<em>scalecodec.types.GenericCall</em>) – The GenericCall object to encrypt and submit.</p></li>
-<li><p><strong>signer_keypair</strong> (<em>Optional</em><em>[</em><em>bittensor_wallet.Keypair</em><em>]</em>) – The Keypair object used for signing the inner call.</p></li>
+<li><p><strong>sign_with</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The keypair to use for signing the inner call/extrinsic. Can be either “coldkey” or “hotkey”.</p></li>
 <li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
 transaction is not included in a block within that number of blocks, it will expire and be rejected. You can
 think of it as an expiration date for the transaction.</p></li>
 <li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
 <li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
 <li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
-<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the DecryptedExecuted event, indicating that validators have
+<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the executed event, indicating that validators have
 successfully decrypted and executed the inner call. If True, the function will poll subsequent blocks for
 the event matching this submission’s commitment.</p></li>
-<li><p><strong>blocks_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Maximum number of blocks to poll for the DecryptedExecuted event after inclusion.
+<li><p><strong>blocks_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Maximum number of blocks to poll for the executed event after inclusion.
 The function checks blocks from start_block + 1 to start_block + blocks_for_revealed_execution. Returns
 immediately if the event is found before the block limit is reached.</p></li>
 </ul>
@@ -516,6 +485,34 @@ commitment = blake2_256(payload_core)</p>
 <p>The key_hash binds the transaction to the key epoch at submission time and replaces nonce-based replay
 protection.</p>
 </div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.asyncex.mev_shield.wait_for_extrinsic_by_hash">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.asyncex.mev_shield.</span></span><span class="sig-name descname"><span class="pre">wait_for_extrinsic_by_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extrinsic_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shield_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submit_block_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_blocks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.asyncex.mev_shield.wait_for_extrinsic_by_hash" title="Link to this definition">#</a></dt>
+<dd><p>Wait for the result of a MeV Shield encrypted extrinsic.</p>
+<p>After submit_encrypted succeeds, the block author will decrypt and submit the inner extrinsic directly. This
+function polls subsequent blocks looking for either:
+- an extrinsic matching the provided hash (success)
+OR
+- a markDecryptionFailed extrinsic with matching shield ID (failure)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>) – SubtensorInterface instance.</p></li>
+<li><p><strong>extrinsic_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hash of the inner extrinsic to find.</p></li>
+<li><p><strong>shield_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The wrapper ID from EncryptedSubmitted event (for detecting decryption failures).</p></li>
+<li><p><strong>submit_block_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Block hash where submit_encrypted was included.</p></li>
+<li><p><strong>timeout_blocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Max blocks to wait (default 3).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optional ExtrinsicReceipt.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[async_substrate_interface.AsyncExtrinsicReceipt]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -569,8 +566,8 @@ protection.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.asyncex.mev_shield.find_revealed_extrinsic"><code class="docutils literal notranslate"><span class="pre">find_revealed_extrinsic()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.asyncex.mev_shield.submit_encrypted_extrinsic"><code class="docutils literal notranslate"><span class="pre">submit_encrypted_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.asyncex.mev_shield.wait_for_extrinsic_by_hash"><code class="docutils literal notranslate"><span class="pre">wait_for_extrinsic_by_hash()</span></code></a></li>
 </ul>
 </li>
 </ul>
