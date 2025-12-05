@@ -160,7 +160,7 @@ wallet = Wallet()
 # Create the staking call
 staking_call = SubtensorModule(subtensor).add_stake(
     netuid=1,
-    hotkey_ss58="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+    hotkey_ss58="5C86aJ2uQawR6P6veaJQXNK9HaWh6NMbUhTiLs65kq4ZW3NH",
     amount_staked=Balance.from_tao(1)
 )
 
