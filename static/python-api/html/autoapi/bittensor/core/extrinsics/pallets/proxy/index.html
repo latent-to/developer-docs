@@ -452,15 +452,15 @@
 <p>This class provides methods to create GenericCall instances for all Proxy pallet extrinsics.</p>
 <p>Works with both sync (Subtensor) and async (AsyncSubtensor) instances. For async operations, pass an AsyncSubtensor
 instance and await the result.</p>
-<dl>
-<dt>Example::</dt><dd><p># Sync usage
-call = Proxy(subtensor).add_proxy(delegate=”5DE..”, proxy_type=”Any”, delay=0)
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p># Sync usage</p>
+<p>call = Proxy(subtensor).add_proxy(delegate=”5DE..”, proxy_type=”Any”, delay=0)
 response = subtensor.sign_and_send_extrinsic(call=call, …)</p>
-<p># Async usage
-call = await Proxy(async_subtensor).add_proxy(delegate=”5DE..”, proxy_type=”Any”, delay=0)
+<p># Async usage</p>
+<p>call = await Proxy(async_subtensor).add_proxy(delegate=”5DE..”, proxy_type=”Any”, delay=0)
 response = await async_subtensor.sign_and_send_extrinsic(call=call, …)</p>
-</dd>
-</dl>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.proxy.Proxy.add_proxy">
 <span class="sig-name descname"><span class="pre">add_proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delegate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.proxy.Proxy.add_proxy" title="Link to this definition">#</a></dt>

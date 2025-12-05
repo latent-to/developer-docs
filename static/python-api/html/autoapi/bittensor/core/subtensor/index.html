@@ -652,7 +652,7 @@ validation).</p></li>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>network</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The network name to connect to (e.g., <cite>finney</cite> for Bittensor mainnet, <cite>test</cite>, for
-Bittensor test network, <cite>local</cite> for a locally deployed blockchain).If <cite>None</cite>, uses the
+Bittensor test network, <cite>local</cite> for a locally deployed blockchain). If <cite>None</cite>, uses the
 default network from config.</p></li>
 <li><p><strong>config</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../config/index.html#bittensor.core.config.Config" title="bittensor.core.config.Config"><em>bittensor.core.config.Config</em></a><em>]</em>) – Configuration object for the Subtensor instance. If <cite>None</cite>, uses the default configuration.</p></li>
 <li><p><strong>log_verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Enables or disables verbose logging.</p></li>
@@ -1018,11 +1018,11 @@ starting point of Yuma Consensus.</p>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p># Get bonds for subnet 1
-bonds = subtensor.bonds(netuid=1)
+<p># Get bonds for subnet 1</p>
+<p>bonds = subtensor.bonds(netuid=1)
 print(bonds[0])</p>
-<p># example output: (5, [(0, 32767), (1, 16383), (3, 8191)])
-# This means validator UID 5 has bonds: 50% to miner 0, 25% to miner 1, 12.5% to miner 3</p>
+<p># example output: (5, [(0, 32767), (1, 16383), (3, 8191)])</p>
+<p># This means validator UID 5 has bonds: 50% to miner 0, 25% to miner 1, 12.5% to miner 3</p>
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
@@ -1121,9 +1121,9 @@ collection.</p>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>sub = bt.Subtensor(network=”finney”)
-# calls to subtensor
-sub.close()</p>
+<p>sub = bt.Subtensor(network=”finney”)</p>
+<p># calls to subtensor</p>
+<p>sub.close()</p>
 </div>
 </dd></dl>
 
@@ -1946,8 +1946,8 @@ distribution.</p>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p># Get children for a hotkey in subnet 1
-success, children, error = subtensor.get_children(hotkey=”5F…”, netuid=1)</p>
+<p># Get children for a hotkey in subnet 1</p>
+<p>success, children, error = subtensor.get_children(hotkey=”5F…”, netuid=1)</p>
 <dl class="simple">
 <dt>if success:</dt><dd><dl class="simple">
 <dt>for proportion, child_hotkey in children:</dt><dd><p>print(f”Child {child_hotkey}: {proportion}”)</p>
@@ -2454,13 +2454,13 @@ blockchain. The fee is returned in Rao (the smallest unit of TAO, where 1 TAO = 
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p># Estimate fee before sending a transfer
-call = subtensor.compose_call(</p>
-<blockquote>
-<div><p>call_module=”Balances”,
+<p># Estimate fee before sending a transfer</p>
+<dl class="simple">
+<dt>call = subtensor.compose_call(</dt><dd><p>call_module=”Balances”,
 call_function=”transfer”,
 call_params={“dest”: destination_ss58, “value”: amount.rao}</p>
-</div></blockquote>
+</dd>
+</dl>
 <p>)
 fee = subtensor.get_extrinsic_fee(call=call, keypair=wallet.coldkey)
 print(f”Estimated fee: {fee.tao} TAO”)</p>
@@ -2670,24 +2670,24 @@ If not provided, all available fields will be returned.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p># Retrieve all fields from the metagraph from subnet 2 mechanism 0
-meta_info = subtensor.get_metagraph_info(netuid=2)</p>
-<p># Retrieve all fields from the metagraph from subnet 2 mechanism 1
-meta_info = subtensor.get_metagraph_info(netuid=2, mechid=1)</p>
-<p># Retrieve selective data from the metagraph from subnet 2 mechanism 0
-partial_meta_info = subtensor.get_metagraph_info(</p>
-<blockquote>
-<div><p>netuid=2,
+<p># Retrieve all fields from the metagraph from subnet 2 mechanism 0</p>
+<p>meta_info = subtensor.get_metagraph_info(netuid=2)</p>
+<p># Retrieve all fields from the metagraph from subnet 2 mechanism 1</p>
+<p>meta_info = subtensor.get_metagraph_info(netuid=2, mechid=1)</p>
+<p># Retrieve selective data from the metagraph from subnet 2 mechanism 0</p>
+<dl class="simple">
+<dt>partial_meta_info = subtensor.get_metagraph_info(</dt><dd><p>netuid=2,
 selected_indices=[SelectiveMetagraphIndex.Name, SelectiveMetagraphIndex.OwnerHotkeys]</p>
-</div></blockquote>
+</dd>
+</dl>
 <p>)</p>
-<p># Retrieve selective data from the metagraph from subnet 2 mechanism 1
-partial_meta_info = subtensor.get_metagraph_info(</p>
-<blockquote>
-<div><p>netuid=2,
+<p># Retrieve selective data from the metagraph from subnet 2 mechanism 1</p>
+<dl class="simple">
+<dt>partial_meta_info = subtensor.get_metagraph_info(</dt><dd><p>netuid=2,
 mechid=1,
 selected_indices=[SelectiveMetagraphIndex.Name, SelectiveMetagraphIndex.OwnerHotkeys]</p>
-</div></blockquote>
+</dd>
+</dl>
 <p>)</p>
 </div>
 <div class="admonition-notes admonition">
@@ -4403,8 +4403,8 @@ You can think of it as an expiration date for the transaction.</p></li>
 <p>import bittensor as bt</p>
 <p>subtensor = bt.subtensor(network=”local”)
 my_wallet = bt.Wallet()</p>
-<p># if <cite>liquidity_delta</cite> is negative
-my_liquidity_delta = Balance.from_tao(100) * -1</p>
+<p># if <cite>liquidity_delta</cite> is negative</p>
+<p>my_liquidity_delta = Balance.from_tao(100) * -1</p>
 <dl class="simple">
 <dt>subtensor.modify_liquidity(</dt><dd><p>wallet=my_wallet,
 netuid=123,
@@ -4413,8 +4413,8 @@ liquidity_delta=my_liquidity_delta</p>
 </dd>
 </dl>
 <p>)</p>
-<p># if <cite>liquidity_delta</cite> is positive
-my_liquidity_delta = Balance.from_tao(120)</p>
+<p># if <cite>liquidity_delta</cite> is positive</p>
+<p>my_liquidity_delta = Balance.from_tao(120)</p>
 <dl class="simple">
 <dt>subtensor.modify_liquidity(</dt><dd><p>wallet=my_wallet,
 netuid=123,
@@ -5634,7 +5634,7 @@ and be rejected. You can think of it as an expiration date for the transaction.<
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.subtensor.Subtensor.set_weights">
-<span class="sig-name descname"><span class="pre">set_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit_reveal_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_attempts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">version_as_int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/subtensor.html#Subtensor.set_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.subtensor.Subtensor.set_weights" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mechid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit_reveal_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_attempts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">version_as_int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_PERIOD</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/subtensor.html#Subtensor.set_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.subtensor.Subtensor.set_weights" title="Link to this definition">#</a></dt>
 <dd><p>Sets the interneuronal weights for the specified neuron. This process involves specifying the influence or trust
 a neuron places on other neurons in the network, which is a fundamental aspect of Bittensor’s decentralized
 learning architecture.</p>
@@ -5744,13 +5744,13 @@ representing the swap fees and output amounts.</p>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p># Simulate staking 100 TAO stake to subnet 1
-result = subtensor.sim_swap(</p>
-<blockquote>
-<div><p>origin_netuid=0,
+<p># Simulate staking 100 TAO stake to subnet 1</p>
+<dl class="simple">
+<dt>result = subtensor.sim_swap(</dt><dd><p>origin_netuid=0,
 destination_netuid=1,
 amount=Balance.from_tao(100)</p>
-</div></blockquote>
+</dd>
+</dl>
 <p>)
 print(f”Fee: {result.tao_fee.tao} TAO, Output: {result.alpha_amount} Alpha”)</p>
 </div>
@@ -6189,8 +6189,8 @@ You can think of it as an expiration date for the transaction.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p># If you would like to unstake all stakes in all subnets safely:
-import bittensor as bt</p>
+<p># If you would like to unstake all stakes in all subnets safely:</p>
+<p>import bittensor as bt</p>
 <p>subtensor = bt.Subtensor()
 wallet = bt.Wallet(“my_wallet”)
 netuid = 14
@@ -6206,9 +6206,9 @@ netuid=stake.netuid,</p>
 <p>)
 print(result)</p>
 </dd>
-<dt># If you would like to unstake all stakes in all subnets unsafely, use <cite>rate_tolerance=None</cite>:</dt><dd><p>import bittensor as bt</p>
-</dd>
 </dl>
+<p># If you would like to unstake all stakes in all subnets unsafely, use <cite>rate_tolerance=None</cite>:</p>
+<p>import bittensor as bt</p>
 <p>subtensor = bt.AsyncSubtensor()
 wallet = bt.Wallet(“my_wallet”)
 netuid = 14
