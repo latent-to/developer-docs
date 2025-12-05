@@ -392,6 +392,20 @@ A data structure that contains comprehensive information about the current state
 
 **See:** [The Subnet Metagraph](../subnets/metagraph)
 
+### MEV (Maximal Extractable Value)
+
+In blockchain networks, MEV refers to the profit that can be extracted by reordering, inserting, or censoring transactions within a block.
+
+Common MEV attacks include:
+
+- **Front-running**: Observing a pending transaction and submitting a similar transaction with higher priority to execute first
+- **Sandwich attacks**: Placing transactions before and after a target transaction to profit from the price movement caused by that transaction
+- **Back-running**: Submitting a transaction immediately after a target transaction to capitalize on its effects
+
+In Bittensor, MEV attacks can affect staking and unstaking operations, where attackers might exploit knowledge of pending transactions to manipulate token prices. The MEV Shield feature protects against these attacks by encrypting transactions until they are included in a block.
+
+**See also:** [MEV Shield](../sdk/mev-protection.md), [Price Protection](../learn/price-protection.md)
+
 ### Multiple Incentive Mechanisms
 
 A feature that allows subnets to implement multiple independent evaluation systems within a single subnet. Each mechanism operates with its own bond pool for Yuma Consensus calculations, enabling subnet creators to distribute emissions across different types of work or evaluation criteria. Validators must evaluate miners separately for each mechanism, and miner performance in one mechanism does not affect their rating in another.

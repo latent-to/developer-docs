@@ -219,7 +219,6 @@ const sidebars = {
         "sdk/migration-guide",
         "subnets/asyncio",
         "sdk/managing-subtensor-connections",
-        "sdk/mev-protection",
       ],
     },
 
@@ -231,6 +230,7 @@ const sidebars = {
       collapsed: true,
       items: [
         "concepts/bittensor-networks",
+        "sdk/mev-protection",
         "concepts/commit-reveal",
         "concepts/consensus-based-weights",
         "concepts/bt-logging-levels",
