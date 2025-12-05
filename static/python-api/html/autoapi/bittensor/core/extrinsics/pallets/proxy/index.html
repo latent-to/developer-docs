@@ -469,14 +469,14 @@ response = await async_subtensor.sign_and_send_extrinsic(call=call, …)</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>delegate</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the delegate proxy account.</p></li>
-<li><p><strong>proxy_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The type of proxy permissions (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;Any&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;NonTransfer&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;Staking&quot;</span></code>). For available
+<li><p><strong>proxy_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The type of proxy permissions (e.g., <cite>Any</cite>, <cite>NonTransfer</cite>, <cite>Staking</cite>). For available
 proxy types and their permissions, see the documentation link in the Notes section below.</p></li>
-<li><p><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Optionally, include a delay in blocks. The time-lock period for proxy announcements. A delay of <code class="docutils literal notranslate"><span class="pre">0</span></code>
+<li><p><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Optionally, include a delay in blocks. The time-lock period for proxy announcements. A delay of <cite>0</cite>
 means immediate execution without announcements.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>GenericCall instance for the <code class="docutils literal notranslate"><span class="pre">Proxy.addProxy</span></code> extrinsic.</p>
+<dd class="field-even"><p>GenericCall instance for the <cite>Proxy.addProxy</cite> extrinsic.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
@@ -499,11 +499,11 @@ means immediate execution without announcements.</p></li>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>real</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the real account on whose behalf the call will be made.</p></li>
-<li><p><strong>call_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hash of the call that will be executed in the future (hex string with <code class="docutils literal notranslate"><span class="pre">0x</span></code> prefix).</p></li>
+<li><p><strong>call_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hash of the call that will be executed in the future (hex string with <cite>0x</cite> prefix).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>GenericCall instance for the <code class="docutils literal notranslate"><span class="pre">Proxy.announce</span></code> extrinsic.</p>
+<dd class="field-even"><p>GenericCall instance for the <cite>Proxy.announce</cite> extrinsic.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
@@ -526,18 +526,18 @@ rejected, or removed. The announcement can be executed after the delay period ha
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>proxy_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The type of proxy permissions for the pure proxy (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;Any&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;NonTransfer&quot;</span></code>,
-<code class="docutils literal notranslate"><span class="pre">&quot;Staking&quot;</span></code>). For available proxy types and their permissions, see the documentation link in the Notes
+<li><p><strong>proxy_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The type of proxy permissions for the pure proxy (e.g., <cite>Any</cite>, <cite>NonTransfer</cite>,
+<cite>Staking</cite>). For available proxy types and their permissions, see the documentation link in the Notes
 section below.</p></li>
-<li><p><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Optionally, include a delay in blocks. The time-lock period for proxy announcements. A delay of <code class="docutils literal notranslate"><span class="pre">0</span></code>
+<li><p><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Optionally, include a delay in blocks. The time-lock period for proxy announcements. A delay of <cite>0</cite>
 means immediate execution without announcements.</p></li>
-<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – A salt value (u16, range <code class="docutils literal notranslate"><span class="pre">0-65535</span></code>) used to generate unique pure proxy addresses. This should
-generally be left as <code class="docutils literal notranslate"><span class="pre">0</span></code> unless you are creating batches of proxies. Must be preserved for
-<code class="docutils literal notranslate"><span class="pre">kill_pure</span></code>.</p></li>
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – A salt value (u16, range <cite>0-65535</cite>) used to generate unique pure proxy addresses. This should
+generally be left as <cite>0</cite> unless you are creating batches of proxies. Must be preserved for
+<cite>kill_pure</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>GenericCall instance for the <code class="docutils literal notranslate"><span class="pre">Proxy.createPure</span></code> extrinsic.</p>
+<dd class="field-even"><p>GenericCall instance for the <cite>Proxy.createPure</cite> extrinsic.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
@@ -560,19 +560,19 @@ generally be left as <code class="docutils literal notranslate"><span class="pre
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>spawner</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the account that spawned the pure proxy (the account that called
-<code class="docutils literal notranslate"><span class="pre">create_pure</span></code>).</p></li>
+<cite>create_pure</cite>).</p></li>
 <li><p><strong>proxy_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The type of proxy permissions that were used when creating the pure proxy. Must match the value
-used in <code class="docutils literal notranslate"><span class="pre">create_pure</span></code>.</p></li>
-<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The salt value (u16, range <code class="docutils literal notranslate"><span class="pre">0-65535</span></code>) originally used in <code class="docutils literal notranslate"><span class="pre">create_pure</span></code> to generate this pure
+used in <cite>create_pure</cite>.</p></li>
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The salt value (u16, range <cite>0-65535</cite>) originally used in <cite>create_pure</cite> to generate this pure
 proxy’s address. Must match exactly the index used during creation.</p></li>
-<li><p><strong>height</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The block number at which the pure proxy was created. This is returned in the <code class="docutils literal notranslate"><span class="pre">&quot;PureCreated&quot;</span></code>
-event from <code class="docutils literal notranslate"><span class="pre">create_pure</span></code>.</p></li>
+<li><p><strong>height</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The block number at which the pure proxy was created. This is returned in the <cite>PureCreated</cite>
+event from <cite>create_pure</cite>.</p></li>
 <li><p><strong>ext_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The extrinsic index within the block at which the pure proxy was created. This is returned in the
-<code class="docutils literal notranslate"><span class="pre">&quot;PureCreated&quot;</span></code> event from <code class="docutils literal notranslate"><span class="pre">create_pure</span></code>.</p></li>
+<cite>PureCreated</cite> event from <cite>create_pure</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>GenericCall instance for the <code class="docutils literal notranslate"><span class="pre">Proxy.killPure</span></code> extrinsic.</p>
+<dd class="field-even"><p>GenericCall instance for the <cite>Proxy.killPure</cite> extrinsic.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
@@ -595,7 +595,7 @@ permanently inaccessible after this operation.</p>
 <dd><p>Adjust proxy and announcement deposits based on current runtime values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>GenericCall instance for the <code class="docutils literal notranslate"><span class="pre">Proxy.pokeDeposit</span></code> extrinsic.</p>
+<dd class="field-odd"><p>GenericCall instance for the <cite>Proxy.pokeDeposit</cite> extrinsic.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bittensor.core.extrinsics.pallets.base.Call</p>
@@ -620,13 +620,13 @@ if the deposit amount has changed.</p></li>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>real</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the real account on whose behalf the call is being made.</p></li>
-<li><p><strong>force_proxy_type</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The type of proxy to use for the call. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, any proxy type can be used. Otherwise,
+<li><p><strong>force_proxy_type</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The type of proxy to use for the call. If <cite>None</cite>, any proxy type can be used. Otherwise,
 must match one of the allowed proxy types that the signing account has for the real account.</p></li>
 <li><p><strong>call</strong> (<em>scalecodec.GenericCall</em>) – The inner call to be executed on behalf of the real account.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>GenericCall instance for the <code class="docutils literal notranslate"><span class="pre">Proxy.proxy</span></code> extrinsic.</p>
+<dd class="field-even"><p>GenericCall instance for the <cite>Proxy.proxy</cite> extrinsic.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
@@ -635,7 +635,7 @@ must match one of the allowed proxy types that the signing account has for the r
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
 <ul class="simple">
-<li><p>The call must be permitted by the proxy type. For example, a <code class="docutils literal notranslate"><span class="pre">&quot;NonTransfer&quot;</span></code> proxy cannot execute transfer
+<li><p>The call must be permitted by the proxy type. For example, a <cite>NonTransfer</cite> proxy cannot execute transfer
 calls.</p></li>
 <li><p>See Working with Proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
 </ul>
@@ -651,14 +651,14 @@ calls.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>delegate</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the delegate proxy account that made the announcement.</p></li>
 <li><p><strong>real</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the real account on whose behalf the call will be made.</p></li>
-<li><p><strong>force_proxy_type</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The type of proxy to use for the call. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, any proxy type can be used. Otherwise,
+<li><p><strong>force_proxy_type</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The type of proxy to use for the call. If <cite>None</cite>, any proxy type can be used. Otherwise,
 must match one of the allowed proxy types.</p></li>
 <li><p><strong>call</strong> (<em>scalecodec.GenericCall</em>) – The inner call to be executed on behalf of the real account. The hash of this call must match the
-<code class="docutils literal notranslate"><span class="pre">call_hash</span></code> that was announced.</p></li>
+<cite>call_hash</cite> that was announced.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>GenericCall instance for the <code class="docutils literal notranslate"><span class="pre">Proxy.proxyAnnounced</span></code> extrinsic.</p>
+<dd class="field-even"><p>GenericCall instance for the <cite>Proxy.proxyAnnounced</cite> extrinsic.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
@@ -667,7 +667,7 @@ must match one of the allowed proxy types.</p></li>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
 <ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">call_hash</span></code> of the provided call must match the <code class="docutils literal notranslate"><span class="pre">call_hash</span></code> that was announced. The announcement must
+<li><p>The <cite>call_hash</cite> of the provided call must match the <cite>call_hash</cite> that was announced. The announcement must
 not have been rejected by the real account, and the delay period must have passed.</p></li>
 <li><p>See Working with Proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
 </ul>
@@ -682,12 +682,12 @@ not have been rejected by the real account, and the delay period must have passe
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>delegate</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the delegate proxy account whose announcement is being rejected.</p></li>
-<li><p><strong>call_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hash of the call that was announced and is now being rejected (hex string with <code class="docutils literal notranslate"><span class="pre">0x</span></code>
+<li><p><strong>call_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hash of the call that was announced and is now being rejected (hex string with <cite>0x</cite>
 prefix).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>GenericCall instance for the <code class="docutils literal notranslate"><span class="pre">Proxy.rejectAnnouncement</span></code> extrinsic.</p>
+<dd class="field-even"><p>GenericCall instance for the <cite>Proxy.rejectAnnouncement</cite> extrinsic.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
@@ -710,12 +710,12 @@ prefix).</p></li>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>real</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the real account on whose behalf the call was announced.</p></li>
-<li><p><strong>call_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hash of the call that was announced and is now being removed (hex string with <code class="docutils literal notranslate"><span class="pre">0x</span></code>
+<li><p><strong>call_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hash of the call that was announced and is now being removed (hex string with <cite>0x</cite>
 prefix).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>GenericCall instance for the <code class="docutils literal notranslate"><span class="pre">Proxy.removeAnnouncement</span></code> extrinsic.</p>
+<dd class="field-even"><p>GenericCall instance for the <cite>Proxy.removeAnnouncement</cite> extrinsic.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
@@ -736,7 +736,7 @@ prefix).</p></li>
 <dd><p>Remove all proxy relationships for the signing account.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>GenericCall instance for the <code class="docutils literal notranslate"><span class="pre">Proxy.removeProxies</span></code> extrinsic.</p>
+<dd class="field-odd"><p>GenericCall instance for the <cite>Proxy.removeProxies</cite> extrinsic.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bittensor.core.extrinsics.pallets.base.Call</p>
@@ -766,7 +766,7 @@ proxy relationship.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>GenericCall instance for the <code class="docutils literal notranslate"><span class="pre">Proxy.removeProxy</span></code> extrinsic.</p>
+<dd class="field-even"><p>GenericCall instance for the <cite>Proxy.removeProxy</cite> extrinsic.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
