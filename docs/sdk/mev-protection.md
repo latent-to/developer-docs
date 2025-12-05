@@ -9,17 +9,17 @@ The MEV Shield feature allows users to encrypt transactions to protect them from
 
 MEV Shield uses a simple encrypt-and-submit approach:
 
-1. Sign your extrinsic: Create and sign the extrinsic (the "inner call") you want to protect
-2. Encrypt the signed payload: Encrypt the signed extrinsic using the current MEV Shield public key
-3. Submit: Send the encrypted payload to the chain
+1. Create and sign the extrinsic (the "inner call") you want to protect.
+2. Encrypt the signed extrinsic using the current MEV Shield public key.
+3. Submit the encrypted payload to the chain.
 4. The the inner call is decrypted and executed after the transaction is included in a block, preventing front-running since the transaction contents are hidden while in the mempool.
 
 ## SDK Support
 
 The SDK supports MEV Shield in two primary ways:
 
-1. **MEV protection parameter** - Add `mev_protection=True` to any supported extrinsic (recommended)
-2. **Direct MEV Shield submission** - Use `mev_submit_encrypted` for full control over encrypted transaction submission
+1. MEV protection parameter - Add `mev_protection=True` to any supported extrinsic (recommended)
+2. Direct MEV Shield submission - Use `mev_submit_encrypted` for full control over encrypted transaction submission
 
 ### Core MEV Shield Methods
 
