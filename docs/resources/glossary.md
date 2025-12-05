@@ -298,6 +298,18 @@ A development-only configuration that accelerates block production to 250ms inte
 
 ## H
 
+### Halving
+
+The process where Bittensor's daily token emission rate cuts in half, similar to Bitcoin's halving mechanism. Halvings reduce the rate of new TAO tokens entering circulation.
+
+Unlike Bitcoin which halves based on block numbers, Bittensor implements halvings based on total token supply. When specific supply thresholds are reached, the emission rate of TAO is cut in half.
+
+The actual date of each halving is not fixed—it changes based on the amount of TAO being recycled each day.
+
+**See also:**
+- [TAO.app Halvings Tracker](https://tao.app/halvings)
+- [Emission](../learn/emissions.md)
+
 ### Hotkey
 
 A component of a Bittensor wallet responsible for less secure operations such as signing messages into the network, secure a UID slot in a subnet, running subnet miners and subnet validators in a subnet. It can be encrypted or unencrypted, but is unencrypted by default. The terms "account" and "hotkey" are used synonymously.
