@@ -16,7 +16,7 @@ See also:
 - [Understanding pricing and anticipating slippage](../learn/slippage)
 - [Price protection when staking](../learn/price-protection)
 - [MEV Shield Protection](../sdk/mev-protection.md)
-- [Staking with a Proxy](../keys/proxies/staking-with-proxy)storage
+- [Staking with a Proxy](../keys/proxies/staking-with-proxy)
 
 :::tip
 Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.0005 TAO.

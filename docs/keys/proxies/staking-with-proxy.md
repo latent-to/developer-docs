@@ -15,6 +15,7 @@ See also:
 - [Working with Proxies](working-with-proxies): Create and manage standard proxies
 - [Managing Stake with SDK](../../staking-and-delegation/managing-stake-sdk): General staking operations with the Python SDK
 - [Managing Stake with BTCLI](../../staking-and-delegation/managing-stake-btcli): General staking operations with the CLI
+- [Working with Blockchain Calls](../../sdk/call): Advanced guide to GenericCall and CallBuilder for composing blockchain transactions
 
 
 ## Overview

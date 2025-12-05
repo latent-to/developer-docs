@@ -114,9 +114,18 @@ ExtrinsicResponse:
     data: {'balance_before': τ90.314788205, 'balance_after': τ89.314638078, 'stake_before': 0.000000000α, 'stake_after': 2,408.440776606α}
 ```
 
-### Option 2: Direct MEV Shield Submission
+### Option 2: Compose Call and Submit Encrypted
 
 For full control over the encryption and submission process, you can use the `mev_submit_encrypted` method on the `Subtensor` instance or call the `submit_encrypted_extrinsic` function directly.
+
+
+See [Working with Blockchain Calls](./call).
+
+### Nonce management
+
+:::tip
+The SDK handles nonce management automatically!
+:::
 
 When using MEV Shield, nonce management is important if you're using the **same account** to sign both the inner call and the submit call:
 
@@ -128,9 +137,6 @@ This is because the submit call will be executed first (consuming nonce `X`), an
 
 **Alternative approach**: Use a different account as the submitter. This eliminates nonce coordination entirely—the inner call signer and the submit call signer have independent nonce sequences.
 
-:::tip
-The SDK handles nonce management automatically when using `mev_protection=True` on extrinsic methods. Manual nonce handling is only needed when using `mev_submit_encrypted` directly with custom configurations.
-:::
 
 #### Key Parameters
 
@@ -140,13 +146,15 @@ The SDK handles nonce management automatically when using `mev_protection=True` 
 
 - `blocks_for_revealed_execution` (default: `5`): Maximum number of blocks to poll for the `DecryptedExecuted` event after inclusion. The function checks blocks from `start_block + 1` to `start_block + blocks_for_revealed_execution`. It returns immediately if the event is found before the block limit is reached.
 
+#### MEV Receipt
+
 - `mev_extrinsic_receipt`: When `wait_for_revealed_execution=True`, the `ExtrinsicResponse` object will contain a `mev_extrinsic_receipt` attribute. This contains the execution details of the revealed (decrypted and executed) extrinsic, including triggered events such as `DecryptedExecuted` or `DecryptedRejected`, block information, and other execution metadata.
 
 :::note
 If `wait_for_inclusion=False`, you cannot set `wait_for_revealed_execution=True`. This will raise a `ValueError` because we need to know the block where the encrypted transaction was included to search for the revealed execution event.
 :::
 
-#### Example: Direct MEV Shield Submission
+#### Example: Direct MEV Shield Submission with SDK
 
 ```python
 from bittensor import Subtensor, Wallet
@@ -157,13 +165,15 @@ from bittensor.utils.balance import Balance
 subtensor = Subtensor()
 wallet = Wallet()
 
-# Create the staking call
-staking_call = SubtensorModule(subtensor).add_stake(
-    netuid=1,
-    hotkey_ss58="5C86aJ2uQawR6P6veaJQXNK9HaWh6NMbUhTiLs65kq4ZW3NH",
-    amount_staked=Balance.from_tao(1)
+staking_call = subtensor.compose_call(
+    call_module="SubtensorModule",
+    call_function="add_stake",
+    call_params={
+        "netuid": 1,
+        "hotkey": "5C86aJ2uQawR6P6veaJQXNK9HaWh6NMbUhTiLs65kq4ZW3NH",
+        "amount_staked": 1000000000  # in RAO
+    }
 )
-
 # Submit with MEV protection
 response = subtensor.mev_submit_encrypted(
     wallet=wallet,

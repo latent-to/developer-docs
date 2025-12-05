@@ -50,6 +50,12 @@ Use proxies to delegate account permissions securely while keeping your coldkey 
 - **Proxy staking**: See [Staking with a Proxy](../keys/proxies/staking-with-proxy.md)
 - **Other proxy operations**: Execute any permitted call through a proxy (see [Working with Proxies](../keys/proxies/working-with-proxies.md))
 
+## Advanced: Working with Blockchain Calls
+
+Compose and execute complex blockchain transactions using `GenericCall` and pallet-specific builders.
+
+- [Working with Blockchain Calls](call): Create, compose, and execute calls with `GenericCall` and `CallBuilder` - essential for proxies, crowdloans, MEV protection, and fee estimation
+
 ## Subnet Operations
 
 Create, manage, and interact with subnets.
