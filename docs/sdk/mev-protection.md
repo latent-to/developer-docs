@@ -1,11 +1,10 @@
 ---
-title: "MEV Shield"
+title: "Using MEV Shield with the Bittensor SDK"
 ---
 
 # MEV Shield
 
 The MEV Shield feature allows users to encrypt transactions to protect them from front running and other maximal extractable value (MEV) attacks that depend on attackers knowing the details of transactions when they enter the transaction pool.
-
 
 MEV Shield uses a simple encrypt-and-submit approach:
 
@@ -42,9 +41,9 @@ The `ExtrinsicResponse` object includes a `mev_extrinsic_receipt` field to store
 ### Extrinsic Functions
 
 In `Subtensor` and `AsyncSubtensor`, all methods that call extrinsics now accept the following keyword arguments:
-  - `mev_protection: bool = DEFAULT_MEV_PROTECTION` as a keyword-only argument
-  - `wait_for_revealed_execution: bool = True` as a keyword-only argument
 
+- `mev_protection: bool = DEFAULT_MEV_PROTECTION` as a keyword-only argument
+- `wait_for_revealed_execution: bool = True` as a keyword-only argument
 
 All extrinsic functions now support MEV protection:
 
@@ -63,7 +62,6 @@ All extrinsic functions now support MEV protection:
     - Transfer: `transfer_extrinsic`
     - Start Call: `start_call_extrinsic`
 
-
 ## Usage
 
 ### Option 1: MEV Protection via Extrinsic Parameter (Recommended)
@@ -71,6 +69,7 @@ All extrinsic functions now support MEV protection:
 All extrinsics now support a `mev_protection` parameter (default: `False`). When set to `True`, the extrinsic is automatically encrypted and submitted through the MEV Shield pallet. This is the simplest way to use MEV protection—the SDK handles all the details including nonce management.
 
 When `mev_protection=True`:
+
 - The transaction is encrypted using ML-KEM-768 + XChaCha20Poly1305
 - The transaction remains encrypted in the mempool until validators decrypt and execute it
 - The `ExtrinsicResponse` will contain `mev_extrinsic_receipt` with the revealed execution details (if `wait_for_revealed_execution=True`, which is the default for extrinsics using MEV protection)
@@ -98,6 +97,7 @@ response = subtensor.add_stake(
 
 print(response)
 ```
+
 ```console
 ExtrinsicResponse:
     success: True
@@ -118,7 +118,6 @@ ExtrinsicResponse:
 
 For full control over the encryption and submission process, you can use the `mev_submit_encrypted` method on the `Subtensor` instance or call the `submit_encrypted_extrinsic` function directly.
 
-
 See [Working with Blockchain Calls](./call).
 
 ### Nonce management
@@ -136,7 +135,6 @@ When using MEV Shield, nonce management is important if you're using the **same 
 This is because the submit call will be executed first (consuming nonce `X`), and then the inner call will be decrypted and executed (consuming nonce `X+1`).
 
 **Alternative approach**: Use a different account as the submitter. This eliminates nonce coordination entirely—the inner call signer and the submit call signer have independent nonce sequences.
-
 
 #### Key Parameters
 

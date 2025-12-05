@@ -91,11 +91,11 @@ const sidebars = {
           type: "category",
           label: "Proxies",
           collapsible: true,
-          collapsed: true,          
+          collapsed: true,
           items: [
-          "keys/proxies/index",
-          "keys/proxies/working-with-proxies",
-          "keys/proxies/pure-proxies",
+            "keys/proxies/index",
+            "keys/proxies/working-with-proxies",
+            "keys/proxies/pure-proxies",
           ],
         },
         "keys/multisig",
@@ -206,7 +206,7 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Bittensor Python SDK",      
+      label: "Bittensor Python SDK",
       collapsible: true,
       collapsed: true,
       items: [
@@ -231,7 +231,13 @@ const sidebars = {
       collapsed: true,
       items: [
         "concepts/bittensor-networks",
-        "sdk/mev-protection",
+        {
+          type: "category",
+          label: "MEV shield",
+          collapsible: true,
+          collapsed: true,
+          items: ["concepts/mev-shield/index", "sdk/mev-protection"],
+        },
         "concepts/commit-reveal",
         "concepts/consensus-based-weights",
         "concepts/bt-logging-levels",
