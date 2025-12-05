@@ -55,7 +55,7 @@ The work to be performed by miners is set by the subnet creator in the form of t
 
 The validators then rank the quality of the work done by the miners within the subnet. The aggregated scores of the validators determine the quantity of TAO emitted to each miner.
 
-At the same time, validators are also incentivized to do their best work, because their emissionsk depend on how well their miner scorings agree with the general consensus of other validators.
+At the same time, validators are also incentivized to do their best work, because their emissions depend on how well their miner scorings agree with the general consensus of other validators.
 
 ### What exactly is the task of a subnet miner?
 
