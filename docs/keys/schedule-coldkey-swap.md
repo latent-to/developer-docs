@@ -28,8 +28,8 @@ The schedule coldkey swap feature works as follows:
 
 - The schedule coldkey swap feature enables you to schedule the swapping of source coldkey to a destination coldkey. If you feel your existing coldkey is potentially compromised, then use this feature to schedule a swap to a destination coldkey.
 - When you use this feature, it will not immediately swap your coldkeys and swap your TAO funds from the source coldkey to the destination coldkey. It will only schedule the swap event.
-- All scheduled coldkey swaps will be executed on-chain. **Your scheduled coldkey swap will execute on the mainnet 7200 blocks (approximately 24 hours) after you successfully scheduled the coldkey swap using the method described in this document.**
-- The source coldkey you used in this method will be locked when you schedule the swap. After the 7200-block period is elapsed your original coldkey will be unlocked entirely.
+- All scheduled coldkey swaps will be executed on-chain. **Your scheduled coldkey swap will execute on the mainnet 36000 blocks (approximately 5 days) after you successfully scheduled the coldkey swap using the method described in this document.**
+- The source coldkey you used in this method will be locked when you schedule the swap. After the 36000-block period is elapsed your original coldkey will be unlocked entirely.
 - **Cost**: The cost of this coldkey swap transaction is 0.1 TAO. This must be available in your source coldkey.
 - Any subnet ownership from your source coldkey will move to the destination coldkey.
 - The delegated stake will be transferred from your source coldkey to the destination coldkey.
@@ -107,4 +107,4 @@ Scroll down to the bottom of the page and click on the **Submit Transaction** bu
 
 ## Verify
 
-Your scheduled coldkey swap will execute on the mainnet 7200 blocks after you successfully scheduled the coldkey swap using the above method. Check your destination coldkey after approximately 24 hours to verify.
+Your scheduled coldkey swap will execute on the mainnet 36000 blocks after you successfully scheduled the coldkey swap using the above method. Check your destination coldkey after approximately 5 days to verify.
