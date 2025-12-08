@@ -17,7 +17,7 @@ import { SiTrpc } from "react-icons/si";
 
 # Bittensor SDK Reference
 
-This section presents the Bittensor SDK reference documentation. Follow the below links to specific Python modules or [click here for SDK reference homepage](pathname:///python-api/html/autoapi/bittensor/index.html).
+This section presents the Bittensor SDK reference documentation for version bittensor 9.12.2. Follow the below links to specific Python modules or [click here for SDK reference homepage](pathname:///python-api/html/autoapi/bittensor/index.html).
 
 <Cards>
     <Card
