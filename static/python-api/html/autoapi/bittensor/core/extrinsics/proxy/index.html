@@ -708,32 +708,32 @@ inaccessible after this operation.</p>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p># After creating a pure proxy</p>
-<dl class="simple">
-<dt>create_response = subtensor.proxies.create_pure_proxy(</dt><dd><p>wallet=spawner_wallet,
-proxy_type=ProxyType.Any,  # Type of proxy permissions for the pure proxy
-delay=0,
-index=0,</p>
-</dd>
-</dl>
-<p>)
-pure_proxy_ss58 = create_response.data[“pure_account”]
-spawner = create_response.data[“spawner”]
-proxy_type_used = create_response.data[“proxy_type”]  # The proxy_type used during creation
-height = create_response.data[“height”]
-ext_index = create_response.data[“ext_index”]</p>
+<p>create_response = subtensor.proxies.create_pure_proxy(</p>
+<blockquote>
+<div><p>wallet=spawner_wallet,</p>
+<p>proxy_type=ProxyType.Any,  # Type of proxy permissions for the pure proxy</p>
+<p>delay=0,</p>
+<p>index=0,</p>
+</div></blockquote>
+<p>)</p>
+<p>pure_proxy_ss58 = create_response.data[“pure_account”]</p>
+<p>spawner = create_response.data[“spawner”]</p>
+<p>proxy_type_used = create_response.data[“proxy_type”]  # The proxy_type used during creation</p>
+<p>height = create_response.data[“height”]</p>
+<p>ext_index = create_response.data[“ext_index”]</p>
 <p># Kill the pure proxy</p>
 <p># Note: force_proxy_type defaults to ProxyType.Any (spawner must have Any proxy relationship)</p>
-<dl class="simple">
-<dt>kill_response = subtensor.proxies.kill_pure_proxy(</dt><dd><p>wallet=spawner_wallet,
-pure_proxy_ss58=pure_proxy_ss58,
-spawner=spawner,
-proxy_type=proxy_type_used,  # Must match the proxy_type used during creation
-index=0,
-height=height,
-ext_index=ext_index,
-# force_proxy_type=ProxyType.Any,  # Optional: defaults to ProxyType.Any</p>
-</dd>
-</dl>
+<p>kill_response = subtensor.proxies.kill_pure_proxy(</p>
+<blockquote>
+<div><p>wallet=spawner_wallet,</p>
+<p>pure_proxy_ss58=pure_proxy_ss58,</p>
+<p>spawner=spawner,</p>
+<p>proxy_type=proxy_type_used,  # Must match the proxy_type used during creation</p>
+<p>index=0,</p>
+<p>height=height,</p>
+<p>ext_index=ext_index,</p>
+<p># force_proxy_type=ProxyType.Any,  # Optional: defaults to ProxyType.Any</p>
+</div></blockquote>
 <p>)</p>
 </div>
 </dd></dl>

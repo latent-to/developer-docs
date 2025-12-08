@@ -455,11 +455,11 @@ instance and await the result.</p>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p># Sync usage</p>
-<p>call = Proxy(subtensor).add_proxy(delegate=”5DE..”, proxy_type=”Any”, delay=0)
-response = subtensor.sign_and_send_extrinsic(call=call, …)</p>
+<p>call = Proxy(subtensor).add_proxy(delegate=”5DE..”, proxy_type=”Any”, delay=0)</p>
+<p>response = subtensor.sign_and_send_extrinsic(call=call, …)</p>
 <p># Async usage</p>
-<p>call = await Proxy(async_subtensor).add_proxy(delegate=”5DE..”, proxy_type=”Any”, delay=0)
-response = await async_subtensor.sign_and_send_extrinsic(call=call, …)</p>
+<p>call = await Proxy(async_subtensor).add_proxy(delegate=”5DE..”, proxy_type=”Any”, delay=0)</p>
+<p>response = await async_subtensor.sign_and_send_extrinsic(call=call, …)</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.proxy.Proxy.add_proxy">

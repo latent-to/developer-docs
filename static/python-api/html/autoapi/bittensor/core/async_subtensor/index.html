@@ -1058,8 +1058,8 @@ starting point of Yuma Consensus.</p>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p># Get bonds for subnet 1</p>
-<p>bonds = await subtensor.bonds(netuid=1)
-print(bonds[0])</p>
+<p>bonds = await subtensor.bonds(netuid=1)</p>
+<p>print(bonds[0])</p>
 <p># example output: (5, [(0, 32767), (1, 16383), (3, 8191)])</p>
 <p># This means validator UID 5 has bonds: 50% to miner 0, 25% to miner 1, 12.5% to miner 3</p>
 </div>
@@ -1834,11 +1834,11 @@ Each validator can have multiple revealed commitments (up to 10 most recent).</p
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p># sample return value
-{</p>
+<p># sample return value</p>
+<p>{</p>
 <blockquote>
-<div><p>“5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY”: ( (12, “Alice message 1”), (152, “Alice message 2”) ),
-“5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty”: ( (12, “Bob message 1”), (147, “Bob message 2”) ),</p>
+<div><p>“5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY”: ( (12, “Alice message 1”), (152, “Alice message 2”) ),</p>
+<p>“5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty”: ( (12, “Bob message 1”), (147, “Bob message 2”) ),</p>
 </div></blockquote>
 <p>}</p>
 </div>
@@ -2071,13 +2071,13 @@ distribution.</p>
 <p class="admonition-title">Example</p>
 <p># Get children for a hotkey in subnet 1</p>
 <p>success, children, error = await subtensor.get_children(hotkey=”5F…”, netuid=1)</p>
-<dl class="simple">
-<dt>if success:</dt><dd><dl class="simple">
-<dt>for proportion, child_hotkey in children:</dt><dd><p>print(f”Child {child_hotkey}: {proportion}”)</p>
-</dd>
-</dl>
-</dd>
-</dl>
+<p>if success:</p>
+<blockquote>
+<div><p>for proportion, child_hotkey in children:</p>
+<blockquote>
+<div><p>print(f”Child {child_hotkey}: {proportion}”)</p>
+</div></blockquote>
+</div></blockquote>
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
@@ -2622,15 +2622,15 @@ blockchain. The fee is returned in Rao (the smallest unit of TAO, where 1 TAO = 
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p># Estimate fee before sending a transfer</p>
-<dl class="simple">
-<dt>call = await subtensor.compose_call(</dt><dd><p>call_module=”Balances”,
-call_function=”transfer”,
-call_params={“dest”: destination_ss58, “value”: amount.rao}</p>
-</dd>
-</dl>
-<p>)
-fee = await subtensor.get_extrinsic_fee(call=call, keypair=wallet.coldkey)
-print(f”Estimated fee: {fee.tao} TAO”)</p>
+<p>call = await subtensor.compose_call(</p>
+<blockquote>
+<div><p>call_module=”Balances”,</p>
+<p>call_function=”transfer”,</p>
+<p>call_params={“dest”: destination_ss58, “value”: amount.rao}</p>
+</div></blockquote>
+<p>)</p>
+<p>fee = await subtensor.get_extrinsic_fee(call=call, keypair=wallet.coldkey)</p>
+<p>print(f”Estimated fee: {fee.tao} TAO”)</p>
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
@@ -2880,11 +2880,11 @@ If not provided, all available fields will be returned.</p></li>
 <p># Retrieve all fields from the metagraph from subnet 2 mechanism 1</p>
 <p>meta_info = subtensor.get_metagraph_info(netuid=2, mechid=1)</p>
 <p># Retrieve selective data from the metagraph from subnet 2 mechanism 0</p>
-<dl class="simple">
-<dt>partial_meta_info = subtensor.get_metagraph_info(</dt><dd><p>netuid=2,
-selected_indices=[SelectiveMetagraphIndex.Name, SelectiveMetagraphIndex.OwnerHotkeys]</p>
-</dd>
-</dl>
+<p>partial_meta_info = subtensor.get_metagraph_info(</p>
+<blockquote>
+<div><p>netuid=2,</p>
+<p>selected_indices=[SelectiveMetagraphIndex.Name, SelectiveMetagraphIndex.OwnerHotkeys]</p>
+</div></blockquote>
 <p>)</p>
 <p># Retrieve selective data from the metagraph from subnet 2 mechanism 1</p>
 <dl class="simple">
@@ -3432,8 +3432,9 @@ block.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>( (12, “Alice message 1”), (152, “Alice message 2”) )
-( (12, “Bob message 1”), (147, “Bob message 2”) )</p>
+<p># sample return value</p>
+<p>( (12, “Alice message 1”), (152, “Alice message 2”) )</p>
+<p>( (12, “Bob message 1”), (147, “Bob message 2”) )</p>
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
@@ -4797,27 +4798,27 @@ You can think of it as an expiration date for the transaction.</p></li>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p>import bittensor as bt</p>
-<p>subtensor = bt.AsyncSubtensor(network=”local”)
-await subtensor.initialize()</p>
+<p>subtensor = bt.AsyncSubtensor(network=”local”)</p>
+<p>await subtensor.initialize()</p>
 <p>my_wallet = bt.Wallet()</p>
-<p># if <cite>liquidity_delta</cite> is negative</p>
-<p>my_liquidity_delta = Balance.from_tao(100) * -1
-await subtensor.modify_liquidity(</p>
+<p># if liquidity_delta is negative</p>
+<p>my_liquidity_delta = Balance.from_tao(100) * -1</p>
+<p>await subtensor.modify_liquidity(</p>
 <blockquote>
-<div><p>wallet=my_wallet,
-netuid=123,
-position_id=2,
-liquidity_delta=my_liquidity_delta</p>
+<div><p>wallet=my_wallet,</p>
+<p>netuid=123,</p>
+<p>position_id=2,</p>
+<p>liquidity_delta=my_liquidity_delta</p>
 </div></blockquote>
 <p>)</p>
-<p># if <cite>liquidity_delta</cite> is positive</p>
-<p>my_liquidity_delta = Balance.from_tao(120)
-await subtensor.modify_liquidity(</p>
+<p># if liquidity_delta is positive</p>
+<p>my_liquidity_delta = Balance.from_tao(120)</p>
+<p>await subtensor.modify_liquidity(</p>
 <blockquote>
-<div><p>wallet=my_wallet,
-netuid=123,
-position_id=2,
-liquidity_delta=my_liquidity_delta</p>
+<div><p>wallet=my_wallet,</p>
+<p>netuid=123,</p>
+<p>position_id=2,</p>
+<p>liquidity_delta=my_liquidity_delta</p>
 </div></blockquote>
 <p>)</p>
 </div>
@@ -6159,13 +6160,13 @@ transaction is not included in a block within that number of blocks, it will exp
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p># Set weights directly (for non-commit-reveal subnets)</p>
-<dl class="simple">
-<dt>response = await subtensor.set_weights(</dt><dd><p>wallet=wallet,
-netuid=1,
-uids=[0, 1, 2],
-weights=[0.5, 0.3, 0.2]</p>
-</dd>
-</dl>
+<p>response = await subtensor.set_weights(</p>
+<blockquote>
+<div><p>wallet=wallet,</p>
+<p>netuid=1,</p>
+<p>uids=[0, 1, 2],</p>
+<p>weights=[0.5, 0.3, 0.2]</p>
+</div></blockquote>
 <p>)</p>
 <p># For commit-reveal subnets, the method automatically handles commit and reveal phases</p>
 </div>
@@ -6245,14 +6246,14 @@ representing the swap fees and output amounts.</p>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p># Simulate staking 100 TAO stake to subnet 1</p>
-<dl class="simple">
-<dt>result = await subtensor.sim_swap(</dt><dd><p>origin_netuid=0,
-destination_netuid=1,
-amount=Balance.from_tao(100)</p>
-</dd>
-</dl>
-<p>)
-print(f”Fee: {result.tao_fee.tao} TAO, Output: {result.alpha_amount} Alpha”)</p>
+<p>result = await subtensor.sim_swap(</p>
+<blockquote>
+<div><p>origin_netuid=0,</p>
+<p>destination_netuid=1,</p>
+<p>amount=Balance.from_tao(100)</p>
+</div></blockquote>
+<p>)</p>
+<p>print(f”Fee: {result.tao_fee.tao} TAO, Output: {result.alpha_amount} Alpha”)</p>
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
@@ -6744,44 +6745,44 @@ decrypt and execute it. If <cite>False</cite>, submits the transaction directly 
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p># If you would like to unstake all stakes in all subnets safely, use default <cite>rate_tolerance</cite> or pass your
-# value:</p>
+<p># If you would like to unstake all stakes in all subnets safely, use default rate_tolerance or pass your</p>
+<p># value:</p>
 <p>import bittensor as bt</p>
-<p>subtensor = bt.AsyncSubtensor()
-wallet = bt.Wallet(“my_wallet”)
-netuid = 14
-hotkey = “5%SOME_HOTKEY_WHERE_IS_YOUR_STAKE_NOW%”</p>
+<p>subtensor = bt.AsyncSubtensor()</p>
+<p>wallet = bt.Wallet(“my_wallet”)</p>
+<p>netuid = 14</p>
+<p>hotkey = “5%SOME_HOTKEY_WHERE_IS_YOUR_STAKE_NOW%”</p>
 <p>wallet_stakes = await subtensor.get_stake_info_for_coldkey(coldkey_ss58=wallet.coldkey.ss58_address)</p>
-<dl>
-<dt>for stake in wallet_stakes:</dt><dd><dl class="simple">
-<dt>result = await subtensor.unstake_all(</dt><dd><p>wallet=wallet,
-hotkey_ss58=stake.hotkey_ss58,
-netuid=stake.netuid,</p>
-</dd>
-</dl>
-<p>)
-print(result)</p>
-</dd>
-</dl>
-<p># If you would like to unstake all stakes in all subnets unsafely, use <cite>rate_tolerance=None</cite>:</p>
+<p>for stake in wallet_stakes:</p>
+<blockquote>
+<div><p>result = await subtensor.unstake_all(</p>
+<blockquote>
+<div><p>wallet=wallet,</p>
+<p>hotkey_ss58=stake.hotkey_ss58,</p>
+<p>netuid=stake.netuid,</p>
+</div></blockquote>
+<p>)</p>
+<p>print(result)</p>
+</div></blockquote>
+<p># If you would like to unstake all stakes in all subnets unsafely, use rate_tolerance=None:</p>
 <p>import bittensor as bt</p>
-<p>subtensor = bt.AsyncSubtensor()
-wallet = bt.Wallet(“my_wallet”)
-netuid = 14
-hotkey = “5%SOME_HOTKEY_WHERE_IS_YOUR_STAKE_NOW%”</p>
+<p>subtensor = bt.AsyncSubtensor()</p>
+<p>wallet = bt.Wallet(“my_wallet”)</p>
+<p>netuid = 14</p>
+<p>hotkey = “5%SOME_HOTKEY_WHERE_IS_YOUR_STAKE_NOW%”</p>
 <p>wallet_stakes = await subtensor.get_stake_info_for_coldkey(coldkey_ss58=wallet.coldkey.ss58_address)</p>
-<dl>
-<dt>for stake in wallet_stakes:</dt><dd><dl class="simple">
-<dt>result = await subtensor.unstake_all(</dt><dd><p>wallet=wallet,
-hotkey_ss58=stake.hotkey_ss58,
-netuid=stake.netuid,
-rate_tolerance=None,</p>
-</dd>
-</dl>
-<p>)
-print(result)</p>
-</dd>
-</dl>
+<p>for stake in wallet_stakes:</p>
+<blockquote>
+<div><p>result = await subtensor.unstake_all(</p>
+<blockquote>
+<div><p>wallet=wallet,</p>
+<p>hotkey_ss58=stake.hotkey_ss58,</p>
+<p>netuid=stake.netuid,</p>
+<p>rate_tolerance=None,</p>
+</div></blockquote>
+<p>)</p>
+<p>print(result)</p>
+</div></blockquote>
 </div>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
@@ -7147,10 +7148,10 @@ This is useful when you don’t want to manually call <cite>await subtensor.init
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p># Create and initialize in one step
-subtensor = await get_async_subtensor(network=”finney”)
-# Ready to use immediately
-block = await subtensor.get_current_block()</p>
+<p># Create and initialize in one step</p>
+<p>subtensor = await get_async_subtensor(network=”finney”)</p>
+<p># Ready to use immediately</p>
+<p>block = await subtensor.get_current_block()</p>
 </div>
 </dd></dl>
 
