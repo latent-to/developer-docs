@@ -2,9 +2,13 @@
 title: "Subtensor Storage Query Examples"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 # Subtensor Storage Query Examples
 
 ## 1. AccumulatedLeaseDividends
+
+<SdkVersion />
 
 - **Description**: Storage for a lease ID's accumulated dividends.
 - **Query Type**: `u16 -> unknown`

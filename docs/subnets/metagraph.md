@@ -4,6 +4,7 @@ title: "The Subnet Metagraph"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Subnet Metagraph
 
@@ -58,6 +59,8 @@ The btcli output shows a subset of metagraph data (lite mode). For complete data
 :::
 
 ### Python SDK
+
+<SdkVersion />
 
 The Bittensor Python SDK [Metagraph module](pathname:///python-api/html/autoapi/bittensor/core/metagraph/index.html) provides programmatic access to metagraph data:
 

@@ -2,6 +2,8 @@
 title: "Logging"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 # Logging
 
 The `logging` module in Bittensor uses several levels to categorize log messages by their severity. Each level has a numeric value and the verbosity decreases as the level increases. See the below table.
@@ -28,6 +30,8 @@ TRACE (`5`) and SUCCESS (`21`) are custom levels added by Bittensor for more gra
 You can control the verbosity of log output by changing the logging level. Messages at or above the set level will be logged.
 
 ## Using state methods
+
+<SdkVersion />
 
 The `logging` module uses a state machine to manage logging levels. You can switch between different states using the provided methods.
 

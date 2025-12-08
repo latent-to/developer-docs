@@ -2,6 +2,8 @@
 title: "Working with Subnets"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 # Working with Subnets
 
 Subnets are composed of a discrete number of UIDs. The subnet validators and subnet miners are associated with these UIDs. Each UID in the subnet belongs to a unique [hotkey](../keys/wallets.md#what-are-wallets-and-keys) which in turn is connected to a unique **coldkey** which was used during registration. The Yuma Consensus runs on these UIDs. This section presents a few examples showing how to work with subnets.
@@ -20,6 +22,8 @@ btcli subnets list
 ```
 
 ## Viewing state
+
+<SdkVersion />
 
 To display fine-grained information about each subnetwork use [bt.Metagraph](pathname:///python-api/html/autoapi/bittensor/core/metagraph/index.html):
 

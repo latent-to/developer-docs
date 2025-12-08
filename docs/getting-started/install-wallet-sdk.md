@@ -2,6 +2,8 @@
 title: "Install Wallet SDK"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 ---
 
 :::warning Install from Verified Sources
@@ -86,6 +88,8 @@ The above will print the Wallet SDK version you just installed, i.e., `2.0.0`, c
 ---
 
 ## Usage examples
+
+<SdkVersion />
 
 **1. Create a wallet**
 

@@ -7,6 +7,7 @@ toc_max_heading_level: 2
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { SdkVersion } from "../../sdk/_sdk-version.mdx";
 
 This page covers creating a pure proxy and executing a call using a pure proxy. The primary use case for pure proxies is constructing multisignature wallets (multisigs) with swappable members. For most other applications requiring wallet indirection, regular proxy wallets are the correct solution.
 
@@ -127,6 +128,8 @@ btcli config add-proxy \
 </TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
+
+<SdkVersion />
 
 ```python
 import bittensor as bt

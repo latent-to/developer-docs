@@ -2,6 +2,8 @@
 title: SubtensorAPI
 ---
 
+import { SdkVersion } from "./_sdk-version.mdx";
+
 # Subtensor API
 
 ## Overview
@@ -65,6 +67,8 @@ pip install bittensor
 :::
 
 ### Synchronous (Default)
+
+<SdkVersion />
 
 ```python
 import bittensor as bt

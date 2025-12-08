@@ -2,6 +2,8 @@
 title: "MEV Shield"
 ---
 
+import { SdkVersion } from "./_sdk-version.mdx";
+
 # MEV Shield
 
 The MEV Shield feature allows users to encrypt transactions to protect them from front running and other maximal extractable value (MEV) attacks that depend on attackers knowing the details of transactions when they enter the transaction pool.
@@ -76,6 +78,8 @@ When `mev_protection=True`:
 - The `ExtrinsicResponse` will contain `mev_extrinsic_receipt` with the revealed execution details (if `wait_for_revealed_execution=True`, which is the default for extrinsics using MEV protection)
 
 #### Example: Staking with MEV Protection
+
+<SdkVersion />
 
 ```python
 from bittensor import Subtensor, Wallet

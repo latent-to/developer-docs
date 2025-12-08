@@ -6,6 +6,7 @@ import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Creating/Importing a Bittensor Wallet
 
@@ -156,6 +157,8 @@ btcli wallet new_hotkey --use-password --wallet.name test-coldkey --wallet.hotke
 ```
 
 ## Creating a wallet using Python
+
+<SdkVersion />
 
 <Tabs queryString="create-wallet" groupId="create-wallet">
 <TabItem value="cold-hot" label="Coldkey and Hotkey">

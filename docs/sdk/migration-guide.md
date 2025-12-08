@@ -2,6 +2,8 @@
 title: "Bittensor SDK v10.0 Migration Guide"
 ---
 
+import { SdkVersion } from "./_sdk-version.mdx";
+
 # Bittensor SDK v10.0 Migration Guide
 
 This page documents breaking changes and new features for the Bittensor Python SDK `v10.0`. This is a major release with significant refactoring, standardization, and new functionality.
@@ -73,6 +75,8 @@ Previously referred to as "sub-subnets" during development, this feature allows 
 - **Backward compatible**: Subnets with only one mechanism (the default) don't need code changes
 
 #### Setting Mechanism Weights:
+
+<SdkVersion />
 
 Validators must set weights independently for each mechanism in a subnet:
 
