@@ -1680,13 +1680,15 @@ reuse_block.</p></li>
 <dd class="field-odd"><p>result</p>
 </dd>
 </dl>
-<p>Example of result:
-{</p>
+<p>Example of result:</p>
 <blockquote>
-<div><p>“5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY”: ( (12, “Alice message 1”), (152, “Alice message 2”) ),
+<div><dl class="simple">
+<dt>{</dt><dd><p>“5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY”: ( (12, “Alice message 1”), (152, “Alice message 2”) ),
 “5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty”: ( (12, “Bob message 1”), (147, “Bob message 2”) ),</p>
-</div></blockquote>
+</dd>
+</dl>
 <p>}</p>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
@@ -2083,26 +2085,26 @@ Otherwise, all known constants defined in <cite>CrowdloanConstants.field_names()
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>print(subtensor.get_crowdloan_constants())
-CrowdloanConstants(</p>
-<blockquote>
-<div><p>AbsoluteMinimumContribution=τ1.000000000,
+<p>print(subtensor.get_crowdloan_constants())</p>
+<dl class="simple">
+<dt>CrowdloanConstants(</dt><dd><p>AbsoluteMinimumContribution=τ1.000000000,
 MaxContributors=1000,
 MaximumBlockDuration=86400,
 MinimumDeposit=τ10.000000000,
 MinimumBlockDuration=600,
 RefundContributorsLimit=50</p>
-</div></blockquote>
+</dd>
+</dl>
 <p>)</p>
 <dl class="simple">
 <dt>crowdloan_consts = subtensor.get_crowdloan_constants(</dt><dd><p>constants=[“MaxContributors”, “RefundContributorsLimit”]</p>
 </dd>
 </dl>
-<p>)
-print(crowdloan_consts)
-CrowdloanConstants(MaxContributors=1000, RefundContributorsLimit=50)</p>
-<p>print(crowdloan_consts.MaxContributors)
-1000</p>
+<p>)</p>
+<p>print(crowdloan_consts)</p>
+<p>CrowdloanConstants(MaxContributors=1000, RefundContributorsLimit=50)</p>
+<p>print(crowdloan_consts.MaxContributors)</p>
+<p>1000</p>
 </div>
 </dd></dl>
 
@@ -2600,24 +2602,24 @@ If not provided, all available fields will be returned.</p></li>
 </dl>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p># Retrieve all fields from the metagraph from subnet 2 mechanism 0
-meta_info = subtensor.get_metagraph_info(netuid=2)</p>
-<p># Retrieve all fields from the metagraph from subnet 2 mechanism 1
-meta_info = subtensor.get_metagraph_info(netuid=2, mechid=1)</p>
-<p># Retrieve selective data from the metagraph from subnet 2 mechanism 0
-partial_meta_info = subtensor.get_metagraph_info(</p>
-<blockquote>
-<div><p>netuid=2,
+<p># Retrieve all fields from the metagraph from subnet 2 mechanism 0</p>
+<p>meta_info = subtensor.get_metagraph_info(netuid=2)</p>
+<p># Retrieve all fields from the metagraph from subnet 2 mechanism 1</p>
+<p>meta_info = subtensor.get_metagraph_info(netuid=2, mechid=1)</p>
+<p># Retrieve selective data from the metagraph from subnet 2 mechanism 0</p>
+<dl class="simple">
+<dt>partial_meta_info = subtensor.get_metagraph_info(</dt><dd><p>netuid=2,
 selected_indices=[SelectiveMetagraphIndex.Name, SelectiveMetagraphIndex.OwnerHotkeys]</p>
-</div></blockquote>
+</dd>
+</dl>
 <p>)</p>
-<p># Retrieve selective data from the metagraph from subnet 2 mechanism 1
-partial_meta_info = subtensor.get_metagraph_info(</p>
-<blockquote>
-<div><p>netuid=2,
+<p># Retrieve selective data from the metagraph from subnet 2 mechanism 1</p>
+<dl class="simple">
+<dt>partial_meta_info = subtensor.get_metagraph_info(</dt><dd><p>netuid=2,
 mechid=1,
 selected_indices=[SelectiveMetagraphIndex.Name, SelectiveMetagraphIndex.OwnerHotkeys]</p>
-</div></blockquote>
+</dd>
+</dl>
 <p>)</p>
 </div>
 <div class="admonition-notes admonition">
@@ -3114,11 +3116,11 @@ block.</p>
 <dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>], Ellipsis]]</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>Example of result:</dt><dd><p>( (12, “Alice message 1”), (152, “Alice message 2”) )
-( (12, “Bob message 1”), (147, “Bob message 2”) )</p>
-</dd>
-</dl>
+<p>Example of result:</p>
+<blockquote>
+<div><p>( (12, “Alice message 1”), (152, “Alice message 2”) )</p>
+<p>( (12, “Bob message 1”), (147, “Bob message 2”) )</p>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
