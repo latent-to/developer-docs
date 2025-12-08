@@ -150,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../config/index.html">bittensor.core.config</a></li>
@@ -726,11 +727,11 @@ network. It is a crucial feature for verifying that the data received is the sam
 <li><p>Concatenates the string representation of these fields.</p></li>
 <li><p>Applies SHA3-256 hashing to the concatenated string to produce a unique fingerprint of the data.</p></li>
 </ol>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">synapse</span> <span class="o">=</span> <span class="n">Synapse</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ExampleRoute&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">hash_value</span> <span class="o">=</span> <span class="n">synapse</span><span class="o">.</span><span class="n">body_hash</span>
-<span class="c1"># hash_value is the SHA3-256 hash of the serialized body of the Synapse instance</span>
-</pre></div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>synapse = Synapse(name=”ExampleRoute”, timeout=10)
+hash_value = synapse.body_hash
+# hash_value is the SHA3-256 hash of the serialized body of the Synapse instance</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -769,23 +770,26 @@ Synapse’s deserialize method will be used, returning the object instance as-is
 <p>In its default form, this method simply returns the instance of the Synapse itself without any modifications.
 Subclasses of Synapse can override this method to add specific deserialization behaviors, such as converting
 serialized data back into complex object types or performing additional data integrity checks.</p>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CustomSynapse</span><span class="p">(</span><span class="n">Synapse</span><span class="p">):</span>
-    <span class="n">additional_data</span><span class="p">:</span> <span class="nb">str</span>
-
-    <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CustomSynapse&quot;</span><span class="p">:</span>
-        <span class="c1"># Custom deserialization logic</span>
-        <span class="c1"># For example, decoding a base64 encoded string in &#39;additional_data&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_data</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">additional_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_data</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-<span class="n">serialized_data</span> <span class="o">=</span> <span class="s1">&#39;{&quot;additional_data&quot;: &quot;SGVsbG8gV29ybGQ=&quot;}&#39;</span>  <span class="c1"># Base64 for &#39;Hello World&#39;</span>
-<span class="n">custom_synapse</span> <span class="o">=</span> <span class="n">CustomSynapse</span><span class="o">.</span><span class="n">model_validate_json</span><span class="p">(</span><span class="n">serialized_data</span><span class="p">)</span>
-<span class="n">deserialized_synapse</span> <span class="o">=</span> <span class="n">custom_synapse</span><span class="o">.</span><span class="n">deserialize</span><span class="p">()</span>
-
-<span class="c1"># deserialized_synapse.additional_data would now be &#39;Hello World&#39;</span>
-</pre></div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<dl>
+<dt>class CustomSynapse(Synapse):</dt><dd><p>additional_data: str</p>
+<dl>
+<dt>def deserialize(self) -&gt; “CustomSynapse”:</dt><dd><p># Custom deserialization logic
+# For example, decoding a base64 encoded string in ‘additional_data’
+if self.additional_data:</p>
+<blockquote>
+<div><p>self.additional_data = base64.b64decode(self.additional_data).decode(‘utf-8’)</p>
+</div></blockquote>
+<p>return self</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>serialized_data = ‘{“additional_data”: “SGVsbG8gV29ybGQ=”}’  # Base64 for ‘Hello World’
+custom_synapse = CustomSynapse.model_validate_json(serialized_data)
+deserialized_synapse = custom_synapse.deserialize()</p>
+<p># deserialized_synapse.additional_data would now be ‘Hello World’</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -835,15 +839,17 @@ reconstruct Synapse objects from received data.</p>
 <dd class="field-odd"><p><a class="reference internal" href="#bittensor.core.synapse.Synapse" title="bittensor.core.synapse.Synapse">Synapse</a></p>
 </dd>
 </dl>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">received_headers</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;bt_header_axon_address&#39;</span><span class="p">:</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;bt_header_dendrite_port&#39;</span><span class="p">:</span> <span class="s1">&#39;8080&#39;</span><span class="p">,</span>
-    <span class="c1"># Other headers...</span>
-<span class="p">}</span>
-<span class="n">synapse</span> <span class="o">=</span> <span class="n">Synapse</span><span class="o">.</span><span class="n">from_headers</span><span class="p">(</span><span class="n">received_headers</span><span class="p">)</span>
-<span class="c1"># synapse is a new Synapse instance reconstructed from the received headers</span>
-</pre></div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<dl class="simple">
+<dt>received_headers = {</dt><dd><p>‘bt_header_axon_address’: ‘127.0.0.1’,
+‘bt_header_dendrite_port’: ‘8080’,
+# Other headers…</p>
+</dd>
+</dl>
+<p>}
+synapse = Synapse.from_headers(received_headers)
+# synapse is a new Synapse instance reconstructed from the received headers</p>
 </div>
 </dd></dl>
 
@@ -967,14 +973,17 @@ consistency and integrity.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
 </dd>
 </dl>
-<dl>
+<dl class="simple">
 <dt>Process:</dt><dd><ol class="arabic simple">
 <li><p>Separates headers into categories based on prefixes (<code class="docutils literal notranslate"><span class="pre">axon</span></code>, <code class="docutils literal notranslate"><span class="pre">dendrite</span></code>, etc.).</p></li>
 <li><p>Decodes and deserializes <code class="docutils literal notranslate"><span class="pre">input_obj</span></code> headers into their original objects.</p></li>
 <li><p>Assigns simple fields directly from the headers to the input dictionary.</p></li>
 </ol>
 </dd>
-<dt>Example::</dt><dd><dl class="simple">
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<dl class="simple">
 <dt>received_headers = {</dt><dd><p>‘bt_header_axon_address’: ‘127.0.0.1’,
 ‘bt_header_dendrite_port’: ‘8080’,
 # Other headers…</p>
@@ -983,8 +992,7 @@ consistency and integrity.</p>
 <p>}
 inputs = Synapse.parse_headers_to_inputs(received_headers)
 # inputs now contains a structured representation of Synapse properties based on the headers</p>
-</dd>
-</dl>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This is handled automatically when calling <code class="xref py py-func docutils literal notranslate"><span class="pre">Synapse.from_headers(headers)()</span></code> and does not need to be

@@ -150,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/config/index.html">bittensor.core.config</a></li>
@@ -405,14 +406,17 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.all_subnets"><code class="docutils literal notranslate"><span class="pre">Subnets.all_subnets</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.blocks_since_last_step"><code class="docutils literal notranslate"><span class="pre">Subnets.blocks_since_last_step</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.blocks_since_last_update"><code class="docutils literal notranslate"><span class="pre">Subnets.blocks_since_last_update</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.blocks_until_next_epoch"><code class="docutils literal notranslate"><span class="pre">Subnets.blocks_until_next_epoch</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.bonds"><code class="docutils literal notranslate"><span class="pre">Subnets.bonds</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.burned_register"><code class="docutils literal notranslate"><span class="pre">Subnets.burned_register</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.commit_reveal_enabled"><code class="docutils literal notranslate"><span class="pre">Subnets.commit_reveal_enabled</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.difficulty"><code class="docutils literal notranslate"><span class="pre">Subnets.difficulty</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_all_ema_tao_inflow"><code class="docutils literal notranslate"><span class="pre">Subnets.get_all_ema_tao_inflow</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_all_subnets_info"><code class="docutils literal notranslate"><span class="pre">Subnets.get_all_subnets_info</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_all_subnets_netuid"><code class="docutils literal notranslate"><span class="pre">Subnets.get_all_subnets_netuid</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_children"><code class="docutils literal notranslate"><span class="pre">Subnets.get_children</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_children_pending"><code class="docutils literal notranslate"><span class="pre">Subnets.get_children_pending</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_ema_tao_inflow"><code class="docutils literal notranslate"><span class="pre">Subnets.get_ema_tao_inflow</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_hyperparameter"><code class="docutils literal notranslate"><span class="pre">Subnets.get_hyperparameter</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_liquidity_list"><code class="docutils literal notranslate"><span class="pre">Subnets.get_liquidity_list</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_mechanism_count"><code class="docutils literal notranslate"><span class="pre">Subnets.get_mechanism_count</span></code></a></li>
@@ -482,7 +486,7 @@
 <dd><p>Class for managing subnet operations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>subtensor</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../../../core/subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>, </em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>subtensor</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../../../core/subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>, </em><a class="reference internal" href="../../../core/async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>]</em>)</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -498,6 +502,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.extras.subtensor_api.subnets.Subnets.blocks_since_last_update">
 <span class="sig-name descname"><span class="pre">blocks_since_last_update</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.subnets.Subnets.blocks_since_last_update" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.subnets.Subnets.blocks_until_next_epoch">
+<span class="sig-name descname"><span class="pre">blocks_until_next_epoch</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.subnets.Subnets.blocks_until_next_epoch" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -521,6 +530,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.subnets.Subnets.get_all_ema_tao_inflow">
+<span class="sig-name descname"><span class="pre">get_all_ema_tao_inflow</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_all_ema_tao_inflow" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.extras.subtensor_api.subnets.Subnets.get_all_subnets_info">
 <span class="sig-name descname"><span class="pre">get_all_subnets_info</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_all_subnets_info" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
@@ -538,6 +552,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.extras.subtensor_api.subnets.Subnets.get_children_pending">
 <span class="sig-name descname"><span class="pre">get_children_pending</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_children_pending" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.subnets.Subnets.get_ema_tao_inflow">
+<span class="sig-name descname"><span class="pre">get_ema_tao_inflow</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_ema_tao_inflow" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -762,14 +781,17 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.all_subnets"><code class="docutils literal notranslate"><span class="pre">Subnets.all_subnets</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.blocks_since_last_step"><code class="docutils literal notranslate"><span class="pre">Subnets.blocks_since_last_step</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.blocks_since_last_update"><code class="docutils literal notranslate"><span class="pre">Subnets.blocks_since_last_update</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.blocks_until_next_epoch"><code class="docutils literal notranslate"><span class="pre">Subnets.blocks_until_next_epoch</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.bonds"><code class="docutils literal notranslate"><span class="pre">Subnets.bonds</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.burned_register"><code class="docutils literal notranslate"><span class="pre">Subnets.burned_register</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.commit_reveal_enabled"><code class="docutils literal notranslate"><span class="pre">Subnets.commit_reveal_enabled</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.difficulty"><code class="docutils literal notranslate"><span class="pre">Subnets.difficulty</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_all_ema_tao_inflow"><code class="docutils literal notranslate"><span class="pre">Subnets.get_all_ema_tao_inflow</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_all_subnets_info"><code class="docutils literal notranslate"><span class="pre">Subnets.get_all_subnets_info</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_all_subnets_netuid"><code class="docutils literal notranslate"><span class="pre">Subnets.get_all_subnets_netuid</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_children"><code class="docutils literal notranslate"><span class="pre">Subnets.get_children</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_children_pending"><code class="docutils literal notranslate"><span class="pre">Subnets.get_children_pending</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_ema_tao_inflow"><code class="docutils literal notranslate"><span class="pre">Subnets.get_ema_tao_inflow</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_hyperparameter"><code class="docutils literal notranslate"><span class="pre">Subnets.get_hyperparameter</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_liquidity_list"><code class="docutils literal notranslate"><span class="pre">Subnets.get_liquidity_list</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.subnets.Subnets.get_mechanism_count"><code class="docutils literal notranslate"><span class="pre">Subnets.get_mechanism_count</span></code></a></li>

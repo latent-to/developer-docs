@@ -426,6 +426,44 @@ Beneficiary does not own hotkey.
 
 Expected beneficiary origin.
 
+## Proxy Errors
+
+### `TooMany`
+
+There are too many proxies registered or too many announcements pending.
+
+### `NotFound`
+
+Proxy registration not found.
+
+### `NotProxy`
+
+Sender is not a proxy of the account to be proxied.
+
+### `Duplicate`
+
+Proxy or relationship already exists.
+
+### `Unproxyable`
+
+A call which is incompatible with the proxy type's filter was attempted.
+
+### `NoPermission`
+
+Call may not be made by proxy because it may escalate its privileges.
+
+### `Unannounced`
+
+Announcement was made too recently or does not exist.
+
+### `NoSelfProxy`
+
+Account cannot add self as proxy.
+
+### `AnnouncementDepositInvariantViolated`
+
+Invariant violated: deposit recomputation returned None after updating announcements.
+
 ## Other Errors
 
 ### `InvalidIpType`

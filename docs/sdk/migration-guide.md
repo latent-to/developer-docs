@@ -2,6 +2,8 @@
 title: "Bittensor SDK v10.0 Migration Guide"
 ---
 
+import { SdkVersion } from "./_sdk-version.mdx";
+
 # Bittensor SDK v10.0 Migration Guide
 
 This page documents breaking changes and new features for the Bittensor Python SDK `v10.0`. This is a major release with significant refactoring, standardization, and new functionality.
@@ -24,7 +26,10 @@ Bittensor SDK v10.0 is a **major breaking release** with significant improvement
 
 - **Multiple Incentive Mechanisms** - Full SDK support for running multiple evaluation mechanisms per subnet with independent weight matrices and emissions ([details](#multiple-incentive-mechanisms-support))
 - **Root claim implementation**: Adds support for setting and managing root claims directly through the SDK
+- **Proxy implementation**: Complete SDK support for creating, managing, and executing calls through proxy accounts ([details](#proxy-support))
 - **Crowdloan implementation**: Adds support for creating, managing, and interacting with crowdloans directly through the SDK
+- **MEV Shield protection**: Encrypt transactions to protect against front-running and MEV attacks ([details](./mev-protection.md))
+- **GenericCall and CallBuilder** - Create, compose, and submit blockchain calls with enhanced validation ([details](./call.md))
 - **Transaction simulation** - `sim_swap()` calculates exact token yields without executing transactions ([details](#simulate-token-swaps))
 - **Fee estimation** - `get_extrinsic_fee()` estimates blockchain transaction costs before submission ([details](#estimate-transaction-fees))
 - **BlockInfo class** - Rich blockchain block information objects ([details](#blockinfo-class))
@@ -71,6 +76,8 @@ Previously referred to as "sub-subnets" during development, this feature allows 
 
 #### Setting Mechanism Weights:
 
+<SdkVersion />
+
 Validators must set weights independently for each mechanism in a subnet:
 
 ```python
@@ -89,6 +96,12 @@ mechanism2_response = subtensor.set_weights(wallet, netuid=1, uids, weights2, me
 ```
 
 #### Querying Mechanism-Specific Data on the Metagraph:
+
+### Proxy Support
+
+Full SDK support for **proxy accounts** is now implemented. Proxies allow one wallet to perform Bittensor operations on behalf of another, enabling enhanced security by keeping your main coldkey in cold storage while a proxy handles day-to-day operations.
+
+See [Proxies: Overview](../keys/proxies/index.md) and [Working with Proxies](../keys/proxies/working-with-proxies.md) for complete documentation.
 
 All metagraph queries now accept a `mechid` parameter:
 
@@ -133,25 +146,25 @@ result = subtensor.sim_swap(
 
 ### Build Extrinsic Calls
 
-Compose an extrinsic call without submitting it to the blockchain with `compose_call`. Useful for fee estimation and transaction preparation.
+Compose an extrinsic call without submitting it to the blockchain with `compose_call` or `CallBuilder`. Useful for fee estimation, transaction preparation, proxies, crowdloans, and MEV protection.
 
 ```python
-from bittensor.core.extrinsics.params import StakingParams
-
 # Compose a call for later submission or fee estimation
 call = subtensor.compose_call(
     call_module="SubtensorModule",
     call_function="add_stake",
-    call_params=StakingParams.add_stake(
-        netuid=1,
-        hotkey_ss58=hotkey_ss58,
-        amount=amount
-    )
+    call_params={
+        "netuid": 1,
+        "hotkey": hotkey_ss58,
+        "amount_staked": amount.rao
+    }
 )
 
 # Use the composed call to estimate fees (requires keypair)
 fee = subtensor.get_extrinsic_fee(call, wallet.coldkeypub)
 ```
+
+For detailed documentation on `GenericCall`, `CallBuilder`, and practical examples including proxy calls and MEV protection, see **[Working with Blockchain Calls](./call.md)**.
 
 ### SimSwap Fee Calculation Methods
 
@@ -251,19 +264,18 @@ Learn more: [`bittensor/extras/dev_framework`](https://github.com/opentensor/bit
 
 ### Estimate Transaction Fees
 
-Query the estimated fee for submitting an extrinsic to the Subtensor blockchain before actually sending it, with ``get_extrinsic_fee()`.
+Query the estimated fee for submitting an extrinsic to the Subtensor blockchain before actually sending it, with `get_extrinsic_fee()`.
 
 ```python
-# Estimate the fee for a transfer extrinsic
-extrinsic = subtensor.compose_call(
+# Compose a call first
+call = subtensor.compose_call(
     call_module="Balances",
     call_function="transfer_keep_alive",
-    call_params={
-        "dest": destination_address,
-        "value": amount.rao
-    }
+    call_params={"dest": destination_address, "value": amount.rao}
 )
-fee = subtensor.get_extrinsic_fee(extrinsic, wallet.coldkeypub)
+
+# Estimate fee without submitting
+fee = subtensor.get_extrinsic_fee(call, wallet.coldkeypub)
 print(f"Estimated fee: {fee}")  # Returns Balance object
 ```
 
@@ -273,7 +285,9 @@ print(f"Estimated fee: {fee}")  # Returns Balance object
 - Display estimated costs to users
 - Optimize transaction batching based on fee estimates
 
-See also: [Transaction Fees in Bittensor](../learn/fees) for complete fee information.
+See also:
+- [Working with Blockchain Calls](./call.md) for more examples of composing and submitting calls
+- [Transaction Fees in Bittensor](../learn/fees) for complete fee information
 
 ### Parameter Validation
 
@@ -564,6 +578,49 @@ This ensures the SDK function response correctly reflects the blockchain transac
 :::note
 When `raise_error=False`, extrinsic functions do not raise exceptions; all error information is captured inside the returned `ExtrinsicResponse` object. Set `raise_error=True` if you prefer exceptions to be raised directly for error cases.
 :::
+
+### Keyword-Only Arguments
+
+All extrinsics and related `Subtensor` methods now use **keyword-only arguments** (indicated by `*,` in the function signature). This means that certain parameters must be passed by name rather than position, improving code clarity and preventing accidental argument misplacement.
+
+The `*` symbol in Python function signatures creates a boundary: all parameters after `*` must be passed as keyword arguments. This helps prevent bugs from positional argument confusion, especially when functions have many parameters.
+
+#### Example: Keyword-Only Arguments
+
+```python
+# Before (positional arguments could cause confusion):
+subtensor.add_stake(
+    wallet, 
+    1, 
+    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", 
+    amount, 
+    False, 
+    False, 
+    0.005, 
+    False, 
+    None, 
+    False, 
+    True, 
+    True
+)
+# Which parameter is which? Hard to tell!
+
+# After (keyword-only arguments enforce clarity):
+subtensor.add_stake(
+    wallet, 
+    1, 
+    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", 
+    amount, 
+    False, 
+    False, 
+    0.005, 
+    mev_protection=True,  # Must be passed by name if provided
+    period=None,  # Must be passed by name if provided
+    raise_error=False,  # Must be passed by name if provided
+    wait_for_inclusion=True,  # Must be passed by name if provided
+    wait_for_finalization=True  # Must be passed by name if provided
+)
+```
 
 ### ExtrinsicResponse Return Type
 

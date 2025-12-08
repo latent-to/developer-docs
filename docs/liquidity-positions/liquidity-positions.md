@@ -2,6 +2,8 @@
 title: User Liquidity Positions (Uniswap)
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 # User Liquidity Positions (Uniswap)
 
 ## Overview
@@ -108,6 +110,8 @@ When a position is destroyed/removed, the position's liquidity is converted back
 [See source code](https://github.com/opentensor/bittensor/blob/master/bittensor/core/extrinsics/asyncex/liquidity.py#L127-L185)
 
 ## The `liquidity` Parameter
+
+<SdkVersion />
 
 The `liquidity` parameter that defines a LP is **not** an amount of TAO or Alpha tokens (or even a sum of the two). Instead, it's a mathematical scaling factor from Uniswap V3's concentrated liquidity model, which calculates the token amounts deducted from your hotkey and coldkey (alpha and TAO respectively) when creating a LP.
 

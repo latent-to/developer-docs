@@ -150,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../core/chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../core/config/index.html">bittensor.core.config</a></li>
@@ -416,14 +417,11 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Registry"><code class="docutils literal notranslate"><span class="pre">Registry</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.SafeMode"><code class="docutils literal notranslate"><span class="pre">SafeMode</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Scheduler"><code class="docutils literal notranslate"><span class="pre">Scheduler</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.SenateMembers"><code class="docutils literal notranslate"><span class="pre">SenateMembers</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.SubtensorModule"><code class="docutils literal notranslate"><span class="pre">SubtensorModule</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Sudo"><code class="docutils literal notranslate"><span class="pre">Sudo</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Swap"><code class="docutils literal notranslate"><span class="pre">Swap</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.System"><code class="docutils literal notranslate"><span class="pre">System</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Timestamp"><code class="docutils literal notranslate"><span class="pre">Timestamp</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Triumvirate"><code class="docutils literal notranslate"><span class="pre">Triumvirate</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.TriumvirateMembers"><code class="docutils literal notranslate"><span class="pre">TriumvirateMembers</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Utility"><code class="docutils literal notranslate"><span class="pre">Utility</span></code></a></li>
 </ul>
 </li>
@@ -441,7 +439,7 @@
   <section id="module-bittensor.extras.dev_framework.calls.pallets">
 <span id="bittensor-extras-dev-framework-calls-pallets"></span><h1>bittensor.extras.dev_framework.calls.pallets<a class="headerlink" href="#module-bittensor.extras.dev_framework.calls.pallets" title="Link to this heading">#</a></h1>
 <p>”
-Subtensor spec version: 325</p>
+Subtensor spec version: 331</p>
 <section id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
@@ -491,31 +489,22 @@ Subtensor spec version: 325</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Scheduler" title="bittensor.extras.dev_framework.calls.pallets.Scheduler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Scheduler</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.SenateMembers" title="bittensor.extras.dev_framework.calls.pallets.SenateMembers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SenateMembers</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.SubtensorModule" title="bittensor.extras.dev_framework.calls.pallets.SubtensorModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubtensorModule</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.SubtensorModule" title="bittensor.extras.dev_framework.calls.pallets.SubtensorModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubtensorModule</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Sudo" title="bittensor.extras.dev_framework.calls.pallets.Sudo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sudo</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Sudo" title="bittensor.extras.dev_framework.calls.pallets.Sudo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sudo</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Swap" title="bittensor.extras.dev_framework.calls.pallets.Swap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Swap</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Swap" title="bittensor.extras.dev_framework.calls.pallets.Swap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Swap</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.System" title="bittensor.extras.dev_framework.calls.pallets.System"><code class="xref py py-obj docutils literal notranslate"><span class="pre">System</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.System" title="bittensor.extras.dev_framework.calls.pallets.System"><code class="xref py py-obj docutils literal notranslate"><span class="pre">System</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Timestamp" title="bittensor.extras.dev_framework.calls.pallets.Timestamp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timestamp</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Timestamp" title="bittensor.extras.dev_framework.calls.pallets.Timestamp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Timestamp</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Triumvirate" title="bittensor.extras.dev_framework.calls.pallets.Triumvirate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Triumvirate</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.TriumvirateMembers" title="bittensor.extras.dev_framework.calls.pallets.TriumvirateMembers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TriumvirateMembers</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Utility" title="bittensor.extras.dev_framework.calls.pallets.Utility"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Utility</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Utility" title="bittensor.extras.dev_framework.calls.pallets.Utility"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Utility</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -600,11 +589,6 @@ Subtensor spec version: 325</p>
 <dd></dd></dl>
 
 <dl class="py data">
-<dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.SenateMembers">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">SenateMembers</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SenateMembers'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.SenateMembers" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.SubtensorModule">
 <span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">SubtensorModule</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SubtensorModule'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.SubtensorModule" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
@@ -627,16 +611,6 @@ Subtensor spec version: 325</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Timestamp">
 <span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Timestamp</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Timestamp'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Timestamp" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Triumvirate">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Triumvirate</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Triumvirate'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Triumvirate" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.TriumvirateMembers">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">TriumvirateMembers</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'TriumvirateMembers'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.TriumvirateMembers" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
@@ -710,14 +684,11 @@ Subtensor spec version: 325</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Registry"><code class="docutils literal notranslate"><span class="pre">Registry</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.SafeMode"><code class="docutils literal notranslate"><span class="pre">SafeMode</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Scheduler"><code class="docutils literal notranslate"><span class="pre">Scheduler</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.SenateMembers"><code class="docutils literal notranslate"><span class="pre">SenateMembers</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.SubtensorModule"><code class="docutils literal notranslate"><span class="pre">SubtensorModule</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Sudo"><code class="docutils literal notranslate"><span class="pre">Sudo</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Swap"><code class="docutils literal notranslate"><span class="pre">Swap</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.System"><code class="docutils literal notranslate"><span class="pre">System</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Timestamp"><code class="docutils literal notranslate"><span class="pre">Timestamp</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Triumvirate"><code class="docutils literal notranslate"><span class="pre">Triumvirate</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.TriumvirateMembers"><code class="docutils literal notranslate"><span class="pre">TriumvirateMembers</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Utility"><code class="docutils literal notranslate"><span class="pre">Utility</span></code></a></li>
 </ul>
 </li>

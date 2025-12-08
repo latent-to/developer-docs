@@ -110,6 +110,25 @@ Effectively, this transfers all of your TAO and alpha stake balances, as well as
 - For each hotkey owned by the old coldkey, ownership transfers to the new coldkey. The list of owned hotkeys for both old and new coldkeys updates.
 - Any remaining balances transfer from the old coldkey to the new coldkey.
 
+### Proxy wallets for coldkey protection
+
+**Proxies are one of the most effective tools for protecting your coldkey** while maintaining operational flexibility. By setting up proxy relationships, you can perform routine operations like staking without exposing your coldkey to any online environment.
+
+Key benefits:
+- **Least-privilege permissions**: Configure proxies with only the specific permissions needed (e.g., `Staking` type for stake management only)
+- **Time-delayed operations**: Set a non-zero delay so you have time to reject unauthorized transactions if a proxy is compromised
+- **Coldkey stays in cold storage**: Your high-value coldkey never needs to leave secure offline storage for day-to-day operations
+
+
+:::warning Zero-delay proxies
+A proxy with `delay: 0` and `ProxyType: Any` offers **no additional security** over direct coldkey access. Always use the narrowest `ProxyType` possible and consider adding delays for high-value operations.
+:::
+
+See:
+- [Proxies: Overview](./proxies/index.md)
+- [Working with Proxies](./proxies/working-with-proxies.md)
+- [Staking with a Proxy](./proxies/staking-with-proxy.md)
+
 ### Hardware Wallets and Hardware Security Modules (HSMs)
 
 Ledger can be integrated with the Bittensor Chrome Extension. This may be a good option for managing stake and TAO balances, but does not allow for advanced functions such as hotkey management, subnet configuration, and governance.

@@ -152,6 +152,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../config/index.html">bittensor.core.config</a></li>
@@ -654,7 +655,7 @@ detailed information but can be quicker to initialize and sync.</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
 Synchronization involves updating the metagraph’s parameters to reflect the current state of the network.</p></li>
 <li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet mechanism unique identifier.</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>]</em>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>]</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -681,7 +682,7 @@ network.</p>
 allows for historical analysis or specific state examination of the network.</p></li>
 <li><p><strong>lite</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>]</em>) – If True, a lite version of the metagraph is used for quicker synchronization. This is beneficial when
 full detail is not necessary, allowing for reduced computational and time overhead.</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>]</em>) – An instance of the subtensor class from Bittensor, providing an interface to the underlying
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>]</em>) – An instance of the subtensor class from Bittensor, providing an interface to the underlying
 blockchain data. If provided, this instance is used for data retrieval during synchronization.</p></li>
 </ul>
 </dd>
@@ -710,16 +711,14 @@ blockchain data. If provided, this instance is used for data retrieval during sy
 test networks.</p>
 </dd>
 </dl>
-<p>For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bittensor.core.subtensor</span> <span class="kn">import</span> <span class="n">Subtensor</span>
-
-<span class="n">subtensor</span> <span class="o">=</span> <span class="n">Subtensor</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="s1">&#39;archive&#39;</span><span class="p">)</span>
-<span class="n">current_block</span> <span class="o">=</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_current_block</span><span class="p">()</span>
-<span class="n">history_block</span> <span class="o">=</span> <span class="n">current_block</span> <span class="o">-</span> <span class="mi">1200</span>
-
-<span class="n">metagraph</span><span class="o">.</span><span class="n">sync</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">history_block</span><span class="p">,</span> <span class="n">lite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>Example:</p>
+<blockquote>
+<div><p>from bittensor.core.subtensor import Subtensor</p>
+<p>subtensor = Subtensor(network=’archive’)
+current_block = subtensor.get_current_block()
+history_block = current_block - 1200</p>
+<p>metagraph.sync(block=history_block, lite=False, subtensor=subtensor)</p>
+</div></blockquote>
 </div>
 </dd></dl>
 
@@ -839,16 +838,14 @@ blockchain data. If provided, this instance is used for data retrieval during sy
 test networks.</p>
 </dd>
 </dl>
-<p>For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bittensor.core.subtensor</span> <span class="kn">import</span> <span class="n">Subtensor</span>
-
-<span class="n">subtensor</span> <span class="o">=</span> <span class="n">Subtensor</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="s1">&#39;archive&#39;</span><span class="p">)</span>
-<span class="n">current_block</span> <span class="o">=</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_current_block</span><span class="p">()</span>
-<span class="n">history_block</span> <span class="o">=</span> <span class="n">current_block</span> <span class="o">-</span> <span class="mi">1200</span>
-
-<span class="n">metagraph</span><span class="o">.</span><span class="n">sync</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">history_block</span><span class="p">,</span> <span class="n">lite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>Example:</p>
+<blockquote>
+<div><p>from bittensor.core.subtensor import Subtensor</p>
+<p>subtensor = Subtensor(network=’archive’)
+current_block = subtensor.get_current_block()
+history_block = current_block - 1200</p>
+<p>metagraph.sync(block=history_block, lite=False, subtensor=subtensor)</p>
+</div></blockquote>
 </div>
 </dd></dl>
 
@@ -878,7 +875,7 @@ interact, how they are incentivized, and their roles within the network’s deci
 <li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 <li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
@@ -947,7 +944,7 @@ detailed information but can be quicker to initialize and sync.</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
 Synchronization involves updating the metagraph’s parameters to reflect the current state of the network.</p></li>
 <li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -1638,7 +1635,7 @@ neuron attributes and parameters, ensuring a complete snapshot of the metagraph�
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.metagraph.MetagraphMixin.subtensor">
-<span class="sig-name descname"><span class="pre">subtensor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bittensor.core.async_subtensor.AsyncSubtensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><span class="pre">bittensor.core.subtensor.Subtensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.subtensor" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">subtensor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><span class="pre">bittensor.core.async_subtensor.AsyncSubtensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><span class="pre">bittensor.core.subtensor.Subtensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.metagraph.MetagraphMixin.subtensor" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1717,7 +1714,7 @@ interact, how they are incentivized, and their roles within the network’s deci
 <li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 <li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
@@ -1785,7 +1782,7 @@ detailed information but can be quicker to initialize and sync.</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
 Synchronization involves updating the metagraph’s parameters to reflect the current state of the network.</p></li>
 <li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet mechanism unique identifier.</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -1973,7 +1970,7 @@ interact, how they are incentivized, and their roles within the network’s deci
 <li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 <li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
@@ -2041,7 +2038,7 @@ detailed information but can be quicker to initialize and sync.</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – A flag indicating whether to synchronize the metagraph with the network upon initialization.
 Synchronization involves updating the metagraph’s parameters to reflect the current state of the network.</p></li>
 <li><p><strong>mechid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Subnet mechanism unique identifier.</p></li>
-<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>subtensor</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>, </em><a class="reference internal" href="../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -2191,7 +2188,7 @@ metagraph = Metagraph(netuid=netuid)</p>
 <li><p><strong>network</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
 <li><p><strong>lite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>sync</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
-<li><p><strong>subtensor</strong> (<em>bittensor.core.async_subtensor.AsyncSubtensor</em>)</p></li>
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

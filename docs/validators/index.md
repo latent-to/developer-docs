@@ -4,6 +4,7 @@ title: "Validating in Bittensor"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Validating in Bittensor
 
@@ -134,11 +135,13 @@ btcli stake add --wallet.name <wallet name> --wallet.hotkey <your validating hot
 
 ### Calculate TAO required
 
+<SdkVersion />
+
 The amount of TAO needed to acquire a validator permit depends on how the other largest 64 wallets distribute TAO across themselves. You can calculate the minimum using [bt.metagraph](pathname:///python-api/html/autoapi/bittensor/core/metagraph/index.html):
 
 ```python
 import bittensor as bt
-subnet = bt.metagraph(1)
+subnet = bt.Metagraph(14)
 top_64_stake = sorted(subnet.S)[-64:]
 print (f'Current requirement for validator permits based on the top 64 stake stands at {min(top_64_stake)} tao')
 ```
@@ -150,8 +153,10 @@ This information can be obtained from the metagraph using your UID.
 
 ```python
 import bittensor as bt
-subnet = bt.metagraph(1)
-wallet = bt.wallet( name = 'my_coldkey', hotkey = 'my_validator_hotkey' )
+
+subnet = bt.Metagraph(1)
+
+wallet = bt.Wallet( name = 'my_coldkey', hotkey = 'my_validator_hotkey' )
 my_uid = subnet.hotkeys.index( wallet.hotkey.ss58_address )
 print(f'Validator permit: {subnet.validator_permit[my_uid]}')
 ```
@@ -247,7 +252,7 @@ import bittensor as bt
 # Replace below with your SS58 hotkey
 hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
 network = "finney"
-sub = bt.subtensor(network)
+sub = bt.Subtensor(network)
 print(f"Registration status for hotkey {hotkey} is: {sub.is_hotkey_registered(hotkey)}")
 ```
 
@@ -259,7 +264,7 @@ import bittensor as bt
 hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
 network = "finney"
 netuid = 1 # subnet uid
-sub = bt.subtensor(network)
+sub = bt.Subtensor(network)
 mg = sub.metagraph(netuid)
 if hotkey not in mg.hotkeys:
   print(f"Hotkey {hotkey} deregistered")
@@ -275,7 +280,7 @@ import bittensor as bt
 hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
 network = "finney"
 netuid = 1 # subnet uid
-sub = bt.subtensor(network)
+sub = bt.Subtensor(network)
 mg = sub.metagraph(netuid)
 uid = 2 # Your UID
 registered = mg.hotkeys[uid] == hotkey

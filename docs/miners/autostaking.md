@@ -4,6 +4,7 @@ title: "Auto Staking for Miners"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Auto Staking for Miners
 
@@ -74,6 +75,8 @@ Total subnets: 3  Custom destinations: 0
 </TabItem>
 
 <TabItem value="sdk" label="Python SDK">
+
+<SdkVersion />
 
 ```python
 import asyncio
@@ -156,7 +159,7 @@ import bittensor as bt
 
 async def main():
     async with bt.async_subtensor(network="local") as subtensor:
-        wallet = bt.wallet(
+        wallet = bt.Wallet(
             name="Alice",
         )
         wallet.unlock_coldkey()
@@ -164,14 +167,14 @@ async def main():
         netuid = 2  # subnet to configure
         hotkey_ss58 = "5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM"  # validator hotkey to auto-stake to
 
-        success, msg = await subtensor.set_auto_stake(
+        response = await subtensor.set_auto_stake(
             wallet=wallet,
             netuid=netuid,
             hotkey_ss58=hotkey_ss58,
             wait_for_inclusion=True,
             wait_for_finalization=False,
         )
-        print("Success" if success else f"Failed: {msg}")
+        print(response)
 
 asyncio.run(main())
 ```

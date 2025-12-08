@@ -150,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="../core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../core/chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../core/config/index.html">bittensor.core.config</a></li>
@@ -444,6 +445,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.unlock_key"><code class="docutils literal notranslate"><span class="pre">unlock_key()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.use_torch"><code class="docutils literal notranslate"><span class="pre">use_torch</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.validate_chain_endpoint"><code class="docutils literal notranslate"><span class="pre">validate_chain_endpoint()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.validate_max_attempts"><code class="docutils literal notranslate"><span class="pre">validate_max_attempts()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -604,6 +606,9 @@
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.validate_chain_endpoint" title="bittensor.utils.validate_chain_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_chain_endpoint</span></code></a>(endpoint_url)</p></td>
 <td><p>Validates if the provided endpoint URL is a valid WebSocket URL.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.validate_max_attempts" title="bittensor.utils.validate_max_attempts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_max_attempts</span></code></a>(max_attempts, response)</p></td>
+<td><p>Common guard for all subtensor methods with max_attempts parameter.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1030,6 +1035,23 @@ false-y values are ‘n’, ‘no’, ‘f’, ‘false’, ‘off’, and ‘0�
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.utils.validate_max_attempts">
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.</span></span><span class="sig-name descname"><span class="pre">validate_max_attempts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_attempts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.validate_max_attempts" title="Link to this definition">#</a></dt>
+<dd><p>Common guard for all subtensor methods with max_attempts parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_attempts</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>response</strong> (<a class="reference internal" href="../core/types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse"><em>bittensor.core.types.ExtrinsicResponse</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optional[<a class="reference internal" href="../core/types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">bittensor.core.types.ExtrinsicResponse</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
@@ -1124,6 +1146,7 @@ false-y values are ‘n’, ‘no’, ‘f’, ‘false’, ‘off’, and ‘0�
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.unlock_key"><code class="docutils literal notranslate"><span class="pre">unlock_key()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.use_torch"><code class="docutils literal notranslate"><span class="pre">use_torch</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.validate_chain_endpoint"><code class="docutils literal notranslate"><span class="pre">validate_chain_endpoint()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.validate_max_attempts"><code class="docutils literal notranslate"><span class="pre">validate_max_attempts()</span></code></a></li>
 </ul>
 </li>
 </ul>

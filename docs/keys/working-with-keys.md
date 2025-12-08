@@ -6,6 +6,7 @@ import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Creating/Importing a Bittensor Wallet
 
@@ -19,8 +20,14 @@ Recommended background reading:
 
 - For discussion of security considerations about working with Bittensor wallets, see [Coldkey and Hotkey Workstation Security](./coldkey-hotkey-security).
 
-:::tip
+:::tip Protect your seed phrase
 The most critical operational goal when handling Bittensor wallets is to avoid losing or leaking your seed phrase. Make sure you [Handle your Seed Phrase/Mnemonic Securely](./handle-seed-phrase).
+:::
+
+:::tip Use proxies for regular operations
+Once you've created your wallet, consider setting up **proxy wallets** for any operations you'll perform regularly. Proxies let you keep your coldkey in secure cold storage while still managing stake, making transfers, or performing other operations through a less-privileged proxy account.
+
+See [Proxies: Overview](./proxies/index.md) to learn more.
 :::
 
 ## Creating a wallet with `btcli`
@@ -151,6 +158,8 @@ btcli wallet new_hotkey --use-password --wallet.name test-coldkey --wallet.hotke
 
 ## Creating a wallet using Python
 
+<SdkVersion />
+
 <Tabs queryString="create-wallet" groupId="create-wallet">
 <TabItem value="cold-hot" label="Coldkey and Hotkey">
 If you intend to mine or validate within a subnet, or create and manage a subnet, you’ll need both a coldkey and a hotkey. If you already have a coldkey, you can [create a new hotkey](?create-wallet=hotkey) for it.
@@ -159,7 +168,7 @@ To create a wallet with Python, copy and paste the following three lines into yo
 
 ```python showLineNumbers
 import bittensor as bt
-wallet = bt.wallet(name = 'my_coldkey', hotkey = 'my_hotkey' )
+wallet = bt.Wallet(name = 'my_coldkey', hotkey = 'my_hotkey' )
 wallet.create_if_non_existent()
 ```
 
@@ -167,7 +176,7 @@ You will see a terminal output like this for an example wallet with `name` as `t
 
 ```text
 >>> import bittensor as bt
->>> wallet = bt.wallet(name = 'test-coldkey', hotkey = 'test-hotkey')
+>>> wallet = bt.Wallet(name = 'test-coldkey', hotkey = 'test-hotkey')
 >>> wallet.create_if_non_existent()
 
 IMPORTANT: Store this mnemonic in a secure (preferable offline place), as anyone who has possession of this mnemonic can use it to regenerate the key and access your tokens.
@@ -188,7 +197,7 @@ Since the coldkey is encrypted by default, the command above only encrypts the n
 
 ```python showLineNumbers
 import bittensor as bt
-wallet = bt.wallet(name = 'my_coldkey', hotkey = 'my_hotkey')
+wallet = bt.Wallet(name = 'my_coldkey', hotkey = 'my_hotkey')
 wallet.create_if_non_existent(hotkey_use_password=True)
 ```
 
@@ -203,7 +212,7 @@ Copy and paste the following lines into your Python interpreter. Replace the str
 
 ```python showLineNumbers
 import bittensor as bt
-wallet = bt.wallet(name = 'my_coldkey')
+wallet = bt.Wallet(name = 'my_coldkey')
 wallet.create_new_coldkey()
 ```
 
@@ -224,7 +233,7 @@ Before creating a hotkey, you must have created a coldkey as described in the [c
 
 ```python showLineNumbers
 import bittensor as bt
-wallet = bt.wallet(name = 'my_coldkey')
+wallet = bt.Wallet(name = 'my_coldkey')
 wallet.create_new_hotkey()
 ```
 
@@ -233,7 +242,7 @@ To encrypt your hotkey when creating a wallet, include the `use_password=True` p
 
 ```python showLineNumbers
 import bittensor as bt
-wallet = bt.wallet(name = 'my_coldkey')
+wallet = bt.Wallet(name = 'my_coldkey')
 wallet.create_new_hotkey(use_password=True)
 ```
 

@@ -111,7 +111,11 @@ See [Emissions](../learn/emissions.md).
 
 The relative value or _weight_ of subnets within Bittensor is critically important as it determines emissions to different subnets and their participant miners and validators. Prior to Dynamic TAO, relative weight among subnets within the Bittensor network were determined by Yuma Consensus over the evaluations of the Root Network validators. This gives a fundamentally centralizing role to the holders of Root Network validator keys.
 
-In Dynamic TAO, the relative weight is determined organically according to the emergent market value of the subnet, as represented by its stabilized token price. TAO-holders can stake TAO into subnets in exchange for the subnet-specific dynamic currency, referred to as the subnet's alpha ($$\alpha$$) token. In this way, stakers 'vote with their TAO' for the value of the subnet, determining the emissions to the validators and miners working in it. In return, stakers extract a share of the subnet's emissions.
+In Dynamic TAO, the relative weight is determined organically according to net TAO flows into and out of each subnet. As TAO-holders stake TAO into subnets in exchange for the subnet-specific alpha, they are essentially 'voting with their TAO' for the value of the subnet. Subnets with more staking than unstaking receive higher emissions, while subnets with net outflows receive reduced or zero emissions. This flow-based model rewards subnets that attract genuine user engagement. In return, stakers extract a share of the subnet's emissions.
+
+:::tip Flow-Based Model Active
+As of November 2025, emissions are based on net TAO flows (staking minus unstaking) rather than token prices. See [Emissions](../learn/emissions.md) for details.
+:::
 
 ## Subnet Zero
 

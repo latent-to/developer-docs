@@ -15,14 +15,17 @@ Staking and unstaking operations incur transaction fees. See [Transaction Fees i
 
 See also:
 
-- [Staking with Polkadot JS](./staking-polkadot-js.md).
-- See also [Validators: Acquiring stake](../validators/index.md#acquiring-stake).
+- [Staking with a Proxy](../keys/proxies/staking-with-proxy) - Keep your coldkey secure while managing staking operations
+- [Staking with Polkadot JS](./staking-polkadot-js.md)
+- [Validators: Acquiring stake](../validators/index.md#acquiring-stake)
 
 :::tip tips
 Validators/delegates can configure their take. The default value is 18%. See [`btcli sudo set-take`](../btcli#btcli-sudo-set-take).
 
 Minimum required stake for nominators is 0.1 TAO.
 :::
+
+### Staking into Subnets
 
 Staking is always local to a subnet.
 
@@ -38,11 +41,42 @@ As a TAO holder, you will stake to a validator’s hotkey on a specific subnet. 
 1. Then, the subnet's AMM pool algorithm uses the latest exchange rate and calculates the equivalent units of $\alpha$, for the TAO that was just added to the TAO reserve side. This amount of $\alpha$ is taken out of the alpha reserve of the pool and is sent to the validator’s hotkey.
 1. The validator’s hotkey holds the $\alpha$. The sum of stake among all hotkeys is referred as **$\alpha$ outstanding** for that subnet.
 
+### Unstaking back to TAO
+
 **When you unstake:**
 
-1. When you issue an unstake command, `btcli stake remove`, and specify the units of $\alpha$ token you want to unstake, this $\alpha$ is first taken out of the validator’s hotkey and added to the $\alpha$ reserves of the subnet pool.
+1. When you issue an unstake command, `btcli stake remove`, and specify the units of $\alpha$ token you want to unstake, this $\alpha$ is first taken out of the validator's hotkey and added to the $\alpha$ reserves of the subnet pool.
 2. The subnet's AMM pool algorithm then applies the latest exchange rate and calculates the equivalent TAO units for the $\alpha$ token units that were just added to the $\alpha$ reserves of the pool.
-3. These equivalent TAO units are then taken out of the TAO reserves of the subnet pool and are sent to the TAO holder’s coldkey.
+3. These equivalent TAO units are then taken out of the TAO reserves of the subnet pool and are sent to the TAO holder's coldkey.
+
+:::important Key considerations when unstaking
+**Slippage**: Like staking, unstaking operations are subject to slippage because your transaction affects the subnet's AMM pool prices. Larger unstaking amounts will experience more slippage. See [Understanding Pricing and Anticipating Slippage](../learn/slippage.md) for details.
+
+**Price protection**: Bittensor provides built-in price protection mechanisms to prevent unfavorable unstaking transactions. You can set tolerance limits and enable partial execution. See [Price Protection When Staking](../learn/price-protection.md) for more information.
+
+**Transaction fees**: Unstaking operations incur blockchain transaction fees. These fees are recycled back into the TAO emission pool. See [Transaction Fees in Bittensor](../learn/fees.md).
+:::
+
+### Unstaking methods
+
+There are several ways to unstake your TAO:
+
+- **Direct unstaking**: Remove stake from a specific validator on a specific subnet using `btcli stake remove` or the SDK's `unstake()` method
+- **Unstake all**: Remove all stake from a validator on a subnet in one operation
+- **Move stake**: Move stake between validators or subnets without withdrawing to your coldkey (see [Moving stake](#moving-stake))
+- **Transfer stake**: Transfer ownership of staked tokens to another coldkey (see [Transferring stake](#transferring-stake))
+
+See the guides for detailed instructions:
+- [Managing Stake with btcli](./managing-stake-btcli.md)
+- [Managing Stake with SDK](./managing-stake-sdk.md)
+
+### Moving stake
+
+Moving stake is a special operation that transfers stake between validators or subnets in a single atomic transaction, without first withdrawing to your coldkey. This can be more efficient than unstaking and restaking separately, as it minimizes the number of transactions and associated fees.
+
+### Transferring stake
+
+Transferring stake changes ownership of staked tokens from one coldkey to another while keeping the stake on the same validator. This comprises unstaking, transferring TAO ownership, and restaking to the same validator as an atomic transaction.
 
 :::tip Stake is always expressed in alpha units
 In Dynamic TAO, except for the stake held in [the Root Subnet](../subnets/understanding-subnets.md#subnet-zero), the stake held by a hotkey in a subnet is always expressed in the subnet-specific $\alpha$ units. Root Subnet stake is expressed in $\tau$.

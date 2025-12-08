@@ -2,6 +2,8 @@
 title: "Managing Multiple Incentive Mechanisms with SDK"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 # Managing Multiple Incentive Mechanisms with SDK
 
 This tutorial shows how to configure and manage multiple incentive mechanisms in a single subnet using the Bittensor Python SDK.
@@ -17,11 +19,11 @@ See [Announcements](../learn/announcements) for updates.
 :::
 
 **Prerequisites**
+
 - A local Subtensor chain running. See: [Run a Local Bittensor Blockchain Instance](../local-build/deploy)
 - A local subnet created (and emissions started). See: [Create a Subnet (Locally)](../local-build/create-subnet)
 - Wallets provisioned and funded for local development. See: [Provision Wallets](../local-build/provision-wallets)
 - BTCLI installed (development version required for mechanism commands)
-
 
 :::tip
 Substitute your subnet's netuid, which you can find with `btcli subnet list`.
@@ -31,8 +33,9 @@ Substitute your subnet's netuid, which you can find with `btcli subnet list`.
 As of the current Subtensor runtime, a subnet can have a maximum of 2 mechanisms. Attempts to set a higher count will be rejected by the chain (runtime enforces `MaxMechanismCount = 2`).
 :::
 
-
 ## Initialize SDK and wallet
+
+<SdkVersion />
 
 The following snippet initializes the Bittensor SDK, imports the needed modules, connects to the local blockchain, and initializes the wallet object for the Alice wallet.
 
@@ -51,7 +54,8 @@ subtensor = bt.Subtensor(network="local")
 # Load the subnet owner wallet (assumes wallet is provisioned locally)
 wallet = bt.Wallet(name="alice")
 
-netuid = 7
+# Input the netuid of the created subnet
+netuid = 2
 print("SDK version:", bt.__version__)
 print(f"Connected to {subtensor.network} — managing subnet {netuid} with wallet {wallet.name}")
 ```
@@ -87,22 +91,19 @@ Subnet 7 mech count: 1
 No split defined.
 ```
 
-
 ## Create a second mechanism
 
 Use the sudo extrinsic to increase the mechanism count to 2 for your subnet owner wallet.
 
 ```python
 # Increase mechanism count to 2
-ok, err = sudo_set_mechanism_count_extrinsic(
+response = sudo_set_mechanism_count_extrinsic(
     subtensor=subtensor,
     wallet=wallet,
     netuid=netuid,
     mech_count=2,
 )
-print("Set mech count success:", ok)
-if not ok:
-    print("Error:", err)
+print(response)
 
 # Verify the change
 new_count = subtensor.get_mechanism_count(netuid=netuid)
@@ -127,16 +128,14 @@ split:
 ```python
 new_split = [60, 40]
 
-ok, err = sudo_set_mechanism_emission_split_extrinsic(
+response = sudo_set_mechanism_emission_split_extrinsic(
     subtensor=subtensor,
     wallet=wallet,
     netuid=netuid,
     maybe_split=new_split,
 )
 
-print("Update success:", ok)
-if not ok:
-    print("Error:", err)
+print(response)
 ```
 
 ```text

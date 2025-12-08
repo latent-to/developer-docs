@@ -2,7 +2,11 @@
 title: "Working with Concurrency"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 This page provides some tips for working with concurrent async functions in Bittensor.
+
+<SdkVersion />
 
 Calls to the blockchain can be slow, and routines that make many calls in series become very slow. For example, suppose we want to check a list of UIDS for subnets and see if they exist. In series, we could execute the following, but it will take longer in proportion to the list of netuids, since it makes a separate call for each.
 
@@ -15,7 +19,6 @@ for netuid in range(1, 8):
 ```
 
 To avoid this, we could create a separate thread with a new `Subtensor` object on each thread, as below. This is faster, but can cause problems by hogging as many web sockets as UIDS in the list of subnets to check.
-
 
 ```python
 import asyncio
@@ -44,14 +47,15 @@ async def main():
         block_hash = await subtensor.get_block_hash()
         subnets = await asyncio.gather(*[subtensor.subnet_exists(netuid, block_hash=block_hash) for netuid in range(1, 8)])
         for i, subnet in enumerate(subnets):
-            print("subnet " + str(1+i) + " exists: " + str(subnet))             
+            print("subnet " + str(1+i) + " exists: " + str(subnet))
 
 asyncio.run(main())
 
 ```
+
 ## Coroutine vs function
 
-The usage of `async def` creates an asyncio *coroutine* rather than a function.
+The usage of `async def` creates an asyncio _coroutine_ rather than a function.
 
 Coroutines differ from functions in that coroutines are run in event loops using `await`.
 
@@ -61,22 +65,22 @@ Coroutines always need to be awaited, and generally speaking, “asyncio objects
 
 ## AsyncSubstrateInterface
 
-[AsyncSubstrateInterface](pathname:///python-api/html/autoapi/bittensor/utils/async_substrate_interface/index.html) is an `asyncio` rewrite of Polkadot's original [`py-substrate-interface`](https://github.com/polkascan/py-substrate-interface) library, with a few added functionalities such as using the `bt_decode` for most SCALE decoding. 
+[AsyncSubstrateInterface](pathname:///python-api/html/autoapi/bittensor/utils/async_substrate_interface/index.html) is an `asyncio` rewrite of Polkadot's original [`py-substrate-interface`](https://github.com/polkascan/py-substrate-interface) library, with a few added functionalities such as using the `bt_decode` for most SCALE decoding.
 
-While `AsyncSubstrateInterface` is about 90% API compatible with `py-substrate-interface`, it is its own library. Similar to how we initialize  `aiohttp.ClientSession` as shown in line 21 of the above example, the `AsyncSubstrateInterface` is initialized in the same way, as shown below:
+While `AsyncSubstrateInterface` is about 90% API compatible with `py-substrate-interface`, it is its own library. Similar to how we initialize `aiohttp.ClientSession` as shown in line 21 of the above example, the `AsyncSubstrateInterface` is initialized in the same way, as shown below:
 
 ```python
 async with AsyncSubstrateInterface(chain_endpoint) as substrate:
     block_hash = await substrate.get_chain_head()
 ```
 
-:::tip 
+:::tip
 Generally speaking, you should use `AsyncSubstrateInterface` as a part of `AsyncSubtensor`, as the methods there are more specifically designed around using it within the Bittensor ecosystem.
 :::
 
 ## AsyncSubtensor
 
-`AsyncSubtensor` is the `asyncio` version of the Subtensor class. Under the hood, it utilises `AsyncSubstrateInterface`. 
+`AsyncSubtensor` is the `asyncio` version of the Subtensor class. Under the hood, it utilises `AsyncSubstrateInterface`.
 
 ### AsyncSubtensor vs Subtensor
 
@@ -87,6 +91,7 @@ Major differences between `AsyncSubtensor` and `Subtensor` are:
 - The usage of `block_hash` is pretty obvious, i.e., you can specify the block hash (`str`) rather than the block number (`int`).
 - The usage of `reuse_block` is a bit different. It allows you to reuse the same block hash that you have used for a previous call.
 - Finally, the remaining major change is the use of args in the below `AsyncSubtensor` methods:
+
   - `get_balance`
   - `get_total_stake_for_coldkey`
   - `get_total_stake_for_hotkey`
@@ -108,14 +113,18 @@ async def main():
 And because `AsyncSubtensor` uses `AsyncSubstrateInterface` under the hood, we can use this to our advantage in `asyncio` gathering:
 
 ```python
+import asyncio
+import time
 from bittensor.core.async_subtensor import AsyncSubtensor
 
-async def async_main():
-    async with AsyncSubtensor("test") as subtensor:
+async def main():
+    async with AsyncSubtensor(network="test") as subtensor:
         start = time.time()
-        block_hash = await subtensor.get_block_hash()
-        total_subnets = await subtensor.get_total_subnets(block_hash=block_hash)
-        neurons = await asyncio.gather(*[subtensor.neurons(x, block_hash) for x in range(0, total_subnets+1)])
+        total_subnets = await subtensor.get_total_subnets()
+        neurons = await asyncio.gather(*[
+            subtensor.neurons(netuid=x)
+            for x in range(1, total_subnets + 1)
+        ])
         print(time.time() - start)
 
 asyncio.run(main())
@@ -124,23 +133,27 @@ asyncio.run(main())
 The above code example pulls all the neurons from the testnet. Compare this to the below sync version of the same code:
 
 ```python
+import time
 from bittensor.core.subtensor import Subtensor
 
 def sync_main():
-    subtensor = Subtensor("test")
+    subtensor = Subtensor(network="test")
     start = time.time()
     block = subtensor.block
     total_subnets = subtensor.get_total_subnets(block)
-    neurons = [subtensor.neurons(x, block) for x in range(0, total_subnets+1)]
+    neurons = [subtensor.neurons(netuid=x, block=block) for x in range(1, total_subnets + 1)]
     print(time.time() - start)
+
+sync_main()
 ```
 
 ### Performance
 
 On a high-latency South African Internet connection:
+
 - The `async` version runs in 13.02 seconds.
 - The sync version runs in 1566.86 seconds.
-Hence the `async` version runs a full 120X faster. Your results will vary depending on your connection latency.
+  Hence the `async` version runs a full 120X faster. Your results will vary depending on your connection latency.
 
 :::caution Some overhead with async
 Note that there is a bit of overhead with the `async` instantiation over the sync version. Therefore, if you are writing a script to maybe retrieve one item, it will likely be faster and less complex using the sync version. However, if you are building anything more complex than this, the `async` version will likely be faster, as shown in the above example.
@@ -148,7 +161,7 @@ Note that there is a bit of overhead with the `async` instantiation over the syn
 
 ### Example
 
-Below is an example of how you can use the `AsyncSubtensor` module to retrieve  balances from multiple coldkey SS58 addresses in various ways:
+Below is an example of how you can use the `AsyncSubtensor` module to retrieve balances from multiple coldkey SS58 addresses in various ways:
 
 :::tip Python reference
 Also see the Bittensor SDK reference for [AsyncSubtensor](pathname:///python-api/html/autoapi/bittensor/core/async_subtensor/index.html).
@@ -170,57 +183,71 @@ COLDKEY_PUBS = [
     "5DZaBZKKGZBGaevi42bYUK44tEuS3SYJ7GU3rQKYr7kjfa8v"
 ]
 
-
 async def main():  # define a coroutine with `async def`
-    sync_sub = Subtensor("finney")  # same as always
-    async with AsyncSubtensor("finney") as async_subtensor:  # very important to initialise this with `async with`
+    sync_sub = Subtensor(network="finney")
+    async with AsyncSubtensor(network="finney") as async_subtensor:
         sync_balance: Balance = sync_sub.get_balance(COLDKEY_PUB)
-        # returns τ0.000000000
+        print(f"Sync balance: {sync_balance}")
 
         async_balance: dict[str, Balance] = await async_subtensor.get_balance(COLDKEY_PUB)
-        # returns {'5EhCvSxpFRgXRCaN5LH2wRCD5su1vKsnVfYfjzkqfmPoCy2G': τ0.000000000}
-        # get_balance now takes multiple addresses, and returns them as a dict
-        # of {ss58: Balance}
-        # for example:
-        async_balances: dict[str, Balance] = await async_subtensor.get_balance(*COLDKEY_PUBS)
-        # returns: {
-        #   '5EhCvSxpFRgXRCaN5LH2wRCD5su1vKsnVfYfjzkqfmPoCy2G': τ0.000000000,
-        #   '5CZrQzo3W6LGEopMw2zVMugPcwFBmQDYne3TJc9XzZbTX2WR': τ0.000000000,
-        #   '5Dcmx3kNTKqExHoineVpBJ6HnD9JHApRs8y2GFBgPLCaYn8d': τ0.000000000,
-        #   '5DZaBZKKGZBGaevi42bYUK44tEuS3SYJ7GU3rQKYr7kjfa8v': τ0.000000000
-        #   }
-        # This works the same with .get_total_stake_for_coldkey, .get_total_stake_for_hotkey
-        # to do multiples with sync subtensor, we would do:
+        print(f"Async balance: {async_balance}")
+
+        async_balances: dict[str, Balance] = await async_subtensor.get_balances(*COLDKEY_PUBS)
+        print(f"Async multiple balances: {async_balances}")
+
         sync_balances: dict[str, Balance] = {}
         for coldkey in COLDKEY_PUBS:
             sync_balances[coldkey] = sync_sub.get_balance(coldkey)
+        print(f"Sync multiple balances: {sync_balances}")
 
-        # let's say we want to make multiple calls at the same time. We can do this with asyncio.gather
         async_delegated, async_balance = await asyncio.gather(
             async_subtensor.get_delegated(COLDKEY_PUB),
             async_subtensor.get_balance(COLDKEY_PUB)
         )
+        print(f"Delegated: {async_delegated}")
+        print(f"Balance: {async_balance}")
+
+
+
         # This will make concurrent calls to retrieve the delegates and balance of this coldkey
         # We can even chain these together quite dramatically, such as this example in btcli wallets:
         """
-        balances, all_neurons, all_delegates = await asyncio.gather(
-            subtensor.get_balance(
-                *[w.coldkeypub.ss58_address for w in wallets_with_ckp_file],
-                block_hash=block_hash,
-            ),
-            asyncio.gather(
-                *[
-                    subtensor.neurons_lite(netuid=netuid, block_hash=block_hash)
-                    for netuid in all_netuids
-                ]
-            ),
-            asyncio.gather(
-                *[
-                    subtensor.get_delegated(w.coldkeypub.ss58_address)
-                    for w in wallets_with_ckp_file
-                ]
-            ),
-        )
+        async def main():
+            async with AsyncSubtensor(network="finney") as subtensor:
+                # Get current block hash for consistency
+                block_hash = await subtensor.get_block_hash()
+
+                # Get total subnets to query
+                total_subnets = await subtensor.get_total_subnets(block_hash=block_hash)
+                all_netuids = list(range(1, min(total_subnets + 1, 10)))  # Limit to first 10 for testing
+
+                # Example wallet addresses (in real usage these would come from wallet objects)
+                wallets_with_ckp_file = COLDKEY_PUBS  # Using the addresses directly
+
+                # Concurrent batch fetch
+                balances, all_neurons, all_delegates = await asyncio.gather(
+                    subtensor.get_balances(  # Fixed: use get_balances for multiple addresses
+                        *wallets_with_ckp_file,
+                        block_hash=block_hash,
+                    ),
+                    asyncio.gather(
+                        *[
+                            subtensor.neurons_lite(netuid=netuid, block_hash=block_hash)
+                            for netuid in all_netuids
+                        ]
+                    ),
+                    asyncio.gather(
+                        *[
+                            subtensor.get_delegated(addr)
+                            for addr in wallets_with_ckp_file
+                        ]
+                    ),
+                )
+
+                # Print results
+                print(f"Balances: {balances}")
+                print(f"Neurons from {len(all_neurons)} subnets")
+                print(f"Delegates: {len(all_delegates)} results")
         """
         # There are also certain changes for the decoding of SCALE objects from the chain.
         # As a rule of thumb, anything using `.value` from sync Subtensor just returns the value itself

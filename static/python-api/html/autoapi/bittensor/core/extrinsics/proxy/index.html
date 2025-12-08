@@ -1,0 +1,1152 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>bittensor.core.extrinsics.proxy &#8212; Bittensor SDK Docs  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/bittensor-custom.css?v=c1dfe055" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/extrinsics/proxy/index';</script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="bittensor.core.extrinsics.registration" href="../registration/index.html" />
+    <link rel="prev" title="bittensor.core.extrinsics.pallets.swap" href="../pallets/swap/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../_static/logo.svg" class="logo__image only-light" alt="Bittensor SDK Docs  documentation - Home"/>
+    <img src="../../../../../_static/logo-dark-mode.svg" class="logo__image only-dark pst-js-only" alt="Bittensor SDK Docs  documentation - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 current active has-children"><a class="reference internal" href="../../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../axon/index.html">bittensor.core.axon</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../chain_data/index.html">bittensor.core.chain_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../config/index.html">bittensor.core.config</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../dendrite/index.html">bittensor.core.dendrite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../errors/index.html">bittensor.core.errors</a></li>
+<li class="toctree-l4 current active"><a class="reference internal" href="../index.html">bittensor.core.extrinsics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../metagraph/index.html">bittensor.core.metagraph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../settings/index.html">bittensor.core.settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../stream/index.html">bittensor.core.stream</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../subtensor/index.html">bittensor.core.subtensor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../synapse/index.html">bittensor.core.synapse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../tensor/index.html">bittensor.core.tensor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../threadpool/index.html">bittensor.core.threadpool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../types/index.html">bittensor.core.types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../extras/index.html">bittensor.extras</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/dev_framework/index.html">bittensor.extras.dev_framework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../extras/timelock/index.html">bittensor.extras.timelock</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../utils/index.html">bittensor.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/axon_utils/index.html">bittensor.utils.axon_utils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/balance/index.html">bittensor.utils.balance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/btlogging/index.html">bittensor.utils.btlogging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/easy_imports/index.html">bittensor.utils.easy_imports</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/formatting/index.html">bittensor.utils.formatting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/networking/index.html">bittensor.utils.networking</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/registration/index.html">bittensor.utils.registration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/subnets/index.html">bittensor.utils.subnets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/version/index.html">bittensor.utils.version</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/weight_utils/index.html">bittensor.utils.weight_utils</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/opentensor/btcli" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/opentensor/btcli/blob/main/autoapi/bittensor/core/extrinsics/proxy/index.rst?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/opentensor/btcli/issues/new?title=Issue%20on%20page%20%2Fautoapi/bittensor/core/extrinsics/proxy/index.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../_sources/autoapi/bittensor/core/extrinsics/proxy/index.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>bittensor.core.extrinsics.proxy</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.add_proxy_extrinsic"><code class="docutils literal notranslate"><span class="pre">add_proxy_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.announce_extrinsic"><code class="docutils literal notranslate"><span class="pre">announce_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic"><code class="docutils literal notranslate"><span class="pre">create_pure_proxy_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.kill_pure_proxy_extrinsic"><code class="docutils literal notranslate"><span class="pre">kill_pure_proxy_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.poke_deposit_extrinsic"><code class="docutils literal notranslate"><span class="pre">poke_deposit_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.proxy_announced_extrinsic"><code class="docutils literal notranslate"><span class="pre">proxy_announced_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.proxy_extrinsic"><code class="docutils literal notranslate"><span class="pre">proxy_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.reject_announcement_extrinsic"><code class="docutils literal notranslate"><span class="pre">reject_announcement_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.remove_announcement_extrinsic"><code class="docutils literal notranslate"><span class="pre">remove_announcement_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.remove_proxies_extrinsic"><code class="docutils literal notranslate"><span class="pre">remove_proxies_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.remove_proxy_extrinsic"><code class="docutils literal notranslate"><span class="pre">remove_proxy_extrinsic()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-bittensor.core.extrinsics.proxy">
+<span id="bittensor-core-extrinsics-proxy"></span><h1>bittensor.core.extrinsics.proxy<a class="headerlink" href="#module-bittensor.core.extrinsics.proxy" title="Link to this heading">#</a></h1>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.proxy.add_proxy_extrinsic" title="bittensor.core.extrinsics.proxy.add_proxy_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_proxy_extrinsic</span></code></a>(subtensor, wallet, delegate_ss58, ...)</p></td>
+<td><p>Adds a proxy relationship.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.proxy.announce_extrinsic" title="bittensor.core.extrinsics.proxy.announce_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">announce_extrinsic</span></code></a>(subtensor, wallet, ...[, ...])</p></td>
+<td><p>Announces a future call that will be executed through a proxy.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic" title="bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_pure_proxy_extrinsic</span></code></a>(subtensor, wallet, ...[, ...])</p></td>
+<td><p>Creates a pure proxy account.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.proxy.kill_pure_proxy_extrinsic" title="bittensor.core.extrinsics.proxy.kill_pure_proxy_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kill_pure_proxy_extrinsic</span></code></a>(subtensor, wallet, ...[, ...])</p></td>
+<td><p>Kills (removes) a pure proxy account.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.proxy.poke_deposit_extrinsic" title="bittensor.core.extrinsics.proxy.poke_deposit_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">poke_deposit_extrinsic</span></code></a>(subtensor, wallet, *[, ...])</p></td>
+<td><p>Adjusts deposits made for proxies and announcements based on current values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.proxy.proxy_announced_extrinsic" title="bittensor.core.extrinsics.proxy.proxy_announced_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">proxy_announced_extrinsic</span></code></a>(subtensor, wallet, ...[, ...])</p></td>
+<td><p>Executes an announced call on behalf of the real account through a proxy.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.proxy.proxy_extrinsic" title="bittensor.core.extrinsics.proxy.proxy_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">proxy_extrinsic</span></code></a>(subtensor, wallet, real_account_ss58, ...)</p></td>
+<td><p>Executes a call on behalf of the real account through a proxy.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.proxy.reject_announcement_extrinsic" title="bittensor.core.extrinsics.proxy.reject_announcement_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reject_announcement_extrinsic</span></code></a>(subtensor, wallet, ...)</p></td>
+<td><p>Rejects an announcement made by a proxy delegate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.proxy.remove_announcement_extrinsic" title="bittensor.core.extrinsics.proxy.remove_announcement_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_announcement_extrinsic</span></code></a>(subtensor, wallet, ...)</p></td>
+<td><p>Removes an announcement made by a proxy account.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.proxy.remove_proxies_extrinsic" title="bittensor.core.extrinsics.proxy.remove_proxies_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_proxies_extrinsic</span></code></a>(subtensor, wallet, *[, ...])</p></td>
+<td><p>Removes all proxy relationships for the account.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.proxy.remove_proxy_extrinsic" title="bittensor.core.extrinsics.proxy.remove_proxy_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_proxy_extrinsic</span></code></a>(subtensor, wallet, ...[, ...])</p></td>
+<td><p>Removes a proxy relationship.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.proxy.add_proxy_extrinsic">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.proxy.</span></span><span class="sig-name descname"><span class="pre">add_proxy_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delegate_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.proxy.add_proxy_extrinsic" title="Link to this definition">#</a></dt>
+<dd><p>Adds a proxy relationship.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – Subtensor instance with the connection to the chain.</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object.</p></li>
+<li><p><strong>delegate_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the delegate proxy account.</p></li>
+<li><p><strong>proxy_type</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference internal" href="../../chain_data/proxy/index.html#bittensor.core.chain_data.proxy.ProxyType" title="bittensor.core.chain_data.proxy.ProxyType"><em>bittensor.core.chain_data.proxy.ProxyType</em></a><em>]</em>) – The type of proxy permissions (e.g., <cite>Any</cite>, <cite>NonTransfer</cite>, <cite>Governance</cite>, <cite>Staking</cite>).
+Can be a string or <cite>ProxyType</cite> enum value. For available proxy types and their permissions, see the
+documentation link in the Notes section below.</p></li>
+<li><p><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Optionally, include a delay in blocks. The number of blocks that must elapse between announcing and
+executing a proxied transaction (time-lock period). A delay of <cite>0</cite> means the proxy can be used immediately
+without announcements. A non-zero delay creates a time-lock, requiring the proxy to announce calls first, wait
+for the delay period, then execute them, giving the real account time to review and reject unwanted operations.</p></li>
+<li><p><strong>mev_protection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <cite>True</cite>, encrypts and submits the transaction through the MEV Shield pallet to protect
+against front-running and MEV attacks. The transaction remains encrypted in the mempool until validators
+decrypt and execute it. If <cite>False</cite>, submits the transaction directly without encryption.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
+transaction is not included in a block within that number of blocks, it will expire and be rejected. You
+can think of it as an expiration date for the transaction.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
+<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the revealed execution of transaction if mev_protection used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result object of the extrinsic execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>A deposit is required when adding a proxy. The deposit amount is determined by runtime constants and is
+returned when the proxy is removed.</p></li>
+<li><p>For available proxy types and their specific permissions, see: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies#types-of-proxies">https://docs.learnbittensor.org/keys/proxies#types-of-proxies</a>&gt;</p></li>
+<li><p>See Working with Proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>The <cite>Any</cite> proxy type is dangerous as it grants full permissions to the proxy, including the ability to make
+transfers and manage the account completely. Use with extreme caution.</p></li>
+<li><p>If <cite>wait_for_inclusion=False</cite> or when <cite>block_hash</cite> is not available, the extrinsic receipt may not contain
+triggered events. This means that any data that would normally be extracted from blockchain events (such as
+proxy relationship details) will not be available in the response. To ensure complete event data is available,
+either pass <cite>wait_for_inclusion=True</cite> when calling this function, or retrieve the data manually from the
+blockchain using the extrinsic hash.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.proxy.announce_extrinsic">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.proxy.</span></span><span class="sig-name descname"><span class="pre">announce_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_account_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_hash</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.proxy.announce_extrinsic" title="Link to this definition">#</a></dt>
+<dd><p>Announces a future call that will be executed through a proxy.</p>
+<p>This extrinsic allows a proxy account to declare its intention to execute a specific call on behalf of a real
+account after a delay period. The real account can review and either approve or reject the announcement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – Subtensor instance with the connection to the chain.</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object (should be the proxy account wallet).</p></li>
+<li><p><strong>real_account_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the real account on whose behalf the call will be made.</p></li>
+<li><p><strong>call_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hash of the call that will be executed in the future (hex string with <cite>0x</cite> prefix).</p></li>
+<li><p><strong>mev_protection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <cite>True</cite>, encrypts and submits the transaction through the MEV Shield pallet to protect
+against front-running and MEV attacks. The transaction remains encrypted in the mempool until validators
+decrypt and execute it. If <cite>False</cite>, submits the transaction directly without encryption.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
+transaction is not included in a block within that number of blocks, it will expire and be rejected. You
+can think of it as an expiration date for the transaction.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
+<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the revealed execution of transaction if mev_protection used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result object of the extrinsic execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>A deposit is required when making an announcement. The deposit is returned when the announcement is
+executed, rejected, or removed. The announcement can be executed after the delay period has passed.</p></li>
+<li><p>See Working with Proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.proxy.</span></span><span class="sig-name descname"><span class="pre">create_pure_proxy_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic" title="Link to this definition">#</a></dt>
+<dd><p>Creates a pure proxy account.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – Subtensor instance with the connection to the chain.</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object.</p></li>
+<li><p><strong>proxy_type</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference internal" href="../../chain_data/proxy/index.html#bittensor.core.chain_data.proxy.ProxyType" title="bittensor.core.chain_data.proxy.ProxyType"><em>bittensor.core.chain_data.proxy.ProxyType</em></a><em>]</em>) – The type of proxy permissions for the pure proxy. Can be a string or <cite>ProxyType</cite> enum value. For
+available proxy types and their permissions, see the documentation link in the Notes section below.</p></li>
+<li><p><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Optionally, include a delay in blocks. The number of blocks that must elapse between announcing and
+executing a proxied transaction (time-lock period). A delay of <cite>0</cite> means the pure proxy can be used
+immediately without any announcement period. A non-zero delay creates a time-lock, requiring announcements
+before execution to give the spawner time to review/reject.</p></li>
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – A salt value (u16, range <cite>0-65535</cite>) used to generate unique pure proxy addresses. This should generally
+be left as <cite>0</cite> unless you are creating batches of proxies. When creating multiple pure proxies with identical
+parameters (same <cite>proxy_type</cite> and <cite>delay</cite>), different index values will produce different SS58 addresses.
+This is not a sequential counter—you can use any unique values (e.g., 0, 100, 7, 42) in any order. The index
+must be preserved as it’s required for <a class="reference internal" href="#bittensor.core.extrinsics.proxy.kill_pure_proxy_extrinsic" title="bittensor.core.extrinsics.proxy.kill_pure_proxy_extrinsic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kill_pure_proxy_extrinsic()</span></code></a>. If creating multiple pure proxies in
+a single batch transaction, each must have a unique index value.</p></li>
+<li><p><strong>mev_protection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <cite>True</cite>, encrypts and submits the transaction through the MEV Shield pallet to protect
+against front-running and MEV attacks. The transaction remains encrypted in the mempool until validators
+decrypt and execute it. If <cite>False</cite>, submits the transaction directly without encryption.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
+transaction is not included in a block within that number of blocks, it will expire and be rejected. You
+can think of it as an expiration date for the transaction.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
+<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the revealed execution of transaction if mev_protection used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result object of the extrinsic execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>The pure proxy account address can be extracted from the <cite>PureCreated</cite> event in the response. Store the
+spawner address, <cite>proxy_type</cite>, <cite>index</cite>, <cite>height</cite>, and <cite>ext_index</cite> as they are required to kill the
+pure proxy later.</p></li>
+<li><p>For available proxy types and their specific permissions, see: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies#types-of-proxies">https://docs.learnbittensor.org/keys/proxies#types-of-proxies</a>&gt;</p></li>
+<li><p>See Pure Proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/pure-proxies">https://docs.learnbittensor.org/keys/proxies/pure-proxies</a>&gt;</p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>The <cite>Any</cite> proxy type is dangerous as it grants full permissions to the proxy, including the ability to make
+transfers and kill the proxy. Use with extreme caution.</p></li>
+<li><p>If <cite>wait_for_inclusion=False</cite> or when <cite>block_hash</cite> is not available, the extrinsic receipt may not contain
+triggered events. This means that any data that would normally be extracted from blockchain events (such as
+the pure proxy account address) will not be available in the response. To ensure complete event data is available,
+either pass <cite>wait_for_inclusion=True</cite> when calling this function, or retrieve the data manually from the
+blockchain using the extrinsic hash.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.proxy.kill_pure_proxy_extrinsic">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.proxy.</span></span><span class="sig-name descname"><span class="pre">kill_pure_proxy_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pure_proxy_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spawner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_proxy_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ProxyType.Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.proxy.kill_pure_proxy_extrinsic" title="Link to this definition">#</a></dt>
+<dd><p>Kills (removes) a pure proxy account.</p>
+<p>This method removes a pure proxy account that was previously created via <cite>create_pure_proxy()</cite>. The <cite>kill_pure</cite> call
+must be executed through the pure proxy account itself, with the spawner acting as an “Any” proxy. This method
+automatically handles this by executing the call via <cite>proxy()</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – Subtensor instance with the connection to the chain.</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object. The <cite>wallet.coldkey.ss58_address</cite> must be the spawner of the pure proxy (the
+account that created it via <a class="reference internal" href="#bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic" title="bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy_extrinsic()</span></code></a>). The spawner must have an <cite>Any</cite> proxy
+relationship with the pure proxy.</p></li>
+<li><p><strong>pure_proxy_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the pure proxy account to be killed. This is the address that was returned
+in the <a class="reference internal" href="#bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic" title="bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy_extrinsic()</span></code></a> response.</p></li>
+<li><p><strong>spawner</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the spawner account (the account that originally created the pure proxy via
+<a class="reference internal" href="#bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic" title="bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy_extrinsic()</span></code></a>). This should match <cite>wallet.coldkey.ss58_address</cite>.</p></li>
+<li><p><strong>proxy_type</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference internal" href="../../chain_data/proxy/index.html#bittensor.core.chain_data.proxy.ProxyType" title="bittensor.core.chain_data.proxy.ProxyType"><em>bittensor.core.chain_data.proxy.ProxyType</em></a><em>]</em>) – The type of proxy permissions that were used when creating the pure proxy. This must match exactly
+the <cite>proxy_type</cite> that was passed to <a class="reference internal" href="#bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic" title="bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy_extrinsic()</span></code></a>.</p></li>
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The salt value (u16, range <cite>0-65535</cite>) originally used in <a class="reference internal" href="#bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic" title="bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy_extrinsic()</span></code></a> to generate
+this pure proxy’s address. This value, combined with <cite>proxy_type</cite>, <cite>delay</cite>, and <cite>spawner</cite>, uniquely
+identifies the pure proxy to be killed. Must match exactly the index used during creation.</p></li>
+<li><p><strong>height</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The block number at which the pure proxy was created. This is returned in the <cite>PureCreated</cite> event from
+<a class="reference internal" href="#bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic" title="bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy_extrinsic()</span></code></a> and is required to identify the exact creation transaction.</p></li>
+<li><p><strong>ext_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The extrinsic index within the block at which the pure proxy was created. This is returned in the
+<cite>PureCreated</cite> event from <a class="reference internal" href="#bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic" title="bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_pure_proxy_extrinsic()</span></code></a> and specifies the position of the creation
+extrinsic within the block. Together with <cite>height</cite>, this uniquely identifies the creation transaction.</p></li>
+<li><p><strong>force_proxy_type</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference internal" href="../../chain_data/proxy/index.html#bittensor.core.chain_data.proxy.ProxyType" title="bittensor.core.chain_data.proxy.ProxyType"><em>bittensor.core.chain_data.proxy.ProxyType</em></a><em>]</em><em>]</em>) – The proxy type relationship to use when executing <cite>kill_pure</cite> through the proxy mechanism.
+Since pure proxies are keyless and cannot sign transactions, the spawner must act as a proxy for the pure
+proxy to execute <cite>kill_pure</cite>. This parameter specifies which proxy type relationship between the spawner and
+the pure proxy account should be used. The spawner must have a proxy relationship of this type (or <cite>Any</cite>)
+with the pure proxy account. Defaults to <cite>ProxyType.Any</cite> for maximum compatibility. If <cite>None</cite>, Substrate
+will automatically select an available proxy type from the spawner’s proxy relationships.</p></li>
+<li><p><strong>mev_protection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, encrypts and submits the transaction through the MEV Shield pallet to protect
+against front-running and MEV attacks. The transaction remains encrypted in the mempool until validators
+decrypt and execute it. If False, submits the transaction directly without encryption.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
+transaction is not included in a block within that number of blocks, it will expire and be rejected. You can
+think of it as an expiration date for the transaction.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
+<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the revealed execution of transaction if mev_protection used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result object of the extrinsic execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>The <cite>kill_pure</cite> call must be executed through the pure proxy account itself, with the spawner acting as a proxy.
+This method automatically handles this by executing the call via <a class="reference internal" href="#bittensor.core.extrinsics.proxy.proxy_extrinsic" title="bittensor.core.extrinsics.proxy.proxy_extrinsic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">proxy_extrinsic()</span></code></a>. By default,
+<cite>force_proxy_type</cite> is set to <cite>ProxyType.Any</cite>, meaning the spawner must have an <cite>Any</cite> proxy relationship
+with the pure proxy. If you pass a different <cite>force_proxy_type</cite>, the spawner must have that specific proxy
+type relationship with the pure proxy.</p></li>
+<li><p>See Pure Proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/pure-proxies">https://docs.learnbittensor.org/keys/proxies/pure-proxies</a>&gt;</p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>All access to this account will be lost. Any funds remaining in the pure proxy account will become permanently
+inaccessible after this operation.</p>
+</div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p># After creating a pure proxy</p>
+<p>create_response = subtensor.proxies.create_pure_proxy(</p>
+<blockquote>
+<div><p>wallet=spawner_wallet,</p>
+<p>proxy_type=ProxyType.Any,  # Type of proxy permissions for the pure proxy</p>
+<p>delay=0,</p>
+<p>index=0,</p>
+</div></blockquote>
+<p>)</p>
+<p>pure_proxy_ss58 = create_response.data[“pure_account”]</p>
+<p>spawner = create_response.data[“spawner”]</p>
+<p>proxy_type_used = create_response.data[“proxy_type”]  # The proxy_type used during creation</p>
+<p>height = create_response.data[“height”]</p>
+<p>ext_index = create_response.data[“ext_index”]</p>
+<p># Kill the pure proxy</p>
+<p># Note: force_proxy_type defaults to ProxyType.Any (spawner must have Any proxy relationship)</p>
+<p>kill_response = subtensor.proxies.kill_pure_proxy(</p>
+<blockquote>
+<div><p>wallet=spawner_wallet,</p>
+<p>pure_proxy_ss58=pure_proxy_ss58,</p>
+<p>spawner=spawner,</p>
+<p>proxy_type=proxy_type_used,  # Must match the proxy_type used during creation</p>
+<p>index=0,</p>
+<p>height=height,</p>
+<p>ext_index=ext_index,</p>
+<p># force_proxy_type=ProxyType.Any,  # Optional: defaults to ProxyType.Any</p>
+</div></blockquote>
+<p>)</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.proxy.poke_deposit_extrinsic">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.proxy.</span></span><span class="sig-name descname"><span class="pre">poke_deposit_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.proxy.poke_deposit_extrinsic" title="Link to this definition">#</a></dt>
+<dd><p>Adjusts deposits made for proxies and announcements based on current values.</p>
+<p>This can be used by accounts to possibly lower their locked amount. The function automatically recalculates deposits
+for both proxy relationships and announcements for the signing account. The transaction fee is waived if the deposit
+amount has changed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – Subtensor instance with the connection to the chain.</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object (the account whose deposits will be adjusted).</p></li>
+<li><p><strong>mev_protection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, encrypts and submits the transaction through the MEV Shield pallet to protect
+against front-running and MEV attacks. The transaction remains encrypted in the mempool until validators
+decrypt and execute it. If False, submits the transaction directly without encryption.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
+<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the revealed execution of transaction if mev_protection used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result object of the extrinsic execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<dl class="simple">
+<dt>When to use:</dt><dd><ul class="simple">
+<li><p>After runtime upgrade, if deposit constants have changed.</p></li>
+<li><p>After removing proxies/announcements, to free up excess locked funds.</p></li>
+<li><p>Periodically to optimize locked deposit amounts.</p></li>
+</ul>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>See Working with Proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.proxy.proxy_announced_extrinsic">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.proxy.</span></span><span class="sig-name descname"><span class="pre">proxy_announced_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delegate_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_account_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_proxy_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.proxy.proxy_announced_extrinsic" title="Link to this definition">#</a></dt>
+<dd><p>Executes an announced call on behalf of the real account through a proxy.</p>
+<p>This extrinsic executes a call that was previously announced via <a class="reference internal" href="#bittensor.core.extrinsics.proxy.announce_extrinsic" title="bittensor.core.extrinsics.proxy.announce_extrinsic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">announce_extrinsic()</span></code></a>. The call must match the
+<cite>call_hash</cite> that was announced, and the delay period must have passed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – Subtensor instance with the connection to the chain.</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object (should be the proxy account wallet that made the announcement).</p></li>
+<li><p><strong>delegate_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the delegate proxy account that made the announcement.</p></li>
+<li><p><strong>real_account_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the real account on whose behalf the call will be made.</p></li>
+<li><p><strong>force_proxy_type</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference internal" href="../../chain_data/proxy/index.html#bittensor.core.chain_data.proxy.ProxyType" title="bittensor.core.chain_data.proxy.ProxyType"><em>bittensor.core.chain_data.proxy.ProxyType</em></a><em>]</em><em>]</em>) – The type of proxy to use for the call. If <cite>None</cite>, any proxy type can be used. Otherwise, must
+match one of the allowed proxy types. Can be a string or <cite>ProxyType</cite> enum value.</p></li>
+<li><p><strong>call</strong> (<em>scalecodec.types.GenericCall</em>) – The inner call to be executed on behalf of the real account (must match the announced <cite>call_hash</cite>).</p></li>
+<li><p><strong>mev_protection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <cite>True</cite>, encrypts and submits the transaction through the MEV Shield pallet to protect
+against front-running and MEV attacks. The transaction remains encrypted in the mempool until validators
+decrypt and execute it. If <cite>False</cite>, submits the transaction directly without encryption.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
+transaction is not included in a block within that number of blocks, it will expire and be rejected. You
+can think of it as an expiration date for the transaction.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
+<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the revealed execution of transaction if mev_protection used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result object of the extrinsic execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>The <cite>call_hash</cite> of the provided call must match the <cite>call_hash</cite> that was announced. The announcement must not
+have been rejected by the real account, and the delay period must have passed.</p></li>
+<li><p>See Working with Proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.proxy.proxy_extrinsic">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.proxy.</span></span><span class="sig-name descname"><span class="pre">proxy_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_account_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_proxy_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.proxy.proxy_extrinsic" title="Link to this definition">#</a></dt>
+<dd><p>Executes a call on behalf of the real account through a proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – Subtensor instance with the connection to the chain.</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object (should be the proxy account wallet).</p></li>
+<li><p><strong>real_account_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the real account on whose behalf the call is being made.</p></li>
+<li><p><strong>force_proxy_type</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference internal" href="../../chain_data/proxy/index.html#bittensor.core.chain_data.proxy.ProxyType" title="bittensor.core.chain_data.proxy.ProxyType"><em>bittensor.core.chain_data.proxy.ProxyType</em></a><em>]</em><em>]</em>) – The type of proxy to use for the call. If <cite>None</cite>, any proxy type can be used. Otherwise, must
+match one of the allowed proxy types. Can be a string or <cite>ProxyType</cite> enum value.</p></li>
+<li><p><strong>call</strong> (<em>scalecodec.types.GenericCall</em>) – The inner call to be executed on behalf of the real account.</p></li>
+<li><p><strong>mev_protection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, encrypts and submits the transaction through the MEV Shield pallet to protect
+against front-running and MEV attacks. The transaction remains encrypted in the mempool until validators
+decrypt and execute it. If False, submits the transaction directly without encryption.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
+transaction is not included in a block within that number of blocks, it will expire and be rejected. You
+can think of it as an expiration date for the transaction.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
+<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the revealed execution of transaction if mev_protection used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result object of the extrinsic execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>The call must be permitted by the proxy type. For example, a <cite>NonTransfer</cite> proxy cannot execute transfer calls.</p></li>
+<li><p>See Working with Proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.proxy.reject_announcement_extrinsic">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.proxy.</span></span><span class="sig-name descname"><span class="pre">reject_announcement_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delegate_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_hash</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.proxy.reject_announcement_extrinsic" title="Link to this definition">#</a></dt>
+<dd><p>Rejects an announcement made by a proxy delegate.</p>
+<p>This extrinsic allows the real account to reject an announcement made by a proxy delegate, preventing the announced
+call from being executed. Once rejected, the announcement cannot be executed and the announcement deposit is
+returned to the delegate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – Subtensor instance with the connection to the chain.</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object (should be the real account wallet).</p></li>
+<li><p><strong>delegate_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the delegate proxy account whose announcement is being rejected.</p></li>
+<li><p><strong>call_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hash of the call that was announced and is now being rejected (hex string with <cite>0x</cite> prefix).</p></li>
+<li><p><strong>mev_protection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <cite>True</cite>, encrypts and submits the transaction through the MEV Shield pallet to protect
+against front-running and MEV attacks. The transaction remains encrypted in the mempool until validators
+decrypt and execute it. If <cite>False</cite>, submits the transaction directly without encryption.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
+transaction is not included in a block within that number of blocks, it will expire and be rejected. You
+can think of it as an expiration date for the transaction.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
+<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the revealed execution of transaction if mev_protection used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result object of the extrinsic execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Once rejected, the announcement cannot be executed. The delegate’s announcement deposit is returned.</p></li>
+<li><p>See Working with Proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.proxy.remove_announcement_extrinsic">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.proxy.</span></span><span class="sig-name descname"><span class="pre">remove_announcement_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_account_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_hash</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.proxy.remove_announcement_extrinsic" title="Link to this definition">#</a></dt>
+<dd><p>Removes an announcement made by a proxy account.</p>
+<p>This extrinsic allows the proxy account to remove its own announcement before it is executed or rejected. This frees
+up the announcement deposit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – Subtensor instance with the connection to the chain.</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object (should be the proxy account wallet that made the announcement).</p></li>
+<li><p><strong>real_account_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the real account on whose behalf the call was announced.</p></li>
+<li><p><strong>call_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hash of the call that was announced and is now being removed (hex string with <cite>0x</cite> prefix).</p></li>
+<li><p><strong>mev_protection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <cite>True</cite>, encrypts and submits the transaction through the MEV Shield pallet to protect
+against front-running and MEV attacks. The transaction remains encrypted in the mempool until validators
+decrypt and execute it. If <cite>False</cite>, submits the transaction directly without encryption.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
+transaction is not included in a block within that number of blocks, it will expire and be rejected. You
+can think of it as an expiration date for the transaction.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
+<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the revealed execution of transaction if mev_protection used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result object of the extrinsic execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>Removing an announcement frees up the announcement deposit.</p></li>
+<li><p>See Working with Proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.proxy.remove_proxies_extrinsic">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.proxy.</span></span><span class="sig-name descname"><span class="pre">remove_proxies_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.proxy.remove_proxies_extrinsic" title="Link to this definition">#</a></dt>
+<dd><p>Removes all proxy relationships for the account.</p>
+<p>This removes all proxy relationships in a single call, which is more efficient than removing them one by one. The
+deposit for all proxies will be returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – Subtensor instance with the connection to the chain.</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object (the account whose proxies will be removed).</p></li>
+<li><p><strong>mev_protection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, encrypts and submits the transaction through the MEV Shield pallet to protect
+against front-running and MEV attacks. The transaction remains encrypted in the mempool until validators
+decrypt and execute it. If False, submits the transaction directly without encryption.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
+<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the revealed execution of transaction if mev_protection used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result object of the extrinsic execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>This removes all proxy relationships for the account, regardless of proxy type or delegate.</p></li>
+<li><p>See Working with Proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bittensor.core.extrinsics.proxy.remove_proxy_extrinsic">
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.proxy.</span></span><span class="sig-name descname"><span class="pre">remove_proxy_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delegate_ss58</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.proxy.remove_proxy_extrinsic" title="Link to this definition">#</a></dt>
+<dd><p>Removes a proxy relationship.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – Subtensor instance with the connection to the chain.</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – Bittensor wallet object.</p></li>
+<li><p><strong>delegate_ss58</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The SS58 address of the delegate proxy account to remove.</p></li>
+<li><p><strong>proxy_type</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference internal" href="../../chain_data/proxy/index.html#bittensor.core.chain_data.proxy.ProxyType" title="bittensor.core.chain_data.proxy.ProxyType"><em>bittensor.core.chain_data.proxy.ProxyType</em></a><em>]</em>) – The type of proxy permissions to remove. Can be a string or <cite>ProxyType</cite> enum value.</p></li>
+<li><p><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The announcement delay value (in blocks) for the proxy being removed. Must exactly match the delay value
+that was set when the proxy was originally added. This is a required identifier for the specific proxy
+relationship, not a delay before removal takes effect (removal is immediate).</p></li>
+<li><p><strong>mev_protection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <cite>True</cite>, encrypts and submits the transaction through the MEV Shield pallet to protect
+against front-running and MEV attacks. The transaction remains encrypted in the mempool until validators
+decrypt and execute it. If <cite>False</cite>, submits the transaction directly without encryption.</p></li>
+<li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
+transaction is not included in a block within that number of blocks, it will expire and be rejected. You
+can think of it as an expiration date for the transaction.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the inclusion of the transaction.</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
+<li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the revealed execution of transaction if mev_protection used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result object of the extrinsic execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../types/index.html#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse">ExtrinsicResponse</a></p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
+<li><p>The delegate_ss58, proxy_type, and delay parameters must exactly match those used when the proxy was added.</p></li>
+<li><p>See Working with Proxies: &lt;<a class="reference external" href="https://docs.learnbittensor.org/keys/proxies/create-proxy">https://docs.learnbittensor.org/keys/proxies/create-proxy</a>&gt;</p></li>
+</ul>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../pallets/swap/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">bittensor.core.extrinsics.pallets.swap</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../registration/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">bittensor.core.extrinsics.registration</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.add_proxy_extrinsic"><code class="docutils literal notranslate"><span class="pre">add_proxy_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.announce_extrinsic"><code class="docutils literal notranslate"><span class="pre">announce_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.create_pure_proxy_extrinsic"><code class="docutils literal notranslate"><span class="pre">create_pure_proxy_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.kill_pure_proxy_extrinsic"><code class="docutils literal notranslate"><span class="pre">kill_pure_proxy_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.poke_deposit_extrinsic"><code class="docutils literal notranslate"><span class="pre">poke_deposit_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.proxy_announced_extrinsic"><code class="docutils literal notranslate"><span class="pre">proxy_announced_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.proxy_extrinsic"><code class="docutils literal notranslate"><span class="pre">proxy_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.reject_announcement_extrinsic"><code class="docutils literal notranslate"><span class="pre">reject_announcement_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.remove_announcement_extrinsic"><code class="docutils literal notranslate"><span class="pre">remove_announcement_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.remove_proxies_extrinsic"><code class="docutils literal notranslate"><span class="pre">remove_proxies_extrinsic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.extrinsics.proxy.remove_proxy_extrinsic"><code class="docutils literal notranslate"><span class="pre">remove_proxy_extrinsic()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Opentensor Foundation
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Opentensor Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

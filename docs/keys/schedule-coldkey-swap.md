@@ -16,6 +16,14 @@ See:
 
 See [code for coldkey swap](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/swap/swap_coldkey.rs).
 
+:::tip Prevent emergencies with proxies
+Coldkey swaps are often needed when a coldkey is compromised. **Using proxy wallets can help prevent this situation entirely.** With a properly configured proxy (limited `ProxyType` and non-zero delay), even if an attacker gains access to your proxy wallet, they cannot immediately drain your funds—the delay gives you time to detect and reject unauthorized transactions.
+
+For high-value wallets, consider setting up a `Staking` proxy for regular staking operations instead of using your coldkey directly.
+
+See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey proactively.
+:::
+
 The schedule coldkey swap feature works as follows:
 
 - The schedule coldkey swap feature enables you to schedule the swapping of source coldkey to a destination coldkey. If you feel your existing coldkey is potentially compromised, then use this feature to schedule a swap to a destination coldkey.

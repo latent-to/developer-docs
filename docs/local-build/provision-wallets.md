@@ -1,5 +1,5 @@
 ---
-title: "Provision Wallets for Local Deploy"
+title: "Provision Wallets for Local Blockchain"
 ---
 
 This page continues the previous tutorial for local Bittensor development.

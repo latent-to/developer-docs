@@ -4,6 +4,7 @@ title: "OCR Subnet Tutorial"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # OCR Subnet Tutorial
 
@@ -98,6 +99,8 @@ To generate this challenge, the subnet validator applies the following steps:
 - Finally, the validator creates the challenge by converting this PDF into a corrupted image, called `noisy_image`. 
 
 #### Code snapshot
+
+<SdkVersion />
 
 See below for a snapshot view of the code. 
 

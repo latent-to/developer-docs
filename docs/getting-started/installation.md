@@ -4,6 +4,7 @@ title: "Install Bittensor SDK"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Install Bittensor SDK
 
@@ -17,7 +18,7 @@ Always double-check the package name and origin before installation. Use links a
 
 ## Supported Python versions
 
-- bittensor (SDK): Python 3.9-3.13 (reference: https://github.com/opentensor/bittensor/blob/master/pyproject.toml#L14)
+- bittensor (SDK): Python 3.10-3.15 (reference: https://github.com/opentensor/bittensor/blob/master/pyproject.toml#L14)
 - bittensor-cli: Python 3.9-3.13 (reference: https://github.com/opentensor/btcli/blob/main/pyproject.toml#L15 )
 - bittensor-wallet: Python 3.9-3.13 (reference: https://github.com/opentensor/btwallet/blob/main/pyproject.toml#L11)
 
@@ -147,6 +148,8 @@ While wallet transactions like delegating, transfer, registering, staking can be
 
 ## Verify the installation
 
+<SdkVersion />
+
 You can verify your installation in either of the following ways shown:
 
 <Tabs>
@@ -200,7 +203,7 @@ Next, enter the following lines in the Python interpreter:
 
 ```python
 import bittensor as bt
-metagraph = bt.metagraph(1)
+metagraph = bt.Metagraph(1)
 metagraph.axons[:10]
 ```
 

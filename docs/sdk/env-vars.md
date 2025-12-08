@@ -30,7 +30,7 @@ The SDK uses `False ` if the variable is not set.
 
 ## Subtensor
 
-### `BT_CHAIN_ENDPOINT`
+### `BT_SUBTENSOR_CHAIN_ENDPOINT`
 
 The Subtensor node (RPC endpoint) URL to connect to Bittensor (overrides the default chain address).
 
@@ -38,7 +38,7 @@ The SDK uses `bittensor.core.settings.DEFAULT_ENDPOINT ` if the variable is not 
 
 See [Bittensor Networks](../concepts/bittensor-networks)
 
-### `BT_NETWORK`
+### `BT_SUBTENSOR_NETWORK`
 
 The default Subtensor network name. Allows selecting the network (e.g., `finney` or `testnet`) during Subtensor initialization without specifying an explicit endpoint.<br/>
 The SDK uses `bittensor.core.settings.DEFAULT_NETWORK ` if the variable is not set.
@@ -94,6 +94,11 @@ The SDK uses `False` if the variable is not set.
 Specifies the directory path for storing log files.
 The SDK uses `bittensor.core.settings.MINERS_DIR` if the variable is not set.
 
+### `BT_LOGGING_ENABLE_THIRD_PARTY_LOGGERS`
+
+When set to `true` or `1`, enables third-party loggers.<br/>
+The SDK logger always acts as the primary logger. Whether enabled or not, messages from third-party loggers are still filtered according to the SDK’s configured logging level.
+
 ## PriorityThreadPoolExecutor
 
 ### `BT_PRIORITY_MAX_WORKERS`
@@ -121,6 +126,16 @@ The SDK uses `default` if the variable is not set,
 ### `BT_WALLET_PATH`
 
 The SDK uses `bittensor.core.settings.WALLETS_DIR` if the variable is not set.
+
+## MEV Protection
+
+### `BT_MEV_PROTECTION`
+
+When set to `true` or `1`, enables MEV Shield protection by default for all supported extrinsics. When enabled, transactions are automatically encrypted and submitted through the MEV Shield pallet to protect against front-running and MEV attacks.
+
+The SDK uses `False` if the variable is not set.
+
+See [MEV Shield Protection](./mev-protection.md) for details on using MEV protection.
 
 ## Testing
 

@@ -4,6 +4,7 @@ title: "Managing Root Claims"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { SdkVersion } from "../../sdk/_sdk-version.mdx";
 
 # Managing Root Claims
 
@@ -63,6 +64,8 @@ Decrypting...
   </TabItem>
   <TabItem value="sdk" label="Bittensor SDK">
 
+<SdkVersion />
+
 Use the `set_root_claim_type()` method to set your root claim type:
 
 ```python
@@ -81,12 +84,9 @@ async def main():
             wait_for_finalization=True
         )
 
-        if response.success:
-            print(f"✅ Successfully set root claim type to 'Keep'")
-            if response.extrinsic_receipt:
-                print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
-        else:
-            print(f"❌ Failed to set root claim type: {response.message}")
+        print(response)
+        if response.extrinsic_receipt:
+            print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
 
 asyncio.run(main())
 ```
@@ -329,12 +329,9 @@ async def main():
             wait_for_finalization=True
         )
 
-        if response.success:
-            print(f"✅ Successfully claimed root emissions from subnets {netuids}")
-            if response.extrinsic_receipt:
-                print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
-        else:
-            print(f"❌ Failed to claim root emissions: {response.message}")
+        print(response)
+        if response.extrinsic_receipt:
+            print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
 
 asyncio.run(main())
 ```

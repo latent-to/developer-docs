@@ -90,6 +90,10 @@ const config = {
             from: "/staking",
           },
           {
+            to: "/staking-and-delegation/delegation",
+            from: "/staking-and-delegation/staking",
+          },
+          {
             from: "/subnets/register-validate-mine",
             to: "/validators",
           },

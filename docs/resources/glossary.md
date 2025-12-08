@@ -231,6 +231,28 @@ An epoch in Bittensor is the period during which a subnet executes its consensus
 
 **See also:** [Tempo](#tempo), [Yuma Consensus](../learn/yuma-consensus.md)
 
+### Existential Deposit
+
+The minimum amount of TAO required for an account to exist on the Bittensor blockchain. Accounts with balances below this threshold can be reaped (removed) to conserve network resources and prevent blockchain bloat from dust accounts.
+
+The existential deposit is a runtime constant set in the Balances pallet configuration. While the default value is defined in the runtime code as 500 RAO (0.0000005 TAO), the actual on-chain value can be queried from the blockchain using the `Balances::ExistentialDeposit` constant.
+
+Use the Bittensor SDK to query the current existential deposit:
+
+```python
+import asyncio
+import json
+from bittensor.core.async_subtensor import AsyncSubtensor
+from bittensor.utils.balance import Balance
+
+async def main():
+	async with AsyncSubtensor(network="finney") as subtensor:
+		deposit = await subtensor.get_existential_deposit()
+	print(f"Existential deposit: {deposit.tao} TAO")
+asyncio.run(main())
+
+```
+
 ### Exponential Moving Average (EMA)
 
 A weighted moving average that prioritizes recent observations while exponentially decreasing the weight of older data points. In Bittensor, EMA is used in two critical stability mechanisms:
@@ -240,7 +262,7 @@ A weighted moving average that prioritizes recent observations while exponential
    - **Basic Mode**: Single α ≈ 0.1 (~7-22 blocks for significant changes)
    - **Liquid Alpha Mode**: Dynamic α range 0.7-0.9 based on consensus alignment (~1-13 blocks depending on consensus)
 
-2. **Subnet Price Emission Smoothing**: Protects emissions from price manipulation by extremely slowly incorporating price changes into emission calculations (α ≈ 0.000003, ~30 days for 50% adjustment)
+2. **Subnet Flow Emission Smoothing**: Protects emissions from manipulation by extremely slowly incorporating TAO flow changes (net staking minus unstaking) into emission calculations (α ≈ 0.000003209, ~30 day half-life, ~86.8 day effective window)
 
 **Formula**: `EMA(t) = α × Current_Value + (1 - α) × EMA(t-1)`
 
@@ -251,6 +273,14 @@ A weighted moving average that prioritizes recent observations while exponential
 - Bittensor prioritizes stability with conservative α values
 
 **See also:** [Understanding Exponential Moving Averages](../learn/ema.md), [Consensus-based Weights](../concepts/consensus-based-weights.md), [Validator-Miner Bonds](#validator-miner-bonds), [Emission](#emission)
+
+### Existential deposit
+
+An existential deposit is the minumum required TAO in a wallet (i.e., in a coldkey).
+If a wallet balance goes below the existential deposit, then this wallet account is deactivated and the remaining TAO in it is destroyed.
+**This is set to 500 RAO for any Bittensor wallet**.
+
+See also [What is the Existential Deposit?](https://support.polkadot.network/support/solutions/articles/65000168651-what-is-the-existential-deposit-).
 
 ### External Wallet
 
@@ -267,6 +297,18 @@ A development-only configuration that accelerates block production to 250ms inte
 **See also:** [Create a local instance](../local-build/deploy.md?local-chain=docker#2-run-the-container)
 
 ## H
+
+### Halving
+
+The process where Bittensor's daily token emission rate cuts in half, similar to Bitcoin's halving mechanism. Halvings reduce the rate of new TAO tokens entering circulation.
+
+Unlike Bitcoin which halves based on block numbers, Bittensor implements halvings based on total token supply. When specific supply thresholds are reached, the emission rate of TAO is cut in half.
+
+The actual date of each halving is not fixed—it changes based on the amount of TAO being recycled each day.
+
+**See also:**
+- [TAO.app Halvings Tracker](https://tao.app/halvings)
+- [Emission](../learn/emissions.md)
 
 ### Hotkey
 
@@ -349,6 +391,20 @@ The primary Bittensor blockchain network, used for production purposes and conne
 A data structure that contains comprehensive information about the current state of a subnet, including detailed information on all the nodes (neurons) such as subnet validator stakes and subnet weights in the subnet. Metagraph aids in calculating emissions.
 
 **See:** [The Subnet Metagraph](../subnets/metagraph)
+
+### MEV (Maximal Extractable Value)
+
+In blockchain networks, MEV refers to the profit that can be extracted by reordering, inserting, or censoring transactions within a block.
+
+Common MEV attacks include:
+
+- **Front-running**: Observing a pending transaction and submitting a similar transaction with higher priority to execute first
+- **Sandwich attacks**: Placing transactions before and after a target transaction to profit from the price movement caused by that transaction
+- **Back-running**: Submitting a transaction immediately after a target transaction to capitalize on its effects
+
+In Bittensor, MEV attacks can affect staking and unstaking operations, where attackers might exploit knowledge of pending transactions to manipulate token prices. The MEV Shield feature protects against these attacks by encrypting transactions until they are included in a block.
+
+**See also:** [MEV Shield](../sdk/mev-protection.md), [Price Protection](../learn/price-protection.md)
 
 ### Multiple Incentive Mechanisms
 
@@ -688,7 +744,7 @@ A key component of any incentive mechanism that defines the work the subnet mine
 
 ### Subnet Weights
 
-The importance assigned to each subnet determined by relative price among subnets and used to determine the percentage emissions to subnets.
+The importance assigned to each subnet determined by net TAO flows (staking minus unstaking activity) and used to determine the percentage emissions to subnets. As of November 2025, this is based on EMA-smoothed TAO flows rather than token prices.
 
 **See also:** [Emissions](../learn/emissions.md), [Consensus-Based Weights](../concepts/consensus-based-weights.md)
 
@@ -810,9 +866,22 @@ A position occupied by a subnet miner or subnet validator within a subnet, ident
 
 ### Unstaking
 
-The process of detaching TAO from a validator hotkey.
+The process of withdrawing staked TAO from a validator hotkey, converting subnet-specific alpha tokens back to TAO through the subnet's automated market maker (AMM). Unstaking operations are subject to slippage—the transaction impacts pool prices, with larger amounts experiencing more slippage. Bittensor provides price protection mechanisms including tolerance limits and partial execution options to guard against unfavorable exchange rates.
 
-**See also:** [Staking/Delegation overview](../staking-and-delegation/delegation.md)
+When you unstake:
+1. Alpha tokens are removed from the validator's hotkey and added to the subnet's alpha reserves
+2. The AMM calculates equivalent TAO using the current exchange rate
+3. TAO is removed from the subnet's TAO reserves and transferred to your coldkey
+
+Unstaking incurs blockchain transaction fees, which are recycled back into the TAO emission pool.
+
+**See also:** 
+- [Staking/Delegation overview](../staking-and-delegation/delegation.md#unstaking)
+- [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md#unstaking-with-btcli)
+- [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md#unstaking-with-the-sdk)
+- [Understanding Pricing and Anticipating Slippage](../learn/slippage.md)
+- [Price Protection When Staking](../learn/price-protection.md)
+- [Transaction Fees](../learn/fees.md)
 
 ## V
 

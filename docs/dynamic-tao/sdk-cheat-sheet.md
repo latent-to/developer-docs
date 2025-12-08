@@ -2,6 +2,8 @@
 title: "Dynamic TAO SDK Cheat Sheet"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 This page provides a quick reference for the core functionalities for the Bittensor Python SDK that have changed for [Dynamic TAO](./index.md), and some example scripts to demonstrate functionality such as [viewing exchange rates](#display-current-exchange-rates) and [manage staking and unstaking](#managing-stake) into subnets.
 
 Updates to the `subtensor` and `async_subtensor` modules and the `DynamicInfo` class provide new ways to view information related to new Dynamic TAO features, such as alpha token prices, token reserve amounts, and wallet balances. Functionality around staking and unstaking has been updated to reflect the new nature of staking/unstaking in Dynamic TAO.
@@ -25,6 +27,8 @@ pip install bittensor
 1. Run `pip install .`
 
 ## Using the SDK for sync or async requests
+
+<SdkVersion />
 
 The Bittensor `subtensor` and `async_subtensor` modules offer the synchronous and asynchronous options for the same functionality.
 
@@ -195,15 +199,17 @@ import bittensor as bt
 
 sub = bt.Subtensor(network="test")
 subnet = sub.subnet(netuid=1)
+netuid = 1
 
-print("alpha_to_tao_with_slippage", subnet.alpha_to_tao_with_slippage(100))
-print("alpha_to_tao_with_slippage percentage", subnet.alpha_to_tao_with_slippage(100, percentage=True))
+alpha_100 = bt.Balance.from_tao(100).set_unit(netuid)
+print("alpha_to_tao_with_slippage", subnet.alpha_to_tao_with_slippage(alpha_100))
+print("alpha_to_tao_with_slippage %", subnet.alpha_to_tao_with_slippage(alpha_100, percentage=True))
+print("alpha_to_tao", subnet.alpha_to_tao(alpha_100))
 
-print("tao_to_alpha_with_slippage", subnet.tao_to_alpha_with_slippage(100))
-print("tao_to_alpha_with_slippage percentage", subnet.tao_to_alpha_with_slippage(100, percentage=True))
-
-print("tao_to_alpha", subnet.tao_to_alpha(100))
-print("alpha_to_tao", subnet.alpha_to_tao(100))
+tao_100 = bt.Balance.from_tao(100)
+print("tao_to_alpha_with_slippage", subnet.tao_to_alpha_with_slippage(tao_100))
+print("tao_to_alpha_with_slippage %", subnet.tao_to_alpha_with_slippage(tao_100, percentage=True))
+print("tao_to_alpha", subnet.tao_to_alpha(tao_100))
 ```
 
 ## Managing stake
@@ -229,43 +235,66 @@ Parameters:
 #### `add_stake`
 
 ```python
-async add_stake(
+add_stake(
     wallet,
-    hotkey: str,
     netuid: int,
-    tao_amount: Union[float, bittensor.Balance, int]
-)
+    hotkey_ss58: str,
+    amount: bittensor.Balance,
+    safe_staking: bool = False,
+    allow_partial_stake: bool = False,
+    rate_tolerance: float = 0.005,
+    wait_for_inclusion: bool = True,
+    wait_for_finalization: bool = True
+) -> ExtrinsicResponse
 ```
 
-Description: Adds (stakes) an amount of TAO (tao_amount) to a specific subnet (netuid) under the provided hotkey.
+Description: Adds (stakes) an amount of TAO to a specific subnet (netuid) under the provided hotkey.
 
 Parameters:
 
 - wallet: Your Bittensor wallet object.
-- hotkey: The SS58 address (hotkey) to be staked.
 - netuid: Unique ID of the subnet on which you want to stake.
-- tao_amount: Amount to stake, can be a float, integer, or bittensor.Balance object.
+- hotkey_ss58: The SS58 address (hotkey) to be staked.
+- amount: Amount to stake as a `bittensor.Balance` object (required).
+- safe_staking: Enable price protection (default: False).
+- allow_partial_stake: Allow partial execution if price moves (default: False).
+- rate_tolerance: Maximum price deviation tolerance (default: 0.005 = 0.5%).
+- wait_for_inclusion: Wait for transaction inclusion in block (default: True).
+- wait_for_finalization: Wait for transaction finalization (default: True).
+
+Returns: `ExtrinsicResponse` object with `success`, `message`, `extrinsic_fee`, and other transaction details.
 
 #### `unstake`
 
 ```python
 unstake(
     wallet,
-    hotkey: str,
     netuid: int,
-    amount: Union[float, bittensor.Balance, int]
-)
-
+    hotkey_ss58: str,
+    amount: bittensor.Balance,
+    safe_unstaking: bool = False,
+    allow_partial_stake: bool = False,
+    rate_tolerance: float = 0.005,
+    wait_for_inclusion: bool = True,
+    wait_for_finalization: bool = True
+) -> ExtrinsicResponse
 ```
 
-Description: Unstakes amount of TAO from the specified hotkey on a given netuid.
+Description: Unstakes amount of alpha tokens from the specified hotkey on a given netuid, converting them back to TAO.
 
 Parameters:
 
 - wallet: Your Bittensor wallet object.
-- hotkey: The SS58 address (hotkey) from which you want to remove stake.
 - netuid: Unique ID of the subnet.
-- amount: Amount to unstake.
+- hotkey_ss58: The SS58 address (hotkey) from which you want to remove stake.
+- amount: Amount to unstake as a `bittensor.Balance` object with the appropriate unit set (required).
+- safe_unstaking: Enable price protection (default: False).
+- allow_partial_stake: Allow partial execution if price moves (default: False).
+- rate_tolerance: Maximum price deviation tolerance (default: 0.005 = 0.5%).
+- wait_for_inclusion: Wait for transaction inclusion in block (default: True).
+- wait_for_finalization: Wait for transaction finalization (default: True).
+
+Returns: `ExtrinsicResponse` object with `success`, `message`, `extrinsic_fee`, and other transaction details.
 
 #### `get_balance`
 
@@ -307,7 +336,16 @@ Description: Waits for the next block to arrive or waits until a specified block
 Update: we have added proper nonce protection allowing you to run gather operations on stake/unstake/transfers, such as:
 
 ```python
-scatter_stake = await asyncio.gather(*[ sub.add_stake( hotkey, coldkey, netuid, amount ) for netuid in range(64) ] )
+# For async operations
+scatter_stake = await asyncio.gather(*[ 
+    sub.add_stake(
+        wallet=wallet,
+        netuid=netuid,
+        hotkey_ss58=hotkey_ss58,
+        amount=bt.Balance.from_tao(amount)
+    ) 
+    for netuid in range(64) 
+])
 ```
 
 ### Staking
@@ -317,8 +355,9 @@ The following script incrementally stakes 3 TAO into several subnets over many b
 ```python
 
 import bittensor as bt
+
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(name="ExampleWalletName")
+wallet = bt.Wallet(name="ExampleWalletName")
 wallet.unlock_coldkey()
 
 to_buy = [119, 277, 18, 5] # list of netuids to stake into
@@ -326,26 +365,40 @@ increment = 0.01 # amount of TAO to stake
 total_spend = 0 # total amount of TAO spent
 stake = {} # dictionary to store the stake for each netuid
 
+# Convert increment to Balance object
+amount_balance = bt.Balance.from_tao(increment)
+
 while total_spend < 3:
     for netuid in to_buy:
         subnet = sub.subnet(netuid)
-        print(f"slippage for subnet {netuid}", subnet.slippage(increment))
-        sub.add_stake(
-            wallet = wallet,
-            netuid = netuid,
-            hotkey = subnet.owner_hotkey,
-            tao_amount = increment,
+        print(f"slippage for subnet {netuid}", subnet.slippage(amount_balance))
+
+        result = sub.add_stake(
+            wallet=wallet,
+            netuid=netuid,
+            hotkey_ss58=subnet.owner_hotkey,
+            amount=amount_balance,
         )
 
+        print(result)
+        if not result.success:
+            continue
+
         current_stake = sub.get_stake(
-            coldkey_ss58 = wallet.coldkeypub.ss58_address,
-            hotkey_ss58 = subnet.owner_hotkey,
-            netuid = netuid,
+            coldkey_ss58=wallet.coldkeypub.ss58_address,
+            hotkey_ss58=subnet.owner_hotkey,
+            netuid=netuid,
         )
         stake[netuid] = current_stake
         total_spend += increment
-        print (f'netuid {netuid} price {subnet.price} stake {current_stake}')
-    sub.wait_for_block()
+        print(f'netuid {netuid} price {subnet.price} stake {current_stake}')
+
+    try:
+        sub.wait_for_block()
+    except AttributeError:
+
+        import time
+        time.sleep(6)  # Wait ~6 seconds for next block
 ```
 
 ```console
@@ -376,8 +429,9 @@ The below script will reverse the effects of the above, by incrementally unstaki
 ```python
 
 import bittensor as bt
+
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(name="ExampleWalletName")
+wallet = bt.Wallet(name="ExampleWalletName")
 wallet.unlock_coldkey()
 
 to_sell = [119, 277, 18, 5] # list of netuids to unstake from
@@ -388,23 +442,37 @@ stake = {} # dictionary to store the stake for each netuid
 while total_sell < 3:
     for netuid in to_sell:
         subnet = sub.subnet(netuid)
-        print(f"slippage for subnet {netuid}", subnet.alpha_slippage(increment))
 
-        sub.remove_stake(
-            wallet = wallet,
-            netuid = netuid,
-            hotkey = subnet.owner_hotkey,
-            amount = increment,
+        alpha_amount = bt.Balance.from_tao(increment).set_unit(netuid)
+
+        print(f"slippage for subnet {netuid}", subnet.alpha_slippage(alpha_amount))
+
+        result = sub.unstake(
+            wallet=wallet,
+            netuid=netuid,
+            hotkey_ss58=subnet.owner_hotkey,
+            amount=alpha_amount,
         )
+
+        print(result)
+        if not result.success:
+            print(f"Failed to unstake from netuid {netuid}: {result.message}")
+            continue
+
         current_stake = sub.get_stake(
-            coldkey_ss58 = wallet.coldkeypub.ss58_address,
-            hotkey_ss58 = subnet.owner_hotkey,
-            netuid = netuid,
+            coldkey_ss58=wallet.coldkeypub.ss58_address,
+            hotkey_ss58=subnet.owner_hotkey,
+            netuid=netuid,
         )
         stake[netuid] = current_stake
         total_sell += increment
-        print (f'netuid {netuid} price {subnet.price} stake {current_stake}')
-    sub.wait_for_block()
+        print(f'netuid {netuid} price {subnet.price} stake {current_stake}')
+
+    try:
+        sub.wait_for_block()
+    except AttributeError:
+        import time
+        time.sleep(6)
 ```
 
 ```console
@@ -440,19 +508,21 @@ You can register your hotkey on a subnet using the `burned_register` method. Thi
 burned_register(
     wallet,
     netuid: int,
-) -> bool
+    wait_for_inclusion: bool = True,
+    wait_for_finalization: bool = True
+) -> ExtrinsicResponse
 ```
 
-Description: Registers a hotkey on a subnet.
+Description: Registers a hotkey on a subnet by burning TAO.
 
 Parameters:
 
 - wallet: Your Bittensor wallet object.
 - netuid: Unique ID of the subnet.
+- wait_for_inclusion: Wait for transaction inclusion in block (default: True).
+- wait_for_finalization: Wait for transaction finalization (default: True).
 
-Returns:
-
-- bool: True if the registration was successful, False otherwise.
+Returns: `ExtrinsicResponse` object with `success`, `message`, `extrinsic_fee`, and `data` containing `{"uid": int}` for the assigned neuron UID.
 
 Sample script:
 
@@ -461,7 +531,7 @@ import bittensor as bt
 logging = bt.logging
 logging.set_info()
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(
+wallet = bt.Wallet(
     name="ExampleWalletName",
     hotkey="ExampleHotkey",
 )
@@ -491,7 +561,7 @@ Example usage:
 ```python
 import bittensor as bt
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(
+wallet = bt.Wallet(
     name="ExampleWalletName",
     hotkey="ExampleHotkey",
 )

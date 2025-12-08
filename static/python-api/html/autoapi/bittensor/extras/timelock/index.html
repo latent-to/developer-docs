@@ -150,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../core/chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../core/config/index.html">bittensor.core.config</a></li>
@@ -423,21 +424,25 @@
 only be decrypted after a specific amount of time (expressed in the form  of Drand rounds). It includes functions
 for encryption, decryption, and handling the decryption process by waiting for the reveal round. The logic is based on
 Drand QuickNet.</p>
-<dl>
+<dl class="simple">
 <dt>Main Functions:</dt><dd><ul class="simple">
 <li><p>encrypt: Encrypts data and returns the encrypted data along with the reveal round.</p></li>
 <li><p>decrypt: Decrypts the provided encrypted data when the reveal round is reached.</p></li>
 <li><p>wait_reveal_and_decrypt: Waits for the reveal round and decrypts the encrypted data.</p></li>
 </ul>
 </dd>
-<dt>Usage Example:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`python</span>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p><code class="docutils literal notranslate"><span class="pre">`python</span>
 <span class="pre">from</span> <span class="pre">bittensor</span> <span class="pre">import</span> <span class="pre">timelock</span>
 <span class="pre">data</span> <span class="pre">=</span> <span class="pre">&quot;From</span> <span class="pre">Cortex</span> <span class="pre">to</span> <span class="pre">Bittensor&quot;</span>
 <span class="pre">encrypted_data,</span> <span class="pre">reveal_round</span> <span class="pre">=</span> <span class="pre">timelock.encrypt(data,</span> <span class="pre">n_blocks=5)</span>
 <span class="pre">decrypted_data</span> <span class="pre">=</span> <span class="pre">timelock.wait_reveal_and_decrypt(encrypted_data)</span>
 <span class="pre">`</span></code></p>
-</dd>
-<dt>Usage Example with custom data:</dt><dd><p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>python
+</div>
+<dl>
+<dt>Example with custom data:</dt><dd><p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>python
 import pickle
 from dataclasses import dataclass</p>
 <p>from bittensor import timelock</p>

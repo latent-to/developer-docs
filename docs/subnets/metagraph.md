@@ -4,6 +4,7 @@ title: "The Subnet Metagraph"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Subnet Metagraph
 
@@ -59,6 +60,8 @@ The btcli output shows a subset of metagraph data (lite mode). For complete data
 
 ### Python SDK
 
+<SdkVersion />
+
 The Bittensor Python SDK [Metagraph module](pathname:///python-api/html/autoapi/bittensor/core/metagraph/index.html) provides programmatic access to metagraph data:
 
 ```python
@@ -85,12 +88,12 @@ from bittensor.core.metagraph import Metagraph
 meta = Metagraph(netuid=14, network="finney", sync=True)
 print(meta.mechid)  # 0
 print(meta.mechanism_count)  # e.g., 2
-print(meta.mechanisms_emissions_split)  # e.g., [60, 40]
+print(meta.emissions_split)  # e.g., [60, 40]
 
 # Specific mechanism (1)
 mech_meta = Metagraph(netuid=14, network="finney", sync=True, lite=False)
 mech_meta.mechid = 1
-await mech_meta.sync()  # or re-init with mechid in helper constructors
+mech_meta.sync()  # or re-init with mechid in helper constructors
 ```
 
 See also: [Multiple Incentive Mechanisms Within Subnets](./understanding-multiple-mech-subnets.md).
@@ -350,7 +353,6 @@ See also:
 ## Python Code Examples
 
 This section provides practical examples of working with the Bittensor metagraph using the Python SDK. Each example demonstrates different aspects of metagraph analysis and data extraction.
-
 
 **Prerequisites**:
 
@@ -757,7 +759,7 @@ def main():
     print(f"  Adjustment interval: {hparams.adjustment_interval}")
     print(f"  Alpha high: {hparams.alpha_high}")
     print(f"  Alpha low: {hparams.alpha_low}")
-    print(f"  Burn rate: {hparams.burn_rate}")
+    print(f"  Burn rate: {hparams.burn}")
     print(f"  Max burn: {hparams.max_burn}")
     print(f"  Min burn: {hparams.min_burn}")
     print(f"  Difficulty: {hparams.difficulty}")
@@ -873,28 +875,35 @@ This example demonstrates async metagraph usage:
 #!/usr/bin/env python3
 
 import asyncio
+from bittensor.core.async_subtensor import AsyncSubtensor
 from bittensor.core.metagraph import async_metagraph
 
 async def analyze_metagraph():
-    # Create async metagraph
-    print("Creating async metagraph...")
-    metagraph = await async_metagraph(netuid=1, network="finney", lite=False)
+    # Create async subtensor first
+    async with AsyncSubtensor(network="finney") as subtensor:
+        # Create async metagraph with subtensor
+        print("Creating async metagraph...")
+        metagraph = await async_metagraph(
+            netuid=1,
+            network="finney",
+            lite=False,
+            subtensor=subtensor  # Pass the subtensor
+        )
 
-    # Perform analysis
-    stakes = metagraph.S
-    print(f"Total stake: {stakes.sum().item():.2f}")
+        # Perform analysis
+        stakes = metagraph.S
+        print(f"Total stake: {stakes.sum().item():.2f}")
 
-    # Sync to latest block
-    print("Syncing to latest block...")
-    await metagraph.sync()
-    print(f"Synced to block: {metagraph.block.item()}")
+        # Sync to latest block
+        print("Syncing to latest block...")
+        await metagraph.sync(subtensor=subtensor)
+        print(f"Synced to block: {metagraph.block.item()}")
 
 async def main():
     print("=== Async Metagraph Analysis ===")
     await analyze_metagraph()
 
 if __name__ == "__main__":
-    # Run async analysis
     asyncio.run(main())
 ```
 
@@ -910,18 +919,20 @@ from bittensor.core.metagraph import Metagraph
 def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
-    metagraph = Metagraph(netuid=1, network="finney", sync=True)
+    metagraph = Metagraph(netuid=1, network="finney", sync=True, lite=False)
 
     # Get complete neuron information for first 5 neurons
     print("=== Complete Neuron Information (First 5 Neurons) ===")
 
     for i in range(min(5, metagraph.n.item())):
         neuron = metagraph.neurons[i]
+        axon = metagraph.axons[i]  # Fixed: Access axon from metagraph.axons
+
         print(f"\nNeuron {i}:")
         print(f"  UID: {neuron.uid}")
         print(f"  Hotkey: {neuron.hotkey}")
         print(f"  Coldkey: {neuron.coldkey}")
-        print(f"  Stake: τ{neuron.stake:.9f}")
+        print(f"  Stake: {neuron.stake}")
         print(f"  Rank: {neuron.rank}")
         print(f"  Trust: {neuron.trust}")
         print(f"  Consensus: {neuron.consensus}")
@@ -932,8 +943,8 @@ def main():
         print(f"  Last update: {neuron.last_update}")
         print(f"  Validator permit: {neuron.validator_permit}")
         print(f"  Validator trust: {neuron.validator_trust}")
-        print(f"  Axon IP: {neuron.axon.ip}")
-        print(f"  Axon port: {neuron.axon.port}")
+        print(f"  Axon IP: {axon.ip}")  # From metagraph.axons
+        print(f"  Axon port: {axon.port}")
         print(f"  ---")
 
 if __name__ == "__main__":
