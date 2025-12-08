@@ -981,11 +981,11 @@ based on default configurations.</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon">Axon</a></p>
 </dd>
 </dl>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_axon</span> <span class="o">=</span> <span class="n">bittensor</span><span class="o">.</span><span class="n">Axon</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="n">subtensor</span> <span class="o">=</span> <span class="n">bt</span><span class="o">.</span><span class="n">subtensor</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">)</span> <span class="c1"># Local by default</span>
-<span class="n">my_axon</span><span class="o">.</span><span class="n">serve</span><span class="p">(</span><span class="n">netuid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">)</span>  <span class="c1"># Serves the axon on subnet with netuid 1</span>
-</pre></div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>my_axon = bittensor.Axon(…)
+subtensor = bt.subtensor(network=”local”) # Local by default
+my_axon.serve(netuid=1, subtensor=subtensor)  # Serves the axon on subnet with netuid 1</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1011,11 +1011,11 @@ within the Bittensor network.</p>
 <dd class="field-even"><p><a class="reference internal" href="#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon">bittensor.core.axon.Axon</a></p>
 </dd>
 </dl>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_axon</span> <span class="o">=</span> <span class="n">bittensor</span><span class="o">.</span><span class="n">Axon</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="o">...</span> <span class="c1"># setup axon, attach functions, etc.</span>
-<span class="n">my_axon</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>  <span class="c1"># Starts the axon server</span>
-</pre></div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>my_axon = bittensor.Axon(…)
+… # setup axon, attach functions, etc.
+my_axon.start()  # Starts the axon server</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1048,12 +1048,12 @@ shut down or needs to temporarily go offline.</p>
 <dd class="field-even"><p><a class="reference internal" href="#bittensor.core.axon.Axon" title="bittensor.core.axon.Axon">bittensor.core.axon.Axon</a></p>
 </dd>
 </dl>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_axon</span> <span class="o">=</span> <span class="n">bittensor</span><span class="o">.</span><span class="n">Axon</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="n">my_axon</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="o">...</span>
-<span class="n">my_axon</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>  <span class="c1"># Stops the axon server</span>
-</pre></div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>my_axon = bittensor.Axon(…)
+my_axon.start()
+…
+my_axon.stop()  # Stops the axon server</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>

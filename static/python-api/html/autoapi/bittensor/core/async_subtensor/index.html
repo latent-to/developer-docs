@@ -2143,9 +2143,7 @@ the commit-reveal mechanism for secure weight setting and other network operatio
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>The commitment data as a string.</p>
-<p># TODO: add a real example of how to handle realistic commitment data, or chop example</p>
-</p>
+<dd class="field-even"><p>The commitment data as a string.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
@@ -3466,13 +3464,12 @@ block.</p></li>
 <dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>], Ellipsis]]</p>
 </dd>
 </dl>
-<p># TODO: add example to clarify return ordering and units; &#64;roman can you help w this?
-.. admonition:: Notes</p>
-<blockquote>
-<div><ul class="simple">
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<ul class="simple">
 <li><p>&lt;<a class="reference external" href="https://docs.learnbittensor.org/glossary#commit-reveal">https://docs.learnbittensor.org/glossary#commit-reveal</a>&gt;</p></li>
 </ul>
-</div></blockquote>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -5887,13 +5884,12 @@ and be rejected. You can think of it as an expiration date for the transaction.<
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.set_commitment">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_commitment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mev_protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_MEV_PROTECTION</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_PERIOD</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.set_commitment" title="Link to this definition">#</a></dt>
-<dd><p>Commits arbitrary data to the Bittensor network by publishing metadata.
-# TODO: check with &#64;roman, is this about ‘arbitrary data’ or ‘commit-reveal’? we need a real example here if this is important.</p>
-<blockquote>
-<div><p>This method allows neurons to publish arbitrary data to the blockchain, which can be used for various purposes
+<dd><dl class="simple">
+<dt>Commits arbitrary data to the Bittensor network by publishing metadata.</dt><dd><p>This method allows neurons to publish arbitrary data to the blockchain, which can be used for various purposes
 such as sharing model updates, configuration data, or other network-relevant information. The data is encoded
 and stored on-chain as metadata.</p>
-</div></blockquote>
+</dd>
+</dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -5988,7 +5984,6 @@ rewards among neurons and their nominators.</p>
 <p>This method commits data that will be automatically revealed after a specified number of blocks using drand
 timelock encryption. The data is encrypted using <cite>get_encrypted_commitment</cite>, which uses drand rounds to ensure
 the data cannot be revealed before the specified reveal time.</p>
-<p># TODO: check with &#64;roman, is this about ‘arbitrary data’ or ‘commit-reveal’? we need a real example here if this is important, and documentating a real commit reveal flow.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -6184,23 +6179,24 @@ to the overall weight matrix used to calculate emissions and maintain network co
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.async_subtensor.AsyncSubtensor.sign_and_send_extrinsic">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sign_and_send_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">call</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sign_with</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coldkey'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_nonce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonce_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hotkey'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_PERIOD</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calling_function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.sign_and_send_extrinsic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.sign_and_send_extrinsic" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sign_and_send_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">call</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sign_with</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coldkey'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_nonce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonce_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hotkey'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_PERIOD</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calling_function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/async_subtensor.html#AsyncSubtensor.sign_and_send_extrinsic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.async_subtensor.AsyncSubtensor.sign_and_send_extrinsic" title="Link to this definition">#</a></dt>
 <dd><p>Helper method to sign and submit an extrinsic call to chain.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>call</strong> (<em>scalecodec.GenericCall</em>) – a prepared Call object</p></li>
-<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – the wallet whose coldkey will be used to sign the extrinsic</p></li>
-<li><p><strong>sign_with</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – the wallet’s keypair to use for the signing. Options are “coldkey”, “hotkey”, “coldkeypub”</p></li>
-<li><p><strong>use_nonce</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – unique identifier for the transaction related with hot/coldkey.</p></li>
-<li><p><strong>nonce_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – the type on nonce to use. Options are “hotkey” or “coldkey”.</p></li>
+<li><p><strong>call</strong> (<em>scalecodec.GenericCall</em>) – A prepared Call object</p></li>
+<li><p><strong>wallet</strong> (<em>bittensor_wallet.Wallet</em>) – The wallet whose coldkey will be used to sign the extrinsic</p></li>
+<li><p><strong>sign_with</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The wallet’s keypair to use for the signing. Options are “coldkey”, “hotkey”, “coldkeypub”</p></li>
+<li><p><strong>use_nonce</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Unique identifier for the transaction related with hot/coldkey.</p></li>
+<li><p><strong>nonce_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The type on nonce to use. Options are “hotkey” or “coldkey”.</p></li>
+<li><p><strong>nonce</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The nonce to use for the transaction. If not provided, it will be fetched from the chain.</p></li>
 <li><p><strong>period</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – The number of blocks during which the transaction will remain valid after it’s submitted. If the
 transaction is not included in a block within that number of blocks, it will expire and be rejected. You
 can think of it as an expiration date for the transaction.</p></li>
-<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – raises the relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
-<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – whether to wait until the extrinsic call is included on the chain</p></li>
-<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – whether to wait until the extrinsic call is finalized on the chain</p></li>
-<li><p><strong>calling_function</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – the name of the calling function.</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Raises the relevant exception rather than returning <cite>False</cite> if unsuccessful.</p></li>
+<li><p><strong>wait_for_inclusion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait until the extrinsic call is included on the chain</p></li>
+<li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait until the extrinsic call is finalized on the chain</p></li>
+<li><p><strong>calling_function</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – The name of the calling function.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

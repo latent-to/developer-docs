@@ -711,16 +711,14 @@ blockchain data. If provided, this instance is used for data retrieval during sy
 test networks.</p>
 </dd>
 </dl>
-<p>For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bittensor.core.subtensor</span> <span class="kn">import</span> <span class="n">Subtensor</span>
-
-<span class="n">subtensor</span> <span class="o">=</span> <span class="n">Subtensor</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="s1">&#39;archive&#39;</span><span class="p">)</span>
-<span class="n">current_block</span> <span class="o">=</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_current_block</span><span class="p">()</span>
-<span class="n">history_block</span> <span class="o">=</span> <span class="n">current_block</span> <span class="o">-</span> <span class="mi">1200</span>
-
-<span class="n">metagraph</span><span class="o">.</span><span class="n">sync</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">history_block</span><span class="p">,</span> <span class="n">lite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>Example:</p>
+<blockquote>
+<div><p>from bittensor.core.subtensor import Subtensor</p>
+<p>subtensor = Subtensor(network=’archive’)
+current_block = subtensor.get_current_block()
+history_block = current_block - 1200</p>
+<p>metagraph.sync(block=history_block, lite=False, subtensor=subtensor)</p>
+</div></blockquote>
 </div>
 </dd></dl>
 
@@ -840,16 +838,14 @@ blockchain data. If provided, this instance is used for data retrieval during sy
 test networks.</p>
 </dd>
 </dl>
-<p>For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bittensor.core.subtensor</span> <span class="kn">import</span> <span class="n">Subtensor</span>
-
-<span class="n">subtensor</span> <span class="o">=</span> <span class="n">Subtensor</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="s1">&#39;archive&#39;</span><span class="p">)</span>
-<span class="n">current_block</span> <span class="o">=</span> <span class="n">subtensor</span><span class="o">.</span><span class="n">get_current_block</span><span class="p">()</span>
-<span class="n">history_block</span> <span class="o">=</span> <span class="n">current_block</span> <span class="o">-</span> <span class="mi">1200</span>
-
-<span class="n">metagraph</span><span class="o">.</span><span class="n">sync</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">history_block</span><span class="p">,</span> <span class="n">lite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">subtensor</span><span class="o">=</span><span class="n">subtensor</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>Example:</p>
+<blockquote>
+<div><p>from bittensor.core.subtensor import Subtensor</p>
+<p>subtensor = Subtensor(network=’archive’)
+current_block = subtensor.get_current_block()
+history_block = current_block - 1200</p>
+<p>metagraph.sync(block=history_block, lite=False, subtensor=subtensor)</p>
+</div></blockquote>
 </div>
 </dd></dl>
 
