@@ -2,7 +2,7 @@
 title: "Using MEV Shield with the Bittensor SDK"
 ---
 
-import { SdkVersion } from "./_sdk-version.mdx";
+import { SdkVersion } from "./\_sdk-version.mdx";
 
 # MEV Shield
 
@@ -46,6 +46,10 @@ In `Subtensor` and `AsyncSubtensor`, all methods that call extrinsics now accept
 
 - `mev_protection: bool = DEFAULT_MEV_PROTECTION` as a keyword-only argument
 - `wait_for_revealed_execution: bool = True` as a keyword-only argument
+
+:::warning MEV shield with hotkey extrinsics
+MEV shield should not be used for transactions that are signed by a hotkey. Attempting to use MEV shield with extrinsics signed by a hotkey will fail.
+:::
 
 All extrinsic functions now support MEV protection:
 

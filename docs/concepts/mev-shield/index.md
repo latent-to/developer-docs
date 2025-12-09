@@ -7,42 +7,44 @@ import TabItem from '@theme/TabItem';
 
 # MEV Shield: Encrypted Mempool Protection
 
-MEV Shield is Bittensor’s opt-in transaction encryption system that protects you from MEV attacks by keeping your transaction details hidden until they are on-chain. It encrypts any Bittensor transaction until after block inclusion, preventing block validators from front-running, sandwiching, or reordering your transaction.
+MEV Shield is Bittensor’s opt-in transaction encryption system that protects you from MEV attacks by keeping your transaction details hidden until they are on-chain. It encrypts any Bittensor transaction until after block inclusion, preventing untrusted observers and third-party bots from front-running or sandwiching your transaction.
 
 ## Overview
 
-When you submit a transaction, it first enters the [_mempool_](../../resources/glossary.md#mempool), where it becomes visible to all network participants. Block validators monitor the mempool to select which transactions to include in the next block they produce.
-
-This transparency creates a critical vulnerability: block validators can see exactly what transactions are waiting to be executed—including their details, amounts, and intended actions—before deciding how to order them in a block. This enables block validators to extract value by strategically ordering, inserting, or excluding transactions based on advanced knowledge of users' intent.
+When you submit a transaction, it first enters the [_mempool_](../../resources/glossary.md#mempool), where it becomes visible to all network participants. This transparency creates a critical vulnerability: attackers can see exactly what transactions are waiting to be executed—including their details, amounts, and intended actions. This enables them to extract value by reacting to visible transactions using knowledge of users’ intent and submitting transactions that profit from the original action.
 
 This is the _Maximal Extractable Value_ (_MEV_) problem.
 
 ### How MEV Attacks Work
 
-MEV attacks involve a block validator exploiting early visibility into the mempool to profit by changing how transactions are ordered, inserted, or included in a block. By seeing a user's intent before it executes, the attacker can manipulate the block layout to gain an advantage—often at the user's expense.
+MEV attacks involve an untrusted observer exploiting early visibility into the mempool to profit. By seeing a user’s intent before it executes, the attacker can submit competing transactions that take advantage of the pending action—often at the user’s expense.
 
 Common attacks include:
 
-- **Front-running**: Block validator sees your profitable transaction and executes their own first to capture the profit
-- **Sandwich attacks**: Block validator places transactions before and after yours to exploit price movements
-- **Transaction reordering**: Manipulating the order of transactions to maximize profit
-- **Selective censorship**: Excluding specific transactions to benefit from their absence
+- **Front-running**: An attacker detects your pending profitable transaction and submits a competing transaction to execute first and capture the profit.
+- **Sandwich attacks**: An attacker submits one transaction just before yours and another right after it to exploit the price movement your transaction creates.
 
 ## How MEV Shield Works
 
-MEV shield transforms how transactions flow through the network by introducing a _commit-reveal_ scheme with encryption. When you submit a transaction with MEV protection, you first encrypt it with the block validator's public key before submitting it. The encrypted wrapper is then submitted to the chain via the `submit_encrypted()` extrinsic. The encrypted wrapper enters the mempool, but the block validators cannot see or decrypt it yet.
+MEV shield transforms how transactions flow through the Bittensor network by encrypting transactions before submission so their details remain hidden until execution. When you submit a transaction with MEV protection, you first encrypt it with the block validator's public key before submitting it. The encrypted wrapper is then submitted to the chain via the `submit_encrypted()` extrinsic. The encrypted wrapper enters the network, but external observers cannot see its contents until it has been decrypted.
 
 :::info
-The block validator producing block `N` can see that an encrypted transaction exists, knows its approximate size, and knows who submitted it, but has absolutely no information about what the transaction actually does. They must include it in the block blindly.
+The block validator producing block `N` can also see that an encrypted transaction exists, knows its approximate size, and knows who submitted it, but has absolutely no information about what the transaction actually does.
 :::
 
-Once block `N` is finalized, the protection scheme moves to its reveal phase. At this point, the block containing your encrypted transaction is immutable; thus, no block validator can change its ordering. In block `N+1`, the block validator’s node automatically decrypts a batch of encrypted wrappers using its secret key. This process happens entirely off-chain on the block validator’s node before any on-chain call is made. The block validator then extracts your original transaction details from the decrypted plaintext.
+Once block `N` is finalized, the encrypted transaction becomes immutable on-chain. While the block validator includes it in the block, its contents remain hidden from external observers who might attempt to exploit it. In block `N+1`, the block validator’s node automatically decrypts a batch of encrypted wrappers using its secret key. This process happens entirely off-chain on the block validator’s node before any on-chain call is made. The block validator then extracts your original transaction details from the decrypted plaintext.
 
-Only after successful decryption does the block validator construct and submit the `execute_revealed()` extrinsic, passing in the already-decrypted data. The runtime validates all the proofs and executes your transaction on your behalf. Because the block production for block `N` has already completed when decryption happens, there's no opportunity for front-running, sandwiching, or reordering.
+Only after successful decryption does the block validator node call the inner extrinsic to submit the transaction. The runtime validates all the proofs and executes your transaction on your behalf. Because the block production for block `N` has already completed when decryption happens, there's no opportunity for front-running or sandwiching.
 
 ## How to use MEV shield
 
-To use MEV Shield, you submit your transaction through the `mevShield::submit_encrypted()` extrinsic. The Bittensor SDK and BTCLI allow you enable MEV protection directly when constructing or sending your transactions as shown:
+To use MEV Shield, you submit your transaction through the `mevShield::submit_encrypted()` extrinsic.
+
+:::warning MEV shield with hotkey extrinsics
+MEV shield should not be used for transactions that are signed by a hotkey. Attempting to use MEV shield with extrinsics signed by a hotkey will fail.
+:::
+
+The Bittensor SDK and BTCLI allow you enable MEV protection directly when constructing or sending your transactions as shown:
 
 <Tabs groupId="mev-shield">
 
