@@ -11,13 +11,13 @@ MEV Shield is Bittensor’s opt-in transaction encryption system that protects y
 
 ## Overview
 
-When you submit a transaction, it first enters the [_mempool_](../../resources/glossary.md#mempool), where it becomes visible to all network participants. This transparency creates a critical vulnerability: attackers can see exactly what transactions are waiting to be executed—including their details, amounts, and intended actions. This enables them to extract value by reacting to visible transactions using knowledge of users’ intent and submitting transactions that profit from the original action.
+When you submit a transaction, it first enters the [_mempool_](../../resources/glossary.md#mempool), where it becomes visible to all network participants. This transparency creates a critical vulnerability: attackers can see exactly what transactions are waiting to be executed—including their details, amounts, and intended actions. This enables them to extract value by reacting to visible transactions using knowledge of users’ intent and submitting competing transactions that profit from the original action.
 
 This is the _Maximal Extractable Value_ (_MEV_) problem.
 
 ### How MEV Attacks Work
 
-MEV attacks involve an untrusted observer exploiting early visibility into the mempool to profit. By seeing a user’s intent before it executes, the attacker can submit competing transactions that take advantage of the pending action—often at the user’s expense.
+MEV attacks involve an untrusted observer exploiting early visibility into the mempool to profit from users’ pending actions. By seeing a user’s intent before it executes, the attacker can submit competing transactions that take advantage of the pending action—often at the user’s expense.
 
 Common attacks include:
 
@@ -29,7 +29,7 @@ Common attacks include:
 MEV shield transforms how transactions flow through the Bittensor network by encrypting transactions before submission so their details remain hidden until execution. When you submit a transaction with MEV protection, you first encrypt it with the block validator's public key before submitting it. The encrypted wrapper is then submitted to the chain via the `submit_encrypted()` extrinsic. The encrypted wrapper enters the network, but external observers cannot see its contents until it has been decrypted.
 
 :::info
-The block validator producing block `N` can also see that an encrypted transaction exists, knows its approximate size, and knows who submitted it, but has absolutely no information about what the transaction actually does.
+The block validator producing block `N` can also see that an encrypted transaction exists, knows its approximate size, and knows who submitted it, but has no information about what the transaction actually does.
 :::
 
 Once block `N` is finalized, the encrypted transaction becomes immutable on-chain. While the block validator includes it in the block, its contents remain hidden from external observers who might attempt to exploit it. In block `N+1`, the block validator’s node automatically decrypts a batch of encrypted wrappers using its secret key. This process happens entirely off-chain on the block validator’s node before any on-chain call is made. The block validator then extracts your original transaction details from the decrypted plaintext.
@@ -40,7 +40,7 @@ Only after successful decryption does the block validator node call the inner ex
 
 To use MEV Shield, you submit your transaction through the `mevShield::submit_encrypted()` extrinsic.
 
-:::warning MEV shield with hotkey extrinsics
+:::warning MEV shield with hotkey-signed extrinsics
 MEV shield should not be used for transactions that are signed by a hotkey. Attempting to use MEV shield with extrinsics signed by a hotkey will fail.
 :::
 
@@ -50,7 +50,7 @@ The Bittensor SDK and BTCLI allow you enable MEV protection directly when constr
 
   <TabItem value="btcli" label="BTCLI">
 
-BTCLI automatically applies MEV Shield to commands that are more prone to MEV attacks, such as staking and subnet creation, while other commands run without it. For these sensitive operations, protection is enabled by default, but you can turn it off by adding the `--no-mev-protection` flag as shown:
+BTCLI automatically applies MEV Shield to commands that are more prone to MEV attacks, such as staking, subnet creation, and proxy execution, while all other commands run without it. For these sensitive operations, MEV protection is enabled by default, but you can turn it off by adding the `--no-mev-protection` flag as shown:
 
 ```bash
 # Remove stake without MEV protection

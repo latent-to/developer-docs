@@ -229,6 +229,7 @@ const sidebars = {
       collapsed: true,
       items: [
         "concepts/bittensor-networks",
+        "concepts/halving.md",
         {
           type: "category",
           label: "MEV shield",
