@@ -2,6 +2,8 @@
 title: "Consensus-based Weights/Liquid alpha"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 # Consensus-based Weights/Liquid Alpha
 
 This guide describes how to use the **consensus-based weights** feature (also called "liquid alpha").
@@ -167,6 +169,7 @@ btcli sudo set --netuid 1 --param alpha_values --value 6554,55706
 
 ## Using Bittensor Python SDK
 
+<SdkVersion />
 
 Below is example Python code showing how to use the Commit Reveal feature:
 

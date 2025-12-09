@@ -2,6 +2,8 @@
 title: "Managing Subtensor Connections"
 ---
 
+import { SdkVersion } from "./_sdk-version.mdx";
+
 # Managing Subtensor Connections
 
 Every time the Bittensor Python SDK's `Subtensor` or `AsyncSubtensor` class is instantiated, it creates a new websocket connection to Subtensor, Bittensor's Blockchain. Your code should ensure that these websocket connections are handled efficiently and closed when no longer in use by your code.
@@ -18,6 +20,8 @@ You don't need to both a `with`-statement context manager and `.close()`, just o
 :::
 
 ## What not to do
+
+<SdkVersion />
 
 ```python
 import bittensor as bt

@@ -2,6 +2,8 @@
 title: "Understanding Slippage"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 # Understanding Slippage
 
 ## Introduction
@@ -64,6 +66,8 @@ Each Bittensor subnet operates as a _constant product AMM_, meaning that it will
 </details>
 
 ## Calculating Slippage with the SDK
+
+<SdkVersion />
 
 You can use Bittensor's SDK to calculate expected slippage before executing transactions:
 

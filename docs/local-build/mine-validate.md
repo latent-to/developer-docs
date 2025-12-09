@@ -4,6 +4,7 @@ title: "Mining and Validating on Localnet"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Mining and Validating on Localnet
 
@@ -160,6 +161,9 @@ If the validator wallet has a validator permit, an asterisk (`*`) is shown under
 
 </TabItem>
 <TabItem value="python SDK" label="Using Bittensor SDK">
+
+<SdkVersion />
+
 Input the following lines in your Python environment, replacing `NETUID`, `WALLET_NAME`, and `WALLET_HOTKEY` with the target subnet ID, the name of the wallet, and the associated hotkey, respectively.
 
 ```python

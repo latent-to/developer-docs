@@ -2,6 +2,8 @@
 title: "Understand Price Protection"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 # Understand Price Protection
 
 ## Price Protection Modes
@@ -128,6 +130,8 @@ You must explicitly configure price protection when using the SDK's staking/unst
 - **Purpose**: Maximum allowed final price deviation from submission price
 
 ### SDK Examples
+
+<SdkVersion />
 
 See [Price Protection Simulation](#price-protection-simulation) for an extended example.
 

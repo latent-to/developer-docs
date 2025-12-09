@@ -74,6 +74,10 @@ const config = {
       {
         redirects: [
         {
+            "to": "/keys/proxies/working-with-proxies",
+            "from": "/keys/proxies/create-proxy"
+          },
+        {
             "to": "/subnets/understanding-multiple-mech-subnets",
             "from": "/subnets/understanding-sub-subnets"
           },

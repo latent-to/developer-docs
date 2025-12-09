@@ -6,9 +6,15 @@ title: "Announcements and Developments"
 
 This page tracks recent and upcoming changes to the Bittensor protocol and other major events in the Bittensor ecosystem.
 
+## Upcoming TAO halving
+
+The first TAO halving event is approaching, which will reduce block rewards by 50%—0.5 TAO per block. This change means less liquidity will be injected each block into the subnet pools. For more information, see the [TAO halving documentation](../concepts/halving.md).
+
+You can track the halving schedule and countdown on the [tao.app explorer](https://tao.app/halving), which provides real-time block data and the estimated time remaining until the reward reduction occurs.
+
 ## Root claim
 
-**Status**: Implemented (on Testnet)
+**Status**: Implemented
 
 - **What**: Root claim replaces the automatic selling of root-alpha dividends and allows users to either accumulate their alpha dividends or enable autosell to sell them off immediately.
 - **Key Features**:
@@ -19,7 +25,7 @@ This page tracks recent and upcoming changes to the Bittensor protocol and other
 
 ## Bittensor SDK v10
 
-**Status**: Pre-release (Bittensor SDK v10.0.0rc2)
+**Status**: Releases
 
 - **What**: A new major version of the Bittensor SDK is in development and will introduce breaking changes.
 - **Key Features**:

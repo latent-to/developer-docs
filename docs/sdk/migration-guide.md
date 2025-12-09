@@ -2,6 +2,8 @@
 title: "Bittensor SDK v10.0 Migration Guide"
 ---
 
+import { SdkVersion } from "./_sdk-version.mdx";
+
 # Bittensor SDK v10.0 Migration Guide
 
 This page documents breaking changes and new features for the Bittensor Python SDK `v10.0`. This is a major release with significant refactoring, standardization, and new functionality.
@@ -27,6 +29,7 @@ Bittensor SDK v10.0 is a **major breaking release** with significant improvement
 - **Proxy implementation**: Complete SDK support for creating, managing, and executing calls through proxy accounts ([details](#proxy-support))
 - **Crowdloan implementation**: Adds support for creating, managing, and interacting with crowdloans directly through the SDK
 - **MEV Shield protection**: Encrypt transactions to protect against front-running and MEV attacks ([details](./mev-protection.md))
+- **GenericCall and CallBuilder** - Create, compose, and submit blockchain calls with enhanced validation ([details](./call.md))
 - **Transaction simulation** - `sim_swap()` calculates exact token yields without executing transactions ([details](#simulate-token-swaps))
 - **Fee estimation** - `get_extrinsic_fee()` estimates blockchain transaction costs before submission ([details](#estimate-transaction-fees))
 - **BlockInfo class** - Rich blockchain block information objects ([details](#blockinfo-class))
@@ -72,6 +75,8 @@ Previously referred to as "sub-subnets" during development, this feature allows 
 - **Backward compatible**: Subnets with only one mechanism (the default) don't need code changes
 
 #### Setting Mechanism Weights:
+
+<SdkVersion />
 
 Validators must set weights independently for each mechanism in a subnet:
 
@@ -141,25 +146,25 @@ result = subtensor.sim_swap(
 
 ### Build Extrinsic Calls
 
-Compose an extrinsic call without submitting it to the blockchain with `compose_call`. Useful for fee estimation and transaction preparation.
+Compose an extrinsic call without submitting it to the blockchain with `compose_call` or `CallBuilder`. Useful for fee estimation, transaction preparation, proxies, crowdloans, and MEV protection.
 
 ```python
-from bittensor.core.extrinsics.params import StakingParams
-
 # Compose a call for later submission or fee estimation
 call = subtensor.compose_call(
     call_module="SubtensorModule",
     call_function="add_stake",
-    call_params=StakingParams.add_stake(
-        netuid=1,
-        hotkey_ss58=hotkey_ss58,
-        amount=amount
-    )
+    call_params={
+        "netuid": 1,
+        "hotkey": hotkey_ss58,
+        "amount_staked": amount.rao
+    }
 )
 
 # Use the composed call to estimate fees (requires keypair)
 fee = subtensor.get_extrinsic_fee(call, wallet.coldkeypub)
 ```
+
+For detailed documentation on `GenericCall`, `CallBuilder`, and practical examples including proxy calls and MEV protection, see **[Working with Blockchain Calls](./call.md)**.
 
 ### SimSwap Fee Calculation Methods
 
@@ -259,19 +264,18 @@ Learn more: [`bittensor/extras/dev_framework`](https://github.com/opentensor/bit
 
 ### Estimate Transaction Fees
 
-Query the estimated fee for submitting an extrinsic to the Subtensor blockchain before actually sending it, with ``get_extrinsic_fee()`.
+Query the estimated fee for submitting an extrinsic to the Subtensor blockchain before actually sending it, with `get_extrinsic_fee()`.
 
 ```python
-# Estimate the fee for a transfer extrinsic
-extrinsic = subtensor.compose_call(
+# Compose a call first
+call = subtensor.compose_call(
     call_module="Balances",
     call_function="transfer_keep_alive",
-    call_params={
-        "dest": destination_address,
-        "value": amount.rao
-    }
+    call_params={"dest": destination_address, "value": amount.rao}
 )
-fee = subtensor.get_extrinsic_fee(extrinsic, wallet.coldkeypub)
+
+# Estimate fee without submitting
+fee = subtensor.get_extrinsic_fee(call, wallet.coldkeypub)
 print(f"Estimated fee: {fee}")  # Returns Balance object
 ```
 
@@ -281,7 +285,9 @@ print(f"Estimated fee: {fee}")  # Returns Balance object
 - Display estimated costs to users
 - Optimize transaction batching based on fee estimates
 
-See also: [Transaction Fees in Bittensor](../learn/fees) for complete fee information.
+See also:
+- [Working with Blockchain Calls](./call.md) for more examples of composing and submitting calls
+- [Transaction Fees in Bittensor](../learn/fees) for complete fee information
 
 ### Parameter Validation
 

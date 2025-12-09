@@ -4,6 +4,7 @@ title: "Staking with a Proxy"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { SdkVersion } from "../../sdk/_sdk-version.mdx";
 
 # Staking with a Proxy
 
@@ -87,6 +88,8 @@ btcli config add-proxy \
 </TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
+
+<SdkVersion />
 
 ```python
 import bittensor

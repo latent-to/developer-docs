@@ -4,6 +4,7 @@ title: "Install Bittensor SDK"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Install Bittensor SDK
 
@@ -146,6 +147,8 @@ While wallet transactions like delegating, transfer, registering, staking can be
 :::
 
 ## Verify the installation
+
+<SdkVersion />
 
 You can verify your installation in either of the following ways shown:
 

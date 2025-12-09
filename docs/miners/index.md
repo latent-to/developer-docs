@@ -4,6 +4,7 @@ title: "Mining in Bittensor"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Mining in Bittensor
 
@@ -179,6 +180,8 @@ After providing your wallet name when prompted, you will see output such as:
 | HOTKEY_SS58 | 5F4tQyWr...        | The ss58-encoded address of the miner's hotkey.                                        |
 
 ## Checking miner registration status
+
+<SdkVersion />
 
 Use any of the Python snippets below:
 

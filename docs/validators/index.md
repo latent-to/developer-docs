@@ -4,6 +4,7 @@ title: "Validating in Bittensor"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Validating in Bittensor
 
@@ -134,6 +135,8 @@ btcli stake add --wallet.name <wallet name> --wallet.hotkey <your validating hot
 
 ### Calculate TAO required
 
+<SdkVersion />
+
 The amount of TAO needed to acquire a validator permit depends on how the other largest 64 wallets distribute TAO across themselves. You can calculate the minimum using [bt.metagraph](pathname:///python-api/html/autoapi/bittensor/core/metagraph/index.html):
 
 ```python
@@ -150,11 +153,9 @@ This information can be obtained from the metagraph using your UID.
 
 ```python
 import bittensor as bt
-<<<<<<< HEAD
+
 subnet = bt.Metagraph(1)
-=======
-subnet = bt.Metagraph(NETUID)
->>>>>>> v10-audit
+
 wallet = bt.Wallet( name = 'my_coldkey', hotkey = 'my_validator_hotkey' )
 my_uid = subnet.hotkeys.index( wallet.hotkey.ss58_address )
 print(f'Validator permit: {subnet.validator_permit[my_uid]}')
