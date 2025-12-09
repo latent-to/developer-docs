@@ -49,10 +49,8 @@ const sidebars = {
         "resources/questions-and-answers",
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
-
         "subnets/understanding-multiple-mech-subnets",
         "learn/neurons",
-
         "learn/emissions",
         "learn/ema",
         "learn/yuma-consensus",
@@ -91,11 +89,11 @@ const sidebars = {
           type: "category",
           label: "Proxies",
           collapsible: true,
-          collapsed: true,          
+          collapsed: true,
           items: [
-          "keys/proxies/index",
-          "keys/proxies/working-with-proxies",
-          "keys/proxies/pure-proxies",
+            "keys/proxies/index",
+            "keys/proxies/working-with-proxies",
+            "keys/proxies/pure-proxies",
           ],
         },
         "keys/multisig",
@@ -231,6 +229,7 @@ const sidebars = {
       collapsed: true,
       items: [
         "concepts/bittensor-networks",
+        "concepts/halving",
         "sdk/mev-protection",
         "concepts/commit-reveal",
         "concepts/consensus-based-weights",
