@@ -2,6 +2,8 @@
 title: "Managing stake with Bittensor Python SDK"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 # Managing Stake with Bittensor Python SDK
 
 This page demonstrates usage of the Bittensor SDK for Python for managing stake.
@@ -29,6 +31,8 @@ Staking is a regular operation for most TAO holders. Every time you stake or uns
 :::
 
 ## Check your TAO balance
+
+<SdkVersion />
 
 To stake, you'll first need some TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network. Alternatively, you can obtain some by completing the [BTCLI Live Coding Playground](../btcli/btcli-playground.md#transfer).
 

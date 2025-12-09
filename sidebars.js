@@ -89,7 +89,9 @@ const sidebars = {
           type: "category",
           label: "Proxies",
           collapsible: true,
+<<<<<<< HEAD
           collapsed: true,
+          collapsed: true,          
           items: [
             "keys/proxies/index",
             "keys/proxies/working-with-proxies",
@@ -204,7 +206,7 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Bittensor Python SDK",
+      label: "Bittensor Python SDK",      
       collapsible: true,
       collapsed: true,
       items: [

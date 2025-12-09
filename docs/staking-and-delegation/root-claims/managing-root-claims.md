@@ -4,6 +4,7 @@ title: "Managing Root Claims"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { SdkVersion } from "../../sdk/_sdk-version.mdx";
 
 # Managing Root Claims
 
@@ -62,6 +63,8 @@ Decrypting...
 
   </TabItem>
   <TabItem value="sdk" label="Bittensor SDK">
+
+<SdkVersion />
 
 Use the `set_root_claim_type()` method to set your root claim type:
 

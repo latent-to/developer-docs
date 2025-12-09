@@ -4,6 +4,7 @@ title: "Auto Staking for Miners"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Auto Staking for Miners
 
@@ -74,6 +75,8 @@ Total subnets: 3  Custom destinations: 0
 </TabItem>
 
 <TabItem value="sdk" label="Python SDK">
+
+<SdkVersion />
 
 ```python
 import asyncio

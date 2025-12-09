@@ -2,6 +2,8 @@
 title: "Governance Overview"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 # Governance Overview
 
 Bittensor's governance protocol transitions the management of the network from centralization within the foundation to community ownership over time.
@@ -39,6 +41,8 @@ Consider the following:
 **Triumvirate**
 
 `Bob` has a novel concept for a subnet and wishes to deploy it on the Bittensor network. `Bob` creates a proposal with the calldata:
+
+<SdkVersion />
 
 ```python
 SubtensorModule.SudoAddNetwork(netuid, tempo, modality)

@@ -2,7 +2,11 @@
 title: "Working with Concurrency"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 This page provides some tips for working with concurrent async functions in Bittensor.
+
+<SdkVersion />
 
 Calls to the blockchain can be slow, and routines that make many calls in series become very slow. For example, suppose we want to check a list of UIDS for subnets and see if they exist. In series, we could execute the following, but it will take longer in proportion to the list of netuids, since it makes a separate call for each.
 

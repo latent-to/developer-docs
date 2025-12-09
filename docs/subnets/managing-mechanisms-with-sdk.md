@@ -2,6 +2,8 @@
 title: "Managing Multiple Incentive Mechanisms with SDK"
 ---
 
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
+
 # Managing Multiple Incentive Mechanisms with SDK
 
 This tutorial shows how to configure and manage multiple incentive mechanisms in a single subnet using the Bittensor Python SDK.
@@ -32,6 +34,8 @@ As of the current Subtensor runtime, a subnet can have a maximum of 2 mechanisms
 :::
 
 ## Initialize SDK and wallet
+
+<SdkVersion />
 
 The following snippet initializes the Bittensor SDK, imports the needed modules, connects to the local blockchain, and initializes the wallet object for the Alice wallet.
 

@@ -4,6 +4,7 @@ title: "Understanding Neurons"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Understanding Neurons
 
@@ -103,6 +104,8 @@ sources={{
 </center>
 
 ### Axon
+
+<SdkVersion />
 
 The `Axon` module in the Bittensor API uses the FastAPI library to create and run API servers. For example, when a subnet miner calls,
 

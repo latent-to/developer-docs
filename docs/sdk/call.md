@@ -2,6 +2,8 @@
 title: "Working with Blockchain Calls"
 ---
 
+import { SdkVersion } from "./_sdk-version.mdx";
+
 # Working with Blockchain Calls
 
 This guide explains how to work with blockchain calls in the Bittensor SDK using `GenericCall` and `CallBuilder`. These powerful tools allow you to create, compose, and execute complex blockchain transactions without immediately submitting them.
@@ -20,6 +22,8 @@ With Bittensor Python SDK, many functions accept a `call` argument of type `Gene
 `GenericCall` does not execute a transaction; it describes an action that will be executed when an extrinsic is submitted.
 
 ### Structure of GenericCall
+
+<SdkVersion />
 
 ```python
 from scalecodec.types import GenericCall

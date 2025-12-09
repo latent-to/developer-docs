@@ -4,6 +4,7 @@ title: "Working with Proxies"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { SdkVersion } from "../../sdk/_sdk-version.mdx";
 
 # Working with Proxies
 
@@ -139,6 +140,8 @@ btcli config proxies
 </TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
+
+<SdkVersion />
 
 ```python
 import bittensor as bt

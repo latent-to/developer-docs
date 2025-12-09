@@ -1,8 +1,10 @@
 ---
 title: "Subtensor Node Basics"
 ---
+
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Subtensor Node Basics
 
@@ -71,6 +73,8 @@ The full synchronization performed by an archive node can be significantly slowe
 
 
 ## Query archived data 
+
+<SdkVersion />
 
 We recommend that you use archive public subtensor node to retrieve blockchain data older than the previous 300 blocks. See the below example:
 
