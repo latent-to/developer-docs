@@ -8,7 +8,7 @@ This page tracks recent and upcoming changes to the Bittensor protocol and other
 
 ## Upcoming TAO halving
 
-The first TAO halving event is approaching, which will reduce block rewards by 50%—0.5 TAO per block. This change impacts reward calculations across the network and may affect staking, validation, and any systems that rely on block-based incentives. For more information, see the [TAO halving documentation](../concepts/halving.md).
+The first TAO halving event is approaching, which will reduce block rewards by 50%—0.5 TAO per block. This change means less liquidity will be injected each block into the subnet pools. For more information, see the [TAO halving documentation](../concepts/halving.md).
 
 You can track the halving schedule and countdown on the [tao.app explorer](https://tao.app/halving), which provides real-time block data and the estimated time remaining until the reward reduction occurs.
 

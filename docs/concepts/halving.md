@@ -4,15 +4,15 @@ This page explains the TAO halving mechanism and describes how it affects the cr
 
 ## What is TAO Halving?
 
-**TAO halving** is a scheduled event in the Bittensor network where the block reward (the amount of TAO given to validators for producing blocks) is reduced by 50%. This happens automatically at regular intervals based on the amount of TAO in circulation.
+**TAO halving** is a scheduled event in the Bittensor network where the block reward is reduced by 50%. This happens automatically at regular intervals based on the amount of TAO in circulation.
 
 :::info
-_Recycling_ of TAO from registration fees can delay halving events. When tokens are recycled, they are returned to the emission pool and removed from circulation. This process continuously extends the time until the next halving threshold is reached.
+_Recycling_ of TAO from subnet registration fees can delay halving events. When tokens are recycled, they are returned to the emission pool and removed from circulation. This process continuously extends the time until the next halving threshold is reached.
 :::
 
 ## TAO halving Mechanism
 
-Halving occurs when the total TAO issuance reaches predetermined thresholds. Before a halving event, the network emits TAO at its current block reward, with the full amount flowing into subnet pools. Once a halving occurs, the block reward is reduced by 50%, which lowers the daily TAO emission and cuts subnet pool injections in half. Each halving slows TAO supply growth and reduces liquidity in subnet pools.
+Halving occurs when the total TAO issuance reaches predetermined thresholds. Before a halving event, the network emits TAO at its current block reward, with the full amount flowing into subnet pools. Once a halving occurs, the block reward is reduced by 50%, which lowers the daily TAO emission and cuts subnet pool injections in half.
 
 ### Effect on Alpha Emissions
 
