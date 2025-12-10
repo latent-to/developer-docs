@@ -1,18 +1,18 @@
 ---
-title: "Bittensor SDK v10.0 Migration Guide"
+title: "Bittensor SDK v10 Migration Guide"
 ---
 
 import { SdkVersion } from "./_sdk-version.mdx";
 
-# Bittensor SDK v10.0 Migration Guide
+# Bittensor SDK v10 Migration Guide
 
-This page documents breaking changes and new features for the Bittensor Python SDK `v10.0`. This is a major release with significant refactoring, standardization, and new functionality.
+This page documents breaking changes and new features for the Bittensor Python SDK `v10`. This is a major release with significant refactoring, standardization, and new functionality.
 
 See [Bittensor Python SDK Reference Docs](./bt-api-ref)
 
 ## Executive Summary
 
-Bittensor SDK v10.0 is a **major breaking release** with significant improvements to consistency, type safety, and functionality. Key changes include:
+Bittensor SDK v10 is a **major breaking release** with significant improvements to consistency, type safety, and functionality. Key changes include:
 
 **Breaking Changes:**
 
