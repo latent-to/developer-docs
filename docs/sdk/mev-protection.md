@@ -26,6 +26,16 @@ The SDK supports MEV Shield in two primary ways:
 1. MEV protection parameter - Add `mev_protection=True` to any supported extrinsic (recommended)
 2. Direct MEV Shield submission - Use `mev_submit_encrypted` for full control over encrypted transaction submission
 
+:::warning MEV shield with hotkey-signed extrinsics
+MEV shield should not be used for transactions that are signed by a hotkey. Attempting to use MEV shield with extrinsics signed by a hotkey will fail.
+
+Note that while it is technically possible to transfer TAO to a hotkey, which would, technically, allow you to use MEV protection for HK operations, this is neither intended nor advisable.
+
+You should *never* transfer TAO to a hotkey, as the whole design intent of the separation of coldkeys and hotkeys is to isolate TAO-ownership related functions to coldkeys, so they can be handled with a higher tier of security compared to hotkeys, which are designed to sign transactions in a less secure mining runtime. This separation of hotkeys and coldkeys is a core design principle of Bittensor.
+
+**Because hotkeys are not intended to hold TAO, you are in *untested waters* if you do so, and there may be unintended consequences that could result in asset loss.**
+:::
+
 ### Core MEV Shield Methods
 
 These SDK methods encapsulate the core MEV shield functionality:
@@ -51,9 +61,6 @@ In `Subtensor` and `AsyncSubtensor`, all methods that call extrinsics now accept
 - `mev_protection: bool = DEFAULT_MEV_PROTECTION` as a keyword-only argument
 - `wait_for_revealed_execution: bool = True` as a keyword-only argument
 
-:::warning MEV shield with hotkey-signed extrinsics
-MEV shield should not be used for transactions that are signed by a hotkey. Attempting to use MEV shield with extrinsics signed by a hotkey will fail.
-:::
 
 All extrinsic functions now support MEV protection:
 
