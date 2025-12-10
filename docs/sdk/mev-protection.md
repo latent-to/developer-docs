@@ -34,13 +34,6 @@ Note that while it is technically possible to transfer TAO to a hotkey, which wo
 **Because hotkeys are not intended to hold TAO, you are in *untested waters* if you do so, and there may be unintended consequences that could result in asset loss.**
 :::
 
-### Core MEV Shield Methods
-
-Note that while it is technically possible to transfer TAO to a hotkey, which would, technically, allow you to use MEV protection for HK operations, this is neither intended nor advisable.
-
-**Because hotkeys are not intended to hold TAO, you are in *untested waters* if you do so, and there may be unintended consequences that could result in asset loss.**
-:::
-
 
 ### Using Extrinsic-Calling Functions
 
