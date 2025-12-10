@@ -6,11 +6,57 @@ title: "Announcements and Developments"
 
 This page tracks recent and upcoming changes to the Bittensor protocol and other major events in the Bittensor ecosystem.
 
+**December, 2025**
+
 ## Upcoming TAO halving
 
 The first TAO halving event is approaching, which will reduce block rewards by 50%—0.5 TAO per block. This change means less liquidity will be injected each block into the subnet pools. For more information, see the [TAO halving documentation](../concepts/halving.md).
 
 You can track the halving schedule and countdown on the [tao.app explorer](https://tao.app/halving), which provides real-time block data and the estimated time remaining until the reward reduction occurs.
+
+## Root Claim Default Change
+
+**Status**: Implemented
+
+- **What**: The default root claim type for stakers has changed from `Swap` to `Keep`.
+- **Impact**: 
+  - Previously, alpha dividends from root staking were automatically swapped to TAO by default.
+  - Now, alpha dividends are kept as Alpha tokens (staked on the subnet) by default.
+  - **If you prefer to continue receiving alpha emissions as TAO (auto-sold), you must explicitly set your claim type to `Swap`.**
+
+For detailed information, see: [Managing Root Claims](../staking-and-delegation/root-claims/managing-root-claims.md).
+
+## Proxies
+
+**Status**: Implemented
+
+- **What**: Proxies allow one wallet to perform Bittensor operations on behalf of another, adding a security layer for valuable wallets.
+- **Key Features**:
+  - Keep high-value coldkeys in cold storage while using proxies for daily operations.
+  - Constrain proxy permissions using `ProxyType` (e.g., staking-only, transfer-only).
+  - Add time-lock delays with public announcements for high-risk actions.
+
+For detailed information, see: [Proxies Overview](../keys/proxies/index.md).
+
+## MEV Shield
+
+**Status**: Implemented
+
+MEV Shield encrypts transactions to protect them from maximal extractable value (MEV) attacks.
+
+For detailed information, see: [MEV Shield](../sdk/mev-protection.md).
+
+## Bittensor SDK v10
+
+**Status**: Released
+
+A new major version of the Bittensor SDK has arrived!
+
+See: [Bittensor SDK v10 Migration guide](../sdk/migration-guide).
+
+---
+
+**October, 2025**
 
 ## Root claim
 
@@ -18,22 +64,10 @@ You can track the halving schedule and countdown on the [tao.app explorer](https
 
 - **What**: Root claim replaces the automatic selling of root-alpha dividends and allows users to either accumulate their alpha dividends or enable autosell to sell them off immediately.
 - **Key Features**:
-  - Taking no action means your root alpha is automatically swapped to TAO and added to your root stake.
+  - Taking no action means your root alpha is kept as Alpha tokens (the new default is `Keep`).
   - Auto-claims happen automatically and randomly—roughly once every two days per account. Your `Keep`/`Swap` setting will apply.
-  - To keep your alpha, call the `set_root_claim_type(Keep)` extrinsic.
+  - To swap your alpha to TAO, call the `set_root_claim_type(Swap)` extrinsic.
   - Manually claim accumulated alpha on specific subnets by calling the `claim_root()` extrinsic and providing the list of subnets.
-
-## Bittensor SDK v10
-
-**Status**: Releases
-
-- **What**: A new major version of the Bittensor SDK is in development and will introduce breaking changes.
-- **Key Features**:
-  - Comprehensive error handling for all extrinsics and related calls.
-  - New standardized extrinsic response class with success status, error objects, receipts, and transaction fees in TAO and alpha.
-  - Amount handling standardized to balance type only for consistent calculations.
-
-For detailed information, see: [Bittensor SDK v10 Migration guide](../sdk/migration-guide).
 
 ## Subnet UID trimming
 
