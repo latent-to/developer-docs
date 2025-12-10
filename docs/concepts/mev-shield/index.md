@@ -32,7 +32,6 @@ Note that while it is technically possible to transfer TAO to a hotkey, which wo
 **Because hotkeys are not intended to hold TAO, you are in *untested waters* if you do so, and there may be unintended consequences that could result in asset loss.**
 :::
 
-The Bittensor SDK and BTCLI allow you enable MEV protection directly when constructing or sending your transactions as shown:
 
 <Tabs groupId="mev-shield">
 
