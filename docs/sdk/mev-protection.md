@@ -23,7 +23,7 @@ MEV Shield uses a simple encrypt-and-submit approach:
 
 The SDK supports MEV Shield in two primary ways:
 
-1. MEV protection parameter - Add `mev_protection=True` to any supported extrinsic (recommended)
+1. MEV protection parameter - Add `mev_protection=True` to any supported extrinsic-calling function (recommended)
 2. Direct MEV Shield submission - Use `mev_submit_encrypted` for full control over encrypted transaction submission
 
 :::warning MEV shield with hotkey-signed extrinsics
@@ -34,25 +34,8 @@ Note that while it is technically possible to transfer TAO to a hotkey, which wo
 **Because hotkeys are not intended to hold TAO, you are in *untested waters* if you do so, and there may be unintended consequences that could result in asset loss.**
 :::
 
-### Core MEV Shield Methods
 
-These SDK methods encapsulate the core MEV shield functionality:
-
-- `submit_encrypted_extrinsic` (sync & async): Core extrinsic function that encrypts and submits transactions through the MEV Shield pallet
-- `mev_submit_encrypted` in `Subtensor` and `AsyncSubtensor` offer a wrapper method for submitting encrypted transactions
-- Query methods for MEV Shield state:
-  - `get_mev_shield_current_key`: Retrieves the current encryption key
-  - `get_mev_shield_next_key`: Retrieves the next encryption key
-  - `get_mev_shield_submission`: Retrieves a specific encrypted submission
-  - `get_mev_shield_submissions`: Retrieves all encrypted submissions for an account
-
-:::info Notes
-The `ExtrinsicResponse` object includes a `mev_extrinsic_receipt` field to store the receipt of the revealed (decrypted and executed) MEV Shield extrinsic.
-
-`BT_MEV_PROTECTION`: Environment variable to enable MEV protection by default. See [Environment Variables](./env-vars.md#bt_mev_protection).
-:::
-
-### Extrinsic Functions
+### Using Extrinsic-Calling Functions
 
 In `Subtensor` and `AsyncSubtensor`, all methods that call extrinsics now accept the following keyword arguments:
 
@@ -77,11 +60,42 @@ All extrinsic functions now support MEV protection:
     - Transfer: `transfer_extrinsic`
     - Start Call: `start_call_extrinsic`
 
+
+### Enabling MEV Protection by Default
+
+You can enable MEV protection globally by setting the `BT_MEV_PROTECTION` environment variable:
+
+```bash
+export BT_MEV_PROTECTION=1
+```
+
+When set, all supported extrinsics will use MEV protection automatically without needing to pass `mev_protection=True` to each call. Accepted values are `1`, `true`, `yes`, or `on` (case-insensitive).
+
+See [Environment Variables](./env-vars.md#bt_mev_protection) for more details.
+
+### Using Core MEV Shield Methods
+
+These SDK methods encapsulate the core MEV shield functionality:
+
+- `submit_encrypted_extrinsic` (sync & async): Core extrinsic function that encrypts and submits transactions through the MEV Shield pallet
+- `mev_submit_encrypted` in `Subtensor` and `AsyncSubtensor` offer a wrapper method for submitting encrypted transactions
+- Query methods for MEV Shield state:
+  - `get_mev_shield_current_key`: Retrieves the current encryption key
+  - `get_mev_shield_next_key`: Retrieves the next encryption key
+  - `get_mev_shield_submission`: Retrieves a specific encrypted submission
+  - `get_mev_shield_submissions`: Retrieves all encrypted submissions for an account
+
+:::info
+The `ExtrinsicResponse` object includes a `mev_extrinsic_receipt` field to store the receipt of the revealed (decrypted and executed) MEV Shield extrinsic.
+:::
+
 ## Usage
 
 ### Option 1: MEV Protection via Extrinsic Parameter (Recommended)
 
-All extrinsics now support a `mev_protection` parameter (default: `False`). When set to `True`, the extrinsic is automatically encrypted and submitted through the MEV Shield pallet. This is the simplest way to use MEV protection—the SDK handles all the details including nonce management.
+All methods that call extrinsics support a `mev_protection` parameter. When set to `True`, the extrinsic is automatically encrypted and submitted through the MEV Shield pallet. This is the simplest way to use MEV protection—the SDK handles all the details including nonce management.
+
+The default value is `False` unless you've set the `BT_MEV_PROTECTION` environment variable (see above).
 
 When `mev_protection=True`:
 
