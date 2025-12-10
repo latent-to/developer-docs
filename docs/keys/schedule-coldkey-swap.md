@@ -38,6 +38,13 @@ The schedule coldkey swap feature works as follows:
 :::danger Do not schedule coldkey swap more than once using the same coldkey
 :::
 
+:::warning Scheduled swaps cannot be cancelled
+Once a coldkey swap has been scheduled, **it cannot be cancelled**. This is an intentional design feature; coldkey swaps must not be cancellable, because if they were, an attacker who gained access to a coldkey could use cancellation to thwart the owner's attempt to swap it.
+
+The delay period is intentionally long to allow those affected by the swap to access their coldkeys in order to respond. This is an issue because high-value keys (for example, coldkeys with subnet ownership or which control high value validator hotkeys) should be kept under stringent conditions of physical security, implying they cannot always be quickly accessed, for example during travel.
+
+:::
+
 ## Requirements
 
 1. To execute this operation, you must own the source coldkey.
