@@ -14,18 +14,6 @@ The first TAO halving event is approaching, which will reduce block rewards by 5
 
 You can track the halving schedule and countdown on the [tao.app explorer](https://tao.app/halving), which provides real-time block data and the estimated time remaining until the reward reduction occurs.
 
-## Root Claim Default Change
-
-**Status**: Implemented
-
-- **What**: The default root claim type for stakers has changed from `Swap` to `Keep`.
-- **Impact**: 
-  - Previously, alpha dividends from root staking were automatically swapped to TAO by default.
-  - Now, alpha dividends are kept as Alpha tokens (staked on the subnet) by default.
-  - **If you prefer to continue receiving alpha emissions as TAO (auto-sold), you must explicitly set your claim type to `Swap`.**
-
-For detailed information, see: [Managing Root Claims](../staking-and-delegation/root-claims/managing-root-claims.md).
-
 ## Proxies
 
 **Status**: Implemented
