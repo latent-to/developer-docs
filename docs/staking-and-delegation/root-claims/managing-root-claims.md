@@ -22,8 +22,8 @@ Your claim type determines what happens to your root dividends when they're clai
 
 **Claim Types:**
 
-- **Keep** (default): Future Root Alpha Emissions are kept as Alpha tokens (staked on the subnet).
-- **Swap**: Future Root Alpha Emissions are swapped to TAO and added to root stake. **If you prefer to continue receiving alpha emissions as TAO (auto-sold), you must explicitly set your claim type to `Swap`.**
+- **Swap** (default): Future Root Alpha Emissions are swapped to TAO and added to root stake.
+- **Keep**: Future Root Alpha Emissions are kept as Alpha tokens.
 - **KeepSubnets**: Keep Alpha for specific subnets only; all other subnets are swapped to TAO. This gives you fine-grained control over which subnet tokens you want to hold. Note that this is a new feature and not yet supported by BTCLI and the SDK (coming soon).
 
 
