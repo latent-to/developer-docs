@@ -213,6 +213,7 @@ const sidebars = {
         "sdk/env-vars",
         "sdk/bt-api-ref",
         "sdk/subtensor-api",
+                         "sdk/mev-protection",
         "getting-started/install-wallet-sdk",
         "sdk/call",
         "sdk/migration-guide",
@@ -230,13 +231,7 @@ const sidebars = {
       items: [
         "concepts/bittensor-networks",
         "concepts/halving",
-        {
-          type: "category",
-          label: "MEV shield",
-          collapsible: true,
-          collapsed: true,
-          items: ["concepts/mev-shield/index", "sdk/mev-protection"],
-        },
+        "concepts/mev-shield/index",
         "concepts/commit-reveal",
         "concepts/consensus-based-weights",
         "concepts/bt-logging-levels",

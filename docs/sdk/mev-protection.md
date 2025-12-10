@@ -8,6 +8,10 @@ import { SdkVersion } from "./\_sdk-version.mdx";
 
 The MEV Shield feature allows users to encrypt transactions to protect them from front running and other maximal extractable value (MEV) attacks that depend on attackers knowing the details of transactions when they enter the transaction pool.
 
+This page gives in-depth coverage of using MEV shield with the Bittensor Python SDK.
+For more overall context on MEV Shield, see:  [MEV Shield: Encrypted Mempool Protection](/concepts/mev-shield/).
+
+
 MEV Shield uses a simple encrypt-and-submit approach:
 
 1. Create and sign the extrinsic (the "inner call") you want to protect.
