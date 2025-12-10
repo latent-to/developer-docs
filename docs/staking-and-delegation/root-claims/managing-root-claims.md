@@ -22,8 +22,10 @@ Your claim type determines what happens to your root dividends when they're clai
 
 **Claim Types:**
 
-- **Swap**: Future Root Alpha Emissions are swapped to TAO and added to root stake (default)
-- **Keep**: Future Root Alpha Emissions are kept as Alpha tokens
+- **Swap** (default): Future Root Alpha Emissions are swapped to TAO and added to root stake.
+- **Keep**: Future Root Alpha Emissions are kept as Alpha tokens.
+- **KeepSubnets**: Keep Alpha for specific subnets only; all other subnets are swapped to TAO. This gives you fine-grained control over which subnet tokens you want to hold. Note that this is a new feature and not yet supported by BTCLI and the SDK (coming soon).
+
 
 <Tabs groupId="root-claim">
   <TabItem value="btcli" label="BTCLI">
@@ -123,14 +125,14 @@ asyncio.run(main())
 2. Select your coldkey account
 3. Choose the pallet: `subtensorModule` and choose the `setRootClaimType(newRootClaimType)` extrinsic.
 4. Select your desired claim type:
-   - `Swap` - for TAO accumulation
-   - `Keep` - for alpha retention
+   - `Swap` - convert all Alpha to TAO (default)
+   - `Keep` - retain all Alpha tokens
+   - `KeepSubnets` - keep Alpha for specific subnets only (requires specifying subnet IDs)
 5. Click **Submit Transaction** and sign.
 
   </TabItem>
 </Tabs>
 
----
 
 ## Monitor claim status and types
 
