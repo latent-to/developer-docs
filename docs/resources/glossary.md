@@ -307,6 +307,7 @@ Unlike Bitcoin which halves based on block numbers, Bittensor implements halving
 The actual date of each halving is not fixed—it changes based on the amount of TAO being recycled each day.
 
 **See also:**
+
 - [TAO.app Halvings Tracker](https://tao.app/halvings)
 - [Emission](../learn/emissions.md)
 
@@ -385,6 +386,10 @@ In the context of machine learning, a mathematical function that measures the di
 The primary Bittensor blockchain network, used for production purposes and connected to lite or archive nodes.
 
 **See also:** [Bittensor Networks](../concepts/bittensor-networks.md), [Subtensor Nodes](../subtensor-nodes/)
+
+### Mempool
+
+The _mempool_ is a temporary holding area in blockchain networks where pending and unconfirmed transactions sit before being included in a block. When you submit a transaction, it first enters the mempool, where it becomes visible to all network participants.
 
 ### Metagraph
 
@@ -869,13 +874,15 @@ A position occupied by a subnet miner or subnet validator within a subnet, ident
 The process of withdrawing staked TAO from a validator hotkey, converting subnet-specific alpha tokens back to TAO through the subnet's automated market maker (AMM). Unstaking operations are subject to slippage—the transaction impacts pool prices, with larger amounts experiencing more slippage. Bittensor provides price protection mechanisms including tolerance limits and partial execution options to guard against unfavorable exchange rates.
 
 When you unstake:
+
 1. Alpha tokens are removed from the validator's hotkey and added to the subnet's alpha reserves
 2. The AMM calculates equivalent TAO using the current exchange rate
 3. TAO is removed from the subnet's TAO reserves and transferred to your coldkey
 
 Unstaking incurs blockchain transaction fees, which are recycled back into the TAO emission pool.
 
-**See also:** 
+**See also:**
+
 - [Staking/Delegation overview](../staking-and-delegation/delegation.md#unstaking)
 - [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md#unstaking-with-btcli)
 - [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md#unstaking-with-the-sdk)

@@ -32,7 +32,7 @@ Manage your TAO stake across validators and subnets.
 
 - [Managing Stake (SDK)](../staking-and-delegation/managing-stake-sdk.md): Complete staking guide covering:
   - How to stake with the SDK
-  - How to unstake with the SDK  
+  - How to unstake with the SDK
   - How to move stake between validators
   - How to transfer stake
 - [Managing Root Claims](../staking-and-delegation/root-claims/managing-root-claims.md): Claim root network positions
@@ -47,6 +47,7 @@ Use proxies to delegate account permissions securely while keeping your coldkey 
 - [Staking with a Proxy](../keys/proxies/staking-with-proxy.md): Perform staking operations through a proxy
 
 **By proxy type:**
+
 - **Proxy staking**: See [Staking with a Proxy](../keys/proxies/staking-with-proxy.md)
 - **Other proxy operations**: Execute any permitted call through a proxy (see [Working with Proxies](../keys/proxies/working-with-proxies.md))
 
@@ -54,7 +55,7 @@ Use proxies to delegate account permissions securely while keeping your coldkey 
 
 Compose and execute complex blockchain transactions using `GenericCall` and pallet-specific builders.
 
-- [Working with Blockchain Calls](../sdk/call): Create, compose, and execute calls with `GenericCall` and `CallBuilder` - essential for proxies, crowdloans, MEV protection, and fee estimation
+- [Working with Blockchain Calls](./call.md): Create, compose, and execute calls with `GenericCall` and `CallBuilder` - essential for proxies, crowdloans, MEV protection, and fee estimation
 
 ## Subnet Operations
 

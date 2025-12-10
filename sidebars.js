@@ -204,7 +204,7 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Bittensor Python SDK",      
+      label: "Bittensor Python SDK",
       collapsible: true,
       collapsed: true,
       items: [
@@ -213,6 +213,7 @@ const sidebars = {
         "sdk/env-vars",
         "sdk/bt-api-ref",
         "sdk/subtensor-api",
+                         "sdk/mev-protection",
         "getting-started/install-wallet-sdk",
         "sdk/call",
         "sdk/migration-guide",
@@ -230,7 +231,7 @@ const sidebars = {
       items: [
         "concepts/bittensor-networks",
         "concepts/halving",
-        "sdk/mev-protection",
+        "concepts/mev-shield/index",
         "concepts/commit-reveal",
         "concepts/consensus-based-weights",
         "concepts/bt-logging-levels",
