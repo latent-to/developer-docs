@@ -31,8 +31,6 @@ MEV shield should not be used for transactions that are signed by a hotkey. Atte
 
 Note that while it is technically possible to transfer TAO to a hotkey, which would, technically, allow you to use MEV protection for HK operations, this is neither intended nor advisable.
 
-You should *never* transfer TAO to a hotkey, as the whole design intent of the separation of coldkeys and hotkeys is to isolate TAO-ownership related functions to coldkeys, so they can be handled with a higher tier of security compared to hotkeys, which are designed to sign transactions in a less secure mining runtime. This separation of hotkeys and coldkeys is a core design principle of Bittensor.
-
 **Because hotkeys are not intended to hold TAO, you are in *untested waters* if you do so, and there may be unintended consequences that could result in asset loss.**
 :::
 
