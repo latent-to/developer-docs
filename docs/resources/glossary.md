@@ -48,6 +48,16 @@ A unit of data in the Bittensor blockchain, containing a collection of transacti
 
 **See also:** [Subtensor API](../sdk/subtensor-api.md)
 
+### Blockchain validator
+
+A node that participates in the Subtensor blockchain’s consensus mechanism to produce and validate blocks. Blockchain validators operate at the blockchain level, not within individual subnets.
+
+#### Blockchain validator vs subnet validator
+
+A blockchain validator participates in the network-wide consensus by validating transactions, producing blocks, and participating in network-wide consensus. In contrast, a subnet validator operates only within a specific subnet's consensus mechanism, where it evaluates miners' tasks and performances.
+
+Blockchain validators function at the core consensus layer and affect the entire network, while subnet validators belong to the application layer and influence only local subnet incentives and rewards.
+
 ### Burn cost
 
 This refers to the required amount of TAO to be recycled when creating a new subnet, i.e., cost of registering a new subnet.
@@ -904,7 +914,7 @@ A list of subnet IDs (netuids) indicating which subnets a delegate is authorized
 
 **See also:** [Validator Permits](#validator-permit), [Delegation](../staking-and-delegation/delegation.md), [Validator Requirements](../validators/index.md#requirements-for-validation)
 
-### Validator
+### Validator (or subnet validator)
 
 A type of node in a subnet that creates tasks, evaluates the performance of subnet miners and sets weights based on their output. A subnet validator is connected only to subnet miners and to the external world. Subnet validators receive inputs from the external world and communicate bidirectionally with subnet miners.
 
