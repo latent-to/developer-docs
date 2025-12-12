@@ -1,14 +1,14 @@
 ---
-title: "TAO and Alpha Halvings"
+title: "Halving Mechanisms in Bittensor"
 ---
 
-# TAO and Alpha Halvings
+# Halving Mechanisms in Bittensor
 
 This page explains the TAO and ALPHA halving mechanisms and describes how it affects the creation and distribution of new tokens across the network.
 
 ---
 
-Halving is a mechanism that automatically reduces the rate at which new tokens are created and distributed by 50%. Bittensor implements two distinct and independent halving mechanisms:
+A halving is a mechanism that automatically reduces the rate at which new tokens are created and distributed by 50%. The Bittensor network implements two distinct and independent halving mechanisms:
 
 - **TAO Halving**: Reduces TAO emission rate by 50% at supply-based thresholds
 - **Alpha Halving**: Reduces emission rate of a subnet's Alpha tokens by 50%
@@ -23,7 +23,7 @@ Before a halving event, the network emits TAO at its current block reward, with 
 
 Follow the approach of the halving at TAO.app's tokenomics dashboard: [tao.app/tokenomics](https://www.tao.app/tokenomics)
 
-:::info
+:::info Impact of TAO Recycling
 _Recycling_ of TAO from subnet registration fees can delay halving events. When tokens are recycled, they are returned to the emission pool and removed from circulation. This process continuously extends the time until the next halving threshold is reached.
 :::
 
