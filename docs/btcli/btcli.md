@@ -38,6 +38,7 @@ btcli [OPTIONS] COMMAND [ARGS]...
 - `sudo`: Sudo commands, alias: `su`
 - `subnets`: Subnets commands, alias: `s`, `subnet`
 - `weights`: Weights commands, aliases: `wt`, `weight`
+- `proxy`: Proxy commands
 - `crowd`: Crowdloan commands, aliases: `cr`, `crowdloan`
 - `liquidity`: Liquidity commands, aliases: `l`
 - `utils`
@@ -62,6 +63,10 @@ aliases: conf, c
 - `set`: Sets or updates configuration values in the BTCLI config file.
 - `get`: Prints the current config file in a table.
 - `clear`: Clears the fields in the config file and sets them to 'None'.
+- `add-proxy`: Adds a new pure proxy to the address book.
+- `proxies` : Displays the current proxies address book
+- `remove-proxy`: Removes a pure proxy from the address book.
+- `update-proxy`
 
 ### `btcli config set`
 
@@ -78,12 +83,14 @@ Set specific values:
 `btcli config set --wallet-name default --network finney`
 `btcli config set --safe-staking --rate-tolerance 0.1`
 
-Note:
+:::info
 
 - Network values can be network names (e.g., 'finney', 'test') or websocket URLs
 - Rate tolerance is specified as a decimal (e.g., 0.05 for 0.05%)
 - Changes are saved to `~/.bittensor/btcli.yaml`
 - Use `btcli config get` to view current settings
+
+:::
 
 **Usage**:
 
@@ -159,6 +166,85 @@ btcli config clear [OPTIONS]
 | `--all`                                                                                                   |      | Clears the entire config.                                                                                                                                           |
 | `--dashboard-path`, `--dashboard_path`, `--dash_path`, `--dash.path`                                      | TEXT | Path to save the dashboard HTML file. For example: `~/.bittensor/dashboard`.                                                                                        |
 | `--help`                                                                                                  |      | Show this message and exit.                                                                                                                                         |
+
+### `btcli config add-proxy`
+
+Adds a new pure proxy to the address book.
+
+**Usage:**
+
+```bash
+btcli config add-proxy [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                    | Type    | Description                                                            |
+| -------------------------- | ------- | ---------------------------------------------------------------------- |
+| `--name`                   |         | Name of the proxy                                                      |
+| `--address`                |         | The SS58 address of the pure proxy/delegatee                           |
+| `--proxy_type`             |         | The type of this proxy                                                 |
+| `--spawner`, `--delegator` |         | The SS58 address of the spawner (pure proxy)/delegator (regular proxy) |
+| `--delay`                  | INTEGER | Delay, in blocks.                                                      |
+| `--note`                   | TEXT    | Any notes about this entry                                             |
+| `--help`                   |         | Show this message and exit.                                            |
+
+### `btcli config proxies`
+
+Displays the current proxies address book
+
+**Usage:**
+
+```bash
+btcli config proxies [OPTIONS]
+```
+
+**Parameters:**
+
+| Options  | Type | Description                 |
+| -------- | ---- | --------------------------- |
+| `--help` |      | Show this message and exit. |
+
+### `btcli config remove-proxy`
+
+Removes a pure proxy from the address book.
+
+:::info
+This command does not remove the proxy on chain. Only removes it from the address book.
+:::
+
+**Usage:**
+
+```bash
+btcli config remove-proxy [OPTIONS]
+```
+
+**Parameters:**
+
+| Options  | Type | Description                     |
+| -------- | ---- | ------------------------------- |
+| `--name` |      | Name of the proxy to be removed |
+| `--help` |      | Show this message and exit.     |
+
+### `btcli config update-proxy`
+
+**Usage:**
+
+```bash
+btcli config update-proxy [OPTIONS]
+```
+
+**Parameters:**
+
+| Options        | Type    | Description                        |
+| -------------- | ------- | ---------------------------------- |
+| `--name`       |         | Name of the proxy                  |
+| `--address`    |         | The SS58 address of the pure proxy |
+| `--proxy_type` |         | The type of this pure proxy        |
+| `--spawner`    |         | The SS58 address of the spawner    |
+| `--delay`      | INTEGER | Delay, in blocks.                  |
+| `--note`       | TEXT    | Any notes about this entry         |
+| `--help`       |         | Show this message and exit.        |
 
 ## `btcli view`
 
@@ -1069,6 +1155,7 @@ alias: st
 - `transfer`: Transfer stake between coldkeys while keeping the same hotkey ownership.
 - `swap`: Swap stake between different subnets while keeping the same coldkey-hotkey pair ownership.
 - `claim`: Set the root claim type for your coldkey, alias `set-claim`.
+- `wizard`: Interactive wizard that guides you through stake movement operations.
 - `process-claim`: Manually claim accumulated root network emissions for your coldkey.
 - `child`: Child Hotkey commands, alias: `children`
 - `children`
@@ -1121,6 +1208,10 @@ Common Examples:
    ```sh
    btcli stake add --all --netuid 3
    ```
+8. Stake without MEV protection:
+   ```sh
+   btcli stake add --amount 100 --netuid 1 --no-mev-protection
+   ```
 
 Safe Staking Parameters:--safe: Enables rate tolerance checks
 `--tolerance`: Maximum % rate change allowed (0.05 = 5%)
@@ -1150,6 +1241,7 @@ btcli stake add [OPTIONS]
 | `--tolerance`, `--rate-tolerance`                                                                         | FLOAT   | Set the rate tolerance percentage for transactions (e.g. 0.1 for 0.1%)                                                                    |
 | `--safe-staking`, `--safe`/`--no-safe-staking`, `--unsafe`                                                |         | Enable or disable safe staking mode.                                                                                                      |
 | `--allow-partial-stake`, `--partial`, `--allow`/`--no-allow-partial-stake`, `--no-partial`, `--not-allow` |         | Allow or prevent partial stakes                                                                                                           |
+| `--mev-protection/--no-mev-protection`                                                                    |         | Enable or disable MEV protection (default: enabled).                                                                                      |
 | `--period`, `-era`                                                                                        | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                             |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                                       |         | Enable or disable interactive prompts.                                                                                                    |
 | `--quiet`                                                                                                 |         | Display only critical information on the console.                                                                                         |
@@ -1248,11 +1340,16 @@ Common Examples:
    ```
    btcli stake remove --all-alpha
    ```
+7. Unstake without MEV protection:
+   ```bash
+   btcli stake remove --amount 100 --netuid 1 --no-mev-protection
+   ```
 
 Safe Staking Parameters:
-`--safe`: Enables rate tolerance checks during unstaking
-`--tolerance`: Max allowed rate change (0.05 = 5%)
-`--partial`: Complete partial unstake if rates exceed tolerance
+
+- `--safe`: Enables rate tolerance checks during unstaking
+- `--tolerance`: Max allowed rate change (0.05 = 5%)
+- `--partial`: Complete partial unstake if rates exceed tolerance
 
 **Usage**:
 
@@ -1280,6 +1377,7 @@ btcli stake remove [OPTIONS]
 | `--tolerance`, `--rate-tolerance`                                                                         | FLOAT   | Set the rate tolerance percentage for transactions (e.g. 0.1 for 0.1%)                                                                        |
 | `--safe-staking`, `--safe`/`--no-safe-staking`, `--unsafe`                                                |         | Enable or disable safe staking mode.                                                                                                          |
 | `--allow-partial-stake`, `--partial`, `--allow`/`--no-allow-partial-stake`, `--no-partial`, `--not-allow` |         | Allow or prevent partial stakes                                                                                                               |
+| `--mev-protection/--no-mev-protection`                                                                    |         | Enable or disable MEV protection (default: enabled).                                                                                          |
 | `--period`, `-era`                                                                                        | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                                 |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                                       |         | Enable or disable interactive prompts.                                                                                                        |
 | `--interactive`, `-t`                                                                                     |         | Enter interactive mode for unstaking.                                                                                                         |
@@ -1354,22 +1452,28 @@ This command allows you to:
 
 You can specify:
 
-- The origin subnet (--origin-netuid)
-- The destination subnet (--dest-netuid)
-- The destination hotkey (--dest-hotkey)
-- The amount to move (--amount)
+- The origin subnet (`--origin-netuid`)
+- The destination subnet (`--dest-netuid`)
+- The destination hotkey (`--dest-hotkey`)
+- The amount to move (`--amount`)
 
 If no arguments are provided, an interactive selection menu will be shown.
 
-**Example:**
+1. Interactive move (guided prompts):
 
-```
+```bash
 btcli stake move
 ```
 
-**Usage**:
+2. Move stake without MEV protection:
 
-```console
+```bash
+btcli stake move --no-mev-protection
+```
+
+**Usage:**
+
+```bash
 btcli stake move [OPTIONS]
 ```
 
@@ -1386,6 +1490,7 @@ btcli stake move [OPTIONS]
 | `to`, `--dest-ss58`, `--dest`                                                                      | TEXT    | Destination validator hotkey SS58.                                                   |
 | `--amount`                                                                                         | FLOAT   | The amount of TAO to stake                                                           |
 | `--stake-all`, `--all`                                                                             |         | Stake all.                                                                           |
+| `--mev-protection/--no-mev-protection`                                                             |         | Enable or disable MEV protection (default: enabled).                                 |
 | `--period`, `-era`                                                                                 | INTEGER | Length (in blocks) for which the transaction should be valid.                        |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                                |         | Enable or disable interactive prompts.                                               |
 | `--quiet`                                                                                          |         | Display only critical information on the console.                                    |
@@ -1420,10 +1525,28 @@ Transfer 100 TAO from subnet 1 to subnet 2:
 btcli stake transfer --origin-netuid 1 --dest-netuid 2 --dest wallet2 --amount 100
 ```
 
-Using SS58 address:
+Using Destination SS58 address:
 
 ```
 btcli stake transfer --origin-netuid 1 --dest-netuid 2 --dest 5FrLxJsyJ5x9n2rmxFwosFraxFCKcXZDngEP9H7qjkKgHLcK --amount 100
+```
+
+Using Origin hotkey SS58 address (useful when transferring stake from a delegate):
+
+```bash
+btcli stake transfer --wallet-hotkey 5FrLxJsyJ5x9n2rmxFwosFraxFCKcXZDngEP9H7qjkKgHLcK --wallet-name sample_wallet
+```
+
+Transfer all available stake from origin hotkey:
+
+```bash
+btcli stake transfer --all --origin-netuid 1 --dest-netuid 2
+```
+
+Transfer stake without MEV protection:
+
+```bash
+btcli stake transfer --origin-netuid 1 --dest-netuid 2 --amount 100 --no-mev-protection
 ```
 
 **Usage**:
@@ -1445,6 +1568,7 @@ btcli stake transfer [OPTIONS]
 | `--dest-ss58`, `--dest`                                                                    | TEXT    | The destination wallet name or SS58 address to transfer stake to.                    |
 | `--amount`                                                                                 | FLOAT   | The amount of stake to transfer.                                                     |
 | `--stake-all`, `--all`                                                                     |         | Stake all.                                                                           |
+| `--mev-protection/--no-mev-protection`                                                     |         | Enable or disable MEV protection (default: enabled).                                 |
 | `--period`, `-era`                                                                         | INTEGER | Length (in blocks) for which the transaction should be valid.                        |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                        |         | Enable or disable interactive prompts.                                               |
 | `--quiet`                                                                                  |         | Display only critical information on the console.                                    |
@@ -1464,18 +1588,24 @@ This command allows you to:
 
 You can specify:
 
-- The origin subnet (--origin-netuid)
-- The destination subnet (--dest-netuid)
-- The amount to swap (--amount)
+- The origin subnet (`--origin-netuid`)
+- The destination subnet (`--dest-netuid`)
+- The amount to swap (`--amount`)
 
 If no arguments are provided, an interactive selection menu will be shown.
 
-**Example:**
+**Examples:**
 
-Swap 100 TAO from subnet 1 to subnet 2:
+1. Swap 100 TAO from subnet 1 to subnet 2:
 
-```
+```bash
 btcli stake swap --wallet-name default --wallet-hotkey default --origin-netuid 1 --dest-netuid 2 --amount 100
+```
+
+2. Swap stake without MEV protection:
+
+```bash
+btcli stake swap --origin-netuid 1 --dest-netuid 2 --amount 100 --no-mev-protection
 ```
 
 **Usage**:
@@ -1500,10 +1630,55 @@ btcli stake swap [OPTIONS]
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                        |         | Enable or disable interactive prompts.                                               |
 | `--wait-for-inclusion`/ `--no-wait-for-inclusion`                                          |         | If `True`, waits until the transaction is included in a block.                       |
 | `--wait-for-finalization`/ `--no-wait-for-finalization`                                    |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--mev-protection/--no-mev-protection`                                                     |         | Enable or disable MEV protection (default: enabled).                                 |
 | `--quiet`                                                                                  |         | Display only critical information on the console.                                    |
 | `--verbose`                                                                                |         | Enable verbose output.                                                               |
 | `--json-output`, `--json-out`                                                              |         | Outputs the result of the command as JSON.                                           |
 | `--help`                                                                                   |         | Show this message and exit.                                                          |
+
+### `btcli stake wizard`
+
+Interactive wizard that guides you through stake movement operations.
+
+This wizard helps you understand and choose the right stake movement command:
+
+- Move: Move stake between hotkeys (same coldkey)
+- Transfer: Transfer stake between coldkeys (same hotkey)
+- Swap: Swap stake between subnets (same coldkey-hotkey pair)
+
+The wizard will:
+
+1. Explain the differences between each operation
+2. Help you select the appropriate operation
+3. Guide you through the selection process
+4. Execute the operation with your choices
+
+**EXAMPLE**
+
+Start the wizard:
+
+```bash
+btcli stake wizard
+```
+
+**Usage:**
+
+```bash
+btcli stake wizard [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type | Description                                                                          |
+| --------------------------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------ |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |      | The subtensor network to connect to. Default: finney.                                |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT | Hotkey of the wallet                                                                 |
+| `--mev-protection/--no-mev-protection`                                      |      | Enable or disable MEV protection (default: enabled).                                 |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |      | Enable or disable interactive prompts.                                               |
+| `--quiet`                                                                   |      | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |      | Enable verbose output.                                                               |
 
 ### `btcli stake claim`
 
@@ -1515,13 +1690,16 @@ Root claim types control how staking emissions are handled on the ROOT network (
 
 - Swap: Future Root Alpha Emissions are swapped to TAO and added to root stake (default)
 - Keep: Future Root Alpha Emissions are kept as Alpha tokens
+- Keep Specific: Keep specific subnets as Alpha, swap others to TAO. You can use this type by selecting the netuids.
 
 **USAGE:**
 
 ```bash
-btcli stake claim
-btcli stake claim keep
-btcli stake claim swap
+btcli stake claim (Full wizard)
+btcli stake claim keep (Keep all subnets)
+btcli stake claim swap (Swap all subnets)
+btcli stake claim keep --netuids 1-5,10,20-30 (Keep specific subnets)
+btcli stake claim swap --netuids 1-30 (Swap specific subnets)
 ```
 
 With specific wallet:
@@ -1546,6 +1724,7 @@ If a claim type—`keep` or `swap`—is not provided, you'll be prompted to choo
 
 | Options                                                                     | Type | Description                                                                          |
 | --------------------------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------ |
+| `--netuids`, `-n`                                                           | TEXT | Netuids to select. Supports ranges and comma-separated values, e.g., '1-5,10,20-30'. |
 | `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT | Name of the wallet.                                                                  |
 | `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
 | `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT | Hotkey of the wallet                                                                 |
@@ -2396,6 +2575,12 @@ btcli subnets create
 btcli subnets create --subnet-name MySubnet --github-repo https://github.com/myorg/mysubnet --subnet-contact team@mysubnet.net
 ```
 
+3. Create subnet without MEV protection:
+
+```bash
+btcli subnets create --no-mev-protection
+```
+
 **Usage**:
 
 ```console
@@ -2417,6 +2602,7 @@ btcli subnets create [OPTIONS]
 | `--discord-handle`, `discord`                                               | TEXT | The Discord handle for the subnet.                                                   |
 | `--description`                                                             | TEXT | The description for the subnet.                                                      |
 | `--additional-info`                                                         | TEXT | Additional details for the subnet.                                                   |
+| `--mev-protection/--no-mev-protection`                                      |      | Enable or disable MEV protection (default: enabled).                                 |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`         |      | Enable or disable interactive prompts.                                               |
 | `--quiet`                                                                   |      | Display only critical information on the console.                                    |
 | `--verbose`                                                                 |      | Enable verbose output.                                                               |
