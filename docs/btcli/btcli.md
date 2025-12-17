@@ -3152,6 +3152,246 @@ btcli weights commit [OPTIONS]
 | `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                                                                            |
 | `--help`                                                                    |         | Show this message and exit.                                                                                                           |
 
+## `btcli proxy`
+
+**Usage:**
+
+```sh
+btcli proxy [OPTIONS] COMMAND [ARGS]...
+
+```
+
+**Options:**
+
+`--help`: Show this message and exit.
+
+**Commands:**
+
+- `create`: Creates a new pure proxy account. The pure proxy account is a keyless account controlled by your wallet.
+- `add` : Registers an existing account as a standard proxy for the delegator.
+- `remove` : Unregisters a proxy from an account.
+- `kill` Permanently removes a pure proxy account.
+- `execute`
+
+### `btcli proxy create`
+
+Creates a new pure proxy account. The pure proxy account is a keyless account controlled by your wallet.
+
+:::info
+The proxy account has no private key and cannot sign transactions independently. All operations must be initiated and signed by the delegator.
+:::
+
+**Common Examples**:
+
+1. Create a pure proxy account
+
+```bash
+btcli proxy create --proxy-type Any
+```
+
+2. Create a delayed pure proxy account
+
+```bash
+btcli proxy create --proxy-type Any --delay 1000
+```
+
+**Usage:**
+
+```bash
+btcli proxy create [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                                                                                                                  |
+| --------------------------------------------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                                                                                                        |
+| `--proxy-type`                                                              |         | Type of proxy                                                                                                                                                                |
+| `--delay`                                                                   | INTEGER | Delay, in number of blocks                                                                                                                                                   |
+| `--index`                                                                   | INTEGER | A disambiguation index, in case this is called multiple times in the same transaction (e.g. with utility::batch). Unless you're using batch you probably just want to use 0. |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                                                                                                          |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                                                         |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                                                         |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                                                       |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                                                                                                               |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.                                                                                                       |
+| `--period`, `--era`                                                         | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                                                                |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                                                                                                            |
+| `--verbose`                                                                 |         | Enable verbose output.                                                                                                                                                       |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                                                                                                                   |
+| `--help`                                                                    |         | Show this message and exit.                                                                                                                                                  |
+
+---
+
+### `btcli proxy add`
+
+Registers an existing account as a standard proxy for the delegator.
+
+Grants an existing account permission to execute transactions on your behalf with
+specified restrictions.
+
+**Common Examples**:
+
+1. Create a standard proxy account
+
+```bash
+btcli proxy add --delegate 5GDeleg... --proxy-type SmallTransfer
+```
+
+2. Create a delayed standard proxy account
+
+```bash
+btcli proxy add --delegate 5GDeleg... --proxy-type Transfer --delay 500
+```
+
+**Usage:**
+
+```bash
+btcli proxy add [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--delegate`                                                                |         | The SS58 address of the delegate to add                                              |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--proxy-type`                                                              |         | Type of proxy                                                                        |
+| `--delay`                                                                   | INTEGER | Delay, in number of blocks                                                           |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--period`, `--era`                                                         | INTEGER | Length (in blocks) for which the transaction should be valid.                        |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+---
+
+### `btcli proxy remove`
+
+Unregisters a proxy from an account.
+
+Revokes proxy permissions previously granted to another account. This prevents the delegate account from executing any further transactions on your behalf.
+
+**Example**:
+
+Revoke proxy permissions from a single proxy account
+
+```bash
+btcli proxy remove --delegate 5GDel... --proxy-type Transfer
+```
+
+**Usage:**
+
+```bash
+btcli proxy remove [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--delegate`                                                                |         | The SS58 address of the delegate to remove                                           |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--proxy-type`                                                              |         | Type of proxy                                                                        |
+| `--delay`                                                                   | INTEGER | Delay, in number of blocks                                                           |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--period`, `--era`                                                         | INTEGER | Length (in blocks) for which the transaction should be valid.                        |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+---
+
+### `btcli proxy kill`
+
+Permanently removes a pure proxy account.
+
+Once killed, the pure proxy account is cleared from chain storage and cannot be recovered.
+
+:::warning
+Killing a pure proxy permanently removes access to the account, and any funds remaining in it are lost.
+:::
+
+**EXAMPLE**
+
+```bash
+btcli proxy kill --height 6345834 --index 3 --proxy-type Any --spawner 5x34SPAWN... --proxy 5CCProxy...
+```
+
+**Usage:**
+
+```bash
+btcli proxy kill [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                                                                                                                  |
+| --------------------------------------------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--height`                                                                  | INTEGER | The block number that the proxy was created at                                                                                                                               |
+| `--ext_index`                                                               | INTEGER | The extrinsic index of the Proxy.PureCreated event (btcli proxy create)                                                                                                      |
+| `--spawner`                                                                 |         | The SS58 of the pure proxy creator account. If omitted, the wallet's coldkeypub is used.                                                                                     |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                                                                                                        |
+| `--proxy-type`                                                              |         | Type of proxy                                                                                                                                                                |
+| `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy.                                        |
+| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                                                          |
+| `--index`                                                                   | INTEGER | A disambiguation index, in case this is called multiple times in the same transaction (e.g. with utility::batch). Unless you're using batch you probably just want to use 0. |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                                                                                                          |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                                                         |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                                                         |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                                                       |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                                                                                                               |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.                                                                                                       |
+| `--period`, `--era`                                                         | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                                                                |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                                                                                                            |
+| `--verbose`                                                                 |         | Enable verbose output.                                                                                                                                                       |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                                                                                                                   |
+| `--help`                                                                    |         | Show this message and exit.                                                                                                                                                  |
+
+---
+
+### `btcli proxy execute`
+
+**Usage:**
+
+```bash
+btcli proxy execute [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                                                                           |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
+| `--real`                                                                    | TEXT    | The real account making this call. If omitted, the proxy's ss58 is used.                                                              |
+| `--delegate`                                                                | TEXT    | The delegate of the call. If omitted, the wallet's coldkey ss58 is used.                                                              |
+| `--call_hash`                                                               | TEXT    | The hash proxy call to execute                                                                                                        |
+| `--call_hex`                                                                | TEXT    | The hex of the call to specify                                                                                                        |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                                                                 |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                                                                   |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
+| `--wait_for_inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                                                                        |
+| `--wait_for_finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.                                                                |
+| `--period`, `--era`                                                         | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                         |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                                                                     |
+| `--verbose`                                                                 |         | Enable verbose output.                                                                                                                |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                                                                            |
+| `--help`                                                                    |         | Show this message and exit.                                                                                                           |
+
 ## `btcli crowd`
 
 **Usage:**
