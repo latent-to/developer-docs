@@ -18,6 +18,13 @@ See:
 - [Rationale for the flow-based model](#rationale-for-flow-based-emissions)
 :::
 
+See also:
+
+- [TAO.app Tokenomics Dashboard](https://www.tao.app/tokenomics)
+- [Implementation in the Subtensor codebase](../navigating-subtensor/emissions-coinbase.md)
+- [Yuma Consensus](./yuma-consensus.md)
+- [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view)
+
 ## Injection and Distribution: Two-Stages of the Emissions Process
 
 Bittensor's emission system operates through two stages, reflecting the system's hierarchical, competitive nature: 
@@ -25,12 +32,6 @@ Bittensor's emission system operates through two stages, reflecting the system's
 - **Injection**: Every [block](../resources/glossary.md#block), new liquidity flows into each subnet's liquidity pools, based on subnet performance.
 
 - **Distribution**: At the end of each [tempo](../resources/glossary.md#tempo) (waiting period of ~360 blocks, ~72 minutes), accumulated rewards within each subnet are distributed to the subnet's participants through [Yuma Consensus](../resources/glossary.md#yuma-consensus), which evaluates individual performance and determines who deserves what share.
-
-See also:
-
-- [Coinbase Implementation](../navigating-subtensor/emissions-coinbase.md) in the Subtensor codebase
-- [Yuma Consensus](./yuma-consensus.md)
-- [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view)
 
 ### Injection
 
