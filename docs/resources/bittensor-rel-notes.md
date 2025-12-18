@@ -17,4 +17,4 @@ title: "Releases"
 ## Subtensor
 
 - [Github](https://github.com/opentensor/subtensor/releases)
-- [Bittensor Blockchain runtime upgrade history explorer on TAO.app](https://www.tao.app/runtime)
+- [Runtime upgrade history on TAO.app](https://www.tao.app/runtime)
