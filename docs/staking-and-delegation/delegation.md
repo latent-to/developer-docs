@@ -79,7 +79,7 @@ Moving stake is a special operation that transfers stake between validators or s
 Transferring stake changes ownership of staked tokens from one coldkey to another while keeping the stake on the same validator. This comprises unstaking, transferring TAO ownership, and restaking to the same validator as an atomic transaction.
 
 :::tip Stake is always expressed in alpha units
-In Dynamic TAO, except for the stake held in [the Root Subnet](../subnets/understanding-subnets.md#subnet-zero), the stake held by a hotkey in a subnet is always expressed in the subnet-specific $\alpha$ units. Root Subnet stake is expressed in $\tau$.
+Except for the stake held in [the Root Subnet](../subnets/understanding-subnets.md#subnet-zero), the stake held by a hotkey in a subnet is always expressed in the subnet-specific $\alpha$ units. Root Subnet stake is expressed in $\tau$.
 :::
 
 :::tip Prereq

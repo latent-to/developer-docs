@@ -1,20 +1,18 @@
 ---
-title: "Dynamic TAO SDK Cheat Sheet"
+title: "Subnet Tokens SDK Cheat Sheet"
 ---
 
 import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
-This page provides a quick reference for the core functionalities for the Bittensor Python SDK that have changed for [Dynamic TAO](./index.md), and some example scripts to demonstrate functionality such as [viewing exchange rates](#display-current-exchange-rates) and [manage staking and unstaking](#managing-stake) into subnets.
+This page provides a quick reference for working with subnet alpha tokens using the Bittensor Python SDK, including example scripts for [viewing exchange rates](#display-current-exchange-rates) and [managing staking and unstaking](#managing-stake) into subnets.
 
-Updates to the `subtensor` and `async_subtensor` modules and the `DynamicInfo` class provide new ways to view information related to new Dynamic TAO features, such as alpha token prices, token reserve amounts, and wallet balances. Functionality around staking and unstaking has been updated to reflect the new nature of staking/unstaking in Dynamic TAO.
-
-See [Dynamic TAO Overview](./index.md).
+The `subtensor` and `async_subtensor` modules and the `DynamicInfo` class provide ways to view information about subnet tokens, such as alpha token prices, token reserve amounts, and wallet balances.
 
 ## Updating your SDK
 
 ### Option 1: Use the release candidate
 
-To update to the Dynamic TAO-enabled versions of the SDK, run:
+To update to the latest version of the SDK, run:
 
 ```
 pip install bittensor
@@ -80,7 +78,7 @@ class DynamicInfo:
 
 ## Viewing subnets
 
-Subnets evolve substantially in Dynamic TAO! Each subnet has its own currency, known as its alpha token, and an internal economy comprising a currency reserve of TAO, a reserve of its own alpha token, and a ledger of staked balances, to keep track of all of its stakers&mdash;those who have put TAO into its reserve in exchange for alpha.
+Each subnet has its own currency, known as its alpha token, and an internal economy comprising a currency reserve of TAO, a reserve of its own alpha token, and a ledger of staked balances, to keep track of all of its stakers&mdash;those who have put TAO into its reserve in exchange for alpha.
 
 #### `all_subnets`
 

@@ -212,7 +212,7 @@ At the end of each tempo (~360 blocks), the quantity of alpha accumulated over e
             Validators who hold both root TAO and subnet alphas will receive both types of token.
             </details>
 
-    See [Core Dynamic TAO Concepts: Validator stake weight](../subnets/understanding-subnets#validator-stake-weight)
+    See [Validator stake weight](../subnets/understanding-subnets#validator-stake-weight)
 
 
 ## Rationale for Flow-Based Emissions
@@ -254,7 +254,7 @@ Emissions and de-registration are **intentionally decoupled**:
 
 ## Note on evolution of Bittensor token economy
 
-At the initialization of Dynamic TAO, there was no alpha in circulation, so validator's stake weights were initially determined by their share of TAO stake.
+When the subnet alpha token system was first introduced (February 2025), there was no alpha in circulation, so validators' stake weights were initially determined by their share of TAO stake.
 
 But far more alpha than TAO is emitted into circulation every block. As a result, over time there will be more alpha relative to TAO in overall circulation, and the relative weight of a validator in a given subnet will depend more on their alpha stake share relative to their share of the TAO stake on Subnet Zero.
 

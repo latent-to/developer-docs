@@ -327,7 +327,7 @@ const sidebars = {
       link: { type: "doc", id: "dynamic-tao/index" },
       collapsible: true,
       collapsed: true,
-      items: ["dynamic-tao/dtao-faq", "dynamic-tao/sdk-cheat-sheet"],
+      items: ["dynamic-tao/sdk-cheat-sheet"],
     },
 
     {
