@@ -17,3 +17,4 @@ title: "Releases"
 ## Subtensor
 
 - [Github](https://github.com/opentensor/subtensor/releases)
+- [Runtime upgrade history on TAO.app](https://www.tao.app/runtime)

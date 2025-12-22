@@ -308,7 +308,7 @@ The actual date of each halving is not fixed—it changes based on the amount of
 
 **See also:**
 
-- [TAO.app Halvings Tracker](https://tao.app/halvings)
+- Halving countdown on [TAO.app Tokenomics Dashboard](https://www.tao.app/tokenomics)
 - [Emission](../learn/emissions.md)
 
 ### Hotkey
@@ -345,11 +345,11 @@ A system that drives the behavior of subnet miners and governs consensus among s
 
 ### Issuance
 
-The total amount of TAO circulating in the Bittensor network. Includes TAO that is help in wallets and subnet liquidity pools, as well as TAO that is locked as subnet registration fees.
+The total amount of TAO circulating in the Bittensor network. Includes TAO that is held in wallets and subnet liquidity pools, as well as TAO that is locked as subnet registration fees.
 
-This can be viewed on Bittensor explorers such as [TAO.app](https://tao.app) and [TAOstats](https://taostats.io).
+This can be viewed on Bittensor explorers such as [TAO.app's Tokenomics Dashboard](https://www.tao.app/tokenomics), or [TAOstats](https://taostats.io).
 
-To query it directly from the change, see: [Subtensor Storage Query Example: Total Issuance](../subtensor-nodes/subtensor-storage-query-examples.md#123-totalissuance)
+To query it directly from the chain, see: [Subtensor Storage Query Example: Total Issuance](../subtensor-nodes/subtensor-storage-query-examples.md#123-totalissuance)
 
 See also: [Recycling, burning, and locking](#recycling-and-burning)
 
@@ -709,7 +709,11 @@ $$
 
 The process of attaching TAO to a validator hotkey, i.e., locking TAO to a subnet validator's hotkey to increase their total stake and increase their consensus power and share of dividends.
 
-**See also:** [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md), [Delegation](../staking-and-delegation/delegation.md)
+**See also:**
+- [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md)
+- [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
+- [Delegation](../staking-and-delegation/delegation.md)
+- [Browse validators on TAO.app](https://www.tao.app/validators)
 
 ### Subnet
 
@@ -906,9 +910,11 @@ A list of subnet IDs (netuids) indicating which subnets a delegate is authorized
 
 ### Validator
 
-A type of node in a subnet that creates tasks, evaluates the performance of subnet miners and sets weights based on their output. A subnet validator is connected only to subnet miners and to the external world. Subnet validators receive inputs from the external world and communicate bidirectionally with subnet miners.
+A type of node in a subnet that evaluates the performance of miners and sets weights based on their output
 
-**See also:** [Subnet Validators](../validators/), [Validators btcli Guide](../validators/validators-btcli-guide.md)
+**See also:**
+- [Validating in Bittensor](../validators/)
+- [Browse validators on TAO.app](https://www.tao.app/validators)
 
 ### Validator Trust
 
