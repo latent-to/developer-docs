@@ -20,6 +20,7 @@ See also:
 - [Managing Stake with the Python SDK](./managing-stake-sdk.md)
 - [Staking with a Proxy](../keys/proxies/staking-with-proxy): Keep your coldkey secure while managing staking operations
 
+
 :::tip tips
 Validators/delegates can configure their take. The default value is 18%. See [`btcli sudo set-take`](../btcli#btcli-sudo-set-take).
 
