@@ -122,6 +122,6 @@ This [Dynamic TAO FAQ](../dynamic-tao/dtao-faq).
 
 ## Who maintains the Bittensor blockchain, software, and documentation?
 
-Bittensor is an open-source project and is open to contributions from the community. Most of the core development on the Subtensor blockchain is done by engineers working for the [Opentensor Foundation](https://github.com/opentensor), a nonprofit organization. The Bittensor CLI (`btcli`), the Bittensor Python SDK, and this documentation, are developed by members of [Latent Holdings](https://latent.to/), a Bittensor development startup that also own maintains [tao.app](https://www.tao.app/) and [Subnet 14: TAOHASH](https://taohash.com/).
+Bittensor is an open-source project and is open to contributions from the community. Most of the core development on the Subtensor blockchain is done by engineers working for the [Opentensor Foundation](https://github.com/opentensor), a nonprofit organization. The Bittensor CLI (`btcli`), the Bittensor Python SDK, and this documentation, are developed by members of [Latent Holdings](https://latent.to/), a Bittensor development startup that also own maintains the blockchain explorer [tao.app](https://www.tao.app/), the Bittensor AI Assistant [Savant](https://tao.app/savant), and [Subnet 14: TAOHASH](https://taohash.com/).
 
 The Head of Documentation for Bittensor is Michael 'Trexman' Trestman, who can be reached at m@latent.to, on [Github](https://github.com/MichaelTrestman), or [Discord](https://discord.com/users/1025598777425404006).
