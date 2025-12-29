@@ -17,7 +17,7 @@ You can also explore Bittensor's many Subnets and find links to their websites a
 
 ## Block Explorers
 
-- **[TAO.app](https://tao.app)** - Recommended (maintained by [Latent](https://latent.to/), the team behind these docs and core contributors to the Bittensor ecosystem). Includes [Savant](https://tao.app/savant), the chain explorer AI assistant.
+- **[TAO.app](https://tao.app)**: Recommended, as it is maintained by [Latent](https://latent.to/), the team behind these docs and core contributors to the Bittensor ecosystem. Includes [Savant](https://tao.app/savant), the Bittensor AI assistant capable of querying tokenomic data directly from the blockchain.
 - **[Taostats](https://taostats.io/)**
 - **[Taomarketcap](https://taomarketcap.com/)**
 

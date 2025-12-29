@@ -16,6 +16,8 @@ Staking and unstaking operations incur transaction fees. See [Transaction Fees i
 See also:
 
 - [Browse validators on TAO.app](https://www.tao.app/validators), with on-chain identities, stake distributions, validator take percentages, etc.
+- [Managing Stake with 'btcli'](./managing-stake-btcli.md)
+- [Managing Stake with the Python SDK](./managing-stake-sdk.md)
 - [Staking with a Proxy](../keys/proxies/staking-with-proxy): Keep your coldkey secure while managing staking operations
 
 
@@ -66,9 +68,6 @@ There are several ways to unstake your TAO:
 - **Move stake**: Move stake between validators or subnets without withdrawing to your coldkey (see [Moving stake](#moving-stake))
 - **Transfer stake**: Transfer ownership of staked tokens to another coldkey (see [Transferring stake](#transferring-stake))
 
-See the guides for detailed instructions:
-- [Managing Stake with btcli](./managing-stake-btcli.md)
-- [Managing Stake with SDK](./managing-stake-sdk.md)
 
 ### Moving stake
 
