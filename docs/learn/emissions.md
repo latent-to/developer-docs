@@ -25,13 +25,6 @@ See also:
 - [TAO.app Tokenomics Dashboard](https://www.tao.app/tokenomics)
 - [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view)
 
-See also:
-
-- [Implementation in the Subtensor codebase](../navigating-subtensor/emissions-coinbase.md)
-- [Yuma Consensus](./yuma-consensus.md)
-- [TAO.app Tokenomics Dashboard](https://www.tao.app/tokenomics)
-- [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view)
-
 ## Injection and Distribution: Two-Stages of the Emissions Process
 
 Bittensor's emission system operates through two stages, reflecting the system's hierarchical, competitive nature:
