@@ -1,10 +1,11 @@
 ---
 title: "Working with Proxies"
+# toc_max_heading_level: 2
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import { SdkVersion } from "../../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../../sdk/\_sdk-version.mdx";
 
 # Working with Proxies
 
@@ -16,6 +17,7 @@ This page covers each step in the use of proxy wallets as a security feature for
 - Removing proxy relationships
 
 See:
+
 - [Proxies: Overview](./index.md)
 - [Staking with a Proxy](./staking-with-proxy.md)
 
@@ -23,9 +25,9 @@ See:
 
 ### Security Considerations
 
-Proxy wallets are a powerful security feature, but to get the full benefits, it is critical to observe good key security. When one wallet serves as proxy for another (the 'safe wallet'), both the safe wallet and the proxy wallet have their own full coldkey keypair (the public key which goes into the wallet's address, and the private key, which is recoverable using the seed phrase), and must be handled with proper care. 
+Proxy wallets are a powerful security feature, but to get the full benefits, it is critical to observe good key security. When one wallet serves as proxy for another (the 'safe wallet'), both the safe wallet and the proxy wallet have their own full coldkey keypair (the public key which goes into the wallet's address, and the private key, which is recoverable using the seed phrase), and must be handled with proper care.
 
-Generally, the safe wallet should be given the maximum security possible, whereas the proxy wallet (if it is carefully limited in its permissions), can be handled in a more convenient, less secure way. For example, a proxy might be loaded into a less trusted compute runtime, whereas the safe wallet's coldkey private key/seed phrase should *never* be loaded into any but the most absolutely secure device). However, depending on the proxy's configuration, compromise of a proxy wallet's coldkey can still be disastrous. For example, a proxy with `ProxyType`:`any` and `delay`:`0` can immediately perform any operation on behalf of the safe wallet, so leaking such a proxy key is just as bad as leaking the safe wallet key.
+Generally, the safe wallet should be given the maximum security possible, whereas the proxy wallet (if it is carefully limited in its permissions), can be handled in a more convenient, less secure way. For example, a proxy might be loaded into a less trusted compute runtime, whereas the safe wallet's coldkey private key/seed phrase should _never_ be loaded into any but the most absolutely secure device). However, depending on the proxy's configuration, compromise of a proxy wallet's coldkey can still be disastrous. For example, a proxy with `ProxyType`:`any` and `delay`:`0` can immediately perform any operation on behalf of the safe wallet, so leaking such a proxy key is just as bad as leaking the safe wallet key.
 
 Before executing any operations with any coldkeys holding TAO on Bittensor main network, carefully think through the desired end result and the steps required to achieve it.
 
@@ -35,7 +37,7 @@ See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
 
 #### Practice/Dev
 
-To follow along with the below examples for practice, you have two options: 
+To follow along with the below examples for practice, you have two options:
 
 - [Run a Local Bittensor Blockchain Instance](../../local-build/deploy).
 - Follow along on test network, if you have some test TAO.
@@ -65,7 +67,6 @@ For any wallet with real-value TAO (i.e. TAO on Bittensor's main network, `finne
 See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
 :::
 
-
 :::info
 Multiple proxy relationships can exist between a pair of wallets, as long as each proxy entry uses a different `ProxyType`. Attempting to register a duplicate entry with the same delegate and `ProxyType` will result in a `proxy.Duplicate` error.
 :::
@@ -77,7 +78,7 @@ Multiple proxy relationships can exist between a pair of wallets, as long as eac
 
 Run `btcli proxy add` to create a proxy relationship between existing wallets on-chain.
 
-Note that `--wallet.name` specifies the *safe wallet*, since the private key must be loaded in for the safe wallet, not the proxy. This makes sense because it is the safe wallet that is *delegating* the authority to order transactions to the proxy wallet, so it must be authenticated with the private key using its encryption password.
+Note that `--wallet.name` specifies the _safe wallet_, since the private key must be loaded in for the safe wallet, not the proxy. This makes sense because it is the safe wallet that is _delegating_ the authority to order transactions to the proxy wallet, so it must be authenticated with the private key using its encryption password.
 
 ```bash
 btcli proxy add \
@@ -87,19 +88,18 @@ btcli proxy add \
 ```
 
 **Parameters:**
+
 - `--wallet.name`: Your wallet name (the real account that will authorize the proxy)
 - `--delegate`: The SS58 address of the proxy (i.e. the delegate of transaction power)
 - `--proxy-type`: The type of proxy relationship (e.g., `Staking`, `Transfer`, `Any`, etc.)
 - `--delay`: Optional delay in blocks (0 for immediate execution)
 
-
 For our example, we'll use two wallets called `PracticeSafeWallet` and `PracticeProxy`. To follow along, create two new wallets with these names and substitute their coldkey ss58 addresses:
 
-- PracticeSafeWallet: `5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt`
-- PracticeProxy: `5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe`
+- **`PracticeSafeWallet`**: `5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt`
+- **`PracticeProxy`**: `5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe`
 
-
-To give PracticeProxy the ability to order small transfers from PracticeSafeWallet's balance immediately (with 0 delay), we'll use the following comand:
+To give the `PracticeProxy` account the ability to order small transfers from the `PracticeSafeWallet` wallet's balance immediately (with 0 delay), we'll use the following comand:
 
 ```bash
 btcli proxy add \
@@ -118,22 +118,21 @@ Would you like to add this to your address book? [y/n]: y
 
 ### BTCLI's proxy address book
 
-
 Use ` btcli config add-proxy` to configure your local BTCLI with a proxy relationship. Make sure to follow the instructions carefully depending on whether:
+
 1. You are using a proxy relationship between pre-existing wallets, as described on this page. This covers most use cases for proxies.
 1. You are using a pure proxy. See [pure proxies](./pure-proxies).
 
-View all saved proxies with: 
+View all saved proxies with:
 
 ```bash
 btcli config proxies
 ```
 
-
 ```console
  Name                    Address                 Spawner/Delegator       Proxy Type      Delay   Note
  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  practice-proxying                 5CngkPSSnhK7ot6zFv3Q…   5GrwvaEF5zXb26Fz9rcQ…   Any             0       always be awesome  
+  practice-proxying                 5CngkPSSnhK7ot6zFv3Q…   5GrwvaEF5zXb26Fz9rcQ…   Any             0       always be awesome
   practice-small-transfers   5GrwvaEF5zXb26Fz9rcQ…   5FLSigC9HGRKVhB9FiEo…   SmallTransfer   0       small transfers only
 ```
 
@@ -182,7 +181,6 @@ The proxy type can be provided either by importing and using the `ProxyType` enu
 </TabItem>
 </Tabs>
 
-
 ### Check an Account’s Proxies
 
 You can check which proxies are associated with an account to see their delegate addresses, proxy types, and any configured delays. To do this:
@@ -229,13 +227,12 @@ This returns all the proxies associated to the account and their information—`
 </TabItem>
 </Tabs>
 
-
 ## Execute a 0-Delay Proxy Call
 
-A proxy wallet that is set up with a delay of 0 can execute transactions allowed by its proxy type simply by declaring which real account they are acting as proxy for. 
+A proxy wallet that is set up with a delay of 0 can execute transactions allowed by its proxy type simply by declaring which real account they are acting as proxy for.
 
 :::note consider security!
-This operation will be run in a coldkey workstation that is set up for the *proxy wallet*, not the *safe wallet/real account*. For main network (`finney`) wallets, the safe wallet's coldkey private key should *never* be loaded onto the proxy workstation, otherwise we undermine the security advantage of the proxy relationship. The safe wallet's coldkey private key/seed phrase should be kept in cold storage as muchas possible, and should only be loaded into dedicated, highly secure, code environments provisioned specifically for that purpose.
+This operation will be run in a coldkey workstation that is set up for the _proxy wallet_, not the _safe wallet/real account_. For main network (`finney`) wallets, the safe wallet's coldkey private key should _never_ be loaded onto the proxy workstation, otherwise we undermine the security advantage of the proxy relationship. The safe wallet's coldkey private key/seed phrase should be kept in cold storage as muchas possible, and should only be loaded into dedicated, highly secure, code environments provisioned specifically for that purpose.
 :::
 
 <Tabs groupId="proxy">
@@ -245,11 +242,11 @@ This operation will be run in a coldkey workstation that is set up for the *prox
 Many `btcli` commands support the `--proxy` flag to proxy an operation on behalf of another wallet.
 
 :::note terminology and parameter names
-The language here may be counter-intuitive, in that the `--proxy` flag specifies the wallet *being* proxied.
+The language here may be counter-intuitive, in that the `--proxy` flag specifies the wallet _being_ proxied.
 
-The wallet specified by `--wallet.name` is actually the wallet we normally call "the proxy", and `--proxy` specifies the safe wallet or 'real account'. It makes more sense if you think of the `--proxy` flag as specifying that the operation is being called *by* proxy for the wallet that follows, i.e., the safe wallet.
+The wallet specified by `--wallet.name` is actually the wallet we normally call "the proxy", and `--proxy` specifies the safe wallet or 'real account'. It makes more sense if you think of the `--proxy` flag as specifying that the operation is being called _by_ proxy for the wallet that follows, i.e., the safe wallet.
 
-More to the point, we can logically infer that it *must* be the case that `--wallet.name` refers to the proxy, and the ss58 supplied (in the `--proxy` field) must refer to the safe wallet, since this command is meant to be run by the proxy, protecting the safe wallet. Therefore, the proxy's private key must be present and unlocked, not the safe wallet's, which should remain in cold storage.
+More to the point, we can logically infer that it _must_ be the case that `--wallet.name` refers to the proxy, and the ss58 supplied (in the `--proxy` field) must refer to the safe wallet, since this command is meant to be run by the proxy, protecting the safe wallet. Therefore, the proxy's private key must be present and unlocked, not the safe wallet's, which should remain in cold storage.
 :::
 
 This command will transfer 18 TAO from PracticeSafeWallet to a third wallet, Miner.
@@ -264,7 +261,9 @@ btcli wallet transfer \
   --network test
 
 ```
+
 **Proxy params:**
+
 - `--wallet.name`: The proxy wallet that signs the transaction on behalf of the real account.
 - `--proxy`: The real account's SS58 address (or proxy name from address book)
 
@@ -285,9 +284,8 @@ Balance:
   98.7739 τ ➡ 98.4409 τ
 ```
 
-
 :::tip Using saved proxies
-If you saved a proxy to your address book with `btcli config add-proxy`, you can reference it by name:
+If you haved a proxy relationship saved to your BTCLI address book, you can reference it by name as shown:
 
 ```bash
 btcli wallet transfer \
@@ -297,6 +295,7 @@ btcli wallet transfer \
   --amount 0.333 \
   --network test
 ```
+
 :::
 
 </TabItem>
@@ -400,6 +399,7 @@ btcli proxy remove \
 ```
 
 **Parameters:**
+
 - `--wallet.name`: Your wallet name (the real account that authorized the proxy)
 - `--delegate`: The SS58 address of the delegate account to remove
 - `--proxy-type`: Must match the proxy type used when adding
@@ -420,6 +420,7 @@ This will remove a proxy of type SmallTransfer for delegate 5CZmB94iEG4Ld7JkejAW
 to proceed? [y/n]: y
 ✅Success!
 ```
+
 :::info Removal is immediate
 Unlike delayed execution, removing a proxy takes effect immediately, regardless of any delay configured on the proxy.
 :::
@@ -517,7 +518,7 @@ else:
 
 If a proxy wallet has been given proxy powers to make a transaction with a delay, they must announce the call beforehand, and then wait the delay interval (specified by the `delay` parameter when the proxy relationship is created).
 
-For example, the following command gives PracticeProxy the ability to make large transfers, but only after an announcement-delay period of 100 blocks:
+For example, the following snippets give the `PracticeProxy` wallet the ability to make large transfers, but only after an announcement-delay period of 100 blocks:
 
 <Tabs groupId="proxy">
 <TabItem value="btcli" label="BTCLI">
@@ -550,7 +551,7 @@ delegate_address = "DELEGATE_ADDRESS" # Your delegate wallet address
 response = subtensor.add_proxy(
    wallet=real_account,
    delegate_ss58=delegate_address,
-   proxy_type=ProxyType.Any,
+   proxy_type=ProxyType.Transfer,
    delay=100,    # optional delay in blocks
 )
 
@@ -558,10 +559,8 @@ print(response)
 
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ### Generate call hash
 
@@ -571,8 +570,7 @@ Announcing a delayed proxy call requires the hash of the call that you intend to
 
 <TabItem value="btcli" label="BTCLI">
 
-When using `--announce-only`, BTCLI automatically generates and stores the call hash for you. You don't need to manually generate it.
-
+When you run a BTCLI command with the `--announce-only` flag, BTCLI automatically generates and adds the call hash to your `ProxyAnnouncements` address book.
 
 </TabItem>
 
@@ -616,8 +614,7 @@ Do not submit the transaction after entering the parameters. Only copy the encod
 
 </TabItem>
 </Tabs>
-
-
+--- 
 ### Announce a proxy call
 
 Announcing a proxy call publishes the hash of a proxy-call that will be made in the future. To announce a delayed call:
@@ -626,7 +623,7 @@ Announcing a proxy call publishes the hash of a proxy-call that will be made in 
 
 <TabItem value="btcli" label="BTCLI">
 
-For delayed proxies, first announce the call using the `--announce-only` flag:
+To announce a delayed proxy call via BTCLI, include the `--announce-only` flag when submitting the transaction, as shown:
 
 ```bash
 # The call hash is automatically generated and saved
@@ -638,8 +635,11 @@ btcli wallet transfer \
   --network test \
   --announce-only
 
-  
+
 ```
+
+<details>
+  <summary><strong>Show sample output</strong></summary>
 ```console
 Do you want to transfer:
   amount: 0.3330 τ
@@ -650,24 +650,27 @@ Transferring is not the same as staking. To instead stake, use btcli stake add i
 Proceed with transfer? [y/n]: y
 Enter your password:
 Decrypting...
-Added entry b'D\x99-\x9d\xa2:BqnQ\xb7\xb6\x99M\xc8\xe1\xd6;\xb2\x810\x15\x82y\xb3XLD\x90#\xd92' at block 5953000 to your
-ProxyAnnouncements address book.
+Added entry 1ca5322e23ea9e36e8c8f1b912c817b89ef1fdcaaf25cacb57c173147ca3abbd at block 5953000 to your
+ProxyAnnouncements address book. You can execute this with
+btcli proxy execute --call-hash 1ca5322e23ea9e36e8c8f1b912c817b89ef1fdcaaf25cacb57c173147ca3abbd
+
 ✅ Finalized
 Block Hash: 0x1c6378ee38b8c27f161b646125ec301f1aa52bffd63b090ec0c0876c9cc56ba5
 Balance:
-  98.4409 τ ➡ 98.4409 τ
-```
+98.4409 τ ➡ 98.4409 τ
 
-
+````
+</details>
 **What this does:**
+
 - Creates and announces the call on-chain
 - Saves the announcement details to your local database
 - Does NOT execute the operation immediately
-- The real account can reject it during the delay period
 
 **After announcing:**
+
 1. Wait for the configured delay period (in blocks) to pass
-2. The real account has the option to reject the announcement
+2. The real account has the option to reject the announcement during the delay period
 3. Execute the call after the delay expires (see next step)
 
 </TabItem>
@@ -710,7 +713,7 @@ response = subtensor.announce_proxy(
 
 print(response)
 # Save the call_hash - you'll need it to execute after the delay
-```
+````
 
 :::info
 Next, wait for the duration of the configured delay before executing the call. During the waiting period, the delegate can cancel the announcement—`subtensor.remove_proxy_announcement()`, while the real account retains final authority to reject it—`subtensor.reject_proxy_announcement()`.
@@ -745,39 +748,24 @@ After the delay period has passed, execute the announced call:
 btcli proxy execute \
   --wallet.name PracticeProxy \
   --proxy 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt \
-  --real 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt
-  --network test 
-
-  btcli wallet transfer \
-  --wallet.name PracticeProxy \
-  --proxy 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt \
-  --destination 5DA7UsaYbk1UnhhtTxqpwdqjuxhQ2rW7D6GTN1S1S5tC2NRV \
-  --amount 0.333 \
-  --network test \
-  --announce-only
+  --real 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt \
+  --call-hash 1ca5322e23ea9e36e8c8f1b912c817b89ef1fdcaaf25cacb57c173147ca3abbd \
+  --network test
 ```
 
 **How it works:**
+
 - Retrieves the previously announced call from your local database
 - Verifies the delay period has passed
 - Executes the call on-chain
 - Clears the announcement
 
-**Manual execution:**
-If you need to specify call details manually:
+BTCLI automatically tracks announcements you make with `--announce-only` in a local database, making execution easier. This allows you to execute a delayed proxy by using the `--call-hash` flag.
 
-```bash
-btcli proxy execute \
-  --wallet.name PracticeProxy \
-  --proxy 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt \
-  --real 5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt \
-  --delegate 5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe \
-  --call-hash 0x1c6378ee38b8c27f161b646125ec301f1aa52bffd63b090ec0c0876c9cc56ba5 \
-  --network test
-```
+:::warning
+Using the `--call-hash` flag attempts to resolve the call from the proxy announcements address book. Use this flag only if you made the proxy announcement via BTCLI.
 
-:::tip Automatic tracking
-BTCLI automatically tracks announcements you make with `--announce-only` in a local database, making execution easier.
+If the proxy call was announced through a different method, you must provide the encoded hex for the call using the `--call-hex` flag or rebuild the call explicitly via the command prompts.
 :::
 
 </TabItem>
@@ -847,15 +835,11 @@ The call you execute **must have the exact same parameters** as the call you ann
 </TabItem>
 </Tabs>
 
-
 :::info
 
 - The call details on the executed proxy must exactly match the original announcement. Any change to the call or call hash will result in a `proxy.Unannounced` error.
 - Once a delayed proxy call is executed, its announcement is cleared. To execute another proxy with the same details, you must create a new announcement and wait for the waiting period to pass.
   :::
-
-
-
 
 ## Troubleshooting
 
