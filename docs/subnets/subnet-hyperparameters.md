@@ -671,7 +671,7 @@ Toggles the consensus mechanism used by the subnet between Yuma Consensus v2 and
 
 The following variables are global and/or can only be configured with `root` permissions, which are held by a triumvirate of Opentensor Foundation employees. They are listed here for reference.
 
-### ColdkeySwapScheduleDuration
+### ColdkeySwapAnnouncementDelay
 
 **Type**: u12
 
@@ -679,7 +679,7 @@ The following variables are global and/or can only be configured with `root` per
 
 **`btcli` setter**: no
 
-**Setter extrinsic**: `sudo_set_coldkey_swap_schedule_duration`
+**Setter extrinsic**: `sudo_set_coldkey_swap_announcement_delay`
 
 **Permissions required to set**: Root
 
