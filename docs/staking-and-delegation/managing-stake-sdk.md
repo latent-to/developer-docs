@@ -34,7 +34,7 @@ Staking is a regular operation for most TAO holders. Every time you stake or uns
 
 <SdkVersion />
 
-To stake, you'll first need some TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network. Alternatively, you can obtain some by completing the [BTCLI Live Coding Playground](../btcli/btcli-playground.md#transfer).
+To stake, you'll first need some TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network. Alternatively, you can [run a local Bittensor blockchain instance](../local-build/deploy.md).
 
 :::danger
 The funds in a crypto wallet are only as secure as your private key and/or seed phrase, and the devices that have access to these.
