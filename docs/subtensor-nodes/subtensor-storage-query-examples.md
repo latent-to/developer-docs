@@ -1451,7 +1451,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
 - **Description**: Network rate limit.
 - **Query Type**: `u64`
 - **Parameters**: None
-- **Default Value**: `7200`
+- **Default Value**: `14400`
 - **Python Example**:
     ```python
     from async_substrate_interface import SubstrateInterface

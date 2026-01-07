@@ -24,6 +24,8 @@ For high-value wallets, consider setting up a `Staking` proxy for regular stakin
 See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey proactively.
 :::
 
+<!-- TODO: will now utilize an announce-execute workflow -->
+
 The schedule coldkey swap feature works as follows:
 
 - The schedule coldkey swap feature enables you to schedule the swapping of source coldkey to a destination coldkey. If you feel your existing coldkey is potentially compromised, then use this feature to schedule a swap to a destination coldkey.
