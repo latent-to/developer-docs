@@ -97,7 +97,7 @@ const sidebars = {
           ],
         },
         "keys/multisig",
-        "keys/schedule-coldkey-swap",
+        "keys/coldkey-swap",
       ],
     },
 
@@ -213,7 +213,7 @@ const sidebars = {
         "sdk/env-vars",
         "sdk/bt-api-ref",
         "sdk/subtensor-api",
-                         "sdk/mev-protection",
+        "sdk/mev-protection",
         "getting-started/install-wallet-sdk",
         "sdk/call",
         "sdk/migration-guide",
