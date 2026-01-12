@@ -675,7 +675,7 @@ The following variables are global and/or can only be configured with `root` per
 
 **Type**: u12
 
-**Default**:
+**Default**: `36000`
 
 **`btcli` setter**: no
 
