@@ -102,10 +102,6 @@ const config = {
             to: "/validators",
           },
           {
-            to: "/keys/coldkey-swap",
-            from: "/subnets/coldkey-swap",
-          },
-          {
             to: "/sdk/bt-api-ref",
             from: "/reference/bittensor-api-ref",
           },
@@ -126,8 +122,8 @@ const config = {
             to: "/resources/questions-and-answers",
           },
           {
-            to: "/keys/schedule-coldkey-swap",
-            from: "/keys/coldkey-swap",
+            to: "/keys/coldkey-swap",
+            from: "/keys/schedule-coldkey-swap",
           },
           {
             from: "/emissions",
