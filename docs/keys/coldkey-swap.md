@@ -145,7 +145,6 @@ response = subtensor.announce_coldkey_swap(
 
 if response.success:
     print(f"✅ Coldkey swap announced successfully!")
-    print(f"   Transaction hash: {response.extrinsic_hash}")
 else:
     print(f"❌ Failed to announce swap: {response.message}")
 ```
@@ -161,7 +160,71 @@ Replace `WALLET_NAME` and `DESTINATION_COLDKEY` with the appropriate wallet addr
 A coldkey swap can be reannounced only after the [ColdkeySwapReannouncementDelay](https://github.com/opentensor/subtensor/blob/b1067d49a24112e80a1fc8ce04f52a34f9bb6cff/chain-extensions/src/mock.rs#L329C15-L329C52) has passed. By default, this is 7,200 blocks (~1 day) after the initial announcement delay period expires. Reannouncing will overwrite the existing announcement and reset the mandatory waiting period before execution.
 :::
 
-<!-- check announcements heading -->
+### Check announcements from a coldkey
+
+You can check the details of any coldkey swap announcements associated with a particular coldkey. This allows you to verify that your announcement is active while inspecting the committed hash and the target block for execution.
+
+<Tabs groupId="coldkey-swap">
+
+  <TabItem value="btcli" label="BTCLI">
+
+Run the following command to execute a coldkey swap using BTCLI:
+
+```bash
+btcli wallets swap-check --wallet-name WALLET_NAME
+```
+
+Replace `WALLET_NAME` with the source coldkey address.
+
+<details>
+  <summary><strong>Show sample output</strong></summary>
+
+```sh
+Enter wallet name or SS58 address (leave blank to show all pending announcements): alice
+
+                                          Pending Coldkey Swap Announcements
+                                                  Current Block: 115
+
+ Coldkey                                          ┃ New Coldkey Hash      ┃ Execution Block ┃ Time Remaining ┃ Status
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━
+ 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY │ 0x94772f97f5...ae2160 │           36111 │         4d 23h │ Pending
+
+
+```
+
+ </details>
+
+</TabItem>
+<TabItem value="sdk" label="Bittensor SDK">
+Paste the following snippet to execute a coldkey swap using the Bittensor SDK:
+
+```py
+import bittensor as bt
+
+subtensor = bt.Subtensor(network="local")
+wallet = bt.Wallet(name="WALLET_NAME")
+
+announcement = subtensor.get_coldkey_swap_announcement(
+    coldkey_ss58=wallet.coldkeypub.ss58_address
+)
+
+if announcement:
+    current_block = subtensor.get_current_block()
+
+    print(f"📋 Announcement found:")
+    print(f"   New coldkey hash: {announcement.new_coldkey_hash}")
+    print(f"   Execution block: {announcement.execution_block}")
+    print(f"   Current block: {current_block}")
+else:
+    print("❌ No announcement found")
+```
+
+Replace `WALLET_NAME` with the source coldkey address. Also, modify the targeted network if necessary.
+</TabItem>
+
+  <!-- <TabItem value="polkadot-app" label="Polkadot app">
+  </TabItem> -->
+</Tabs >
 
 ## Execute a coldkey swap
 
@@ -209,7 +272,7 @@ Are you sure you want to continue? [y/n] (n): y
 Decrypting...
 
 ✅ Successfully executed coldkey swap!
-✅ Your extrinsic has been included as 42386-2
+✅ Your extrinsic has been included as 39386-2
 
                       Coldkey Swap Completed
 
@@ -247,7 +310,6 @@ response = subtensor.announce_coldkey_swap(
 
 if response.success:
     print(f"✅ Coldkey swap announced successfully!")
-    print(f"   Transaction hash: {response.extrinsic_hash}")
 else:
     print(f"❌ Failed to announce swap: {response.message}")
 ```
@@ -260,7 +322,3 @@ Replace `WALLET_NAME` and `DESTINATION_COLDKEY` with the appropriate wallet addr
 </Tabs >
 
 <!-- check balance -->
-
-## Verify
-
-Your scheduled coldkey swap will execute on the mainnet 36000 blocks after you successfully scheduled the coldkey swap using the above method. Check your destination coldkey after approximately 5 days to verify.
