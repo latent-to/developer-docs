@@ -687,7 +687,7 @@ The following variables are global and/or can only be configured with `root` per
 
 The duration in blocks of the waiting period before a coldkey swap.
 
-See [Rotate/Swap your Coldkey](../keys/schedule-coldkey-swap)
+See [Rotate/Swap your Coldkey](../keys/coldkey-swap)
 
 <!-- fact check what is this on chain -->
 
