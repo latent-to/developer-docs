@@ -197,7 +197,6 @@ const sidebars = {
       link: { type: "doc", id: "btcli/overview" },
       items: [
         "getting-started/install-btcli",
-        "btcli/btcli-playground",
         "btcli/btcli-permissions",
         "btcli/btcli",
       ],

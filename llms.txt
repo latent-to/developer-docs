@@ -64,7 +64,7 @@ Essential tools for building and interacting with Bittensor.
 The primary command-line tool for Bittensor operations.
 - **Overview**: https://docs.bittensor.com/btcli/overview - Introduction to BTCLI
 - **Installation**: https://docs.bittensor.com/getting-started/install-btcli - Setting up BTCLI
-- **Playground**: https://docs.bittensor.com/btcli/btcli-playground - Interactive BTCLI learning environment
+- **Local Build**: https://docs.bittensor.com/local-build/deploy - Run a local Bittensor blockchain instance for testing and development
 - **Permissions**: https://docs.bittensor.com/btcli-permissions - Understanding BTCLI access levels
 - **Full Reference**: https://docs.bittensor.com/btcli - Complete command reference
 
