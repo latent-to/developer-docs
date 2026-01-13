@@ -103,7 +103,7 @@ const config = {
           },
           {
             to: "/keys/coldkey-swap",
-            from: "/subnets/schedule-coldkey-swap",
+            from: "/subnets/coldkey-swap",
           },
           {
             to: "/sdk/bt-api-ref",
