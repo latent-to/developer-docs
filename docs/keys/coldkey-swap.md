@@ -26,7 +26,7 @@ See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey
 
 The coldkey swap mechanism provides a secure way to transition from a potentially compromised source coldkey to a new destination coldkey. To initiate the swap, you must first announce your intention by providing a cryptographic hash of the destination coldkey. This announcement is visible on the chain but does not immediately move funds or ownership; instead, it triggers a mandatory locking period for the source coldkey.
 
-After the announcement, a required delay period must pass before the swap can be finalized. By default, this [announcement delay period](<(https://github.com/opentensor/subtensor/blob/b1067d49a24112e80a1fc8ce04f52a34f9bb6cff/pallets/subtensor/src/lib.rs#L1360)>) is set to **36,000 blocks** (approximately **5 days**). Once this period has elapsed, you must manually execute the swap by providing the actual destination coldkey. The system then verifies that this key matches the previously submitted hash and that the required time has passed.
+After the announcement, a required delay period must pass before the swap can be finalized. By default, this [announcement delay period](https://github.com/opentensor/subtensor/blob/b1067d49a24112e80a1fc8ce04f52a34f9bb6cff/pallets/subtensor/src/lib.rs#L1360) is set to **36,000 blocks** (approximately **5 days**). Once this period has elapsed, you must manually execute the swap by providing the actual destination coldkey. The system then verifies that this key matches the previously submitted hash and that the required time has passed.
 
 :::info
 If the destination coldkey already has an existing identity, it will be preserved during this process rather than being overwritten.
