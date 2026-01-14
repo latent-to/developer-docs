@@ -48,9 +48,10 @@ To follow along with the below examples:
 - You must own the source coldkey to be swapped.
 - A destination (new) coldkey public key.
 
-:::tip
+:::warning
 Confirm the identity of the destination coldkey. A mistake here can result in loss of all of the source coldkey's assets and identity.
 
+- The destination coldkey must not have any existing associations with hotkeys on-chain.
 - If you are rotating the coldkey to maintain ownership, you must control the destination coldkey privatekey. Otherwise you will lose control over all of the source coldkey's assets and identity.
 - If you are transferring ownership to someone else, confirm that they have secure control of the destination coldkey private key.
   :::
@@ -151,9 +152,6 @@ else:
 
 Replace `WALLET_NAME` and `DESTINATION_COLDKEY` with the appropriate wallet addresses. Also, modify the targeted network if necessary.
 </TabItem>
-
-  <!-- <TabItem value="polkadot-app" label="Polkadot app">
-  </TabItem> -->
 </Tabs >
 
 :::info reannouncing coldkey swaps
@@ -221,9 +219,6 @@ else:
 
 Replace `WALLET_NAME` with the source coldkey address. Also, modify the targeted network if necessary.
 </TabItem>
-
-  <!-- <TabItem value="polkadot-app" label="Polkadot app">
-  </TabItem> -->
 </Tabs >
 
 ## Execute a coldkey swap
@@ -301,7 +296,7 @@ wallet = bt.Wallet(name="WALLET_NAME")
 new_coldkey_ss58 = "DESTINATION_COLDKEY"
 
 # Announce the coldkey swap
-response = subtensor.announce_coldkey_swap(
+response = subtensor.swap_coldkey_announced(
     wallet=wallet,
     new_coldkey_ss58=new_coldkey_ss58,
     wait_for_inclusion=True,
@@ -309,16 +304,13 @@ response = subtensor.announce_coldkey_swap(
 )
 
 if response.success:
-    print(f"✅ Coldkey swap announced successfully!")
+    print(f"✅ Coldkey swap executed successfully!")
 else:
     print(f"❌ Failed to announce swap: {response.message}")
 ```
 
 Replace `WALLET_NAME` and `DESTINATION_COLDKEY` with the appropriate wallet addresses. Also, modify the targeted network if necessary.
 </TabItem>
-
-  <!-- <TabItem value="polkadot-app" label="Polkadot app">
-  </TabItem> -->
 </Tabs >
 
-<!-- check balance -->
+After executing a coldkey swap, all assets will be transferred to the destination coldkey, including TAO balance, delegated stake, and any subnet ownership.
