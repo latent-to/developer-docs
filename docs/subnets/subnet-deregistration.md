@@ -102,11 +102,14 @@ When a subnet is deregistered, all alpha tokens in that subnet are liquidated an
    ```
    Where `owner_received_emission_in_tao` is the TAO value of the owner's cut of all emissions received during the subnet's lifetime.
 
-3. **Enumerate alpha Holders**: All alpha token holders and their stake amounts are collected
+ :::info **Note:** the above calculation only applies to subnets number 64+ that were registered *after* the dTAO upgrade, but prior to the implementation of post-dTAO subnet deregistration, which went into on 01 October 2025 (50400 blocks after the reimplementation of subnet deregistration via [BIT-0016](https://github.com/opentensor/bits/pull/29).  For subnets 1-63, registered prior to the implementation of dTAO, there is no owner refund (owners were already refunded when the dTAO upgrade went into effect).  For subnets registered after 01 October 2025 (50400 blocks after the reimplementation of subnet deregistration via [BIT-0016](https://github.com/opentensor/bits/pull/29), there is **no refund for owners** -- the owner refund is equal to the emission that the owner earns after registration.)
+:::
 
-4. **Extract TAO Pool**: The subnet's TAO pool (`SubnetTAO`) is extracted for distribution
+4. **Enumerate alpha Holders**: All alpha token holders and their stake amounts are collected
 
-5. **Distribution**: TAO is distributed proportionally to alpha holders:
+5. **Extract TAO Pool**: The subnet's TAO pool (`SubnetTAO`) is extracted for distribution
+
+6. **Distribution**: TAO is distributed proportionally to alpha holders:
    - Each holder receives: `(holder_alpha_value / total_alpha_value) * pool_tao`
    - TAO is credited directly to each holder's coldkey free balance
 
