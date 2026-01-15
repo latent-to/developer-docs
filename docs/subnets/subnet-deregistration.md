@@ -97,12 +97,12 @@ When multiple subnets have identical EMA prices:
 
 ## Token Liquidation
 
-When a subnet is deregistered, all alpha tokens in that subnet are swapped back to TAO and distributed to the subnet's alpha holders. The subnet’s TAO reserve is then allocated to these holders and used to refund the subnet owner’s lock cost minus the emissions they've received.
+When a subnet is deregistered, all alpha tokens in that subnet are swapped back to TAO and distributed to the subnet's alpha holders. The subnet’s TAO reserve is then allocated to these holders and used to refund any applicable lock cost to the subnet owner, minus the emissions they have received.
 
 ### Takeaways
 
 - **Distribution Method**: Largest-remainder for fair rounding
-- **Owner Protection**: Owner gets refund minus emissions already received
+- **Owner Protection**: Owners receive a lock cost refund, where applicable, minus emissions already received
 - **Immediate Effect**: All alpha tokens are destroyed and cannot be recovered
 
 ### Liquidation Steps
@@ -117,8 +117,13 @@ When a subnet is deregistered, all alpha tokens in that subnet are swapped back 
 
    Where `owner_received_emission_in_tao` is the TAO value of the owner's cut of all emissions received during the subnet's lifetime.
 
- :::info **Note:** the above calculation only applies to subnets number 64+ that were registered *after* the dTAO upgrade, but prior to the implementation of post-dTAO subnet deregistration, which went into on 01 October 2025 (50400 blocks after the reimplementation of subnet deregistration via [BIT-0016](https://github.com/opentensor/bits/pull/29).  For subnets 1-63, registered prior to the implementation of dTAO, there is no owner refund (owners were already refunded when the dTAO upgrade went into effect).  For subnets registered after 01 October 2025 (50400 blocks after the reimplementation of subnet deregistration via [BIT-0016](https://github.com/opentensor/bits/pull/29), there is **no refund for owners** -- the owner refund is equal to the emission that the owner earns after registration.)
-:::
+:::info Subnet owner refund
+The total amount returned to a subnet owner upon deregistration depends on when the subnet was registered. The refund is categorized as follows:
+
+- Legacy subnets registered before DTAO receive no refund as the owners were already compensated during the initial DTAO upgrade.
+- Subnets registered after DTAO but before the implementation of subnet deregistration (**Oct 1, 2025**) receive a full refund. The total subnet owner payout equals the original Locked TAO (`Lock Refund + Emissions Received`).
+- Subnets registered after DTAO and after the implementation of subnet deregistration (**Oct 1, 2025**) receive subnet owner emissions only. There are no lock cost refunds since the registration costs are burned.
+  :::
 
 4. **Enumerate alpha Holders**: All alpha token holders and their stake amounts are collected
 
