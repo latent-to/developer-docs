@@ -6,6 +6,19 @@ title: "Announcements and Developments"
 
 This page tracks recent and upcoming changes to the Bittensor protocol and other major events in the Bittensor ecosystem.
 
+**January, 2026**
+
+## Updated coldkey swap mechanism
+
+**Status**: In development
+
+- **What**: Coldkey swap transitions from a schedule-based system to an "Announce-and-Execute" workflow, requiring users to finalize the swap after a mandatory delay.
+- **Key Features**:
+  - Swaps are no longer automatic. After announcing, the user must execute the swap by providing the destination coldkey to verify it against the announced hash.
+  - A default waiting period of 36,000 blocks (~5 days) must elapse before the announced swap can be executed.
+  - To prevent spam or frontrunning, a 7,200-block (~1 day) buffer is required after the initial delay expires before a new announcement can be submitted.
+  - The source coldkey is locked upon announcement. Once executed, all TAO, delegated stakes, and subnet ownership transfer to the destination key.
+
 **December, 2025**
 
 ## Upcoming TAO halving
