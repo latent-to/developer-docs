@@ -374,7 +374,7 @@ The maximum of the dynamic range for difficulty of proof-of-work registration on
 
 **Description**:
 
-Maximum neuron registrations per block. Note: Actual limit may be lower, as there is also per interval limit `TargetRegistrationsPerInterval`.
+Maximum neuron registrations per block. Note: Actual limit may be lower, as there is also per interval limit [`TargetRegistrationsPerInterval`](#targetregistrationsperinterval).
 
 ### MaxWeightsLimit
 
@@ -566,7 +566,11 @@ Indicates whether or not the subnet's emissions have started.
 
 **Description**:
 
-Maximum number of neuron registrations allowed per interval. Interval is `AdjustmentInterval`
+Target number of neuron registrations allowed per interval. Interval is `AdjustmentInterval`.
+
+:::info
+The hyperparameter triggers a rate limit when the registration attempts in the current interval exceed three times the `TargetRegistrationsPerInterval` value.
+:::
 
 ### Tempo
 
