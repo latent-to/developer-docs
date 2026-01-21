@@ -4,7 +4,7 @@ title: "Mining and Validating on Localnet"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 # Mining and Validating on Localnet
 
@@ -122,6 +122,10 @@ btcli stake add --netuid NETUID \
 --network ws://127.0.0.1:9945
 ```
 
+:::info
+When running a local chain in fast-blocks mode, we recommend using the `--no-mev-protection` flag when executing this command.
+:::
+
 Replace `NETUID`, `WALLET_NAME`, and `WALLET_HOTKEY` with the target subnet ID, the name of the wallet, and the associated hotkey, respectively.
 
 Once you've staked enough TAO to the validator hotkey, the validator becomes eligible to submit evaluations and set weights on the subnet. You can verify that the validator has been granted a permit using any of the following methods:
@@ -164,7 +168,7 @@ If the validator wallet has a validator permit, an asterisk (`*`) is shown under
 
 <SdkVersion />
 
-Input the following lines in your Python environment, replacing `NETUID`, `WALLET_NAME`, and `WALLET_HOTKEY` with the target subnet ID, the name of the wallet, and the associated hotkey, respectively.
+Input the following lines in your Python environment, replacing `NETUID`, `WALLET_NAME`, and `WALLET_HOTKEY` with the target subnet ID, the name of the validator wallet, and its associated hotkey, respectively.
 
 ```python
 import bittensor as bt
@@ -187,12 +191,21 @@ On localnet subnets, competition for permits is typically minimal. After staking
 
 The `subnet-template` repo contains the core logic for the subnet miner and validator. It features a simple `dummy` protocol where miners multiply input values by 2, while validators evaluate responses and update network weights based on performance.
 
-To begin, clone the subnet-template GitHub repository and navigate into its directory:
+To begin, clone the `subnet-template` GitHub repository and navigate into its directory:
 
 ```sh
 git clone https://github.com/opentensor/subnet-template.git
 cd subnet-template
 ```
+
+:::info
+After changing to the `subnet-template` directory, you must install the dependencies required to run the miner and validator Python scripts. To do this, create a virtual environment and run the following command in the `subnet-template` directory:
+
+```sh
+pip install bittensor
+```
+
+:::
 
 ## 4. Run the miner and validator
 
