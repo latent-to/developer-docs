@@ -214,8 +214,10 @@ After getting the validator permits, you can now run the validator alongside the
 Begin by starting the miner process to produce and submit work to the subnet. Then, run the validator process on a different terminal tab to evaluate miner outputs and set weights for the network.
 
 :::info
-To ensure proper operation, run the miner and validator processes concurrently, each in a separate terminal tab or session.
-:::
+
+- To ensure proper operation, run the miner and validator processes concurrently, each in a separate terminal tab or session.
+- Also, run the `miner.py` and `validator.py` scripts in the Python environment with the Bittensor SDK installed.
+  :::
 
 ### Start the miner process
 
