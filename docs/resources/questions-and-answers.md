@@ -85,7 +85,7 @@ Yes indeed. In Bittensor, the work of validating the blockchain is performed by 
 
 ### What is the incentive to be a miner or a validator, or create a subnet?
 
-Bittensor incentivizes participation through emission of TAO. Each day, 7200 TAO are emitted into the network (one TAO every 12 seconds).
+Bittensor incentivizes participation through emission of TAO. Each day, 3600 TAO are emitted into the network (0.5 TAO every 12 seconds).
 
 The emission of TAO within each subnet is as follows:
 

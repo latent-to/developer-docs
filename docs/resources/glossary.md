@@ -221,7 +221,7 @@ The total staked TAO amount of a delegate, including their own TAO tokens and th
 
 ### Emission
 
-Every block, currency is injected into each subnet in Bittensor, and every tempo (or 360 blocks), it is extracted by participants (miners, validators, stakers, and subnet creators).
+Every block, TAO is injected into each subnet in Bittensor, and every tempo (or 360 blocks), it is extracted by participants (miners, validators, stakers, and subnet creators).
 
 Emission is this process of generating and allocating currency to participants. The amount allocated to a given participant over some duration of time is also often referred to as 'their emissions' for the period.
 
@@ -268,7 +268,6 @@ asyncio.run(main())
 A weighted moving average that prioritizes recent observations while exponentially decreasing the weight of older data points. In Bittensor, EMA is used in two critical stability mechanisms:
 
 1. **Validator-Miner Bond Smoothing**: Smooths the evolution of bonds between validators and miners over time, rewarding early discovery while preventing abrupt manipulation attempts. Has two modes:
-
    - **Basic Mode**: Single α ≈ 0.1 (~7-22 blocks for significant changes)
    - **Liquid Alpha Mode**: Dynamic α range 0.7-0.9 based on consensus alignment (~1-13 blocks depending on consensus)
 
@@ -720,6 +719,7 @@ $$
 The process of attaching TAO to a validator hotkey, i.e., locking TAO to a subnet validator's hotkey to increase their total stake and increase their consensus power and share of dividends.
 
 **See also:**
+
 - [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md)
 - [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
 - [Delegation](../staking-and-delegation/delegation.md)
@@ -791,7 +791,7 @@ A data object used by subnet validators and subnet miners as the main vehicle to
 
 ### TAO ($\tau$)
 
-The cryptocurrency of the Bittensor network, used to incentivize participation in network activities (mining, validation, subnet creation and management). A single TAO is newly created (i.e., minted) every 12 seconds on the Bittensor blockchain.
+The cryptocurrency of the Bittensor network, used to incentivize participation in network activities (mining, validation, subnet creation and management). Currently, 0.5 TAO is minted every 12 seconds on the Bittensor blockchain.
 
 **See also:** [Emissions](../learn/emissions.md), [Wallets](../keys/wallets.md)
 
@@ -923,6 +923,7 @@ A list of subnet IDs (netuids) indicating which subnets a delegate is authorized
 A type of node in a subnet that evaluates the performance of miners and sets weights based on their output
 
 **See also:**
+
 - [Validating in Bittensor](../validators/)
 - [Browse validators on TAO.app](https://www.tao.app/validators)
 
