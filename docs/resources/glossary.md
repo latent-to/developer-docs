@@ -358,7 +358,7 @@ The total amount of TAO circulating in the Bittensor network. Includes TAO that 
 
 This can be viewed on Bittensor explorers such as [TAO.app's Tokenomics Dashboard](https://www.tao.app/tokenomics), or [TAOstats](https://taostats.io).
 
-To query it directly from the chain, see: [Subtensor Storage Query Example: Total Issuance](../subtensor-nodes/subtensor-storage-query-examples.md#123-totalissuance)
+To query it directly from the chain, see: [Subtensor Storage Query Example: Total Issuance](../subtensor-nodes/subtensor-storage-query-examples.md#168-totalissuance)
 
 See also: [Recycling, burning, and locking](#recycling-and-burning)
 
@@ -899,7 +899,7 @@ Unstaking incurs blockchain transaction fees, which are recycled back into the T
 
 - [Staking/Delegation overview](../staking-and-delegation/delegation.md#unstaking)
 - [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md#unstaking-with-btcli)
-- [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md#unstaking-with-the-sdk)
+- [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md#unstaking-from-a-validator)
 - [Understanding Pricing and Anticipating Slippage](../learn/slippage.md)
 - [Price Protection When Staking](../learn/price-protection.md)
 - [Transaction Fees](../learn/fees.md)
@@ -918,7 +918,7 @@ A list of subnet IDs (netuids) indicating which subnets a delegate is authorized
 
 **See also:** [Validator Permits](#validator-permit), [Delegation](../staking-and-delegation/delegation.md), [Validator Requirements](../validators/index.md#requirements-for-validation)
 
-### Validator (or subnet validator)
+### Validator (or subnet validator) {#subnet-validator}
 
 A type of node in a subnet that evaluates the performance of miners and sets weights based on their output
 

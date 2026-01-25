@@ -2,7 +2,7 @@
 title: "Bittensor SDK v10 Migration Guide"
 ---
 
-import { SdkVersion } from "./_sdk-version.mdx";
+import { SdkVersion } from "./\_sdk-version.mdx";
 
 # Bittensor SDK v10 Migration Guide
 
@@ -168,7 +168,7 @@ For detailed documentation on `GenericCall`, `CallBuilder`, and practical exampl
 
 ### SimSwap Fee Calculation Methods
 
-The SDK now provides dedicated methods for calculating swap-based fees for staking operations. These methods use the new `sim_swap()` functionality (see [New Subtensor Methods](#new-subtensor-methods)) to query the Subtensor blockchain and return precise fee calculations:
+The SDK now provides dedicated methods for calculating swap-based fees for staking operations. These methods use the new `sim_swap()` functionality to query the Subtensor blockchain and return precise fee calculations:
 
 ```python
 # Get fee for adding stake (staking operation)
@@ -286,6 +286,7 @@ print(f"Estimated fee: {fee}")  # Returns Balance object
 - Optimize transaction batching based on fee estimates
 
 See also:
+
 - [Working with Blockchain Calls](./call.md) for more examples of composing and submitting calls
 - [Transaction Fees in Bittensor](../learn/fees) for complete fee information
 
@@ -401,7 +402,7 @@ commits_v2 = subtensor.get_current_weight_commit_info_v2(netuid, mechid)
 commits = subtensor.get_timelocked_weight_commits(netuid, mechid)
 ```
 
-## Breaking Changes: Parameter Changes
+## Breaking Changes: Parameter Changes {#parameter-changes}
 
 ### Consistent Parameter Ordering
 
@@ -514,7 +515,7 @@ subtensor.set_weights(wallet, netuid, uids, weights, max_attempts=5)
 
 **New Validation:** The `max_attempts` parameter now includes validation. If `max_attempts=0` or negative, the method will return an `ExtrinsicResponse` with `success=False` and an appropriate error message instead of attempting the operation.
 
-## Breaking Changes:Removed Methods
+## Breaking Changes:Removed Methods {#removed-methods}
 
 ### Duplicate References
 
@@ -590,30 +591,30 @@ The `*` symbol in Python function signatures creates a boundary: all parameters 
 ```python
 # Before (positional arguments could cause confusion):
 subtensor.add_stake(
-    wallet, 
-    1, 
-    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", 
-    amount, 
-    False, 
-    False, 
-    0.005, 
-    False, 
-    None, 
-    False, 
-    True, 
+    wallet,
+    1,
+    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+    amount,
+    False,
+    False,
+    0.005,
+    False,
+    None,
+    False,
+    True,
     True
 )
 # Which parameter is which? Hard to tell!
 
 # After (keyword-only arguments enforce clarity):
 subtensor.add_stake(
-    wallet, 
-    1, 
-    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", 
-    amount, 
-    False, 
-    False, 
-    0.005, 
+    wallet,
+    1,
+    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+    amount,
+    False,
+    False,
+    0.005,
     mev_protection=True,  # Must be passed by name if provided
     period=None,  # Must be passed by name if provided
     raise_error=False,  # Must be passed by name if provided

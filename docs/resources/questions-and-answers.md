@@ -116,10 +116,6 @@ You can keep trying forever, but your success depends on your performance. Minin
 
 See [miner deregistration](../miners/index.md#miner-deregistration).
 
-## Where can I get answers to my questions about Dynamic TAO?
-
-This [Dynamic TAO FAQ](../dynamic-tao/dtao-faq).
-
 ## Who maintains the Bittensor blockchain, software, and documentation?
 
 Bittensor is an open-source project and is open to contributions from the community. Most of the core development on the Subtensor blockchain is done by engineers working for the [Opentensor Foundation](https://github.com/opentensor), a nonprofit organization. The Bittensor CLI (`btcli`), the Bittensor Python SDK, and this documentation, are developed by members of [Latent Holdings](https://latent.to/), a Bittensor development startup that also own maintains the blockchain explorer [tao.app](https://www.tao.app/), the Bittensor AI Assistant [Savant](https://tao.app/savant), and [Subnet 14: TAOHASH](https://taohash.com/).
