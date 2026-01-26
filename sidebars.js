@@ -212,7 +212,7 @@ const sidebars = {
         "sdk/env-vars",
         "sdk/bt-api-ref",
         "sdk/subtensor-api",
-                         "sdk/mev-protection",
+        "sdk/mev-protection",
         "getting-started/install-wallet-sdk",
         "sdk/call",
         "sdk/migration-guide",
@@ -319,14 +319,6 @@ const sidebars = {
         "governance/senate",
         "governance/senators-btcli-guide",
       ],
-    },
-    {
-      type: "category",
-      label: "Dynamic TAO",
-      link: { type: "doc", id: "dynamic-tao/index" },
-      collapsible: true,
-      collapsed: true,
-      items: ["dynamic-tao/dtao-faq", "dynamic-tao/sdk-cheat-sheet"],
     },
 
     {

@@ -85,7 +85,7 @@ Yes indeed. In Bittensor, the work of validating the blockchain is performed by 
 
 ### What is the incentive to be a miner or a validator, or create a subnet?
 
-Bittensor incentivizes participation through emission of TAO. Each day, 7200 TAO are emitted into the network (one TAO every 12 seconds).
+Bittensor incentivizes participation through emission of TAO. Each day, 3600 TAO are emitted into the network (0.5 TAO every 12 seconds).
 
 The emission of TAO within each subnet is as follows:
 
@@ -115,10 +115,6 @@ Browse the subnets at [TAO.app](https://tao.app), or on [Discord](https://discor
 You can keep trying forever, but your success depends on your performance. Mining and validating in a subnet is competitive. If a miner or validator is one of the three lowest in the subnet, it may be de-registered at the end of the tempo, and have to register again.
 
 See [miner deregistration](../miners/index.md#miner-deregistration).
-
-## Where can I get answers to my questions about Dynamic TAO?
-
-This [Dynamic TAO FAQ](../dynamic-tao/dtao-faq).
 
 ## Who maintains the Bittensor blockchain, software, and documentation?
 

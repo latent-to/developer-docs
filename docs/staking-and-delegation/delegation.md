@@ -20,7 +20,6 @@ See also:
 - [Managing Stake with the Python SDK](./managing-stake-sdk.md)
 - [Staking with a Proxy](../keys/proxies/staking-with-proxy): Keep your coldkey secure while managing staking operations
 
-
 :::tip tips
 Validators/delegates can configure their take. The default value is 18%. See [`btcli sudo set-take`](../btcli#btcli-sudo-set-take).
 
@@ -43,7 +42,7 @@ As a TAO holder, you will stake to a validator’s hotkey on a specific subnet. 
 1. Then, the subnet's AMM pool algorithm uses the latest exchange rate and calculates the equivalent units of $\alpha$, for the TAO that was just added to the TAO reserve side. This amount of $\alpha$ is taken out of the alpha reserve of the pool and is sent to the validator’s hotkey.
 1. The validator’s hotkey holds the $\alpha$. The sum of stake among all hotkeys is referred as **$\alpha$ outstanding** for that subnet.
 
-### Unstaking back to TAO
+### Unstaking back to TAO {#unstaking}
 
 **When you unstake:**
 
@@ -67,7 +66,6 @@ There are several ways to unstake your TAO:
 - **Unstake all**: Remove all stake from a validator on a subnet in one operation
 - **Move stake**: Move stake between validators or subnets without withdrawing to your coldkey (see [Moving stake](#moving-stake))
 - **Transfer stake**: Transfer ownership of staked tokens to another coldkey (see [Transferring stake](#transferring-stake))
-
 
 ### Moving stake
 

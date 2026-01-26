@@ -4,7 +4,7 @@ title: "Validating in Bittensor"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 # Validating in Bittensor
 
@@ -196,7 +196,7 @@ When validator permits are lost, associated bonds are deleted. This ensures that
 
 ### Implementation Details
 
-For implementation details of how validator permits are calculated, managed, and cleaned up in the codebase, see the [Validator Permit Management section](../navigating-subtensor/epoch.md#validator-permit-management) in the Epoch Implementation documentation.
+For implementation details of how validator permits are calculated, managed, and cleaned up in the codebase, see the [Validator Permit Management section](../navigating-subtensor/epoch.md#3-validator-permit-management) in the Epoch Implementation documentation.
 
 ### Code References
 

@@ -7,11 +7,12 @@ toc_max_heading_level: 2
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import { SdkVersion } from "../../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../../sdk/\_sdk-version.mdx";
 
 This page covers creating a pure proxy and executing a call using a pure proxy. The primary use case for pure proxies is constructing multisignature wallets (multisigs) with swappable members. For most other applications requiring wallet indirection, regular proxy wallets are the correct solution.
 
-See: 
+See:
+
 - [Proxies Overview](./)
 - [Working with Proxies](./working-with-proxies)
 - [Secure a Coldkey with a Multisig Wallet](../multisig)
@@ -36,23 +37,22 @@ All transactions involving a pure proxy must be signed by the spawner account. O
 
 Multisignature wallets offer a unique security advantage (see [Secure a Coldkey with a Multisig Wallet](../multisig)). However, the unique mechanism that underlies them cryptographically presents an operational difficulty. A multisig address is deterministically derived from its members. If you create a 2-of-3 multisig with Alice, Bob, and Charlie, you get a specific address. Therefore, if Charlie leaves and Dave joins, you must create an entirely new multisig with a new address—then transfer all funds and update all references.
 
-
-Pure proxies offer a workaround; instead of basing the multisig on people's coldkeys directly, you can base it off or pure proxies controlled by the  members of a multisig, you can make **pure proxies** the members:
+Pure proxies offer a workaround; instead of basing the multisig on people's coldkeys directly, you can base it off or pure proxies controlled by the members of a multisig, you can make **pure proxies** the members:
 
 ```
 Multisig (Any 2 of 3 signatures required to sign transaction)
 ├── Pure Proxy A ← controlled by Alice
-├── Pure Proxy B ← controlled by Bob  
+├── Pure Proxy B ← controlled by Bob
 └── Pure Proxy C ← controlled by Charlie
 ```
 
 When Charlie leaves and Dave joins:
+
 1. Charlie transfers control of Pure Proxy C to Dave
 2. Dave now controls Pure Proxy C, allowing him to co-sign transactions with either Alice or Bob. Charlie's key is now unable to co-sign.
 3. **The multisig itself never changes**—same address, same members (the pure proxies)
 
 This approach means you never need to recreate the multisig or transfer funds when team members change. The pure proxy addresses remain constant; only who controls each pure proxy changes.
-
 
 ### Transferring control of a pure proxy
 
@@ -62,7 +62,6 @@ You can transfer control of a pure proxy to a new account by:
 2. Removing the old controller as proxy
 
 This is how you swap members in a multisig-of-pure-proxies setup: the outgoing member adds the incoming member as a proxy for their pure proxy, then removes themselves. See [source code: pure proxy account generation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L827-L850).
-
 
 ## Prerequisites
 
@@ -87,15 +86,17 @@ btcli proxy create \
 ```
 
 **Parameters:**
+
 - `--wallet.name`: Your wallet name (the spawner account that will control the proxy)
 - `--proxy-type`: The type of proxy (e.g., `Any`, `Staking`, `Transfer`, etc.)
 - `--delay`: Optional delay in blocks (0 for immediate execution)
 - `--index`: Disambiguation index for creating unique addresses (usually 0)
 
 **Example output:**
+
 ```console
-Created pure '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty' 
-from spawner '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY' 
+Created pure '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty'
+from spawner '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'
 with proxy type 'Any' with delay 0.
 
 Extrinsic hash: 0xcd5ded2dfc505152870610233532646f6ebdd930793fa82f999d9bda2b79c2b5
@@ -105,6 +106,7 @@ Extrinsic index: 2
 
 :::tip Save creation details
 **Record the following values** from the output—you'll need them to kill the proxy later:
+
 - Pure proxy address
 - Block number (height)
 - Extrinsic index
@@ -115,6 +117,7 @@ BTCLI will prompt you to save this to your address book for convenience.
 :::
 
 **Save to address book:**
+
 ```bash
 # Optionally add to your local address book
 btcli config add-proxy \
@@ -200,7 +203,7 @@ Importing the proxy account makes it selectable in the Polkadot-JS web app UI.
 </TabItem>
 </Tabs>
 
-Creating a pure proxy adds the spawner account as the first delegate for that proxy. Additional delegates can also be added by [registering new proxy entries](working-with-proxies.md#add-a-proxy) from the pure proxy account, each specifying the delegate account, proxy type, etc.
+Creating a pure proxy adds the spawner account as the first delegate for that proxy. Additional delegates can also be added by [registering new proxy entries](working-with-proxies.md#add-a-proxy-relationship) from the pure proxy account, each specifying the delegate account, proxy type, etc.
 
 ## Executing calls via a pure proxy
 
@@ -224,6 +227,7 @@ btcli wallet transfer \
 ```
 
 **How it works:**
+
 - `--wallet.name spawner_wallet`: The spawner wallet signs the transaction
 - `--proxy PURE_PROXY_ADDRESS`: The pure proxy account acts as the origin
 - The transfer will appear to come from the pure proxy address
@@ -245,6 +249,7 @@ Ensure the pure proxy account has enough funds to cover both the transfer amount
 :::
 
 **Other operations through pure proxies:**
+
 ```bash
 # Add stake through pure proxy
 btcli stake add \
@@ -341,11 +346,10 @@ Ensure the pure proxy account holds enough funds to cover both the transfer and 
 
 - After submitting the transaction, check the Polkadot.JS web app's **Explorer** page for a `balances.Transfer` event. Notice the sender is the pure proxy account.
 - Ensure the pure proxy account holds enough funds to cover both the transfer and transaction fees.
-:::
+  :::
 
 </TabItem>
 </Tabs>
-
 
 ## Kill a pure proxy
 
@@ -374,6 +378,7 @@ btcli proxy kill \
 ```
 
 **Required Parameters:**
+
 - `--wallet.name`: The spawner wallet that created the proxy
 - `--height`: The block number where the pure proxy was created
 - `--ext-index`: The extrinsic index of the creation transaction
@@ -384,6 +389,7 @@ btcli proxy kill \
 **Example:**
 
 Suppose we created a pure proxy and received output as follows:
+
 ```console
  btcli proxy create \
   --wallet.name PracticeSafeWallet \
@@ -397,7 +403,9 @@ Decrypting...
 l✅ Your extrinsic has been included as 5960138-7
 Created pure '5DvEUipraHsk26renzART8NKuskd3yacsJq64wKHRGTpncCn' from spawner '5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt' with proxy type 'Transfer' with delay 0.
 ```
+
 We use the block number/extrinsic index as follows when identifying the pure proxy to kill:
+
 ```bash
 btcli proxy kill \
   --wallet.name PracticeSafeWallet \
@@ -413,6 +421,7 @@ Enter your password:
 Decrypting...
 ✅Success!
 ```
+
 </TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
@@ -449,6 +458,7 @@ else:
 ```
 
 :::info Parameter requirements
+
 - The `index`, `proxy_type`, and `delay` (from creation) must exactly match those used when creating the pure proxy.
 - `height` and `ext_index` uniquely identify the creation transaction. Together, they specify exactly when and where in the blockchain the pure proxy was created. These values are returned in the `PureCreated` event from `create_pure_proxy()`.
 :::
@@ -470,8 +480,6 @@ else:
 Ensure that all parameters are correct before making this call. The call will fail with a `Proxy.NoPermission` error if any parameter is invalid or if the origin account lacks permission to perform the action.
 </TabItem>
 </Tabs>
-
-
 
 ## Troubleshooting
 
