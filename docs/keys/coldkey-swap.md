@@ -26,7 +26,7 @@ See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey
 
 The coldkey swap mechanism provides a secure way to transition from a potentially compromised source coldkey to a new destination coldkey. To initiate the swap, you must first announce your intention by providing a cryptographic hash of the destination coldkey. This announcement is visible on the chain but does not immediately move funds or ownership; instead, it triggers a mandatory locking period for the source coldkey.
 
-After the announcement, a required delay period must pass before the swap can be finalized. By default, this [announcement delay period](https://github.com/opentensor/subtensor/blob/b1067d49a24112e80a1fc8ce04f52a34f9bb6cff/pallets/subtensor/src/lib.rs#L1360) is set to **36,000 blocks** (approximately **5 days**). Once this period has elapsed, you must manually execute the swap by providing the actual destination coldkey. The system then verifies that this key matches the previously submitted hash and that the required time has passed.
+After the announcement, a required delay period must pass before the swap can be finalized. By default, this [announcement delay period](https://github.com/opentensor/subtensor/blob/b1067d49a24112e80a1fc8ce04f52a34f9bb6cff/pallets/subtensor/src/lib.rs#L1360) is set to **36,000 blocks** (~ **5 days**). Once this period has elapsed, you must manually execute the swap by providing the actual destination coldkey. The system then verifies that this key matches the previously submitted hash and that the required time has passed.
 
 :::info
 If the destination coldkey already has an existing identity, it will be preserved during this process rather than being overwritten.
@@ -34,10 +34,10 @@ If the destination coldkey already has an existing identity, it will be preserve
 
 The cost for a coldkey swap transaction is **0.1 TAO**. This must be available in the source coldkey when the swap is announced. Upon successful execution, the source coldkey is entirely unlocked, and all associated assets are migrated to the destination coldkey. This includes the transfer of all delegated stake, staked TAO (for those staking to a validator), and any subnet ownership from the source coldkey to the destination coldkey.
 
-:::warning Announced swaps cannot be cancelled
-Once a coldkey swap has been announced, **it cannot be cancelled**. This is an intentional design feature; coldkey swaps must not be cancellable, because if they were, an attacker who gained access to a coldkey could use cancellation to thwart the owner's attempt to swap it.
+:::warning Coldkey Swap Disputes
+Once a coldkey swap has been announced, **it cannot be cancelled**. However, an announced swap can be frozen by calling the [`dispute_coldkey_swap`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs) extrinsic. This action immediately prevents the execution of the swap and suspends all other operations on the coldkey to secure the assets.
 
-The delay period is intentionally long to allow those affected by the swap to access their coldkeys in order to respond. This is an issue because high-value keys (for example, coldkeys with subnet ownership or which control high value validator hotkeys) should be kept under stringent conditions of physical security, implying they cannot always be quickly accessed, for example during travel.
+This mechanism serves as a primary defense against unauthorized access by a malicious attacker. To resolve a dispute, the rightful owner must contact the Triumvirate and attempt to prove ownership of the coldkey.
 
 :::
 

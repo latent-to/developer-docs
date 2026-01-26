@@ -120,6 +120,26 @@ Related:
 **Error**: `InputLengthsUnequal`  
 **Description**: Attempted to batch reveal weights with mismatched vector input lenghts.
 
+### Error code 19
+
+**Error**: `UidNotFound`
+**Description**: The specified netuid does not exist or the provided hotkey does not own this subnet.
+
+### Error code 20
+
+**Error**: `EvmKeyAssociateRateLimitExceeded`
+**Description**: Rate limit exceeded for associate EVM key extrinsic.
+
+### Error code 21
+
+**Error**: `ColdkeySwapDisputed`
+**Description**: The announced coldkey swap has an associated dispute.
+
+### Error code 21
+
+**Error**: `InvalidRealAccount`
+**Description**: Invalid real account for proxy operation.
+
 ### Error Code 255
 
 **Error**: `BadRequest`  

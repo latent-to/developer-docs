@@ -506,6 +506,10 @@ Coldkey swap reannounced too early.
 
 The announced coldkey hash does not match the new coldkey hash.
 
+### `ColdkeySwapAlreadyDisputed`
+
+Coldkey swap already disputed.
+
 ### `InvalidIdentity`
 
 Invalid identity.
