@@ -27,7 +27,7 @@ Related:
 ### Error Code 0
 
 **Error**: `ColdkeySwapAnnounced`  
-**Description**: Your coldkey is set to be swapped. No transfer operations are possible.
+**Description**: A coldkey swap has been announced for this coldkey. No operations are possible.
 
 ### Error Code 1
 
@@ -133,9 +133,9 @@ Related:
 ### Error code 21
 
 **Error**: `ColdkeySwapDisputed`
-**Description**: The announced coldkey swap has an associated dispute.
+**Description**: The coldkey has an associated dispute. No operations are possible.
 
-### Error code 21
+### Error code 22
 
 **Error**: `InvalidRealAccount`
 **Description**: Invalid real account for proxy operation.

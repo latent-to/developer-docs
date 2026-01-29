@@ -26,7 +26,7 @@ See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey
 
 The coldkey swap mechanism provides a secure way to transition from a potentially compromised source coldkey to a new destination coldkey. To initiate the swap, you must first announce your intention by providing a cryptographic hash of the destination coldkey. This announcement is visible on the chain but does not immediately move funds or ownership; instead, it triggers a mandatory locking period for the source coldkey.
 
-After the announcement, a required delay period must pass before the swap can be finalized. By default, this [announcement delay period](https://github.com/opentensor/subtensor/blob/b1067d49a24112e80a1fc8ce04f52a34f9bb6cff/pallets/subtensor/src/lib.rs#L1360) is set to **36,000 blocks** (~ **5 days**). Once this period has elapsed, you must manually execute the swap by providing the actual destination coldkey. The system then verifies that this key matches the previously submitted hash and that the required time has passed.
+After the announcement, a required delay period must pass before the swap can be finalized. By default, this [announcement delay period](https://github.com/opentensor/subtensor/blob/devnet-ready/runtime/src/lib.rs#:~:text=pub%20const%20InitialColdkeySwapAnnouncementDelay) is set to **36,000 blocks** (~ **5 days**). Once this period has elapsed, you must manually execute the swap by providing the actual destination coldkey. The system then verifies that this key matches the previously submitted hash and that the required time has passed.
 
 :::info
 If the destination coldkey already has an existing identity, it will be preserved during this process rather than being overwritten.
@@ -35,7 +35,7 @@ If the destination coldkey already has an existing identity, it will be preserve
 The cost for a coldkey swap transaction is **0.1 TAO**. This must be available in the source coldkey when the swap is announced. Upon successful execution, the source coldkey is entirely unlocked, and all associated assets are migrated to the destination coldkey. This includes the transfer of all delegated stake, staked TAO (for those staking to a validator), and any subnet ownership from the source coldkey to the destination coldkey.
 
 :::warning Coldkey Swap Disputes
-Once a coldkey swap has been announced, **it cannot be cancelled**. However, an announced swap can be frozen by calling the [`dispute_coldkey_swap`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs) extrinsic. This action immediately prevents the execution of the swap and suspends all other operations on the coldkey to secure the assets.
+Once a coldkey swap has been announced, **it cannot be cancelled**. However, an announced swap can be frozen by calling the [`dispute_coldkey_swap`](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/subtensor/src/macros/dispatches.rs#:~:text=pub%20fn%20dispute_coldkey_swap) extrinsic. [Disputing a coldkey swap](#dispute-a-coldkey-swap) immediately prevents the execution of the swap and suspends all other operations on the coldkey to secure the assets.
 
 This mechanism serves as a primary defense against unauthorized access by a malicious attacker. To resolve a dispute, the rightful owner must contact the Triumvirate and attempt to prove ownership of the coldkey.
 
@@ -155,7 +155,7 @@ Replace `WALLET_NAME` and `DESTINATION_COLDKEY` with the appropriate wallet addr
 </Tabs >
 
 :::info reannouncing coldkey swaps
-A coldkey swap can be reannounced only after the [ColdkeySwapReannouncementDelay](https://github.com/opentensor/subtensor/blob/b1067d49a24112e80a1fc8ce04f52a34f9bb6cff/chain-extensions/src/mock.rs#L329C15-L329C52) has passed. By default, this is 7,200 blocks (~1 day) after the initial announcement delay period expires. Reannouncing will overwrite the existing announcement and reset the mandatory waiting period before execution.
+A coldkey swap can be reannounced only after the [ColdkeySwapReannouncementDelay](https://github.com/opentensor/subtensor/blob/devnet-ready/runtime/src/lib.rs#:~:text=pub%20const%20InitialColdkeySwapReannouncementDelay) has passed. By default, this is 7,200 blocks (~1 day) after the initial announcement delay period expires. Reannouncing will overwrite the existing announcement and reset the mandatory waiting period before execution.
 :::
 
 ### Check announcements from a coldkey
@@ -314,3 +314,73 @@ Replace `WALLET_NAME` and `DESTINATION_COLDKEY` with the appropriate wallet addr
 </Tabs >
 
 After executing a coldkey swap, all assets will be transferred to the destination coldkey, including TAO balance, delegated stake, and any subnet ownership.
+
+## Dispute a coldkey swap
+
+If a malicious actor announces a coldkey swap on a compromised key, the legitimate owner can trigger a dispute at any point prior to its execution to intercept the operation. This operation freezes the coldkey and prevents the attacker from completing the swap process.
+
+To dispute a coldkey swap:
+<Tabs groupId="coldkey-swap">
+<TabItem value="btcli" label="BTCLI">
+Run the following command to dispute a coldkey swap using BTCLI:
+
+```bash
+btcli wallets swap-coldkey dispute --wallet-name WALLET_NAME
+```
+
+Replace `WALLET_NAME` with the appropriate wallet addresses.
+
+<details>
+  <summary><strong>Show sample output</strong></summary>
+
+```sh
+Wallet selected: Wallet (Name: 'alice', Hotkey: 'default', Path: '/Users/chidera/.bittensor/wallets/')
+
+Using the specified network local from config
+[13:27:34] Warning: Verify your local subtensor is running on port 9944.                                                                                                                    subtensor_interface.py:91
+
+                                       Dispute Coldkey Swap
+
+            Item ┃ Value
+━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         Coldkey │ 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+ Execution Block │ 87
+          Status │ Ready
+         Warning │ Disputing freezes the current swap process until the triumvirate can intervene.
+─────────────────┼─────────────────────────────────────────────────────────────────────────────────
+                 │
+Proceed with dispute? Your swap process will be frozen until the triumvirate can intervene. [y/n] (n): y
+✅ Coldkey swap disputed.
+
+✅ Your extrinsic has been included as 40386-2
+```
+
+ </details>
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
+
+```py
+import bittensor as bt
+
+subtensor = bt.Subtensor(network="local")
+wallet = bt.Wallet(name="WALLET_NAME")
+
+response = subtensor.dispute_coldkey_swap(
+wallet=wallet,
+wait_for_inclusion=True,
+wait_for_finalization=True,
+)
+
+if response.success:
+print(f"✅ Coldkey swap disputed successfully!")
+else:
+print(f"❌ Failed to dispute coldkey swap: {response.message}")
+
+```
+
+</TabItem>
+
+</Tabs>
+
+After a coldkey swap is disputed, the legitimate owner must contact the Triumvirate to prove ownership of the coldkey. The coldkey remains frozen until the Triumvirate resolves the dispute and [manually resets it](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/subtensor/src/macros/dispatches.rs#:~:text=pub%20fn%20reset_coldkey_swap).
