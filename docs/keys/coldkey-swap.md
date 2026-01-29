@@ -379,8 +379,13 @@ print(f"❌ Failed to dispute coldkey swap: {response.message}")
 
 ```
 
+Replace `WALLET_NAME` with the appropriate wallet addresses. Also, modify the targeted network if necessary.
 </TabItem>
 
 </Tabs>
+
+:::info
+The [`dispute_coldkey_swap`](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/subtensor/src/macros/dispatches.rs#:~:text=pub%20fn%20dispute_coldkey_swap) extrinsic is only callable by a coldkey with an active swap announcement. If no swap has been initiated, the process returns a [`ColdkeySwapAnnouncementNotFound`](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/subtensor/src/macros/errors.rs#:~:text=ColdkeySwapAnnouncementNotFound) error.
+:::
 
 After a coldkey swap is disputed, the legitimate owner must contact the Triumvirate to prove ownership of the coldkey. The coldkey remains frozen until the Triumvirate resolves the dispute and [manually resets it](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/subtensor/src/macros/dispatches.rs#:~:text=pub%20fn%20reset_coldkey_swap).
