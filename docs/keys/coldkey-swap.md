@@ -7,38 +7,104 @@ import TabItem from '@theme/TabItem';
 
 # Rotate/Swap your Coldkey
 
-This page describes how to _rotate_ or _swap_ the coldkey in your wallet. This is required if you suspect your coldkey has been leaked. Your coldkey secures your identity on Bittensor.
+This page describes how to _rotate_ or _swap_ the coldkey in your wallet. Because the coldkey controls your access to your wallet, this is the equivalent of 'changing your password', although it is more complex, due to the nature of blockchain cryptography.
+
+It is *critical* to swap your coldkey if you it has been leaked. Your coldkey secures your wallet's identity and assets.
 
 See:
 
 - [Wallets, Coldkeys and Hotkeys in Bittensor](./wallets)
 - [Coldkey and Hotkey Workstation Security](./coldkey-hotkey-security)
+- [Blockchain sourcecode](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/swap/swap_coldkey.rs).
 
-See [code for coldkey swap](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/swap/swap_coldkey.rs).
+# Introduction
+
+The coldkey swap mechanism provides a secure way to transition from a potentially compromised source coldkey to a new destination coldkey. To initiate the swap, you must first announce your intention by providing a cryptographic hash of the destination coldkey. This announcement is visible on the chain but does not immediately move funds or ownership; instead, it triggers a mandatory locking period for the source coldkey.
+
+After the announcement, a waiting/locking period of **36,000 blocks** (~ **5 days**) must pass before the swap can be finalized. Once this period has elapsed, you must manually execute the swap by providing the actual destination coldkey. The system then verifies that this key matches the previously submitted hash and that the required time has passed.
+
+If the destination coldkey already has an existing identity, it will be preserved during this process rather than being overwritten, and the assets of the source wallet will be transferred/merged into this existing wallet.
+
+The cost for a coldkey swap transaction is **0.1 TAO**. This must be available in the source coldkey when the swap is announced. Upon successful execution, the source coldkey is entirely unlocked, and all associated assets are migrated to the destination coldkey. This includes the transfer of all delegated stake, staked TAO (for those staking to a validator), and any subnet ownership from the source coldkey to the destination coldkey.
+
+Once a coldkey swap has been announced, **it cannot be cancelled**. However, an announced swap can be frozen by disputing it. [Disputing a coldkey swap](#dispute-a-coldkey-swap) immediately prevents the execution of the swap and suspends all other operations on the coldkey to secure the assets. To resolve a dispute, the rightful owner must contact the Triumvirate and attempt to prove ownership of the coldkey.
+
+
+![Coldkey swap flow diagram](/img/docs/coldkey-swap.svg)
+
+<!-- 
+
+
+@startuml
+title Coldkey Swap
+
+skinparam shadowing false
+skinparam defaultFontName Monospace
+skinparam sequence {
+  LifeLineBorderColor #444444
+  ParticipantBorderColor #444444
+  ParticipantBackgroundColor white
+  ArrowColor #444444
+}
+
+actor "Swap Initiator\n(must hold key)" as KH
+
+database "Chain\n(Subtensor)" as C
+actor "Swap Disputant\n(must hold key)" as D
+== Announcement ==
+    note over KH
+The iniator (key owner wanting to swap the key)
+triggers the swap, using a client to submit an
+`announce_coldkey_swap` extrinsic.
+    end note
+KH -> C: announce_coldkey_swap(source_private_key, destination address)
+
+
+== Pending Swap / LOCKED window (~5 days / 36,000 blocks) ==
+group #LightSkyBlue Pending Swap/Dispute
+  note over C
+This waiting period is required in case an attacker steals your key and tries to execute a swap.  
+Source coldkey is in "pending swap" state. A holder of the coldkey can *dispute* the swap, blocking it.
+
+  end note
+
+  opt Dispute during pending
+    D -[#red]> C: dispute_coldkey_swap(source_private_key)
+    note right of C
+Swap is blocked.
+The wallet remains locked pending action by the triumvirate.
+    end note
+  end opt
+end group
+
+== Finalization period==
+note over C
+Disputes are no longer allowed.
+Keyholder can *finalize* swap using the (secret) coldkey used to make the announcement.
+end note
+
+KH -> C: execute_coldkey_swap(source_private_key, dest_coldkey)
+C -> C: verify hash
+C -> C: transfer/migrate assets
+
+note over C
+Result: assets moved to destination coldkey.
+Announcement cleared, swap complete.
+end note
+
+@enduml
+
+
+ -->
 
 :::tip Prevent emergencies with proxies
-Coldkey swaps are often needed when a coldkey is compromised. **Using proxy wallets can help prevent this situation entirely.** With a properly configured proxy (limited `ProxyType` and non-zero delay), even if an attacker gains access to your proxy wallet, they cannot immediately drain your funds—the delay gives you time to detect and reject unauthorized transactions.
+Coldkey swaps are needed when a coldkey has been compromised, that is, if you suspect it may have been leaked, i.e. that it is possible that someone else could have copied or recorded it in some way and can reproduce it. If someone gains your coldkey private key, they can take all of your wallet's assets, so any possibility of a compromise should be taken seriously.
+
+To limit the opportunity to compromise your most valuable coldkey, you can use another wallet as a **proxy.** With a properly configured proxy (a `ProxyType` limited to specific actions, and non-zero delay), even if an attacker gains access to your proxy wallet, they cannot immediately drain your funds—the delay gives you time to detect and reject unauthorized transactions.
 
 For high-value wallets, consider setting up a `Staking` proxy for regular staking operations instead of using your coldkey directly.
 
 See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey proactively.
-:::
-
-The coldkey swap mechanism provides a secure way to transition from a potentially compromised source coldkey to a new destination coldkey. To initiate the swap, you must first announce your intention by providing a cryptographic hash of the destination coldkey. This announcement is visible on the chain but does not immediately move funds or ownership; instead, it triggers a mandatory locking period for the source coldkey.
-
-After the announcement, a required delay period must pass before the swap can be finalized. By default, this [announcement delay period](https://github.com/opentensor/subtensor/blob/devnet-ready/runtime/src/lib.rs#:~:text=pub%20const%20InitialColdkeySwapAnnouncementDelay) is set to **36,000 blocks** (~ **5 days**). Once this period has elapsed, you must manually execute the swap by providing the actual destination coldkey. The system then verifies that this key matches the previously submitted hash and that the required time has passed.
-
-:::info
-If the destination coldkey already has an existing identity, it will be preserved during this process rather than being overwritten.
-:::
-
-The cost for a coldkey swap transaction is **0.1 TAO**. This must be available in the source coldkey when the swap is announced. Upon successful execution, the source coldkey is entirely unlocked, and all associated assets are migrated to the destination coldkey. This includes the transfer of all delegated stake, staked TAO (for those staking to a validator), and any subnet ownership from the source coldkey to the destination coldkey.
-
-:::warning Coldkey Swap Disputes
-Once a coldkey swap has been announced, **it cannot be cancelled**. However, an announced swap can be frozen by calling the [`dispute_coldkey_swap`](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/subtensor/src/macros/dispatches.rs#:~:text=pub%20fn%20dispute_coldkey_swap) extrinsic. [Disputing a coldkey swap](#dispute-a-coldkey-swap) immediately prevents the execution of the swap and suspends all other operations on the coldkey to secure the assets.
-
-This mechanism serves as a primary defense against unauthorized access by a malicious attacker. To resolve a dispute, the rightful owner must contact the Triumvirate and attempt to prove ownership of the coldkey.
-
 :::
 
 ## Prerequisites
@@ -56,9 +122,77 @@ Confirm the identity of the destination coldkey. A mistake here can result in lo
 - If you are transferring ownership to someone else, confirm that they have secure control of the destination coldkey private key.
   :::
 
+
+## Check pending (announced) coldkey swaps
+
+You can fetch a list of all pending coldkey swaps, or check a paricular coldkey for pending swaps:
+
+You can check the details of all any coldkey swap announcements associated with a particular coldkey. This allows you to verify that your announcement is active while inspecting the committed hash and the target block for execution.
+
+<Tabs groupId="coldkey-swap">
+
+  <TabItem value="btcli" label="BTCLI">
+
+Run the following command to execute a coldkey swap using BTCLI:
+
+```bash
+btcli wallets swap-check --wallet-name WALLET_NAME
+```
+
+Replace `WALLET_NAME` with the source coldkey address.
+
+<details>
+  <summary><strong>Show sample output</strong></summary>
+
+```sh
+Enter wallet name or SS58 address (leave blank to show all pending announcements): alice
+
+                                          Pending Coldkey Swap Announcements
+                                                  Current Block: 115
+
+ Coldkey                                          ┃ New Coldkey Hash      ┃ Execution Block ┃ Time Remaining ┃ Status
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━
+ 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY │ 0x94772f97f5...ae2160 │           36111 │         4d 23h │ Pending
+
+
+```
+
+ </details>
+
+</TabItem>
+<TabItem value="sdk" label="Bittensor SDK">
+Paste the following snippet to execute a coldkey swap using the Bittensor SDK:
+
+```py
+import bittensor as bt
+
+subtensor = bt.Subtensor(network="local")
+wallet = bt.Wallet(name="WALLET_NAME")
+
+announcement = subtensor.get_coldkey_swap_announcement(
+    coldkey_ss58=wallet.coldkeypub.ss58_address
+)
+
+if announcement:
+    current_block = subtensor.get_current_block()
+
+    print(f"📋 Announcement found:")
+    print(f"   New coldkey hash: {announcement.new_coldkey_hash}")
+    print(f"   Execution block: {announcement.execution_block}")
+    print(f"   Current block: {current_block}")
+else:
+    print("❌ No announcement found")
+```
+
+Replace `WALLET_NAME` with the source coldkey address. Also, modify the targeted network if necessary.
+</TabItem>
+</Tabs >
+
+
+
 ## Announce a coldkey swap
 
-Before swapping a coldkey, users must first announce their intention to swap coldkeys by providing a hash of the new coldkey and then wait the required delay interval before executing the swap.
+Before swapping a coldkey, users must first announce their intention to swap coldkeys by providing the new coldkey and then wait the required delay interval before executing the swap.
 
 To announce a coldkey swap:
 
@@ -158,68 +292,6 @@ Replace `WALLET_NAME` and `DESTINATION_COLDKEY` with the appropriate wallet addr
 A coldkey swap can be reannounced only after the [ColdkeySwapReannouncementDelay](https://github.com/opentensor/subtensor/blob/devnet-ready/runtime/src/lib.rs#:~:text=pub%20const%20InitialColdkeySwapReannouncementDelay) has passed. By default, this is 7,200 blocks (~1 day) after the initial announcement delay period expires. Reannouncing will overwrite the existing announcement and reset the mandatory waiting period before execution.
 :::
 
-### Check announcements from a coldkey
-
-You can check the details of any coldkey swap announcements associated with a particular coldkey. This allows you to verify that your announcement is active while inspecting the committed hash and the target block for execution.
-
-<Tabs groupId="coldkey-swap">
-
-  <TabItem value="btcli" label="BTCLI">
-
-Run the following command to execute a coldkey swap using BTCLI:
-
-```bash
-btcli wallets swap-check --wallet-name WALLET_NAME
-```
-
-Replace `WALLET_NAME` with the source coldkey address.
-
-<details>
-  <summary><strong>Show sample output</strong></summary>
-
-```sh
-Enter wallet name or SS58 address (leave blank to show all pending announcements): alice
-
-                                          Pending Coldkey Swap Announcements
-                                                  Current Block: 115
-
- Coldkey                                          ┃ New Coldkey Hash      ┃ Execution Block ┃ Time Remaining ┃ Status
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━
- 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY │ 0x94772f97f5...ae2160 │           36111 │         4d 23h │ Pending
-
-
-```
-
- </details>
-
-</TabItem>
-<TabItem value="sdk" label="Bittensor SDK">
-Paste the following snippet to execute a coldkey swap using the Bittensor SDK:
-
-```py
-import bittensor as bt
-
-subtensor = bt.Subtensor(network="local")
-wallet = bt.Wallet(name="WALLET_NAME")
-
-announcement = subtensor.get_coldkey_swap_announcement(
-    coldkey_ss58=wallet.coldkeypub.ss58_address
-)
-
-if announcement:
-    current_block = subtensor.get_current_block()
-
-    print(f"📋 Announcement found:")
-    print(f"   New coldkey hash: {announcement.new_coldkey_hash}")
-    print(f"   Execution block: {announcement.execution_block}")
-    print(f"   Current block: {current_block}")
-else:
-    print("❌ No announcement found")
-```
-
-Replace `WALLET_NAME` with the source coldkey address. Also, modify the targeted network if necessary.
-</TabItem>
-</Tabs >
 
 ## Execute a coldkey swap
 
