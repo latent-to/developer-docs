@@ -17,7 +17,7 @@ See:
 - [Coldkey and Hotkey Workstation Security](./coldkey-hotkey-security)
 - [Blockchain sourcecode](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/swap/swap_coldkey.rs).
 
-# Introduction
+## Introduction
 
 The coldkey swap mechanism provides a secure way to transition from a potentially compromised source coldkey to a new destination coldkey.
 
@@ -36,12 +36,7 @@ Currently the waiting/locked period is **36,000 blocks** (~ **5 days**). During 
     1. If the Pending Period expires without the swap being disputed, the coldkey owner must finalize the swap by again providing the destination coldkey. The blockchain verifies that this key matches the recorded hash before proceeding.
 
 
-:::info notes
-- If the destination coldkey already has an existing identity, it will be preserved rather than being overwritten, and the assets of the source wallet will be transferred/merged into this existing wallet.
 
-- The cost for a coldkey swap transaction is **0.1 TAO**. This must be available in the source coldkey when the swap is announced. Upon successful execution all assets are migrated to the destination coldkey. This includes all TAO, all stake in subnets, control of any hotkeys, and any subnet ownership.
-
-:::
 
 
 ![Coldkey swap flow diagram](/img/docs/coldkey-swap.svg)
@@ -111,6 +106,12 @@ end note
 
 
  -->
+:::info notes
+- If the destination coldkey already has an existing identity, it will be preserved rather than being overwritten, and the assets of the source wallet will be transferred/merged into this existing wallet.
+
+- The cost for a coldkey swap transaction is **0.1 TAO**. This must be available in the source coldkey when the swap is announced. Upon successful execution all assets are migrated to the destination coldkey. This includes all TAO, all stake in subnets, control of any hotkeys, and any subnet ownership.
+
+:::
 
 :::tip Prevent emergencies with proxies
 Coldkey swaps are needed when a coldkey has been compromised, that is, if you suspect it may have been leaked, i.e. that it is possible that someone else could have copied or recorded it in some way and can reproduce it. If someone gains your coldkey private key, they can take all of your wallet's assets, so any possibility of a compromise should be taken seriously.
