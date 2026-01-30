@@ -19,20 +19,35 @@ See:
 
 # Introduction
 
-The coldkey swap mechanism provides a secure way to transition from a potentially compromised source coldkey to a new destination coldkey. To initiate the swap, you must first announce your intention by providing a cryptographic hash of the destination coldkey. This announcement is visible on the chain but does not immediately move funds or ownership; instead, it triggers a mandatory locking period for the source coldkey.
+The coldkey swap mechanism provides a secure way to transition from a potentially compromised source coldkey to a new destination coldkey.
 
-After the announcement, a waiting/locking period of **36,000 blocks** (~ **5 days**) must pass before the swap can be finalized. Once this period has elapsed, you must manually execute the swap by providing the actual destination coldkey. The system then verifies that this key matches the previously submitted hash and that the required time has passed.
+Because they are such sensitive operations a security perspective, coldkey swaps unfold in several careful stages:
 
-If the destination coldkey already has an existing identity, it will be preserved during this process rather than being overwritten, and the assets of the source wallet will be transferred/merged into this existing wallet.
+1. Initiation/Announcement
 
-The cost for a coldkey swap transaction is **0.1 TAO**. This must be available in the source coldkey when the swap is announced. Upon successful execution, the source coldkey is entirely unlocked, and all associated assets are migrated to the destination coldkey. This includes the transfer of all delegated stake, staked TAO (for those staking to a validator), and any subnet ownership from the source coldkey to the destination coldkey.
+The first step is for the coldkey owner to initiate the swap by making an announcement that the swap will occur (which is public), which begins a mandatory waiting period, during which the wallet is locked and the swap can be disputed. At this initiation step, the coldkey owner provides the destination wallet address, which remains private, as only a hash is published to the blockchain.
 
-Once a coldkey swap has been announced, **it cannot be cancelled**. However, an announced swap can be frozen by disputing it. [Disputing a coldkey swap](#dispute-a-coldkey-swap) immediately prevents the execution of the swap and suspends all other operations on the coldkey to secure the assets. To resolve a dispute, the rightful owner must contact the Triumvirate and attempt to prove ownership of the coldkey.
+2. Pending Period
+
+Currently the waiting/locked period is **36,000 blocks** (~ **5 days**). During this period, the swap can be disputed but not finalized.
+
+3. Dispute or Finalization
+    1. [Disputing a coldkey swap](#dispute-a-coldkey-swap) prevents the execution of the swap and locks the coldkey. At this point, the triumvirate is required to resolve the dispute. The coldkey private key is required to dispute a swap.
+    1. If the Pending Period expires without the swap being disputed, the coldkey owner must finalize the swap by again providing the destination coldkey. The blockchain verifies that this key matches the recorded hash before proceeding.
+
+
+:::info notes
+- If the destination coldkey already has an existing identity, it will be preserved rather than being overwritten, and the assets of the source wallet will be transferred/merged into this existing wallet.
+
+- The cost for a coldkey swap transaction is **0.1 TAO**. This must be available in the source coldkey when the swap is announced. Upon successful execution all assets are migrated to the destination coldkey. This includes all TAO, all stake in subnets, control of any hotkeys, and any subnet ownership.
+
+:::
 
 
 ![Coldkey swap flow diagram](/img/docs/coldkey-swap.svg)
 
 <!-- 
+https://editor.plantuml.com/uml/
 
 
 @startuml
@@ -61,14 +76,13 @@ KH -> C: announce_coldkey_swap(source_private_key, destination address)
 
 
 == Pending Swap / LOCKED window (~5 days / 36,000 blocks) ==
-group #LightSkyBlue Pending Swap/Dispute
-  note over C
-This waiting period is required in case an attacker steals your key and tries to execute a swap.  
-Source coldkey is in "pending swap" state. A holder of the coldkey can *dispute* the swap, blocking it.
+note over C
+This waiting period is required in case an attacker steals a key and tries to execute a swap.
+The owner of the coldkey can *dispute* the swap, blocking it until the triumvirate adjudicates.
 
   end note
-
-  opt Dispute during pending
+group #LightSkyBlue Disputed Swap
+  opt
     D -[#red]> C: dispute_coldkey_swap(source_private_key)
     note right of C
 Swap is blocked.
@@ -95,6 +109,7 @@ end note
 @enduml
 
 
+
  -->
 
 :::tip Prevent emergencies with proxies
@@ -113,6 +128,8 @@ To follow along with the below examples:
 
 - You must own the source coldkey to be swapped.
 - A destination (new) coldkey public key.
+- To safely experiment with this and other blockchain operations, you can deploy a your own
+ instance of Subtensor (Bittensor's blockchain component).
 
 :::warning
 Confirm the identity of the destination coldkey. A mistake here can result in loss of all of the source coldkey's assets and identity.
@@ -293,7 +310,7 @@ A coldkey swap can be reannounced only after the [ColdkeySwapReannouncementDelay
 :::
 
 
-## Execute a coldkey swap
+## Execute/finalize a coldkey swap
 
 After the announcement waiting period has passed, the source coldkey can now execute the swap to finalize the process. Attempting to execute a coldkey swap before the announcement delay period has passed will return an error.
 
