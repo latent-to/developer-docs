@@ -9,34 +9,33 @@ import TabItem from '@theme/TabItem';
 
 This page describes how to _rotate_ or _swap_ the coldkey in your wallet. Because the coldkey controls your access to your wallet, this is the equivalent of 'changing your password', although it is more complex, due to the nature of blockchain cryptography.
 
-It is *critical* to swap your coldkey if you it has been leaked. Your coldkey secures your wallet's identity and assets.
+It is *critical* to swap your coldkey if you think it has been leaked, as your coldkey secures your wallet's identity and assets.
 
 See:
 
 - [Wallets, Coldkeys and Hotkeys in Bittensor](./wallets)
 - [Coldkey and Hotkey Workstation Security](./coldkey-hotkey-security)
-- [Blockchain sourcecode](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/swap/swap_coldkey.rs).
+- [Coldkey swap blockchain sourcecode](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/swap/swap_coldkey.rs).
 
 ## Introduction
 
-The coldkey swap mechanism provides a secure way to transition from a potentially compromised source coldkey to a new destination coldkey.
+The coldkey swap mechanism provides a secure way to switch to a new coldkey, if you feel the secrecy of your wallet's coldkey secret key needs to be improved.
 
 Because they are such sensitive operations a security perspective, coldkey swaps unfold in several careful stages:
 
 1. Initiation/Announcement
 
-The first step is for the coldkey owner to initiate the swap by making an announcement that the swap will occur (which is public), which begins a mandatory waiting period, during which the wallet is locked and the swap can be disputed. At this initiation step, the coldkey owner provides the destination wallet address, which remains private, as only a hash is published to the blockchain.
+In the first step, the coldkey owner initiates the swap by making an announcement that the swap will occur (which is public), which begins a mandatory waiting period, during which the wallet is locked and the swap can be disputed. At this initiation step, the coldkey owner provides the destination wallet address, which remains private, as only a hash is published to the blockchain.
 
 2. Pending Period
 
-Currently the waiting/locked period is **36,000 blocks** (~ **5 days**). During this period, the swap can be disputed but not finalized.
+Next, a pending or lock-out period must elapse, during which the swap can be disputed but not finalized.
 
-3. Dispute or Finalization
+Currently the waiting/locked period is **36,000 blocks** (~ **5 days**).
+
+3. Disputation or Finalization
     1. [Disputing a coldkey swap](#dispute-a-coldkey-swap) prevents the execution of the swap and locks the coldkey. At this point, the triumvirate is required to resolve the dispute. The coldkey private key is required to dispute a swap.
     1. If the Pending Period expires without the swap being disputed, the coldkey owner must finalize the swap by again providing the destination coldkey. The blockchain verifies that this key matches the recorded hash before proceeding.
-
-
-
 
 
 ![Coldkey swap flow diagram](/img/docs/coldkey-swap.svg)
@@ -114,7 +113,7 @@ end note
 :::
 
 :::tip Prevent emergencies with proxies
-Coldkey swaps are needed when a coldkey has been compromised, that is, if you suspect it may have been leaked, i.e. that it is possible that someone else could have copied or recorded it in some way and can reproduce it. If someone gains your coldkey private key, they can take all of your wallet's assets, so any possibility of a compromise should be taken seriously.
+Coldkey swaps are needed when a coldkey has been compromised/leaked, that is, if it is possible that someone else could have copied or recorded it in some way and can reproduce it. If someone gains your coldkey private key, they can take all of your wallet's assets, so any possibility of a compromise should be taken seriously.
 
 To limit the opportunity to compromise your most valuable coldkey, you can use another wallet as a **proxy.** With a properly configured proxy (a `ProxyType` limited to specific actions, and non-zero delay), even if an attacker gains access to your proxy wallet, they cannot immediately drain your funds—the delay gives you time to detect and reject unauthorized transactions.
 
@@ -135,29 +134,26 @@ To follow along with the below examples:
 :::warning
 Confirm the identity of the destination coldkey. A mistake here can result in loss of all of the source coldkey's assets and identity.
 
-- The destination coldkey must not have any existing associations with hotkeys on-chain.
 - If you are rotating the coldkey to maintain ownership, you must control the destination coldkey privatekey. Otherwise you will lose control over all of the source coldkey's assets and identity.
 - If you are transferring ownership to someone else, confirm that they have secure control of the destination coldkey private key.
-  :::
-
+- The destination coldkey should not have any existing associations with hotkeys on-chain, which may result in unexpected consequences.
+:::
 
 ## Check pending (announced) coldkey swaps
 
 You can fetch a list of all pending coldkey swaps, or check a paricular coldkey for pending swaps:
 
-You can check the details of all any coldkey swap announcements associated with a particular coldkey. This allows you to verify that your announcement is active while inspecting the committed hash and the target block for execution.
+You can check the details of all coldkey swap announcements, or announcements associated with a particular coldkey. This allows you to verify that your announcement is active while inspecting the committed hash and the target block for execution.
 
 <Tabs groupId="coldkey-swap">
 
   <TabItem value="btcli" label="BTCLI">
 
-Run the following command to execute a coldkey swap using BTCLI:
+Run the following command to check coldkey swaps using BTCLI. Replace `WALLET_NAME` with the source coldkey address, or use `--all` instead.
 
 ```bash
 btcli wallets swap-check --wallet-name WALLET_NAME
 ```
-
-Replace `WALLET_NAME` with the source coldkey address.
 
 <details>
   <summary><strong>Show sample output</strong></summary>
