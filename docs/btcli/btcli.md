@@ -41,6 +41,7 @@ btcli [OPTIONS] COMMAND [ARGS]...
 - `proxy`: Proxy commands
 - `crowd`: Crowdloan commands, aliases: `cr`, `crowdloan`
 - `liquidity`: Liquidity commands, aliases: `l`
+- `axon`: Axon serving commands
 - `utils`
 - `view`: HTML view commands
 
@@ -4132,6 +4133,115 @@ btcli liquidity remove [OPTIONS]
 | `--verbose`                                                                 |         | Enable verbose output.                                                                                                                |
 | `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                                                                            |
 | `--help`                                                                    |         | Show this message and exit.                                                                                                           |
+
+## `btcli axon`
+
+**Usage**:
+
+```console
+btcli axon [OPTIONS] COMMAND [ARGS]...
+```
+
+**Options**:
+
+- `--help`: Show this message and exit.
+
+**Commands**:
+
+- `reset`: Reset the axon information for a neuron on the network.
+- `set`: Set the axon information for a neuron on the network.
+
+### `btcli axon reset`
+
+Reset the axon information for a neuron on the network.
+
+This command removes the serving endpoint by setting the IP to `0.0.0.0` and port to `1`,
+indicating the neuron is no longer serving.
+
+**USAGE**
+
+```bash
+btcli axon reset [OPTIONS]
+```
+
+The command requires you to specify the netuid where the neuron is registered.
+It will reset the axon information for the hotkey associated with the wallet.
+
+**EXAMPLE**
+
+```bash
+btcli axon reset --netuid 1 --wallet-name my_wallet --wallet-hotkey my_hotkey
+```
+
+:::info
+This command is used to stop serving on a specific subnet. The neuron will
+remain registered but will not be reachable by other neurons until a new axon is set.
+:::
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                   |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--wait-for-inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait-for-finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
+
+### `btcli axon set`
+
+Set the axon information for a neuron on the network.
+
+This command configures the serving endpoint for a neuron by specifying its IP address
+and port, allowing other neurons to connect to it.
+
+**USAGE**
+
+```bash
+btcli axon set [OPTIONS]
+```
+
+The command requires you to specify the netuid, IP address, and port number.
+It will set the axon information for the hotkey associated with the wallet.
+
+**EXAMPLE**
+
+```bash
+btcli axon set --netuid 1 --ip 192.168.1.100 --port 8091 --wallet-name my_wallet --wallet-hotkey my_hotkey
+```
+
+:::info
+This command is used to advertise your serving endpoint on the network. Make sure the IP and port are accessible from the internet if you want other neurons to connect.
+
+:::
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                          |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                   |
+| `--ip`                                                                      | TEXT    | IP address to set for the axon (e.g., '192.168.1.1')                                 |
+| `--port`                                                                    | INTEGER | Port number to set for the axon (0-65535)                                            |
+| `--ip-type`                                                                 | INTEGER | IP type (4 for IPv4, 6 for IPv6)                                                     |
+| `--protocol`                                                                | INTEGER | Protocol version                                                                     |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                               |
+| `--wait-for-inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                       |
+| `--wait-for-finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.               |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
+| `--verbose`                                                                 |         | Enable verbose output.                                                               |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
+| `--help`                                                                    |         | Show this message and exit.                                                          |
 
 ## `btcli utils`
 
