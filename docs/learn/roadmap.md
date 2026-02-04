@@ -13,6 +13,7 @@ This document outlines current major development initiatives for the Bittensor p
 See also:
 - [Bittensor Development Roadmap](https://www.notion.so/292ae7e8d21280f4b1b2f652c10f7f09?v=292ae7e8d212806ab31b000ca578c69b&p=2bfae7e8d2128018947cfbab29f9e03e&pm=s)
 - [Church of RAO Roadmap forum](https://forum.bittensor.church/c/roadmap/9/l/latest?board=default)
+- [Proposal: On-Chain Governance System for Bittensor](https://hackmd.io/mHQ9sPiCRn-vyc7ZTKBfWw)
 
 ## Solving the MEV problem
   
