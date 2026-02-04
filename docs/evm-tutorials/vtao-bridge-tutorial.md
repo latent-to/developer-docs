@@ -1,14 +1,20 @@
 ---
-title: "Wrapping and Bridging TAO"
+title: "Bridging and Wrapping vTAO"
 ---
 
 import SubstrateWallet from '/img/docs/connect-ss58-wallet.png';
 import EVMWallet from '/img/docs/connect-evm-wallet.png';
 import VTAOBridge from '/img/docs/wrap-vtao.png';
 
-# Wrapping and Bridging vTAO
+# Bridging and Wrapping vTAO
 
 This page explains how to move native TAO from the Bittensor Substrate layer to the Bittensor EVM and wrap it into vTAO.
+
+## Introduction
+
+TAO, the native token of the Bittensor network, exists on Subtensor, a Substrate-based platform. Hence, TAO is normally held in Substrate-style, ss58-format wallets.
+
+If TAO is transferred to an Ethereum-style h160 wallet, it can be used in Bittensor's EVM layer. The process of moving TAO between Substrate and EVM wallets is referred to as _TAO bridging_.
 
 ## Prerequisites
 
@@ -65,5 +71,5 @@ After the TAO arrives on the Talisman EVM wallet, you can begin the process of w
 This converts your TAO into vTAO, the wrapped version compatible with cross-chain activity. Once the transaction is processed, verify that the vTAO balance is now reflected in your Talisman EVM wallet.
 
 :::warning Gas fees
-Ensure you have enough TAO in your native EVM wallet to cover the gas fees for the transaction.
+Ensure you have enough TAO in your EVM wallet to cover the gas fees for the transaction.
 :::
