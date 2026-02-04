@@ -19,8 +19,7 @@ See also:
   
 Maximal Extractable Value (MEV) occurs when network participants exploit transaction visibility in the mempool to profit from foreknowledge of pending transactions—enabling front-running, sandwich attacks, and other forms of parasitic extraction.
 
-Throughout Bittensor's history, MEV attackers have taken a significant toll on the Bittensor token economy, as is true for many blockchain token economies. Careful configuration of price protection can protect, users, but is dauntingly complex and laborious for many users.
-
+Throughout Bittensor's history, MEV attackers have taken a significant toll on the Bittensor token economy, as is true for many blockchain token economies. Carefully using Bittensor's [price protection mechanisms](./price-protection) can protect stakers, but can be a dauntingly complex and laborious task for many users.
 
 Bittensor's MEV Shield, introduced in December 2025, encrypts transaction details until block inclusion, provided easy, automated protection from MEV exploits. 
 
@@ -52,39 +51,20 @@ We can roughly think of three essential chunks to this control:
 
 ### Decentralized Blockchain Validation
 
-**Status:** In Development  
-**Target:** Spring 2026
-
 Transitioning from Proof of Authority (PoA) to Nominated Proof of Stake (NPoS) a foundational step toward true decentralization.
 
-**What this means:**
-- Block production will be distributed across elected validators
-- OTF will no longer have direct control over block production
-- The network becomes permissionlessly decentralized at the consensus layer
+Block production will be distributed across elected validators, and OTF will no longer have direct control. The network at that point becomes permissionlessly decentralized at the consensus layer.
 
-
-**Prerequisites:**
+**Current Blockers:**
 - Trustless MEV Shield (see below)
 - Validator incentive model finalized
 - Governance framework in place
 
+#### Trustless MEV Shield
 
+The current MEV Shield implementation relies on a single encryption key held by the block validator, which works effectively in the Proof-of-Authority model. However, this centralized approach must be adapted to a trustless model before the NPoS transition can occur.
 
-The current MEV Shield must be upgraded to a trustless implementation before NPoS can launch. This prevents validators from exploiting their position to front-run transactions.
-
-Bittensor's [MEV Shield](../concepts/mev-shield/index.md) encrypts transaction data until block finalization, preventing MEV attacks by keeping transaction details hidden from potential exploiters in the mempool. The shield must transition to a trustless model to ensure security in a fully decentralized validation environment.
-
-
-**Current Status:**
-
-Bittensor is in the final stages of rooting out MEV. The current MEV Shield implementation relies on a single encryption key held by the block validator, which works effectively in the Proof-of-Authority model. However, this centralized approach must be adapted to a trustless model before the NPoS transition can occur.
-
-Recent anti-MEV improvements include batch call filtering, proxy transaction mitigation, slippage clamping mechanisms, and shielded priority transactions for subnet operations.
-
-### Validator Incentives for NPoS
-
-**Status:** Under Research  
-**Target:** Before NPoS launch
+#### Validator Incentives for NPoS
 
 The economics of running an NPoS validator need to be defined. Current thinking:
 - Initially, validator incentives will likely be modest (approximately break-even)
@@ -93,29 +73,22 @@ The economics of running an NPoS validator need to be defined. Current thinking:
   - Transaction fee distribution to validators
   - Registration fee allocation
 
-
 ### Rotating Triumvirate Elections
 
-**Status:** Planned  
-**Target:** Q2 2026
-
 The Triumvirate (a multisig 2 of 3 that controls sudo operations on the Bittensor blockchain) will transition to democratically elected positions.
+
+Currently, the Triumvirate consists of appointed Opentensor Foundation employees who exercise power cautiously as a "benevolent dictator" during Bittensor's transitional phase. An elected Triumvirate can act with the mandate of the community, enabling more decisive governance when needed.
 
 **Proposed mechanism:**
 - Three seats, with one seat up for election every three months (rotating)
 - Ranked choice voting
 - Members elected from stakers and builders
-- Once elected, the Triumvirate can exercise stronger executive power with democratic legitimacy
 
-**Why this matters:**
-Currently, the Triumvirate consists of appointed Opentensor Foundation employees who exercise power cautiously as a "benevolent dictator" during Bittensor's transitional phase. An elected Triumvirate can act with the mandate of the community, enabling more decisive governance when needed.
 
 ### Enhanced Governance Framework
 
-**Status:** In Development  
-**Target:** Q2 2026
 
-Building out the full governance stack to enable community-driven protocol evolution:
+The protocol for decentralized governance of Bittensor is still in research and development. For the current proposal, see the [governance design document](https://hackmd.io/mHQ9sPiCRn-vyc7ZTKBfWw).
 
 **On-Chain Governance System:**
 - Proposal mechanisms for community input and protocol changes
@@ -150,7 +123,7 @@ Building out the full governance stack to enable community-driven protocol evolu
 The first governance release will allow testing the democratic process even without full elections. For controversial changes that the Triumvirate could execute unilaterally but prefers community input on (e.g., deregistrations), proposals can run through the governance process to gauge community sentiment before the Triumvirate acts.
 <!-- NOTE: From first meeting lines 121-123, Speaker 1 discussing governance testing strategy -->
 
-For detailed governance plans, see the [governance design document](https://hackmd.io/mHQ9sPiCRn-vyc7ZTKBfWw).
+
 
 
 
