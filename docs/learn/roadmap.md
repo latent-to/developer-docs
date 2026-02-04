@@ -17,13 +17,24 @@ See also:
 
 ## Solving the MEV problem
   
-Maximal Extractable Value (MEV) occurs when network participants exploit transaction visibility in the mempool to profit from foreknowledge of pending transactions—enabling front-running, sandwich attacks, and other forms of parasitic extraction. Bittensor's MEV Shield encrypts transaction details until block inclusion, preventing these exploits and protecting users.  
+Maximal Extractable Value (MEV) occurs when network participants exploit transaction visibility in the mempool to profit from foreknowledge of pending transactions—enabling front-running, sandwich attacks, and other forms of parasitic extraction.
+
+Throughout Bittensor's history, MEV attackers have taken a significant toll on the Bittensor token economy, as is true for many blockchain token economies. Careful configuration of price protection can protect, users, but is dauntingly complex and laborious for many users.
+
+
+Bittensor's MEV Shield, introduced in December 2025, encrypts transaction details until block inclusion, provided easy, automated protection from MEV exploits. 
 
 See [MEV Shield: Encrypted Mempool Protection](../concepts/mev-shield/)
+
+A number of follow-up optimizations and edge-case fixes are currently in research and development and are expected to roll out to main net in Spring 2026.
 
 ## Perfecting of the Emissions Model
   
 Bittensor's Emissions algorith, by which Bittensor rewards participants with ownership of tokens, is continually evolving. The research and development team and many contributors from the community are working hard to invent, mathematically explore, computationally simulate and rigorously crash test, the implications of possible variants of how Bittensor could distribute tokens. All of this is required in order to find the ideal protocol for the goals of Bittensor, to promote a Bittensor ecosystem that can excel both in producing better commodities and creating a fair environment for all participants.
+
+The most recent major change was the shift in December 2025 to the 'TAO flow' emissions model, wherein subnets' relative emissions are determined by their net flow of TAO into/out of the subnet due to staking, whereas previously emissions were based on price.
+
+Further refinements are currently being being explored by Opentensor Foundation researchers. Any changes to the emissions model are expected to undergo community review and discussion prior to introduction to main net.
 
 See [Emissions](../learn/emissions)
 
@@ -31,7 +42,7 @@ See [Emissions](../learn/emissions)
 
 The bulk of heavy development in Bittensor currently is oriented toward the transition from an operationally centralized project toward its eventual, planned state of fully decentralization.
 
-Bittensor was created by a small team, the Opentensor Foundation (OTF) that has maintained careful operational control since its inception, in order to protect the project and ensure it could function. Eventually achieving full decentralization while maintaining operational soundness and security along every step of the way requires careful planning and execution of a series of precise steps, delegating various components of all of the control that OTF has had over the project.
+Bittensor was initially created by a small team, the Opentensor Foundation (OTF) that has maintained careful operational control since its inception, in order to protect the project and ensure it could function. Eventually achieving full decentralization while maintaining operational soundness and security along every step of the way requires careful planning and execution of a series of precise steps, delegating various components of all of the control that OTF has had over the project.
 
 We can roughly think of three essential chunks to this control:
 
