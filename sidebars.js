@@ -46,6 +46,7 @@ const sidebars = {
       collapsed: true,
       items: [
         "learn/introduction",
+        "learn/roadmap",
         "resources/questions-and-answers",
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",

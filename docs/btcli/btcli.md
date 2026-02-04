@@ -2,7 +2,11 @@
 title: "Bittensor CLI: btcli Reference Document"
 ---
 
+import { GovernanceTransitionalState } from "../governance/_governance-transitional-state.mdx";
+
 # Bittensor CLI: `btcli` Reference Document
+
+<GovernanceTransitionalState />
 
 Command line interface (CLI) for Bittensor. Uses the values in the configuration file. These values can be overriden by passing them explicitly in the command line.
 
