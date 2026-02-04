@@ -777,7 +777,9 @@ The Bittensor SDK offers the [`bittensor.core.subtensor`](pathname:///python-api
 
 ### Sudo
 
-A privileged key for administrative actions, replaced by governance protocol for enhanced security.
+A privileged role required for administrative actions, such as changing the values of chain state variables, and subnet hyperparameters that are not accessible to subnet owners.
+
+On Bittensor main net ('finney'), sudo is controlled by the triumvirate.
 
 **See also:** [Governance](../governance/governance.md), [btcli Permissions](../btcli/btcli-permissions.md)
 
@@ -815,7 +817,7 @@ The process of sending TAO tokens from one wallet address to another in the Bitt
 
 ### Triumvirate
 
-A group of three Opentensor Foundation employees responsible for creating proposals.
+A group of three Opentensor Foundation employees that controls the sudo key.
 
 **See also:** [Governance](../governance/governance.md), [Senate](../governance/senate.md)
 
