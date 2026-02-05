@@ -21,7 +21,9 @@ If TAO is transferred to an Ethereum-style h160 wallet, it can be used in Bitten
 To follow along with the rest of the tutorial, you will need the following:
 
 - A Talisman browser extension with a Substrate wallet—or "Polkadot account"—containing native TAO on Bittensor mainnet.
-- An EVM Wallet extension. For simplicity, we will be using the Talisman browser extension for this tutorial.
+- An EVM Wallet extension, e.g. Talisman or Metamask.
+
+For simplicity, we will be using the Talisman browser extension for this tutorial.
 
 ## Step 1: Connect your wallets
 
@@ -34,6 +36,8 @@ To begin, you must first connect your Substrate and EVM wallet to the [TAO.app](
 
 <img src={SubstrateWallet} alt="Connect Substrate wallet" style={{width: 300, display: "flex", justifySelf: "center"}} />
 
+<br/>
+
 ### Connect your EVM wallet
 
 1. Navigate to the [TAO.app](https://www.tao.app/bridge) bridge page.
@@ -41,6 +45,8 @@ To begin, you must first connect your Substrate and EVM wallet to the [TAO.app](
 3. Click **Connect Wallet** and continue the process on the Talisman extension.
 
 <img src={EVMWallet} alt="Connect EVM wallet" style={{width: 700, display: "flex", justifySelf: "center"}} />
+
+<br/>
 
 ## Step 2: Bridge TAO to Bittensor EVM
 
@@ -67,9 +73,14 @@ After the TAO arrives on the Talisman EVM wallet, you can begin the process of w
 5. Click **Bridge** and sign the pop-up on the Talisman extension.
 
 <img src={VTAOBridge} alt="vTAO bridge" style={{width: 700, display: "flex", justifySelf: "center"}} />
+<br/>
 
 This converts your TAO into vTAO, the wrapped version compatible with cross-chain activity. Once the transaction is processed, verify that the vTAO balance is now reflected in your Talisman EVM wallet.
 
 :::warning Gas fees
 Ensure you have enough TAO in your EVM wallet to cover the gas fees for the transaction.
 :::
+
+## Next steps
+
+After converting your TAO to vTAO, you can use it to earn staking rewards while using your TAO anywhere. For more information, see [Providing vTAO liquidity to Aerodrome](./vtao-liquidity-on-aerodrome.md).
