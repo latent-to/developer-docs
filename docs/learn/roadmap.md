@@ -30,7 +30,7 @@ See [MEV Shield: Encrypted Mempool Protection](../concepts/mev-shield/)
 
 ## Perfecting the Emissions Model
   
-Bittensor's Emissions algorithm, by which Bittensor rewards participants with ownership of tokens, is continually evolving. The research and development team and many contributors from the community are working hard to invent, mathematically explore, computationally simulate and rigorously crash test, the implications of possible variants of how Bittensor could distribute tokens. All of this is required in order to find the ideal protocol for the goals of Bittensor, to promote a Bittensor ecosystem that can excel both in producing better commodities and creating a fair environment for all participants.
+Bittensor's Emissions algorithm, which determines the flow of liquidity into subnets, where they are then used to incentivize participants, is continually evolving. The research and development team and many contributors from the community are working hard to invent, mathematically explore, computationally simulate and rigorously crash test, the implications of possible variants of how Bittensor could distribute tokens. All of this is required in order to find the ideal protocol for the goals of Bittensor, to promote a Bittensor ecosystem that can excel both in producing better commodities and creating a fair environment for all participants.
 
 The most recent major change was the shift in December 2025 to the 'TAO flow' emissions model, wherein subnets' relative emissions are determined by their net flow of TAO into/out of the subnet due to staking, whereas previously emissions were based on price.
 
