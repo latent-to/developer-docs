@@ -289,6 +289,8 @@ const sidebars = {
         "evm-tutorials/convert-h160-to-ss58",
         "evm-tutorials/transfer-from-metamask-to-ss58",
         "evm-tutorials/transfer-between-two-h160-accounts",
+        "evm-tutorials/vtao-bridge-tutorial",
+        "evm-tutorials/vtao-liquidity-on-aerodrome",
         "evm-tutorials/withdraw-from-alice",
         "evm-tutorials/ed25519-verify-precompile",
         "evm-tutorials/staking-precompile",
