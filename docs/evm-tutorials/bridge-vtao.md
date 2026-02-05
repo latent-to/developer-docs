@@ -22,10 +22,11 @@ See [Wallets, Coldkeys and Hotkeys in Bittensor](../keys/wallets)
 If TAO is transferred to an Ethereum-style h160 wallet, it can be used in Bittensor's EVM layer. This is the same token, just represented in a different account format.
 
 You can move TAO back and forth between Substrate and EVM wallets several ways:
-Use example scripts: - [Transfer TAO from H160 to SS58](./convert-h160-to-ss58) - [Transfer TAO from SS58 to H160](./transfer-from-metamask-to-ss58)
+Use example scripts:
 
+- [Transfer TAO from H160 to SS58](./convert-h160-to-ss58)
+- [Transfer TAO from SS58 to H160](./transfer-from-metamask-to-ss58)
 - Using [`tao.app/bridge`](https://tao.app/bridge).
-
 - Using OTF's EVM Bridge: [`bridge.bittensor.com/`](https://bridge.bittensor.com/)
 
 ## Bridge to other EVM Chains with vTAO
