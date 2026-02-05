@@ -340,19 +340,6 @@ def demonstrate_protection_modes():
         )
 
         print(response)
-        
-        if response.success:
-            # Check if it should have failed
-            post_subnet_info = subtensor.subnet(netuid=netuid)
-            post_safe_price = post_subnet_info.price.tao
-            print(f"Final price: {post_safe_price:.6f} TAO/α")
-            print(f"Price ceiling was: {price_ceiling:.6f} TAO/α")
-
-            if post_safe_price > price_ceiling:
-                print(f"🚨 BUG: Transaction succeeded but price ({post_safe_price:.6f}) > ceiling ({price_ceiling:.6f})")
-            else:
-                print(f"Price stayed within tolerance: {post_safe_price:.6f} ≤ {price_ceiling:.6f}")
-                print(f"Actual price increase: {((post_safe_price - pre_safe_price) / pre_safe_price) * 100:.3f}%")
 
     except Exception as e:
         if "Price exceeded tolerance limit" in str(e) or "exceeded tolerance" in str(e) or "tolerance" in str(e).lower():

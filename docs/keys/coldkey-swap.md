@@ -183,19 +183,11 @@ import bittensor as bt
 subtensor = bt.Subtensor(network="local")
 wallet = bt.Wallet(name="WALLET_NAME")
 
-announcement = subtensor.get_coldkey_swap_announcement(
+response = subtensor.get_coldkey_swap_announcement(
     coldkey_ss58=wallet.coldkeypub.ss58_address
 )
 
-if announcement:
-    current_block = subtensor.get_current_block()
-
-    print(f"📋 Announcement found:")
-    print(f"   New coldkey hash: {announcement.new_coldkey_hash}")
-    print(f"   Execution block: {announcement.execution_block}")
-    print(f"   Current block: {current_block}")
-else:
-    print("❌ No announcement found")
+print(response)
 ```
 
 Replace `WALLET_NAME` with the source coldkey address. Also, modify the targeted network if necessary.
@@ -291,11 +283,8 @@ response = subtensor.announce_coldkey_swap(
     wait_for_inclusion=True,
     wait_for_finalization=True,
 )
+print(response)
 
-if response.success:
-    print(f"✅ Coldkey swap announced successfully!")
-else:
-    print(f"❌ Failed to announce swap: {response.message}")
 ```
 
 Replace `WALLET_NAME` and `DESTINATION_COLDKEY` with the appropriate wallet addresses. Also, modify the targeted network if necessary.
@@ -388,11 +377,7 @@ response = subtensor.swap_coldkey_announced(
     wait_for_inclusion=True,
     wait_for_finalization=True,
 )
-
-if response.success:
-    print(f"✅ Coldkey swap executed successfully!")
-else:
-    print(f"❌ Failed to announce swap: {response.message}")
+print(response)
 ```
 
 Replace `WALLET_NAME` and `DESTINATION_COLDKEY` with the appropriate wallet addresses. Also, modify the targeted network if necessary.
@@ -458,10 +443,7 @@ wait_for_inclusion=True,
 wait_for_finalization=True,
 )
 
-if response.success:
-print(f"✅ Coldkey swap disputed successfully!")
-else:
-print(f"❌ Failed to dispute coldkey swap: {response.message}")
+print(response)
 
 ```
 
