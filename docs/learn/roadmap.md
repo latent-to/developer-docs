@@ -23,7 +23,7 @@ Maximal Extractable Value (MEV) occurs when network participants exploit transac
 
 Bittensor's [price protection mechanism](./price-protection) has offered stakers a strong degree of protection for some time, but using it correctly can be a dauntingly complex and laborious task for many users and requires the use of programmable clients (e.g. BTCLI or the Python SDK) rather than simpler trading apps.
 
-Bittensor's MEV Shield, introduced in December 2025, encrypts transaction details until block inclusion and provides easy, automated protection from MEV exploits. A number of follow-up optimizations and edge-case fixes are currently in research and development and are expected to roll out to main net in Spring 2026, providing a mature, comprehensive, and seamless-to-use solution to the MEV problem for Bittensor.
+Bittensor's MEV Shield, introduced in December 2025, encrypts transaction details until block inclusion and provides easy, automated protection from MEV exploits. A number of follow-up optimizations and edge-case fixes are currently in research and development and are expected to roll out to mainnet in Spring 2026, providing a mature, comprehensive, and seamless-to-use solution to the MEV problem for Bittensor.
 
 See [MEV Shield: Encrypted Mempool Protection](../concepts/mev-shield/)
 
