@@ -34,7 +34,7 @@ Bittensor's Emissions algorithm, by which Bittensor rewards participants with ow
 
 The most recent major change was the shift in December 2025 to the 'TAO flow' emissions model, wherein subnets' relative emissions are determined by their net flow of TAO into/out of the subnet due to staking, whereas previously emissions were based on price.
 
-Further refinements are currently being explored by Opentensor Foundation researchers. Any changes to the emissions model are expected to undergo community review and discussion prior to introduction to main net.
+Further refinements are currently being explored by Opentensor Foundation researchers. Any changes to the emissions model are expected to undergo community review and discussion prior to introduction to mainnet.
 
 See [Emissions](../learn/emissions)
 
