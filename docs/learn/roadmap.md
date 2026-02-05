@@ -180,7 +180,7 @@ end
 
 ## Subnet Governance
 
-A number of mechanisms are being researched and developed that would give the Bittensor community formal, on-chain mechanisms for governance at the subnet level, as well as provide subnet developers with more tools for building out their token economies. The most prominent features under development are:
+A number of mechanisms are being researched that would give the Bittensor community formal, on-chain mechanisms for governance at the subnet level, as well as provide subnet developers with more tools for building out their token economies. The most prominent features under development are:
 
 ### Subnet Treasury and Voting Power
 
@@ -188,8 +188,8 @@ Many subnets have a need to fund work that doesn't map cleanly onto the mining w
 
 ### Subnet Policing
 
-Bittensor is not a platform for trading arbitrary tokens in order to extract money through luck or trickery; it is designed as a platform for funding the creation of digital commodities. It may be inevitable that subnet owners will attempt to extract emissions in a way that, from that perspective, is cheating rather than good-faith participation. This can include varieties of 'self-mining' or colluding with miners, or attempting to dampen root sell pressure while still receiving injections of TAO liquidity.
+Bittensor is not a platform for trading arbitrary tokens in order to extract money through luck or trickery; it is designed as a platform for funding the creation of digital commodities. It may be inevitable that subnet owners will attempt to extract emissions in a way that, from that perspective, is cheating rather than good-faith participation. This can include varieties of 'self-mining' or colluding with miners, attempting to dampen root sell pressure while still receiving injections of TAO liquidity, or attempting to use a subnet to launch a [Ponzi scheme](https://en.wikipedia.org/wiki/Ponzi_scheme) or other extractive project devoid of value.
  
-Historically, this sort of problem has been handled via ad hoc enforcement by the community of validators acting in policing roll, by submitting weight matrices that burn the subnet's emissions instead of rewarding them to miners.
+Historically, this sort of problem has been handled by the community of validators acting in policing roll, by submit weight matrices that burn the subnet's emissions instead of rewarding them to miners.
 
 The research and development and community of subnet owners and validators are currently exploring mechanisms that can optimally capture the spirit of Bittensor's need to enforce good behavior by subnet owners, in a robust, decentralized way that itself is immune to exploitation.
