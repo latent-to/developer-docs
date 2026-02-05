@@ -11,6 +11,12 @@ import ConfirmDeposit from '/img/docs/confirm-deposit.png';
 
 This page walks through how to move vTAO from the Bittensor EVM to the Base network to provide liquidity on Aerodrome.
 
+:::danger Understanding liquidity positions
+Providing liquidity in a Concentrated Volatile pool involves significant risk, including Impermanent Loss. Before following this tutorial, ensure you understand how price ranges affect your asset ratio.
+
+For more information on how liquidity positions work, see [Understanding Liquidity Provision in DeFi](https://blog.uniswap.org/how-liquidity-provision-in-defi-works).
+:::
+
 ## Prerequisites
 
 To continue with the rest of this tutorial,, you will need the following:
