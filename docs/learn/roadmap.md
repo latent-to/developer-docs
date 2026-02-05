@@ -9,6 +9,7 @@ This document outlines current major development initiatives for the Bittensor p
 - [Solving the MEV problem](#solving-the-mev-problem)
 - [Perfecting the Emissions Model](#perfecting-the-emissions-model)
 - [The Path to Decentralization](#the-path-to-decentralization)
+- [Subnet Governance](#subnet-governance)
 
 See also:
 - [Bittensor Development Roadmap](https://www.notion.so/292ae7e8d21280f4b1b2f652c10f7f09?v=292ae7e8d212806ab31b000ca578c69b&p=2bfae7e8d2128018947cfbab29f9e03e&pm=s)
@@ -176,3 +177,19 @@ end
 
 @enduml
  -->
+
+## Subnet Governance
+
+A number of mechanisms are being researched and developed that would give the Bittensor community formal, on-chain mechanisms for governance at the subnet level, as well as provide subnet developers with more tools for building out their token economies. The most prominent features under development are:
+
+### Subnet Treasury and Voting Power
+
+Many subnets have a need to fund work that doesn't map cleanly onto the mining work judged by validators. The Treasury feature provides a contract-controlled budget, where distributions can be decided via stake-weighted voting, in contrast to emissions which are determined by Yuma Consensus operating over the matrix of weights set by validators.
+
+### Subnet Policing
+
+Bittensor is not a platform for trading arbitrary tokens in order to extract money through luck or trickery; it is designed as a platform for funding the creation of digital commodities. It may be inevitable that subnet owners will attempt to extract emissions in a way that, from that perspective, is cheating rather than good-faith participation. This can include varieties of 'self-mining' or colluding with miners, or attempting to dampen root sell pressure while still receiving injections of TAO liquidity.
+ 
+Historically, this sort of problem has been handled via ad hoc enforcement by the community of validators acting in policing roll, by submitting weight matrices that burn the subnet's emissions instead of rewarding them to miners.
+
+The research and development and community of subnet owners and validators are currently exploring mechanisms that can optimally capture the spirit of Bittensor's need to enforce good behavior by subnet owners, in a robust, decentralized way that itself is immune to exploitation.
