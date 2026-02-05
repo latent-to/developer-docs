@@ -79,7 +79,7 @@ The economics of running an NPoS validator need to be defined. Current thinking:
 
 ### Operational Control
 
-Currently, operational control of the Bittensor blockchain is exercised through the [Triumvirate](../resources/glossary#triumvirate), a [multisig](../keys/multisig) 2-of-3 that controls [sudo](../resources/glossary#sudo) operations. The Triumvirate consists of appointed Opentensor Foundation employees who have held their keys since early in Bittensor's history, essentially acting as stewards of the blockchain on behalf of the Bittensor community. While this centralized model was beneficial in bootstrapping Bittensor, transitioning to a decentralized model is required to fulfill Bittensor's mandate for true decentralization.
+Currently, operational control of the Bittensor blockchain is exercised through the [Triumvirate](../resources/glossary#triumvirate), a [multisig](../keys/multisig) 2-of-3 that controls [sudo](../resources/glossary#sudo) operations. The Triumvirate consists of trusted developers appointed by Opentensor Foundation, who have held their keys since early in Bittensor's history, essentially acting as stewards of the blockchain on behalf of the Bittensor community. While this centralized model was beneficial in bootstrapping Bittensor, transitioning to a decentralized model is required to fulfill Bittensor's mandate for true decentralization.
 
 ### Decentralized Governance
 
