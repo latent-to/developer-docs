@@ -175,7 +175,7 @@ Enter wallet name or SS58 address (leave blank to show all pending announcements
 
 </TabItem>
 <TabItem value="sdk" label="Bittensor SDK">
-Paste the following snippet to execute a coldkey swap using the Bittensor SDK:
+Fetch the current coldkey swap announcement (if any) by calling `get_coldkey_swap_announcement`. Set `WALLET_NAME` to a wallet on disk that holds the coldkey you want to query, or replace `coldkey_ss58` with any coldkey SS58 address.
 
 ```py
 import bittensor as bt
@@ -189,8 +189,6 @@ response = subtensor.get_coldkey_swap_announcement(
 
 print(response)
 ```
-
-Replace `WALLET_NAME` with the source coldkey address. Also, modify the targeted network if necessary.
 </TabItem>
 </Tabs >
 
@@ -206,15 +204,13 @@ To announce a coldkey swap:
 
   <TabItem value="btcli" label="BTCLI">
 
-Run the following command to announce a coldkey swap using BTCLI:
+Run the following command to announce a coldkey swap using BTCLI. Set `WALLET_NAME` to your source wallet name (or SS58 address) and `DESTINATION_COLDKEY` to the destination coldkey SS58 address.
 
 ```bash
 btcli wallets swap-coldkey announce \
 --wallet-name WALLET_NAME \
 --new-coldkey DESTINATION_COLDKEY
 ```
-
-Replace `WALLET_NAME` and `DESTINATION_COLDKEY` with the appropriate wallet addresses.
 
 <details>
   <summary><strong>Show sample output</strong></summary>
@@ -266,7 +262,7 @@ btcli wallet swap-coldkey execute --new-coldkey 5FHqAJM9jtVccTctCVmEvxzzm6qeA2yf
  </details> 
 </TabItem>
 <TabItem value="sdk" label="Bittensor SDK">
-Paste the following snippet to announce a coldkey swap using the Bittensor SDK:
+Announce a coldkey swap (starts the mandatory waiting period) by submitting `announce_coldkey_swap`. Set `WALLET_NAME` to your source wallet name on disk and `DESTINATION_COLDKEY` to the destination coldkey SS58 address.
 
 ```py
 import bittensor as bt
@@ -286,8 +282,6 @@ response = subtensor.announce_coldkey_swap(
 print(response)
 
 ```
-
-Replace `WALLET_NAME` and `DESTINATION_COLDKEY` with the appropriate wallet addresses. Also, modify the targeted network if necessary.
 </TabItem>
 </Tabs >
 
@@ -306,15 +300,13 @@ To execute a coldkey swap:
 
   <TabItem value="btcli" label="BTCLI">
 
-Run the following command to execute a coldkey swap using BTCLI:
+Run the following command to execute a coldkey swap using BTCLI. Set `WALLET_NAME` to your source wallet name (or SS58 address) and `DESTINATION_COLDKEY` to the destination coldkey SS58 address.
 
 ```bash
 btcli wallets swap-coldkey execute \
 --wallet-name WALLET_NAME \
 --new-coldkey DESTINATION_COLDKEY
 ```
-
-Replace `WALLET_NAME` and `DESTINATION_COLDKEY` with the appropriate wallet addresses.
 
 <details>
   <summary><strong>Show sample output</strong></summary>
@@ -360,7 +352,7 @@ All assets have been transferred to the new coldkey.
 
 </TabItem>
 <TabItem value="sdk" label="Bittensor SDK">
-Paste the following snippet to execute a coldkey swap using the Bittensor SDK:
+Execute/finalize an **announced** swap (once it is executable) by submitting `swap_coldkey_announced`. Set `WALLET_NAME` to your source wallet name on disk and `DESTINATION_COLDKEY` to the destination coldkey SS58 address used in the announcement.
 
 ```py
 import bittensor as bt
@@ -370,7 +362,7 @@ wallet = bt.Wallet(name="WALLET_NAME")
 
 new_coldkey_ss58 = "DESTINATION_COLDKEY"
 
-# Announce the coldkey swap
+# Execute/finalize the announced swap
 response = subtensor.swap_coldkey_announced(
     wallet=wallet,
     new_coldkey_ss58=new_coldkey_ss58,
@@ -379,8 +371,6 @@ response = subtensor.swap_coldkey_announced(
 )
 print(response)
 ```
-
-Replace `WALLET_NAME` and `DESTINATION_COLDKEY` with the appropriate wallet addresses. Also, modify the targeted network if necessary.
 </TabItem>
 </Tabs >
 
@@ -393,13 +383,11 @@ If a malicious actor announces a coldkey swap on a compromised key, the legitima
 To dispute a coldkey swap:
 <Tabs groupId="coldkey-swap">
 <TabItem value="btcli" label="BTCLI">
-Run the following command to dispute a coldkey swap using BTCLI:
+Run the following command to dispute a coldkey swap using BTCLI. Set `WALLET_NAME` to your source wallet name (or SS58 address).
 
 ```bash
 btcli wallets swap-coldkey dispute --wallet-name WALLET_NAME
 ```
-
-Replace `WALLET_NAME` with the appropriate wallet addresses.
 
 <details>
   <summary><strong>Show sample output</strong></summary>
@@ -430,6 +418,7 @@ Proceed with dispute? Your swap process will be frozen until the triumvirate can
 </TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
+Dispute (freeze) an active swap announcement by submitting `dispute_coldkey_swap`. Set `WALLET_NAME` to your source wallet name on disk.
 
 ```py
 import bittensor as bt
@@ -438,16 +427,14 @@ subtensor = bt.Subtensor(network="local")
 wallet = bt.Wallet(name="WALLET_NAME")
 
 response = subtensor.dispute_coldkey_swap(
-wallet=wallet,
-wait_for_inclusion=True,
-wait_for_finalization=True,
+    wallet=wallet,
+    wait_for_inclusion=True,
+    wait_for_finalization=True,
 )
 
 print(response)
 
 ```
-
-Replace `WALLET_NAME` with the appropriate wallet addresses. Also, modify the targeted network if necessary.
 </TabItem>
 
 </Tabs>
