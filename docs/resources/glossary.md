@@ -779,7 +779,7 @@ The Bittensor SDK offers the [`bittensor.core.subtensor`](pathname:///python-api
 
 A privileged role required for administrative actions, such as changing the values of chain state variables, and subnet hyperparameters that are not accessible to subnet owners.
 
-On Bittensor main net ('finney'), sudo is controlled by the triumvirate.
+On Bittensor mainnet ('finney'), sudo is controlled by the triumvirate.
 
 **See also:** [Governance](../governance/governance.md), [btcli Permissions](../btcli/btcli-permissions.md)
 
