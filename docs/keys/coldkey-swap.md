@@ -7,9 +7,9 @@ import TabItem from '@theme/TabItem';
 
 # Rotate/Swap your Coldkey
 
-This page describes how to _rotate_ or _swap_ the coldkey in your wallet. Because the coldkey controls your access to your wallet, this is the equivalent of 'changing your password', although it is more complex, due to the nature of blockchain cryptography.
+This page describes how to _rotate_ or _swap_ the coldkey in your wallet. This operation migrates your entire on-chain identity, including TAO balances and subnet ownership, to a new cryptographic key pair.
 
-It is *critical* to swap your coldkey if you think it has been leaked, as your coldkey secures your wallet's identity and assets.
+It is _critical_ to swap your coldkey if you think it has been leaked or compromised, as your coldkey secures your wallet's identity and assets.
 
 See:
 
@@ -25,7 +25,9 @@ Because they are such sensitive operations a security perspective, coldkey swaps
 
 1. Initiation/Announcement
 
-In the first step, the coldkey owner initiates the swap by making an announcement that the swap will occur (which is public), which begins a mandatory waiting period, during which the wallet is locked and the swap can be disputed. At this initiation step, the coldkey owner provides the destination wallet address, which remains private, as only a hash is published to the blockchain.
+In the first step, the coldkey owner initiates the swap by making an announcement on the blockchain that the swap will occur. This triggers a mandatory waiting period, during which the wallet is locked to prevent operations such as transfers or staking. During this phase, the coldkey can only reannounce a coldkey swap, execute a swap or dispute a swap.
+
+At this initiation step, the coldkey owner provides the destination wallet address, which remains private, as only a hash is published to the blockchain.
 
 2. Pending Period
 
@@ -34,13 +36,12 @@ Next, a pending or lock-out period must elapse, during which the swap can be dis
 Currently the waiting/locked period is **36,000 blocks** (~ **5 days**).
 
 3. Disputation or Finalization
-    1. [Disputing a coldkey swap](#dispute-a-coldkey-swap) prevents the execution of the swap and locks the coldkey. At this point, the triumvirate is required to resolve the dispute. The coldkey private key is required to dispute a swap.
-    1. If the Pending Period expires without the swap being disputed, the coldkey owner must finalize the swap by again providing the destination coldkey. The blockchain verifies that this key matches the recorded hash before proceeding.
+   1. [Disputing a coldkey swap](#dispute-a-coldkey-swap) prevents the execution of the swap and completely blocks the coldkey from performing any operations. At this point, the triumvirate is required to resolve the dispute. The coldkey private key is required to dispute a swap.
+   1. If the Pending Period expires without the swap being disputed, the coldkey owner must finalize the swap by again providing the destination coldkey. The blockchain verifies that this key matches the recorded hash before proceeding.
 
+![Coldkey swap flow diagram](/img/docs/coldkey-swap.png)
 
-![Coldkey swap flow diagram](/img/docs/coldkey-swap.svg)
-
-<!-- 
+<!--
 https://editor.plantuml.com/uml/
 
 
@@ -79,19 +80,18 @@ group #LightSkyBlue Disputed Swap
   opt
     D -[#red]> C: dispute_coldkey_swap(source_private_key)
     note right of C
-Swap is blocked.
-The wallet remains locked pending action by the triumvirate.
+Swap execution is blocked.
+The wallet is completely locked pending action by the triumvirate.
     end note
   end opt
 end group
 
 == Finalization period==
 note over C
-Disputes are no longer allowed.
 Keyholder can *finalize* swap using the (secret) coldkey used to make the announcement.
 end note
 
-KH -> C: execute_coldkey_swap(source_private_key, dest_coldkey)
+KH -> C: swap_coldkey_announced(source_private_key, dest_coldkey)
 C -> C: verify hash
 C -> C: transfer/migrate assets
 
@@ -101,13 +101,11 @@ Announcement cleared, swap complete.
 end note
 
 @enduml
-
-
-
  -->
-:::info notes
-- If the destination coldkey already has an existing identity, it will be preserved rather than being overwritten, and the assets of the source wallet will be transferred/merged into this existing wallet.
 
+:::info notes
+
+- If the destination coldkey already has an existing identity, it will be preserved rather than being overwritten, and the assets of the source wallet will be transferred/merged into this existing wallet.
 - The cost for a coldkey swap transaction is **0.1 TAO**. This must be available in the source coldkey when the swap is announced. Upon successful execution all assets are migrated to the destination coldkey. This includes all TAO, all stake in subnets, control of any hotkeys, and any subnet ownership.
 
 :::
@@ -129,7 +127,7 @@ To follow along with the below examples:
 - You must own the source coldkey to be swapped.
 - A destination (new) coldkey public key.
 - To safely experiment with this and other blockchain operations, you can deploy a your own
- instance of Subtensor (Bittensor's blockchain component).
+  instance of Subtensor (Bittensor's blockchain component).
 
 :::warning
 Confirm the identity of the destination coldkey. A mistake here can result in loss of all of the source coldkey's assets and identity.
@@ -137,7 +135,7 @@ Confirm the identity of the destination coldkey. A mistake here can result in lo
 - If you are rotating the coldkey to maintain ownership, you must control the destination coldkey privatekey. Otherwise you will lose control over all of the source coldkey's assets and identity.
 - If you are transferring ownership to someone else, confirm that they have secure control of the destination coldkey private key.
 - The destination coldkey should not have any existing associations with hotkeys on-chain, which may result in unexpected consequences.
-:::
+  :::
 
 ## Check pending (announced) coldkey swaps
 
@@ -189,10 +187,9 @@ response = subtensor.get_coldkey_swap_announcement(
 
 print(response)
 ```
+
 </TabItem>
 </Tabs >
-
-
 
 ## Announce a coldkey swap
 
@@ -282,13 +279,13 @@ response = subtensor.announce_coldkey_swap(
 print(response)
 
 ```
+
 </TabItem>
 </Tabs >
 
 :::info reannouncing coldkey swaps
 A coldkey swap can be reannounced only after the [ColdkeySwapReannouncementDelay](https://github.com/opentensor/subtensor/blob/devnet-ready/runtime/src/lib.rs#:~:text=pub%20const%20InitialColdkeySwapReannouncementDelay) has passed. By default, this is 7,200 blocks (~1 day) after the initial announcement delay period expires. Reannouncing will overwrite the existing announcement and reset the mandatory waiting period before execution.
 :::
-
 
 ## Execute/finalize a coldkey swap
 
@@ -371,6 +368,7 @@ response = subtensor.swap_coldkey_announced(
 )
 print(response)
 ```
+
 </TabItem>
 </Tabs >
 
@@ -435,6 +433,7 @@ response = subtensor.dispute_coldkey_swap(
 print(response)
 
 ```
+
 </TabItem>
 
 </Tabs>
