@@ -370,15 +370,104 @@ See also: [Proxies Documentation](../keys/proxies/)
 
 </details>
 
+### `crowd`
+
+The `btcli crowd` commands are used to create and manage crowdloans on the network.
+
+- **`crowd contribute`**: Pledges TAO contribution from your wallet to a specific crowdloan campaign.
+- **`crowd withdraw`**: Recalls your contributed TAO from a non-finalized crowdloan.
+- **`crowd finalize`**: Finalizes a crowdloan that has reached its cap if the finalization conditions are met. Finalizing a crowdloan either transfers the funds to the target account or executes the underlying crowdloan call.
+- **`crowd create`**: Initializes a new crowdloan campaign with a defined funding cap, duration, and purpose.
+- **`crowd update`**: Modifies the details of an existing crowdloan campaign. This command can only be called by the crowdloan creator.
+- **`crowd refund`**: Triggers the return of TAO to all contributors of an non-finalized crowdloan. This command can only be called by the crowdloan creator.
+- **`crowd dissolve`**: Dissolves a crowdloan entirely and removes its record from the blockchain. This command can only be called by the crowdloan creator after all contributors have been refunded.
+- **`crowd list`**: Displays a summarized list of all active and past crowdloans, including their current status on the selected network.
+- **`crowd info`**: Provides detailed information about a specific crowdloan.
+
+<details>
+  <summary>`btcli crowd`</summary>
+
+#### `btcli crowd contribute`
+
+#### `btcli crowd withdraw`
+
+#### `btcli crowd finalize`
+
+#### `btcli crowd create`
+
+#### `btcli crowd update`
+
+#### `btcli crowd refund`
+
+#### `btcli crowd dissolve`
+
+#### `btcli crowd list`
+
+#### `btcli crowd info`
+
+</details>
+
+### `liquidity`
+
+The `btcli liquidity` commands are used to provide and manage trading liquidity for specific subnets. For more information, see [Liquidity positions](../liquidity-positions/liquidity-positions.md).
+
+- **`liquidity add`**: Add liquidity to the swap (as a combination of TAO + Alpha).
+- **`liquidity list`**: Shows a wallet's liquidity positions in given subnet.
+- **`liquidity modify`**: Modifies the liquidity position for the given subnet.
+- **`liquidity remove`**: Remove liquidity from the swap (as a combination of TAO + Alpha).
+
+<details>
+  <summary>`btcli liquidity`</summary>
+
+#### `liquidity add`
+
+#### `liquidity list`
+
+#### `liquidity modify`
+
+#### `liquidity remove`
+
+</details>
+
+### `axon`
+
+The `btcli axon` commands are used to configure or remove a neuron's serving endpoint on the network.
+
+- **`axon reset`** is used to reset the axon information for a neuron on the network by setting the IP address and port to `0.0.0.0` and `1` respectively.
+- **`axon set`** sets the axon information for a neuron on the network.
+
+<details>
+  <summary>`btcli axon`</summary>
+
+#### `btcli axon reset`
+
+#### `btcli axon set`
+
+</details>
+
 ### `utils`
 
-- `btcli utils convert` is a convenience command for performing conversions between minimal units (RAO) and TAO, or other chain-specific conversions. It is permissionless (no key required) because it performs no on-chain operation, just a local calculation.
-- `btcli utils latency` returns the latency of all finney-like nodes. You can also view latency on additional networks by using the `--network` flag.
+The `btcli utils ...` commands are utility commands used for specialized operations like checking network latency and performing token conversions.
+
+- **`utils convert`** is a convenience command for performing conversions between minimal units (RAO) and TAO, or other chain-specific conversions. It is permissionless (no key required) because it performs no on-chain operation, just a local calculation.
+- **`utils latency`** returns the latency of all finney-like nodes. You can also view latency on additional networks by using the `--network` flag.
 <details>
   <summary>`btcli utils`</summary>
 
 #### `btcli utils convert`
 
 #### `btcli utils latency`
+
+</details>
+
+### `view`
+
+- **`view dashboard`** generates an HTML dashboard that provides a comprehensive overview of the entire network, listing all subnets and detailing the wallet's stake information across each of them.
+
+<details>
+
+  <summary>`btcli view`</summary>
+
+#### `btcli view dashboard`
 
 </details>
