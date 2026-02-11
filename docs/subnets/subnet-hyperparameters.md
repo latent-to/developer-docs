@@ -21,53 +21,59 @@ Anyone can view the parameters of any subnet.
 **Example**
 
 ```bash
-btcli subnet hyperparameters --netuid 19
+btcli subnet hyperparameters --netuid 14
 ```
 
 ```console
-Netuid: 19
-Using the specified network test from config
-
-                          Subnet Hyperparameters
-                  NETUID: 19 (inference) - Network: test
+                                                                                           Subnet Hyperparameters
+                                                                                    NETUID: 14 (TAOHash) - Network: finney
 
 
- HYPERPARAMETER                    VALUE                  NORMALIZED
- ────────────────────────────────────────────────────────────────────────
-   activity_cutoff                 5000                   5000
-   adjustment_alpha                17893341751498265066   0.97
-   adjustment_interval             360                    360
-   alpha_high                      58982                  0.9000076295
-   alpha_low                       45875                  0.7000076295
-   alpha_sigmoid_steepness         0.0                    0
-   bonds_moving_avg                900000                 4.878909776e-14
-   bonds_reset_enabled             False                  False
-   commit_reveal_period            1                      1
-   commit_reveal_weights_enabled   False                  False
-   difficulty                      18446744073709551615   1
-   immunity_period                 5000                   5000
-   kappa                           32767                  0.4999923705
-   liquid_alpha_enabled            False                  False
-   max_burn                        100000000000           100.0000 τ
-   max_difficulty                  18446744073709551615   1
-   max_regs_per_block              1                      1
-   max_validators                  64                     64
-   max_weight_limit                65535                  1
-   min_allowed_weights             1                      1
-   min_burn                        500000                 0.0005 τ
-   min_difficulty                  18446744073709551615   1
-   registration_allowed            True                   True
-   rho                             10                     10
-   serving_rate_limit              50                     50
-   subnet_is_active                True                   True
-   target_regs_per_interval        1                      1
-   tempo                           360                    360
-   transfers_enabled               True                   True
-   user_liquidity_enabled          True                   True
-   weights_rate_limit              100                    100
-   weights_version                 0                      0
-   yuma_version                    2                      2
- ────────────────────────────────────────────────────────────────────────
+ HYPERPARAMETER                    VALUE                  NORMALIZED        OWNER SETTABLE             DESCRIPTION
+ ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   activity_cutoff                 5000                   5000              Yes                        Minimum activity level required for neurons to remain active. link
+   adjustment_alpha                14757395258967641292   0.8               Yes                        Alpha parameter for difficulty adjustment algorithm. link
+   adjustment_interval             360                    360               No (Root Only)             Number of blocks between automatic difficulty adjustments. link
+   alpha_high                      58982                  0.9000076295      Yes                        High bound of the alpha range for stake calculations. link
+   alpha_low                       45875                  0.7000076295      Yes                        Low bound of the alpha range for stake calculations. link
+   alpha_sigmoid_steepness         0.0                    0                 No (Root Only)             Steepness parameter for alpha sigmoid function. link
+   bonds_moving_avg                1                      5.421010862e-20   Yes                        Moving average window size for bond calculations. link
+   bonds_reset_enabled             False                  False             Yes                        Enable or disable periodic bond resets. link
+   commit_reveal_period            1                      1                 Yes                        Duration (in blocks) for commit-reveal weight submission scheme. link
+   commit_reveal_weights_enabled   True                   True              Yes                        Enable or disable commit-reveal scheme for weight submissions. link
+   difficulty                      10000000               5.421010862e-13   No (Root Only)             Current proof-of-work difficulty for registration. link
+   immunity_period                 5000                   5000              Yes                        Duration (in blocks) during which newly registered neurons are protected from certain penalties. link
+   kappa                           32767                  0.4999923705      No (Root Only)             Kappa determines the scaling factor for consensus calculations. link
+   liquid_alpha_enabled            False                  False             Yes                        Enable or disable liquid alpha staking mechanism. link
+   max_burn                        100000000000           ‎100.0000 τ‎        No (Root Only)             Maximum TAO burn amount cap for subnet registration. link
+   max_difficulty                  18446744073709551615   1                 Yes                        Maximum proof-of-work difficulty cap. link
+   max_regs_per_block              1                      1                 No (Root Only)             Maximum number of registrations allowed per block. link
+   max_validators                  64                     64                No (Root Only)             Maximum number of validators allowed in the subnet. link
+   max_weight_limit                65535                  1                 Yes                        No description available.
+   min_allowed_weights             1                      1                 Yes                        Minimum number of weight connections a neuron must maintain to stay active. link
+   min_burn                        500000                 ‎0.0005 τ‎          Yes                        Minimum TAO burn amount required for subnet registration. link
+   min_difficulty                  10000000               5.421010862e-13   No (Root Only)             Minimum proof-of-work difficulty required for registration link
+   registration_allowed            True                   True              No (Root Only)             Enable or disable new registrations to the subnet. link
+   rho                             10                     10                Yes                        Rho controls the rate at which weights decay over time. link
+   serving_rate_limit              50                     50                Yes                        Rate limit for serving requests. link
+   subnet_is_active                True                   True              Yes                        Whether the subnet is currently active and operational. link
+   target_regs_per_interval        1                      1                 No (Root Only)             Target number of new registrations per adjustment interval. link
+   tempo                           360                    360               No (Root Only)             Number of blocks between epoch transitions link
+   transfers_enabled               True                   True              Yes                        Enable or disable TAO transfers within the subnet. link
+   user_liquidity_enabled          False                  False             COMPLICATED (Owner/Sudo)   Enable or disable user liquidity features. link
+   weights_rate_limit              100                    100               No (Root Only)             Maximum number of weight updates allowed per epoch. link
+   weights_version                 28                     28                Yes                        Version key for weight sets. link
+   yuma_version                    2                      2                 Yes                        Version of the Yuma consensus mechanism. link
+ ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+💡 Tip: Use btcli sudo set --param <name> --value <value> to modify hyperparameters.
+💡 Tip: Subnet owners can set parameters marked 'Yes'. Parameters marked 'No (Root Only)' require root sudo access.
+💡 Tip: To set custom hyperparameters not in this list, use the exact parameter name from the chain metadata.
+   Example: btcli sudo set --netuid 14 --param custom_param_name --value 123
+   The parameter name must match exactly as defined in the chain's AdminUtils pallet metadata.
+📚 For detailed documentation, visit: https://docs.bittensor.com
 ```
 
 :::tip
