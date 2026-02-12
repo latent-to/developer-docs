@@ -59,7 +59,7 @@ The protocol for decentralized governance of Bittensor is still in research and 
 
 Transitioning from Proof of Authority (PoA) to Nominated Proof of Stake (NPoS) is a foundational step toward true decentralization.
 
-Block production will be distributed across elected validators, and OTF will no longer have direct control. The network at that point becomes permissionlessly decentralized at the consensus layer.
+Block production will be distributed across elected validators, and OTF will no longer have direct control. The network at that point becomes permissionlessly decentralized at the consensus layer. Blockchain validation work will be compensated, from liquidity gathered from transaction fees.
 
 **Current Blockers:**
 - Trustless MEV Shield (see below)
