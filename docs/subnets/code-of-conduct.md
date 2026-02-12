@@ -4,7 +4,7 @@ title: "Subnet Code of Conduct (Draft)"
 
 # Subnet Code of Conduct (Draft)
 
-This discusses Bittensor's *unofficial* code of conduct for subnet owners: norms that have historically been upheld by validators, through the enforcement mechanism of burning the subnet's emissions. This is done by submitting a weight matrix that gives all weight to the subnet owner's own key, rather than actual miners, which triggers those alpha emissions to be burnt, not to be sent to the subnet owner.
+This page discusses Bittensor's *unofficial* code of conduct for subnet owners: norms that have historically been upheld by validators, through the enforcement mechanism of burning the subnet's emissions. This is done by submitting a weight matrix that gives all weight to the subnet owner's own key, rather than actual miners, which triggers those alpha emissions to be burnt, not to be sent to the subnet owner.
 
 Bittensor's validators strive to uphold this set of norms because they are seen as critical to keep Bittensor aligned with its design intent as a platform for funding the creation of digital commodities.
 
