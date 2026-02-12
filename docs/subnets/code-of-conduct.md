@@ -23,15 +23,13 @@ This is not an “official law code”. Burn outcomes are ultimately the result 
 
 ### Validator operations should be open-source and permissionless
 
+
+- Publish runnable code and at adequate documentation so third-party validators can operate independently.
+- Do not require validators to interact with owner infrastructure for the core functionality of scoring/weights. Do not fee-gate, role-gate, or otherwise impede validation if the practical effect is owner control.
+- Avoid centralized, owner-controlled “weight servers” or “evaluation servers” that determine outcomes off-chain.
 - Do not use hyperparameter manipulation or other tactics to make third-party validators ineffective while keeping your own validators advantaged.
 
-- Publish runnable code and at least minimal documentation so third-party validators can operate independently.
-
-- Do not require validators to interact with owner infrastructure for the core functionality of scoring/weights. Do not fee-gate, role-gate, or otherwise impede validation if the practical effect is owner control.
-
-- Avoid centralized, owner-controlled “weight servers” or “evaluation servers” that determine outcomes off-chain.
-
-- If you believe a narrow exception is justified (e.g., an anti-fraud module), document:
+- If you believe any exception to the above is justified, avoid trouble by pre-emptively documenting:
   - what is closed,
   - why it must be closed,
   - what safeguards exist,
