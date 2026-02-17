@@ -4,9 +4,11 @@ title: "Subnet Code of Conduct (Draft)"
 
 # Subnet Code of Conduct (Draft)
 
-This page discusses Bittensor's *unofficial* code of conduct for subnet owners: norms that have historically been upheld by validators, through the enforcement mechanism of burning the subnet's emissions. This is done by submitting a weight matrix that gives all weight to the subnet owner's own key, rather than actual miners, which triggers those alpha emissions to be burnt, not to be sent to the subnet owner.
+This page discusses Bittensor's *unofficial* code of conduct for subnet owners, which is enforced by validators. Historically, norms of conduct have been enforced through the mechanism of burning the subnet's emissions by submitting a weight matrix that gives all weight to the subnet owner's own key, rather than actual miners. This triggers the emissions algorithm to burn those alpha emissions, **not** to send them to the subnet owner.
 
-Bittensor's validators strive to uphold this set of norms because they are seen as critical to keep Bittensor aligned with its design intent as a platform for funding the creation of digital commodities.
+Currently, additional mechanisms for validators to limit the impact of suspected bad actor subnets, and to punish them tokenomically, are being researched for eventual inclusion in the protocol.
+
+Bittensor's validators strive to uphold norms of conduct because they are seen as critical to keep Bittensor aligned with its design intent as a platform for funding the creation of digital commodities.
 
 The rules and their enforcement aim to:
 
@@ -22,7 +24,6 @@ This is not an “official law code”. Burn outcomes are ultimately the result 
 ## Subet Owner Responsibilities
 
 ### Validator operations should be open-source and permissionless
-
 
 - Publish runnable code and at adequate documentation so third-party validators can operate independently.
 - Do not require validators to interact with owner infrastructure for the core functionality of scoring/weights. Do not fee-gate, role-gate, or otherwise impede validation if the practical effect is owner control.
@@ -64,24 +65,23 @@ If your subnet is being discussed for burn-related action, pursue a course of tr
 
 ## Code of Operating Conduct for Validators (acting as 'burn police')
 
-Enforcement of the code of conduct is an open, decentralized process. Publishing process norms helps owners know what to expect and helps validators keep decisions understandable.
+Validators' readiness to participate as 'burn police' is critical to Bittensor's tokenomic health. If bad-actor subnets are not quickly halted, they can potentially drain significant liquidity, gaining a foothold for making further trouble and harming the public trust of TAO through pump and dump schemes that add no value. If validators display consistent, decisive responsiveness, bad actors will lose, potential bad actors will be deterred, and such attacks will remain rare.
 
-### Core principles
+### Transparency/Documentation
 
-- **Consistency**: apply standards evenly; avoid favoritism.
-- **Transparency by default**: public rationale and non-ephemeral records where feasible.
-- **Evidence over vibes or personal cred**: prefer primary sources and reproducible claims.
-- **Due process**: right of reply and time to remediate when appropriate.
-- **Proportionality**: “pause and fix” when there is good faith; reserve severe measures for persistent malice/defiance.
-- **Conflict-of-interest controls**: disclose material conflicts; abstain where possible.
-- **Professional conduct**: no harassment/doxxing; critique designs; avoid defamation.
+In order to maintain public trust in this critical function, burn police actions should be made transparent. Published documentation should include the evidence used to assess the sitiuation and the time-table of events, including a retroactive assessment after the situation has concluded. These records should be publicly archived.
 
-### Logging
+### Communication/Warnings
 
-Ideally, log every 'burn police' action with its rationale and a subsequent assessment of the success of the action. For each subnet action (burn / sink / other), publish:
+Except in rare, exceptional, emergency cases, punitive actions should be proceeded by warnings, dialogue, and clear communication of what is required to bring the subnet into compliance. Without communicating these requirements prior to the sanction, the subnet owner cannot be expected to comply, and punitive actions will be seen as bullying or piratical, by the recipient as well as potentially by the community. Prompt, unambiguous, highly visible communication is the key.
 
-- What norm was implicated (or “under review” if preliminary)
-- Evidence links (code, on-chain, public statements)
-- Remediation checklist
-- Next review trigger (e.g., “major code update shipped”)
-- Publish post hoc assessment
+Unless a subnet owner's intent is clearly malicious, it be preferred to achieve compliance through communication and negotion *without needing to exercise the burn or other punishment*.
+
+### Fairness
+
+Standards of conduct must be applied consistently and without bias, or public trust in Bittensor, and correlatively the value of TAO, will be eroded.
+
+Sanctions and scrutiny should be applied based on the subnet design rather than ad hominem factors. Validators should not excuse subnets based on personal relationships; standards for exceptions, and for subnets to make transparent the rationale for any exceptions, must be applied without favoritism or secrecy.
+
+Material conflicts of interest between validators and subnets should be avoided and stated clearly when necessary.
+
