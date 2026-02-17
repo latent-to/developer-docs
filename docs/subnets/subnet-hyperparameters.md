@@ -365,6 +365,22 @@ Current dynamically computed value for the proof-of-work (POW) requirement for P
 
 Sets the halving time of average moving price on a subnet.
 
+### ImmuneOwnerUidsLimit
+
+**Type**: u16
+
+**Default**: 1
+
+**`btcli` setter**: `btcli sudo set --param sudo_set_owner_immune_neuron_limit`
+
+**Setter extrinsic**: `sudo_set_owner_immune_neuron_limit`
+
+**Permissions required to set**: Subnet creator
+
+**Description**:
+
+The `ImmuneOwnerUidsLimit` hyperparameter determines the maximum number neurons that can be marked as owner-immune on a subnet.
+
 ### ImmunityPeriod
 
 **Type**: u16
@@ -414,6 +430,22 @@ the consensus threshold for bond-clipping during [Yuma Consensus](../learn/yuma-
 **Description**:
 
 Enables the [liquid alpha ](../concepts/consensus-based-weights) feature.
+
+### MaxAllowedUids
+
+**Type**: u16
+
+**Default**: 256
+
+**`btcli` setter**: `btcli sudo set --param sudo_trim_to_max_allowed_uids` / `btcli sudo trim`
+
+**Setter extrinsic**: `sudo_trim_to_max_allowed_uids`
+
+**Permissions required to set**: Root
+
+**Description**:
+
+Maximum validators on a subnet.
 
 ### MaxAllowedValidators
 
@@ -493,6 +525,51 @@ Maximum neuron registrations per block. Note: Actual limit may be lower, as ther
 
 **Description**: The limit for the u16-normalized weights. If some weight is greater than this limit when all weights are normalized so that maximum weight is 65535, then it will not be used.
 
+### MechanismCount
+
+**Type**: u8
+
+**Default**: 1
+
+**`btcli` setter**: `btcli sudo set --param sudo_set_mechanism_count`
+
+**Setter extrinsic**: `sudo_set_mechanism_count`
+
+**Permissions required to set**: Subnet creator
+
+**Description**:
+Sets the number of mechanisms on a subnet. Before modifying this hyperparameter, you must ensure that the new mechanism count multiplied by the maximum number of UIDs in a subnet must be less than 256. To learn more about trimming UIDs, see [UID trimming](../subnets/uid-trimming.md).
+
+### MechanismEmissionSplit
+
+**Type**: `<Vec<u16>>`
+
+**Default**: n/a
+
+**`btcli` setter**: `btcli sudo set --param sudo_set_mechanism_emission_split`
+
+**Setter extrinsic**: `sudo_set_mechanism_emission_split`
+
+**Permissions required to set**: Subnet creator
+
+**Description**:
+The `MechanismEmissionSplit` sets the emissions splits of mechanisms in a subnet.
+
+### MinAllowedUids
+
+**Type**: u16
+
+**Default**: 64
+
+**`btcli` setter**: n/a
+
+**Setter extrinsic**: `sudo_set_min_allowed_uids`
+
+**Permissions required to set**: Root
+
+**Description**:
+This hyperparameter sets the minimum allowed UIDs for a subnet. It is only callable by the root account.
+
 ### MinAllowedWeights
 
 **Type**: u16
@@ -539,6 +616,21 @@ The minimum of the range of the dynamic burn cost for registering on the subnet.
 **Description**:
 
 The minimum of the range of the proof-of-work for registering on the subnet
+
+### MinNonImmuneUids
+
+**Type**: u16
+
+**Default**: 10
+
+**`btcli` setter**: n/a
+
+**Setter extrinsic**: `sudo_set_min_non_immune_uids`
+
+**Permissions required to set**: Root
+
+**Description**:
+Sets the minimum number non-immune UIDs that must remain in a subnet. It is only callable by the root account.
 
 ### NetworkPowRegistrationAllowed
 
@@ -590,21 +682,35 @@ Rate limit for network registrations expressed in blocks
 
 `NetworkRegistrationAllowed` determines if burned registrations are allowed. If both burned and pow registrations are disabled, the subnet will not get emissions.
 
-### OwnerImmuneNeuronLimit
+### OwnerHyperparamRateLimit
 
 **Type**: u16
 
-**Default**: 1
+**Default**: 2 (tempos)
 
-**`btcli` setter**: `btcli sudo set --param sudo_set_owner_immune_neuron_limit`
+**`btcli` setter**: none
 
-**Setter extrinsic**: `sudo_set_owner_immune_neuron_limit`
+**Setter extrinsic**: `sudo_set_owner_hparam_rate_limit`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Root
 
 **Description**:
 
-The `OwnerImmuneNeuronLimit` hyperparameter determines the maximum number neurons that can be marked as owner-immune on a subnet.
+Global multiplier that rate-limits how frequently a subnet owner can update subnet hyperparameters. The cooldown window equals `Tempo(netuid) × OwnerHyperparamRateLimit` blocks. The rate limit is tracked independently per hyperparameter; changing `kappa` does not block an immediate change to `rho`, for example.
+
+### RecycleOrBurn
+
+**Type**: `RecycleOrBurnEnum`
+
+**Default**: Burn
+
+**`btcli` setter**: `btcli sudo set --param sudo_set_recycle_or_burn`
+
+**Setter extrinsic**: `sudo_set_recycle_or_burn`
+
+**Permissions required to set**: Subnet creator
+
+**Description**: The `RecycleOrBurnEnum` hyperparameter sets the behaviour of the burn UIDs for a given subnet. If set to `Burn`, the miner emission sent to the burn UID(s) will be burned. If set to `Recycle`, the miner emission sent to the burn UID(s) will be recycled.
 
 ### Rho
 
@@ -639,22 +745,6 @@ Deprecated.
 **Description**:
 
 Rate limit for calling `serve_axon` and `serve_prometheus` extrinsics used by miners.
-
-### OwnerHyperparamRateLimit
-
-**Type**: u16
-
-**Default**: 2 (tempos)
-
-**`btcli` setter**: none
-
-**Setter extrinsic**: `sudo_set_owner_hparam_rate_limit`
-
-**Permissions required to set**: Root
-
-**Description**:
-
-Global multiplier that rate-limits how frequently a subnet owner can update subnet hyperparameters. The cooldown window equals `Tempo(netuid) × OwnerHyperparamRateLimit` blocks. The rate limit is tracked independently per hyperparameter; changing `kappa` does not block an immediate change to `rho`, for example.
 
 ### SubtokenEnabled
 
