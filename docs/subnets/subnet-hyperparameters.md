@@ -10,13 +10,11 @@ Note that the names of the variables may be slightly different in various repres
 
 ## Manage hyperparams with `btcli`
 
-:::note
-Not all hyperparameters can be viewed and set with `btcli`.
-:::
+This section covers how to use BTCLI to view, update, and verify network hyperparameters directly from the terminal.
 
 ### View the hyperparameters
 
-Anyone can view the parameters of any subnet.
+Any user can view the hyperparameters of any subnet by using the `btcli subnets hyperparameters` command and including the `--netuid` flag . The command displays the subnet hyperparameter information, including their values, descriptions, and permission information.
 
 **Example**
 
@@ -76,28 +74,96 @@ btcli subnet hyperparameters --netuid 14
 📚 For detailed documentation, visit: https://docs.bittensor.com
 ```
 
-:::tip
+### Set hyperparameters on BTCLI {#set-hyperparameters}
 
-`btcli` does not include all of the chain state variables, some of which can only be accessed through the Bittensor Python SDK or directly through extrinsic calls.
-:::
+Setting hyperparameters can be set using BTCLI requires the appropriate permissions.
 
-### Set hyperparameters
-
-Use the below command to set these hyperparameters.
-
-:::tip
-Only the coldkey that created the subnet can set the hyperparameters.
+:::info Required Privileges
+Only the subnet owner coldkey or a coldkey with root permissions can modify subnet hyperparameters. Hyperparameters that require root permissions cannot be set using BTCLI.
 :::
 
 ```bash
-btcli sudo set
+btcli sudo set --netuid 14
 ```
+
+<details>
+    <summary><strong>Show sample output</strong></summary>
+    
+<!-- prettier-ignore-start -->
+
+```
+Available hyperparameters:
+
+#       HYPERPARAMETER                  OWNER SETTABLE       DESCRIPTION
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+1       activity_cutoff                 Yes                  Minimum activity level required for neurons to remain active.
+2       adjustment_alpha                Yes                  Alpha parameter for difficulty adjustment algorithm.
+3       adjustment_interval             No (Root Only)       Number of blocks between automatic difficulty adjustments.
+4       alpha_high                      Yes                  High bound of the alpha range for stake calculations.
+5       alpha_low                       Yes                  Low bound of the alpha range for stake calculations.
+6       alpha_sigmoid_steepness         No (Root Only)       Steepness parameter for alpha sigmoid function.
+7       bonds_moving_avg                Yes                  Moving average window size for bond calculations.
+8       bonds_reset_enabled             Yes                  Enable or disable periodic bond resets.
+9       commit_reveal_period            Yes                  Duration (in blocks) for commit-reveal weight submission scheme.
+10      commit_reveal_weights_enabled   Yes                  Enable or disable commit-reveal scheme for weight submissions.
+11      difficulty                      No (Root Only)       Current proof-of-work difficulty for registration.
+12      immunity_period                 Yes                  Duration (in blocks) during which newly registered neurons are protected from certain penalties.
+13      kappa                           No (Root Only)       Kappa determines the scaling factor for consensus calculations.
+14      liquid_alpha_enabled            Yes                  Enable or disable liquid alpha staking mechanism.
+15      max_burn                        No (Root Only)       Maximum TAO burn amount cap for subnet registration.
+16      max_difficulty                  Yes                  Maximum proof-of-work difficulty cap.
+17      max_regs_per_block              No (Root Only)       Maximum number of registrations allowed per block.
+18      max_validators                  No (Root Only)       Maximum number of validators allowed in the subnet.
+19      max_weight_limit                Yes                  No description available.
+20      min_allowed_weights             Yes                  Minimum number of weight connections a neuron must maintain to stay active.
+21      min_burn                        Yes                  Minimum TAO burn amount required for subnet registration.
+22      min_difficulty                  No (Root Only)       Minimum proof-of-work difficulty required for registration
+23      registration_allowed            No (Root Only)       Enable or disable new registrations to the subnet.
+24      rho                             Yes                  Rho controls the rate at which weights decay over time.
+25      serving_rate_limit              Yes                  Rate limit for serving requests.
+26      subnet_is_active                Yes                  Whether the subnet is currently active and operational.
+27      target_regs_per_interval        No (Root Only)       Target number of new registrations per adjustment interval.
+28      tempo                           No (Root Only)       Number of blocks between epoch transitions
+29      transfers_enabled               Yes                  Enable or disable TAO transfers within the subnet.
+30      user_liquidity_enabled          COMPLICATED          Enable or disable user liquidity features.
+31      weights_rate_limit              No (Root Only)       Maximum number of weight updates allowed per epoch.
+32      weights_version                 Yes                  Version key for weight sets.
+33      yuma_version                    Yes                  Version of the Yuma consensus mechanism.
+
+Enter the number of the hyperparameter: 7
+
+Selected: bonds_moving_avg
+Moving average window size for bond calculations. link
+Side Effects: Larger windows provide smoother bond values but slower response to changes. Smaller windows react faster but may be more volatile.
+📚 Docs: https://docs.learnbittensor.org/subnets/subnet-hyperparameters#bondsmovingaverage
+
+Enter the new value for bonds_moving_avg in the VALUE column format: 89000
+Enter the wallet name (Hint: You can set this with `btcli config set --wallet-name`) (default): sn-creator
+Enter your password:
+Decrypting...
+✅ Your extrinsic has been included as 1671-6
+✅ Hyperparameter bonds_moving_avg changed to 89000
+```
+
+<!-- prettier-ignore-end -->
+
+</details>
+
+:::info Set custom hyperparameters
+
+You can also modify values for hyperparameters that are not included in the table. To do this, you must provide the hyperparameter's setter extrinsic and value when running the `btcli sudo set` command.
+
+For example, the following command sets the number of owner-immune neurons to `four`.
+
+```sh
+ btcli sudo set --param sudo_set_owner_immune_neuron_limit --value .00007
+```
+
+:::
 
 ## Subnet Hyperparameters
 
-The following variables are configurable by the subnet creator.
-
-**Permissions required to set**: Subnet Creator
+This section details all subnet hyperparameters, including their default values, descriptions, and the setter extrinsics required to modify them.
 
 ### ActivityCutoff
 
@@ -160,6 +226,21 @@ The number of blocks for the stake to become inactive for the purpose of epoch i
 
 **Description**:
 `AlphaSigmoidSteepness` determines how the consensus mechanism assigns an alpha value for a given miner-validator pair based on voting alignment. Lower steepness values result in moderate alpha values, while higher steepness values push alpha values closer to the defined `alpha_low` or `alpha_high` values.
+
+### AlphaValues
+
+**Type**: nil
+
+**Default**: nil
+
+**`btcli` setter**: `btcli sudo set --param sudo_set_alpha_values`
+
+**Setter extrinsic**: `sudo_set_alpha_values`
+
+**Permissions required to set**: Subnet Creator
+
+**Description**:
+The `AlphaValues` hyperparameter sets the values for [liquid alpha](../concepts/consensus-based-weights.md) on a subnet. Modifying the `AlphaValues` hyperparameter will require you to set the `alpha_low` and `alpha_high` values for the subnet.
 
 ### BondsMovingAverage
 
@@ -267,6 +348,22 @@ Enables [Commit Reveal](../concepts/commit-reveal)
 Current dynamically computed value for the proof-of-work (POW) requirement for POW hotkey registration. Decreases over time but increases after new registrations, between the min and the maximum set by the subnet creator. see [#max-difficulty].
 
 <!-- What are the units here? What does this actually mean, how are miners supposed to read/understand this? -->
+
+### EMAPriceHalvingPeriod
+
+**Type**: u64
+
+**Default**: 201600
+
+**`btcli` setter**: n/a
+
+**Setter extrinsic**: `sudo_set_ema_price_halving_period`
+
+**Permissions required to set**: Root
+
+**Description**:
+
+Sets the halving time of average moving price on a subnet.
 
 ### ImmunityPeriod
 
@@ -493,6 +590,22 @@ Rate limit for network registrations expressed in blocks
 
 `NetworkRegistrationAllowed` determines if burned registrations are allowed. If both burned and pow registrations are disabled, the subnet will not get emissions.
 
+### OwnerImmuneNeuronLimit
+
+**Type**: u16
+
+**Default**: 1
+
+**`btcli` setter**: `btcli sudo set --param sudo_set_owner_immune_neuron_limit`
+
+**Setter extrinsic**: `sudo_set_owner_immune_neuron_limit`
+
+**Permissions required to set**: Subnet creator
+
+**Description**:
+
+The `OwnerImmuneNeuronLimit` hyperparameter determines the maximum number neurons that can be marked as owner-immune on a subnet.
+
 ### Rho
 
 **Type**: u16
@@ -543,6 +656,21 @@ Rate limit for calling `serve_axon` and `serve_prometheus` extrinsics used by mi
 
 Global multiplier that rate-limits how frequently a subnet owner can update subnet hyperparameters. The cooldown window equals `Tempo(netuid) × OwnerHyperparamRateLimit` blocks. The rate limit is tracked independently per hyperparameter; changing `kappa` does not block an immediate change to `rho`, for example.
 
+### SubtokenEnabled
+
+**Type**: Bool
+
+**Default**: True
+
+**`btcli` setter**: n/a
+
+**Setter extrinsic**: `sudo_set_subtoken_enabled`
+
+**Permissions required to set**: Root
+
+**Description**:
+Enables or disables subtoken trading for a given subnet.
+
 ### SubnetIsActive
 
 **Type**: Bool
@@ -557,6 +685,21 @@ Global multiplier that rate-limits how frequently a subnet owner can update subn
 
 **Description**:
 Indicates whether or not the subnet's emissions have started.
+
+### SubnetOwnerHotkey
+
+**Type**: n/a
+
+**Default**: Defaults to the hotkey of the account that created the subnet.
+
+**`btcli` setter**: `btcli sudo set --param sudo_set_subnet_owner_hotkey`
+
+**Setter extrinsic**: `sudo_set_subnet_owner_hotkey`
+
+**Permissions required to set**: Subnet creator
+
+**Description**:
+Changes the hotkey of the subnet owner on the subnet.
 
 ### TargetRegistrationsPerInterval
 
