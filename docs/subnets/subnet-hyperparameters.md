@@ -76,11 +76,9 @@ btcli subnet hyperparameters --netuid 14
 
 ### Set hyperparameters on BTCLI {#set-hyperparameters}
 
-Setting hyperparameters can be set using BTCLI requires the appropriate permissions.
+Setting hyperparameters can be set using BTCLI requires the appropriate permissions. Only the subnet owner coldkey or a coldkey with root permissions can modify subnet hyperparameters. Hyperparameters that require root permissions cannot be set using BTCLI.
 
-:::info Required Privileges
-Only the subnet owner coldkey or a coldkey with root permissions can modify subnet hyperparameters. Hyperparameters that require root permissions cannot be set using BTCLI.
-:::
+To set a hyperparameter:
 
 ```bash
 btcli sudo set --netuid 14
