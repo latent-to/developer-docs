@@ -175,7 +175,7 @@ This section details all subnet hyperparameters, including their default values,
 
 **Setter extrinsic**: `sudo_set_activity_cutoff`
 
-**Permissions required to set**: Subnet Creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -191,7 +191,7 @@ The number of blocks for the stake to become inactive for the purpose of epoch i
 
 **Setter extrinsic**: `sudo_set_adjustment_alpha`
 
-**Permissions required to set**: Subnet Creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 `AdjustmentAlpha` is the rate at which difficulty and burn are adjusted up or down.
@@ -206,7 +206,7 @@ The number of blocks for the stake to become inactive for the purpose of epoch i
 
 **Setter extrinsic**: `sudo_set_adjustment_interval`
 
-**Permissions required to set**: Subnet Creator
+**Permissions required to set**: Root
 
 **Description**:
 
@@ -214,7 +214,7 @@ The number of blocks for the stake to become inactive for the purpose of epoch i
 
 ### AlphaSigmoidSteepness
 
-**Type**: u16
+**Type**: i16
 
 **Default**: 1000
 
@@ -222,7 +222,7 @@ The number of blocks for the stake to become inactive for the purpose of epoch i
 
 **Setter extrinsic**: `sudo_set_alpha_sigmoid_steepness`
 
-**Permissions required to set**: Subnet Creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 `AlphaSigmoidSteepness` determines how the consensus mechanism assigns an alpha value for a given miner-validator pair based on voting alignment. Lower steepness values result in moderate alpha values, while higher steepness values push alpha values closer to the defined `alpha_low` or `alpha_high` values.
@@ -237,14 +237,14 @@ The number of blocks for the stake to become inactive for the purpose of epoch i
 
 **Setter extrinsic**: `sudo_set_alpha_values`
 
-**Permissions required to set**: Subnet Creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 The `AlphaValues` hyperparameter sets the values for [liquid alpha](../concepts/consensus-based-weights.md) on a subnet. Modifying the `AlphaValues` hyperparameter will require you to set the `alpha_low` and `alpha_high` values for the subnet.
 
 ### BondsMovingAverage
 
-**Type**:
+**Type**: u64
 
 **Default**:
 
@@ -252,7 +252,7 @@ The `AlphaValues` hyperparameter sets the values for [liquid alpha](../concepts/
 
 **`btcli` setter**: `sudo_set_bonds_moving_average`
 
-**Permissions required to set**: Subnet Creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -270,9 +270,7 @@ See [Yuma Consensus: bonding mechanics](../learn/yuma-consensus#bonding-mechanic
 
 **Setter extrinsic**: `sudo_set_bonds_penalty`
 
-**Permissions required to set**: root
-
-<!-- Is this configurable??? ^^ -->
+**Permissions required to set**: Subnet owner
 
 **Description**:
 The magnitude of the penalty subtracted from weights for exceeding consensus, for a specific subnet.
@@ -289,7 +287,7 @@ See [Yuma Consensus: Penalizing out-of-consensus bonds](../learn/yuma-consensus#
 
 **Setter extrinsic**: `sudo_set_bonds_reset_enabled`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -297,7 +295,7 @@ Determines whether or not bonds are reset-enabled.
 
 ### CommitRevealPeriod
 
-**Type**: u16
+**Type**: u64
 
 **Default**: 1
 
@@ -305,7 +303,7 @@ Determines whether or not bonds are reset-enabled.
 
 **Setter extrinsic**: `sudo_set_commit_reveal_weights_interval`
 
-**Permissions required to set**: Subnet Creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -319,13 +317,13 @@ See [Commit Reveal](../concepts/commit-reveal) for details on how commit reveal 
 
 **Type**: Boolean
 
-**Default**: false
+**Default**: False
 
 **`btcli` setter**: `btcli sudo set --param commit_reveal_weights_enabled`
 
 **Setter extrinsic**: `sudo_set_commit_reveal_weights_enabled`
 
-**Permissions required to set**: Subnet Creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -345,7 +343,7 @@ Enables [Commit Reveal](../concepts/commit-reveal)
 
 **Description**:
 
-Current dynamically computed value for the proof-of-work (POW) requirement for POW hotkey registration. Decreases over time but increases after new registrations, between the min and the maximum set by the subnet creator. see [#max-difficulty].
+Current dynamically computed value for the proof-of-work (POW) requirement for POW hotkey registration. Decreases over time but increases after new registrations, between the min and the maximum set by the Subnet owner. see [MaxDifficulty](#maxdifficulty).
 
 <!-- What are the units here? What does this actually mean, how are miners supposed to read/understand this? -->
 
@@ -375,7 +373,7 @@ Sets the halving time of average moving price on a subnet.
 
 **Setter extrinsic**: `sudo_set_owner_immune_neuron_limit`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -391,7 +389,7 @@ The `ImmuneOwnerUidsLimit` hyperparameter determines the maximum number neurons 
 
 **Setter extrinsic**: `sudo_set_immunity_period`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -407,7 +405,7 @@ The number of blocks after registration when a miner is protected from deregistr
 
 **Setter extrinsic**: `sudo_set_kappa`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Root
 
 **Description**:
 
@@ -425,7 +423,7 @@ the consensus threshold for bond-clipping during [Yuma Consensus](../learn/yuma-
 
 **Setter extrinsic**: `sudo_set_liquid_alpha_enabled`
 
-**Permissions required to set**: SN creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -441,11 +439,11 @@ Enables the [liquid alpha ](../concepts/consensus-based-weights) feature.
 
 **Setter extrinsic**: `sudo_trim_to_max_allowed_uids`
 
-**Permissions required to set**: Root
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
-Maximum validators on a subnet.
+Maximum number of neurons on a subnet.
 
 ### MaxAllowedValidators
 
@@ -473,7 +471,7 @@ Maximum validators on a subnet.
 
 **Setter extrinsic**: `sudo_set_max_burn`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -489,7 +487,7 @@ The maximum of the dynamic range for TAO cost of burn registration on the subnet
 
 **Setter extrinsic**: `sudo_set_max_difficulty`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -505,25 +503,11 @@ The maximum of the dynamic range for difficulty of proof-of-work registration on
 
 **Setter extrinsic**: `sudo_set_max_registrations_per_block`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Root
 
 **Description**:
 
 Maximum neuron registrations per block. Note: Actual limit may be lower, as there is also per interval limit [`TargetRegistrationsPerInterval`](#targetregistrationsperinterval).
-
-### MaxWeightsLimit
-
-**Type**: u16
-
-**Default**: 65535
-
-**`btcli` setter**: `btcli sudo set --param max_weights_limit`
-
-**Setter extrinsic**: `sudo_set_max_weight_limit`
-
-**Permissions required to set**: Subnet creator
-
-**Description**: The limit for the u16-normalized weights. If some weight is greater than this limit when all weights are normalized so that maximum weight is 65535, then it will not be used.
 
 ### MechanismCount
 
@@ -531,11 +515,11 @@ Maximum neuron registrations per block. Note: Actual limit may be lower, as ther
 
 **Default**: 1
 
-**`btcli` setter**: `btcli sudo set --param sudo_set_mechanism_count`
+**`btcli` setter**: n/a
 
 **Setter extrinsic**: `sudo_set_mechanism_count`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 Sets the number of mechanisms on a subnet. Before modifying this hyperparameter, you must ensure that the new mechanism count multiplied by the maximum number of UIDs in a subnet must be less than 256. To learn more about trimming UIDs, see [UID trimming](../subnets/uid-trimming.md).
@@ -546,11 +530,11 @@ Sets the number of mechanisms on a subnet. Before modifying this hyperparameter,
 
 **Default**: n/a
 
-**`btcli` setter**: `btcli sudo set --param sudo_set_mechanism_emission_split`
+**`btcli` setter**: n/a
 
 **Setter extrinsic**: `sudo_set_mechanism_emission_split`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 The `MechanismEmissionSplit` sets the emissions splits of mechanisms in a subnet.
@@ -580,7 +564,7 @@ This hyperparameter sets the minimum allowed UIDs for a subnet. It is only calla
 
 **Setter extrinsic**: `sudo_set_min_allowed_weights`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 Minimum number of weights for a validator to set when setting weights.
@@ -595,7 +579,7 @@ Minimum number of weights for a validator to set when setting weights.
 
 **Setter extrinsic**: `sudo_set_min_burn`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -611,11 +595,11 @@ The minimum of the range of the dynamic burn cost for registering on the subnet.
 
 **Setter extrinsic**: `sudo_set_min_difficulty`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
-The minimum of the range of the proof-of-work for registering on the subnet
+The minimum of the range of the proof-of-work for registering on the subnet.
 
 ### MinNonImmuneUids
 
@@ -644,7 +628,7 @@ Sets the minimum number non-immune UIDs that must remain in a subnet. It is only
 
 **Setter extrinsic**: `sudo_set_network_pow_registration_allowed`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -654,13 +638,13 @@ Sets the minimum number non-immune UIDs that must remain in a subnet. It is only
 
 **Type**: u64
 
-**Default**: 7200
+**Default**: 14400
 
 **`btcli` setter**: none
 
-**Setter extrinsic**:
+**Setter extrinsic**: `sudo_set_network_rate_limit`
 
-**Permissions required to set**: root
+**Permissions required to set**: Root
 
 **Description**:
 
@@ -676,7 +660,7 @@ Rate limit for network registrations expressed in blocks
 
 **Setter extrinsic**: `sudo_set_network_registration_allowed`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Root
 
 **Description**:
 
@@ -704,11 +688,11 @@ Global multiplier that rate-limits how frequently a subnet owner can update subn
 
 **Default**: Burn
 
-**`btcli` setter**: `btcli sudo set --param sudo_set_recycle_or_burn`
+**`btcli` setter**: n/a
 
 **Setter extrinsic**: `sudo_set_recycle_or_burn`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**: The `RecycleOrBurnEnum` hyperparameter sets the behaviour of the burn UIDs for a given subnet. If set to `Burn`, the miner emission sent to the burn UID(s) will be burned. If set to `Recycle`, the miner emission sent to the burn UID(s) will be recycled.
 
@@ -722,7 +706,7 @@ Global multiplier that rate-limits how frequently a subnet owner can update subn
 
 **Setter extrinsic**: `sudo_set_rho`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -732,7 +716,7 @@ Deprecated.
 
 ### ServingRateLimit
 
-**Type**: u16
+**Type**: u64
 
 **Default**: 50
 
@@ -740,7 +724,7 @@ Deprecated.
 
 **Setter extrinsic**: `sudo_set_serving_rate_limit`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -771,7 +755,7 @@ Enables or disables subtoken trading for a given subnet.
 
 **Setter extrinsic**: nil
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 Indicates whether or not the subnet's emissions have started.
@@ -786,7 +770,7 @@ Indicates whether or not the subnet's emissions have started.
 
 **Setter extrinsic**: `sudo_set_subnet_owner_hotkey`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 Changes the hotkey of the subnet owner on the subnet.
@@ -801,7 +785,7 @@ Changes the hotkey of the subnet owner on the subnet.
 
 **Setter extrinsic**: `sudo_set_target_registrations_per_interval`
 
-**Permissions required to set**: root
+**Permissions required to set**: Root
 
 **Description**:
 
@@ -821,7 +805,7 @@ The hyperparameter triggers a rate limit when the registration attempts in the c
 
 **Setter extrinsic**: `sudo_set_tempo`
 
-**Permissions required to set**: root
+**Permissions required to set**: Root
 
 **Description**:
 
@@ -838,7 +822,7 @@ See [Emission](../learn/emissions.md)
 
 **Setter extrinsic**: `sudo_set_toggle_transfer`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -854,7 +838,7 @@ Allows/disallows transfer of stake between coldkeys.
 
 **Setter extrinsic**: `toggle_user_liquidity`
 
-**Permissions required to set**: Subnet creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -862,7 +846,7 @@ Determines whether or not the user liquidity feature is enabled on the subnet.
 
 ### WeightsVersion
 
-**Type**: u16
+**Type**: u64
 
 **Default**: 0
 
@@ -870,17 +854,17 @@ Determines whether or not the user liquidity feature is enabled on the subnet.
 
 **Setter extrinsic**: `sudo_set_weights_version_key`
 
-**Permissions required to set**: Subnet Creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
-If the version key specified in `set_weights` extrinsic is lower than this system-wide setting (WeightsVersionKey), the transaction will fail. This is a fool-proofing protection for validators to update, not a security feature.
+If the version key specified in `set_weights` extrinsic is lower than this system-wide setting (`WeightsVersionKey`), the transaction will fail. This is a fool-proofing protection for validators to update, not a security feature.
 
 <!-- need more explanation/clarification ??? -->
 
 ### WeightsRateLimit / CommitmentRateLimit
 
-**Type**: u12
+**Type**: u64
 
 **Default**: 100
 
@@ -904,7 +888,7 @@ How long, in blocks, a validator must wait between weight commits on a subnet.
 
 **Setter extrinsic**: `sudo_set_yuma3_enabled`
 
-**Permissions required to set**: Subnet Creator
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
