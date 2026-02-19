@@ -354,13 +354,13 @@ A system that drives the behavior of subnet miners and governs consensus among s
 
 ### Issuance
 
-The total amount of TAO circulating in the Bittensor network. Includes TAO that is held in wallets and subnet liquidity pools, as well as TAO that is locked as subnet registration fees.
+The total amount of TAO circulating in the Bittensor network. Includes TAO that is held in wallets and subnet liquidity pools.
 
 This can be viewed on Bittensor explorers such as [TAO.app's Tokenomics Dashboard](https://www.tao.app/tokenomics), or [TAOstats](https://taostats.io).
 
 To query it directly from the chain, see: [Subtensor Storage Query Example: Total Issuance](../subtensor-nodes/subtensor-storage-query-examples.md#168-totalissuance)
 
-See also: [Recycling, burning, and locking](#recycling-and-burning)
+See also: [Recycling and burning](#recycling-and-burning)
 
 ## L
 
