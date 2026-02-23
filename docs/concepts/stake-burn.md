@@ -79,8 +79,14 @@ Execute a stake burn by calling the `add_stake_burn` extrinsic with the target s
 <Tabs groupId="stake-burn">
 
 <TabItem value="btcli" label="BTCLI">
+Run the following command to execute a stake burn on BTCLI. Replace `WALLET_NAME`  with the  name of the subnet owner coldkey wallet and `NETUID` with the netuid of the subnet.
+
 ```sh
-  btcli sudo stake-burn --netuid NETUID --amount 10 --network local
+  btcli sudo stake-burn \
+  --wallet-name WALLET_NAME
+  --netuid NETUID \
+  --amount 10 \
+  --tolerance 0.05
 ```
 
 <details>
@@ -119,6 +125,7 @@ Decrypting...
 </TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
+Execute a stake burn using the `subtensor.add_stake_burn` method as shown:
 
 ```py
 import bittensor as bt
@@ -126,14 +133,16 @@ import bittensor as bt
 subtensor = bt.Subtensor(network="local")
 wallet = bt.Wallet(name="WALLET_NAME")
 
-netuid = 14
+netuid = NETUID
 amount = bt.Balance.from_tao(10.0)
+limit_price = bt.Balance.from_tao(LIMIT_PRICE)
 hotkey_ss58 = "HOTKEY_SS58"     # Hotkey to stake to (and burn the resulting Alpha)
 
 response = subtensor.add_stake_burn(
     wallet=wallet,
     netuid=netuid,
     hotkey_ss58=hotkey_ss58,
+    limit_price=limit_price,
     amount=amount,
     wait_for_inclusion=True,
     wait_for_finalization=True,
@@ -145,6 +154,7 @@ else:
     print(f"Failed to execute stake burn: {response.message}")
 ```
 
+Replace `WALLET_NAME` with the name of the subnet owner coldkey wallet, `NETUID` with the netuid of the subnet, and `LIMIT_PRICE` with the maximum Alpha price you are willing to pay for the swap.
 </TabItem>
 
 </Tabs>
