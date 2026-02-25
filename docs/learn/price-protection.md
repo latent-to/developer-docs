@@ -47,10 +47,64 @@ Consider attempting to unstake 1000 alpha when executing the full transaction wo
 | Partial Safe | Unstakes ~400 alpha (maximum amount that keeps final price within 2% tolerance) |
 | Unsafe       | Unstakes full 1000 alpha regardless of 5% price impact                          |
 
+
+### Moving stake between subnets
+
+:::note
+In Bittensor terminology:
+
+- **`stake transfer`**: transfer stake in a specific hotkey on a subnet to another coldkey
+- **`stake move`**: move stake delegated to one valdiator to another validator hotkey, while maintaining ownership of the stake
+- **`stake swap`**: swap stake delegated to a particular validator hotkey to that same hotkey on another subnet, without affecting ownership of the stake
+:::
+
+Stake transactions between subnets can be executed via slippage-protected `*_limit` variants (for example `swap_stake_limit`; some client interfaces refer to this flow as `move_stake_limit`) which take a `limit_price` parameter.
+
+The `limit_price` parameter bounds how far the **relative price** between the origin subnet and destination subnet is allowed to move during execution.
+
+The relative price is defined as:
+
+$$
+\text{relative price} = \frac{\text{origin price}}{\text{destination price}}
+$$
+
+Where each subnet price is its current spot price in $ \tau/\alpha $ (TAO per alpha), and the Root subnet’s price is $1.0$.
+
+The key non-obvious detail is that, for stake movement, the slippage check is based on a **single consistent definition** of relative price:
+
+    $$
+    \frac{\text{origin price}}{\text{destination price}}
+    $$
+
+    This is counter-intuitive when moving stake from Root $\rightarrow$ a dynamic subnet, because the destination subnet price typically goes **up** during the move (you are effectively buying the destination alpha), which makes the ratio $\text{origin}/\text{destination}$ go **down**.
+
+    **Example (Root $\rightarrow$ SN100):**
+
+    - Suppose subnet 100 has price $0.0167\ \tau/\alpha$.
+    - Root price is $1.0$.
+    - Relative price is $1.0 / 0.0167 \approx 59.88$.
+
+    Since execution tends to push the destination price up, the relative price tends to move down. To enforce (say) a 5% slippage bound, you’d set:
+
+    $$
+    \text{limit\_price} \approx 59.88 \cdot (1 - 0.05) \approx 56.89
+    $$
+
+    In the on-chain call, `limit_price` is encoded as a fixed-point `u64` with $10^9$ precision (so $1.0 \mapsto 1{,}000{,}000{,}000$). In that representation, the current relative price $59.88$ is about $59{,}880{,}000{,}000$, and a “just below” limit might be around $59{,}000{,}000{,}000$.
+
+    If the destination is Root (subnet 0), destination price is $1.0$, so the relative price reduces to the origin subnet price. In that case the formula is intuitive: set the limit to the origin price you are willing to accept (e.g. a bit higher than current), for example $0.017$.
+
+    Why define it this way (consistent vs. “intuitive”)?
+
+    - If we flipped the formula depending on direction (staking vs unstaking), the dynamic $\rightarrow$ dynamic case becomes very hard to reason about and easy to misuse.
+    - A uniform definition makes client integrations safer and simpler: “apply 5% slippage” can be implemented as “compute the relative price once, then multiply by $1 - 0.05$” for all cases.
+
+
 ## Managing Price Protection with BTCLI
 
 The `btcli stake` interface provides parameters to control price protection modes.
 
+### Parameters
 **Enable/disable price protection (strict or partial):**
 
 True by default. Enables price protection, which is strict by default.
@@ -79,7 +133,8 @@ If in **partial safe** staking mode, determines the threshold of price variation
 - **Range**: 0.0 to 1.0 (0% to 100%)
 - **Purpose**: Maximum allowed final price deviation from submission price
 
-### BTCLI Examples
+
+### Adding stake
 
 **Strict Safe Mode (reject if price moves beyond tolerance):**
 
@@ -100,32 +155,26 @@ btcli stake add --amount 1000 --netuid 1 --safe --tolerance 0.02 --partial
 ```bash
 btcli stake add --amount 300 --netuid 1 --unsafe
 ```
+### Swapping stake between subnets (on the same validator coldkey-hotkey pair)
 
-**Swap stake between subnets (same coldkey-hotkey pair):**
-
-In BTCLI terminology:
-
-- **`stake move`**: move staked TAO between hotkeys while keeping the same coldkey ownership
-- **`stake transfer`**: transfer stake between coldkeys while keeping the same hotkey ownership
-- **`stake swap`**: swap stake between different subnets while keeping the same coldkey-hotkey pair ownership
 
 The following is a minimal testnet walkthrough to swap stake from one subnet to another.
 
 ```bash
 # 0) Inspect your current balances/stake and pick origin/destination netuids
-btcli wallet balance --network test --wallet-name default --hotkey default
-btcli stake list --network test --wallet-name default --hotkey default
-btcli subnets list --network test
+btcli wallet balance 
+btcli stake list
+btcli subnets list 
 
 # 1) (Optional) Add stake on the origin subnet so you have something to swap
-btcli stake add --network test --wallet-name default --hotkey default --netuid 1 --amount 100 --safe --tolerance 0.02 --no-partial --no-prompt
+btcli stake add --netuid 1 --amount 100 --safe --tolerance 0.02 --no-partial --no-prompt
 
 # 2) Swap stake from subnet 1 -> subnet 2 with price protection enabled
 # note that --safe is unnecessary as it is enabled by default
-btcli stake swap --network test --wallet-name default --hotkey default --origin-netuid 1 --dest-netuid 2 --amount 50 --safe --tolerance 0.01 --allow-partial-stake --no-prompt
+btcli stake swap --origin-netuid 1 --dest-netuid 2 --amount 50 --safe --tolerance 0.01 --allow-partial-stake --no-prompt
 
 # 3) Verify the stake moved
-btcli stake list --network test --wallet-name default --hotkey default
+btcli stake list
 ```
 
 ## Managing Price Protection with SDK
@@ -155,12 +204,10 @@ You must explicitly configure price protection when using the SDK's staking/unst
 - **Range**: 0.0 to 1.0
 - **Purpose**: Maximum allowed final price deviation from submission price
 
-### SDK Examples
 
 <SdkVersion />
 
-See [Price Protection Simulation](#price-protection-simulation) for an extended example.
-
+### Adding Stake
 #### Safe Mode (reject if price moves beyond tolerance)
 
 ```python
@@ -206,21 +253,8 @@ response = subtensor.add_stake(
 )
 ```
 
-### Moving stake between subnets (swap/move stake)
 
-Stake movement between subnets can be executed via slippage-protected `_limit` variants (for example `swap_stake_limit`; some client interfaces refer to this flow as `move_stake_limit`) which take a `limit_price` parameter.
-
-The `limit_price` parameter bounds how far the **relative price** between the origin subnet and destination subnet is allowed to move during execution.
-
-The relative price is defined as:
-
-$$
-\text{relative price} = \frac{\text{origin price}}{\text{destination price}}
-$$
-
-Where each subnet price is its current spot price in $ \tau/\alpha $ (TAO per alpha), and the Root subnet’s price is $1.0$.
-
-#### SDK example: swap stake between two subnets
+### Swapping stake between subnets (on the same validator coldkey-hotkey pair)
 
 <SdkVersion />
 
@@ -315,39 +349,7 @@ print("origin_after:", origin_after)
 print("dest_after:", dest_after)
 ```
 
-<details>
-  <summary><strong>See how it's calculated!</strong></summary>
 
-    The key non-obvious detail is that, for stake movement, the slippage check is based on a **single consistent definition** of relative price:
-
-    $$
-    \frac{\text{origin price}}{\text{destination price}}
-    $$
-
-    This is counter-intuitive when moving stake from Root $\rightarrow$ a dynamic subnet, because the destination subnet price typically goes **up** during the move (you are effectively buying the destination alpha), which makes the ratio $\text{origin}/\text{destination}$ go **down**.
-
-    **Example (Root $\rightarrow$ SN100):**
-
-    - Suppose subnet 100 has price $0.0167\ \tau/\alpha$.
-    - Root price is $1.0$.
-    - Relative price is $1.0 / 0.0167 \approx 59.88$.
-
-    Since execution tends to push the destination price up, the relative price tends to move down. To enforce (say) a 5% slippage bound, you’d set:
-
-    $$
-    \text{limit\_price} \approx 59.88 \cdot (1 - 0.05) \approx 56.89
-    $$
-
-    In the on-chain call, `limit_price` is encoded as a fixed-point `u64` with $10^9$ precision (so $1.0 \mapsto 1{,}000{,}000{,}000$). In that representation, the current relative price $59.88$ is about $59{,}880{,}000{,}000$, and a “just below” limit might be around $59{,}000{,}000{,}000$.
-
-    If the destination is Root (subnet 0), destination price is $1.0$, so the relative price reduces to the origin subnet price.
-
-    Why define it this way (consistent vs. “intuitive”)?
-
-    - If we flipped the formula depending on direction (staking vs unstaking), the dynamic $\rightarrow$ dynamic case becomes very hard to reason about and easy to misuse.
-    - A uniform definition makes client integrations safer and simpler: “apply 5% slippage” can be implemented as “compute the relative price once, then multiply by $1 - 0.05$” for all cases.
-
-</details>
 
 ## Price Protection Simulation
 
