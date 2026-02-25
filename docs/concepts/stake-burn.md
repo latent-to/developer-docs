@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # Subnet Stake Burn
 
-The stake burn mechanism allows subnet owners to reduce the amount of alpha in circulation. This page describes Bittensor's subnet stake burn mechanism. It covers the mechanism’s behavior, how to execute a stake burn, and its effect on a subnet.
+This page describes Bittensor's subnet stake burn mechanism. It covers the mechanism’s behavior, how to execute a stake burn, and its effect on a subnet.
 
 The stake burn mechanism allows subnet owners to permanently remove alpha from circulation. It works as a combination of the [`add_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/add_stake.rs#:~:text=pub%20fn%20do_add_stake)/[`add_stake_limit`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/add_stake.rs#:~:text=pub%20fn%20do_add_stake_limit) extrinsics and the `burn_alpha` extrinsic.
 
