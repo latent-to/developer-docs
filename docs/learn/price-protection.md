@@ -76,7 +76,7 @@ The key non-obvious detail is that, for stake movement, the slippage check is ba
     \frac{\text{origin price}}{\text{destination price}}
     $$
 
-    This is counter-intuitive when moving stake from Root $\rightarrow$ a dynamic subnet, because the destination subnet price typically goes **up** during the move (you are effectively buying the destination alpha), which makes the ratio $\text{origin}/\text{destination}$ go **down**.
+    This is counter-intuitive when moving stake from Root $\rightarrow$ a dynamic subnet, because the destination subnet price typically goes **up** during the move (the operation effectively buys the destination alpha), which makes the ratio $\text{origin}/\text{destination}$ go **down**.
 
     **Example (Root $\rightarrow$ SN100):**
 
@@ -84,7 +84,7 @@ The key non-obvious detail is that, for stake movement, the slippage check is ba
     - Root price is $1.0$.
     - Relative price is $1.0 / 0.0167 \approx 59.88$.
 
-    Since execution tends to push the destination price up, the relative price tends to move down. To enforce (say) a 5% slippage bound, you’d set:
+    Since execution tends to push the destination price up, the relative price tends to move down. To enforce (say) a 5% slippage bound, set:
 
     $$
     \text{limit\_price} \approx 59.88 \cdot (1 - 0.05) \approx 56.89
@@ -92,11 +92,11 @@ The key non-obvious detail is that, for stake movement, the slippage check is ba
 
     In the on-chain call, `limit_price` is encoded as a fixed-point `u64` with $10^9$ precision (so $1.0 \mapsto 1{,}000{,}000{,}000$). In that representation, the current relative price $59.88$ is about $59{,}880{,}000{,}000$, and a “just below” limit might be around $59{,}000{,}000{,}000$.
 
-    If the destination is Root (subnet 0), destination price is $1.0$, so the relative price reduces to the origin subnet price. In that case the formula is intuitive: set the limit to the origin price you are willing to accept (e.g. a bit higher than current), for example $0.017$.
+    If the destination is Root (subnet 0), destination price is $1.0$, so the relative price reduces to the origin subnet price. In that case the formula is intuitive: set the limit to the desired origin price (e.g. a bit higher than current), for example $0.017$.
 
     Why define it this way (consistent vs. “intuitive”)?
 
-    - If we flipped the formula depending on direction (staking vs unstaking), the dynamic $\rightarrow$ dynamic case becomes very hard to reason about and easy to misuse.
+    - If the formula were flipped depending on direction (staking vs unstaking), the dynamic $\rightarrow$ dynamic case would become very hard to reason about and easy to misuse.
     - A uniform definition makes client integrations safer and simpler: “apply 5% slippage” can be implemented as “compute the relative price once, then multiply by $1 - 0.05$” for all cases.
 
 
@@ -380,7 +380,7 @@ def display_balances_and_stakes(subtensor, wallet, target_hotkey, netuid, label)
 
     print(f"Coldkey balance: {balance}")
 
-    # Find stake for our target hotkey and netuid
+    # Find stake for the target hotkey and netuid
     target_stake = None
     for stake_info in stakes:
         if stake_info.hotkey_ss58 == target_hotkey and stake_info.netuid == netuid:
