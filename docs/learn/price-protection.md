@@ -101,6 +101,33 @@ btcli stake add --amount 1000 --netuid 1 --safe --tolerance 0.02 --partial
 btcli stake add --amount 300 --netuid 1 --unsafe
 ```
 
+**Swap stake between subnets (same coldkey-hotkey pair):**
+
+In BTCLI terminology:
+
+- **`stake move`**: move staked TAO between hotkeys while keeping the same coldkey ownership
+- **`stake transfer`**: transfer stake between coldkeys while keeping the same hotkey ownership
+- **`stake swap`**: swap stake between different subnets while keeping the same coldkey-hotkey pair ownership
+
+The following is a minimal testnet walkthrough to swap stake from one subnet to another.
+
+```bash
+# 0) Inspect your current balances/stake and pick origin/destination netuids
+btcli wallet balance --network test --wallet-name default --hotkey default
+btcli stake list --network test --wallet-name default --hotkey default
+btcli subnets list --network test
+
+# 1) (Optional) Add stake on the origin subnet so you have something to swap
+btcli stake add --network test --wallet-name default --hotkey default --netuid 1 --amount 100 --safe --tolerance 0.02 --no-partial --no-prompt
+
+# 2) Swap stake from subnet 1 -> subnet 2 with price protection enabled
+# note that --safe is unnecessary as it is enabled by default
+btcli stake swap --network test --wallet-name default --hotkey default --origin-netuid 1 --dest-netuid 2 --amount 50 --safe --tolerance 0.01 --allow-partial-stake --no-prompt
+
+# 3) Verify the stake moved
+btcli stake list --network test --wallet-name default --hotkey default
+```
+
 ## Managing Price Protection with SDK
 
 The Bittensor SDK provides price protection through method parameters:
@@ -178,6 +205,149 @@ response = subtensor.add_stake(
     safe_staking=False          # Disable protection; Unnecessary as this is the default setting
 )
 ```
+
+### Moving stake between subnets (swap/move stake)
+
+Stake movement between subnets can be executed via slippage-protected `_limit` variants (for example `swap_stake_limit`; some client interfaces refer to this flow as `move_stake_limit`) which take a `limit_price` parameter.
+
+The `limit_price` parameter bounds how far the **relative price** between the origin subnet and destination subnet is allowed to move during execution.
+
+The relative price is defined as:
+
+$$
+\text{relative price} = \frac{\text{origin price}}{\text{destination price}}
+$$
+
+Where each subnet price is its current spot price in $ \tau/\alpha $ (TAO per alpha), and the Root subnet’s price is $1.0$.
+
+#### SDK example: swap stake between two subnets
+
+<SdkVersion />
+
+```python
+import bittensor as bt
+
+subtensor = bt.Subtensor(network="test")
+wallet = bt.Wallet("my_wallet")
+
+# Swap stake from subnet 1 -> subnet 2, keeping the same coldkey-hotkey pair.
+response = subtensor.swap_stake(
+    wallet=wallet,
+    hotkey_ss58=wallet.hotkey.ss58_address,
+    origin_netuid=1,
+    destination_netuid=2,
+    amount=bt.Balance.from_tao(50),
+    safe_swapping=True,
+    rate_tolerance=0.01,        # 1% tolerance on the relative price
+    allow_partial_stake=True,   # execute what fits within tolerance
+)
+print(response)
+```
+
+#### SDK walkthrough: inspect → simulate → swap → verify
+
+<SdkVersion />
+
+```python
+import bittensor as bt
+
+subtensor = bt.Subtensor(network="test")
+wallet = bt.Wallet("my_wallet")
+wallet.unlock_coldkey()
+
+coldkey = wallet.coldkeypub.ss58_address
+hotkey = wallet.hotkey.ss58_address
+
+# 1) Choose origin/destination netuids.
+#    A practical approach is: pick an origin netuid where you already have stake.
+stakes = subtensor.get_stake_info_for_coldkey(coldkey)
+positions = [
+    s for s in stakes
+    if s.hotkey_ss58 == hotkey and float(s.stake) > 0
+]
+print("Positions with stake (this coldkey+hotkey):")
+for s in positions:
+    print(" netuid=", s.netuid, " stake=", s.stake)
+
+origin_netuid = positions[0].netuid     # choose intentionally
+destination_netuid = 2                 # choose intentionally (must exist)
+
+# 2) Inspect the current relative price = origin_price / destination_price.
+origin_pool = subtensor.subnet(netuid=origin_netuid)
+dest_pool = subtensor.subnet(netuid=destination_netuid)
+relative_price = origin_pool.price.tao / (dest_pool.price.tao or 1.0)
+print("relative price (origin/dest):", relative_price)
+
+# 3) Choose an amount to swap.
+#    IMPORTANT: swap_stake amount is denominated in the origin subnet's alpha units.
+amount = bt.Balance.from_tao(50).set_unit(origin_netuid)
+
+# 4) (Optional) simulate fees and output amounts (does not include the extrinsic fee).
+sim = subtensor.sim_swap(
+    origin_netuid=origin_netuid,
+    destination_netuid=destination_netuid,
+    amount=amount,
+)
+print("sim.alpha_fee:", sim.alpha_fee)
+print("sim.tao_fee:", sim.tao_fee)
+print("sim.alpha_amount:", sim.alpha_amount)
+print("sim.tao_amount:", sim.tao_amount)
+
+# 5) Execute the swap with price protection.
+resp = subtensor.swap_stake(
+    wallet=wallet,
+    hotkey_ss58=hotkey,
+    origin_netuid=origin_netuid,
+    destination_netuid=destination_netuid,
+    amount=amount,
+    safe_swapping=True,
+    rate_tolerance=0.01,        # 1% tolerance on the relative price
+    allow_partial_stake=True,
+    wait_for_inclusion=True,
+    wait_for_finalization=True,
+)
+print(resp)
+
+# 6) Verify updated stakes.
+origin_after = subtensor.get_stake(coldkey_ss58=coldkey, hotkey_ss58=hotkey, netuid=origin_netuid)
+dest_after = subtensor.get_stake(coldkey_ss58=coldkey, hotkey_ss58=hotkey, netuid=destination_netuid)
+print("origin_after:", origin_after)
+print("dest_after:", dest_after)
+```
+
+<details>
+  <summary><strong>See how it's calculated!</strong></summary>
+
+    The key non-obvious detail is that, for stake movement, the slippage check is based on a **single consistent definition** of relative price:
+
+    $$
+    \frac{\text{origin price}}{\text{destination price}}
+    $$
+
+    This is counter-intuitive when moving stake from Root $\rightarrow$ a dynamic subnet, because the destination subnet price typically goes **up** during the move (you are effectively buying the destination alpha), which makes the ratio $\text{origin}/\text{destination}$ go **down**.
+
+    **Example (Root $\rightarrow$ SN100):**
+
+    - Suppose subnet 100 has price $0.0167\ \tau/\alpha$.
+    - Root price is $1.0$.
+    - Relative price is $1.0 / 0.0167 \approx 59.88$.
+
+    Since execution tends to push the destination price up, the relative price tends to move down. To enforce (say) a 5% slippage bound, you’d set:
+
+    $$
+    \text{limit\_price} \approx 59.88 \cdot (1 - 0.05) \approx 56.89
+    $$
+
+    In the on-chain call, `limit_price` is encoded as a fixed-point `u64` with $10^9$ precision (so $1.0 \mapsto 1{,}000{,}000{,}000$). In that representation, the current relative price $59.88$ is about $59{,}880{,}000{,}000$, and a “just below” limit might be around $59{,}000{,}000{,}000$.
+
+    If the destination is Root (subnet 0), destination price is $1.0$, so the relative price reduces to the origin subnet price.
+
+    Why define it this way (consistent vs. “intuitive”)?
+
+    - If we flipped the formula depending on direction (staking vs unstaking), the dynamic $\rightarrow$ dynamic case becomes very hard to reason about and easy to misuse.
+    - A uniform definition makes client integrations safer and simpler: “apply 5% slippage” can be implemented as “compute the relative price once, then multiply by $1 - 0.05$” for all cases.
+
+</details>
 
 ## Price Protection Simulation
 
