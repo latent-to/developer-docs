@@ -58,7 +58,7 @@ In Bittensor terminology:
 - **`stake swap`**: swap stake delegated to a particular validator hotkey to that same hotkey on another subnet, without affecting ownership of the stake
 :::
 
-Stake transactions between subnets can be executed via slippage-protected `*_limit` variants (for example `swap_stake_limit`; some client interfaces refer to this flow as `move_stake_limit`) which take a `limit_price` parameter.
+Stake transactions between subnets can be executed via slippage-protected `*_limit` variants (for example `swap_stake_limit`, which take a `limit_price` parameter.
 
 The `limit_price` parameter bounds how far the **relative price** between the origin subnet and destination subnet is allowed to move during execution.
 
