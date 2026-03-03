@@ -4,11 +4,33 @@ title: "Subnet Code of Conduct (Draft)"
 
 # Subnet Code of Conduct (Draft)
 
-This page discusses Bittensor's *unofficial* code of conduct for subnet owners, which is enforced by validators. Historically, norms of conduct have been enforced through the mechanism of burning the subnet's emissions by submitting a weight matrix that gives all weight to the subnet owner's own key, rather than actual miners. This triggers the emissions algorithm to burn those alpha emissions, **not** to send them to the subnet owner.
+This page gives an overview of Bittensor's unofficial code of conduct for subnet owners. 
+
+Throughout the history of Bittensor, norms of conduct have been enforced **by validators** through the mechanism of [burning](../resources/glossary.md#burning) the subnet's miner incentives. This is triggered by validators submitting a weight matrix that gives all weight to the subnet owner's own key, rather than actual miners--resulting in the incentives being burned (not received by the subnet owner). Coordinated burning of mining emissions has been, and will continue to be, a critical means to limit the economic impact of subnets acting in ways that are malicious, irresponsible, or otherwise harmful to the network and community. It must also serve to deter attempts to cheat the Bittensor community through Ponzi schemes and other scams, by demonstrating that such attempts are bound to fail.
 
 Currently, additional mechanisms for validators to limit the impact of suspected bad actor subnets, and to punish them tokenomically, are being researched for eventual inclusion in the protocol.
 
-Bittensor's validators strive to uphold norms of conduct because they are seen as critical to keep Bittensor aligned with its design intent as a platform for funding the creation of digital commodities.
+See also:
+
+- [Why Burn](https://github.com/bittensor-church/bittensor-why-burn/blob/master/README.md): Maintained by the Bittensor community organization Church of Rao, this living document contains detailed discussions of specific rules and consequences.
+
+- To report a subnet for suspected violations: **TBD (forum, GitHub issues, or form—to be determined).**
+
+## The nature of distributed policing by validators
+
+Bittensor is a distributed incentivization engine. It is based on the idea that  that, in a well-organized, trustless, system, agents pursuing their own selfish interests can converge on a kind of productive cooperation. Bittensor's validators strive to uphold norms of conduct that are seen as critical to keep Bittensor aligned with its design intent as a platform for funding the creation of digital commodities. How can be validators be trust to act in the interest of Bittensor overall?
+
+Validators' power comes from two sources: held stake and delegated stake, which combine into [stake-weight](../resources/glossary.md#stake-weight), the metric that [Yuma Consensus](../learn/yuma-consensus.md) uses to weight validator inputs when computing emissions. As a result, validators by their nature are invested in enforcing good behavior by subnet owners for two reasons:
+
+1) Because validation is lucarative and can be achieved either by self-funding or by finding delegated stake, validators by their nature tend to hold and accumulate large amounts of liquidity. As a result, they are invested in the overall health of the Bittensor ecosystem, if only for the selfish reason that they want the open-market value of their token holdings to increase. Overall health in this sense means that Bittensor is fulfillings its mission of producing best-in-class digital commodities. Scammy, unstable, and vacuous subnets that result in failed investments for their stakers lower the value of all token holdings. By design, validators are in a position ot represent an interest in the long-term, overall value of the Bittensor ecosystem.
+
+2) To the extent that a validator maintains their stake-weight through delegated stake, their power as a validator is contingent on maintaining the trust of the community that delegates to them. If a validator loses delegated stake they depend on, they lose their lucrative, powerful position as validator. Therefore, if stakers efficiently prefer delegating to validators that participate in good faith in policing actions, then validators must police subnets.
+
+:::note
+If enough validators by stake-weight opt to participate in a burn action, the other validators will have to follow suit otherwise they will fall out of consensus and lose emissions. This ensures that not all validators have to be motivated to police, since they can be economically induced to go along with policing actions provided sufficient validators by stake-weight are participating in good faith.
+:::
+
+## Purpose of the Subnet Code of Conduct
 
 The rules and their enforcement aim to:
 
@@ -18,10 +40,12 @@ The rules and their enforcement aim to:
 - Provide a predictable, appealable path to remediation when problems are found.
 
 :::note
-This is not an “official law code”. Burn outcomes are ultimately the result of validators' independent decisions. Validators gain their roles by the stake delegated to them by the Bittensor community, and do not have any other authority. 
+This is not an “official law code”. Burn outcomes are ultimately the result of validators' independent decisions. Validators gain their roles by the stake delegated to them by the Bittensor community, and do not have any other authority.
+
+**Stakers are the meta-layer.** Validators are responsible for serving their own interests and the interests of the community, but they are ultimately subject to what stakers want. Stakers keep validators honest by choosing where to delegate; validators who fail to uphold norms can lose stake to those who do. This tiered, distributed responsibility — stakers → validators → subnet owners — is what makes the system work. If you do not like how validators are enforcing these norms, move your stake.
 :::
 
-## Subet Owner Responsibilities
+## Subnet Owner Responsibilities
 
 ### Validator operations should be open-source and permissionless
 
@@ -63,19 +87,19 @@ If your subnet is being discussed for burn-related action, pursue a course of tr
 - Communicate your remediation plans and provide a single place to track progress (issue tracker, forum post).
 - Request reevaluation after a substantive code/architecture change.
 
-## Code of Operating Conduct for Validators (acting as 'burn police')
+## Code of Operating Conduct for Validators
 
 Validators' readiness to participate as 'burn police' is critical to Bittensor's tokenomic health. If bad-actor subnets are not quickly halted, they can potentially drain significant liquidity, gaining a foothold for making further trouble and harming the public trust of TAO through pump and dump schemes that add no value. If validators display consistent, decisive responsiveness, bad actors will lose, potential bad actors will be deterred, and such attacks will remain rare.
 
 ### Transparency/Documentation
 
-In order to maintain public trust in this critical function, burn police actions should be made transparent. Published documentation should include the evidence used to assess the sitiuation and the time-table of events, including a retroactive assessment after the situation has concluded. These records should be publicly archived.
+In order to maintain public trust in this critical function, punitive actions must be communicated clearly. Published documentation should include the evidence used to assess the situation and the time-table of events, including a retroactive assessment after the situation has concluded. These records should be publicly archived.
 
 ### Communication/Warnings
 
-Except in rare, exceptional, emergency cases, punitive actions should be proceeded by warnings, dialogue, and clear communication of what is required to bring the subnet into compliance. Without communicating these requirements prior to the sanction, the subnet owner cannot be expected to comply, and punitive actions will be seen as bullying or piratical, by the recipient as well as potentially by the community. Prompt, unambiguous, highly visible communication is the key.
+Except in rare, exceptional, emergency cases, punitive actions should be preceded by warnings, dialogue, and clear communication of what is required to bring the subnet into compliance. Without communicating these requirements prior to the sanction, the subnet owner cannot be expected to comply, and punitive actions will be seen as bullying or piratical, by the recipient as well as potentially by the community. Prompt, unambiguous, highly visible communication is the key.
 
-Unless a subnet owner's intent is clearly malicious, it be preferred to achieve compliance through communication and negotion *without needing to exercise the burn or other punishment*.
+Unless a subnet owner's intent is clearly malicious, it should be preferred to achieve compliance through communication and negotiation *without needing to exercise the burn or other punishment*.
 
 ### Fairness
 
