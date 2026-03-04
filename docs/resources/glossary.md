@@ -614,6 +614,16 @@ The process of registering keys with a subnet and purchasing a UID slot.
 
 **See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/), [Working with Subnets](../subnets/working-with-subnets.md)
 
+### Relative stake weight
+
+A validator's relative stake weight in a subnet is the validator's individual stake expressed as a proportion of the total stake held by all active validators within the subnet. It measures a single validator's "share" of the total pool and directly determines how much influence their votes have on miner scoring and the distribution of network emissions.
+
+A validator's relative influence in a subnet is calculated as:
+
+$$
+\text{Relative Stake Weight} = \frac{\text{Stake Weight}_i}{\sum_{v \in \text{validators}} \text{Stake Weight}_v}
+$$
+
 ### Root Proportion
 
 For a given subnet, the relative weight of TAO staked to validators on that subnet through staking to the Root Subnet (rather than directly to the subnet). Mathematically it is the ratio of stake on Root to the total issuance of the subnet's alpha token.
@@ -698,6 +708,8 @@ A validator's relative influence in a subnet is calculated as:
 $$
 \text{Relative Stake Weight} = \frac{\text{Stake Weight}_i}{\sum_{v \in \text{validators}} \text{Stake Weight}_v}
 $$
+
+See [Relative stake weight](#relative-stake-weight).
 
 **Consensus Power:**
 

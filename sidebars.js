@@ -167,7 +167,6 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "subnets/metagraph",
         "subnets/create-a-subnet",
         {
           type: "category",
@@ -182,6 +181,7 @@ const sidebars = {
         "subnets/working-with-subnets",
         "subnets/managing-mechanisms-with-sdk",
         "subnets/managing-mechanisms-btcli",
+        "subnets/metagraph",
         "subnets/uid-trimming",
         "subnets/subnet-deregistration",
         "subnets/walkthrough-prompting",
