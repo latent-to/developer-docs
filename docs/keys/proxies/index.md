@@ -12,28 +12,25 @@ See [Working with Proxies](./proxies/working-with-proxies)
 
 Proxies allow one wallet to perform Bittensor operations on behalf of another. Used correctly, this allows you to add a strong layer of additional protection for your most important wallets and the valuable assets they control, such as large TAO or alpha holdings, or subnet ownership. Proxy relationships are useful both for one person managing their own coldkey security, and also for allowing one person to on behalf of another person or an organization.
 
-The private key and seed phrase for a highly valuable wallet's coldkey should be kept offline as much as possible, and only used via a dedicated, highly secure [coldkey workstation](../coldkey-hotkey-security.md). By allowing one coldkey to serve as a *proxy* or stand-in for another, the "real account" or "safe wallet", we add an additional layer of security for the safe wallet by leaving it in cold storage and using the proxy instead.
+The private key and seed phrase for a highly valuable wallet's coldkey should be kept offline as much as possible, and only used via a dedicated, highly secure [coldkey workstation](../coldkey-hotkey-security.md). By allowing one coldkey to serve as a _proxy_ or stand-in for another, the "real account" or "safe wallet", we add an additional layer of security for the safe wallet by leaving it in cold storage and using the proxy instead.
 
 ### Common use cases
 
 Proxies are useful in many situations where the permissions of one coldkey should be gated behind another level of security:
 
-- **Staking operations**: Keep your coldkey secure in cold storage while using a proxy to manage staking operations. 
-	
-	See [Staking with a Proxy](../../keys/proxies/staking-with-proxy.md).
+- **Staking operations**: Keep your coldkey secure in cold storage while using a proxy to manage staking operations.
+
+  See [Staking with a Proxy](../../keys/proxies/staking-with-proxy.md).
+
 - **Operational delegation**: run subnet operations tasks like setting hyperparameters from a designated operations wallet, allowing the owner wallet to remain in maximum-security deep storage.
-- **Least-privilege permissions**: allow an employee or other designated operoator to perform a constrained set of calls on a project-owned wallet.
+- **Least-privilege permissions**: allow an employee or other designated operator to perform a constrained set of calls on a project-owned wallet.
 
 ### Scope and Delays
 
 The power of proxies as a security tool comes from the two ways proxies can be limited: in the scope of their permissions, and by requiring a delay with announcement before they can perform operations. It's critical to note that without using these constraints properly, proxies don't necessarily give any security benefit.
 
-- The proxy can be constrained to specific operations. The permission scope is determined by the `ProxyType` call filter. 
+- The proxy can be constrained to specific operations. The permission scope is determined by the `ProxyType` call filter.
 - The proxy can be constrained by a **delay** with a public **announcement**, giving the safe wallet holder time to reject a call made by they proxy (for example, if a key has been compromised).
-
-
-
-
 
 ### Terminology and parameters
 
@@ -49,16 +46,21 @@ If the proxy entry includes a non-zero delay, the delegate cannot execute the ca
 
 The real account always retains full control over the relationship. It can revoke a proxy’s access to their proxy operations at any time by removing the proxy entry, immediately disabling the delegate’s ability to act on its behalf.
 
-:::note proxies vs pure proxies
-*Proxies*, which 'stand in' for a real account by initiating transactions on its behalf, must not be confused with *pure proxies*, which 'stand-in' for the real account in a reverse relationship, where the real account can initiate transactions on behalf of the pure proxy. Pure proxies are primarily designed to be used with multi-sig wallets.
+:::info proxies vs pure proxies
+_Proxies_ allow a delegate account to initiate transactions on behalf of a real account. _Pure proxies_, however, work differently: they are accounts controlled by the real account, which can initiate transactions on the pure proxy’s behalf. Pure proxies are mainly used with multisig wallets.
 
 See also:
 
 - [Pure proxies](../keys/proxies/pure-proxies)
 - [Multi-sig wallets](../keys/multisig)
 - [Polkadot.js Substrate Proxy Docs](https://wiki.polkadot.com/learn/learn-proxies/)
-:::
+  :::
 
+### Transaction fee payment
+
+By default, the delegate pays the transaction fees for proxy calls in a proxy relationship. The real account can optionally be configured to pay these fees instead.
+
+To enable this, the real account must call the `setRealPaysFee` extrinsic in the `Proxy` pallet and provide the delegate account along with a boolean value indicating whether the real account should pay the transaction fee. When enabled, both the transaction value and the transaction fee are deducted from the real account rather than the delegate account.
 
 ## `ProxyType`
 
@@ -66,24 +68,22 @@ This defines what the proxy is allowed to do on behalf of the real account. It d
 
 The following table shows the available `ProxyType` options and their descriptions:
 
-| `ProxyType`              | Description                                                                         |
-| ------------------------ | ----------------------------------------------------------------------------------- |
-| `Any`                    | Grants full permissions to execute any call on behalf of the real account. This is the most permissive `ProxyType`; use with caution. |
-| `Owner`                  | Allows subnet identity and settings management. Permitted operations: AdminUtils calls (except `sudo_set_sn_owner_hotkey`), `set_subnet_identity`, `update_symbol`. |
-| `NonCritical`            | Allows all operations except critical ones that could harm the account. Prohibited operations: `dissolve_network`, `root_register`, `burned_register`, Sudo calls. |
-| `NonTransfer`            | Allows all operations except token transfers. Prohibited operations: all Balances module calls, `transfer_stake`, `schedule_swap_coldkey`, `swap_coldkey`. |
+| `ProxyType`              | Description                                                                                                                                                                                                                                                                                                                                                                               |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Any`                    | Grants full permissions to execute any call on behalf of the real account. This is the most permissive `ProxyType`; use with caution.                                                                                                                                                                                                                                                     |
+| `Owner`                  | Allows subnet identity and settings management. Permitted operations: AdminUtils calls (except `sudo_set_sn_owner_hotkey`), `set_subnet_identity`, `update_symbol`.                                                                                                                                                                                                                       |
+| `NonCritical`            | Allows all operations except critical ones that could harm the account. Prohibited operations: `dissolve_network`, `root_register`, `burned_register`, Sudo calls.                                                                                                                                                                                                                        |
+| `NonTransfer`            | Allows all operations except token transfers. Prohibited operations: all Balances module calls, `transfer_stake`, `schedule_swap_coldkey`, `swap_coldkey`.                                                                                                                                                                                                                                |
 | `NonFungible`            | Allows all operations except token-related operations and registrations. Prohibited operations: all Balances module calls, all staking operations (`add_stake`, `remove_stake`, `unstake_all`, `swap_stake`, `move_stake`, `transfer_stake`), registration operations (`burned_register`, `root_register`), key swap operations (`schedule_swap_coldkey`, `swap_coldkey`, `swap_hotkey`). |
-| `Staking`                | Allows only staking-related operations: `add_stake`, `add_stake_limit`, `remove_stake`, `remove_stake_limit`, `remove_stake_full_limit`, `unstake_all`, `unstake_all_alpha`, `swap_stake`, `swap_stake_limit`, `move_stake`. |
-| `Registration`           | Allows only neuron registration operations: `burned_register`, `register`. |
-| `Transfer`               | Allows only token transfer operations: `transfer_keep_alive`, `transfer_allow_death`, `transfer_all`, `transfer_stake`. |
-| `SmallTransfer`          | Allows only small token transfers below 0.5 TAO. Permitted operations: `transfer_keep_alive`, `transfer_allow_death` (if value < 0.5 TAO), `transfer_stake` (if alpha_amount < 0.5 TAO). |
-| `ChildKeys`              | Allows only child key management operations: `set_children`, `set_childkey_take`. |
-| `SudoUncheckedSetCode`   | Allows only runtime code updates: `sudo_unchecked_weight` with inner call `System::set_code`. |
-| `SwapHotkey`             | Allows only hotkey swap operations: `swap_hotkey`. |
-| `SubnetLeaseBeneficiary` | Allows subnet management and configuration operations: `start_call`, multiple `AdminUtils.sudo_set_*` calls for subnet parameters, network settings, weights, alpha values, etc. |
-| `RootClaim`              | Allows only root claim operations: `claim_root`. |
-
-
+| `Staking`                | Allows only staking-related operations: `add_stake`, `add_stake_limit`, `remove_stake`, `remove_stake_limit`, `remove_stake_full_limit`, `unstake_all`, `unstake_all_alpha`, `swap_stake`, `swap_stake_limit`, `move_stake`.                                                                                                                                                              |
+| `Registration`           | Allows only neuron registration operations: `burned_register`, `register`.                                                                                                                                                                                                                                                                                                                |
+| `Transfer`               | Allows only token transfer operations: `transfer_keep_alive`, `transfer_allow_death`, `transfer_all`, `transfer_stake`.                                                                                                                                                                                                                                                                   |
+| `SmallTransfer`          | Allows only small token transfers below 0.5 TAO. Permitted operations: `transfer_keep_alive`, `transfer_allow_death` (if value < 0.5 TAO), `transfer_stake` (if alpha_amount < 0.5 TAO).                                                                                                                                                                                                  |
+| `ChildKeys`              | Allows only child key management operations: `set_children`, `set_childkey_take`.                                                                                                                                                                                                                                                                                                         |
+| `SudoUncheckedSetCode`   | Allows only runtime code updates: `sudo_unchecked_weight` with inner call `System::set_code`.                                                                                                                                                                                                                                                                                             |
+| `SwapHotkey`             | Allows only hotkey swap operations: `swap_hotkey`.                                                                                                                                                                                                                                                                                                                                        |
+| `SubnetLeaseBeneficiary` | Allows subnet management and configuration operations: `start_call`, multiple `AdminUtils.sudo_set_*` calls for subnet parameters, network settings, weights, alpha values, etc.                                                                                                                                                                                                          |
+| `RootClaim`              | Allows only root claim operations: `claim_root`.                                                                                                                                                                                                                                                                                                                                          |
 
 ## Best practices for using proxies
 
