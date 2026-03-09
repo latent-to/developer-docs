@@ -35,6 +35,8 @@ All transactions involving a pure proxy must be signed by the spawner account. O
 
 :::info Transaction fees
 By default, the spawner account covers the transaction fee when a proxy is executed. However, if the value of the proxy relationship's `realPaysFee` parameter has been set to `True`, the transaction fees will be covered by the pure proxy account when a proxy is executed.
+
+For more information, see [Transaction fee payment](./index.md#transaction-fee-payment)
 :::
 
 ### Multisigs and Pure Proxies

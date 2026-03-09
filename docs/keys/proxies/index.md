@@ -60,7 +60,7 @@ See also:
 
 By default, the delegate pays the transaction fees for proxy calls in a proxy relationship. The real account can optionally be configured to pay these fees instead.
 
-To enable this, the real account must call the `setRealPaysFee` extrinsic in the `Proxy` pallet and provide the delegate account along with a boolean value indicating whether the real account should pay the transaction fee. When enabled, both the transaction value and the transaction fee are deducted from the real account rather than the delegate account.
+To enable this, the real account must call the [`setRealPaysFee`](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/proxy/src/lib.rs#:~:text=pub%20fn%20set_real_pays_fee) extrinsic in the `Proxy` pallet and provide the delegate account along with a boolean value indicating whether the real account should pay the transaction fee. When enabled, both the transaction value and the transaction fee are deducted from the real account rather than the delegate account.
 
 ## `ProxyType`
 
