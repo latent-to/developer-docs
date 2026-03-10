@@ -147,11 +147,19 @@ Decrypting...
 
 </details>
 
-:::info Set custom hyperparameters
+#### Set custom hyperparameters
 
 You can also modify values for hyperparameters that are not included in the table. To do this, you must provide the hyperparameter's setter extrinsic and value when running the `btcli sudo set` command.
 
-For example, the following command sets the number of owner-immune neurons to `four`.
+```sh
+ btcli sudo set --param SETTER_EXTRINSIC --value VALUE
+```
+
+:::info custom hyperparameters values
+
+When using custom hyperparameters, provide values in the format required by their underlying type. Parameters with numeric types—like `u16` or `u64`—require normalized values between `0` and `1`, while boolean parameters require a `true` or `false`.
+
+For example, the following command sets the number of owner-immune neurons to `four`. The `sudo_set_owner_immune_neuron_limit` parameter uses a `u16` type, so the value must be provided as a normalized fraction as shown:
 
 ```sh
  btcli sudo set --param sudo_set_owner_immune_neuron_limit --value .00007
