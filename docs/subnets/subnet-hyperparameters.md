@@ -152,7 +152,7 @@ Decrypting...
 You can also modify values for hyperparameters that are not included in the table. To do this, you must provide the hyperparameter's setter extrinsic and value when running the `btcli sudo set` command.
 
 ```sh
- btcli sudo set --param SETTER_EXTRINSIC --value VALUE
+ btcli sudo set --param SETTER_EXTRINSIC --value VALUE --netuid NETUID
 ```
 
 :::info custom hyperparameters values
