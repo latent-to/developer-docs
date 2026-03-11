@@ -120,6 +120,36 @@ Related:
 **Error**: `InputLengthsUnequal`  
 **Description**: Attempted to batch reveal weights with mismatched vector input lenghts.
 
+### Error code 19
+
+**Error**: `UidNotFound`
+**Description**: The specified netuid does not exist or the provided hotkey does not own this subnet.
+
+### Error code 20
+
+**Error**: `EvmKeyAssociateRateLimitExceeded`
+**Description**: Rate limit exceeded for associate EVM key extrinsic.
+
+### Error code 21
+
+**Error**: `ColdkeySwapDisputed`
+**Description**: The coldkey has an associated dispute. No operations are possible.
+
+### Error code 22
+
+**Error**: `InvalidRealAccount`
+**Description**: Invalid real account for proxy operation.
+
+### Error code 23
+
+**Error**: `FailedShieldedTxParsing`
+**Description**: The shielded transaction could not be parsed. The ciphertext is malformed or does not match the expected shielded-transaction format.
+
+### Error code 24
+
+**Error**: `InvalidShieldedTxPubKeyHash`
+**Description**: The public key hash provided for the shielded transaction is invalid.
+
 ### Error Code 255
 
 **Error**: `BadRequest`  
