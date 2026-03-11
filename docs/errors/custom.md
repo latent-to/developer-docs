@@ -26,7 +26,7 @@ Related:
 
 ### Error Code 0
 
-**Error**: `ColdkeySwapAnnounced`  
+**Error**: `ColdkeyInSwapSchedule`  
 **Description**: A coldkey swap has been announced for this coldkey. No operations are possible.
 
 ### Error Code 1

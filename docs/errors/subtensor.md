@@ -490,6 +490,14 @@ PoW hash seal does not match work.
 
 Faucet is disabled.
 
+### ColdkeySwapAnnounced
+
+A coldkey swap has been announced for this account.
+
+### ColdkeySwapDisputed
+
+A coldkey swap for this account is under dispute.
+
 ### `ColdkeySwapAnnouncementNotFound`
 
 Coldkey swap announcement not found
