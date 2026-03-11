@@ -61,7 +61,6 @@ To create a wallet, run the following command in your terminal:
 btcli wallet create \
 --wallet.name WALLET_NAME \
 --hotkey WALLET_HOTKEY \
---network ws://127.0.0.1:9945
 ```
 
 Replace `WALLET_NAME` and `WALLET_HOTKEY` with the appropriate identifiers for each role—subnet creator, miner, or validator.

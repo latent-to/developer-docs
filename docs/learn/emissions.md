@@ -7,7 +7,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Emission
 
-Emission is the economic heartbeat of Bittensor—the process that continuously distributes newly created [TAO](../resources/glossary.md#tao-τ) and subnet-specific alpha tokens to network participants who contribute value through [mining](../resources/glossary.md#subnet-miner), [validation](../resources/glossary.md#validator), [staking](../resources/glossary.md#staking), and [subnet creation](../resources/glossary.md#subnet-creator).
+Emission is the economic heartbeat of Bittensor—the process that continuously distributes newly created [TAO](../resources/glossary.md#tao-tau) and subnet-specific alpha tokens to network participants who contribute value through [mining](../resources/glossary.md#subnet-miner), [validation](../resources/glossary.md#subnet-validator), [staking](../resources/glossary.md#staking), and [subnet creation](../resources/glossary.md#subnet-creator).
 
 :::tip Flow-Based Emissions ("Taoflow") Now Active
 **As of November 2025**: Bittensor has transitioned to a **flow-based model** ("Taoflow") for determining how TAO emissions are distributed across subnets. Emissions are now based on net TAO inflows due to staking activity, rather than token prices as previously.
@@ -91,7 +91,7 @@ The flow-based model uses an Exponential Moving Average (EMA) of net TAO flows (
 5. **Final TAO injection**: Multiply the share by total block emission to get actual TAO amount:
    $$\Delta\tau_i = \Delta\bar{\tau} \times \text{share}(i)$$
 
-   This converts the proportions into actual TAO amounts. The total block emission $\Delta\bar{\tau}$ is 1 TAO per block.
+   This converts the proportions into actual TAO amounts. Currently, the total block emission $\Delta\bar{\tau}$ is 0.5 TAO per block.
 
 With the default $p = 1$ ([source](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1293-L1295)), this creates **linear/proportional distribution**: a subnet with 2× the flow receives exactly 2× the emissions. The parameter can be adjusted to create winner-takes-more dynamics if desired (e.g., with $p = 1.5$, a subnet with 2× flow would get 2.83× emissions).
 
@@ -188,7 +188,6 @@ At the end of each tempo (~360 blocks), the quantity of alpha accumulated over e
 1.  18% by subnet owner
 1.  41% of emissions go to miners. The allocation to particular miners is determined by [Yuma Consensus: Miner emissions#miner-emissions](./yuma-consensus).
 1.  41% by validators and their stakers.
-
     1.  First, the allocation to validators miners is determined by [Yuma Consensus: Validator Emissions](./yuma-consensus#validator-emissions).
     1.  Then, validators receive their take from that allocation.
     1.  Then, TAO and alpha are emitted to stakers in proportion to the validators' holdings in each token. TAO emissions are sourced by swapping a portion of alpha emissions to TAO through the subnet's liquidity pool.

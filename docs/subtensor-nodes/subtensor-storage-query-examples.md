@@ -2576,7 +2576,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
 - **Query Type**: `u16 -> u16`
 - **Parameters**:
   - `netuid`: `u16`
-- **Default Value**: `2`
+- **Default Value**: `1`
 - **Python Example**:
     ```python
     from async_substrate_interface import SubstrateInterface
@@ -2758,7 +2758,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 172. TransferToggle
 
-- **Description**: Storage for TransferToggle.
+- **Description**: Storage for TransferToggle. When enabled, a holder of alpha stake can transfer its ownership to another coldkey/wallet using [`btcli stake transfer`](../staking-and-delegation/managing-stake-btcli#transferring-stake) or [`transfer_stake`](pathname:///python-api/html/autoapi/bittensor/core/async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor.transfer_stake).
 - **Query Type**: `u16 -> unknown`
 - **Parameters**:
   - `netuid`: `u16`

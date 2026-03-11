@@ -167,7 +167,6 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "subnets/metagraph",
         "subnets/create-a-subnet",
         {
           type: "category",
@@ -182,6 +181,7 @@ const sidebars = {
         "subnets/working-with-subnets",
         "subnets/managing-mechanisms-with-sdk",
         "subnets/managing-mechanisms-btcli",
+        "subnets/metagraph",
         "subnets/uid-trimming",
         "subnets/subnet-deregistration",
         "subnets/walkthrough-prompting",
@@ -197,7 +197,6 @@ const sidebars = {
       link: { type: "doc", id: "btcli/overview" },
       items: [
         "getting-started/install-btcli",
-        "btcli/btcli-playground",
         "btcli/btcli-permissions",
         "btcli/btcli",
       ],
@@ -278,7 +277,6 @@ const sidebars = {
         "evm-tutorials/evm-mainnet-with-metamask-wallet",
         "evm-tutorials/hardhat-config-for-subtensor-evm",
         "evm-tutorials/remix-config-for-subtensor-evm",
-        "evm-tutorials/bridge-vtao",
         "evm-tutorials/troubleshooting",
       ],
     },
@@ -290,6 +288,8 @@ const sidebars = {
         "evm-tutorials/convert-h160-to-ss58",
         "evm-tutorials/transfer-from-metamask-to-ss58",
         "evm-tutorials/transfer-between-two-h160-accounts",
+        "evm-tutorials/vtao-bridge-tutorial",
+        "evm-tutorials/vtao-liquidity-on-aerodrome",
         "evm-tutorials/withdraw-from-alice",
         "evm-tutorials/ed25519-verify-precompile",
         "evm-tutorials/staking-precompile",
@@ -320,14 +320,6 @@ const sidebars = {
         "governance/senate",
         "governance/senators-btcli-guide",
       ],
-    },
-    {
-      type: "category",
-      label: "Dynamic TAO",
-      link: { type: "doc", id: "dynamic-tao/index" },
-      collapsible: true,
-      collapsed: true,
-      items: ["dynamic-tao/dtao-faq", "dynamic-tao/sdk-cheat-sheet"],
     },
 
     {

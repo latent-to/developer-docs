@@ -5,6 +5,7 @@ title: "Token Bridging"
 # Token Bridging
 
 This guide provides an overview of two related topics:
+
 - how to moves TAO between Substrate-style wallets (SS58) and the Etherum style wallets on Bittensor EVM
 - how to use vTAO as a token bridge between Bittensor EVM and other EVM chains.
 
@@ -22,10 +23,10 @@ If TAO is transferred to an Ethereum-style h160 wallet, it can be used in Bitten
 
 You can move TAO back and forth between Substrate and EVM wallets several ways:
 Use example scripts:
-	- [Transfer TAO from H160 to SS58](./convert-h160-to-ss58)
-	- [Transfer TAO from SS58 to H160](./transfer-from-metamask-to-ss58)
-- Using [`tao.app/bridge`](https://tao.app/bridge). 
 
+- [Transfer TAO from H160 to SS58](./convert-h160-to-ss58)
+- [Transfer TAO from SS58 to H160](./transfer-from-metamask-to-ss58)
+- Using [`tao.app/bridge`](https://tao.app/bridge).
 - Using OTF's EVM Bridge: [`bridge.bittensor.com/`](https://bridge.bittensor.com/)
 
 ## Bridge to other EVM Chains with vTAO
@@ -37,7 +38,5 @@ vTAO is a liquid-staked TAO token on the Subtensor EVM, available through ['tao.
 - vTAO can be bridged between supported EVM chains.
 
 :::tip
-vTAO conceptually similar to [Lido's wstETH](https://docs.lido.fi/contracts/wsteth/).
+vTAO conceptually similar to [Lido's wstETH](https://docs.lido.fi/contracts/wsteth/). For more information on how to bridge and wrap vTAO, see [Bridging and Wrapping vTAO](./vtao-bridge-tutorial.md)
 :::
-
-

@@ -221,7 +221,7 @@ The total staked TAO amount of a delegate, including their own TAO tokens and th
 
 ### Emission
 
-Every block, currency is injected into each subnet in Bittensor, and every tempo (or 360 blocks), it is extracted by participants (miners, validators, stakers, and subnet creators).
+Every block, TAO is injected into each subnet in Bittensor, and every tempo (or 360 blocks), it is extracted by participants (miners, validators, stakers, and subnet creators).
 
 Emission is this process of generating and allocating currency to participants. The amount allocated to a given participant over some duration of time is also often referred to as 'their emissions' for the period.
 
@@ -268,7 +268,6 @@ asyncio.run(main())
 A weighted moving average that prioritizes recent observations while exponentially decreasing the weight of older data points. In Bittensor, EMA is used in two critical stability mechanisms:
 
 1. **Validator-Miner Bond Smoothing**: Smooths the evolution of bonds between validators and miners over time, rewarding early discovery while preventing abrupt manipulation attempts. Has two modes:
-
    - **Basic Mode**: Single α ≈ 0.1 (~7-22 blocks for significant changes)
    - **Liquid Alpha Mode**: Dynamic α range 0.7-0.9 based on consensus alignment (~1-13 blocks depending on consensus)
 
@@ -355,13 +354,13 @@ A system that drives the behavior of subnet miners and governs consensus among s
 
 ### Issuance
 
-The total amount of TAO circulating in the Bittensor network. Includes TAO that is held in wallets and subnet liquidity pools, as well as TAO that is locked as subnet registration fees.
+The total amount of TAO circulating in the Bittensor network. Includes TAO that is held in wallets and subnet liquidity pools.
 
 This can be viewed on Bittensor explorers such as [TAO.app's Tokenomics Dashboard](https://www.tao.app/tokenomics), or [TAOstats](https://taostats.io).
 
-To query it directly from the chain, see: [Subtensor Storage Query Example: Total Issuance](../subtensor-nodes/subtensor-storage-query-examples.md#123-totalissuance)
+To query it directly from the chain, see: [Subtensor Storage Query Example: Total Issuance](../subtensor-nodes/subtensor-storage-query-examples.md#168-totalissuance)
 
-See also: [Recycling, burning, and locking](#recycling-and-burning)
+See also: [Recycling and burning](#recycling-and-burning)
 
 ## L
 
@@ -615,6 +614,16 @@ The process of registering keys with a subnet and purchasing a UID slot.
 
 **See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/), [Working with Subnets](../subnets/working-with-subnets.md)
 
+### Relative stake weight
+
+A validator's relative stake weight in a subnet is the validator's individual stake expressed as a proportion of the total stake held by all active validators within the subnet. It measures a single validator's "share" of the total pool and directly determines how much influence their votes have on miner scoring and the distribution of network emissions.
+
+A validator's relative influence in a subnet is calculated as:
+
+$$
+\text{Relative Stake Weight} = \frac{\text{Stake Weight}_i}{\sum_{v \in \text{validators}} \text{Stake Weight}_v}
+$$
+
 ### Root Proportion
 
 For a given subnet, the relative weight of TAO staked to validators on that subnet through staking to the Root Subnet (rather than directly to the subnet). Mathematically it is the ratio of stake on Root to the total issuance of the subnet's alpha token.
@@ -700,6 +709,8 @@ $$
 \text{Relative Stake Weight} = \frac{\text{Stake Weight}_i}{\sum_{v \in \text{validators}} \text{Stake Weight}_v}
 $$
 
+See [Relative stake weight](#relative-stake-weight).
+
 **Consensus Power:**
 
 - **Weight Setting**: Higher stake weight means more influence when setting weights
@@ -720,6 +731,7 @@ $$
 The process of attaching TAO to a validator hotkey, i.e., locking TAO to a subnet validator's hotkey to increase their total stake and increase their consensus power and share of dividends.
 
 **See also:**
+
 - [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md)
 - [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
 - [Delegation](../staking-and-delegation/delegation.md)
@@ -791,7 +803,7 @@ A data object used by subnet validators and subnet miners as the main vehicle to
 
 ### TAO ($\tau$)
 
-The cryptocurrency of the Bittensor network, used to incentivize participation in network activities (mining, validation, subnet creation and management). A single TAO is newly created (i.e., minted) every 12 seconds on the Bittensor blockchain.
+The cryptocurrency of the Bittensor network, used to incentivize participation in network activities (mining, validation, subnet creation and management). Currently, 0.5 TAO is minted every 12 seconds on the Bittensor blockchain.
 
 **See also:** [Emissions](../learn/emissions.md), [Wallets](../keys/wallets.md)
 
@@ -899,7 +911,7 @@ Unstaking incurs blockchain transaction fees, which are recycled back into the T
 
 - [Staking/Delegation overview](../staking-and-delegation/delegation.md#unstaking)
 - [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md#unstaking-with-btcli)
-- [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md#unstaking-with-the-sdk)
+- [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md#unstaking-from-a-validator)
 - [Understanding Pricing and Anticipating Slippage](../learn/slippage.md)
 - [Price Protection When Staking](../learn/price-protection.md)
 - [Transaction Fees](../learn/fees.md)
@@ -918,11 +930,12 @@ A list of subnet IDs (netuids) indicating which subnets a delegate is authorized
 
 **See also:** [Validator Permits](#validator-permit), [Delegation](../staking-and-delegation/delegation.md), [Validator Requirements](../validators/index.md#requirements-for-validation)
 
-### Validator (or subnet validator)
+### Validator (or subnet validator) {#subnet-validator}
 
 A type of node in a subnet that evaluates the performance of miners and sets weights based on their output
 
 **See also:**
+
 - [Validating in Bittensor](../validators/)
 - [Browse validators on TAO.app](https://www.tao.app/validators)
 

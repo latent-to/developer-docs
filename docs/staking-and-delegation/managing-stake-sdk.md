@@ -2,7 +2,7 @@
 title: "Managing stake with Bittensor Python SDK"
 ---
 
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 # Managing Stake with Bittensor Python SDK
 
@@ -25,7 +25,7 @@ Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.000
 :::
 
 :::warning Keep your coldkey secure
-Staking is a regular operation for most TAO holders. Every time you stake or unstake directly, you must decrypt and use your coldkey—exposing it to potential compromise. 
+Staking is a regular operation for most TAO holders. Every time you stake or unstake directly, you must decrypt and use your coldkey—exposing it to potential compromise.
 
 **For better security, use a [Staking Proxy](../keys/proxies/staking-with-proxy)**. With a `Staking` proxy configured with a delay, you can manage your stake without ever exposing your coldkey. If the proxy is compromised, the delay gives you time to reject unauthorized unstaking attempts.
 :::
@@ -34,7 +34,7 @@ Staking is a regular operation for most TAO holders. Every time you stake or uns
 
 <SdkVersion />
 
-To stake, you'll first need some TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network. Alternatively, you can obtain some by completing the [BTCLI Live Coding Playground](../btcli/btcli-playground.md#transfer).
+To stake, you'll first need some TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network. Alternatively, you can [run a local Bittensor blockchain instance](../local-build/deploy.md).
 
 :::danger
 The funds in a crypto wallet are only as secure as your private key and/or seed phrase, and the devices that have access to these.
@@ -326,6 +326,8 @@ Decrypting...
 [True, True, True]
 ```
 
+</details>
+
 ## Unstaking From a Validator
 
 Unstaking is the process of withdrawing your staked TAO from validators, converting subnet-specific alpha tokens back to TAO through the subnet's AMM. When you unstake, slippage applies similar to staking operations—your transaction affects pool prices, with larger amounts experiencing more slippage.
@@ -341,8 +343,8 @@ async def main():
     async with bt.AsyncSubtensor(network='test') as subtensor:
         wallet = bt.Wallet(name="PracticeKey!")
         wallet.unlock_coldkey()
-        
-        
+
+
         result = await subtensor.unstake(
             wallet=wallet,
             netuid=17,
@@ -351,7 +353,7 @@ async def main():
             wait_for_inclusion=True,
             wait_for_finalization=False,
         )
-        
+
         print(result)
 asyncio.run(main())
 ```
@@ -366,7 +368,7 @@ async def main():
     async with bt.async_subtensor(network='test') as subtensor:
         wallet = bt.Wallet(name="ExampleWallet")
         wallet.unlock_coldkey()
-        
+
         # Unstake all from this validator
         result = await subtensor.unstake_all(
             wallet=wallet,
@@ -376,12 +378,14 @@ async def main():
             wait_for_inclusion=True,
             wait_for_finalization=True,
         )
-        
+
         print(result)
 
 asyncio.run(main())
 ```
 
+<details>
+  <summary><strong>Show sample response!</strong></summary>
 ```console
 Enter your password:
 Decrypting...

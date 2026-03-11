@@ -24,8 +24,13 @@ Now, let us create a new subnet on the local chain. To create a new subnet, run 
 btcli subnet create \
 --subnet-name awesome-first-subnet \
 --wallet.name sn-creator \
+--wallet.hotkey default \
 --network ws://127.0.0.1:9945
 ```
+
+:::info
+When running a local chain in fast-blocks mode, we recommend using the `--no-mev-protection` flag when executing this command.
+:::
 
 You will then be prompted to provide the wallet hotkey as well as configure the subnet as shown:
 
