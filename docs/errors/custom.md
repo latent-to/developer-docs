@@ -26,8 +26,8 @@ Related:
 
 ### Error Code 0
 
-**Error**: `ColdKeyInSwapSchedule`  
-**Description**: Your coldkey is set to be swapped. No transfer operations are possible.
+**Error**: `ColdkeyInSwapSchedule`  
+**Description**: A coldkey swap has been announced for this coldkey. No operations are possible.
 
 ### Error Code 1
 

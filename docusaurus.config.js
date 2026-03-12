@@ -73,15 +73,15 @@ const config = {
       "@docusaurus/plugin-client-redirects",
       {
         redirects: [
-        {
-            "to": "/keys/proxies/working-with-proxies",
-            "from": "/keys/proxies/create-proxy"
+          {
+            to: "/keys/proxies/working-with-proxies",
+            from: "/keys/proxies/create-proxy",
           },
-        {
-            "to": "/subnets/understanding-multiple-mech-subnets",
-            "from": "/subnets/understanding-sub-subnets"
+          {
+            to: "/subnets/understanding-multiple-mech-subnets",
+            from: "/subnets/understanding-sub-subnets",
           },
-            {
+          {
             to: "/liquidity-positions/",
             from: "/liquidity-provider",
           },
@@ -102,10 +102,6 @@ const config = {
             to: "/validators",
           },
           {
-            to: "/keys/schedule-coldkey-swap",
-            from: "/subnets/schedule-coldkey-swap",
-          },
-          {
             to: "/sdk/bt-api-ref",
             from: "/reference/bittensor-api-ref",
           },
@@ -124,6 +120,10 @@ const config = {
           {
             from: "/questions-and-answers",
             to: "/resources/questions-and-answers",
+          },
+          {
+            to: "/keys/coldkey-swap",
+            from: "/keys/schedule-coldkey-swap",
           },
           {
             from: "/emissions",
