@@ -16,8 +16,10 @@ Staking and unstaking operations incur this transaction fee as well as amount-ba
 Reading the state of the chain is always free.
 
 This page also covers:
-- The [alpha fallback](#alpha-fallback) mechanism, whereby transaction fees are paid in alpha when a wallet's TAO balance is insufficient.
+- The [alpha fallback](#alpha-fallback) mechanism, whereby transaction fees are paid in alpha when a wallet's TAO balance is insufficient (not yet active).
 - [Fee-free extrinsics](#fee-free-extrinsics).
+- [Proxy call fees](#proxy-call-fees) — how fees and deposits work when dispatching through a proxy.
+- [Batch transaction fees](#batch-transaction-fees) — how fees are aggregated (or waived) across batched calls.
 
 [In-depth example](#in-depth-example-fees-for-a-cross-subnet-move_stake) (fees for a cross-subnet move_stake) and [Estimating fees](#estimating-fees-before-you-send-a-transaction) (how to estimate before sending).
 
@@ -137,6 +139,10 @@ See: [Swap Simulator example](#swap-simulator)
 
 ## Alpha Fallback
 
+:::note
+This feature is not yet active. The alpha fallback logic is implemented but currently disabled in the chain. At present, if a coldkey cannot cover the transaction fee in TAO, the transaction is rejected.
+:::
+
 For the unstaking and stake-movement extrinsics listed below, if the sender's TAO balance cannot cover the transaction fee, the chain will fall back to charging the fee in Alpha instead. If both TAO and Alpha balances are insufficient to cover the fee, the transaction is rejected before it is processed. When fees are paid in Alpha, the TAO fee amount is converted to Alpha at the current Alpha price with no slippage.
 
 ### Affected extrinsics
@@ -163,6 +169,125 @@ For `remove_stake`, `remove_stake_limit`, `recycle_alpha`, and `burn_alpha`: if 
 
 
 
+
+## Proxy Call Fees
+
+When a call is dispatched through the `proxy` extrinsic, the total transaction fee covers the proxy's own overhead **plus** the inner call's weight. Crucially, the outer extrinsic inherits `pays_fee` and `dispatch_class` directly from the inner call ([`pallets/proxy/src/lib.rs:232–238`](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L232-L238)):
+
+```rust
+#[pallet::weight({
+    let di = call.get_dispatch_info();
+    (T::WeightInfo::proxy(T::MaxProxies::get())
+        .saturating_add(T::DbWeight::get().reads_writes(1, 1))
+        .saturating_add(di.call_weight),
+    di.class, di.pays_fee)
+})]
+```
+
+This means that if the inner call is [fee-free](#fee-free-extrinsics) (e.g. `set_weights`, `commit_weights`), the entire proxy call is also free — no transaction fee is charged.
+
+### Proxy registration deposits
+
+Registering a proxy relationship locks a **reserved** balance from the real account's free TAO — this is not burned. It is returned in full when the proxy is removed. The total deposit for `n` proxies on a single real account is:
+
+$$\text{proxy deposit} = \underbrace{60{,}000{,}000}_{\text{base}} + \underbrace{33{,}000{,}000 \times n}_{\text{per proxy}} \text{ rao}$$
+
+| Constant | Rao | TAO |
+|---|---|---|
+| `ProxyDepositBase` | 60,000,000 | τ 0.06 |
+| `ProxyDepositFactor` | 33,000,000 | τ 0.033 per proxy |
+
+So one proxy relationship costs τ 0.093 reserved; each additional proxy on the same real account adds τ 0.033.
+
+**Source code:** deposit formula [`runtime/src/lib.rs:199–204`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L199-L204), constants [`runtime/src/lib.rs:539–543`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L539-L543), deposit calculation [`pallets/proxy/src/lib.rs:964–971`](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L964-L971).
+
+<details>
+<summary><strong>Verify deposit amounts on-chain</strong></summary>
+
+These values are runtime constants (compiled into the WASM blob) and can only change with a runtime upgrade. To verify the current live values against what is documented here:
+
+```python
+import bittensor as bt
+
+sub = bt.Subtensor(network="finney")
+s = sub.substrate
+
+for name in [
+    "ProxyDepositBase",
+    "ProxyDepositFactor",
+    "AnnouncementDepositBase",
+    "AnnouncementDepositFactor",
+    "MaxProxies",
+    "MaxPending",
+]:
+    print(f"{name}: {s.get_constant('Proxy', name)}")
+```
+
+```console
+ProxyDepositBase: 60000000
+ProxyDepositFactor: 33000000
+AnnouncementDepositBase: 36000000
+AnnouncementDepositFactor: 68000000
+MaxProxies: 20
+MaxPending: 75
+```
+
+</details>
+
+### Announcement deposits
+
+Proxies configured with a non-zero `delay` must announce calls before executing them. Each pending announcement locks an additional reserved balance (also returned on removal or execution):
+
+$$\text{announcement deposit} = \underbrace{36{,}000{,}000}_{\text{base}} + \underbrace{68{,}000{,}000 \times n}_{\text{per announcement}} \text{ rao}$$
+
+| Constant | Rao | TAO |
+|---|---|---|
+| `AnnouncementDepositBase` | 36,000,000 | τ 0.036 |
+| `AnnouncementDepositFactor` | 68,000,000 | τ 0.068 per announcement |
+
+Up to 75 pending announcements are allowed per account (`MaxPending`). **Source code:** [`runtime/src/lib.rs:546–549`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L546-L549).
+
+### Proxy management extrinsics
+
+`add_proxy`, `remove_proxy`, `remove_proxies`, `create_pure`, `kill_pure`, `announce`, `remove_announcement`, and `reject_announcement` all pay the standard weight + length fee. `add_proxy` and `remove_proxy` additionally adjust the reserved proxy deposit.
+
+See [Proxies: Overview](../keys/proxies/) for a full description of proxy types, delays, and use cases.
+
+---
+
+## Batch Transaction Fees
+
+The utility pallet's `batch`, `batch_all`, and `force_batch` extrinsics aggregate the fees of their inner calls. The weight of the outer extrinsic is the sum of the inner call weights plus a small per-call overhead for the batch wrapper itself.
+
+The `pays_fee` for the entire batch is determined by [`weight_and_dispatch_class`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L608-L633):
+
+```rust
+let pays = if dispatch_infos.clone().any(|di| di.pays_fee == Pays::No) {
+    Pays::No
+} else {
+    Pays::Yes
+};
+```
+
+**If any inner call is fee-free, the entire batch pays no transaction fee.** For example, batching `set_weights` (free) with `add_stake` (fee-bearing) makes the whole batch free. The calls still execute normally — only the transaction fee is waived.
+
+:::note
+This applies only to the weight + length transaction fee. Swap fees for staking operations are assessed per-call inside the runtime and are not affected by the batch's `pays_fee`.
+:::
+
+### `batch` vs `batch_all` vs `force_batch`
+
+All three behave identically for fee purposes. They differ only in error handling:
+
+| Extrinsic | On error |
+|---|---|
+| `batch` | Stops at first failure; prior calls succeed. Emits `BatchInterrupted`. |
+| `batch_all` | Reverts all calls atomically on any failure. |
+| `force_batch` | Continues past failures; failed calls are skipped. |
+
+**Source code:** `batch` [`pallets/utility/src/lib.rs:200–204`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L200-L204), `batch_all` [`pallets/utility/src/lib.rs:312–315`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L312-L315), `force_batch` [`pallets/utility/src/lib.rs:411–414`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L411-L414), `weight_and_dispatch_class` [`pallets/utility/src/lib.rs:608–633`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L608-L633).
+
+---
 
 ## Estimating fees (before you send a transaction)
 
