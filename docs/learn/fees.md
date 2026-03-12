@@ -25,7 +25,7 @@ This page also covers:
 
 Each fee-bearing extrinsic is charged two components, both paid from the sender’s TAO free balance and recycled (deducted from `TotalIssuance`; see [Recycling and Burning](../resources/glossary#recycling-and-burning)):
 
-- **Weight fee** — proportional to compute time ([weight](https://docs.polkadot.com/polkadot-protocol/glossary/#weight)). Calculated as $\text{weight\_ref\_time} \times (50{,}000 / 10^9)$ rao.
+- **Weight fee** — proportional to compute time ([weight](https://docs.polkadot.com/polkadot-protocol/glossary/#weight); specifically the `ref_time` component, in picoseconds). Calculated as $\text{weight} \times (50{,}000 / 10^9)$ rao.
 
 - **Length fee** — 1 rao per byte of the encoded extrinsic.
 
@@ -137,7 +137,7 @@ See: [Swap Simulator example](#swap-simulator)
 
 ## Alpha Fallback
 
-For extrinsics that charge fees by swapping Alpha for TAO, if the sender's TAO balance cannot cover the weight-based transaction fee, the chain will fall back to charging the fee in Alpha. If both TAO and Alpha balances are insufficient to cover the anticipated fee, the transaction fails validation and will not be included in the mempool. When fees are paid in Alpha, the TAO fee is converted to Alpha using the current Alpha price with no slippage.
+For the unstaking and stake-movement extrinsics listed below, if the sender's TAO balance cannot cover the transaction fee, the chain will fall back to charging the fee in Alpha instead. If both TAO and Alpha balances are insufficient to cover the fee, the transaction is rejected before it is processed. When fees are paid in Alpha, the TAO fee amount is converted to Alpha at the current Alpha price with no slippage.
 
 ### Affected extrinsics
 
@@ -312,17 +312,22 @@ SimSwapResult(tao_amount=τ0.009642946, alpha_amount=0.625912713ξ, tao_fee=τ0.
 
 ### Transaction (extrinsic) fee
 
-To estimate the **weight + length** fee for any extrinsic (including stake calls), use the standard Substrate payment APIs.
+To estimate the **weight + length** fee for any extrinsic (including stake calls), you can use the chain's payment query APIs in the polkadot browser app, or use the Bittensor Python SDK
 
-**On the chain:** `TransactionPaymentApi`:
 
-- `query_info(uxt, len)` or `query_fee_details(uxt, len)` — full fee breakdown for a given extrinsic and length
-- `query_weight_to_fee(weight)` — weight component only
-- `query_length_to_fee(length)` — length component only
 
 
 
 <Tabs groupId="fee-estimate-tx">
+<TabItem value="polkadotjs" label="Polkadot.js App">
+
+You can query fee details directly from the chain using the [Polkadot.js browser app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/runtime) connected to Finney. Under **Developer → Runtime Calls**, use `TransactionPaymentApi`:
+
+- `query_info(uxt, len)` or `query_fee_details(uxt, len)` — full fee breakdown for a given extrinsic and its encoded length
+- `query_weight_to_fee(weight)` — weight component only
+- `query_length_to_fee(length)` — length component only
+
+</TabItem>
 <TabItem value="btcli" label="BTCLI">
 
 The **stake add**, **stake remove**, and **stake move** commands display **Extrinsic Fee (τ)** (the transaction fee) in the preview table alongside the swap fee, as described above:
@@ -424,7 +429,7 @@ You move stake from **subnet 5** (origin) to **subnet 18** (destination). The am
 
 1. **Validate and charge the transaction fee (before dispatch)**  
    The runtime treats the call as a normal signed extrinsic: it computes **weight** and **length** (the size in bytes of the encoded extrinsic; see [Length-Based Transaction Fee](#length-based-transaction-fee-extrinsic-size)), then charges:
-   - **Weight fee:** $\text{weight\_ref\_time} \times (50{,}000 / 10^9)$ rao (from [`LinearWeightToFee`](https://github.com/opentensor/subtensor/blob/main/pallets/transaction-fee/src/lib.rs#L43-L56): `Perbill::from_parts(50_000)`).
+   - **Weight fee:** $\text{weight} \times (50{,}000 / 10^9)$ rao (from [`LinearWeightToFee`](https://github.com/opentensor/subtensor/blob/main/pallets/transaction-fee/src/lib.rs#L43-L56): `Perbill::from_parts(50_000)`).
    - **Length fee:** 1 rao per byte of the encoded extrinsic (from runtime config [`LengthToFee = IdentityFee`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L504)).  
    This is withdrawn from the **coldkey’s TAO free balance**. If the coldkey cannot pay, the extrinsic fails at validation and nothing else runs. Fee withdrawal: [`OnChargeTransaction::withdraw_fee`](https://github.com/opentensor/subtensor/blob/main/pallets/transaction-fee/src/lib.rs#L307-L335).
 
@@ -453,7 +458,7 @@ Weight::from_parts(164_300_000, 0)
   + DbWeight::writes(7)
 ```
 
-The runtime converts this to rao using the weight-to-fee polynomial: $\text{fee\_rao} = \text{weight} \times 50{,}000 / 10^9$. The exact ref_time for reads and writes is given by the runtime’s `DbWeight` (e.g. RocksDbWeight). For illustration, if the total ref_time is about 165_000_000:
+The chain converts this to rao using the fee formula: $\text{fee\_rao} = \text{weight} \times 50{,}000 / 10^9$. The exact weight contribution of each read and write is determined by the chain’s `DbWeight` constants. For illustration, if the total weight is about 165_000_000:
 
 - Weight fee $\approx 165{,}000{,}000 \times 50{,}000 / 10^9 \approx$ **8,250 rao** (about 0.00000825 TAO).
 
@@ -463,7 +468,7 @@ The encoded extrinsic includes the call index, two account IDs (32 bytes each), 
 - Length fee ≈ **100–200 rao**.
 
 **3. Swap fee (liquidity component)**  
-For subnet 5 (mechanism 1), the fee is $\text{alpha\_amount} \times (\text{FeeRate}(\text{netuid}) / \text{u16::MAX})$ ([`calculate_fee_amount`](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/impls.rs#L362-L381) for mechanism 1). With the default [`DefaultFeeRate`](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/mod.rs#L75-L78) of 33:
+For subnet 5 (mechanism 1), the fee is $\text{alpha\_amount} \times (\text{FeeRate}(\text{netuid}) / 65{,}535)$ ([`calculate_fee_amount`](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/impls.rs#L362-L381) for mechanism 1), where 65,535 is the maximum possible fee rate value. With the default [`DefaultFeeRate`](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/mod.rs#L75-L78) of 33:
 
 - Rate $\approx 33 / 65{,}535 \approx 0.0504\%$.
 - For 1 TAO worth of alpha on subnet 5, the swap fee is about **0.0005 TAO** (about 500_000 rao), taken in alpha from the amount moved.
