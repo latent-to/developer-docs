@@ -7,7 +7,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Understanding Subnets
 
-In Bittensor, a subnet is an incentive-based competition marketplace that produces a specific kind of digital commodity related to artificial intelligence. It consists of a community of miners that produce the commodity, and a community of validators that measure the miners' work to ensure its quality. Often, parties that serve as validators do so in order to run applications that make use of the services provided by the miners.
+In Bittensor, a subnet is an incentive-based competition marketplace that produces a specific kind of digital commodity related to artificial intelligence. It consists of a community of miners that produce the commodity, and a community of validators that measure the miners' work to ensure its quality. Often , parties that serve as validators do so in order to run applications that make use of the services provided by the miners.
 
 Emissions of TAO (τ) from Bittensor&mdash;are distributed among miners and validators based on their performance within subnets, and based on the relative performance of subnets within Bittensor.
 
@@ -15,8 +15,8 @@ Emissions of TAO (τ) from Bittensor&mdash;are distributed among miners and vali
 
 The illustration below shows the main components of a subnet:
 
-1. A subnet's [incentive mechanism](../learn/anatomy-of-incentive-mechanism) defines the work that miners must perform, and the work that validators must perform to evaluate the miners' work. The incentive mechanism is unique to the subnet, and maintained off-chain by the subnet creator in the form of a code-repository that defines the interface for miners and validators to participate. For example, see [Subnet 1](https://github.com/macrocosm-os/prompting).
-2. **Miners** perform some useful work as defined in the subnet's incentive mechanism. For example, in Subnet 1, miners serve chat prompt completion.
+1. A subnet's [incentive mechanism](../learn/anatomy-of-incentive-mechanism) defines the work that miners must perform, and the work that validators must perform to evaluate the miners' work. The incentive mechanism is unique to the subnet, and maintained off-chain by the subnet creator in the form of a code-repository that defines the interface for miners and validators to participate. For example, see [Subnet 14](https://github.com/latent-to/taohash).
+2. **Miners** perform some useful work as defined in the subnet's incentive mechanism. In Subnet 14, miners perform Proof-of-Work to earn direct Bitcoin/Bitcoin Cash rewards alongside Alpha tokens.
 3. **Validators** independently evaluate the task performed by the subnet miners, according to standards defined by the subnet's incentive mechanism.
 4. Validators each score the performance of each miner over the most recent time period. The matrix of these scores, by each validator for each miner, serves as input to **Yuma Consensus**.
 5. The Yuma Consensus algorithm operates on-chain, and determines emissions to miners, validators, and subnet creators across the platform, based on performance.
@@ -49,7 +49,7 @@ These subnet tokens contrast with TAO ($$\tau$$), the token of the Bittensor net
 :::
 The _price_ of a subnet's alpha token is determined by the ratio of TAO in that subnet's reserve to its alpha in reserve. Alpha currency that is not held in reserve but is which is held in the hotkeys of subnet participants is referred to as _alpha outstanding_.
 
-Run the `btcli subnet list` command with the Dynamic TAO-enabled `btcli` to view information about the subnets and their currency reserves on Bittensor testnet.
+Run the `btcli subnet list` command to view information about the subnets and their currency reserves on Bittensor testnet.
 
 ```txt
         ┃               ┃ Price       ┃ Market Cap  ┃              ┃                         ┃               ┃              ┃
@@ -109,23 +109,27 @@ See [Emissions](../learn/emissions.md).
 
 ## Decentralized evaluation of subnets
 
-The relative value or _weight_ of subnets within Bittensor is critically important as it determines emissions to different subnets and their participant miners and validators. Prior to Dynamic TAO, relative weight among subnets within the Bittensor network were determined by Yuma Consensus over the evaluations of the Root Network validators. This gives a fundamentally centralizing role to the holders of Root Network validator keys.
+The relative value or _weight_ of subnets within Bittensor is critically important as it determines emissions to different subnets and their participant miners and validators. This weight is determined organically according to net TAO flows into and out of each subnet.
 
-In Dynamic TAO, the relative weight is determined organically according to net TAO flows into and out of each subnet. As TAO-holders stake TAO into subnets in exchange for the subnet-specific alpha, they are essentially 'voting with their TAO' for the value of the subnet. Subnets with more staking than unstaking receive higher emissions, while subnets with net outflows receive reduced or zero emissions. This flow-based model rewards subnets that attract genuine user engagement. In return, stakers extract a share of the subnet's emissions.
+As TAO-holders stake TAO into subnets in exchange for the subnet-specific alpha, they are essentially 'voting with their TAO' for the value of the subnet. Subnets with more staking than unstaking receive higher emissions, while subnets with net outflows receive reduced or zero emissions. This flow-based model rewards subnets that attract genuine user engagement. In return, stakers extract a share of the subnet's emissions.
 
 :::tip Flow-Based Model Active
 As of November 2025, emissions are based on net TAO flows (staking minus unstaking) rather than token prices. See [Emissions](../learn/emissions.md) for details.
 :::
 
-## Subnet Zero
+## Root subnet
 
-In Dynamic TAO, Subnet Zero&mdash;or _Root Subnet_&mdash;is a special subnet. It is the only subnet that does not have its own $\alpha$ currency. No miners can register on subnet zero, and no validation work is performed. However validators can register, and $\tau$-holders can stake to those validators, as with any other subnet. This offers a mechanism for $\tau$-holders to stake $\tau$ into validators in a subnet-agnostic way. This works because the weight of a validator in a subnet includes both their share of that subnet's $\alpha$ and their share of TAO staked into the root subnet.
+Root subnet&mdash;or _Subnet Zero_&mdash;is a special subnet on Bittensor. It is the only subnet without its own alpha currency. No miners can register on subnet zero, and no validation work is performed. However validators can register on the root subnet, and TAO holders can stake to those validators, as with any other subnet. This offers a mechanism for TAO holders to stake TAO into validators in a subnet-agnostic way. This works because the weight of a validator in a subnet includes both their share of that subnet's TAO and their share of TAO staked into the root subnet.
+
+::: Staking on Root
+Staking to a Root validator provides exposure to their entire network performance, allowing you to earn rewards across every subnet where that validator is active. You can choose to accumulate these dividends as subnet alpha or have them automatically converted to TAO. For more information, see [root claims](../staking-and-delegation/root-claims/index.md)
+:::
 
 Over time, the emissions generated by TAO staked into Subnet Zero will decrease, relative to stake held in the alpha currency of active subnets. See [Note on evolution of Bittensor token economy](../learn/emissions.md#note-on-evolution-of-bittensor-token-economy).
 
 ## Validator stake weight
 
-A validator's stake weight in a subnet equals their alpha stake plus their TAO stake times the `tao_weight` parameter:
+A validator's stake weight in a subnet equals their alpha stake plus their TAO stake multiplied by the `tao_weight` parameter:
 
 $$
 
@@ -138,7 +142,7 @@ $$
 A validator's stake weight in Subnet Zero is simply their staked TAO.
 :::
 
-A validator's relative stake weight (their stake weight over the total stake weight) in a subnet determines their voting power when evaluating miners, and determines their share of emissions.
+A validator's [relative stake weight](../resources/glossary.md#relative-stake-weight) in a subnet determines their voting power when evaluating miners, and determines their share of emissions.
 
 $$
 

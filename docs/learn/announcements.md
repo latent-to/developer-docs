@@ -6,6 +6,26 @@ title: "Announcements and Developments"
 
 This page tracks recent and upcoming changes to the Bittensor protocol and other major events in the Bittensor ecosystem.
 
+**February, 2026**
+
+## Subnet stake burn
+
+**Status**: In development
+
+- **What**: Subnet stake burn stake mechanism works as a combination of the `add_stake`/`add_stake_limit` extrinsics and the `burn_alpha` extrinsic. It allows subnet owners to permanently remove alpha from circulation.
+- **Key Features**:
+  - Subnets owner calls `add_stake_burn` extrinsic. Extrinsic initially stakes TAO for alpha and immediately burns the acquired alpha.
+  - As a result, the circulating alpha decreases, the AMM pool reserves adjust, and the alpha price updates according to the new reserve ratio.
+
+## Max Subnet Mechanisms
+
+**Status**: In development
+
+- **What**: Maintains current limit of 256 UIDs across all subnet mechanisms.
+- **Key Features**:
+  - Subnet owners must trim UIDs before increasing the mechanism count.
+  - Product of multiplying max UIDs and mechanism count must not excess 256.
+
 **January, 2026**
 
 ## Updated coldkey swap mechanism
@@ -128,7 +148,6 @@ A percentage fee will be deducted from emissions bound to validator hotkeys thro
 **Status**: Ready for deployment on September 16, 2025
 
 - **Key Changes**:
-
   - Subnet limit remains at 128 initially with no new registrations available immediately
   - Immunity period reduced from 6 months to 4 months from registration block
   - Network rate limit increased to 4 days between registrations
