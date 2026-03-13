@@ -159,14 +159,13 @@ For the unstaking and stake-movement extrinsics listed below, if the sender's TA
 - `recycle_alpha`
 - `burn_alpha`
 
-### Complete unstaking handling
+:::note balance edgecases
 
-For `remove_stake`, `remove_stake_limit`, `recycle_alpha`, and `burn_alpha`: after withdrawing Alpha fees, if the remaining Alpha balance is too small to keep as a dust balance, the transaction will consume and process the entire remaining Alpha balance in the same call.
 
-### Updated handling of `NotEnoughStakeToWithdraw`
+- For `remove_stake`, `remove_stake_limit`, `recycle_alpha`, and `burn_alpha`: after withdrawing Alpha fees, if the remaining Alpha balance is too small to keep as a dust balance, the transaction will consume and process the entire remaining Alpha balance in the same call.
+- For `remove_stake`, `remove_stake_limit`, `recycle_alpha`, and `burn_alpha`: if the requested amount exceeds the available Alpha, the amount is capped at the available Alpha and the extrinsic succeeds (assuming no other errors).
 
-For `remove_stake`, `remove_stake_limit`, `recycle_alpha`, and `burn_alpha`: if the requested amount exceeds the available Alpha, the amount is capped at the available Alpha and the extrinsic succeeds (assuming no other errors).
-
+:::
 
 
 
@@ -259,17 +258,20 @@ See [Proxies: Overview](../keys/proxies/) for a full description of proxy types,
 
 The utility pallet's `batch`, `batch_all`, and `force_batch` extrinsics aggregate the fees of their inner calls. The weight of the outer extrinsic is the sum of the inner call weights plus a small per-call overhead for the batch wrapper itself.
 
-The `pays_fee` for the entire batch is determined by [`weight_and_dispatch_class`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L608-L633):
+The `pays_fee` for the entire batch is determined by [`weight_and_dispatch_class`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L606-L618):
 
 ```rust
-let pays = if dispatch_infos.clone().any(|di| di.pays_fee == Pays::No) {
-    Pays::No
-} else {
-    Pays::Yes
-};
+let mut pays = Pays::No;
+
+for di in calls.iter().map(|call| call.get_dispatch_info()) {
+    total_weight = total_weight.saturating_add(di.call_weight);
+    if di.pays_fee == Pays::Yes {
+        pays = Pays::Yes;
+    }
+}
 ```
 
-**If any inner call is fee-free, the entire batch pays no transaction fee.** For example, batching `set_weights` (free) with `add_stake` (fee-bearing) makes the whole batch free. The calls still execute normally — only the transaction fee is waived.
+**The batch pays a fee if any inner call is fee-bearing.** The batch is free only if all inner calls are fee-free. For example, batching `set_weights` (free) with `add_stake` (fee-bearing) results in a fee being charged for the batch.
 
 :::note
 This applies only to the weight + length transaction fee. Swap fees for staking operations are assessed per-call inside the runtime and are not affected by the batch's `pays_fee`.
@@ -285,7 +287,68 @@ All three behave identically for fee purposes. They differ only in error handlin
 | `batch_all` | Reverts all calls atomically on any failure. |
 | `force_batch` | Continues past failures; failed calls are skipped. |
 
-**Source code:** `batch` [`pallets/utility/src/lib.rs:200–204`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L200-L204), `batch_all` [`pallets/utility/src/lib.rs:312–315`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L312-L315), `force_batch` [`pallets/utility/src/lib.rs:411–414`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L411-L414), `weight_and_dispatch_class` [`pallets/utility/src/lib.rs:608–633`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L608-L633).
+**Source code:** `batch` [`pallets/utility/src/lib.rs:197–201`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L197-L201), `batch_all` [`pallets/utility/src/lib.rs:309–313`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L309-L313), `force_batch` [`pallets/utility/src/lib.rs:408–412`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L408-L412), `weight_and_dispatch_class` [`pallets/utility/src/lib.rs:606–618`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L606-L618).
+
+### Using batch calls with the SDK
+
+The Bittensor SDK does not have a high-level batch wrapper — `add_stake_multiple` and `unstake_multiple` send individual extrinsics sequentially, not a single batch extrinsic. To submit a true batch (one extrinsic on-chain), use the low-level `compose_call` + `sign_and_send_extrinsic` path directly.
+
+Use `batch_all` (atomic) when all inner calls must succeed or none should. Use `batch` if partial success is acceptable, or `force_batch` to continue past failures. See the [comparison table above](#batch-vs-batch_all-vs-force_batch).
+
+**Example: stake to two hotkeys in a single atomic batch extrinsic**
+
+```python
+import bittensor as bt
+
+sub = bt.Subtensor(network="finney")
+wallet = bt.Wallet(name="my_wallet", hotkey="my_hotkey")
+wallet.unlock_coldkey()
+
+hotkey_1 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+hotkey_2 = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
+netuid = 1
+amount = bt.Balance.from_tao(10)
+
+# Compose each inner call individually
+call_1 = sub.compose_call(
+    call_module="SubtensorModule",
+    call_function="add_stake",
+    call_params={
+        "hotkey": hotkey_1,
+        "netuid": netuid,
+        "amount_staked": amount.rao,
+    },
+)
+call_2 = sub.compose_call(
+    call_module="SubtensorModule",
+    call_function="add_stake",
+    call_params={
+        "hotkey": hotkey_2,
+        "netuid": netuid,
+        "amount_staked": amount.rao,
+    },
+)
+
+# Wrap in a Utility.batch_all — reverts all calls atomically on any failure
+batch_call = sub.compose_call(
+    call_module="Utility",
+    call_function="batch_all",
+    call_params={"calls": [call_1, call_2]},
+)
+
+# Submit the batch as a single extrinsic
+success, error_message = sub.sign_and_send_extrinsic(
+    call=batch_call,
+    wallet=wallet,
+    wait_for_inclusion=True,
+    wait_for_finalization=False,
+)
+print(f"Success: {success}" if success else f"Failed: {error_message}")
+```
+
+:::note `add_stake_multiple` is not a batch extrinsic
+`subtensor.add_stake_multiple()` and `subtensor.unstake_multiple()` loop over their inputs and submit one extrinsic per hotkey. Each transaction is settled independently — they are not atomic. Use the `Utility.batch_all` pattern above when you need all-or-nothing semantics or want to pay a single transaction fee for the group.
+:::
 
 ---
 
