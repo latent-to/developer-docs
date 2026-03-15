@@ -58,6 +58,7 @@ const sidebars = {
         "concepts/weight-copying-in-bittensor",
         "learn/yuma3-migration-guide",
         "learn/fees",
+        "learn/batch-transactions",
         "learn/chain-rate-limits",
         {
           type: "category",
