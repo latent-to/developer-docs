@@ -121,7 +121,7 @@ impl WeightToFeePolynomial for LinearWeightToFee {
 
 ## Swap Fees for Stake and Unstake Operations
 
-In addition to the weight-based fee above, staking and unstaking operations are subject to fees based on a percentage of the quantity of transacted liquidity. When moving stake between subnets—whether through a transfer, swap, or move—a 0.05% fee is applied. If the move happens within the same subnet, no additional fee is incurred, only the weight-based fee.
+In addition to the weight-based fee above, staking and unstaking operations are subject to fees based on a percentage of the quantity of transacted liquidity. When moving stake between subnets—whether through a transfer, swap, or move—a 0.05% fee is applied.
 
 **Fee Details:**
 
@@ -129,8 +129,11 @@ In addition to the weight-based fee above, staking and unstaking operations are 
 - **For staking**: Fee paid in **TAO** from the staking amount
 - **For unstaking**: Fee paid in **Alpha** from the unstaking amount
 
-
 See: [Swap Simulator example](#swap-simulator)
+
+:::tip
+When moving stake between hotkeys within the subnet, no staking fee is applied, only the weight-based transaction fee.
+:::
 
 **Source code references:**
 
@@ -642,16 +645,7 @@ So in this example, **total cost** to the user is roughly:
 - **Transaction fee:** ~8_250 + ~150 ≈ **~8_400 rao** (0.0000084 TAO), paid from the coldkey’s TAO balance.
 - **Swap fee:** ~0.05% of the moved amount, paid in alpha (from the stake on subnet 5).
 
-The swap fee is much larger than the transaction fee for typical move amounts; the transaction fee is still required and must be covered by the coldkey’s TAO.
 
-### Same-subnet move
-
-If you **move_stake** (or **transfer_stake**) within the **same subnet** (same hotkey or different hotkey, same netuid), the chain uses [`transfer_stake_within_subnet`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/stake_utils.rs#L850-L857): it only reattributes alpha between hotkeys/coldkeys. There is **no swap**, so **no swap fee**—only the weight and length transaction fee apply. (Comment in code: "Does not incur any swapping nor fees".)
-
-### How to get exact numbers
-
-- **Transaction fee:** Use the runtime’s `TransactionPaymentApi.query_fee_details(uxt, len)` or the SDK’s `get_payment_info(call, keypair)` to get the actual inclusive fee (e.g. `partial_fee`) for the constructed extrinsic.
-- **Swap fee for a move:** Use the runtime API [`get_stake_fee`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L2476-L2477) (origin, origin_coldkey, destination, destination_coldkey, amount) or the SimSwap API / SDK `sim_swap` for the path and amount you use. For move_stake, the chain charges only one side (origin or destination) as above, so the displayed “stake fee” from these APIs should be interpreted in that light.
 
 ### Code references
 
