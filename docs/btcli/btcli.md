@@ -32,18 +32,18 @@ btcli [OPTIONS] COMMAND [ARGS]...
 
 **Commands**:
 
-- `config`: Config commands, aliases: `c`, `conf`
-- `wallet`: Wallet commands, aliases: `wallets`, `w`
-- `stake`: Stake commands, alias: `st`
-- `sudo`: Sudo commands, alias: `su`
-- `subnets`: Subnets commands, alias: `s`, `subnet`
-- `weights`: Weights commands, aliases: `wt`, `weight`
-- `proxy`: Proxy commands
-- `crowd`: Crowdloan commands, aliases: `cr`, `crowdloan`
-- `liquidity`: Liquidity commands, aliases: `l`
-- `axon`: Axon serving commands
-- `utils`
-- `view`: HTML view commands
+- [`config`](#btcli-config): Config commands, aliases: `c`, `conf`
+- [`wallet`](#btcli-wallet): Wallet commands, aliases: `wallets`, `w`
+- [`stake`](#btcli-stake): Stake commands, alias: `st`
+- [`sudo`](#btcli-sudo): Sudo commands, alias: `su`
+- [`subnets`](#btcli-subnets): Subnets commands, alias: `s`, `subnet`
+- [`weights`](#btcli-weights): Weights commands, aliases: `wt`, `weight`
+- [`proxy`](#btcli-proxy): Proxy commands
+- [`crowd`](#btcli-crowd): Crowdloan commands, aliases: `cr`, `crowdloan`
+- [`liquidity`](#btcli-liquidity): Liquidity commands, aliases: `l`
+- [`axon`](#btcli-axon): Axon serving commands
+- [`utils`](#btcli-utils)
+- [`view`](#btcli-view): HTML view commands
 
 ## `btcli config`
 

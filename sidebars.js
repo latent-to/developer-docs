@@ -71,6 +71,7 @@ const sidebars = {
             "navigating-subtensor/swap-stake",
           ],
         },
+        "navigating-subtensor/subtensor-extrinsics",
         "resources/community-links",
       ],
     },
