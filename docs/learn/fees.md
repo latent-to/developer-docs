@@ -589,30 +589,26 @@ Note this is only the weight + length transaction fee. For staking operations yo
 
 This section traces a single **move_stake** transaction from the moment it is submitted until the chain has applied every fee. It shows how the **transaction fee** (weight + length) and the **swap/liquidity fee** combine, and how the chain avoids double-charging on moves.
 
-**Scenario (from [Managing stake with the SDK](../staking-and-delegation/managing-stake-sdk.md#move-stake)):**  
-You move stake from **subnet 5** (origin) to **subnet 18** (destination). The amount is **1 TAO worth of alpha** on subnet 5 (the coldkey signs; the amount is specified in origin-subnet alpha). Same coldkey, different hotkeys and subnets.
+**Scenario:** Moving 1 TAO worth of alpha from **subnet 5** to **subnet 18** — same coldkey, different hotkeys.
 
 ### What the chain does
 
-1. **Validate and charge the transaction fee (before dispatch)**  
-   The runtime treats the call as a normal signed extrinsic: it computes **weight** and **length** (the size in bytes of the encoded extrinsic; see [Length-Based Transaction Fee](#length-based-transaction-fee-extrinsic-size)), then charges:
-   - **Weight fee:** $\text{weight} \times (50{,}000 / 10^9)$ rao (from [`LinearWeightToFee`](https://github.com/opentensor/subtensor/blob/main/pallets/transaction-fee/src/lib.rs#L43-L56): `Perbill::from_parts(50_000)`).
-   - **Length fee:** 1 rao per byte of the encoded extrinsic (from runtime config [`LengthToFee = IdentityFee`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L564)).
-   This is withdrawn from the **coldkey’s TAO free balance**. If the coldkey cannot pay, the extrinsic fails at validation and nothing else runs. Fee withdrawal: [`OnChargeTransaction::withdraw_fee`](https://github.com/opentensor/subtensor/blob/main/pallets/transaction-fee/src/lib.rs#L315).
+1. **The transaction fee is charged upfront.**
+   Before the extrinsic executes, the runtime deducts the weight + length fee from the coldkey’s TAO free balance ([`withdraw_fee`](https://github.com/opentensor/subtensor/blob/main/pallets/transaction-fee/src/lib.rs#L315)). If the balance is insufficient, the transaction is rejected immediately.
+   - **Weight fee:** $\text{weight} \times (50{,}000 / 10^9)$ rao ([`LinearWeightToFee`](https://github.com/opentensor/subtensor/blob/main/pallets/transaction-fee/src/lib.rs#L43-L56): `Perbill::from_parts(50_000)`).
+   - **Length fee:** 1 rao per byte of the encoded extrinsic ([`LengthToFee = IdentityFee`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L564)).
 
-2. **Execute the move (transition_stake_internal)**
-   [`do_move_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L30) calls [`transition_stake_internal`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L298). Because `origin_netuid != destination_netuid`, the chain:
-   - **Unstake on origin (subnet 5):** Converts the requested alpha to TAO via the subnet’s swap. A **swap fee** is applied here unless the origin is root (see below). Source: [`unstake_from_subnet`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L358) with `drop_fee_origin`.
-   - **Stake on destination (subnet 18):** Converts the resulting TAO to alpha on subnet 18 ([`stake_into_subnet`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L376) with `drop_fee_destination`). For **move_stake** (and **swap_stake**), the chain **does not** charge a second swap fee on the destination when the origin is not root: it sets `drop_fee_destination = true` so that only one liquidity fee is taken (on the origin unstake). This avoids double-charging on a single move.
+2. **The move executes.**
+   [`do_move_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L30) calls [`transition_stake_internal`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L298), which runs two swaps because origin and destination subnets differ:
+   - **Unstake on origin (subnet 5):** [`unstake_from_subnet`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L358) converts the alpha to TAO, taking a **swap fee** in alpha (`drop_fee_origin`).
+   - **Stake on destination (subnet 18):** [`stake_into_subnet`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L376) converts that TAO to alpha with no swap fee (`drop_fee_destination = true`). Only one liquidity fee is charged per move.
 
-3. **Fee logic for moves**  
-   In the code, [`drop_fee_origin = origin_netuid == NetUid::ROOT`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L354-L355) and `drop_fee_destination = !drop_fee_origin`. So:
-   - **Move from a non-root subnet (e.g. 5) to another subnet (e.g. 18):** Fee is charged only on the **origin** (alpha→TAO on subnet 5). No fee on the destination stake.
-   - **Move from root to a subnet:** Fee is charged only on the **destination** (TAO→alpha). No fee on the “unstake” from root.
+3. **Which side pays the swap fee depends on the origin.**
+   [`drop_fee_origin = origin_netuid == NetUid::ROOT`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L354-L355), `drop_fee_destination = !drop_fee_origin`:
+   - **Non-root → subnet:** swap fee on the origin unstake (alpha→TAO).
+   - **Root → subnet:** swap fee on the destination stake (TAO→alpha).
 
-So for **subnet 5 → subnet 18**, the user pays:
-- The **transaction fee** (weight + length) in TAO from the coldkey.
-- One **swap fee** (on subnet 5’s alpha→TAO conversion), taken from the moved liquidity (in alpha).
+For this scenario (**subnet 5 → subnet 18**), the coldkey pays the transaction fee in TAO, and one swap fee is taken in alpha from the moved liquidity on subnet 5.
 
 ### Calculating the fees
 
