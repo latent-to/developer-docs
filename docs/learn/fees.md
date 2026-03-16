@@ -7,11 +7,11 @@ import TabItem from '@theme/TabItem';
 
 # Transaction Fees in Bittensor
 
-This page describes the blockchain transaction fees charged by Bittensor and shows how to estimate them prior to your transactions.
+This page describes the blockchain transaction fees charged by Bittensor and shows how to estimate them before running transactions.
 
-Many extrinsic transactions that change the state of the blockchain are subject to a **transaction fee** based on a combination of transaction weight (computational load) and transaction length (storage load).
+Many extrinsic transactions that change the state of the blockchain are subject to a fee based on a combination of weight (computational load) and length (storage load).
 
-Staking and unstaking operations incur this transaction fee as well as amount-based **swap fees** of 0.05% of the transacted liquidity.
+Staking and unstaking operations incur this fee as well as amount-based **swap fees** of 0.05% of the transacted liquidity.
 
 Reading the state of the chain is always free.
 
