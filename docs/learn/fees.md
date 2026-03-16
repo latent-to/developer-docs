@@ -16,12 +16,12 @@ Staking and unstaking operations incur this transaction fee as well as amount-ba
 Reading the state of the chain is always free.
 
 This page also covers:
-- The [alpha fallback](#alpha-fallback) mechanism, whereby transaction fees are paid in alpha when a wallet's TAO balance is insufficient (not yet active).
+- The [alpha fallback](#alpha-fallback) mechanism, whereby transaction fees are paid in alpha when a wallet's TAO balance is insufficient
 - [Fee-free extrinsics](#fee-free-extrinsics).
 - [Fees for proxy calls](#proxy-call-fees)
 - [Fees for batch transactions](#batch-transaction-fees)
-- [Estimating fees](#estimating-fees-before-you-send-a-transaction) (how to estimate before sending).
-- [Example: Fees in the lifecycle of a transaction](#in-depth-example-fees-for-a-cross-subnet-move_stake)
+- [Estimating fees](#estimating-fees)
+- [Example: Fees in the lifecycle of a transaction](#example-fees-in-the-lifecycle-of-a-transaction)
 
 ## General Transaction Fees
 
@@ -114,7 +114,7 @@ impl WeightToFeePolynomial for LinearWeightToFee {
 }
 ```
 
-**Length fee** — runtime config sets [`LengthToFee = IdentityFee`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L504): 1 rao per byte of the encoded extrinsic. Source: [`runtime/src/lib.rs`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs) and the standard [FRAME Transaction Payment pallet](https://docs.substrate.io/reference/frame-pallets/transaction-payment/).
+**Length fee** — runtime config sets [`LengthToFee = IdentityFee`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L564): 1 rao per byte of the encoded extrinsic. Source: [`runtime/src/lib.rs`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs) and the [FRAME Transaction Payment pallet](https://docs.substrate.io/reference/frame-pallets/transaction-payment/).
 
 </details>
 
@@ -184,10 +184,48 @@ Reading the state of the chain is always free. Additionally, the following extri
 - [`commit_crv3_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L285) - Commit CRv3 encrypted weights
 - [`batch_reveal_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L337) - Batch reveal committed weights
 
+## Batch Transaction Fees
+
+The utility pallet's `batch`, `batch_all`, and `force_batch` extrinsics aggregate the fees of their inner calls. The weight of the outer extrinsic is the sum of the inner call weights plus a small per-call overhead for the batch wrapper itself.
+
+See: [Batch Transactions](./batch-transactions)
+
+<details>
+<summary><strong>See how batch transaction fees are calculated</strong></summary>
+
+The `pays_fee` for the entire batch is determined by [`weight_and_dispatch_class`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L606-L618):
+
+```rust
+let mut pays = Pays::No;
+
+for di in calls.iter().map(|call| call.get_dispatch_info()) {
+    total_weight = total_weight.saturating_add(di.call_weight);
+    if di.pays_fee == Pays::Yes {
+        pays = Pays::Yes;
+    }
+}
+```
+
+**The batch pays a fee if any inner call is fee-bearing.** The batch is free only if all inner calls are fee-free. For example, batching `set_weights` (free) with `add_stake` (fee-bearing) results in a fee being charged for the batch.
+</details>
+
+:::note
+This applies only to the weight + length transaction fee. Swap fees for staking operations are assessed per-call inside the runtime and are not affected by the batch's `pays_fee`.
+:::
+
+All three batch variants behave identically for fee purposes.
+
+
+**Source code:** `weight_and_dispatch_class` [`pallets/utility/src/lib.rs:606–618`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L606-L618).
+
 
 ## Proxy Call Fees
 
 When a call is dispatched through the `proxy` extrinsic, the total transaction fee covers the proxy's own overhead **plus** the inner call's weight. Crucially, the outer extrinsic inherits `pays_fee` and `dispatch_class` directly from the inner call ([`pallets/proxy/src/lib.rs:232–238`](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L232-L238)):
+
+See [Proxies: Overview](../keys/proxies/) for a full description of proxy types, delays, and use cases.
+
+
 
 ```rust
 #[pallet::weight({
@@ -200,6 +238,11 @@ When a call is dispatched through the `proxy` extrinsic, the total transaction f
 ```
 
 This means that if the inner call is [fee-free](#fee-free-extrinsics) (e.g. `set_weights`, `commit_weights`), the entire proxy call is also free — no transaction fee is charged.
+
+:::info Proxy management extrinsics
+
+`add_proxy`, `remove_proxy`, `remove_proxies`, `create_pure`, `kill_pure`, `announce`, `remove_announcement`, and `reject_announcement` all pay the standard weight + length fee. `add_proxy` and `remove_proxy` additionally adjust the reserved proxy deposit.
+:::
 
 ### Proxy registration deposits
 
@@ -262,49 +305,8 @@ $$\text{announcement deposit} = \underbrace{36{,}000{,}000}_{\text{base}} + \und
 
 Up to 75 pending announcements are allowed per account (`MaxPending`). **Source code:** [`runtime/src/lib.rs:546–549`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L546-L549).
 
-### Proxy management extrinsics
 
-`add_proxy`, `remove_proxy`, `remove_proxies`, `create_pure`, `kill_pure`, `announce`, `remove_announcement`, and `reject_announcement` all pay the standard weight + length fee. `add_proxy` and `remove_proxy` additionally adjust the reserved proxy deposit.
-
-See [Proxies: Overview](../keys/proxies/) for a full description of proxy types, delays, and use cases.
-
-
-## Batch Transaction Fees
-
-The utility pallet's `batch`, `batch_all`, and `force_batch` extrinsics aggregate the fees of their inner calls. The weight of the outer extrinsic is the sum of the inner call weights plus a small per-call overhead for the batch wrapper itself.
-
-See: [Batch Transactions](./batch-transactions)
-
-<details>
-<summary><strong>See how batch transaction fees are calculated</strong></summary>
-
-The `pays_fee` for the entire batch is determined by [`weight_and_dispatch_class`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L606-L618):
-
-```rust
-let mut pays = Pays::No;
-
-for di in calls.iter().map(|call| call.get_dispatch_info()) {
-    total_weight = total_weight.saturating_add(di.call_weight);
-    if di.pays_fee == Pays::Yes {
-        pays = Pays::Yes;
-    }
-}
-```
-
-**The batch pays a fee if any inner call is fee-bearing.** The batch is free only if all inner calls are fee-free. For example, batching `set_weights` (free) with `add_stake` (fee-bearing) results in a fee being charged for the batch.
-</details>
-
-:::note
-This applies only to the weight + length transaction fee. Swap fees for staking operations are assessed per-call inside the runtime and are not affected by the batch's `pays_fee`.
-:::
-
-All three batch variants behave identically for fee purposes.
-
-
-**Source code:** `weight_and_dispatch_class` [`pallets/utility/src/lib.rs:606–618`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L606-L618).
-
-
-## Estimating fees (before you send a transaction)
+## Estimating fees
 
 The chain and the SDK expose **two separate estimation paths**: one for the **swap/liquidity fee** (stake, unstake, move, swap) and one for the **transaction fee** (weight + length). Use both when you want the full cost of a staking-related call.
 
@@ -580,7 +582,7 @@ print(f"Estimated transaction fee: {fee}")
 Estimated transaction fee: τ0.001401232
 ```
 
-Note this is only the weight + length transaction fee. For staking operations you also need the swap fee — use `sub.sim_swap()` per inner call for that. See [Estimating fees](./fees#estimating-fees-before-you-send-a-transaction) for the full picture.
+Note this is only the weight + length transaction fee. For staking operations you also need the swap fee — use `sub.sim_swap()` per inner call for that. See [Estimating fees](./fees#estimating-fees) for the full picture.
 
 
 ## Example: Fees in the lifecycle of a transaction
