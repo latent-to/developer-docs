@@ -452,12 +452,11 @@ SimSwapResult(tao_amount=τ0.009642946, alpha_amount=0.625912713ξ, tao_fee=τ0.
 
 ### Extrinsic fee simulation
 
-To estimate the **weight + length** fee for any extrinsic (including stake calls), you can use the chain's payment query APIs in the polkadot browser app, or use the Bittensor Python SDK
+To estimate the **weight + length** fee for any extrinsic (including stake calls), use the chain's payment query APIs in the polkadot browser app, or use the Bittensor Python SDK
 
 <Tabs groupId="fee-estimate-tx">
 <TabItem value="polkadotjs" label="Polkadot.js App">
-
-You can query fee details directly from the chain using the [Polkadot.js browser app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/runtime) connected to Finney. Under **Developer → Runtime Calls**, use `TransactionPaymentApi`:
+ Query fee details directly from the chain using the [Polkadot.js browser app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/runtime) connected to Finney. Under **Developer → Runtime Calls**, use `TransactionPaymentApi`:
 
 - `query_info(uxt, len)` or `query_fee_details(uxt, len)` — full fee breakdown for a given extrinsic and its encoded length
 - `query_weight_to_fee(weight)` — weight component only
@@ -466,7 +465,7 @@ You can query fee details directly from the chain using the [Polkadot.js browser
 </TabItem>
 <TabItem value="btcli" label="BTCLI">
 
-The **stake add**, **stake remove**, and **stake move** commands display **Extrinsic Fee (τ)** (the transaction fee) in the preview table alongside the swap fee, as described above:
+The **stake add**, **stake remove**, and **stake move** commands display **Extrinsic Fee (τ)** in the preview table alongside the swap fee, as described above:
 
 :::danger
 the only way to see these fees in BTCLI is to run the actual stake command; the table is printed before execution. Use the default prompt and answer "no" at "Would you like to continue?" to exit without sending the transaction.
@@ -541,7 +540,7 @@ Estimated transaction fee: τ0.001337128
 
 ### Batch fee simulation
 
-Because a batch extrinsic is just a single composed call, you can pass the finished `batch_call` to `get_extrinsic_fee` before sending it — the same way you would for any other extrinsic. See [Transaction (extrinsic) fee](./fees#transaction-extrinsic-fee) for background on what this fee covers.
+Because a batch extrinsic is just a single composed call, pass the finished `batch_call` to `get_extrinsic_fee` before sending it as for any other extrinsic.
 
 ```python
 import bittensor as bt
@@ -582,7 +581,6 @@ Estimated transaction fee: τ0.001401232
 ```
 
 Note this is only the weight + length transaction fee. For staking operations you also need the swap fee — use `sub.sim_swap()` per inner call for that. See [Estimating fees](./fees#estimating-fees-before-you-send-a-transaction) for the full picture.
-
 
 
 ## Example: Fees in the lifecycle of a transaction
