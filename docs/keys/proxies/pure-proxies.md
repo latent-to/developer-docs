@@ -31,7 +31,13 @@ It is critical to understand that pure proxies do not offer the security advanta
 
 ### Transaction flow in pure proxies
 
-All transactions involving a pure proxy must be signed by the spawner account. Once signed, the transaction is executed on-chain as if it originated directly from the pure proxy. Unlike standard proxies, a pure proxy must hold its own funds to cover fees or transfers. The spawner then acts as an _Any proxy_, handling the signing and authorization of calls, but the balance used comes from the pure proxy's account.
+All transactions involving a pure proxy must be signed by the spawner account. Once signed, the transaction is executed on-chain as if it originated directly from the pure proxy. Unlike standard proxies, a pure proxy must hold its own funds to cover the transaction value. The spawner then acts as an _Any proxy_, signing and authorizing calls and paying transaction fees, while the balance used for the call comes from the pure proxy’s account.
+
+:::info Transaction fees
+By default, the spawner account covers the transaction fee when a proxy is executed. However, if the value of the proxy relationship's `realPaysFee` parameter has been set to `True`, the transaction fees will be covered by the pure proxy account when a proxy is executed.
+
+For more information, see [Transaction fee payment](./index.md#transaction-fee-payment)
+:::
 
 ### Multisigs and Pure Proxies
 
@@ -149,19 +155,7 @@ response = subtensor.create_pure_proxy(
     index=0,  # the disambiguation index, leave as zero
 )
 
-if response.success:
-    pure_account = response.data.get("pure_account")
-    spawner_address = response.data.get("spawner")
-    height = response.data.get("height")
-    ext_index = response.data.get("ext_index")
-
-    print(f"✓ Pure proxy created!")
-    print(f"  Pure proxy address: {pure_account}")
-    print(f"  Spawner: {spawner_address}")
-    print(f"  Block: {height}")
-    print(f"  Extrinsic index: {ext_index}")
-else:
-    print(f"✗ Failed: {response.message}")
+print(response)
 ```
 
 :::tip
@@ -244,8 +238,11 @@ btcli wallet transfer \
   --amount 1.0
 ```
 
-:::warning Pure proxy must be funded
-Ensure the pure proxy account has enough funds to cover both the transfer amount and transaction fees. Transfer funds to the pure proxy first using a regular transfer.
+:::warning Pure proxy account must be funded
+Ensure the pure proxy account holds enough funds to cover the transaction value. Attempting to perform a proxy operation without funding the pure proxy account with return a `FundsUnavailable` error.
+
+You can transfer funds to the pure proxy account using the `btcli wallet transfer` command in your terminal.
+
 :::
 
 **Other operations through pure proxies:**
@@ -296,11 +293,7 @@ response = subtensor.proxy(
    call=transfer_call,
 )
 
-if response.success:
-   print(f"✓ Transfer executed through proxy!")
-   print(f"  Transferred {transfer_amount} from {proxy_account[:10]}...")
-else:
-   print(f"✗ Failed: {response.message}")
+print(response)
 ```
 
 :::info Building a call
@@ -322,8 +315,10 @@ Balances(subtensor).transfer_keep_alive(...)
 
 :::
 
-:::warning
-Ensure the pure proxy account holds enough funds to cover both the transfer and transaction fees.
+:::warning Pure proxy account must be funded
+Ensure the pure proxy account holds enough funds to cover the transaction value. Attempting to perform a proxy operation without funding the pure proxy account with return a `FundsUnavailable` error.
+
+You can transfer funds to the pure proxy account using the `btcli wallet transfer` command in your terminal.
 
 :::
 
@@ -345,7 +340,7 @@ Ensure the pure proxy account holds enough funds to cover both the transfer and 
 :::info
 
 - After submitting the transaction, check the Polkadot.JS web app's **Explorer** page for a `balances.Transfer` event. Notice the sender is the pure proxy account.
-- Ensure the pure proxy account holds enough funds to cover both the transfer and transaction fees.
+- Ensure the pure proxy account holds enough funds to cover the transaction value.
   :::
 
 </TabItem>
@@ -451,10 +446,7 @@ response = subtensor.kill_pure_proxy(
     ext_index=ext_index,  # the extrinsic index of the `Proxy.PureCreated` transaction
 )
 
-if response.success:
-    print("✓ Pure proxy killed successfully!")
-else:
-    print(f"✗ Failed: {response.message}")
+print(response)
 ```
 
 :::info Parameter requirements

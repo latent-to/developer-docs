@@ -102,10 +102,6 @@ New coldkey is hotkey.
 
 The coldkey has already been swapped.
 
-### `ColdkeyIsInArbitration`
-
-The coldkey is in arbitration.
-
 ### `UnableToRecoverPublicKey`
 
 Public key cannot be recovered.
@@ -494,13 +490,33 @@ PoW hash seal does not match work.
 
 Faucet is disabled.
 
-### `SwapAlreadyScheduled`
+### ColdkeySwapAnnounced
 
-Swap already scheduled.
+A coldkey swap has been announced for this account.
 
-### `FailedToSchedule`
+### ColdkeySwapDisputed
 
-Failed to schedule swap.
+A coldkey swap for this account is under dispute.
+
+### `ColdkeySwapAnnouncementNotFound`
+
+Coldkey swap announcement not found
+
+### `ColdkeySwapTooEarly`
+
+Coldkey swap too early.
+
+### `ColdkeySwapReannouncedTooEarly`
+
+Coldkey swap reannounced too early.
+
+### `AnnouncedColdkeyHashDoesNotMatch`
+
+The announced coldkey hash does not match the new coldkey hash.
+
+### `ColdkeySwapAlreadyDisputed`
+
+Coldkey swap already disputed.
 
 ### `InvalidIdentity`
 
@@ -541,3 +557,7 @@ Wallet not authorized. Ensure that the account has the correct root or subnet ow
 ### `InvalidValue`
 
 Generic error for out-of-range parameter value
+
+### `Deprecated`
+
+Deprecated call.
