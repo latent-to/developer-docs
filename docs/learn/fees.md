@@ -18,10 +18,10 @@ Reading the state of the chain is always free.
 This page also covers:
 - The [alpha fallback](#alpha-fallback) mechanism, whereby transaction fees are paid in alpha when a wallet's TAO balance is insufficient (not yet active).
 - [Fee-free extrinsics](#fee-free-extrinsics).
-- [Proxy call fees](#proxy-call-fees) — how fees and deposits work when dispatching through a proxy.
-- [Batch transaction fees](#batch-transaction-fees) — how fees are aggregated (or waived) across batched calls. See also [Batch Transactions](./batch-transactions) for error handling and SDK usage.
-
-[In-depth example](#in-depth-example-fees-for-a-cross-subnet-move_stake) (fees for a cross-subnet move_stake) and [Estimating fees](#estimating-fees-before-you-send-a-transaction) (how to estimate before sending).
+- [Fees for proxy calls](#proxy-call-fees)
+- [Fees for batch transactions](#batch-transaction-fees)
+- [Estimating fees](#estimating-fees-before-you-send-a-transaction) (how to estimate before sending).
+- [Example: Fees in the lifecycle of a transaction](#in-depth-example-fees-for-a-cross-subnet-move_stake)
 
 ## General Transaction Fees
 
@@ -38,7 +38,7 @@ Extrinsics that are [fee-free](#fee-free-extrinsics) (e.g. `set_weights`, `commi
 <details>
 <summary><strong>See affected extrinsics</strong></summary>
 
-### Staking Operations
+#### Staking Operations
 
 - [`add_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L591)
 - [`remove_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L635)
@@ -52,7 +52,7 @@ Extrinsics that are [fee-free](#fee-free-extrinsics) (e.g. `set_weights`, `commi
 - [`unstake_all`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1581)
 - [`unstake_all_alpha`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1614)
 
-### Wallet and Identity Management
+#### Wallet and Identity Management
 
 - [`set_identity`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1471)
 - [`set_subnet_identity`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1513)
@@ -60,30 +60,30 @@ Extrinsics that are [fee-free](#fee-free-extrinsics) (e.g. `set_weights`, `commi
 - [`schedule_swap_coldkey`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1333)
 - [`set_coldkey_auto_stake_hotkey`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2132)
 
-### Registration
+#### Registration
 
 - [`register`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L895)
 - [`root_register`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1037)
 - [`burned_register`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L930)
 
-### Subnet Management
+#### Subnet Management
 
 - [`register_network`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1231)
 - [`register_network_with_identity`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1440)
 - [`start_call`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1963)
 - [`update_symbol`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2163)
 
-### Burn/Recycle Alpha
+#### Burn/Recycle Alpha
 
 - [`recycle_alpha`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2027)
 - [`burn_alpha`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2052)
 
-### Child Hotkey Management
+#### Child Hotkey Management
 
 - [`set_children`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1287)
 - [`set_childkey_take`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1021)
 
-### Governance
+#### Governance
 
 - [`adjust_senate`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L921)
 - [`claim_root`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2254)
@@ -137,7 +137,7 @@ See: [Swap Simulator example](#swap-simulator)
 - [Fee value](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/mod.rs#L68-L76)
 - [Fee calculation and distribution](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/impls.rs#L596-L639)
 
-## Alpha Fallback
+### Alpha Fallback
 
 :::note
 This feature is not yet active. The alpha fallback logic is implemented but currently disabled in the chain. At present, if a coldkey cannot cover the transaction fee in TAO, the transaction is rejected.
@@ -145,7 +145,7 @@ This feature is not yet active. The alpha fallback logic is implemented but curr
 
 For the unstaking and stake-movement extrinsics listed below, if the sender's TAO balance cannot cover the transaction fee, the chain will fall back to charging the fee in Alpha instead. If both TAO and Alpha balances are insufficient to cover the fee, the transaction is rejected before it is processed. When fees are paid in Alpha, the TAO fee amount is converted to Alpha at the current Alpha price with no slippage.
 
-### Affected extrinsics
+#### Affected extrinsics
 
 - `remove_stake`
 - `remove_stake_limit`
@@ -167,6 +167,19 @@ For the unstaking and stake-movement extrinsics listed below, if the sender's TA
 
 :::
 
+
+## Fee-Free Extrinsics
+
+Reading the state of the chain is always free. Additionally, the following extrinsics are free of fees.
+
+### Weight Setting & Commit-Reveal
+
+- [`set_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L83) - Setting validator weights
+- [`commit_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L158) - Commit weight hash
+- [`batch_commit_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L192) - Batch commit weight hashes
+- [`reveal_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L241) - Reveal committed weights
+- [`commit_crv3_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L285) - Commit CRv3 encrypted weights
+- [`batch_reveal_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L337) - Batch reveal committed weights
 
 
 ## Proxy Call Fees
@@ -252,11 +265,15 @@ Up to 75 pending announcements are allowed per account (`MaxPending`). **Source 
 
 See [Proxies: Overview](../keys/proxies/) for a full description of proxy types, delays, and use cases.
 
----
 
 ## Batch Transaction Fees
 
 The utility pallet's `batch`, `batch_all`, and `force_batch` extrinsics aggregate the fees of their inner calls. The weight of the outer extrinsic is the sum of the inner call weights plus a small per-call overhead for the batch wrapper itself.
+
+See: [Batch Transactions](./batch-transactions)
+
+<details>
+<summary><strong>See how batch transaction fees are calculated</strong></summary>
 
 The `pays_fee` for the entire batch is determined by [`weight_and_dispatch_class`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L606-L618):
 
@@ -272,16 +289,17 @@ for di in calls.iter().map(|call| call.get_dispatch_info()) {
 ```
 
 **The batch pays a fee if any inner call is fee-bearing.** The batch is free only if all inner calls are fee-free. For example, batching `set_weights` (free) with `add_stake` (fee-bearing) results in a fee being charged for the batch.
+</details>
 
 :::note
 This applies only to the weight + length transaction fee. Swap fees for staking operations are assessed per-call inside the runtime and are not affected by the batch's `pays_fee`.
 :::
 
-All three batch variants behave identically for fee purposes. For error handling differences and SDK usage examples, see [Batch Transactions](./batch-transactions).
+All three batch variants behave identically for fee purposes.
+
 
 **Source code:** `weight_and_dispatch_class` [`pallets/utility/src/lib.rs:606–618`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L606-L618).
 
----
 
 ## Estimating fees (before you send a transaction)
 
@@ -429,13 +447,9 @@ SimSwapResult(tao_amount=τ0.009642946, alpha_amount=0.625912713ξ, tao_fee=τ0.
 
 **Code references:** Runtime [`SwapRuntimeApi`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs) (`sim_swap_tao_for_alpha`, `sim_swap_alpha_for_tao`); swap pallet [`sim_swap`](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/impls.rs); SDK [`sim_swap`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/subtensor.py) and btcli `subtensor_interface.sim_swap`; chain_data [`SimSwapResult`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/chain_data.py).
 
-### Transaction (extrinsic) fee
+### Extrinsic fee simulation
 
 To estimate the **weight + length** fee for any extrinsic (including stake calls), you can use the chain's payment query APIs in the polkadot browser app, or use the Bittensor Python SDK
-
-
-
-
 
 <Tabs groupId="fee-estimate-tx">
 <TabItem value="polkadotjs" label="Polkadot.js App">
@@ -482,12 +496,13 @@ Amount to stake (TAO τ): 100
 </TabItem>
 <TabItem value="sdk" label="Bittensor SDK">
 
+Two methods in the SDK can be used to get fees for a transaction:
 
-- `subtensor.get_payment_info(call, keypair)` — returns a dict including `partial_fee` (the total transaction fee in rao). Used by btcli for “Extrinsic Fee”.
-- `subtensor.get_extrinsic_fee(call, keypair)` — same underlying `substrate.get_payment_info(call, keypair)`; returns a `Balance` from `partial_fee`.
+- `subtensor.get_payment_info(call, keypair)`  returns a dict including `partial_fee` (the total transaction fee in rao). This method is used by BTCLI under the hood to fetch “Extrinsic Fee”.
+- `subtensor.get_extrinsic_fee(call, keypair)` calls `get_payment_info()` but returns only the `Balance` amount for the fee.
 
-You must **compose the call** (e.g. the exact `add_stake`, `move_stake`, or other extrinsic and params) before calling these; they simulate the fee for that call and keypair.
-**Example: estimate transaction fee for an add_stake extrinsic**
+You must **compose the call** (e.g. the exact `add_stake`, `move_stake`, or other extrinsic and params) before calling these; they simulate the fee for that call and keypair. See [Working with Blockchain Calls
+](../sdk/call)
 
 ```python
 import bittensor as bt
@@ -521,23 +536,53 @@ Estimated transaction fee: τ0.001337128
 </TabItem>
 </Tabs>
 
+### Batch fee simulation
+
+Because a batch extrinsic is just a single composed call, you can pass the finished `batch_call` to `get_extrinsic_fee` before sending it — the same way you would for any other extrinsic. See [Transaction (extrinsic) fee](./fees#transaction-extrinsic-fee) for background on what this fee covers.
+
+```python
+import bittensor as bt
+
+sub = bt.Subtensor(network="finney")
+wallet = bt.Wallet(name="my_wallet", hotkey="my_hotkey")
+wallet.unlock_coldkey()
+
+hotkey_1 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+hotkey_2 = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
+netuid = 1
+amount = bt.Balance.from_tao(10)
+
+call_1 = sub.compose_call(
+    call_module="SubtensorModule",
+    call_function="add_stake",
+    call_params={"hotkey": hotkey_1, "netuid": netuid, "amount_staked": amount.rao},
+)
+call_2 = sub.compose_call(
+    call_module="SubtensorModule",
+    call_function="add_stake",
+    call_params={"hotkey": hotkey_2, "netuid": netuid, "amount_staked": amount.rao},
+)
+
+batch_call = sub.compose_call(
+    call_module="Utility",
+    call_function="batch_all",
+    call_params={"calls": [call_1, call_2]},
+)
+
+# Estimate the transaction fee before sending
+fee = sub.get_extrinsic_fee(call=batch_call, keypair=wallet.coldkeypub)
+print(f"Estimated transaction fee: {fee}")
+```
+
+```console
+Estimated transaction fee: τ0.001401232
+```
+
+Note this is only the weight + length transaction fee. For staking operations you also need the swap fee — use `sub.sim_swap()` per inner call for that. See [Estimating fees](./fees#estimating-fees-before-you-send-a-transaction) for the full picture.
 
 
-## Fee-Free Extrinsics
 
-The following extrinsics are free.
-
-### Weight Setting & Commit-Reveal
-
-- [`set_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L83) - Setting validator weights
-- [`commit_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L158) - Commit weight hash
-- [`batch_commit_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L192) - Batch commit weight hashes
-- [`reveal_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L241) - Reveal committed weights
-- [`commit_crv3_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L285) - Commit CRv3 encrypted weights
-- [`batch_reveal_weights`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L337) - Batch reveal committed weights
-
-
-## In-depth example: fees for a cross-subnet move_stake
+## Example: Fees in the lifecycle of a transaction
 
 This section traces a single **move_stake** transaction from the moment it is submitted until the chain has applied every fee. It shows how the **transaction fee** (weight + length) and the **swap/liquidity fee** combine, and how the chain avoids double-charging on moves. **All claims below are backed by source references;** see [Code references for this section](#code-references-for-this-section) at the end.
 
