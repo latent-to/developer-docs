@@ -97,7 +97,7 @@ const sidebars = {
           ],
         },
         "keys/multisig",
-        "keys/coldkey-swap",
+        "keys/schedule-coldkey-swap",
       ],
     },
 
