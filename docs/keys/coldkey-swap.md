@@ -17,6 +17,13 @@ See:
 - [Coldkey and Hotkey Workstation Security](./coldkey-hotkey-security)
 - [Coldkey swap blockchain sourcecode](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/swap/swap_coldkey.rs).
 
+:::info coldkey swap vs transfers
+Coldkey swaps are only necessary if you need to migrate a coldkey with subnet ownerships or registrations.
+
+If you only hold and stake TAO, you do not need to perform a coldkey swap. Instead, simply transfer your staked and unstaked TAO to the new coldkey. For more information, see [`btcli wallet transfer`](../btcli/btcli.md#btcli-wallet-transfer) and [`btcli stake transfer --all`](../btcli/btcli.md#btcli-stake-transfer).
+
+:::
+
 ## Introduction
 
 The coldkey swap mechanism provides a secure way to switch to a new coldkey, if you feel the secrecy of your wallet's coldkey secret key needs to be improved.
