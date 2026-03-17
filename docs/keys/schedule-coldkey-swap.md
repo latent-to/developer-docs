@@ -16,12 +16,11 @@ See:
 
 See [code for coldkey swap](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/swap/swap_coldkey.rs).
 
-:::tip Prevent emergencies with proxies
-Coldkey swaps are often needed when a coldkey is compromised. **Using proxy wallets can help prevent this situation entirely.** With a properly configured proxy (limited `ProxyType` and non-zero delay), even if an attacker gains access to your proxy wallet, they cannot immediately drain your funds—the delay gives you time to detect and reject unauthorized transactions.
+:::info coldkey swap vs transfers
+Coldkey swaps are only necessary if you need to migrate a compromised coldkey with subnet-related state, such as registered hotkeys or owned subnets.
 
-For high-value wallets, consider setting up a `Staking` proxy for regular staking operations instead of using your coldkey directly.
+If you only hold and stake TAO, you do not need to perform a coldkey swap. Instead, simply transfer your staked and unstaked TAO to the new coldkey. For more information, see [`btcli wallet transfer`](../btcli/btcli.md#btcli-wallet-transfer) and [`btcli stake transfer --all`](../btcli/btcli.md#btcli-stake-transfer).
 
-See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey proactively.
 :::
 
 The schedule coldkey swap feature works as follows:
