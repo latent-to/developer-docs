@@ -328,7 +328,11 @@ response = subtensor.proxy(
    call=transfer_call,
 )
 
-print(response)
+if response.success:
+   print(f"✓ Transfer executed through proxy!")
+   print(f"  Transferred {transfer_amount} from {real_account[:10]}...")
+else:
+   print(f"✗ Failed: {response.message}")
 ```
 
 :::info Building a call
@@ -441,7 +445,10 @@ response = subtensor.remove_proxy(
     delay=0,  # must match the delay value set when the proxy was added
 )
 
-print(response)
+if response.success:
+    print("✓ Proxy removed successfully!")
+else:
+    print(f"✗ Failed: {response.message}")
 ```
 
   </TabItem>
@@ -490,7 +497,10 @@ real_account = bt.Wallet(name="sn-creator")
 
 response = subtensor.remove_proxies(wallet=real_account)
 
-print(response)
+if response.success:
+    print(f"✓ All proxies removed!")
+else:
+    print(f"✗ Failed: {response.message}")
 ```
 
   </TabItem>

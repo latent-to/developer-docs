@@ -461,10 +461,23 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     result = substrate.query('SubtensorModule', 'CKBurn')
     print(result.value)
     ```
+## 28. ColdkeySwapRescheduleDuration
 
-## 29. ColdkeySwapAnnouncements
+- **Description**: Storage for ColdkeySwapRescheduleDuration.
+- **Query Type**: `u32`
+- **Parameters**: None
+- **Default Value**: `0`
+- **Python Example**:
+    ```python
+    from async_substrate_interface import SubstrateInterface
+    substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
-- **Description**: Storage for ColdkeySwapAnnouncements.
+    result = substrate.query('SubtensorModule', 'ColdkeySwapRescheduleDuration')
+    print(result.value)
+    ```
+## 29. ColdkeySwapScheduled
+
+- **Description**: Storage for ColdkeySwapScheduled.
 - **Query Type**: `u16 -> AccountId`
 - **Parameters**:
   - `coldkey`: `AccountId`
@@ -476,12 +489,12 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
     from bittensor_wallet import Keypair
     coldkey = Keypair.create_from_uri('//Bob').ss58_address
-    result = substrate.query('SubtensorModule', 'ColdkeySwapAnnouncements', [coldkey])
+    result = substrate.query('SubtensorModule', 'ColdkeySwapScheduled', [coldkey])
     print(result.value)
     ```
-## 30. ColdkeySwapAnnouncementDelay
+## 30. ColdkeySwapScheduleDuration
 
-- **Description**: The number of blocks that must pass after a coldkey swap is announced before it can be executed.
+- **Description**: The block duration for which a coldkey swap schedule must wait before execution.
 - **Query Type**: `u32`
 - **Parameters**: None
 - **Default Value**: `36000`
@@ -490,7 +503,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
-    result = substrate.query('SubtensorModule', 'ColdkeySwapAnnouncementDelay')
+    result = substrate.query('SubtensorModule', 'ColdkeySwapScheduleDuration')
     print(result.value)
     ```
 ## 31. CommitRevealWeightsEnabled
@@ -1438,7 +1451,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
 - **Description**: Network rate limit.
 - **Query Type**: `u64`
 - **Parameters**: None
-- **Default Value**: `14400`
+- **Default Value**: `7200`
 - **Python Example**:
     ```python
     from async_substrate_interface import SubstrateInterface
