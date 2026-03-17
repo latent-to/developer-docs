@@ -324,6 +324,10 @@ Childkey take rate limit exceeded.
 
 Attempting staking operations too frequently.
 
+### `AddStakeBurnRateLimitExceeded`
+
+The stake burn operation has exceeded its rate limit. Try again in the next tempo.
+
 ## Registration and Network Management
 
 ### `TooManyRegistrationsThisBlock`

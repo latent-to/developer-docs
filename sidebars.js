@@ -232,6 +232,7 @@ const sidebars = {
         "concepts/halving",
         "concepts/mev-shield/index",
         "concepts/commit-reveal",
+        "concepts/stake-burn",
         "concepts/consensus-based-weights",
         "concepts/bt-logging-levels",
         "resources/utilities",
