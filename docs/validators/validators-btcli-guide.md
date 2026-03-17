@@ -54,4 +54,4 @@ To set weights, a validator must meet several requirements. See [Requirements fo
 
 If you suspect your coldkey may have been leaked, you can request to swap it out of your wallet, using an extrinsic blockchain transaction. This operation has a 5 day waiting period, during which your coldkey will be locked. The cost of this coldkey swap transaction is 0.1 TAO.
 
-See [Rotate/Swap your Coldkey](../keys/schedule-coldkey-swap)
+See [Rotate/Swap your Coldkey](../keys/coldkey-swap)
