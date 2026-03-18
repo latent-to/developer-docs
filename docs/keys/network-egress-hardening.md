@@ -32,7 +32,6 @@ A supply chain attack in the Python ecosystem works as follows:
 2. The malicious code executes silently alongside the legitimate functionality.
 3. When the victim unlocks their wallet, the code reads the decrypted private key from memory or disk and transmits it to attacker-controlled infrastructure over HTTPS.
 
-Bittensor was the target of exactly this type of attack. The malicious code exfiltrated plaintext private keys to a small set of attacker-controlled domains. On-chain analysis of the attacker's wallet shows the largest individual theft events in March–April 2025 — single transfers of 65,000 TAO and 31,000 TAO to the attacker's float account.
 
 :::tip
 If the infected host cannot establish outbound connections to those domains, the exfiltration fails. The attacker has the key material in memory but no channel to receive it.
