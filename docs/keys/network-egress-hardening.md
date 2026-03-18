@@ -9,8 +9,7 @@ import { SecurityWarning } from "./_security-warning.mdx";
 This guide covers configuring a Bittensor workstation — whether a cloud server running miners and validators, or a personal computer handling coldkey operations — so that even a compromised Python package cannot exfiltrate key material. The mechanism: the host can only reach an explicit allowlist of domains; any other outbound connection is dropped at the firewall before it reaches the network.
 
 :::tip
-
-This egress control approach was developed and documented by **Berzeck**, a Bittensor community member, following the supply chain attack on the Bittensor ecosystem. His observation — that the attack's exfiltration would have been blocked by a locked-down egress configuration — motivated the original tutorial. The configuration was shared in the Bittensor community Discord and is reproduced here with VM guidance added.
+This egress control approach was developed and documented by **Berzeck**, a Bittensor community member.
 :::
 
 
@@ -32,6 +31,7 @@ A supply chain attack in the Python ecosystem works as follows:
 2. The malicious code executes silently alongside the legitimate functionality.
 3. When the victim unlocks their wallet, the code reads the decrypted private key from memory or disk and transmits it to attacker-controlled infrastructure over HTTPS.
 
+Bittensor was the target of exactly this type of attack. The malicious code exfiltrated plaintext private keys to a small set of attacker-controlled domains. On-chain analysis of the attacker's wallet shows the largest individual theft events in March–April 2025 — single transfers of 65,000 TAO and 31,000 TAO to the attacker's float account.
 
 :::tip
 If the infected host cannot establish outbound connections to those domains, the exfiltration fails. The attacker has the key material in memory but no channel to receive it.
@@ -84,25 +84,27 @@ These steps are for **OpenSUSE Leap 15.6**, which is what the original configura
 ### Step 1 — Prerequisites
 
 ```shell
-systemctl enable --now firewalld
-zypper refresh
+systemctl enable --now firewalld  # enable firewalld to start on boot AND start it immediately
+zypper refresh                    # update package repository metadata (zypper = OpenSUSE's package manager)
 ```
 
 ### Step 2 — Squid: install and configure the allowlist
 
 ```shell
+# squid: forward proxy daemon that filters all outbound traffic against a domain allowlist
 zypper install -y squid
 ```
 
 ```shell
 cat > /etc/squid/squid.conf <<'EOF'
-visible_hostname bittensor-node
-http_port 127.0.0.1:3128
-via off
-forwarded_for delete
-pinger_enable off
+visible_hostname bittensor-node   # hostname shown in Squid error pages; arbitrary value
+http_port 127.0.0.1:3128          # bind to loopback only — Squid is NOT reachable from outside the machine
+via off                           # suppress the Via: HTTP header that identifies this as a proxy
+forwarded_for delete              # strip X-Forwarded-For; prevents destination servers seeing the real client IP
+pinger_enable off                 # disable Squid's ICMP health pinger; reduces attack surface
 
 # Adjust mirror domains to match your repos — check /etc/zypp/repos.d/*.repo
+# Leading dot matches the domain and all subdomains (.pypi.org matches files.pypi.org, etc.)
 acl allowed_domains dstdomain \
     .pypi.org \
     .pythonhosted.org \
@@ -116,6 +118,8 @@ acl allowed_domains dstdomain \
     .uepg.br \
     .cedia.org.ec
 
+# allowed_tls_sni: matches HTTPS CONNECT tunnels by TLS SNI field (inspected before decryption)
+# Must mirror allowed_domains exactly — HTTPS traffic requires both ACLs to pass
 acl allowed_tls_sni ssl::server_name \
     .pypi.org \
     .pythonhosted.org \
@@ -129,26 +133,28 @@ acl allowed_tls_sni ssl::server_name \
     .uepg.br \
     .cedia.org.ec
 
+# port 443 = standard HTTPS; port 9944 = Substrate WebSocket RPC used by btcli to reach chain nodes
 acl SSL_ports port 443 9944
-http_access deny CONNECT !SSL_ports
-http_access allow allowed_domains
-http_access allow CONNECT allowed_tls_sni
-http_access deny all
+http_access deny CONNECT !SSL_ports   # block CONNECT tunnels to any non-SSL port (prevents port abuse)
+http_access allow allowed_domains     # allow plain HTTP to allowlisted domains
+http_access allow CONNECT allowed_tls_sni  # allow HTTPS tunnels to allowlisted domains (matched by SNI)
+http_access deny all                  # default-deny: reject everything not matched above
 EOF
 ```
 
 ```shell
-mkdir -p /var/cache/squid /var/log/squid
-chown -R squid:squid /var/cache/squid /var/log/squid
-squid -k parse && squid -z
-systemctl enable --now squid
+mkdir -p /var/cache/squid /var/log/squid              # create cache and log dirs if absent
+chown -R squid:squid /var/cache/squid /var/log/squid  # squid process must own these dirs to write logs and cache
+squid -k parse && squid -z                            # validate config syntax, then initialize cache directory structure
+                                                      # squid -z creates internal swap dirs; must run before first start
+systemctl enable --now squid                          # enable on boot and start now
 ```
 
 Sanity check (`400 Bad Request` confirms Squid is listening):
 
 ```shell
-ss -lntp | grep 3128
-curl -I http://127.0.0.1:3128
+ss -lntp | grep 3128       # list listening TCP sockets; confirm squid is bound to :3128
+curl -I http://127.0.0.1:3128  # direct request to Squid with no Host header; '400 Bad Request' = Squid is up
 ```
 
 After future config changes: `squid -k parse && systemctl reload squid`
@@ -156,38 +162,63 @@ After future config changes: `squid -k parse && systemctl reload squid`
 ### Step 3 — firewalld: force egress through Squid
 
 ```shell
+# --permanent writes to persistent config (survives reloads); without it, changes are runtime-only and lost on reload
+# Allow SSH via the firewalld service abstraction (belt-and-suspenders alongside the direct rule below)
 firewall-cmd --permanent --add-service=ssh
+
+# --direct rules write raw iptables rules, bypassing firewalld's zone abstraction for fine-grained control
+# filter INPUT/OUTPUT = standard netfilter chains; priority 0 = evaluated first within that chain
+# Allow SSH inbound (TCP port 22) for both IPv4 and IPv6
 firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p tcp --dport 22 -j ACCEPT
 firewall-cmd --permanent --direct --add-rule ipv6 filter INPUT 0 -p tcp --dport 22 -j ACCEPT
 
+# Allow outbound packets for already-established connections (TCP response packets, related traffic like ICMP errors)
+# -m conntrack --ctstate: connection tracking; ESTABLISHED = reply to a session we opened; RELATED = associated flows
+# Without this rule, Squid's outbound TCP sessions would have their return packets dropped
 firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 firewall-cmd --permanent --direct --add-rule ipv6 filter OUTPUT 0 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
+# Allow all loopback traffic (-i lo = inbound on loopback interface; -o lo = outbound on loopback)
+# Required for proxychains, pip, and other tools to connect to Squid on 127.0.0.1:3128
 firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT  0 -i lo -j ACCEPT
 firewall-cmd --permanent --direct --add-rule ipv6 filter INPUT  0 -i lo -j ACCEPT
 firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -o lo -j ACCEPT
 
+# Explicitly allow outbound connections to Squid on localhost (belt-and-suspenders with the loopback rules above)
 firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -d 127.0.0.1 -p tcp --dport 3128 -j ACCEPT
 
+# Allow DNS outbound to specific resolvers only (8.8.8.8 = Google, 1.1.1.1 = Cloudflare)
+# Both UDP (primary protocol) and TCP (fallback for large responses / zone transfers) variants
+# Pinning to named resolvers reduces DNS tunneling risk vs allowing all outbound DNS traffic
 firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -p udp -d 8.8.8.8 --dport 53 -j ACCEPT
 firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -p tcp -d 8.8.8.8 --dport 53 -j ACCEPT
 firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -p udp -d 1.1.1.1 --dport 53 -j ACCEPT
 firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -p tcp -d 1.1.1.1 --dport 53 -j ACCEPT
 
+# Allow DHCP: --sport 68 --dport 67 = client-to-server (discover/request); --sport 67 --dport 68 = server-to-client (offer/ack)
+# Required for the machine to obtain its IP address from the router or hypervisor
 firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -p udp --sport 68 --dport 67 -j ACCEPT
 firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT  0 -p udp --sport 67 --dport 68 -j ACCEPT
 
 # Only Squid's process UID may make direct outbound connections
+# id -u squid: resolves the squid service account's numeric UID at rule-write time (system-assigned integer)
 SQUID_UID=$(id -u squid)
+# -m owner --uid-owner: iptables owner match module; matches only packets from processes running as this UID
+# Priority 5: evaluated after the priority-0 rules above, but before the DROP at priority 100
+# port 80 (HTTP), 443 (HTTPS), 9944 (Substrate WebSocket RPC — how btcli communicates with chain nodes)
 firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 5 -m owner --uid-owner $SQUID_UID -p tcp --dport 80   -j ACCEPT
 firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 5 -m owner --uid-owner $SQUID_UID -p tcp --dport 443  -j ACCEPT
 firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 5 -m owner --uid-owner $SQUID_UID -p tcp --dport 9944 -j ACCEPT
 
+# Allow NTP outbound (UDP port 123) for clock synchronization
 firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 0 -p udp --dport 123 -j ACCEPT
 
+# Default-deny: silently drop all other outbound traffic not matched by any rule above
+# Priority 100 = evaluated last; -j DROP = silently discard (vs -j REJECT which sends an ICMP error back)
 firewall-cmd --permanent --direct --add-rule ipv4 filter OUTPUT 100 -j DROP
 firewall-cmd --permanent --direct --add-rule ipv6 filter OUTPUT 100 -j DROP
 
+# Set the default zone to drop all unclassified interface traffic, then apply permanent config to runtime
 firewall-cmd --set-default-zone=drop
 firewall-cmd --reload
 ```
@@ -201,56 +232,77 @@ Only the process running as the `squid` service user may make direct outbound TC
 ### Step 4 — zypper proxy
 
 ```shell
+# Idempotent: only append the proxy line if it isn't already present
 grep -q '^proxy=http://127.0.0.1:3128' /etc/zypp/zypp.conf || \
   echo 'proxy=http://127.0.0.1:3128' >> /etc/zypp/zypp.conf
 
+# Disable delta RPM downloads — deltarpm fetches partial binary diffs requiring local reassembly,
+# which can produce corrupt packages or fail silently when routed through a proxy
+# Handles both cases: updating an existing setting and adding it if absent
 if grep -q '^ *download.use_deltarpm' /etc/zypp/zypp.conf; then
   sed -i 's/^ *download\.use_deltarpm.*/download.use_deltarpm = false/' /etc/zypp/zypp.conf
 else
   echo 'download.use_deltarpm = false' >> /etc/zypp/zypp.conf
 fi
 
-REL="15.6"
+REL="15.6"  # OpenSUSE Leap version; update this if upgrading the OS
+# Remove the default repos before re-adding; 2>/dev/null suppresses errors if an alias doesn't exist
+# || true prevents the command from failing if none of these repos are currently registered
 zypper rr repo-oss repo-non-oss repo-update repo-update-non-oss \
   repo-backports-update repo-sle-update 2>/dev/null || true
+# Re-add repos with explicit full URLs so they match the domain patterns in the Squid allowlist
+# zypper ar: add repository; -f: enable automatic metadata refresh
 zypper ar -f "https://download.opensuse.org/distribution/leap/${REL}/repo/oss/"     repo-oss
 zypper ar -f "https://download.opensuse.org/distribution/leap/${REL}/repo/non-oss/" repo-non-oss
 zypper ar -f "https://download.opensuse.org/update/leap/${REL}/oss/"                 repo-update
 zypper ar -f "https://download.opensuse.org/update/leap/${REL}/non-oss/"             repo-update-non-oss
 zypper ar -f "https://download.opensuse.org/update/leap/${REL}/backports/"           repo-backports-update
 zypper ar -f "https://download.opensuse.org/update/leap/${REL}/sle/"                 repo-sle-update
-zypper -vvv refresh
+zypper -vvv refresh  # -vvv: verbose; confirms the proxy is being used and all repos are reachable
 ```
 
 ### Step 5 — proxychains, pip, git, btcli wrapper
 
 ```shell
+# proxychains-ng: intercepts outbound TCP connections from tools that don't natively support
+# proxy config (or that override proxy env vars) and forces them through Squid
 zypper install -y proxychains-ng
 
 cat > /etc/proxychains.conf <<'EOF'
-strict_chain
-proxy_dns
+strict_chain    # fail if the proxy is unreachable; do NOT fall back to a direct connection
+proxy_dns       # resolve hostnames through the proxy instead of locally — prevents DNS leaks
+                # where the destination hostname would be visible to local network monitors
+                # TODO: verify exactly how Squid handles DNS resolution for CONNECT tunnels in this mode
 
 [ProxyList]
-http 127.0.0.1 3128
+http 127.0.0.1 3128  # route all proxied connections through Squid on localhost port 3128
 EOF
 
 cat > /etc/pip.conf <<'EOF'
 [global]
-proxy = http://127.0.0.1:3128
+proxy = http://127.0.0.1:3128  # route all pip install / pip download traffic through Squid
 EOF
 
+# btcli wrapper: forces btcli through proxychains without relying on env vars alone
 cat > /usr/local/bin/btc <<'EOF'
 #!/usr/bin/env bash
+# Unset proxy env vars before exec to prevent a double-proxy loop:
+# if http_proxy is already set AND proxychains is active, btcli would proxy to Squid,
+# then proxychains would proxy that already-proxied connection to Squid a second time
 unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY
+# exec replaces this wrapper process with proxychains4 (no extra shell process left behind)
+# proxychains4 is the binary name installed by the proxychains-ng package
+# "$@" passes all arguments through to btcli unchanged
 exec proxychains4 btcli "$@"
 EOF
-chmod +x /usr/local/bin/btc
+chmod +x /usr/local/bin/btc  # make the wrapper executable
 ```
 
 As your normal user:
 
 ```shell
+# git uses its own proxy config and does not pick up system env vars or proxychains automatically
+# --global writes to ~/.gitconfig for the current user
 git config --global http.proxy  http://127.0.0.1:3128
 git config --global https.proxy http://127.0.0.1:3128
 ```
@@ -258,13 +310,26 @@ git config --global https.proxy http://127.0.0.1:3128
 ### Step 6 — Test
 
 ```shell
+# 1. Confirm Squid is responding — '400 Bad Request' (no Host header) means Squid is up and listening
 curl -I http://127.0.0.1:3128
+
+# 2. Set proxy env vars for the curl tests below
 export http_proxy="http://127.0.0.1:3128" https_proxy="http://127.0.0.1:3128"
+
+# 3. Test an allowlisted domain — should succeed (200 or redirect response)
 curl -I https://www.opentensor.ai
+
+# 4. Test a non-allowlisted domain — should be blocked by Squid; || echo confirms the block is working
 curl -I https://example.com || echo "blocked ✓"
+
+# 5. Verify zypper can reach all repos through the proxy
 zypper -vvv refresh
+
+# 6. Unset proxy env vars, then test btcli through the proxychains wrapper
 unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY
-btc wallet list
+btc wallet list  # 'btc' is the wrapper at /usr/local/bin/btc that calls proxychains4 btcli
+
+# 7. Watch Squid's access log in real-time to observe what is being allowed and blocked
 tail -f /var/log/squid/access.log
 ```
 
@@ -288,7 +353,7 @@ Before setting up a VM, consider what threat model you are actually defending ag
 | Setup | What it protects against | Remaining exposure |
 |---|---|---|
 | **Hardware wallet** | Key never exists in software | Physical theft of device |
-| **Airgapped dedicated machine** | All network-based attacks | Physical access, evil maid |
+| **Airgapped dedicated machine** | All network-based attacks | Physical access |
 | **Dedicated Linux machine** | Malware on a separate host OS | The Linux machine itself |
 | **Hardened VM on Mac** (this guide) | Casual process isolation, accidental leakage | macOS host privilege, keyloggers, firmware |
 | **Native macOS** | Nothing specific | Everything |
