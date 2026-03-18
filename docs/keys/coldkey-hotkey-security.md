@@ -185,4 +185,9 @@ Bittensor nodes often run complex software stacks with many dependencies. Take s
 
 - Keep your Python environment or Docker images updated with the latest patches.
 - Avoid installing unnecessary packages that might contain vulnerabilities.
+- Pin exact package versions and verify SHA-256 hashes with `pip install --require-hashes`.
 - Consider sandboxing the ML library if possible, using solutions like [PyPy sandboxing](https://doc.pypy.org/en/latest/sandbox.html) or custom Docker seccomp profiles.
+
+For an additional layer of defense against supply chain attacks, consider configuring network egress control — a host-level firewall and proxy that restricts outbound connections to an explicit domain allowlist. Even if a malicious package executes, it cannot exfiltrate key material if it cannot reach attacker-controlled infrastructure.
+
+See [Network Egress Hardening for Bittensor Nodes](./network-egress-hardening).

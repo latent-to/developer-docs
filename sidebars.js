@@ -84,6 +84,7 @@ const sidebars = {
         "keys/working-with-keys",
         "keys/handle-seed-phrase",
         "keys/coldkey-hotkey-security",
+        "keys/network-egress-hardening",
         "keys/address-poisoning-scams",
         {
           type: "category",
