@@ -457,14 +457,7 @@ SimSwapResult(tao_amount=τ0.009642946, alpha_amount=0.625912713ξ, tao_fee=τ0.
 To estimate the **weight + length** fee for any extrinsic (including stake calls), use the chain's payment query APIs in the polkadot browser app, or use the Bittensor Python SDK
 
 <Tabs groupId="fee-estimate-tx">
-<TabItem value="polkadotjs" label="Polkadot.js App">
- Query fee details directly from the chain using the [Polkadot.js browser app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/runtime) connected to Finney. Under **Developer → Runtime Calls**, use `TransactionPaymentApi`:
 
-- `query_info(uxt, len)` or `query_fee_details(uxt, len)` — full fee breakdown for a given extrinsic and its encoded length
-- `query_weight_to_fee(weight)` — weight component only
-- `query_length_to_fee(length)` — length component only
-
-</TabItem>
 <TabItem value="btcli" label="BTCLI">
 
 The **stake add**, **stake remove**, and **stake move** commands display **Extrinsic Fee (τ)** in the preview table alongside the swap fee, as described above:
@@ -538,12 +531,21 @@ Estimated transaction fee: τ0.001337128
 ```
 
 </TabItem>
+<TabItem value="polkadotjs" label="Polkadot.js App">
+ Query fee details directly from the chain using the [Polkadot.js browser app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/runtime) connected to Finney. Under **Developer → Runtime Calls**, use `TransactionPaymentApi`:
+
+- `query_info(uxt, len)` or `query_fee_details(uxt, len)` — full fee breakdown for a given extrinsic and its encoded length
+- `query_weight_to_fee(weight)` — weight component only
+- `query_length_to_fee(length)` — length component only
+
+</TabItem>
 </Tabs>
 
 ### Batch fee simulation
 
 Because a batch extrinsic is just a single composed call, pass the finished `batch_call` to `get_extrinsic_fee` before sending it as for any other extrinsic.
 
+Using the SDK:
 ```python
 import bittensor as bt
 
@@ -642,19 +644,4 @@ So in this example, **total cost** to the user is roughly:
 - **Swap fee:** ~0.05% of the moved amount, paid in alpha (from the stake on subnet 5).
 
 
-
-### Code references
-
-| Claim | Source |
-|-------|--------|
-| move_stake weight (164_300_000 + reads(15) + writes(7)) | [`dispatches.rs` L1557-L1559](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L1557-L1559) |
-| Weight-to-fee: 50_000/10^9 | [`transaction-fee/src/lib.rs` L43-L56](https://github.com/opentensor/subtensor/blob/main/pallets/transaction-fee/src/lib.rs#L43-L56) |
-| Length-to-fee: IdentityFee | [`runtime/src/lib.rs` L564](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L564) |
-| Fee withdrawal | [`transaction-fee/src/lib.rs` L315](https://github.com/opentensor/subtensor/blob/main/pallets/transaction-fee/src/lib.rs#L315) |
-| do_move_stake, transition_stake_internal | [`move_stake.rs` L30](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L30), [`move_stake.rs` L298](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L298) |
-| drop_fee_origin / drop_fee_destination | [`move_stake.rs` L354-L355](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L354-L355) |
-| unstake_from_subnet / stake_into_subnet | [`move_stake.rs` L358](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L358), [`move_stake.rs` L376](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/move_stake.rs#L376) |
-| transfer_stake_within_subnet (no swap) | [`stake_utils.rs` L883](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/stake_utils.rs#L883) |
-| Swap fee: FeeRate/u16::MAX, DefaultFeeRate=33 | [`swap/impls.rs` L367](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/impls.rs#L367), [`swap/mod.rs` L78](https://github.com/opentensor/subtensor/blob/main/pallets/swap/src/pallet/mod.rs#L78) |
-| get_stake_fee runtime API | [`runtime/src/lib.rs` L2504](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L2504) |
 
