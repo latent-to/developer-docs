@@ -111,7 +111,7 @@ acl allowed_domains dstdomain \
     .opensuse.org \
     .opentensor.ai \
     .github.com \
-    .githubusercontent.com    
+    .githubusercontent.com
 
 # allowed_tls_sni: matches HTTPS CONNECT tunnels by TLS SNI field (inspected before decryption)
 # Must mirror allowed_domains exactly — HTTPS traffic requires both ACLs to pass
@@ -121,7 +121,7 @@ acl allowed_tls_sni ssl::server_name \
     .opensuse.org \
     .opentensor.ai \
     .github.com \
-    .githubusercontent.com   
+    .githubusercontent.com
 
 # port 443 = standard HTTPS; port 9944 = Substrate WebSocket RPC used by btcli to reach chain nodes
 acl SSL_ports port 443 9944
