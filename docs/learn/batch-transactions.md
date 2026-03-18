@@ -18,7 +18,9 @@ The three variants differ only in how they handle errors. Choose based on whethe
 | `batch_all` | Reverts all calls atomically on any failure. |
 | `force_batch` | Continues past failures; failed calls are skipped. |
 
+:::info 
 Use `batch_all` when all inner calls must succeed or none should. Use `batch` if partial success is acceptable, or `force_batch` to continue past failures.
+:::
 
 **Source code:** `batch` [`pallets/utility/src/lib.rs:197–201`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L197-L201), `batch_all` [`pallets/utility/src/lib.rs:309–313`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L309-L313), `force_batch` [`pallets/utility/src/lib.rs:408–412`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L408-L412).
 

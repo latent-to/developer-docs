@@ -316,7 +316,7 @@ The **SimSwap Runtime API** simulates a swap and returns the liquidity fee and e
 
 :::note Full cost for a stake operation
 
-For add_stake, remove_stake, move_stake, or swap_stake:
+For `add_stake`, `remove_stake`, `move_stake`, or `swap_stake`:
 
 1. **Swap fee:** `sim_swap(origin_netuid, destination_netuid, amount)` → use `tao_fee` or `alpha_fee` as appropriate (and same-subnet moves have no swap fee).
 2. **Transaction fee:** Compose the extrinsic, then `get_payment_info(call, keypair)` or `get_extrinsic_fee(call, keypair)` → `partial_fee`.
