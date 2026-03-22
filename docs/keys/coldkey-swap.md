@@ -32,7 +32,7 @@ Because they are such sensitive operations a security perspective, coldkey swaps
 
 1. Initiation/Announcement
 
-In the first step, the coldkey owner initiates the swap by making an announcement on the blockchain that the swap will occur. This triggers a mandatory waiting period, during which the wallet is locked to prevent operations such as transfers or staking. During this phase, the coldkey can only reannounce a coldkey swap, execute a swap or dispute a swap.
+In the first step, the coldkey owner initiates the swap by making an announcement on the blockchain that the swap will occur. This triggers a mandatory waiting period, during which the wallet is locked to prevent operations such as transfers or staking. During this phase, the coldkey can only execute or dispute a swap.
 
 At this initiation step, the coldkey owner provides the destination wallet address, which remains private, as only a hash is published to the blockchain.
 
