@@ -155,19 +155,7 @@ response = subtensor.create_pure_proxy(
     index=0,  # the disambiguation index, leave as zero
 )
 
-if response.success:
-    pure_account = response.data.get("pure_account")
-    spawner_address = response.data.get("spawner")
-    height = response.data.get("height")
-    ext_index = response.data.get("ext_index")
-
-    print(f"✓ Pure proxy created!")
-    print(f"  Pure proxy address: {pure_account}")
-    print(f"  Spawner: {spawner_address}")
-    print(f"  Block: {height}")
-    print(f"  Extrinsic index: {ext_index}")
-else:
-    print(f"✗ Failed: {response.message}")
+print(response)
 ```
 
 :::tip
@@ -305,11 +293,7 @@ response = subtensor.proxy(
    call=transfer_call,
 )
 
-if response.success:
-   print(f"✓ Transfer executed through proxy!")
-   print(f"  Transferred {transfer_amount} from {proxy_account[:10]}...")
-else:
-   print(f"✗ Failed: {response.message}")
+print(response)
 ```
 
 :::info Building a call
@@ -462,10 +446,7 @@ response = subtensor.kill_pure_proxy(
     ext_index=ext_index,  # the extrinsic index of the `Proxy.PureCreated` transaction
 )
 
-if response.success:
-    print("✓ Pure proxy killed successfully!")
-else:
-    print(f"✗ Failed: {response.message}")
+print(response)
 ```
 
 :::info Parameter requirements

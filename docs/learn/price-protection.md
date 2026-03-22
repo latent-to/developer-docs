@@ -2,7 +2,7 @@
 title: "Understand Price Protection"
 ---
 
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 # Understand Price Protection
 
@@ -13,6 +13,7 @@ Other users' transactions can affect the token price, even while your transactio
 It is therefore important to carefully manage price protection when staking and unstaking real value liquidity, i.e. on mainnet ("finney"). For additional protection against MEV attacks, consider using [MEV Shield](../sdk/mev-protection.md) to encrypt your transactions.
 
 ## Price Protection Modes
+
 ### Strict Safe Mode (Default)
 
 In this mode, the transaction is **rejected entirely** if executing it would push the final market price beyond the tolerance threshold from the price when you submitted the transaction. Tolerance threshold can be specified but is 5% by default.
@@ -339,19 +340,6 @@ def demonstrate_protection_modes():
         )
 
         print(response)
-        
-        if response.success:
-            # Check if it should have failed
-            post_subnet_info = subtensor.subnet(netuid=netuid)
-            post_safe_price = post_subnet_info.price.tao
-            print(f"Final price: {post_safe_price:.6f} TAO/α")
-            print(f"Price ceiling was: {price_ceiling:.6f} TAO/α")
-
-            if post_safe_price > price_ceiling:
-                print(f"🚨 BUG: Transaction succeeded but price ({post_safe_price:.6f}) > ceiling ({price_ceiling:.6f})")
-            else:
-                print(f"Price stayed within tolerance: {post_safe_price:.6f} ≤ {price_ceiling:.6f}")
-                print(f"Actual price increase: {((post_safe_price - pre_safe_price) / pre_safe_price) * 100:.3f}%")
 
     except Exception as e:
         if "Price exceeded tolerance limit" in str(e) or "exceeded tolerance" in str(e) or "tolerance" in str(e).lower():
@@ -425,7 +413,7 @@ def demonstrate_protection_modes():
         actual_amount_executed = balance_before.tao - balance_after.tao
 
         print(response)
-        
+
         if response.success:
             print(f"Amount requested: {very_large_amount} TAO")
             print(f"Amount actually executed: {actual_amount_executed:.3f} TAO")
