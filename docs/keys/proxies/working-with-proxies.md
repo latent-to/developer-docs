@@ -199,7 +199,7 @@ btcli config proxies
 
 This displays all proxies you've saved to your local address book.
 
-:::info On-chain proxy query
+:::warning No BTCLI Coverage
 BTCLI does not currently provide a command to query on-chain proxy state directly. To view all proxies registered on-chain for an account, use the SDK's `get_proxies_for_real_account()` method or query via Polkadot.js Apps.
 :::
 
@@ -853,7 +853,7 @@ The `Proxy.Announcements` chain state is keyed by **delegate (proxy) account**. 
 <Tabs groupId="proxy">
 <TabItem value="btcli" label="BTCLI">
 
-:::info No BTCLI command
+:::warning No BTCLI command
 BTCLI does not currently have a command to list pending on-chain announcements. Use the SDK or Polkadot.js Apps.
 :::
 
@@ -981,7 +981,7 @@ If you find an unexpected announcement, reject it immediately from your **real a
 <Tabs groupId="proxy">
 <TabItem value="btcli" label="BTCLI">
 
-:::info No BTCLI command
+:::warning No BTCLI command
 BTCLI does not currently have a command to reject proxy announcements. Use the SDK.
 :::
 

