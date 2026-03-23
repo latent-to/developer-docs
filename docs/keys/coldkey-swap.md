@@ -30,19 +30,18 @@ The coldkey swap mechanism provides a secure way to switch to a new coldkey, if 
 
 Because they are such sensitive operations a security perspective, coldkey swaps unfold in several careful stages:
 
-1. Initiation/Announcement
+1. **Initiation/Announcement**
 
 In the first step, the coldkey owner initiates the swap by making an announcement on the blockchain that the swap will occur. This triggers a mandatory waiting period, during which the wallet is locked to prevent operations such as transfers or staking. During this phase, the coldkey can only execute or dispute a swap.
 
 At this initiation step, the coldkey owner provides the destination wallet address, which remains private, as only a hash is published to the blockchain.
 
-2. Pending Period
+2. **Pending Period**
 
 Next, a pending or lock-out period must elapse, during which the swap can be disputed but not finalized.
+Currently, the waiting/locked period is **36,000 blocks** (~ **5 days**).
 
-Currently the waiting/locked period is **36,000 blocks** (~ **5 days**).
-
-3. Disputation or Finalization
+3. **Disputation or Finalization**
    1. [Disputing a coldkey swap](#dispute-a-coldkey-swap) prevents the execution of the swap and completely blocks the coldkey from performing any operations. At this point, the triumvirate is required to resolve the dispute. The coldkey private key is required to dispute a swap.
    1. If the Pending Period expires without the swap being disputed, the coldkey owner must finalize the swap by again providing the destination coldkey. The blockchain verifies that this key matches the recorded hash before proceeding.
 
@@ -450,3 +449,11 @@ The [`dispute_coldkey_swap`](https://github.com/opentensor/subtensor/blob/devnet
 :::
 
 After a coldkey swap is disputed, the legitimate owner must contact the Triumvirate to prove ownership of the coldkey. The coldkey remains frozen until the Triumvirate resolves the dispute and [manually resets it](https://github.com/opentensor/subtensor/blob/822452f0bc205490c5ada2f2a04ad7b56ef7cc0a/pallets/subtensor/src/macros/dispatches.rs#L2470-L2490).
+
+## Clear a coldkey swap announcement
+
+You can clear a coldkey swap announcement by submitting the [`clear_coldkey_swap_announcement`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#:~:text=pub%20fn%20clear_coldkey_swap_announcement) extrinsic to remove a pending or announced swap from the chain. This resets the swap state for the coldkey and allows normal operations to resume.
+
+:::info
+A coldkey swap announcement can only be cleared after the [ColdkeySwapReannouncementDelay](https://github.com/opentensor/subtensor/blob/devnet-ready/runtime/src/lib.rs#:~:text=pub%20const%20InitialColdkeySwapReannouncementDelay) period has elapsed. By default, this is 7,200 blocks (~1 day) after the initial announcement delay expires. The announcement must also not be under dispute to be cleared.
+:::
