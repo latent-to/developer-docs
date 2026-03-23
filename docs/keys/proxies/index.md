@@ -6,13 +6,13 @@ title: "Proxies: Overview"
 
 This page introduces the theory and use of proxy wallets for enhanced security in Bittensor.
 
-See [Working with Proxies](./proxies/working-with-proxies)
+See [Working with Proxies](../../keys/proxies/working-with-proxies)
 
 ## Introduction: What is a proxy?
 
 Proxies allow one wallet to perform Bittensor operations on behalf of another. Used correctly, this allows you to add a strong layer of additional protection for your most important wallets and the valuable assets they control, such as large TAO or alpha holdings, or subnet ownership. Proxy relationships are useful both for one person managing their own coldkey security, and also for allowing one person to on behalf of another person or an organization.
 
-The private key and seed phrase for a highly valuable wallet's coldkey should be kept offline as much as possible, and only used via a dedicated, highly secure [coldkey workstation](../coldkey-hotkey-security.md). By allowing one coldkey to serve as a _proxy_ or stand-in for another, the "real account" or "safe wallet", we add an additional layer of security for the safe wallet by leaving it in cold storage and using the proxy instead.
+The private key and seed phrase for a highly valuable wallet's coldkey should be kept offline as much as possible, and only used via a dedicated, highly secure [coldkey workstation](../../keys/coldkey-hotkey-security.md). By allowing one coldkey to serve as a _proxy_ or stand-in for another, the "real account" or "safe wallet", we add an additional layer of security for the safe wallet by leaving it in cold storage and using the proxy instead.
 
 ### Common use cases
 
@@ -41,11 +41,11 @@ A zero-delay proxy executes immediately with no veto window. If the proxy key is
 **Recommendations:**
 
 - **Always set a non-zero delay** for proxies that control financial operations. The delay creates a veto window during which you can reject unauthorized announcements from your hardware wallet.
-- **If you have a delayed proxy, monitor announcements** on a schedule shorter than your delay period. See [Monitor and Reject Announcements](./working-with-proxies#monitor-and-reject-announcements).
+- **If you have a delayed proxy, monitor announcements** on a schedule shorter than your delay period. See [Monitor and Reject Announcements](../../keys/proxies/working-with-proxies#monitor-and-reject-announcements).
 - **If you are not monitoring a proxy, revoke it.** A dormant proxy — delayed or not — is a liability.
 - An `Any` proxy at zero delay is equivalent to giving away your coldkey.
 
-See [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security) for the full security model.
+See [Coldkey and Hotkey Workstation Security](../../keys/coldkey-hotkey-security) for the full security model.
 :::
 
 ### Terminology and parameters

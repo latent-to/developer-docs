@@ -103,15 +103,19 @@ For automated or routine operations, configure proxies with:
 
 A `SmallTransfer` proxy with a meaningful delay is a robustly safe configuration for automated operations: a compromised proxy key can only attempt small transactions, announced on-chain in advance, with a cancellation window.
 
-:::warning `Transfer` proxy type
-A proxy with `Transfer` permissions and zero delay provides little protection over direct coldkey access — it can drain your entire TAO balance in a single transaction. If transfer capability is needed, prefer `SmallTransfer` with a delay. Treat any `Transfer`-capable proxy coldkey with the same security rigor as a primary coldkey.
+:::warning Transfer proxy type
+A proxy with `Transfer` permissions and zero delay provides little protection over direct coldkey access. It can drain your entire TAO balance in a single transaction. If transfer capability is needed, prefer `SmallTransfer` with a delay. Treat any `Transfer`-capable proxy coldkey with the same security rigor as a primary coldkey.
 :::
+
 
 :::warning Zero-delay proxies
 A proxy with `delay: 0` executes immediately with no veto window. Always set a non-zero delay for proxies that control financial operations.
 :::
 
-Set up proxies using your hardware wallet so the primary coldkey is never involved in day-to-day operations. See:
+
+Set up proxies from your hardware wallet so the primary coldkey is never involved in day-to-day operations. See:
+
+
 
 - [Proxies: Overview](./proxies/index.md)
 - [Working with Proxies](./proxies/working-with-proxies.md)
@@ -173,7 +177,7 @@ If you face an urgent operation with no time for a delayed proxy — a subnet em
 
 If you suspect the primary coldkey has been compromised, you can swap it out using an on-chain extrinsic. This operation has a 5-day waiting period during which the coldkey is locked. The cost is 0.1 TAO.
 
-See [Rotate/Swap your Coldkey](./schedule-coldkey-swap).
+See [Rotate/Swap your Coldkey](./coldkey-swap).
 
 
 ## Hotkey workstation
