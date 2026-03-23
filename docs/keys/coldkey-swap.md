@@ -43,7 +43,7 @@ Currently, the waiting/locked period is **36,000 blocks** (~ **5 days**).
 
 3. **Disputation or Finalization**
    1. [Disputing a coldkey swap](#dispute-a-coldkey-swap) prevents the execution of the swap and completely blocks the coldkey from performing any operations. At this point, the triumvirate is required to resolve the dispute. The coldkey private key is required to dispute a swap.
-   2. If the Pending Period expires without the swap being disputed, the coldkey owner must finalize the swap by again providing a hash of the destination coldkey. The blockchain verifies that this key matches the recorded hash before proceeding.
+   2. If the Pending Period expires without the swap being disputed, the coldkey owner must finalize the swap by providing the destination coldkey. It will be checked against the on-chain coldkey hash provided during announcement before proceeding.
 
 ![Coldkey swap flow diagram](/img/docs/coldkey-swap.png)
 
