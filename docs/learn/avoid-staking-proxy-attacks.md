@@ -14,7 +14,7 @@ It might seem like leaking a staking proxy key would be not so bad; unlike a tra
 
 However, an attacker that gains your staking proxy can still drain your token balance by repeatedly setting you up for maximized 'sandwich attacks', where you make unfavorable trades, losing value each time as the attacker gains.
 
-How it works:
+## How the attack works
 
 1. The attacker stakes some of their own TAO into a subnet (first leg).
 2. Using the stolen `Staking` proxy, they stake a large amount of the victim's TAO into the same subnet and hotkey (second leg), moving the pool further.
@@ -25,15 +25,13 @@ The attack may be obscure to the victim, in that no transaction links their acco
 
 See [Slippage](./slippage.md).
 
-## Why delay and monitoring matter
+## Protect yourself: non-zero delay + monitoring
 
 A non-zero delay forces the delegate to announce a call and wait for a number of blocks before execution. During that window, the real account (for example from a hardware wallet) can reject the announcement. With zero delay, there is no such window: a leaked delegate key can act as fast as the chain accepts extrinsics.
 
 Whether delay helps you in practice depends on whether you actually check for announcements on a schedule shorter than the delay. If you never look, a long delay only helps after the fact in forensics, not prevention.
 
 See [Monitor and Reject Proxy Announcements](../keys/proxies/working-with-proxies#monitor-and-reject-proxy-announcements)
-
-## How to protect yourself
 
 - Prefer scoped proxy types and non-zero delay for any delegate that can touch meaningful stake. See [Proxies: Overview](../keys/proxies/index.md) and [Working with Proxies](../keys/proxies/working-with-proxies.md).
 - Treat a compromised `Staking` proxy (especially one with 0-delay) as a real operational risk, not "low impact": rotate or remove the proxy, and assume stake-moving activity until you verify otherwise.
