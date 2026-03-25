@@ -18,7 +18,7 @@ For example, the Subtensor pallet contains functions related to Bittensor networ
 
 The Subtensor runtime is composed of multiple pallets that collectively define the behavior of the Bittensor blockchain. Each pallet manages a specific domain of the protocol.
 
-Below are some of the key pallets included in the Subtensor runtime.
+Below are some of the key pallets included in the Subtensor runtime:
 
 ### `AdminUtils`
 
@@ -336,6 +336,7 @@ Core Bittensor logic: subnets, registration, staking, weights, serving, Alpha/TA
 | `swap_coldkey_announced`               | `new_coldkey`                                                                                                              |
 | `dispute_coldkey_swap`                 | —                                                                                                                          |
 | `reset_coldkey_swap`                   | `coldkey`                                                                                                                  |
+| `clear_coldkey_swap_announcement`      | -                                                                                                                          |
 | `set_identity`                         | `name`, `url`, `github_repo`, `image`, `discord`, `description`, `additional`                                              |
 | `set_subnet_identity`                  | `netuid`, `subnet_name`, `github_repo`, `subnet_contact`, `subnet_url`, `discord`, `description`, `logo_url`, `additional` |
 | `set_children`                         | `hotkey`, `netuid`, `children`                                                                                             |

@@ -339,6 +339,13 @@ const sidebars = {
     "resources/community-links",
     "resources/media-assets",
   ],
+  apiSidebar: [
+    "subtensor-api/extrinsics",
+    "subtensor-api/errors",
+    // "subtensor-api/storage",
+    // "subtensor-api/events",
+    // "subtensor-api/constants",
+  ],
 };
 
 module.exports = sidebars;
