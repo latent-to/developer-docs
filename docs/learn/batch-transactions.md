@@ -32,7 +32,7 @@ Use `batch_all` when all inner calls must succeed or none should. Use `batch` if
 
 The SDK's `add_stake_multiple` and `unstake_multiple` send individual extrinsics sequentially, not a single batch extrinsic.
 
-To submit a true batch (one extrinsic on-chain), use the low-level pallet builder + `proxy` path. The batch call is wrapped in a proxy extrinsic signed by your proxy wallet.
+To submit multiple stake actions as an atomic batch (one extrinsic on-chain), use the low-level pallet builder + `proxy` path. The batch call is wrapped in a proxy extrinsic signed by your proxy wallet.
 
 :::note Proxy type for batch calls
 The `Staking` proxy type allows specific staking extrinsics (`add_stake`, `remove_stake`, etc.) but does not allow `Utility::batch_all` as the outer call. For batch staking operations, use a `NonCritical` proxy, which prohibits only destructive operations (`dissolve_network`, `root_register`, `burned_register`, `Sudo`) and allows everything else, including batch wrappers.
