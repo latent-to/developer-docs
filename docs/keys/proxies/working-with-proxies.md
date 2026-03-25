@@ -148,7 +148,7 @@ btcli config proxies
 import bittensor as bt
 from bittensor.core.chain_data.proxy import ProxyType
 
-subtensor = bt.Subtensor()
+subtensor = bt.Subtensor("test")
 
 real_account = bt.Wallet(name="WALLET_NAME") # Your real account
 delegate_address = "DELEGATE_ADDRESS" # Your delegate wallet address
@@ -309,7 +309,7 @@ import bittensor as bt
 from bittensor.core.chain_data.proxy import ProxyType
 from bittensor.core.extrinsics.pallets import Balances
 
-subtensor = bt.Subtensor()
+subtensor = bt.Subtensor("test")
 
 real_account = "REAL_ACCOUNT_ADDRESS"  # address of the real account
 delegate_address = bt.Wallet(name="PROXY_WALLET")  # name of the proxy wallet
@@ -431,7 +431,7 @@ Unlike delayed execution, removing a proxy takes effect immediately, regardless 
 import bittensor as bt
 from bittensor.core.chain_data.proxy import ProxyType
 
-subtensor = bt.Subtensor()
+subtensor = bt.Subtensor("test")
 
 real_account = bt.Wallet(name="WALLET_NAME")
 delegate_address = "DELEGATE_ADDRESS"
@@ -535,7 +535,7 @@ Added proxy delegatee '5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe' from de
 import bittensor as bt
 from bittensor.core.chain_data.proxy import ProxyType
 
-subtensor = bt.Subtensor()
+subtensor = bt.Subtensor("test")
 
 real_account = bt.Wallet(name="WALLET_NAME") # Your real account
 delegate_address = "DELEGATE_ADDRESS" # Your delegate wallet address
@@ -572,7 +572,7 @@ When you run a BTCLI command with the `--announce-only` flag, BTCLI automaticall
 import bittensor as bt
 from bittensor.core.extrinsics.pallets import Balances
 
-subtensor = bt.Subtensor()
+subtensor = bt.Subtensor("test")
 
 recipient_address = "RECIPIENT_WALLET"
 
@@ -586,7 +586,7 @@ transfer_call = Balances(subtensor).transfer_keep_alive(
 # Get the call hash
 call_hash = "0x" + transfer_call.call_hash.hex()
 
-print(response)
+print(call_hash)
 ```
 
 </TabItem>
@@ -833,22 +833,26 @@ The call you execute **must have the exact same parameters** as the call you ann
 - Once a delayed proxy call is executed, its announcement is cleared. To execute another proxy with the same details, you must create a new announcement and wait for the waiting period to pass.
   :::
 
-## Monitor and Reject Announcements
+## Monitor and Reject Proxy Announcements
 
 ### Why monitoring is mandatory
 
-A non-zero delay creates a **veto window** — it does not provide automatic protection. If you are not checking for announcements regularly, an attacker who has stolen a proxy key can announce a call and wait for the delay to expire without any intervention. The delay protects you only if you are watching.
+A non-zero delay creates a window to cancel transactions that implement attacks, but if you are not checking for announcements regularly, an attacker who has stolen a proxy key can announce a call and wait for the delay to expire without any intervention. The delay protects you only if you are watching.
 
-**Two rules follow from this:**
+Two rules follow from this:
 
-1. **Revoke any proxy relationship you are not actively monitoring.** A dormant delayed proxy with no one watching it is not safer than a zero-delay proxy.
-2. **Check for pending announcements on a schedule shorter than your configured delay.** If your delay is 100 blocks (~20 minutes), you must check more frequently than that to have any realistic veto window.
+1. Revoke any proxy relationship you are not actively monitoring. A dormant delayed proxy with no one watching it is little safer than a zero-delay proxy.
+2. Check for pending announcements on a schedule shorter than your configured delay. If your delay is 100 blocks (~20 minutes), you must check more frequently than that to have any realistic veto window.
 
-See also: [Coldkey and Hotkey Workstation Security — Monitor proxy announcements](../coldkey-hotkey-security#monitor-proxy-announcements).
+See also: [Coldkey and Hotkey Workstation Security: Monitor proxy announcements](../coldkey-hotkey-security#monitor-proxy-announcements).
 
 ### Check pending announcements
 
-The `Proxy.Announcements` chain state is keyed by **delegate (proxy) account**. To find all pending announcements against your coldkey, query each of your configured proxy delegates and filter for entries where your coldkey is the real account. This is a read-only chain query — **no wallet signature required**.
+The `Proxy.Announcements` chain state is keyed by **delegate (proxy) account**. To find all pending announcements against your coldkey, query each of your configured proxy delegates and filter for entries where your coldkey is the real account.
+
+:::tip
+No coldkey is required for this operation, like all chain reads.
+:::
 
 <Tabs groupId="proxy">
 <TabItem value="btcli" label="BTCLI">
@@ -866,7 +870,7 @@ BTCLI does not currently have a command to list pending on-chain announcements. 
 import asyncio
 import bittensor as bt
 
-MY_COLDKEY_SS58 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"  # replace with your coldkey SS58
+MY_COLDKEY_SS58 = ""  # replace with your coldkey SS58
 BLOCK_TIME_SECONDS = 12
 
 async def check_announcements():
@@ -878,9 +882,9 @@ async def check_announcements():
         if not proxies:
             print("No proxy relationships configured.")
             return
+        print(proxies)
 
         current_block = await subtensor.get_current_block()
-
         for proxy_info in proxies:
             if proxy_info.delay == 0:
                 continue  # 0-delay proxies have no announcement mechanism

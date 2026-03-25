@@ -32,11 +32,13 @@ The power of proxies as a security tool comes from the two ways proxies can be l
 - The proxy can be constrained to specific operations. The permission scope is determined by the `ProxyType` call filter.
 - The proxy can be constrained by a **delay** with a public **announcement**, giving the safe wallet holder time to reject a call made by the proxy (for example, if a key has been compromised).
 
-:::danger Zero-delay proxies provide no protection against a leaked key
+:::danger Zero-delay proxies provide little protection
 
-A chain survey of all proxy relationships on Bittensor mainnet (block ~7,788,686) found **6,571 total proxy relationships across 5,836 accounts — and 6,569 of them have zero delay.** Only 2 delayed proxies exist on the entire chain.
+A zero-delay proxy allows an attacker to act repeatedly and opportunistically.
 
-A zero-delay proxy executes immediately with no veto window. If the proxy key is leaked, the attacker can act instantly. **The delay is the actual security mechanism**, not the proxy type filter alone. A `Staking` proxy with `delay: 0` restricts _what_ an attacker can do, but does not give you time to intervene — and even staking-only operations can be weaponized. An attacker with a stolen Staking proxy can use `swap_stake` to repeatedly move a victim's stake through low-liquidity subnet AMMs, extracting value through slippage on each round trip.
+Without a delay, even a staking proxy can use `swap_stake` to repeatedly move a victim's stake through low-liquidity subnet AMMs, extracting value through slippage on each round trip.
+
+See: [Avoid Staking Proxy Attacks](./proxies/avoid-staking-proxy-attacks)
 
 **Recommendations:**
 
