@@ -12,7 +12,7 @@ Start with: [Proxies: Overview](../keys/proxies/index.md).
 
 It might seem like leaking a staking proxy key would be not so bad; unlike a transfer proxy, an attacker can't use it to just steal all of your TAO in one step.
 
-However, an attacker that gains your staking proxy can still drain your token balance by repeatedly setting you up for maximized 'sandwich attacks', where you make unfavorable trades, losing value each time as the attacker gains.
+However, an attacker that gains your staking proxy can still drain your token balance by repeatedly setting you up for maximized multi-transaction sandwich attacks (bypassing MEV-shield because of unfolding over multiple transaction), where you make unfavorable trades, losing value each time as the attacker gains.
 
 ## How the attack works
 
