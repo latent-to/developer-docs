@@ -31,6 +31,20 @@ Proxy wallets are a powerful security feature, but to get the full benefits, it 
 
 Generally, the safe wallet should be given the maximum security possible, whereas the proxy wallet (if it is carefully limited in its permissions), can be handled in a more convenient, less secure way. For example, a proxy might be loaded into a less trusted compute runtime, whereas the safe wallet's coldkey private key/seed phrase should _never_ be loaded into any but the most absolutely secure device). However, depending on the proxy's configuration, compromise of a proxy wallet's coldkey can still be disastrous. For example, a proxy with `ProxyType`:`any` and `delay`:`0` can immediately perform any operation on behalf of the safe wallet, so leaking such a proxy key is just as bad as leaking the safe wallet key.
 
+
+:::warning mind your proxies!
+
+A non-zero delay creates a window to cancel transactions that implement attacks, but if you are not checking for announcements regularly, an attacker who has stolen a proxy key can announce a call and wait for the delay to expire without any intervention. The delay protects you only if you are watching.
+
+Two rules follow from this:
+
+1. Revoke any proxy relationship you are not actively monitoring. A dormant delayed proxy with no one watching it is little safer than a zero-delay proxy.
+2. Check for pending announcements on a schedule shorter than your configured delay. If your delay is 100 blocks (~20 minutes), you must check more frequently than that to have any realistic veto window.
+
+See also: [Coldkey and Hotkey Workstation Security: Monitor proxy announcements](../coldkey-hotkey-security#monitor-proxy-announcements).
+
+:::
+
 Before executing any operations with any coldkeys holding TAO on Bittensor main network, carefully think through the desired end result and the steps required to achieve it.
 
 See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
@@ -61,7 +75,7 @@ See: [Fees](../../learn/fees)
 
 Add a proxy record on the blockchain to designate a proxy wallet for your safe wallet.
 
-:::note consider security!
+:::note coldkey security!
 Note that this operation requires the safe wallet's coldkey private key, which is a maximally sensitive and valuable cryptographic secret.
 
 For any wallet with real-value TAO (i.e. TAO on Bittensor's main network, `finney`), coldkey private keys and seed phrases should be handled with utmost care, only on dedicated coldkey workstations.
@@ -233,8 +247,10 @@ This returns all the proxies associated to the account and their information—`
 
 A proxy wallet that is set up with a delay of 0 can execute transactions allowed by its proxy type simply by declaring which real account they are acting as proxy for.
 
-:::note consider security!
-This operation will be run in a coldkey workstation that is set up for the _proxy wallet_, not the _safe wallet/real account_. For main network (`finney`) wallets, the safe wallet's coldkey private key should _never_ be loaded onto the proxy workstation, otherwise we undermine the security advantage of the proxy relationship. The safe wallet's coldkey private key/seed phrase should be kept in cold storage as muchas possible, and should only be loaded into dedicated, highly secure, code environments provisioned specifically for that purpose.
+:::danger consider security!
+This operation will be run in a coldkey workstation that is set up for the _proxy wallet_, not the _safe wallet/real account_. For main network (`finney`) wallets, the safe wallet's coldkey private key should _never_ be loaded onto the proxy workstation, otherwise we undermine the security advantage of the proxy relationship. The safe wallet's coldkey private key/seed phrase should be kept in cold storage as much as possible, and should only be loaded into dedicated, highly secure, code environments provisioned specifically for that purpose.
+
+However, 0-delay proxies are high-risk keys, since their compromise allows a would-be-attacker to act immediately, repeatedly and opportunistically.
 :::
 
 <Tabs groupId="proxy">
@@ -383,6 +399,13 @@ After submitting the transaction, check the Polkadot.JS web app's **Explorer** p
 ## Remove a Proxy
 
 Removing a proxy revokes the delegate’s permission to act on behalf of the primary account, effectively ending the proxy relationship on-chain. To remove a proxy:
+:::note coldkey security!
+Note that this operation requires the safe wallet's coldkey private key, which is a maximally sensitive and valuable cryptographic secret.
+
+For any wallet with real-value TAO (i.e. TAO on Bittensor's main network, `finney`), coldkey private keys and seed phrases should be handled with utmost care, only on dedicated coldkey workstations.
+
+See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
+:::
 
 <Tabs groupId="proxy">
 
@@ -468,6 +491,13 @@ The `delegate_ss58`, `proxy_type`, and `delay` parameters must exactly match tho
 ### Remove all proxies
 
 Use this to remove all proxies associated with an account.
+:::note coldkey security!
+Note that this operation requires the safe wallet's coldkey private key, which is a maximally sensitive and valuable cryptographic secret.
+
+For any wallet with real-value TAO (i.e. TAO on Bittensor's main network, `finney`), coldkey private keys and seed phrases should be handled with utmost care, only on dedicated coldkey workstations.
+
+See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
+:::
 
 <Tabs groupId="proxy">
 
@@ -834,17 +864,6 @@ The call you execute **must have the exact same parameters** as the call you ann
   :::
 
 ## Monitor and Reject Proxy Announcements
-
-### Why monitoring is mandatory
-
-A non-zero delay creates a window to cancel transactions that implement attacks, but if you are not checking for announcements regularly, an attacker who has stolen a proxy key can announce a call and wait for the delay to expire without any intervention. The delay protects you only if you are watching.
-
-Two rules follow from this:
-
-1. Revoke any proxy relationship you are not actively monitoring. A dormant delayed proxy with no one watching it is little safer than a zero-delay proxy.
-2. Check for pending announcements on a schedule shorter than your configured delay. If your delay is 100 blocks (~20 minutes), you must check more frequently than that to have any realistic veto window.
-
-See also: [Coldkey and Hotkey Workstation Security: Monitor proxy announcements](../coldkey-hotkey-security#monitor-proxy-announcements).
 
 ### Check pending announcements
 

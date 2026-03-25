@@ -31,7 +31,7 @@ A non-zero delay forces the delegate to announce a call and wait for a number of
 
 Whether delay helps you in practice depends on whether you actually check for announcements on a schedule shorter than the delay. If you never look, a long delay only helps after the fact in forensics, not prevention.
 
-See [Monitor and Reject Proxy Announcements](./working-with-proxies#monitor-and-reject-proxy-announcements)
+See [Monitor and Reject Proxy Announcements](../keys/proxies/working-with-proxies#monitor-and-reject-proxy-announcements)
 
 ## How to protect yourself
 

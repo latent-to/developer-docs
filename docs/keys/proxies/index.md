@@ -38,7 +38,7 @@ A zero-delay proxy allows an attacker to act repeatedly and opportunistically.
 
 Without a delay, even a staking proxy can use `swap_stake` to repeatedly move a victim's stake through low-liquidity subnet AMMs, extracting value through slippage on each round trip.
 
-See: [Avoid Staking Proxy Attacks](./proxies/avoid-staking-proxy-attacks)
+See: [Avoid Staking Proxy Attacks](../learn/avoid-staking-proxy-attacks)
 
 **Recommendations:**
 
