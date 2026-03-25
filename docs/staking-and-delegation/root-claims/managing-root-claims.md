@@ -5,10 +5,13 @@ title: "Managing Root Claims"
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { SdkVersion } from "../../sdk/_sdk-version.mdx";
+import { ProxyColdkeyWarning } from "../../keys/_proxy-warning.mdx";
 
 # Managing Root Claims
 
 This page covers how to configure, monitor, and claim root dividends, i.e. dividends from staking to validators on the Root Subnet. See [Root Claim](./)
+
+<ProxyColdkeyWarning />
 
 ## Prerequisites
 
@@ -30,10 +33,10 @@ Your claim type determines what happens to your root dividends when they're clai
 <Tabs groupId="root-claim">
   <TabItem value="btcli" label="BTCLI">
 
-Use the `btcli stake set-claim` command to set your root claim type:
+Use the `btcli stake set-claim` command to set your root claim type. The `set_root_claim_type` extrinsic is included in the `Staking` proxy type's allowed operations, so a `Staking` proxy is sufficient:
 
 ```bash
-btcli stake set-claim
+btcli stake set-claim --wallet.name PROXY_WALLET --proxy REAL_COLDKEY_SS58
 ```
 
 The command will display your current setting and prompt for changes.
@@ -68,36 +71,33 @@ Decrypting...
 
 <SdkVersion />
 
-Use the `set_root_claim_type()` method to set your root claim type:
+Use the `set_root_claim_type()` pallet builder with a `Staking` proxy. `set_root_claim_type` is included in the `Staking` proxy type's allowed operations:
 
 ```python
-import asyncio
+import asyncio, os
+import bittensor as bt
 from bittensor_wallet import Wallet
 from bittensor.core.async_subtensor import AsyncSubtensor
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import SubtensorModule
 
 async def main():
-    # Initialize wallet and subtensor
-    wallet = Wallet(name="validator", hotkey="default")
-    async with AsyncSubtensor(network="local") as subtensor:
-        # Set claim type to 'Keep' to retain Alpha tokens
-        response = await subtensor.set_root_claim_type(
-            wallet=wallet,
-            new_root_claim_type="Keep",  # or "Swap" for TAO accumulation
-            wait_for_finalization=True
-        )
+    proxy_wallet = Wallet(name=os.environ['BT_PROXY_WALLET_NAME'])
+    real_account_ss58 = os.environ['BT_REAL_ACCOUNT_SS58']
 
+    async with AsyncSubtensor(network="finney") as subtensor:
+        set_claim_call = SubtensorModule(subtensor).set_root_claim_type(
+            new_root_claim_type="Keep",  # or "Swap" for TAO accumulation
+        )
+        response = await subtensor.proxy(
+            wallet=proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            force_proxy_type=ProxyType.Staking,
+            call=set_claim_call,
+        )
         print(response)
-        if response.extrinsic_receipt:
-            print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
 
 asyncio.run(main())
-```
-
-```
-Enter your password:
-Decrypting...
-✅ Successfully set root claim type to 'Keep'
-Transaction hash: 0xe3a387589b0ae6abfd7172088cc7853224f304e0bc4c3688b335a6f6e8f9a508
 ```
 
 You can also query the current claim type:
@@ -271,10 +271,10 @@ To manually trigger a claim:
 <Tabs groupId="root-claim">
   <TabItem value="btcli" label="BTCLI">
 
-Use the `btcli stake process-claim` command to manually claim your accumulated root network emissions:
+Use the `btcli stake process-claim` command to manually claim your accumulated root network emissions. Use a `RootClaim` proxy — it is scoped specifically to `claim_root` operations:
 
 ```console
-btcli st process-claim --verbose
+btcli st process-claim --verbose --wallet.name PROXY_WALLET --proxy REAL_COLDKEY_SS58
 ```
 
 <details>
@@ -310,39 +310,31 @@ Do you want to proceed? [y/n]:
   </TabItem>
   <TabItem value="sdk" label="Bittensor SDK">
 
-Use the `claim_root()` method to manually claim your accumulated root network emissions:
+Use the `claim_root()` pallet builder with a `RootClaim` proxy to manually claim your accumulated root network emissions. The `RootClaim` proxy type is scoped specifically to `claim_root` operations:
 
 ```python
-import asyncio
+import asyncio, os
 from bittensor_wallet import Wallet
 from bittensor.core.async_subtensor import AsyncSubtensor
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import SubtensorModule
 
 async def main():
-    # Initialize wallet and subtensor
-    wallet = Wallet(name="validator", hotkey="default")
-    async with AsyncSubtensor(network="local") as subtensor:
-        # Specify the subnets to claim from (up to 5 at once)
-        netuids = [1, 2, 3]
+    proxy_wallet = Wallet(name=os.environ['BT_PROXY_WALLET_NAME'])
+    real_account_ss58 = os.environ['BT_REAL_ACCOUNT_SS58']
 
-        # Claim root emissions
-        response = await subtensor.claim_root(
-            wallet=wallet,
-            netuids=netuids,
-            wait_for_finalization=True
+    async with AsyncSubtensor(network="finney") as subtensor:
+        # Specify subnets to claim from (up to 5 at once)
+        claim_call = SubtensorModule(subtensor).claim_root(subnets=[1, 2, 3])
+        response = await subtensor.proxy(
+            wallet=proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            force_proxy_type=ProxyType.RootClaim,
+            call=claim_call,
         )
-
         print(response)
-        if response.extrinsic_receipt:
-            print(f"Transaction hash: {response.extrinsic_receipt.extrinsic_hash}")
 
 asyncio.run(main())
-```
-
-```console
-Enter your password:
-Decrypting...
-✅ Successfully claimed root emissions from subnets [1, 2, 3]
-Transaction hash: 0x0e153ac52f63dde1be1854f00daf09f643d1491c6e6b4103cdd5b04591921e3f
 ```
 
 You can also check claimable amounts before claiming:

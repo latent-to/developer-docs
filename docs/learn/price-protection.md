@@ -259,6 +259,9 @@ def demonstrate_protection_modes():
     print(f"TAO in reserve: {subnet_info.tao_in}")
 
     # Initialize wallet
+    # NOTE: This simulation uses the pre-provisioned Alice dev wallet on a local chain.
+    # On mainnet, use a proxy coldkey (Staking type) instead of loading your primary coldkey.
+    # See: Coldkey and Hotkey Workstation Security, Staking with a Proxy.
     wallet = bt.Wallet(name="Alice")
 
     try:

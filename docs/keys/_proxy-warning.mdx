@@ -1,0 +1,9 @@
+import Admonition from '@theme/Admonition';
+
+export const ProxyColdkeyWarning = () => (
+  <Admonition type="warning" title="Use a proxy coldkey for these operations">
+    <p>
+      The operations on this page require a coldkey. Your primary coldkey should remain in cold storage (hardware wallet) and never be loaded onto a machine running <code>btcli</code> or the Bittensor SDK. Use a scoped, delayed proxy coldkey to perform these operations via <code>btcli</code> or the SDK. See <a href="/keys/coldkey-hotkey-security">Coldkey and Hotkey Workstation Security</a> and <a href="/keys/proxies">Proxies</a>.
+    </p>
+  </Admonition>
+);

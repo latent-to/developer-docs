@@ -125,6 +125,7 @@ const sidebars = {
         },
         "learn/price-protection",
         "learn/slippage",
+        "learn/avoid-staking-proxy-attacks",
         "staking-and-delegation/staking-polkadot-js",
         "staking-and-delegation/using-ledger-hw-wallet",
       ],

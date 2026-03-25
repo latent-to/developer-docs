@@ -15,6 +15,8 @@ This page covers each step in the use of proxy wallets as a security feature for
 - Executing transactions with 0-day proxy wallets.
 - Announcing and then executing transactions with a non-zero delay period.
 - Removing proxy relationships
+- Monitoring pending announcements on your proxy accounts
+- Rejecting unauthorized announcements
 
 See:
 
@@ -830,6 +832,202 @@ The call you execute **must have the exact same parameters** as the call you ann
 - The call details on the executed proxy must exactly match the original announcement. Any change to the call or call hash will result in a `proxy.Unannounced` error.
 - Once a delayed proxy call is executed, its announcement is cleared. To execute another proxy with the same details, you must create a new announcement and wait for the waiting period to pass.
   :::
+
+## Monitor and Reject Announcements
+
+### Why monitoring is mandatory
+
+A non-zero delay creates a **veto window** — it does not provide automatic protection. If you are not checking for announcements regularly, an attacker who has stolen a proxy key can announce a call and wait for the delay to expire without any intervention. The delay protects you only if you are watching.
+
+**Two rules follow from this:**
+
+1. **Revoke any proxy relationship you are not actively monitoring.** A dormant delayed proxy with no one watching it is not safer than a zero-delay proxy.
+2. **Check for pending announcements on a schedule shorter than your configured delay.** If your delay is 100 blocks (~20 minutes), you must check more frequently than that to have any realistic veto window.
+
+See also: [Coldkey and Hotkey Workstation Security — Monitor proxy announcements](../coldkey-hotkey-security#monitor-proxy-announcements).
+
+### Check pending announcements
+
+The `Proxy.Announcements` chain state is keyed by **delegate (proxy) account**. To find all pending announcements against your coldkey, query each of your configured proxy delegates and filter for entries where your coldkey is the real account. This is a read-only chain query — **no wallet signature required**.
+
+<Tabs groupId="proxy">
+<TabItem value="btcli" label="BTCLI">
+
+:::info No BTCLI command
+BTCLI does not currently have a command to list pending on-chain announcements. Use the SDK or Polkadot.js Apps.
+:::
+
+</TabItem>
+<TabItem value="sdk" label="Bittensor SDK">
+
+<SdkVersion />
+
+```python
+import asyncio
+import bittensor as bt
+
+MY_COLDKEY_SS58 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"  # replace with your coldkey SS58
+BLOCK_TIME_SECONDS = 12
+
+async def check_announcements():
+    async with bt.AsyncSubtensor(network="finney") as subtensor:
+        # Get your configured proxy relationships to know delegate addresses and delays
+        proxies, _ = await subtensor.get_proxies_for_real_account(
+            real_account_ss58=MY_COLDKEY_SS58
+        )
+        if not proxies:
+            print("No proxy relationships configured.")
+            return
+
+        current_block = await subtensor.get_current_block()
+
+        for proxy_info in proxies:
+            if proxy_info.delay == 0:
+                continue  # 0-delay proxies have no announcement mechanism
+
+            announcements = await subtensor.get_proxy_announcement(proxy_info.delegate)
+            for ann in announcements:
+                if ann.real != MY_COLDKEY_SS58:
+                    continue
+                blocks_elapsed = current_block - ann.height
+                blocks_remaining = proxy_info.delay - blocks_elapsed
+                time_remaining_s = blocks_remaining * BLOCK_TIME_SECONDS
+                print(
+                    f"PENDING ANNOUNCEMENT\n"
+                    f"  delegate:     {proxy_info.delegate}\n"
+                    f"  proxy_type:   {proxy_info.proxy_type}\n"
+                    f"  call_hash:    {ann.call_hash}\n"
+                    f"  announced:    block {ann.height} ({blocks_elapsed} blocks ago)\n"
+                    f"  veto window:  {max(0, blocks_remaining)} blocks remaining "
+                    f"({max(0, time_remaining_s):.0f} s)\n"
+                )
+
+asyncio.run(check_announcements())
+```
+
+</TabItem>
+<TabItem value="polkadot-app" label="Polkadot app">
+
+1. Go to **Developer** → **Chain state** → **Storage**.
+2. Select the `proxy` pallet and `announcements` storage function.
+3. Enter the **delegate (proxy) account** SS58 address.
+4. Click **+** to run the query.
+
+This returns all pending announcements for that delegate, each with the real account, call hash, and block height.
+
+</TabItem>
+</Tabs>
+
+### Automate announcement monitoring
+
+Run the following script on a schedule to alert on any pending announcements before the veto window closes. Your check interval must be **shorter than your configured delay period** (delay in blocks × 12 seconds).
+
+```python
+import asyncio, sys
+import bittensor as bt
+
+MY_COLDKEY_SS58 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"  # replace with your coldkey SS58
+BLOCK_TIME_SECONDS = 12
+
+async def main():
+    async with bt.AsyncSubtensor(network="finney") as subtensor:
+        proxies, _ = await subtensor.get_proxies_for_real_account(
+            real_account_ss58=MY_COLDKEY_SS58
+        )
+        current_block = await subtensor.get_current_block()
+
+        alerts = []
+        for proxy_info in proxies:
+            if proxy_info.delay == 0:
+                continue
+            announcements = await subtensor.get_proxy_announcement(proxy_info.delegate)
+            for ann in announcements:
+                if ann.real != MY_COLDKEY_SS58:
+                    continue
+                blocks_remaining = proxy_info.delay - (current_block - ann.height)
+                alerts.append({
+                    "delegate": proxy_info.delegate,
+                    "proxy_type": proxy_info.proxy_type,
+                    "call_hash": ann.call_hash,
+                    "seconds_remaining": blocks_remaining * BLOCK_TIME_SECONDS,
+                })
+
+        if alerts:
+            for alert in alerts:
+                print(
+                    f"ALERT: proxy announcement pending\n"
+                    f"  delegate:   {alert['delegate']}\n"
+                    f"  proxy_type: {alert['proxy_type']}\n"
+                    f"  call_hash:  {alert['call_hash']}\n"
+                    f"  time left:  {alert['seconds_remaining']:.0f} s\n"
+                    f"\n"
+                    f"  If unexpected, reject immediately from your hardware wallet.\n"
+                )
+            sys.exit(1)  # non-zero exit triggers alerts in cron/systemd/CI
+
+asyncio.run(main())
+```
+
+Pair the non-zero exit with whatever alerting infrastructure you use: cron + email, a systemd timer + PagerDuty, a GitHub Actions scheduled workflow, etc.
+
+:::warning The veto window can expire silently
+Once `seconds_remaining` reaches zero, the delay has elapsed and the attacker can execute `proxy_announced` at any block. Reject the announcement anyway — `reject_proxy_announcement` cancels it on-chain regardless of whether the delay has passed. But do not rely on catching it after expiry: **the goal is to detect and reject while the window is open**.
+:::
+
+### Reject an announcement
+
+If you find an unexpected announcement, reject it immediately from your **real account** (primary coldkey / hardware wallet). Rejection cancels the announcement on-chain and prevents execution.
+
+<Tabs groupId="proxy">
+<TabItem value="btcli" label="BTCLI">
+
+:::info No BTCLI command
+BTCLI does not currently have a command to reject proxy announcements. Use the SDK.
+:::
+
+</TabItem>
+<TabItem value="sdk" label="Bittensor SDK">
+
+<SdkVersion />
+
+The wallet passed to `reject_proxy_announcement` must be the **real account** — your primary coldkey. For any wallet holding real value, this means signing from your hardware wallet.
+
+```python
+import asyncio, os
+import bittensor as bt
+
+async def main():
+    async with bt.AsyncSubtensor(network="finney") as subtensor:
+        # Must be the real account — sign from your hardware wallet
+        real_account_wallet = bt.Wallet(name=os.environ["BT_REAL_WALLET_NAME"])
+
+        response = await subtensor.reject_proxy_announcement(
+            wallet=real_account_wallet,
+            delegate_ss58="DELEGATE_SS58",   # proxy account that made the announcement
+            call_hash="0x...",               # call_hash from the announcement
+        )
+        print(response)
+
+asyncio.run(main())
+```
+
+</TabItem>
+<TabItem value="polkadot-app" label="Polkadot app">
+
+1. Go to **Developer** → **Extrinsics**.
+2. Under "using the selected account", choose the **real account** (your primary coldkey).
+3. Select the `proxy` pallet and call `rejectAnnouncement(delegate, callHash)`.
+4. Fill the parameters:
+   - `delegate`: the delegate (proxy) account that made the announcement.
+   - `callHash`: the call hash from the announcement.
+5. Click **Submit Transaction** and sign from the real account.
+
+</TabItem>
+</Tabs>
+
+:::warning Rejection requires the primary coldkey
+`reject_proxy_announcement` must be signed by the real account. For primary coldkeys holding real value this means your hardware wallet. Keep your hardware wallet accessible so you can reject promptly if an unexpected announcement appears.
+:::
 
 ## Troubleshooting
 

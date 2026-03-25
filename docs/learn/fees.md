@@ -506,7 +506,6 @@ import bittensor as bt
 
 sub = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="my_wallet", hotkey="my_hotkey")
-wallet.unlock_coldkey()
 
 netuid = 1
 hotkey_ss58 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
@@ -522,7 +521,7 @@ call = sub.compose_call(
         "amount_staked": amount.rao,
     },
 )
-# Keypair is the account that pays the fee (coldkey)
+# Fee estimation only needs the public key — no coldkey unlock required
 fee = sub.get_extrinsic_fee(call=call, keypair=wallet.coldkeypub)
 print(f"Estimated transaction fee: {fee}")
 ```
@@ -551,7 +550,6 @@ import bittensor as bt
 
 sub = bt.Subtensor(network="finney")
 wallet = bt.Wallet(name="my_wallet", hotkey="my_hotkey")
-wallet.unlock_coldkey()
 
 hotkey_1 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
 hotkey_2 = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
@@ -575,7 +573,7 @@ batch_call = sub.compose_call(
     call_params={"calls": [call_1, call_2]},
 )
 
-# Estimate the transaction fee before sending
+# Fee estimation only needs the public key — no coldkey unlock required
 fee = sub.get_extrinsic_fee(call=batch_call, keypair=wallet.coldkeypub)
 print(f"Estimated transaction fee: {fee}")
 ```

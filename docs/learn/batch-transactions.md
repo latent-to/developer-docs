@@ -2,6 +2,8 @@
 title: "Batch Transactions"
 ---
 
+import { ProxyColdkeyWarning } from "../keys/_proxy-warning.mdx";
+
 # Batch Transactions
 
 The Bittensor runtime's utility pallet exposes three extrinsics — `batch`, `batch_all`, and `force_batch` — that let you submit multiple calls as a single on-chain transaction. This is useful when you want to stake to multiple hotkeys, perform multiple operations atomically, or reduce the number of round-trips to the chain.
@@ -26,59 +28,50 @@ Use `batch_all` when all inner calls must succeed or none should. Use `batch` if
 
 ## Using batch calls with the SDK
 
+<ProxyColdkeyWarning />
 
 The SDK's `add_stake_multiple` and `unstake_multiple` send individual extrinsics sequentially, not a single batch extrinsic.
 
-To submit a true batch (one extrinsic on-chain), use the low-level `compose_call` + `sign_and_send_extrinsic` path directly.
+To submit a true batch (one extrinsic on-chain), use the low-level pallet builder + `proxy` path. The batch call is wrapped in a proxy extrinsic signed by your proxy wallet.
 
+:::note Proxy type for batch calls
+The `Staking` proxy type allows specific staking extrinsics (`add_stake`, `remove_stake`, etc.) but does not allow `Utility::batch_all` as the outer call. For batch staking operations, use a `NonCritical` proxy, which prohibits only destructive operations (`dissolve_network`, `root_register`, `burned_register`, `Sudo`) and allows everything else, including batch wrappers.
+:::
 
 ```python
+import os
 import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import SubtensorModule
 
 sub = bt.Subtensor(network="finney")
-wallet = bt.Wallet(name="my_wallet", hotkey="my_hotkey")
-wallet.unlock_coldkey()
+proxy_wallet = bt.Wallet(name=os.environ['BT_PROXY_WALLET_NAME'])
+real_account_ss58 = os.environ['BT_REAL_ACCOUNT_SS58']
 
 hotkey_1 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
 hotkey_2 = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
 netuid = 1
 amount = bt.Balance.from_tao(10)
 
-# Compose each inner call individually
-call_1 = sub.compose_call(
-    call_module="SubtensorModule",
-    call_function="add_stake",
-    call_params={
-        "hotkey": hotkey_1,
-        "netuid": netuid,
-        "amount_staked": amount.rao,
-    },
-)
-call_2 = sub.compose_call(
-    call_module="SubtensorModule",
-    call_function="add_stake",
-    call_params={
-        "hotkey": hotkey_2,
-        "netuid": netuid,
-        "amount_staked": amount.rao,
-    },
-)
+pallet = SubtensorModule(sub)
+call_1 = pallet.add_stake(netuid=netuid, hotkey=hotkey_1, amount_staked=amount.rao)
+call_2 = pallet.add_stake(netuid=netuid, hotkey=hotkey_2, amount_staked=amount.rao)
 
-# Wrap in a Utility.batch_all — reverts all calls atomically on any failure
+# Wrap in Utility.batch_all — reverts all calls atomically on any failure
 batch_call = sub.compose_call(
     call_module="Utility",
     call_function="batch_all",
     call_params={"calls": [call_1, call_2]},
 )
 
-# Submit the batch as a single extrinsic
-success, error_message = sub.sign_and_send_extrinsic(
+# Submit via proxy — NonCritical proxy type is required for batch wrappers
+response = sub.proxy(
+    wallet=proxy_wallet,
+    real_account_ss58=real_account_ss58,
+    force_proxy_type=ProxyType.NonCritical,
     call=batch_call,
-    wallet=wallet,
-    wait_for_inclusion=True,
-    wait_for_finalization=False,
 )
-print(f"Success: {success}" if success else f"Failed: {error_message}")
+print(response)
 ```
 
 :::note `add_stake_multiple` is not a batch extrinsic

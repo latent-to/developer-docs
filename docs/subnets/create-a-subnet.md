@@ -65,6 +65,15 @@ Subnet creations are limited to **one subnet creation per 28800 blocks** (approx
 - To create a subnet on test chain, your wallet must have sufficient test net TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network.
 - To create a subnet on main network (finney) requires a substantial investment of TAO, depending on current registration cost for new subnets.
 
+:::warning Coldkey required — use a hardware wallet
+Creating a subnet requires your primary coldkey. There is no scoped proxy type for subnet creation. Perform this operation from a hardware wallet:
+
+- **Polkadot Vault** (recommended): An air-gapped phone that can sign any Subtensor extrinsic via QR code. See [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security).
+- **Ledger via Crucible**: Supports a limited set of operations — verify subnet creation is supported before relying on this path.
+
+If you must use `btcli` directly, load your primary coldkey only on a dedicated, offline-after-use machine. Do not load it onto any machine that is regularly connected to the internet.
+:::
+
 ## Creating a subnet on testchain
 
 Create your new subnet on the testchain using the test TAO you received from the previous step. This will create a new subnet on the testchain and give you its owner permissions.

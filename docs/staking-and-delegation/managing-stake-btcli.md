@@ -2,6 +2,8 @@
 title: "Managing Stake with BTCLI"
 ---
 
+import { ProxyColdkeyWarning } from "../keys/_proxy-warning.mdx";
+
 # Managing stake with `btcli`
 
 This page demonstrates usage of `btcli`, the Bittensor CLI, for managing stake.
@@ -14,6 +16,8 @@ Likewise, TAO holders can **unstake** to withdraw their delegated tokens from va
 Staking and unstaking operations incur transaction fees for the underlying blockchain transactions they trigger. See [Transaction Fees in Bittensor](../learn/fees.md) for details.
 :::
 
+<ProxyColdkeyWarning />
+
 See also:
 
 - [Staking/delegation overview](./delegation)
@@ -23,12 +27,6 @@ See also:
 
 :::tip
 Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.0005 TAO.
-:::
-
-:::warning Keep your coldkey secure
-Staking is a regular operation for most TAO holders. Every time you stake or unstake directly, you must decrypt and use your coldkey—exposing it to potential compromise. 
-
-**For better security, use a [Staking Proxy](../keys/proxies/staking-with-proxy)**. With a `Staking` proxy configured with a delay, you can manage your stake without ever exposing your coldkey. If the proxy is compromised, the delay gives you time to reject unauthorized unstaking attempts.
 :::
 
 ## Pre-requisite: Create a wallet
@@ -135,10 +133,10 @@ Using the specified network test from config
 
 ## Stake to a validator
 
-Use `btcli stake add` to stake to a validator on a subnet. You'll be prompted to choose a subnet and validator, as well as specify an amount of TAO to stake into the validator's hotkey as alpha.
+Use `btcli stake add` to stake to a validator on a subnet. Specify your proxy wallet with `--wallet.name` and the real account SS58 with `--proxy`. You'll be prompted to choose a subnet and validator, as well as specify an amount of TAO to stake.
 
 ```shell
- btcli stake add
+btcli stake add --wallet.name PROXY_WALLET --proxy REAL_COLDKEY_SS58
 ```
 
 ```console
@@ -208,16 +206,16 @@ If you confirm, the staking operation will execute.
 
 ### Staking to multiple validators
 
-You can add stake to multiple validators at once by running the following command:
+You can add stake to multiple validators at once by including a comma-separated list of subnet netuids:
 
 ```shell
-btcli stake add -n 4,14,70
+btcli stake add -n 4,14,70 --wallet.name PROXY_WALLET --proxy REAL_COLDKEY_SS58
 ```
 
-The command accepts a comma-separated list of the subnets you wish to stake into. If you want to stake the same amount of TAO into all subnets, you can include the `--amount` flag as shown:
+If you want to stake the same amount of TAO into all subnets, include the `--amount` flag:
 
 ```shell
-btcli stake add -n 4,14,70 --amount 100
+btcli stake add -n 4,14,70 --amount 100 --wallet.name PROXY_WALLET --proxy REAL_COLDKEY_SS58
 ```
 
 ## View your current stakes
@@ -257,10 +255,10 @@ Unstaking is the process of withdrawing your staked TAO from validators, convert
 
 ### Remove stake from a validator
 
-Use `btcli stake remove` to unstake from a specific validator. You'll be prompted to select the subnet and validator, then specify the amount to unstake.
+Use `btcli stake remove` to unstake from a specific validator. Specify your proxy wallet with `--wallet.name` and the real account SS58 with `--proxy`. You'll be prompted to select the subnet and validator, then specify the amount to unstake.
 
 ```shell
-btcli stake remove
+btcli stake remove --wallet.name PROXY_WALLET --proxy REAL_COLDKEY_SS58
 ```
 
 You'll see a confirmation screen showing:
@@ -340,10 +338,10 @@ Do you want to proceed with unstaking everything? [y/n]: y
 
 ### Unstake all from a validator
 
-To unstake all your stake from a specific validator, or from all validators use the `--all` flag:
+To unstake all your stake from a specific validator, or from all validators, use the `--all` flag:
 
 ```shell
-btcli stake remove --all
+btcli stake remove --all --wallet.name PROXY_WALLET --proxy REAL_COLDKEY_SS58
 ```
 
 Either specify the hotkey, to remove all stake on all subnets, or `all` for all stake on all subnets for all validator hotkeys.
@@ -376,7 +374,7 @@ Do you want to proceed with unstaking everything? [y/n]:
 
 ## Transferring stake
 
-The `btcli stake transfer` command is used to transfer ownership of stake from one wallet (coldkey) to another.
+The `btcli stake transfer` command transfers ownership of stake from one wallet (coldkey) to another. This operation uses the `transfer_stake` extrinsic, which requires a `Transfer` (or `SmallTransfer` for amounts under 0.5 TAO) proxy — not a `Staking` proxy. Pass your proxy wallet with `--wallet.name` and the real account SS58 with `--proxy`.
 
 :::tip
 Don't confuse this with `btcli stake move`, which does not transfer ownership to another wallet/coldkey, but moves stake between validators or subnets, effectively unstaking and restaking it in a single operation.
@@ -389,7 +387,7 @@ This operation effectively comprises a series of operations, which occur as an a
 - the recipient then automatically stakes the newly received TAO into the subnet, receiving the alpha tokens in return
 
 ```
-btcli stake transfer
+btcli stake transfer --wallet.name PROXY_WALLET --proxy REAL_COLDKEY_SS58
 
 
 This command transfers stake from one coldkey to another while keeping the same hotkey.
@@ -463,8 +461,12 @@ Wallet:
 
 ## Moving stake
 
-The `btcli stake move` command is used to moves stake between validators or subnets, effectively unstaking and restaking it in a single operation. It does not change ownership of the stake, which remains with the same wallet/coldkey.
+The `btcli stake move` command moves stake between validators or subnets in a single operation. It does not change ownership; stake remains with the same coldkey. This uses the `move_stake` extrinsic, which is permitted by the `Staking` proxy type.
 
 :::tip
-Don't confuse this with `btcli stake transfer`, which is used to transfer ownership of stake from one wallet (coldkey) to another.
+Don't confuse this with `btcli stake transfer`, which transfers ownership of stake from one coldkey to another (requires a `Transfer` proxy).
 :::
+
+```shell
+btcli stake move --wallet.name PROXY_WALLET --proxy REAL_COLDKEY_SS58
+```
