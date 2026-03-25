@@ -930,7 +930,7 @@ Run the following script on a schedule to alert on any pending announcements bef
 import asyncio, sys
 import bittensor as bt
 
-MY_COLDKEY_SS58 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"  # replace with your coldkey SS58
+MY_COLDKEY_SS58 = ""  # replace with your coldkey SS58
 BLOCK_TIME_SECONDS = 12
 
 async def main():
