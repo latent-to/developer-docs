@@ -941,61 +941,6 @@ This returns all pending announcements for that delegate, each with the real acc
 </TabItem>
 </Tabs>
 
-### Automate announcement monitoring
-
-Run the following script on a schedule to alert on any pending announcements before the veto window closes. Your check interval must be **shorter than your configured delay period** (delay in blocks × 12 seconds).
-
-```python
-import asyncio, sys
-import bittensor as bt
-
-MY_COLDKEY_SS58 = ""  # replace with your coldkey SS58
-BLOCK_TIME_SECONDS = 12
-
-async def main():
-    async with bt.AsyncSubtensor(network="finney") as subtensor:
-        proxies, _ = await subtensor.get_proxies_for_real_account(
-            real_account_ss58=MY_COLDKEY_SS58
-        )
-        current_block = await subtensor.get_current_block()
-
-        alerts = []
-        for proxy_info in proxies:
-            if proxy_info.delay == 0:
-                continue
-            announcements = await subtensor.get_proxy_announcement(proxy_info.delegate)
-            for ann in announcements:
-                if ann.real != MY_COLDKEY_SS58:
-                    continue
-                blocks_remaining = proxy_info.delay - (current_block - ann.height)
-                alerts.append({
-                    "delegate": proxy_info.delegate,
-                    "proxy_type": proxy_info.proxy_type,
-                    "call_hash": ann.call_hash,
-                    "seconds_remaining": blocks_remaining * BLOCK_TIME_SECONDS,
-                })
-
-        if alerts:
-            for alert in alerts:
-                print(
-                    f"ALERT: proxy announcement pending\n"
-                    f"  delegate:   {alert['delegate']}\n"
-                    f"  proxy_type: {alert['proxy_type']}\n"
-                    f"  call_hash:  {alert['call_hash']}\n"
-                    f"  time left:  {alert['seconds_remaining']:.0f} s\n"
-                    f"\n"
-                    f"  If unexpected, reject immediately from your hardware wallet.\n"
-                )
-            sys.exit(1)  # non-zero exit triggers alerts in cron/systemd/CI
-
-asyncio.run(main())
-```
-
-Pair the non-zero exit with whatever alerting infrastructure you use: cron + email, a systemd timer + PagerDuty, a GitHub Actions scheduled workflow, etc.
-
-:::warning The veto window can expire silently
-Once `seconds_remaining` reaches zero, the delay has elapsed and the attacker can execute `proxy_announced` at any block. Reject the announcement anyway — `reject_proxy_announcement` cancels it on-chain regardless of whether the delay has passed. But do not rely on catching it after expiry: **the goal is to detect and reject while the window is open**.
-:::
 
 ### Reject an announcement
 
