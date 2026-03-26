@@ -68,7 +68,7 @@ Below are examples of how to run the container using each mode:
   ```
 
 :::info
-By default, exiting the Docker container removes the image container with the local chain instance; thus, deleting the state of the local chain instance running on it. You can modify this behavior by when running the container wihtout the `--rm` flag.
+Exiting the Docker container removes the image container with the local chain instance; thus, deleting the state of the local chain instance running on it. You can modify this behavior by running the command to start the container wihtout the `--rm` flag.
 
 For more information, see official [Docker documentation](https://docs.docker.com/reference/cli/docker/container/run/).
 :::
