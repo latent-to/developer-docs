@@ -387,7 +387,7 @@ If a malicious actor announces a coldkey swap on a compromised key, the legitima
 To dispute a coldkey swap:
 <Tabs groupId="coldkey-swap">
 <TabItem value="btcli" label="BTCLI">
-Run the following command to dispute a coldkey swap using BTCLI. Set `WALLET_NAME` to your source wallet name (or SS58 address).
+Run the following command to dispute a coldkey swap using BTCLI. Set `WALLET_NAME` to your source wallet name.
 
 ```bash
 btcli wallets swap-coldkey dispute --wallet-name WALLET_NAME
@@ -454,6 +454,73 @@ After a coldkey swap is disputed, the legitimate owner must contact the Triumvir
 
 You can clear a coldkey swap announcement by submitting the [`clear_coldkey_swap_announcement`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#:~:text=pub%20fn%20clear_coldkey_swap_announcement) extrinsic to remove a pending or announced swap from the chain. This resets the swap state for the coldkey and allows normal operations to resume.
 
+To clear a coldkey swap:
+
+<Tabs groupId="coldkey-swap">
+<TabItem value="btcli" label="BTCLI">
+
+Run the following command to clear a coldkey swap using BTCLI. Set `WALLET_NAME` to your source wallet name.
+
+```bash
+btcli wallets swap-coldkey clear --wallet-name WALLET_NAME
+```
+
+<details>
+  <summary><strong>Show sample output</strong></summary>
+
+```sh
+Wallet selected: Wallet (Name: 'alice', Hotkey: 'default', Path: '/Users/chidera/.bittensor/wallets/')
+
+Using the specified network local from config
+[13:25:54] Warning: Verify your local subtensor is running on port 9944.                                                                                                                    subtensor_interface.py:89
+
+                           Clear Coldkey Swap Announcement
+
+            Item ┃ Value
+━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         Coldkey │ 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+  Announced Hash │ 0x2fb78d4ee01239aabcefecdd61121858e5b38b940e0697ab23f5d62f1805a7d8
+ Execution Block │ 42111
+          Status │ Ready
+─────────────────┼────────────────────────────────────────────────────────────────────
+                 │
+Proceed with clearing this swap announcement? [y/n] (n): y
+✅ Coldkey swap announcement cleared.
+
+✅ Your extrinsic has been included as 52240-2
+
+Your coldkey is no longer locked by a pending swap announcement.
+```
+
+ </details>
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
+Set `WALLET_NAME` to your source wallet name on disk.
+
+```py
+import bittensor as bt
+
+subtensor = bt.Subtensor(network="local")
+
+# Signer must be the coldkey with an active and undisputed swap announcement
+wallet = bt.Wallet(name="WALLET_NAME")
+
+response = subtensor.clear_coldkey_swap_announcement(
+wallet=wallet,
+wait_for_inclusion=True,
+wait_for_finalization=True,
+)
+
+print(response)
+```
+
+</TabItem>
+
+</Tabs>
+
 :::info
+
 A coldkey swap announcement can only be cleared after the [ColdkeySwapReannouncementDelay](https://github.com/opentensor/subtensor/blob/devnet-ready/runtime/src/lib.rs#:~:text=pub%20const%20InitialColdkeySwapReannouncementDelay) period has elapsed. By default, this is 7,200 blocks (~1 day) after the initial announcement delay expires. The announcement must also not be under dispute to be cleared.
+
 :::

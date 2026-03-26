@@ -45,6 +45,11 @@ docker pull ghcr.io/opentensor/subtensor-localnet:devnet-ready
 
 This command downloads the `subtensor-localnet` Docker image, making it available on your device.
 
+:::tip Keep Image Up to Date
+In order to stay aligned with current mainnet behavior and protocol updates, run the command regularly to pull the latest `subtensor-localnet` Docker image. Using an outdated image may result in inconsistencies with recent Subtensor changes.
+
+:::
+
 ### 2. Run the container
 
 Subtensor can either be run in _fast blocks_ mode, which has advantages for development and testing purposes, or _non-fast blocks_.
