@@ -131,8 +131,8 @@ See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey
 To follow along with the below examples:
 
 - You must own the source coldkey to be swapped.
-- A destination (new) coldkey public key.
-- To safely experiment with this and other blockchain operations, you can deploy your own
+- A destination (new) coldkey public key. **This must be a COMPLETELY NEW OR UNUSED COLDKEY, with NO transactions including transfers or stakes or child hotkeys**, or the swap will fail.
+- To safely experiment with this and other blockchain operations, you can deploy a your own
   instance of Subtensor (Bittensor's blockchain component).
 
 :::warning
