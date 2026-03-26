@@ -30,21 +30,20 @@ The coldkey swap mechanism provides a secure way to switch to a new coldkey, if 
 
 Because they are such sensitive operations a security perspective, coldkey swaps unfold in several careful stages:
 
-1. Initiation/Announcement
+1. **Initiation/Announcement**
 
 In the first step, the coldkey owner initiates the swap by making an announcement on the blockchain that the swap will occur. This triggers a mandatory waiting period, during which the wallet is locked to prevent operations such as transfers or staking. During this phase, the coldkey can only execute or dispute a swap.
 
 At this initiation step, the coldkey owner provides the destination wallet address, which remains private, as only a hash is published to the blockchain.
 
-2. Pending Period
+2. **Pending Period**
 
 Next, a pending or lock-out period must elapse, during which the swap can be disputed but not finalized.
+Currently, the waiting/locked period is **36,000 blocks** (~ **5 days**).
 
-Currently the waiting/locked period is **36,000 blocks** (~ **5 days**).
-
-3. Disputation or Finalization
+3. **Disputation or Finalization**
    1. [Disputing a coldkey swap](#dispute-a-coldkey-swap) prevents the execution of the swap and completely blocks the coldkey from performing any operations. At this point, the triumvirate is required to resolve the dispute. The coldkey private key is required to dispute a swap.
-   1. If the Pending Period expires without the swap being disputed, the coldkey owner must finalize the swap by again providing the destination coldkey. The blockchain verifies that this key matches the recorded hash before proceeding.
+   2. If the Pending Period expires without the swap being disputed, the coldkey owner must finalize the swap by providing the destination coldkey. It will be checked against the on-chain coldkey hash provided during announcement before proceeding.
 
 ![Coldkey swap flow diagram](/img/docs/coldkey-swap.png)
 
@@ -113,7 +112,7 @@ end note
 :::info notes
 
 - If the destination coldkey already has an existing identity, it will be preserved rather than being overwritten, and the assets of the source wallet will be transferred/merged into this existing wallet.
-- The cost for a coldkey swap transaction is **0.1 TAO**. This must be available in the source coldkey when the swap is announced. Upon successful execution all assets are migrated to the destination coldkey. This includes all TAO, all stake in subnets, control of any hotkeys, and any subnet ownership.
+- The cost for a coldkey swap transaction is **0.1 TAO**. This must be available in the source coldkey when the swap is initially announced. Upon successful execution all assets are migrated to the destination coldkey. This includes all TAO, all stake in subnets, control of any hotkeys, and any subnet ownership.
 
 :::
 
@@ -132,7 +131,7 @@ See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey
 To follow along with the below examples:
 
 - You must own the source coldkey to be swapped.
-- A destination (new) coldkey public key. **This must be a COMPLETELY NEW OR UNUSED COLDKEY, with NO transactions including transfers or stakes or child hotkeys**, or the swap will fail.
+- A destination (new) coldkey public key. **This must be an UNUSED COLDKEY, with NO associations to a hotkey on-chain—including stakes, registration or child hotkeys**, or the swap will fail.
 - To safely experiment with this and other blockchain operations, you can deploy a your own
   instance of Subtensor (Bittensor's blockchain component).
 
@@ -388,7 +387,7 @@ If a malicious actor announces a coldkey swap on a compromised key, the legitima
 To dispute a coldkey swap:
 <Tabs groupId="coldkey-swap">
 <TabItem value="btcli" label="BTCLI">
-Run the following command to dispute a coldkey swap using BTCLI. Set `WALLET_NAME` to your source wallet name (or SS58 address).
+Run the following command to dispute a coldkey swap using BTCLI. Set `WALLET_NAME` to your source wallet name.
 
 ```bash
 btcli wallets swap-coldkey dispute --wallet-name WALLET_NAME
@@ -450,3 +449,78 @@ The [`dispute_coldkey_swap`](https://github.com/opentensor/subtensor/blob/devnet
 :::
 
 After a coldkey swap is disputed, the legitimate owner must contact the Triumvirate to prove ownership of the coldkey. The coldkey remains frozen until the Triumvirate resolves the dispute and [manually resets it](https://github.com/opentensor/subtensor/blob/822452f0bc205490c5ada2f2a04ad7b56ef7cc0a/pallets/subtensor/src/macros/dispatches.rs#L2470-L2490).
+
+## Clear a coldkey swap announcement
+
+You can clear a coldkey swap announcement by submitting the [`clear_coldkey_swap_announcement`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#:~:text=pub%20fn%20clear_coldkey_swap_announcement) extrinsic to remove a pending or announced swap from the chain. This resets the swap state for the coldkey and allows normal operations to resume.
+
+To clear a coldkey swap:
+
+<Tabs groupId="coldkey-swap">
+<TabItem value="btcli" label="BTCLI">
+
+Run the following command to clear a coldkey swap using BTCLI. Set `WALLET_NAME` to your source wallet name.
+
+```bash
+btcli wallets swap-coldkey clear --wallet-name WALLET_NAME
+```
+
+<details>
+  <summary><strong>Show sample output</strong></summary>
+
+```sh
+Wallet selected: Wallet (Name: 'alice', Hotkey: 'default', Path: '/Users/chidera/.bittensor/wallets/')
+
+Using the specified network local from config
+[13:25:54] Warning: Verify your local subtensor is running on port 9944.                                                                                                                    subtensor_interface.py:89
+
+                           Clear Coldkey Swap Announcement
+
+            Item ┃ Value
+━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         Coldkey │ 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+  Announced Hash │ 0x2fb78d4ee01239aabcefecdd61121858e5b38b940e0697ab23f5d62f1805a7d8
+ Execution Block │ 42111
+          Status │ Ready
+─────────────────┼────────────────────────────────────────────────────────────────────
+                 │
+Proceed with clearing this swap announcement? [y/n] (n): y
+✅ Coldkey swap announcement cleared.
+
+✅ Your extrinsic has been included as 52240-2
+
+Your coldkey is no longer locked by a pending swap announcement.
+```
+
+ </details>
+</TabItem>
+
+<TabItem value="sdk" label="Bittensor SDK">
+Set `WALLET_NAME` to your source wallet name on disk.
+
+```py
+import bittensor as bt
+
+subtensor = bt.Subtensor(network="local")
+
+# Signer must be the coldkey with an active and undisputed swap announcement
+wallet = bt.Wallet(name="WALLET_NAME")
+
+response = subtensor.clear_coldkey_swap_announcement(
+wallet=wallet,
+wait_for_inclusion=True,
+wait_for_finalization=True,
+)
+
+print(response)
+```
+
+</TabItem>
+
+</Tabs>
+
+:::info
+
+A coldkey swap announcement can only be cleared after the [ColdkeySwapReannouncementDelay](https://github.com/opentensor/subtensor/blob/devnet-ready/runtime/src/lib.rs#:~:text=pub%20const%20InitialColdkeySwapReannouncementDelay) period has elapsed. By default, this is 7,200 blocks (~1 day) after the initial announcement delay expires. The announcement must also not be under dispute to be cleared.
+
+:::
