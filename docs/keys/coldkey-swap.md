@@ -1,11 +1,11 @@
 ---
-title: "Rotate/Swap your Coldkey"
+title: "Rotate or Swap your Coldkey"
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Rotate/Swap your Coldkey
+# Rotate or Swap your Coldkey
 
 This page describes how to _rotate_ or _swap_ the coldkey in your wallet. This operation migrates your entire on-chain identity, including TAO balances and subnet ownership, to a new cryptographic key pair.
 
