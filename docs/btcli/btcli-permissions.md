@@ -172,6 +172,7 @@ See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
 #### `btcli wallet swap-coldkey announce`
 #### `btcli wallet swap-coldkey execute`
 #### `btcli wallet swap-coldkey dispute`
+#### `btcli wallet swap-coldkey clear`
 #### `btcli wallet swap-check`
 #### `btcli wallet regen-coldkey`
 #### `btcli wallet regen-coldkeypub`
@@ -234,6 +235,7 @@ See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
 
 - **`set`** sets the hyperparameters for a subnet (requires the coldkey of the subnet creator).
 - **`trim`** sets the maximum number of UIDs on a subnet (requires the coldkey of the subnet creator).
+- **`stake-burn`** allows subnet owners to buyback their Alpha (requires the coldkey of the subnet creator).
 - **`set-take`** sets the validator take for a validator (requires the validator's coldkey).
 - **`senate-vote`** votes on a proposal before the senate (requres a coldkey with senate permissions).
 
@@ -242,6 +244,7 @@ See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
 #### `btcli sudo set`
 #### `btcli sudo get`
 #### `btcli sudo trim`
+#### `btcli sudo stake-burn`
 #### `btcli sudo senate`
 #### `btcli sudo proposals`
 #### `btcli sudo senate-vote`
