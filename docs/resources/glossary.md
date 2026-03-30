@@ -658,6 +658,16 @@ Subnet Zero a.k.a. the root subnet is a special subnet. No miners can register o
 
 ## S
 
+### Seed phrase
+
+The **_seed phrase_** (a.k.a. 'menemonic' or 'recovery phrase') is a series of (at least 12) words that is generated together with your wallet's cryptographic key pair, and which can be used to recover the coldkey private key. This seed phrase is therefore a human-usable way to save access to the cryptographic wallet offline, and to import the cryptographic wallet into a hardware or software wallet.
+
+The most important operational goal when handling Bittensor wallets is to avoid losing or leaking your seed phrase.
+
+See:
+- [Handle your Seed Phrase/Mnemonic Securely](../keys/handle-seed-phrase)
+- [Wallets, Coldkeys and Hotkeys in Bittensor](../keys/wallets)
+
 ### SS58 Encoded
 
 A compact representation of public keys corresponding to the wallet's coldkey and hotkey, used as wallet addresses for secure TAO transfers.
