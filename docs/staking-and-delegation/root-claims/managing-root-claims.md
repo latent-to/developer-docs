@@ -85,7 +85,7 @@ async def main():
     proxy_wallet = Wallet(name=os.environ['BT_PROXY_WALLET_NAME'])
     real_account_ss58 = os.environ['BT_REAL_ACCOUNT_SS58']
 
-    async with AsyncSubtensor(network="finney") as subtensor:
+    async with AsyncSubtensor(network="test") as subtensor:
         set_claim_call = SubtensorModule(subtensor).set_root_claim_type(
             new_root_claim_type="Keep",  # or "Swap" for TAO accumulation
         )
@@ -109,7 +109,7 @@ from bittensor.core.async_subtensor import AsyncSubtensor
 
 async def main():
     wallet = Wallet(name="validator", hotkey="default")
-    async with AsyncSubtensor(network="finney") as subtensor:
+    async with AsyncSubtensor(network="test") as subtensor:
         claim_type = await subtensor.get_root_claim_type(
             coldkey_ss58=wallet.coldkeypub.ss58_address
         )
@@ -323,7 +323,7 @@ async def main():
     proxy_wallet = Wallet(name=os.environ['BT_PROXY_WALLET_NAME'])
     real_account_ss58 = os.environ['BT_REAL_ACCOUNT_SS58']
 
-    async with AsyncSubtensor(network="finney") as subtensor:
+    async with AsyncSubtensor(network="test") as subtensor:
         # Specify subnets to claim from (up to 5 at once)
         claim_call = SubtensorModule(subtensor).claim_root(subnets=[1, 2, 3])
         response = await subtensor.proxy(
@@ -346,7 +346,7 @@ from bittensor.core.async_subtensor import AsyncSubtensor
 
 async def main():
     wallet = Wallet(name="validator", hotkey="default")
-    async with AsyncSubtensor(network="finney") as subtensor:
+    async with AsyncSubtensor(network="test") as subtensor:
         # Get stake info which includes claimable amounts
         stake_info = await subtensor.get_stake_info_for_coldkey(
             coldkey_ss58=wallet.coldkeypub.ss58_address

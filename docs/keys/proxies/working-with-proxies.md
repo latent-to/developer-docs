@@ -893,7 +893,7 @@ MY_COLDKEY_SS58 = ""  # replace with your coldkey SS58
 BLOCK_TIME_SECONDS = 12
 
 async def check_announcements():
-    async with bt.AsyncSubtensor(network="finney") as subtensor:
+    async with bt.AsyncSubtensor(network="test") as subtensor:
         # Get your configured proxy relationships to know delegate addresses and delays
         proxies, _ = await subtensor.get_proxies_for_real_account(
             real_account_ss58=MY_COLDKEY_SS58
@@ -967,7 +967,7 @@ from bittensor.core.chain_data.proxy import ProxyType
 from bittensor.core.extrinsics.pallets import Proxy
 
 async def main():
-    async with bt.AsyncSubtensor(network="finney") as subtensor:
+    async with bt.AsyncSubtensor(network="test") as subtensor:
         nontransfer_proxy_wallet = bt.Wallet(name="YOUR_NONTRANSFER_PROXY")  # replace with your NonTransfer proxy wallet name
         real_account_ss58 = "YOUR_REAL_ACCOUNT_SS58"  # replace with your real account SS58
         delegate_ss58 = "DELEGATE_SS58"  # proxy account that made the announcement

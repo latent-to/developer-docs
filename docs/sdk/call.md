@@ -74,7 +74,7 @@ The SDK provides `subtensor.compose_call()` with enhanced functionality:
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 
 # Creating a call with automatic validation
 call = subtensor.compose_call(
@@ -96,7 +96,7 @@ call = subtensor.compose_call(
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 
 # Example 1: Creating a call to add stake
 stake_call = subtensor.compose_call(
@@ -169,7 +169,7 @@ from bittensor.core.extrinsics.pallets import (
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 
 # Create GenericCall for Proxy.add_proxy function
 from bittensor.core.extrinsics.pallets import Proxy
@@ -188,7 +188,7 @@ call = Proxy(subtensor).add_proxy(
 ```python
 import bittensor as bt
 
-async_subtensor = bt.AsyncSubtensor(network="finney")
+async_subtensor = bt.AsyncSubtensor(network="test")
 
 # Create GenericCall (need await for async)
 from bittensor.core.extrinsics.pallets import Proxy
@@ -207,7 +207,7 @@ call = await Proxy(async_subtensor).add_proxy(
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 
 # Even if the method is not explicitly defined in SubtensorModule class,
 # CallBuilder will automatically create GenericCall for this function
@@ -235,7 +235,7 @@ Proxy functionality frequently requires passing `call` as an argument. Here are 
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="alice")
 
 # Create a call to add stake
@@ -261,7 +261,7 @@ response = subtensor.proxy(
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="alice")
 
 # Create a call to remove stake
@@ -287,7 +287,7 @@ response = subtensor.proxy(
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="alice")
 
 # Create a call to transfer stake between subnets
@@ -315,7 +315,7 @@ response = subtensor.proxy(
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="alice")
 
 # Create a call to move stake
@@ -343,7 +343,7 @@ response = subtensor.proxy(
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="alice")
 
 # Create a call to set mechanism weights
@@ -371,7 +371,7 @@ response = subtensor.proxy(
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="alice")
 
 # Create a call to register network
@@ -395,7 +395,7 @@ response = subtensor.proxy(
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="alice")
 
 # Create a call to set subnet identity
@@ -427,7 +427,7 @@ response = subtensor.proxy(
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="alice")
 
 # Create a call that was previously announced
@@ -454,7 +454,7 @@ response = subtensor.proxy_announced(
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="alice")
 
 # Create a call to execute upon successful crowdloan completion
@@ -480,7 +480,7 @@ response = subtensor.create_crowdloan(
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="alice")
 
 # Create a call to encrypt
@@ -507,7 +507,7 @@ response = subtensor.mev_submit_encrypted(
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="alice")
 
 # Create a call
@@ -546,7 +546,7 @@ import bittensor as bt
 from bittensor.core.extrinsics.staking import add_stake_extrinsic
 from bittensor.core.extrinsics.proxy import proxy_extrinsic
 
-subtensor = bt.Subtensor(network="finney")
+subtensor = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="alice")
 
 # Example 1: Direct extrinsic call to add stake

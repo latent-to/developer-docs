@@ -256,7 +256,7 @@ from bittensor.core.async_subtensor import AsyncSubtensor
 from bittensor.utils.balance import Balance
 
 async def main():
-	async with AsyncSubtensor(network="finney") as subtensor:
+	async with AsyncSubtensor(network="test") as subtensor:
 		deposit = await subtensor.get_existential_deposit()
 	print(f"Existential deposit: {deposit.tao} TAO")
 asyncio.run(main())

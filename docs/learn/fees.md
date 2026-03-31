@@ -267,7 +267,7 @@ These values are runtime constants (compiled into the WASM blob) and can only ch
 ```python
 import bittensor as bt
 
-sub = bt.Subtensor(network="finney")
+sub = bt.Subtensor(network="test")
 s = sub.substrate
 
 for name in [
@@ -389,7 +389,7 @@ This example estimates swap fee and output for add_stake (TAO → alpha for SN 1
 ```python
 import bittensor as bt
 
-sub = bt.Subtensor(network="finney")
+sub = bt.Subtensor(network="test")
 netuid = 14
 amount_stake = bt.Balance.from_tao(0.1)
 
@@ -409,7 +409,7 @@ This example estimates swap fee and output for remove_stake (alpha for SN 14 →
 ```python
 import bittensor as bt
 
-sub = bt.Subtensor(network="finney")
+sub = bt.Subtensor(network="test")
 netuid = 14
 amount_stake = bt.Balance.from_tao(0.1)
 
@@ -431,7 +431,7 @@ This example estimates swap for a cross-subnet move (subnet 14 → subnet 5):
 ```python
 import bittensor as bt
 
-sub = bt.Subtensor(network="finney")
+sub = bt.Subtensor(network="test")
 
 amount_alpha = bt.Balance.from_tao(1).set_unit(5)
 
@@ -548,7 +548,7 @@ Using the SDK:
 ```python
 import bittensor as bt
 
-sub = bt.Subtensor(network="finney")
+sub = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="my_wallet", hotkey="my_hotkey")
 
 hotkey_1 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"

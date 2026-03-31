@@ -39,7 +39,7 @@ Or the following configuration for synchronous calls to Bittensor mainnet ('finn
 
     ```python
     import bittensor as bt
-    sub = bt.Subtensor(network="finney")
+    sub = bt.Subtensor(network="test")
     ```
 
 

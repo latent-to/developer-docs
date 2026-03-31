@@ -10,9 +10,16 @@ See [Working with Proxies](../../keys/proxies/working-with-proxies)
 
 ## Introduction: What is a proxy?
 
-Proxies allow one wallet to perform sign blockchains transactions on behalf of another. Used correctly, this allows you to add a strong layer of additional protection for your most important wallets and the valuable assets they control, such as large TAO or alpha holdings, or subnet ownership. Proxy relationships are useful both for one person managing their own coldkey security, and also for allowing one person to on behalf of another person or an organization.
+Proxies allow one wallet to perform sign blockchains transactions on behalf of another. Used correctly, this allows you to add a strong layer of additional protection for your most important wallets and the valuable assets they control, such as large TAO or alpha holdings, or subnet ownership.
 
-The private key and seed phrase for a highly valuable wallet's coldkey should be kept offline as much as possible, and only used via a dedicated, highly secure [coldkey workstation](../../keys/coldkey-hotkey-security.md). By allowing one coldkey to serve as a _proxy_ or stand-in for another, the "real account" or "safe wallet", we add an additional layer of security for the safe wallet by leaving it in cold storage and using the proxy instead.
+The private key and seed phrase for a highly valuable wallet's coldkey should be kept offline in cold storage, and, and only used to sign transactions via a secure connection to a hardware wallet. 
+
+See [Workstation Security](../../keys/coldkey-hotkey-security.md).
+
+By allowing one coldkey to serve as a _proxy_ or stand-in for another, the "real account" or "safe wallet", we add an additional layer of security for the safe wallet by leaving it in cold storage and using the proxy instead.
+
+Proxy relationships are useful both for one person managing their own coldkey security, and also for allowing one person to on behalf of another person or an organization.
+
 
 ### Common use cases
 
@@ -24,6 +31,8 @@ Proxies are useful in many situations where the permissions of one coldkey shoul
 
 - **Operational delegation**: run subnet operations tasks like setting hyperparameters from a designated operations wallet, allowing the owner wallet to remain in maximum-security deep storage.
 - **Least-privilege permissions**: allow an employee or other designated operator to perform a constrained set of calls on a project-owned wallet.
+
+- **Nearly *all* operations:** you can even manage proxies with a proxy, so other than making the first proxy, you should ideally not perform any operations with your primary coldkey.
 
 ### Scope and Delays
 

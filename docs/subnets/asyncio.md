@@ -184,8 +184,8 @@ COLDKEY_PUBS = [
 ]
 
 async def main():  # define a coroutine with `async def`
-    sync_sub = Subtensor(network="finney")
-    async with AsyncSubtensor(network="finney") as async_subtensor:
+    sync_sub = Subtensor(network="test")
+    async with AsyncSubtensor(network="test") as async_subtensor:
         sync_balance: Balance = sync_sub.get_balance(COLDKEY_PUB)
         print(f"Sync balance: {sync_balance}")
 
@@ -213,7 +213,7 @@ async def main():  # define a coroutine with `async def`
         # We can even chain these together quite dramatically, such as this example in btcli wallets:
         """
         async def main():
-            async with AsyncSubtensor(network="finney") as subtensor:
+            async with AsyncSubtensor(network="test") as subtensor:
                 # Get current block hash for consistency
                 block_hash = await subtensor.get_block_hash()
 

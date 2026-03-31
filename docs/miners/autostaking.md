@@ -172,7 +172,7 @@ async def main():
     netuid = 2  # subnet to configure
     hotkey_ss58 = "5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM"  # validator hotkey to auto-stake to
 
-    async with bt.AsyncSubtensor(network="finney") as subtensor:
+    async with bt.AsyncSubtensor(network="test") as subtensor:
         set_auto_call = SubtensorModule(subtensor).set_coldkey_auto_stake_hotkey(
             netuid=netuid,
             hotkey=hotkey_ss58,

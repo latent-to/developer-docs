@@ -44,7 +44,7 @@ import bittensor as bt
 from bittensor.core.chain_data.proxy import ProxyType
 from bittensor.core.extrinsics.pallets import SubtensorModule
 
-sub = bt.Subtensor(network="finney")
+sub = bt.Subtensor(network="test")
 proxy_wallet = bt.Wallet(name=os.environ['BT_PROXY_WALLET_NAME'])
 real_account_ss58 = os.environ['BT_REAL_ACCOUNT_SS58']
 
