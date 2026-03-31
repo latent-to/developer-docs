@@ -359,7 +359,7 @@ The delay is configured when the proxy relationship is created — see [Add a Pr
 
 ### Step 1: Announce
 
-This script builds all the staking calls, announces each one on-chain, and prints the call hashes. **Record these hashes** — you will need them to verify that no unauthorized announcements were injected before you execute.
+This script builds all the staking calls, announces each one on-chain, and prints the call hashes, as well as saving them to file. You will need them to verify that no unauthorized announcements were injected before you execute.
 
 Set up the required environment variables before running:
 
