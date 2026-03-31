@@ -1,6 +1,5 @@
 ---
 title: "Working with Proxies"
-# toc_max_heading_level: 2
 ---
 
 import Tabs from '@theme/Tabs';
@@ -196,6 +195,43 @@ The proxy type can be provided either by importing and using the `ProxyType` enu
 
 </TabItem>
 </Tabs>
+
+### Manage proxies through a NonTransfer proxy
+
+After initial setup, you should never need your primary coldkey to manage proxies. A `NonTransfer` proxy can create and remove other proxy relationships on behalf of the real account ([`is_superset` in `runtime/src/lib.rs:815-828`](https://github.com/opentensor/subtensor/blob/devnet-ready/runtime/src/lib.rs#L815-L828) defines which proxy types a `NonTransfer` proxy can manage: everything except `Transfer` and `SmallTransfer`).
+
+This means your primary coldkey stays in cold storage. Use it once to create the initial `NonTransfer` proxy from your hardware wallet, then use that proxy for all subsequent proxy management.
+
+```python
+import asyncio
+import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import Proxy
+
+nontransfer_proxy_wallet = bt.Wallet(name="YOUR_NONTRANSFER_PROXY")  # replace with your NonTransfer proxy wallet name
+real_account_ss58 = "YOUR_REAL_ACCOUNT_SS58"  # replace with your real account SS58
+new_delegate_ss58 = "NEW_DELEGATE_SS58"  # replace with the SS58 of the new proxy to add
+
+async def main():
+    async with bt.AsyncSubtensor(network="test") as subtensor:
+        # Create a Staking proxy via the NonTransfer proxy
+        add_proxy_call = await Proxy(subtensor).add_proxy(
+            delegate=new_delegate_ss58,
+            proxy_type="Staking",
+            delay=0,
+        )
+        response = await subtensor.proxy(
+            wallet=nontransfer_proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            force_proxy_type=ProxyType.NonTransfer,
+            call=add_proxy_call,
+        )
+        print(response)
+
+asyncio.run(main())
+```
+
+To remove a proxy through the same path, use `Proxy(subtensor).remove_proxy()` with the same parameters.
 
 ### Check an Account’s Proxies
 
