@@ -27,6 +27,56 @@ See also:
 Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.0005 TAO.
 :::
 
+## Best practices for staking security
+
+When staking real-value liquidity (especially on mainnet), three practices significantly reduce your exposure to loss:
+
+### Use a proxy coldkey
+
+Never expose your primary coldkey on any machine connected to the internet. Instead, create a **proxy coldkey** with `Staking` permissions and use it to sign transactions on behalf of your primary coldkey. Your primary coldkey's private key never needs to be present on the machine. All examples on this page use this pattern.
+
+See: [Working with Proxies](../keys/proxies/working-with-proxies)
+
+### Use time-delay proxies
+
+A **zero-delay** proxy executes transactions immediately — convenient, but if the proxy key is compromised, an attacker can drain your stake instantly.
+
+A **time-delay** proxy requires a two-step flow: first **announce** the transaction (publishing its hash on-chain), then **execute** it after a configurable delay (measured in blocks, where 1 block ≈ 12 seconds). During the delay window, the real account owner can review pending announcements and [**reject**](../keys/proxies/working-with-proxies#reject-an-announcement) any unauthorized ones before they execute. This gives you a safety window to respond to a compromised proxy key.
+
+The tradeoff is latency and operational overhead. Are your tokens worth it?
+
+See: [Stake with a time-delay proxy](#stake-with-a-time-delay-proxy)
+
+### Use price protection (safe staking)
+
+Every stake or unstake operation trades tokens through the subnet's AMM, which means your transaction itself moves the price. Without price protection, you're exposed to:
+
+- **Slippage**: Large transactions push the price against you.
+- **MEV/sandwich attacks**: Adversaries can front-run your transaction to extract value.
+- **Organic volatility**: The price may move between when you submit and when your transaction lands.
+
+The SDK provides **price protection** through `add_stake_limit` and `remove_stake_limit` extrinsics, which accept a `limit_price` (the worst acceptable price in RAO per alpha) and an `allow_partial` flag:
+
+- **Strict mode** (`allow_partial=False`): Transaction is rejected entirely if the final price would exceed your limit.
+- **Partial mode** (`allow_partial=True`): Executes the maximum amount that stays within your price limit.
+
+To calculate `limit_price` from a tolerance percentage:
+
+```python
+# For staking (price goes up as you buy alpha):
+pool = await subtensor.subnet(netuid=netuid)
+limit_price = bt.Balance.from_tao(pool.price.tao * (1 + rate_tolerance)).rao
+
+# For unstaking (price goes down as you sell alpha):
+limit_price = bt.Balance.from_tao(pool.price.tao * (1 - rate_tolerance)).rao
+```
+
+See: [Understand Price Protection](../learn/price-protection)
+
+:::warning SDK default is unsafe
+Unlike `btcli`, the SDK does **not** enable price protection by default. You must explicitly use `add_stake_limit` / `remove_stake_limit` instead of the unprotected `add_stake` / `remove_stake` to get price protection.
+:::
+
 ## Check your TAO balance
 
 <SdkVersion />
@@ -150,7 +200,9 @@ print(netuids)
 
 ## Stake to top subnets and validators
 
-The following script uses a `Staking` proxy to stake a user-defined amount of TAO across the top subnets and validators. The proxy coldkey signs all transactions; the primary coldkey SS58 address is supplied as a read-only reference.
+The following script uses a `Staking` proxy to stake a user-defined amount of TAO across the top subnets and validators, with [price protection](#use-price-protection-safe-staking). The proxy coldkey signs all transactions; the primary coldkey SS58 address is supplied as a read-only reference.
+
+**Why transactions are serialized**: Read-only operations (fetching metagraphs) run concurrently for speed. However, staking transactions must run **sequentially** because each transaction from the same signing key requires a unique, incrementing nonce. If multiple transactions are submitted concurrently, they all fetch the same nonce from the chain and all but the first are rejected with a "Transaction is temporarily banned" error.
 
 Set up the required environment variables before running:
 
@@ -215,13 +267,28 @@ print(f"  Dividing {total_to_stake} TAO across top {validators_per_subnet} valid
 
 proxy_wallet = bt.Wallet(proxy_wallet_name)
 
+# Price protection settings
+RATE_TOLERANCE = 0.02  # 2% price tolerance
+ALLOW_PARTIAL = False  # Strict mode: reject if price exceeds tolerance
+
 async def stake_via_proxy(subtensor, netuid, hotkey_ss58, amount_to_stake):
+    """Stake to a single validator with price protection."""
     print(f"  Staking {amount_to_stake} to {hotkey_ss58} on subnet {netuid}...")
     try:
-        add_stake_call = SubtensorModule(subtensor).add_stake(
+        # Fetch current subnet price to compute the limit price.
+        # limit_price is the worst acceptable price (in RAO per alpha).
+        # For staking, price goes up as you buy alpha, so the limit is above current price.
+        pool = await subtensor.subnet(netuid=netuid)
+        limit_price = bt.Balance.from_tao(pool.price.tao * (1 + RATE_TOLERANCE)).rao
+
+        # Use add_stake_limit for price protection.
+        # Note the `await`: with AsyncSubtensor, pallet helpers return awaitables.
+        add_stake_call = await SubtensorModule(subtensor).add_stake_limit(
             netuid=netuid,
             hotkey=hotkey_ss58,
             amount_staked=amount_to_stake.rao,
+            limit_price=limit_price,
+            allow_partial=ALLOW_PARTIAL,
         )
         result = await subtensor.proxy(
             wallet=proxy_wallet,
@@ -234,12 +301,8 @@ async def stake_via_proxy(subtensor, netuid, hotkey_ss58, amount_to_stake):
         print(f"❌ Failed to stake to {hotkey_ss58} on subnet {netuid}: {e}")
         return None
 
-async def stake_batch(subtensor, netuid, top_validators, amount_to_stake):
-    tasks = [stake_via_proxy(subtensor, netuid, hk, amount_to_stake) for hk in top_validators]
-    results = await asyncio.gather(*tasks)
-    print(results)
-
 async def find_top_validators(subtensor, subnet):
+    """Fetch metagraph and return top validators by stake. Read-only, safe to run concurrently."""
     netuid = subnet.netuid
     print(f"\n  Subnet {netuid} had {subnet.tao_in_emission} emissions!")
     print(f"\n  Fetching metagraph for subnet {netuid}...")
@@ -265,193 +328,485 @@ async def main():
         top_subnets = sorted_subnets[0:num_subnets]
         amount_to_stake = bt.Balance.from_tao(total_to_stake / (num_subnets * validators_per_subnet))
 
+        # Fetch metagraphs concurrently (read-only, no nonce needed)
         top_vali_dicts = await asyncio.gather(*[find_top_validators(subtensor, subnet) for subnet in top_subnets])
         top_validators_per_subnet = {}
         for d in top_vali_dicts:
             netuid = d['netuid']
             top_validators_per_subnet[netuid] = [hk for hk, _ in d['validators']]
 
+        # Stake sequentially: each transaction must complete before the next
+        # to avoid nonce collisions from the same signing key.
         start_time = time.time()
-        await asyncio.gather(*[stake_batch(subtensor, netuid, top_validators, amount_to_stake) for netuid, top_validators in top_validators_per_subnet.items()])
+        for netuid, top_validators in top_validators_per_subnet.items():
+            for hk in top_validators:
+                result = await stake_via_proxy(subtensor, netuid, hk, amount_to_stake)
+                print(result)
         print(f"Staking completed in {time.time() - start_time:.2f}s")
 
 asyncio.run(main())
 ```
 
+## Stake to top subnets and validators with a time-delay proxy
+
+This is the same script as above, adapted to use a **time-delay proxy** for stronger security. The process is split into three separate steps with a mandatory human verification step between them:
+
+1. **Announce**: Build all staking calls and announce their hashes on-chain. Record every hash.
+2. **Monitor**: Before doing anything else, verify that **all and only** the hashes you announced are pending. This is the critical security step — if an attacker has compromised your proxy key, unauthorized announcements will appear here. If you see any hash you don't recognize, reject it immediately and rotate your keys.
+3. **Execute**: After the delay has passed and you have confirmed the announcements are legitimate, execute them.
+
+The delay is configured when the proxy relationship is created — see [Add a Proxy Relationship](../keys/proxies/working-with-proxies#add-a-proxy-relationship) and [Announce and Execute a Delayed Proxy Call](../keys/proxies/working-with-proxies#announce-and-execute-a-delayed-proxy-call). This example assumes a delay of 100 blocks (~20 minutes). For high-value accounts, this delay is almost always worth the extra latency.
+
+### Step 1: Announce
+
+This script builds all the staking calls, announces each one on-chain, and prints the call hashes. **Record these hashes** — you will need them to verify that no unauthorized announcements were injected before you execute.
+
+Set up the required environment variables before running:
+
+```python
+import os
+
+os.environ['BT_PROXY_WALLET_NAME'] = 'PROXY_WALLET'       # proxy wallet name
+os.environ['BT_REAL_ACCOUNT_SS58'] = 'YOUR_COLDKEY_SS58'  # primary coldkey SS58 (no private key needed)
+os.environ['TOTAL_TAO_TO_STAKE'] = '1'
+os.environ['NUM_SUBNETS_TO_STAKE_IN'] = '3'
+os.environ['NUM_VALIDATORS_PER_SUBNET'] = '3'
+```
+
+```python
+import os, sys, asyncio, json
+import bittensor as bt
+import time
+from bittensor import tao
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import SubtensorModule
+
+# Load environment variables
+proxy_wallet_name = os.environ.get('BT_PROXY_WALLET_NAME')
+real_account_ss58 = os.environ.get('BT_REAL_ACCOUNT_SS58')
+total_to_stake = os.environ.get('TOTAL_TAO_TO_STAKE')
+num_subnets = os.environ.get('NUM_SUBNETS_TO_STAKE_IN')
+validators_per_subnet = os.environ.get('NUM_VALIDATORS_PER_SUBNET')
+
+if proxy_wallet_name is None:
+    sys.exit("❌ BT_PROXY_WALLET_NAME not specified.")
+if real_account_ss58 is None:
+    sys.exit("❌ BT_REAL_ACCOUNT_SS58 not specified.")
+
+if total_to_stake is None:
+    print("⚠️ TOTAL_TAO_TO_STAKE not specified. Defaulting to 1 TAO.")
+    total_to_stake = 1.0
+else:
+    try:
+        total_to_stake = float(total_to_stake)
+    except:
+        sys.exit("❌ Invalid TOTAL_TAO_TO_STAKE amount.")
+
+if num_subnets is None:
+    num_subnets = 3
+else:
+    try:
+        num_subnets = int(num_subnets)
+    except:
+        sys.exit("❌ Invalid NUM_SUBNETS_TO_STAKE_IN.")
+
+if validators_per_subnet is None:
+    validators_per_subnet = 3
+else:
+    try:
+        validators_per_subnet = int(validators_per_subnet)
+    except:
+        sys.exit("❌ Invalid NUM_VALIDATORS_PER_SUBNET.")
+
+print(f"\n🔓 Using proxy wallet: {proxy_wallet_name}")
+print(f"  Staking on behalf of: {real_account_ss58[:12]}...")
+print(f"  Dividing {total_to_stake} TAO across top {validators_per_subnet} validators in each of top {num_subnets} subnets.")
+
+proxy_wallet = bt.Wallet(proxy_wallet_name)
+
+# Price protection settings
+RATE_TOLERANCE = 0.02  # 2% price tolerance
+ALLOW_PARTIAL = False  # Strict mode: reject if price exceeds tolerance
+
+# Time-delay proxy settings
+# Must match the delay configured when the proxy relationship was created.
+PROXY_DELAY_BLOCKS = 100  # ~20 minutes at 12 seconds per block
+
+async def announce_stake(subtensor, netuid, hotkey_ss58, amount_to_stake):
+    """Build a staking call and announce its hash on-chain. Returns the call and hash for later execution."""
+    print(f"  Announcing stake of {amount_to_stake} to {hotkey_ss58} on subnet {netuid}...")
+    try:
+        pool = await subtensor.subnet(netuid=netuid)
+        limit_price = bt.Balance.from_tao(pool.price.tao * (1 + RATE_TOLERANCE)).rao
+
+        add_stake_call = await SubtensorModule(subtensor).add_stake_limit(
+            netuid=netuid,
+            hotkey=hotkey_ss58,
+            amount_staked=amount_to_stake.rao,
+            limit_price=limit_price,
+            allow_partial=ALLOW_PARTIAL,
+        )
+
+        # GenericCall objects expose a .call_hash property (blake2-256 of the SCALE-encoded call).
+        call_hash = "0x" + add_stake_call.call_hash.hex()
+        print(f"    Call hash: {call_hash}")
+
+        announce_result = await subtensor.announce_proxy(
+            wallet=proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            call_hash=call_hash,
+        )
+        if not announce_result.success:
+            print(f"    ❌ Announce failed: {announce_result.message}")
+            return None
+
+        print(f"    ✅ Announced successfully")
+        return {
+            "netuid": netuid,
+            "hotkey": hotkey_ss58,
+            "call_hash": call_hash,
+            "amount_staked_rao": amount_to_stake.rao,
+            "limit_price_rao": limit_price,
+            "allow_partial": ALLOW_PARTIAL,
+        }
+    except Exception as e:
+        print(f"    ❌ Failed: {e}")
+        return None
+
+async def find_top_validators(subtensor, subnet):
+    """Fetch metagraph and return top validators by stake. Read-only, safe to run concurrently."""
+    netuid = subnet.netuid
+    print(f"\n  Subnet {netuid} had {subnet.tao_in_emission} emissions!")
+    print(f"\n  Fetching metagraph for subnet {netuid}...")
+
+    start_time = time.time()
+    metagraph = await subtensor.metagraph(netuid)
+
+    print(f"✅ Retrieved metagraph for subnet {netuid} in {time.time() - start_time:.2f} seconds.")
+    hk_stake_pairs = [(metagraph.hotkeys[index], metagraph.stake[index]) for index in range(len(metagraph.stake))]
+    top_validators = sorted(hk_stake_pairs, key=lambda x: x[1], reverse=True)[0:validators_per_subnet]
+
+    print(f"\n  Top {validators_per_subnet} Validators for Subnet {netuid}:")
+    for rank, (hk, stake) in enumerate(top_validators, start=1):
+        print(f"  {rank}. {hk} - Stake: {stake}")
+
+    return {"netuid": netuid, "validators": top_validators}
+
+async def main():
+    async with bt.AsyncSubtensor(network='test') as subtensor:
+        print("Fetching information on top subnets by TAO emissions")
+
+        sorted_subnets = sorted(list(await subtensor.all_subnets()), key=lambda subnet: subnet.tao_in_emission, reverse=True)
+        top_subnets = sorted_subnets[0:num_subnets]
+        amount_to_stake = bt.Balance.from_tao(total_to_stake / (num_subnets * validators_per_subnet))
+
+        # Fetch metagraphs concurrently (read-only, no nonce needed)
+        top_vali_dicts = await asyncio.gather(*[find_top_validators(subtensor, subnet) for subnet in top_subnets])
+        top_validators_per_subnet = {}
+        for d in top_vali_dicts:
+            netuid = d['netuid']
+            top_validators_per_subnet[netuid] = [hk for hk, _ in d['validators']]
+
+        # Announce all stakes sequentially (each announcement needs its own nonce)
+        announced = []
+        for netuid, top_validators in top_validators_per_subnet.items():
+            for hk in top_validators:
+                result = await announce_stake(subtensor, netuid, hk, amount_to_stake)
+                if result:
+                    announced.append(result)
+
+        # Save the announced hashes for later verification and execution.
+        # Record these hashes — you will cross-reference them in the monitoring step.
+        print(f"\n{'='*60}")
+        print(f"ANNOUNCED {len(announced)} STAKING TRANSACTIONS")
+        print(f"{'='*60}")
+        for a in announced:
+            print(f"  Subnet {a['netuid']} → {a['hotkey'][:16]}...")
+            print(f"    Hash: {a['call_hash']}")
+        print(f"{'='*60}")
+        print(f"\n⏳ Delay period: {PROXY_DELAY_BLOCKS} blocks (~{PROXY_DELAY_BLOCKS * 12 // 60} minutes)")
+        print(f"   STOP HERE. Do not execute until you have monitored your")
+        print(f"   announcements and confirmed that all and only the above")
+        print(f"   hashes are pending. See Step 2.")
+
+        # Save announced call data to a file so Step 3 can rebuild the exact same calls.
+        # The limit_price and amount_staked RAO values must be preserved exactly —
+        # proxy_announced requires the full call (not just the hash), and the chain
+        # re-hashes it to verify it matches. If any parameter differs, the hash won't match.
+        save_data = [
+            {
+                "netuid": a["netuid"],
+                "hotkey": a["hotkey"],
+                "call_hash": a["call_hash"],
+                "amount_staked_rao": a["amount_staked_rao"],
+                "limit_price_rao": a["limit_price_rao"],
+                "allow_partial": a["allow_partial"],
+            }
+            for a in announced
+        ]
+        with open("announced_stakes.json", "w") as f:
+            json.dump(save_data, f, indent=2)
+        print(f"\n   Saved announcement data to announced_stakes.json")
+
+asyncio.run(main())
+```
 ```shell
+⚠️ TOTAL_TAO_TO_STAKE not specified. Defaulting to 1 TAO.
+
 🔓 Using proxy wallet: zingo
   Staking on behalf of: 5ECaCSR1tEzc...
-  Dividing 10.0 TAO across top 3 validators in each of top 3 subnets.
+  Dividing 1.0 TAO across top 3 validators in each of top 3 subnets.
 Fetching information on top subnets by TAO emissions
 
-  Subnet 119 had τ0.017297815 emissions!
+  Subnet 31 had τ0.043267221 emissions!
+
+  Fetching metagraph for subnet 31...
+
+  Subnet 119 had τ0.017303911 emissions!
 
   Fetching metagraph for subnet 119...
 
-  Subnet 13 had τ0.011085027 emissions!
+  Subnet 26 had τ0.014446833 emissions!
 
-  Fetching metagraph for subnet 13...
+  Fetching metagraph for subnet 26...
+✅ Retrieved metagraph for subnet 31 in 1.30 seconds.
 
-  Subnet 353 had τ0.006091625 emissions!
+  Top 3 Validators for Subnet 31:
+  1. 5H9iGnmydhRKbVNtC6tDr9ZbbEhHAKUE5xuLWZ1wJWsUw49z - Stake: 1130.682861328125
+  2. 5CAbcrX6dDoCLYZrXzNCU9csL8JctBxhi9oZcvtc8hqz5Pri - Stake: 695.8594970703125
+  3. 5DM5o384xnjsohycyLxX9umWKybCJLVoSjwzYBZ8NUwy5zXj - Stake: 83.06707763671875
+✅ Retrieved metagraph for subnet 26 in 1.34 seconds.
 
-  Fetching metagraph for subnet 353...
-✅ Retrieved metagraph for subnet 353 in 1.24 seconds.
-
-  Top 3 Validators for Subnet 353:
-  1. 5CFZ9xDaFQVLA9ERsTs9S3i6jp1VDydvjQH5RDsyWCCJkTM4 - Stake: 249972.03125
-  2. 5E7NahRhasrbzdiy9ET9Uau8jBPWisvYzZNbrEmf2kCsnYqN - Stake: 574.5496826171875
-  3. 5Gb9UGDCMandeYerV3okgQVwcvovS5ZNnmnKuQ1zmJqD3vqT - Stake: 0.0
-✅ Retrieved metagraph for subnet 119 in 1.36 seconds.
+  Top 3 Validators for Subnet 26:
+  1. 5FZijBVEXfmCqhJH8V6aXhSujVMMTPKGb76AiG4QfWVG6fvM - Stake: 2606.20849609375
+  2. 5GYi8aRkGCqQH8YScK4yYDkfZx6DtLVz3G5WJigwwbennZz8 - Stake: 689.8923950195312
+  3. 5DoRe6Zic5PUfnPUno3z8MngQEHvgqEMWhfFMEXB7wug9HsV - Stake: 106.76640319824219
+✅ Retrieved metagraph for subnet 119 in 1.41 seconds.
 
   Top 3 Validators for Subnet 119:
-  1. 5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ - Stake: 990945.875
-  2. 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT - Stake: 489277.59375
-  3. 5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV - Stake: 296578.34375
-✅ Retrieved metagraph for subnet 13 in 1.41 seconds.
-
-  Top 3 Validators for Subnet 13:
-  1. 5EnSc8m4n79NetfJZ4w7c7bxT3CA8XdgAKUJqBLnu6yyFvAr - Stake: 1168657.375
-  2. 5DcQrTd45LGT88WR3tBRqgyDxFJ73SQ2ULfUqNcrMNez2Vtx - Stake: 1080121.5
-  3. 5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV - Stake: 320195.09375
-  Staking τ1.111111111 to 5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ on subnet 119...
+  1. 5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ - Stake: 993573.125
+  2. 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT - Stake: 490129.15625
+  3. 5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV - Stake: 297071.78125
+  Announcing stake of τ0.111111111 to 5H9iGnmydhRKbVNtC6tDr9ZbbEhHAKUE5xuLWZ1wJWsUw49z on subnet 31...
+    Call hash: 0x976e9001af2a194cc174ca7f6b9d073f3070c880ee5338ffc9babee1f9f2152f
 Enter your password:
 Decrypting...
-ExtrinsicResponse:
-    success: True
-    message: Success
-    extrinsic_function: proxy_extrinsic
-    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0x284c140823f5d70b04e92ccf9f7ed7560e38f1c6a4496f4474ec8a3a63e0a338742135f906359e673571b91b53854a716032e5528eeb6f4a1179f74e8ee56884'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ', 'netuid': 119, 'amount_staked': 1111111111}})>}, 'nonce': 33, 'era': {'period': 128, 'current': 6800798}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ', 'netuid': 119, 'amount_staked': 1111111111}})>}}}
-    extrinsic_fee: τ0.001447515
-    extrinsic_receipt: ExtrinsicReceipt<hash:0x8d3f7370f9a2bfc81e18018ebd41c9b03768f95954b4936cf5a7836b0b6710f6>
+    ✅ Announced successfully
+  Announcing stake of τ0.111111111 to 5CAbcrX6dDoCLYZrXzNCU9csL8JctBxhi9oZcvtc8hqz5Pri on subnet 31...
+    Call hash: 0xd7932a9330761d28c9715e0f479588c265ed75e58d588d3e90235723535768e8
+    ✅ Announced successfully
+  Announcing stake of τ0.111111111 to 5DM5o384xnjsohycyLxX9umWKybCJLVoSjwzYBZ8NUwy5zXj on subnet 31...
+    Call hash: 0x16dbf773da71e8783ca70cc25a327550e0e7f0cfe7197bb9df6ca0ef8e80051c
+    ✅ Announced successfully
+  Announcing stake of τ0.111111111 to 5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ on subnet 119...
+    Call hash: 0x634e5dc1e2c8064d003b55811a3c944a758c977c6d04c2b4c719b5042049aea6
+    ✅ Announced successfully
+  Announcing stake of τ0.111111111 to 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT on subnet 119...
+    Call hash: 0x9b3ca2fa9e8674dd56a93079221c99510e1392f2c9ce898fbf28b69a3a60345e
+    ✅ Announced successfully
+  Announcing stake of τ0.111111111 to 5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV on subnet 119...
+    Call hash: 0x6723384df7f9b865165ce1271bdd7cdf29dfc31b1e807eaabf670f17c013b067
+    ✅ Announced successfully
+  Announcing stake of τ0.111111111 to 5FZijBVEXfmCqhJH8V6aXhSujVMMTPKGb76AiG4QfWVG6fvM on subnet 26...
+    Call hash: 0x47389244e6ed9dcd5b16ae10d2360313db960f87564fce0627603a46fd52d06e
+    ✅ Announced successfully
+  Announcing stake of τ0.111111111 to 5GYi8aRkGCqQH8YScK4yYDkfZx6DtLVz3G5WJigwwbennZz8 on subnet 26...
+    Call hash: 0xc18db3dc6d6260ef995243711a98ee73884914e125d7c35c47def0c190b6dd96
+    ✅ Announced successfully
+  Announcing stake of τ0.111111111 to 5DoRe6Zic5PUfnPUno3z8MngQEHvgqEMWhfFMEXB7wug9HsV on subnet 26...
+    Call hash: 0xf4671b0f0febcfd4e5d6c32b6817b4241aeff6ea07c6c3001c205be1301f0bc0
+    ✅ Announced successfully
 
-    mev_extrinsic: None
-    transaction_tao_fee: None
-    transaction_alpha_fee: None
-    error: None
-    data: None
+============================================================
+ANNOUNCED 9 STAKING TRANSACTIONS
+============================================================
+  Subnet 31 → 5H9iGnmydhRKbVNt...
+    Hash: 0x976e9001af2a194cc174ca7f6b9d073f3070c880ee5338ffc9babee1f9f2152f
+  Subnet 31 → 5CAbcrX6dDoCLYZr...
+    Hash: 0xd7932a9330761d28c9715e0f479588c265ed75e58d588d3e90235723535768e8
+  Subnet 31 → 5DM5o384xnjsohyc...
+    Hash: 0x16dbf773da71e8783ca70cc25a327550e0e7f0cfe7197bb9df6ca0ef8e80051c
+  Subnet 119 → 5FRxKzKrBDX3cCGq...
+    Hash: 0x634e5dc1e2c8064d003b55811a3c944a758c977c6d04c2b4c719b5042049aea6
+  Subnet 119 → 5FCPTnjevGqAuTtt...
+    Hash: 0x9b3ca2fa9e8674dd56a93079221c99510e1392f2c9ce898fbf28b69a3a60345e
+  Subnet 119 → 5Ckdcm5X2EMe8q3V...
+    Hash: 0x6723384df7f9b865165ce1271bdd7cdf29dfc31b1e807eaabf670f17c013b067
+  Subnet 26 → 5FZijBVEXfmCqhJH...
+    Hash: 0x47389244e6ed9dcd5b16ae10d2360313db960f87564fce0627603a46fd52d06e
+  Subnet 26 → 5GYi8aRkGCqQH8YS...
+    Hash: 0xc18db3dc6d6260ef995243711a98ee73884914e125d7c35c47def0c190b6dd96
+  Subnet 26 → 5DoRe6Zic5PUfnPU...
+    Hash: 0xf4671b0f0febcfd4e5d6c32b6817b4241aeff6ea07c6c3001c205be1301f0bc0
+============================================================
 
-  Staking τ1.111111111 to 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT on subnet 119...
-ExtrinsicResponse:
-    success: True
-    message: Success
-    extrinsic_function: proxy_extrinsic
-    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0x2083f26dfb3fc05eb434a98d0de971978e35e6667d14ae5444edfd802d2997516088f58c5a141d0ef31189328823729dcefca788150a33c9f397c2ebdc7e8b86'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT', 'netuid': 119, 'amount_staked': 1111111111}})>}, 'nonce': 34, 'era': {'period': 128, 'current': 6800802}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT', 'netuid': 119, 'amount_staked': 1111111111}})>}}}
-    extrinsic_fee: τ0.001447515
-    extrinsic_receipt: ExtrinsicReceipt<hash:0xd23a02136c8c5202a8ec3cffa3d0d653675f019b28671c27ef519638683e87a5>
+⏳ Delay period: 100 blocks (~20 minutes)
+   STOP HERE. Do not execute until you have monitored your
+   announcements and confirmed that all and only the above
+   hashes are pending. See Step 2.
 
-    mev_extrinsic: None
-    transaction_tao_fee: None
-    transaction_alpha_fee: None
-    error: None
-    data: None
-
-  Staking τ1.111111111 to 5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV on subnet 119...
-ExtrinsicResponse:
-    success: True
-    message: Success
-    extrinsic_function: proxy_extrinsic
-    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0x3eaa81e8ee37e91767029aa967264545671c8fe0143dc047f502b7927e9f862e67c95f56ec25ee2f369ed5f232d340372d38846d354f9c5953e9daa6ffe5dd89'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV', 'netuid': 119, 'amount_staked': 1111111111}})>}, 'nonce': 35, 'era': {'period': 128, 'current': 6800804}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV', 'netuid': 119, 'amount_staked': 1111111111}})>}}}
-    extrinsic_fee: τ0.001447515
-    extrinsic_receipt: ExtrinsicReceipt<hash:0x3632ee897d1f3f977ac00635112943e710f1abf634e5a89270ff500cbb275dc8>
-
-    mev_extrinsic: None
-    transaction_tao_fee: None
-    transaction_alpha_fee: None
-    error: None
-    data: None
-
-  Staking τ1.111111111 to 5EnSc8m4n79NetfJZ4w7c7bxT3CA8XdgAKUJqBLnu6yyFvAr on subnet 13...
-ExtrinsicResponse:
-    success: True
-    message: Success
-    extrinsic_function: proxy_extrinsic
-    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0xdecfc77cdcaf0736263bbbf3a4cd90a04f68c59ff765458087a67eae203f734bd89c1fd01e112a2a286bd24197473249c74f58073d92ec37a3e29d22a7d3a481'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5EnSc8m4n79NetfJZ4w7c7bxT3CA8XdgAKUJqBLnu6yyFvAr', 'netuid': 13, 'amount_staked': 1111111111}})>}, 'nonce': 36, 'era': {'period': 128, 'current': 6800808}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5EnSc8m4n79NetfJZ4w7c7bxT3CA8XdgAKUJqBLnu6yyFvAr', 'netuid': 13, 'amount_staked': 1111111111}})>}}}
-    extrinsic_fee: τ0.001447515
-    extrinsic_receipt: ExtrinsicReceipt<hash:0x9f18e06a3b9d0bd09e0af239ca39d3b77fb1afae93e8b3be4bab0361faf67dc7>
-
-    mev_extrinsic: None
-    transaction_tao_fee: None
-    transaction_alpha_fee: None
-    error: None
-    data: None
-
-  Staking τ1.111111111 to 5DcQrTd45LGT88WR3tBRqgyDxFJ73SQ2ULfUqNcrMNez2Vtx on subnet 13...
-ExtrinsicResponse:
-    success: True
-    message: Success
-    extrinsic_function: proxy_extrinsic
-    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0xde501cc5bdad357689b77ea9159add53a700db4d75d7e12e60622351de1538640527eb0860f3d124e0fa5ee186b8c60707efc1ecc4cfc5f4be79943a3da58d84'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5DcQrTd45LGT88WR3tBRqgyDxFJ73SQ2ULfUqNcrMNez2Vtx', 'netuid': 13, 'amount_staked': 1111111111}})>}, 'nonce': 37, 'era': {'period': 128, 'current': 6800810}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5DcQrTd45LGT88WR3tBRqgyDxFJ73SQ2ULfUqNcrMNez2Vtx', 'netuid': 13, 'amount_staked': 1111111111}})>}}}
-    extrinsic_fee: τ0.001447515
-    extrinsic_receipt: ExtrinsicReceipt<hash:0x3cc778716050735fa9387a0f57ae4d79d95c1be20f67769b1c196280b890d983>
-
-    mev_extrinsic: None
-    transaction_tao_fee: None
-    transaction_alpha_fee: None
-    error: None
-    data: None
-
-  Staking τ1.111111111 to 5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV on subnet 13...
-ExtrinsicResponse:
-    success: True
-    message: Success
-    extrinsic_function: proxy_extrinsic
-    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0x80f64a110b4aeee41b5efbaf8a6ccff4704302f01dcef725d63cdc02865fd0126642e09c568f83eab15953d3e1737983496398bcf3da223ae8c5ba7e166fb585'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV', 'netuid': 13, 'amount_staked': 1111111111}})>}, 'nonce': 38, 'era': {'period': 128, 'current': 6800814}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV', 'netuid': 13, 'amount_staked': 1111111111}})>}}}
-    extrinsic_fee: τ0.001447515
-    extrinsic_receipt: ExtrinsicReceipt<hash:0xa277eec29bed42d5442a11e450697ea373cc2f2aeb533ca57d2f91beecde46b9>
-
-    mev_extrinsic: None
-    transaction_tao_fee: None
-    transaction_alpha_fee: None
-    error: None
-    data: None
-
-  Staking τ1.111111111 to 5CFZ9xDaFQVLA9ERsTs9S3i6jp1VDydvjQH5RDsyWCCJkTM4 on subnet 353...
-ExtrinsicResponse:
-    success: True
-    message: Success
-    extrinsic_function: proxy_extrinsic
-    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0x1c92ece8ea85faf0e5ad5aae55f7a104a9ad25f653cc8a260cc0fdc9503b7d0bc7528f310195980379882e892039c313a0e3426e2cf5074ff6bef2f98d7c1d84'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5CFZ9xDaFQVLA9ERsTs9S3i6jp1VDydvjQH5RDsyWCCJkTM4', 'netuid': 353, 'amount_staked': 1111111111}})>}, 'nonce': 39, 'era': {'period': 128, 'current': 6800817}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5CFZ9xDaFQVLA9ERsTs9S3i6jp1VDydvjQH5RDsyWCCJkTM4', 'netuid': 353, 'amount_staked': 1111111111}})>}}}
-    extrinsic_fee: τ0.001447515
-    extrinsic_receipt: ExtrinsicReceipt<hash:0x2286eee64fa36db43a0946b60d80dbf0e8cd72065d21513eb26e655a781cd379>
-
-    mev_extrinsic: None
-    transaction_tao_fee: None
-    transaction_alpha_fee: None
-    error: None
-    data: None
-
-  Staking τ1.111111111 to 5E7NahRhasrbzdiy9ET9Uau8jBPWisvYzZNbrEmf2kCsnYqN on subnet 353...
-ExtrinsicResponse:
-    success: True
-    message: Success
-    extrinsic_function: proxy_extrinsic
-    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0xf6caf107f69848b05d89dd3aa6c259ba2d2f7b1291c674092c33beee947a466682ef737ed1161dc59d4536ff244f623a9dfb375673bb94cb822754ac27179089'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5E7NahRhasrbzdiy9ET9Uau8jBPWisvYzZNbrEmf2kCsnYqN', 'netuid': 353, 'amount_staked': 1111111111}})>}, 'nonce': 40, 'era': {'period': 128, 'current': 6800819}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5E7NahRhasrbzdiy9ET9Uau8jBPWisvYzZNbrEmf2kCsnYqN', 'netuid': 353, 'amount_staked': 1111111111}})>}}}
-    extrinsic_fee: τ0.001447515
-    extrinsic_receipt: ExtrinsicReceipt<hash:0x6a34c510537039ce1250481d2286f5250e7bd915c8be14c717ced8a097dc51eb>
-
-    mev_extrinsic: None
-    transaction_tao_fee: None
-    transaction_alpha_fee: None
-    error: None
-    data: None
-
-  Staking τ1.111111111 to 5Gb9UGDCMandeYerV3okgQVwcvovS5ZNnmnKuQ1zmJqD3vqT on subnet 353...
-ExtrinsicResponse:
-    success: True
-    message: Success
-    extrinsic_function: proxy_extrinsic
-    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0x72d78aaa8e8007a373f9dcda04cdc2d50a6db0ca21d65307cbc399660ce7b029507cac24949c020168b8ea202436b94cee3042c3f09a6327e6c07d759b946185'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5Gb9UGDCMandeYerV3okgQVwcvovS5ZNnmnKuQ1zmJqD3vqT', 'netuid': 353, 'amount_staked': 1111111111}})>}, 'nonce': 41, 'era': {'period': 128, 'current': 6800823}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5Gb9UGDCMandeYerV3okgQVwcvovS5ZNnmnKuQ1zmJqD3vqT', 'netuid': 353, 'amount_staked': 1111111111}})>}}}
-    extrinsic_fee: τ0.001447515
-    extrinsic_receipt: ExtrinsicReceipt<hash:0xf6fad2ee153defb2bd19759c2852e8369708f37b169ce9518c0bc234ea488bbf>
-
-    mev_extrinsic: None
-    transaction_tao_fee: None
-    transaction_alpha_fee: None
-    error: None
-    data: None
-
-Staking completed in 332.55s
 ```
+### Step 2: Monitor announcements
+
+:::danger monitoring is not optional
+The entire security value of a time-delay proxy depends on monitoring. If you skip this step, a compromised proxy key can drain your account during the delay window by submitting its own announcements. **Always verify that the pending announcements match exactly what you announced**. 
+:::
+
+During the delay window, run this script to cross-reference on-chain announcements against the `announced_stakes.json` file saved in Step 1. It will flag any announcement you didn't create — which would indicate your proxy key has been compromised — and confirm which of your expected announcements are present.
+
+```python
+import json
+import bittensor as bt
+import os
+
+sub = bt.Subtensor(network="test")
+
+delegate_ss58 = os.environ.get("BT_PROXY_WALLET_SS58", "YOUR_PROXY_WALLET_SS58")
+real_account_ss58 = os.environ.get("BT_REAL_ACCOUNT_SS58", "YOUR_COLDKEY_SS58")
+delay_blocks = 100
+
+# Load the hashes we expect from Step 1
+with open("announced_stakes.json") as f:
+    expected = json.load(f)
+expected_hashes = {a["call_hash"] for a in expected}
+
+# Fetch proxy relationships to confirm setup
+proxies, deposit = sub.get_proxies_for_real_account(real_account_ss58)
+print(f"Proxy relationships for {real_account_ss58[:16]}...:")
+for p in proxies:
+    print(f"  {p}")
+
+# Fetch pending announcements for our delegate (proxy) account
+announcements = sub.get_proxy_announcement(delegate_ss58)
+current_block = sub.block
+on_chain_hashes = set()
+
+print(f"\n{'='*60}")
+print(f"PENDING ANNOUNCEMENTS (block {current_block})")
+print(f"{'='*60}")
+
+for ann in announcements:
+    on_chain_hashes.add(ann.call_hash)
+    blocks_elapsed = current_block - ann.height
+    blocks_remaining = max(0, delay_blocks - blocks_elapsed)
+    is_ours = ann.call_hash in expected_hashes
+    status = "✅ EXPECTED" if is_ours else "🚨 UNEXPECTED — NOT IN announced_stakes.json"
+
+    print(f"\n  call_hash:    {ann.call_hash}")
+    print(f"  real:         {ann.real}")
+    print(f"  announced:    block {ann.height} ({blocks_elapsed} blocks ago)")
+    print(f"  veto window:  {blocks_remaining} blocks remaining ({blocks_remaining * 12}s)")
+    print(f"  status:       {status}")
+
+# Check for expected announcements that are missing on-chain
+missing = expected_hashes - on_chain_hashes
+unexpected = on_chain_hashes - expected_hashes
+
+print(f"\n{'='*60}")
+print(f"SUMMARY")
+print(f"{'='*60}")
+print(f"  Expected:    {len(expected_hashes)}")
+print(f"  On-chain:    {len(on_chain_hashes)}")
+print(f"  Matched:     {len(expected_hashes & on_chain_hashes)}")
+
+if missing:
+    print(f"\n⚠️  MISSING announcements (expected but not on-chain):")
+    for h in missing:
+        print(f"    {h}")
+
+if unexpected:
+    print(f"\n🚨 UNAUTHORIZED announcements detected!")
+    print(f"   Your proxy key may be compromised. Reject these immediately")
+    print(f"   and rotate your keys.")
+    for h in unexpected:
+        print(f"    {h}")
+else:
+    print(f"\n✅ All on-chain announcements match expected hashes. Safe to proceed to Step 3.")
+```
+
+
+If you see an **unexpected hash**, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately:
+
+```python
+real_account_wallet = bt.Wallet(name="YOUR_REAL_ACCOUNT_WALLET")  # The real account, NOT the proxy
+
+response = sub.reject_proxy_announcement(
+    wallet=real_account_wallet,
+    delegate_ss58=delegate_ss58,
+    call_hash="0xSUSPICIOUS_HASH_HERE",
+)
+print(response)
+```
+
+### Step 3: Execute
+
+After the delay has passed and you have confirmed in Step 2 that all pending announcements are legitimate, execute them.
+
+`proxy_announced` requires the full `GenericCall` object, not just the hash — the chain re-hashes the call you submit and verifies it matches what was announced. This means you must rebuild each call with **exactly the same parameters** used in Step 1. This is why Step 1 saves `amount_staked_rao`, `limit_price_rao`, and `allow_partial` to `announced_stakes.json` — if any parameter differs (e.g. because you recomputed `limit_price` from a newer pool price), the hash won't match and execution will fail.
+
+```python
+import os, sys, asyncio, json
+import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import SubtensorModule
+
+proxy_wallet_name = os.environ.get('BT_PROXY_WALLET_NAME')
+real_account_ss58 = os.environ.get('BT_REAL_ACCOUNT_SS58')
+
+if proxy_wallet_name is None:
+    sys.exit("❌ BT_PROXY_WALLET_NAME not specified.")
+if real_account_ss58 is None:
+    sys.exit("❌ BT_REAL_ACCOUNT_SS58 not specified.")
+
+proxy_wallet = bt.Wallet(proxy_wallet_name)
+
+# Load the announcement data saved in Step 1.
+# This contains the exact parameter values needed to rebuild identical calls.
+with open("announced_stakes.json") as f:
+    announced = json.load(f)
+
+print(f"Loaded {len(announced)} announcements to execute.")
+
+async def main():
+    async with bt.AsyncSubtensor(network='test') as subtensor:
+        for a in announced:
+            netuid = a["netuid"]
+            hotkey = a["hotkey"]
+            expected_hash = a["call_hash"]
+
+            # Rebuild the call using the exact parameters saved in Step 1.
+            # Do NOT recompute limit_price from the current pool price —
+            # the hash must match what was announced.
+            add_stake_call = await SubtensorModule(subtensor).add_stake_limit(
+                netuid=netuid,
+                hotkey=hotkey,
+                amount_staked=a["amount_staked_rao"],
+                limit_price=a["limit_price_rao"],
+                allow_partial=a["allow_partial"],
+            )
+
+            # Sanity check: verify the rebuilt call matches the announced hash
+            rebuilt_hash = "0x" + add_stake_call.call_hash.hex()
+            if rebuilt_hash != expected_hash:
+                print(f"  ❌ Hash mismatch for subnet {netuid} → {hotkey[:16]}...")
+                print(f"     Expected: {expected_hash}")
+                print(f"     Got:      {rebuilt_hash}")
+                print(f"     Skipping — do NOT execute mismatched calls.")
+                continue
+
+            print(f"  Executing: subnet {netuid} → {hotkey[:16]}... (hash: {expected_hash[:18]}...)")
+            result = await subtensor.proxy_announced(
+                wallet=proxy_wallet,
+                delegate_ss58=proxy_wallet.coldkey.ss58_address,
+                real_account_ss58=real_account_ss58,
+                force_proxy_type=ProxyType.Staking,
+                call=add_stake_call,
+            )
+            print(result)
+
+asyncio.run(main())
+```
+
 ## Unstake from a validator
 
 Set up the required environment variables:
@@ -463,7 +818,7 @@ os.environ['BT_PROXY_WALLET_NAME'] = 'PROXY_WALLET'
 os.environ['BT_REAL_ACCOUNT_SS58'] = 'YOUR_COLDKEY_SS58'
 ```
 
-Basic unstake from a specific validator on a specific subnet. `amount` specifies the amount of alpha to unstake:
+Unstake from a specific validator on a specific subnet with price protection. The `limit_price` for unstaking is computed as `price * (1 - tolerance)` since selling alpha pushes the price down — you're setting a floor on the worst price you'll accept:
 
 ```python
 import asyncio
@@ -477,10 +832,22 @@ real_account_ss58 = os.environ['BT_REAL_ACCOUNT_SS58']
 
 async def main():
     async with bt.AsyncSubtensor(network='test') as subtensor:
-        remove_stake_call = SubtensorModule(subtensor).remove_stake(
-            netuid=17,
-            hotkey="5FvC...",
-            amount_unstaked=bt.Balance.from_tao(10).rao,
+        netuid = 17
+        hotkey = "5FvC..."
+        amount = bt.Balance.from_tao(10)
+
+        # Compute limit price for unstaking (price floor).
+        # Unstaking sells alpha for TAO, pushing the price down.
+        pool = await subtensor.subnet(netuid=netuid)
+        rate_tolerance = 0.02  # 2%
+        limit_price = bt.Balance.from_tao(pool.price.tao * (1 - rate_tolerance)).rao
+
+        remove_stake_call = await SubtensorModule(subtensor).remove_stake_limit(
+            netuid=netuid,
+            hotkey=hotkey,
+            amount_unstaked=amount.rao,
+            limit_price=limit_price,
+            allow_partial=False,
         )
         result = await subtensor.proxy(
             wallet=proxy_wallet,
@@ -494,6 +861,18 @@ async def main():
 
 asyncio.run(main())
 ```
+
+:::tip Unsafe unstake (for development/testing)
+To skip price protection (e.g. on testnet), use `remove_stake` instead of `remove_stake_limit`:
+
+```python
+remove_stake_call = await SubtensorModule(subtensor).remove_stake(
+    netuid=netuid,
+    hotkey=hotkey,
+    amount_unstaked=amount.rao,
+)
+```
+:::
 
 ## Unstake from low-emissions validators
 
@@ -551,14 +930,25 @@ total_to_unstake = bt.Balance.from_tao(total_to_unstake)
 proxy_wallet = bt.Wallet(proxy_wallet_name)
 unstake_minimum = 0.0005  # TAO
 
+# Price protection settings
+RATE_TOLERANCE = 0.02  # 2%
+ALLOW_PARTIAL = False  # Strict mode
+
 async def perform_unstake(subtensor, stake, amount):
     try:
         print(f"⏳ Attempting to unstake {amount} from {stake.hotkey_ss58} on subnet {stake.netuid}")
         start = time.time()
-        remove_stake_call = SubtensorModule(subtensor).remove_stake(
+
+        # Compute limit price for this subnet (price floor)
+        pool = await subtensor.subnet(netuid=stake.netuid)
+        limit_price = bt.Balance.from_tao(pool.price.tao * (1 - RATE_TOLERANCE)).rao
+
+        remove_stake_call = await SubtensorModule(subtensor).remove_stake_limit(
             netuid=stake.netuid,
             hotkey=stake.hotkey_ss58,
             amount_unstaked=amount.rao,
+            limit_price=limit_price,
+            allow_partial=ALLOW_PARTIAL,
         )
         result = await subtensor.proxy(
             wallet=proxy_wallet,
@@ -593,12 +983,14 @@ async def main():
             print(f"Validator: {s.hotkey_ss58}\n  NetUID: {s.netuid}\n  Stake: {s.stake.tao}\n  Emission: {s.emission}\n-----------")
 
         amount_per_stake = total_to_unstake.tao / len(stakes)
-        tasks = [
-            perform_unstake(subtensor, stake, bt.Balance.from_tao(min(amount_per_stake, stake.stake.tao)).set_unit(stake.netuid))
-            for stake in stakes
-        ]
-        results = await asyncio.gather(*tasks)
-        success_count = sum(results)
+
+        # Unstake sequentially to avoid nonce collisions
+        success_count = 0
+        for stake in stakes:
+            amount = bt.Balance.from_tao(min(amount_per_stake, stake.stake.tao)).set_unit(stake.netuid)
+            success = await perform_unstake(subtensor, stake, amount)
+            if success:
+                success_count += 1
         print(f"\n  Unstake complete. Success: {success_count}/{len(stakes)}")
 
 asyncio.run(main())
@@ -620,7 +1012,7 @@ real_account_ss58 = os.environ['BT_REAL_ACCOUNT_SS58']
 
 async def main():
     async with bt.AsyncSubtensor("test") as subtensor:
-        move_stake_call = SubtensorModule(subtensor).move_stake(
+        move_stake_call = await SubtensorModule(subtensor).move_stake(
             origin_netuid=5,
             origin_hotkey_ss58="5DyHnV9Wz6cnefGfczeBkQCzHZ5fJcVgy7x1eKVh8otMEd31",
             destination_netuid=18,
