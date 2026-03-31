@@ -21,7 +21,8 @@ Bittensor operations fall into three security tiers based on which key is requir
 | Tier | Key required | Recommended environment |
 |---|---|---|
 | **Permissionless** | Public key only | Any device |
-| **Operational** | Scoped proxy coldkey | Internet-connected workstation |
+| **Hotkey operational** | Hotkey | Mining/validation server |
+| **Coldkey operational** | Scoped proxy coldkey | Internet-connected workstation |
 | **Custody** | Primary coldkey | Hardware wallet only |
 
 
