@@ -944,7 +944,7 @@ This returns all pending announcements for that delegate, each with the real acc
 
 ### Reject an announcement
 
-If you find an unexpected announcement, reject it immediately from your **real account** (primary coldkey / hardware wallet). Rejection cancels the announcement on-chain and prevents execution.
+If you find an unexpected announcement, reject it immediately. Rejection cancels the announcement on-chain and prevents execution. You can reject through a `NonTransfer` proxy (the proxy pallet sets the origin to the real account, satisfying the on-chain check), so your primary coldkey can stay in cold storage.
 
 <Tabs groupId="proxy">
 <TabItem value="btcli" label="BTCLI">
@@ -958,21 +958,29 @@ BTCLI does not currently have a command to reject proxy announcements. Use the S
 
 <SdkVersion />
 
-The wallet passed to `reject_proxy_announcement` must be the **real account** — your primary coldkey. For any wallet holding real value, this means signing from your hardware wallet.
+Use a `NonTransfer` proxy to reject announcements on behalf of the real account.
 
 ```python
-import asyncio, os
+import asyncio
 import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import Proxy
 
 async def main():
     async with bt.AsyncSubtensor(network="finney") as subtensor:
-        # Must be the real account — sign from your hardware wallet
-        real_account_wallet = bt.Wallet(name=os.environ["BT_REAL_WALLET_NAME"])
+        nontransfer_proxy_wallet = bt.Wallet(name="YOUR_NONTRANSFER_PROXY")  # replace with your NonTransfer proxy wallet name
+        real_account_ss58 = "YOUR_REAL_ACCOUNT_SS58"  # replace with your real account SS58
+        delegate_ss58 = "DELEGATE_SS58"  # proxy account that made the announcement
 
-        response = await subtensor.reject_proxy_announcement(
-            wallet=real_account_wallet,
-            delegate_ss58="DELEGATE_SS58",   # proxy account that made the announcement
-            call_hash="0x...",               # call_hash from the announcement
+        reject_call = await Proxy(subtensor).reject_announcement(
+            delegate=delegate_ss58,
+            call_hash="0x...",  # call_hash from the announcement
+        )
+        response = await subtensor.proxy(
+            wallet=nontransfer_proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            force_proxy_type=ProxyType.NonTransfer,
+            call=reject_call,
         )
         print(response)
 
@@ -982,19 +990,35 @@ asyncio.run(main())
 </TabItem>
 <TabItem value="polkadot-app" label="Polkadot app">
 
+With Polkadot.js you can reject directly from the real account (signing with Polkadot Vault keeps the primary coldkey air-gapped), or through a `NonTransfer` proxy like the SDK examples above.
+
+**Direct rejection from the real account:**
+
 1. Go to **Developer** → **Extrinsics**.
-2. Under "using the selected account", choose the **real account** (your primary coldkey).
+2. Under "using the selected account", choose the **real account**.
 3. Select the `proxy` pallet and call `rejectAnnouncement(delegate, callHash)`.
 4. Fill the parameters:
    - `delegate`: the delegate (proxy) account that made the announcement.
    - `callHash`: the call hash from the announcement.
-5. Click **Submit Transaction** and sign from the real account.
+5. Click **Submit Transaction** and sign with Polkadot Vault (QR code).
+
+**Through a NonTransfer proxy:**
+
+1. Go to **Developer** → **Extrinsics**.
+2. Under "using the selected account", choose your `NonTransfer` proxy account.
+3. Select the `proxy` pallet and call `proxy(real, forceProxyType, call)` where the inner call is `rejectAnnouncement(delegate, callHash)`.
+4. Fill the parameters:
+   - `real`: your real account SS58 address.
+   - `forceProxyType`: `NonTransfer`.
+   - `delegate`: the delegate (proxy) account that made the announcement.
+   - `callHash`: the call hash from the announcement.
+5. Click **Submit Transaction** and sign from the `NonTransfer` proxy account.
 
 </TabItem>
 </Tabs>
 
-:::warning Rejection requires the primary coldkey
-`reject_proxy_announcement` must be signed by the real account. For primary coldkeys holding real value this means your hardware wallet. Keep your hardware wallet accessible so you can reject promptly if an unexpected announcement appears.
+:::tip Use a NonTransfer proxy for rejections
+A `NonTransfer` proxy can reject announcements on behalf of the real account, so your primary coldkey stays in cold storage even during incident response. Set up a `NonTransfer` proxy with zero delay specifically for monitoring and rejection.
 :::
 
 ### Reject all pending announcements
@@ -1004,12 +1028,13 @@ If you need to clear all pending announcements from a delegate at once — for e
 ```python
 import asyncio
 import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
 from bittensor.core.extrinsics.pallets import Proxy
 
 async def main():
     async with bt.AsyncSubtensor(network="test") as subtensor:
-        # Must be the real account — sign from your hardware wallet
-        real_account_wallet = bt.Wallet(name="YOUR_REAL_WALLET")  # replace with your real account wallet name
+        nontransfer_proxy_wallet = bt.Wallet(name="YOUR_NONTRANSFER_PROXY")  # replace with your NonTransfer proxy wallet name
+        real_account_ss58 = "YOUR_REAL_ACCOUNT_SS58"  # replace with your real account SS58
         delegate_ss58 = "DELEGATE_SS58"  # replace with your proxy account SS58 address
 
         # Fetch all pending announcements for this delegate
@@ -1038,9 +1063,12 @@ async def main():
             call_params={"calls": reject_calls},
         )
 
-        response = await subtensor.sign_and_send_extrinsic(
+        # Submit via NonTransfer proxy — primary coldkey stays in cold storage
+        response = await subtensor.proxy(
+            wallet=nontransfer_proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            force_proxy_type=ProxyType.NonTransfer,
             call=batch_call,
-            wallet=real_account_wallet,
         )
         print(response)
 

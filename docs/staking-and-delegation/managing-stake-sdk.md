@@ -728,12 +728,21 @@ else:
 If you see an **unexpected hash**, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately:
 
 ```python
-real_account_wallet = bt.Wallet(name="YOUR_REAL_ACCOUNT_WALLET")  # The real account, NOT the proxy
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import Proxy
 
-response = sub.reject_proxy_announcement(
-    wallet=real_account_wallet,
-    delegate_ss58=delegate_ss58,
+nontransfer_proxy_wallet = bt.Wallet(name="YOUR_NONTRANSFER_PROXY")  # replace with your NonTransfer proxy wallet name
+real_account_ss58 = "YOUR_REAL_ACCOUNT_SS58"  # replace with your real account SS58
+
+reject_call = Proxy(sub).reject_announcement(
+    delegate=delegate_ss58,
     call_hash="0xSUSPICIOUS_HASH_HERE",
+)
+response = sub.proxy(
+    wallet=nontransfer_proxy_wallet,
+    real_account_ss58=real_account_ss58,
+    force_proxy_type=ProxyType.NonTransfer,
+    call=reject_call,
 )
 print(response)
 ```

@@ -55,34 +55,60 @@ Your primary coldkey is the ultimate authority over your Bittensor wallet. It co
 
 Hardware wallets keep the private key inside the device. Signing happens on the device itself; the key is never exposed to the host machine's operating system.
 
-### Ledger
+
+
+
+
+
+### Operations requiring the primary coldkey
+
+Only two operations strictly require the primary coldkey:
+
+1. **Initial proxy setup**: creating the very first proxy relationship on a new coldkey, since no proxy exists yet to act on its behalf.
+2. **Coldkey rotation**: swapping to a new coldkey.
+
+All other operations, including rejecting proxy announcements, can be done through a `NonTransfer` proxy.
+
+For these, use your hardware wallet (Ledger or Polkadot Vault). Both support proxy creation and coldkey rotation.
+
+**After the initial proxy is in place, use it to manage all subsequent proxy relationships.** A `NonTransfer` proxy can create and remove other proxies, and perform batch operations so the primary coldkey never needs to leave cold storage again. The recommended pattern:
+
+1. From your hardware wallet, create a single `NonTransfer` proxy with a non-zero delay.
+2. Use that proxy to create narrower, scoped proxies (`Staking`, `Registration`, etc.) as needed.
+3. Use those scoped proxies for day-to-day operations.
+4. Use the `NonTransfer` proxy to revoke scoped proxies when they're no longer needed.
+
+If you find yourself needing to load your primary coldkey onto a machine to perform an operation, that is a signal to reconsider the approach.
+
+
+### Hardware Solution: Ledger
 
 Ledger hardware wallets, used with a compatible wallet app, support TAO transfers, staking, unstaking, and proxy creation. Compatible wallet apps include the Bittensor mobile wallet app ([bittensor.com/wallet](https://bittensor.com/wallet)), [Crucible](https://crucible.bittensor.com/), [Talisman](https://www.talisman.xyz/), [Nova Wallet](https://novawallet.io/), and [SubWallet](https://www.subwallet.app/).
 
 See [Using Ledger Hardware Wallet](../staking-and-delegation/using-ledger-hw-wallet).
 
-### Polkadot Vault
+### Hardware Solution: Polkadot Vault
 
 [Polkadot Vault](https://vault.novasama.io/) (formerly Parity Signer) turns a dedicated offline smartphone into a cold-signing device. The private key is generated on the device, which is then kept in airplane mode permanently. Transactions pass between the hot and cold device exclusively via QR code — the key never leaves the air-gapped phone.
 
-Unlike Ledger wallet apps, which expose a limited set of supported operations, Polkadot Vault loads the full Bittensor chain metadata and can therefore decode and sign **any Subtensor extrinsic** — including proxy creation, hotkey registration, subnet operations, and governance.
+Unlike Ledger wallet apps, which expose a limited set of supported operations, Polkadot Vault can decode and sign **any Subtensor extrinsic**.
 
-**Setup:**
 
-1. Install Polkadot Vault on a dedicated smartphone.
-2. Enable airplane mode and disable all wireless communications permanently.
-3. Generate your coldkey on the device.
-4. Load Bittensor chain metadata via QR code from a trusted portal:
-   - [metadata.opentensor.ai](https://metadata.opentensor.ai) (maintained by OTF)
-   - [metadata.novasama.io](https://metadata.novasama.io/#/node-subtensor) (maintained by Nova Wallet)
-   - Metadata must be re-loaded after each Bittensor runtime upgrade.
-5. Use [polkadot.js/apps](https://polkadot.js.org/apps/) connected to Subtensor to construct transactions, signing via QR code on the Vault device.
+### Rotating your coldkey
 
-## Proxy architecture: bridging cold custody to hot operations
+If you suspect the primary coldkey has been compromised, you can swap it out using an on-chain extrinsic. This operation has a 5-day waiting period during which the coldkey is locked. The cost is 0.1 TAO.
 
-The Bittensor SDK and `btcli` require a coldkey on the machine for most financial operations. The solution is to use your hardware wallet to create **proxy coldkeys**: coldkeys that can be granted scoped, limited permissions that act on behalf of your primary coldkey.
+See [Rotate/Swap your Coldkey](./coldkey-swap).
 
-This keeps your primary coldkey in cold storage while allowing `btcli` and SDK use with a proxy coldkey whose blast radius is constrained by type and delay. Proxies can be set to act with a requried delay, allowing a window to reject unauthorized transactions. A properly maintained, adequately monitored system of scoped, delayed proxies offers the best way to securely conduct operations that require a coldkey for advanced functionality requiring the SDK or `btcli`, such as managing subnets or hotkeys.
+If a proxy coldkey is comporomised it may be easier, and is certainly quicker, to revoke its proxy status and purge any references to it from your system.
+
+
+## Using BTCLI and the SDK with proxy coldkeys
+
+`btcli` and the Bittensor SDK run on internet-connected machines. Any coldkey loaded onto such a machine is exposed to network risk regardless of how the machine is configured.
+
+
+Proxies can be set to act with a requried delay, allowing a window to reject unauthorized transactions. A properly maintained, adequately monitored system of scoped, delayed proxies offers the best way to securely conduct operations that require a coldkey for advanced functionality requiring the SDK or `btcli`, such as managing subnets or hotkeys.
 
 ### Recommended proxy configuration
 
@@ -95,7 +121,7 @@ Configure proxies with:
   - `Registration`: hotkey registration only
   - `Owner`: subnet owner operations only
 
-- **Non-zero delay**: a delayed proxy must announce its intent on-chain and wait a specified number of blocks before the call executes. During this window, the primary coldkey holder can reject and veto the transaction from their hardware wallet.
+- **Non-zero delay**: a delayed proxy must announce its intent on-chain and wait a specified number of blocks before the call executes. During this window, you can reject and veto the transaction using a `NonTransfer` proxy.
 
 
 :::warning Transfer proxy type
@@ -109,17 +135,9 @@ A proxy with `delay: 0` executes immediately with no veto window. Always set a n
 
 Set up proxies from your hardware wallet so the primary coldkey is never involved in day-to-day operations. See:
 
-
-
 - [Proxies: Overview](./proxies/index.md)
 - [Working with Proxies](./proxies/working-with-proxies.md)
 - [Staking with a Proxy](./proxies/staking-with-proxy.md)
-
-## Using BTCLI and the SDK with proxy coldkeys
-
-`btcli` and the Bittensor SDK run on internet-connected machines. Any coldkey loaded onto such a machine is exposed to network risk regardless of how the machine is configured.
-
-Therefore, it should always be preferred to use a scoped, proxy coldkey: one with the minimum permissions needed for the specific operation at hand, a non-zero delay, and ideally a short lifecycle.
 
 ### Proxy lifecycle
 
@@ -127,7 +145,7 @@ The safest pattern for any `btcli` or SDK operation requiring a coldkey:
 
 1. **Create** a proxy with the narrowest type and a delay sufficient to let you detect and cancel misuse.
 2. **Use** it for the specific operation.
-3. **Revoke** it immediately after.
+3. **Revoke** it after you are no longer monitoring it for announcements.
 
 Keeping long-lived proxies with broad permissions around indefinitely defeats the purpose. The goal is to minimize the window during which a leaked key can cause damage.
 
@@ -141,9 +159,9 @@ A delayed proxy must broadcast its intent on-chain before executing, which allow
 
 - Check for pending announcements on a schedule **shorter than your configured delay period**. A 100-block delay (~20 minutes) requires checks more frequent than that.
 - Revoke any proxy relationship you are not actively monitoring. A dormant delayed proxy with no observer is no safer than a zero-delay proxy.
-- Be ready to reject unexpected announcements from your hardware wallet immediately.
+- Be ready to reject unexpected announcements using your `NonTransfer` proxy immediately.
 
-See [Monitor and Reject Announcements](./proxies/working-with-proxies#monitor-and-reject-announcements) for how to query pending announcements, run a monitoring script, and reject from your hardware wallet.
+See [Monitor and Reject Announcements](./proxies/working-with-proxies#monitor-and-reject-proxy-announcements) for how to query pending announcements, run a monitoring script, and reject.
 
 :::warning Do not mine with primary coldkeys
 Miners need coldkeys for currency management and hotkeys for serving requests. The no coldkey should be present in an environment running mining code.
@@ -154,32 +172,6 @@ Miners need coldkeys for currency management and hotkeys for serving requests. T
 If a team collectively manages a coldkey, you can use a multisig to prevent a single compromised team member from acting unilaterally.
 
 See [Multi-signature wallets](./multisig).
-
-## Operations requiring the primary coldkey
-
-Only two operations strictly require the primary coldkey:
-
-1. **Initial proxy setup** — creating the very first proxy relationship on a new coldkey, since no proxy exists yet to act on its behalf.
-2. **Coldkey rotation** — swapping to a new coldkey.
-
-For these, use your hardware wallet (Ledger or Polkadot Vault). Both support proxy creation and coldkey rotation.
-
-**After the initial proxy is in place, use it to manage all subsequent proxy relationships.** A `NonTransfer` proxy can create and remove other proxies, reject announcements, and perform batch operations so the primary coldkey never needs to leave cold storage again. The recommended pattern:
-
-1. From your hardware wallet, create a single `NonTransfer` proxy with a non-zero delay.
-2. Use that proxy to create narrower, scoped proxies (`Staking`, `Registration`, etc.) as needed.
-3. Use those scoped proxies for day-to-day operations.
-4. Use the `NonTransfer` proxy to revoke scoped proxies when they're no longer needed.
-
-If you find yourself needing to load your primary coldkey onto a machine to perform an operation, that is a signal to reconsider the approach.
-
-### Rotating your coldkey
-
-If you suspect the primary coldkey has been compromised, you can swap it out using an on-chain extrinsic. This operation has a 5-day waiting period during which the coldkey is locked. The cost is 0.1 TAO.
-
-See [Rotate/Swap your Coldkey](./coldkey-swap).
-
-If a proxy coldkey is comporomised it may be easier, and is certainly quicker, to revoke its proxy status and purge any references to it from your system.
 
 ## Hotkey workstation
 
