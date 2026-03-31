@@ -342,9 +342,9 @@ const sidebars = {
   apiSidebar: [
     "subtensor-api/extrinsics",
     "subtensor-api/errors",
-    // "subtensor-api/storage",
-    // "subtensor-api/events",
-    // "subtensor-api/constants",
+    "subtensor-api/storage",
+    "subtensor-api/events",
+    "subtensor-api/constants",
   ],
 };
 

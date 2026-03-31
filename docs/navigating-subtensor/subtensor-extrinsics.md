@@ -14,6 +14,40 @@ Each pallet exposes functions that users or other parts of the system can call. 
 
 For example, the Subtensor pallet contains functions related to Bittensor network operations, such as neuron registration, staking, or subnet management. When a user calls one of these functions—using BTCLI or another client interface—they submit an extrinsic to the chain. Some extrinsics may also trigger events on-chain, such as confirming a successful registration or updating staking balances.
 
+## Runtime pallet list
+
+The runtime includes these pallets (name as in `RuntimeCall`):
+
+| Index | Pallet name                | Crate / purpose                              |
+| ----- | -------------------------- | -------------------------------------------- |
+| 0     | `System`                   | `frame_system`                               |
+| 1     | `RandomnessCollectiveFlip` | `pallet_insecure_randomness_collective_flip` |
+| 2     | `Timestamp`                | `pallet_timestamp`                           |
+| 3     | `Aura`                     | `pallet_aura`                                |
+| 4     | `Grandpa`                  | `pallet_grandpa`                             |
+| 5     | `Balances`                 | `pallet_balances`                            |
+| 6     | `TransactionPayment`       | `pallet_transaction_payment`                 |
+| 7     | `SubtensorModule`          | `pallet_subtensor`                           |
+| 11    | `Utility`                  | `pallet_utility`                             |
+| 12    | `Sudo`                     | `pallet_sudo`                                |
+| 13    | `Multisig`                 | `pallet_multisig`                            |
+| 14    | `Preimage`                 | `pallet_preimage`                            |
+| 15    | `Scheduler`                | `pallet_scheduler`                           |
+| 16    | `Proxy`                    | `pallet_subtensor_proxy`                     |
+| 17    | `Registry`                 | `pallet_registry`                            |
+| 18    | `Commitments`              | `pallet_commitments`                         |
+| 19    | `AdminUtils`               | `pallet_admin_utils`                         |
+| 20    | `SafeMode`                 | `pallet_safe_mode`                           |
+| 21    | `Ethereum`                 | `pallet_ethereum`                            |
+| 22    | `EVM`                      | `pallet_evm`                                 |
+| 23    | `EVMChainId`               | `pallet_evm_chain_id`                        |
+| 25    | `BaseFee`                  | `pallet_base_fee`                            |
+| 26    | `Drand`                    | `pallet_drand`                               |
+| 27    | `Crowdloan`                | `pallet_crowdloan`                           |
+| 28    | `Swap`                     | `pallet_subtensor_swap`                      |
+| 29    | `Contracts`                | `pallet_contracts` )                         |
+| 30    | `MevShield`                | `pallet_shield`                              |
+
 ## Subtensor pallets
 
 The Subtensor runtime is composed of multiple pallets that collectively define the behavior of the Bittensor blockchain. Each pallet manages a specific domain of the protocol.
