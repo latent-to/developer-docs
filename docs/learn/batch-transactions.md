@@ -35,7 +35,7 @@ The SDK's `add_stake_multiple` and `unstake_multiple` send individual extrinsics
 To submit multiple stake actions as an atomic batch (one extrinsic on-chain), use the low-level pallet builder + `proxy` path. The batch call is wrapped in a proxy extrinsic signed by your proxy wallet.
 
 :::note Proxy type for batch calls
-The `Staking` proxy type allows specific staking extrinsics (`add_stake`, `remove_stake`, etc.) but does not allow `Utility::batch_all` as the outer call. For batch staking operations, use a `NonCritical` proxy, which prohibits only destructive operations (`dissolve_network`, `root_register`, `burned_register`, `Sudo`) and allows everything else, including batch wrappers.
+The `Staking` proxy type is an allowlist of specific staking extrinsics. It does not permit `Utility::batch_all` as the outer call, so batch staking via a `Staking` proxy will fail with `CallFiltered`. Use a `NonTransfer` proxy for batch staking. `NonTransfer` blocks only balance transfers and coldkey swaps, allowing everything else including batch wrappers. `NonCritical` also works but is more permissive than most users need.
 :::
 
 ```python
@@ -64,11 +64,11 @@ batch_call = sub.compose_call(
     call_params={"calls": [call_1, call_2]},
 )
 
-# Submit via proxy — NonCritical proxy type is required for batch wrappers
+# Submit via proxy — Staking proxy type cannot wrap batch calls, use NonTransfer
 response = sub.proxy(
     wallet=proxy_wallet,
     real_account_ss58=real_account_ss58,
-    force_proxy_type=ProxyType.NonCritical,
+    force_proxy_type=ProxyType.NonTransfer,
     call=batch_call,
 )
 print(response)

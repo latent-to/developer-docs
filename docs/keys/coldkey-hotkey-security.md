@@ -163,18 +163,14 @@ Only two operations strictly require the primary coldkey:
 
 For these, use your hardware wallet (Ledger or Polkadot Vault). Both support proxy creation and coldkey rotation.
 
-**After the initial proxy is in place, use it to manage all subsequent proxy relationships.** A `NonCritical` or `NonTransfer` proxy can create and remove other proxies, reject announcements, and perform batch operations — so the primary coldkey never needs to leave cold storage again. The recommended pattern:
+**After the initial proxy is in place, use it to manage all subsequent proxy relationships.** A `NonTransfer` proxy can create and remove other proxies, reject announcements, and perform batch operations so the primary coldkey never needs to leave cold storage again. The recommended pattern:
 
-1. From your hardware wallet, create a single `NonCritical` proxy with a non-zero delay.
+1. From your hardware wallet, create a single `NonTransfer` proxy with a non-zero delay.
 2. Use that proxy to create narrower, scoped proxies (`Staking`, `Registration`, etc.) as needed.
 3. Use those scoped proxies for day-to-day operations.
-4. Use the `NonCritical` proxy to revoke scoped proxies when they're no longer needed.
+4. Use the `NonTransfer` proxy to revoke scoped proxies when they're no longer needed.
 
-If you find yourself needing to load your primary coldkey onto a machine to perform an operation, that is a signal to reconsider the approach — not to harden the machine. Hardening does not make a hot machine safe for primary coldkey operations; it only reduces the probability of compromise. The goal is to avoid the situation entirely.
-
-:::danger Emergency operations
-If you face an urgent operation with no time for a delayed proxy — a subnet emergency requiring immediate hyperparameter changes, for example — you are choosing between intervention risk and financial risk. This is a difficult position to be in. The best preparation is to have scoped proxies already configured in advance for predictable emergency operations, so this tradeoff never arises.
-:::
+If you find yourself needing to load your primary coldkey onto a machine to perform an operation, that is a signal to reconsider the approach.
 
 ### Rotating your coldkey
 
@@ -182,6 +178,7 @@ If you suspect the primary coldkey has been compromised, you can swap it out usi
 
 See [Rotate/Swap your Coldkey](./coldkey-swap).
 
+If a proxy coldkey is comporomised it may be easier, and is certainly quicker, to revoke its proxy status and purge any references to it from your system.
 
 ## Hotkey workstation
 
