@@ -98,7 +98,6 @@ Cons:
 Only to be used in addition to backups of the seed phrase.
 :::
 
-Here’s a concise, on-brand section you can drop into your doc, matching the tone and structure of the others:
 
 ### Mobile phone vault (e.g. Polkadot Vault)
 

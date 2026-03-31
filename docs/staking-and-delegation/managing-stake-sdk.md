@@ -278,6 +278,180 @@ async def main():
 asyncio.run(main())
 ```
 
+```shell
+🔓 Using proxy wallet: zingo
+  Staking on behalf of: 5ECaCSR1tEzc...
+  Dividing 10.0 TAO across top 3 validators in each of top 3 subnets.
+Fetching information on top subnets by TAO emissions
+
+  Subnet 119 had τ0.017297815 emissions!
+
+  Fetching metagraph for subnet 119...
+
+  Subnet 13 had τ0.011085027 emissions!
+
+  Fetching metagraph for subnet 13...
+
+  Subnet 353 had τ0.006091625 emissions!
+
+  Fetching metagraph for subnet 353...
+✅ Retrieved metagraph for subnet 353 in 1.24 seconds.
+
+  Top 3 Validators for Subnet 353:
+  1. 5CFZ9xDaFQVLA9ERsTs9S3i6jp1VDydvjQH5RDsyWCCJkTM4 - Stake: 249972.03125
+  2. 5E7NahRhasrbzdiy9ET9Uau8jBPWisvYzZNbrEmf2kCsnYqN - Stake: 574.5496826171875
+  3. 5Gb9UGDCMandeYerV3okgQVwcvovS5ZNnmnKuQ1zmJqD3vqT - Stake: 0.0
+✅ Retrieved metagraph for subnet 119 in 1.36 seconds.
+
+  Top 3 Validators for Subnet 119:
+  1. 5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ - Stake: 990945.875
+  2. 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT - Stake: 489277.59375
+  3. 5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV - Stake: 296578.34375
+✅ Retrieved metagraph for subnet 13 in 1.41 seconds.
+
+  Top 3 Validators for Subnet 13:
+  1. 5EnSc8m4n79NetfJZ4w7c7bxT3CA8XdgAKUJqBLnu6yyFvAr - Stake: 1168657.375
+  2. 5DcQrTd45LGT88WR3tBRqgyDxFJ73SQ2ULfUqNcrMNez2Vtx - Stake: 1080121.5
+  3. 5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV - Stake: 320195.09375
+  Staking τ1.111111111 to 5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ on subnet 119...
+Enter your password:
+Decrypting...
+ExtrinsicResponse:
+    success: True
+    message: Success
+    extrinsic_function: proxy_extrinsic
+    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0x284c140823f5d70b04e92ccf9f7ed7560e38f1c6a4496f4474ec8a3a63e0a338742135f906359e673571b91b53854a716032e5528eeb6f4a1179f74e8ee56884'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ', 'netuid': 119, 'amount_staked': 1111111111}})>}, 'nonce': 33, 'era': {'period': 128, 'current': 6800798}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ', 'netuid': 119, 'amount_staked': 1111111111}})>}}}
+    extrinsic_fee: τ0.001447515
+    extrinsic_receipt: ExtrinsicReceipt<hash:0x8d3f7370f9a2bfc81e18018ebd41c9b03768f95954b4936cf5a7836b0b6710f6>
+
+    mev_extrinsic: None
+    transaction_tao_fee: None
+    transaction_alpha_fee: None
+    error: None
+    data: None
+
+  Staking τ1.111111111 to 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT on subnet 119...
+ExtrinsicResponse:
+    success: True
+    message: Success
+    extrinsic_function: proxy_extrinsic
+    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0x2083f26dfb3fc05eb434a98d0de971978e35e6667d14ae5444edfd802d2997516088f58c5a141d0ef31189328823729dcefca788150a33c9f397c2ebdc7e8b86'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT', 'netuid': 119, 'amount_staked': 1111111111}})>}, 'nonce': 34, 'era': {'period': 128, 'current': 6800802}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT', 'netuid': 119, 'amount_staked': 1111111111}})>}}}
+    extrinsic_fee: τ0.001447515
+    extrinsic_receipt: ExtrinsicReceipt<hash:0xd23a02136c8c5202a8ec3cffa3d0d653675f019b28671c27ef519638683e87a5>
+
+    mev_extrinsic: None
+    transaction_tao_fee: None
+    transaction_alpha_fee: None
+    error: None
+    data: None
+
+  Staking τ1.111111111 to 5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV on subnet 119...
+ExtrinsicResponse:
+    success: True
+    message: Success
+    extrinsic_function: proxy_extrinsic
+    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0x3eaa81e8ee37e91767029aa967264545671c8fe0143dc047f502b7927e9f862e67c95f56ec25ee2f369ed5f232d340372d38846d354f9c5953e9daa6ffe5dd89'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV', 'netuid': 119, 'amount_staked': 1111111111}})>}, 'nonce': 35, 'era': {'period': 128, 'current': 6800804}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV', 'netuid': 119, 'amount_staked': 1111111111}})>}}}
+    extrinsic_fee: τ0.001447515
+    extrinsic_receipt: ExtrinsicReceipt<hash:0x3632ee897d1f3f977ac00635112943e710f1abf634e5a89270ff500cbb275dc8>
+
+    mev_extrinsic: None
+    transaction_tao_fee: None
+    transaction_alpha_fee: None
+    error: None
+    data: None
+
+  Staking τ1.111111111 to 5EnSc8m4n79NetfJZ4w7c7bxT3CA8XdgAKUJqBLnu6yyFvAr on subnet 13...
+ExtrinsicResponse:
+    success: True
+    message: Success
+    extrinsic_function: proxy_extrinsic
+    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0xdecfc77cdcaf0736263bbbf3a4cd90a04f68c59ff765458087a67eae203f734bd89c1fd01e112a2a286bd24197473249c74f58073d92ec37a3e29d22a7d3a481'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5EnSc8m4n79NetfJZ4w7c7bxT3CA8XdgAKUJqBLnu6yyFvAr', 'netuid': 13, 'amount_staked': 1111111111}})>}, 'nonce': 36, 'era': {'period': 128, 'current': 6800808}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5EnSc8m4n79NetfJZ4w7c7bxT3CA8XdgAKUJqBLnu6yyFvAr', 'netuid': 13, 'amount_staked': 1111111111}})>}}}
+    extrinsic_fee: τ0.001447515
+    extrinsic_receipt: ExtrinsicReceipt<hash:0x9f18e06a3b9d0bd09e0af239ca39d3b77fb1afae93e8b3be4bab0361faf67dc7>
+
+    mev_extrinsic: None
+    transaction_tao_fee: None
+    transaction_alpha_fee: None
+    error: None
+    data: None
+
+  Staking τ1.111111111 to 5DcQrTd45LGT88WR3tBRqgyDxFJ73SQ2ULfUqNcrMNez2Vtx on subnet 13...
+ExtrinsicResponse:
+    success: True
+    message: Success
+    extrinsic_function: proxy_extrinsic
+    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0xde501cc5bdad357689b77ea9159add53a700db4d75d7e12e60622351de1538640527eb0860f3d124e0fa5ee186b8c60707efc1ecc4cfc5f4be79943a3da58d84'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5DcQrTd45LGT88WR3tBRqgyDxFJ73SQ2ULfUqNcrMNez2Vtx', 'netuid': 13, 'amount_staked': 1111111111}})>}, 'nonce': 37, 'era': {'period': 128, 'current': 6800810}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5DcQrTd45LGT88WR3tBRqgyDxFJ73SQ2ULfUqNcrMNez2Vtx', 'netuid': 13, 'amount_staked': 1111111111}})>}}}
+    extrinsic_fee: τ0.001447515
+    extrinsic_receipt: ExtrinsicReceipt<hash:0x3cc778716050735fa9387a0f57ae4d79d95c1be20f67769b1c196280b890d983>
+
+    mev_extrinsic: None
+    transaction_tao_fee: None
+    transaction_alpha_fee: None
+    error: None
+    data: None
+
+  Staking τ1.111111111 to 5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV on subnet 13...
+ExtrinsicResponse:
+    success: True
+    message: Success
+    extrinsic_function: proxy_extrinsic
+    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0x80f64a110b4aeee41b5efbaf8a6ccff4704302f01dcef725d63cdc02865fd0126642e09c568f83eab15953d3e1737983496398bcf3da223ae8c5ba7e166fb585'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV', 'netuid': 13, 'amount_staked': 1111111111}})>}, 'nonce': 38, 'era': {'period': 128, 'current': 6800814}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5Ckdcm5X2EMe8q3V5EH3A6bhNpUEd8ZM61dwfxECjuJLfMUV', 'netuid': 13, 'amount_staked': 1111111111}})>}}}
+    extrinsic_fee: τ0.001447515
+    extrinsic_receipt: ExtrinsicReceipt<hash:0xa277eec29bed42d5442a11e450697ea373cc2f2aeb533ca57d2f91beecde46b9>
+
+    mev_extrinsic: None
+    transaction_tao_fee: None
+    transaction_alpha_fee: None
+    error: None
+    data: None
+
+  Staking τ1.111111111 to 5CFZ9xDaFQVLA9ERsTs9S3i6jp1VDydvjQH5RDsyWCCJkTM4 on subnet 353...
+ExtrinsicResponse:
+    success: True
+    message: Success
+    extrinsic_function: proxy_extrinsic
+    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0x1c92ece8ea85faf0e5ad5aae55f7a104a9ad25f653cc8a260cc0fdc9503b7d0bc7528f310195980379882e892039c313a0e3426e2cf5074ff6bef2f98d7c1d84'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5CFZ9xDaFQVLA9ERsTs9S3i6jp1VDydvjQH5RDsyWCCJkTM4', 'netuid': 353, 'amount_staked': 1111111111}})>}, 'nonce': 39, 'era': {'period': 128, 'current': 6800817}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5CFZ9xDaFQVLA9ERsTs9S3i6jp1VDydvjQH5RDsyWCCJkTM4', 'netuid': 353, 'amount_staked': 1111111111}})>}}}
+    extrinsic_fee: τ0.001447515
+    extrinsic_receipt: ExtrinsicReceipt<hash:0x2286eee64fa36db43a0946b60d80dbf0e8cd72065d21513eb26e655a781cd379>
+
+    mev_extrinsic: None
+    transaction_tao_fee: None
+    transaction_alpha_fee: None
+    error: None
+    data: None
+
+  Staking τ1.111111111 to 5E7NahRhasrbzdiy9ET9Uau8jBPWisvYzZNbrEmf2kCsnYqN on subnet 353...
+ExtrinsicResponse:
+    success: True
+    message: Success
+    extrinsic_function: proxy_extrinsic
+    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0xf6caf107f69848b05d89dd3aa6c259ba2d2f7b1291c674092c33beee947a466682ef737ed1161dc59d4536ff244f623a9dfb375673bb94cb822754ac27179089'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5E7NahRhasrbzdiy9ET9Uau8jBPWisvYzZNbrEmf2kCsnYqN', 'netuid': 353, 'amount_staked': 1111111111}})>}, 'nonce': 40, 'era': {'period': 128, 'current': 6800819}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5E7NahRhasrbzdiy9ET9Uau8jBPWisvYzZNbrEmf2kCsnYqN', 'netuid': 353, 'amount_staked': 1111111111}})>}}}
+    extrinsic_fee: τ0.001447515
+    extrinsic_receipt: ExtrinsicReceipt<hash:0x6a34c510537039ce1250481d2286f5250e7bd915c8be14c717ced8a097dc51eb>
+
+    mev_extrinsic: None
+    transaction_tao_fee: None
+    transaction_alpha_fee: None
+    error: None
+    data: None
+
+  Staking τ1.111111111 to 5Gb9UGDCMandeYerV3okgQVwcvovS5ZNnmnKuQ1zmJqD3vqT on subnet 353...
+ExtrinsicResponse:
+    success: True
+    message: Success
+    extrinsic_function: proxy_extrinsic
+    extrinsic: {'account_id': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'signature': {'Sr25519': '0x72d78aaa8e8007a373f9dcda04cdc2d50a6db0ca21d65307cbc399660ce7b029507cac24949c020168b8ea202436b94cee3042c3f09a6327e6c07d759b946185'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5Gb9UGDCMandeYerV3okgQVwcvovS5ZNnmnKuQ1zmJqD3vqT', 'netuid': 353, 'amount_staked': 1111111111}})>}, 'nonce': 41, 'era': {'period': 128, 'current': 6800823}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0x8239a0d104d34d835eb44217a0383e4af12a06782833da8f4c5bd734a6bed239', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'Staking', 'call': <GenericCall(value={'call_module': 'SubtensorModule', 'call_function': 'add_stake', 'call_args': {'hotkey': '5Gb9UGDCMandeYerV3okgQVwcvovS5ZNnmnKuQ1zmJqD3vqT', 'netuid': 353, 'amount_staked': 1111111111}})>}}}
+    extrinsic_fee: τ0.001447515
+    extrinsic_receipt: ExtrinsicReceipt<hash:0xf6fad2ee153defb2bd19759c2852e8369708f37b169ce9518c0bc234ea488bbf>
+
+    mev_extrinsic: None
+    transaction_tao_fee: None
+    transaction_alpha_fee: None
+    error: None
+    data: None
+
+Staking completed in 332.55s
+```
 ## Unstake from a validator
 
 Set up the required environment variables:
