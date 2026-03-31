@@ -77,8 +77,6 @@ Add a proxy record on the blockchain to designate a proxy wallet for your safe w
 :::note coldkey security!
 Note that this operation requires the safe wallet's coldkey private key, which is a maximally sensitive and valuable cryptographic secret.
 
-For any wallet with real-value TAO (i.e. TAO on Bittensor's main network, `finney`), coldkey private keys and seed phrases should be handled with utmost care, only on dedicated coldkey workstations.
-
 See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
 :::
 
@@ -435,10 +433,9 @@ After submitting the transaction, check the Polkadot.JS web app's **Explorer** p
 ## Remove a Proxy
 
 Removing a proxy revokes the delegate’s permission to act on behalf of the primary account, effectively ending the proxy relationship on-chain. To remove a proxy:
+
 :::note coldkey security!
 Note that this operation requires the safe wallet's coldkey private key, which is a maximally sensitive and valuable cryptographic secret.
-
-For any wallet with real-value TAO (i.e. TAO on Bittensor's main network, `finney`), coldkey private keys and seed phrases should be handled with utmost care, only on dedicated coldkey workstations.
 
 See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
 :::
@@ -529,8 +526,6 @@ The `delegate_ss58`, `proxy_type`, and `delay` parameters must exactly match tho
 Use this to remove all proxies associated with an account.
 :::note coldkey security!
 Note that this operation requires the safe wallet's coldkey private key, which is a maximally sensitive and valuable cryptographic secret.
-
-For any wallet with real-value TAO (i.e. TAO on Bittensor's main network, `finney`), coldkey private keys and seed phrases should be handled with utmost care, only on dedicated coldkey workstations.
 
 See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
 :::
