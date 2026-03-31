@@ -997,6 +997,56 @@ asyncio.run(main())
 `reject_proxy_announcement` must be signed by the real account. For primary coldkeys holding real value this means your hardware wallet. Keep your hardware wallet accessible so you can reject promptly if an unexpected announcement appears.
 :::
 
+### Reject all pending announcements
+
+If you need to clear all pending announcements from a delegate at once — for example, after aborting a staking run or if you suspect your proxy key is compromised — use this script to fetch and reject every pending announcement as a single atomic [batch transaction](../../learn/batch-transactions).
+
+```python
+import asyncio
+import bittensor as bt
+from bittensor.core.extrinsics.pallets import Proxy
+
+async def main():
+    async with bt.AsyncSubtensor(network="test") as subtensor:
+        # Must be the real account — sign from your hardware wallet
+        real_account_wallet = bt.Wallet(name="YOUR_REAL_WALLET")  # replace with your real account wallet name
+        delegate_ss58 = "DELEGATE_SS58"  # replace with your proxy account SS58 address
+
+        # Fetch all pending announcements for this delegate
+        announcements = await subtensor.get_proxy_announcement(delegate_ss58)
+
+        if not announcements:
+            print("No pending announcements found.")
+            return
+
+        print(f"Found {len(announcements)} pending announcements. Batch rejecting...")
+
+        # Build a reject call for each announcement
+        reject_calls = []
+        for ann in announcements:
+            print(f"  Will reject: {ann.call_hash}")
+            call = await Proxy(subtensor).reject_announcement(
+                delegate=delegate_ss58,
+                call_hash=ann.call_hash,
+            )
+            reject_calls.append(call)
+
+        # Wrap in batch_all — reverts all rejections atomically on any failure
+        batch_call = await subtensor.compose_call(
+            call_module="Utility",
+            call_function="batch_all",
+            call_params={"calls": reject_calls},
+        )
+
+        response = await subtensor.sign_and_send_extrinsic(
+            call=batch_call,
+            wallet=real_account_wallet,
+        )
+        print(response)
+
+asyncio.run(main())
+```
+
 ## Troubleshooting
 
 - `proxy.Duplicate`: A proxy with the same configuration already exists on the real account. See [source code: `Duplicate` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L739).

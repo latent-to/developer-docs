@@ -24,7 +24,6 @@ Bittensor operations fall into three security tiers based on which key is requir
 | **Operational** | Scoped proxy coldkey | Internet-connected workstation |
 | **Custody** | Primary coldkey | Hardware wallet only |
 
-The core principle: **your primary coldkey should never be loaded onto a machine running btcli or the Bittensor SDK.** Neither tool has hardware wallet integration — both require the key present on disk to sign transactions. The proxy system exists to bridge this gap, but it is not a substitute for hardware wallet custody. A proxy coldkey on a hot machine is still a coldkey on a hot machine; the safety comes from limiting its scope, requiring a delay, and revoking it when not in active use.
 
 ## Permissionless workstation
 
@@ -57,13 +56,9 @@ Hardware wallets keep the private key inside the device. Signing happens on the 
 
 ### Ledger
 
-Ledger hardware wallets, used with a compatible wallet app, support TAO transfers, staking, unstaking, and proxy creation. Compatible wallet apps include [Crucible](https://crucible.bittensor.com/), [Talisman](https://www.talisman.xyz/), [Nova Wallet](https://novawallet.io/), and [SubWallet](https://www.subwallet.app/).
+Ledger hardware wallets, used with a compatible wallet app, support TAO transfers, staking, unstaking, and proxy creation. Compatible wallet apps include the Bittensor mobile wallet app ([bittensor.com/wallet](https://bittensor.com/wallet)), [Crucible](https://crucible.bittensor.com/), [Talisman](https://www.talisman.xyz/), [Nova Wallet](https://novawallet.io/), and [SubWallet](https://www.subwallet.app/).
 
 See [Using Ledger Hardware Wallet](../staking-and-delegation/using-ledger-hw-wallet).
-
-### Bittensor mobile wallet
-
-The Bittensor mobile wallet app ([bittensor.com/wallet](https://bittensor.com/wallet)) supports TAO management and alpha staking. If using it, dedicate a device to this purpose with no other apps installed to minimize the risk of key exposure.
 
 ### Polkadot Vault
 
@@ -84,31 +79,29 @@ Unlike Ledger wallet apps, which expose a limited set of supported operations, P
 
 ## Proxy architecture: bridging cold custody to hot operations
 
-The Bittensor SDK and `btcli` require a coldkey on the machine for most financial operations. The solution is to use your hardware wallet to create **proxy coldkeys** — separate coldkeys with scoped, limited permissions that act on behalf of your primary coldkey.
+The Bittensor SDK and `btcli` require a coldkey on the machine for most financial operations. The solution is to use your hardware wallet to create **proxy coldkeys**: coldkeys that can be granted scoped, limited permissions that act on behalf of your primary coldkey.
 
-This keeps your primary coldkey in cold storage while allowing `btcli` and SDK use with a proxy coldkey whose blast radius is constrained by type and delay.
+This keeps your primary coldkey in cold storage while allowing `btcli` and SDK use with a proxy coldkey whose blast radius is constrained by type and delay. Proxies can be set to act with a requried delay, allowing a window to reject unauthorized transactions. A properly maintained, adequately monitored system of scoped, delayed proxies offers the best way to securely conduct operations that require a coldkey for advanced functionality requiring the SDK or `btcli`, such as managing subnets or hotkeys.
 
 ### Recommended proxy configuration
 
-For automated or routine operations, configure proxies with:
+Configure proxies with:
 
 - **Least-privileged proxy type**: use only the permission level the operation requires:
-  - `Staking` — stake and unstake only, no transfers
-  - `SmallTransfer` — TAO and alpha transfers below 0.5 TAO/alpha per transaction only
-  - `Transfer` — unlimited transfers; treat with nearly the same care as the primary coldkey
-  - `Registration` — hotkey registration only
-  - `Owner` — subnet owner operations only
+  - `Staking`: stake and unstake only, no transfers
+  - `SmallTransfer`: TAO and alpha transfers below 0.5 TAO/alpha per transaction only
+  - `Transfer`: unlimited transfers, including all of your TAO to someone else in one quick step.
+  - `Registration`: hotkey registration only
+  - `Owner`: subnet owner operations only
 
 - **Non-zero delay**: a delayed proxy must announce its intent on-chain and wait a specified number of blocks before the call executes. During this window, the primary coldkey holder can reject and veto the transaction from their hardware wallet.
 
-A `SmallTransfer` proxy with a meaningful delay is a robustly safe configuration for automated operations: a compromised proxy key can only attempt small transactions, announced on-chain in advance, with a cancellation window.
 
 :::warning Transfer proxy type
-A proxy with `Transfer` permissions and zero delay provides little protection over direct coldkey access. It can drain your entire TAO balance in a single transaction. If transfer capability is needed, prefer `SmallTransfer` with a delay. Treat any `Transfer`-capable proxy coldkey with the same security rigor as a primary coldkey.
+A proxy with `Transfer` permissions and zero delay provides little protection over direct coldkey access. It can drain your entire TAO balance in a single transaction. If transfer capability is needed, prefer `SmallTransfer`.
 :::
 
-
-:::warning Zero-delay proxies
+:::danger Zero-delay proxies
 A proxy with `delay: 0` executes immediately with no veto window. Always set a non-zero delay for proxies that control financial operations.
 :::
 
@@ -121,11 +114,11 @@ Set up proxies from your hardware wallet so the primary coldkey is never involve
 - [Working with Proxies](./proxies/working-with-proxies.md)
 - [Staking with a Proxy](./proxies/staking-with-proxy.md)
 
-## Using btcli and the SDK: proxy coldkeys
+## Using BTCLI and the SDK with proxy coldkeys
 
-`btcli` and the Bittensor SDK run on internet-connected machines. Any coldkey loaded onto such a machine is exposed to network risk regardless of how the machine is configured. **The way to use these tools safely is not to harden the machine — it is to never load your primary coldkey onto it in the first place.**
+`btcli` and the Bittensor SDK run on internet-connected machines. Any coldkey loaded onto such a machine is exposed to network risk regardless of how the machine is configured.
 
-Instead, use a scoped proxy coldkey: one with the minimum permissions needed for the specific operation, a non-zero delay, and a short lifespan.
+Therefore, it should always be preferred to use a scoped, proxy coldkey: one with the minimum permissions needed for the specific operation at hand, a non-zero delay, and ideally a short lifecycle.
 
 ### Proxy lifecycle
 
@@ -139,7 +132,9 @@ Keeping long-lived proxies with broad permissions around indefinitely defeats th
 
 ### Monitor proxy announcements
 
-A delayed proxy must broadcast its intent on-chain before executing. **If you are not actively monitoring those announcements, the delay provides no protection.** The delay creates a veto window — it does not enforce one. An attacker who steals a proxy key can announce a call and wait out the delay undetected if no one is watching.
+A delayed proxy must broadcast its intent on-chain before executing, which allows users to check pending announcements and ensure that no unauthorized transactions are made.
+
+**However, if you are not actively monitoring those announcements, the delay provides no protection.** An attacker who steals a proxy key can announce a call and wait out the delay undetected if no one is watching.
 
 **Requirements:**
 
@@ -150,22 +145,30 @@ A delayed proxy must broadcast its intent on-chain before executing. **If you ar
 See [Monitor and Reject Announcements](./proxies/working-with-proxies#monitor-and-reject-announcements) for how to query pending announcements, run a monitoring script, and reject from your hardware wallet.
 
 :::warning Do not mine with primary coldkeys
-Miners need coldkeys for currency management and hotkeys for serving requests. The primary coldkey should **never** be present in an environment running untrusted ML code, containers, or third-party frameworks. Use a proxy coldkey with the minimum permissions required, and revoke it when not actively mining.
+Miners need coldkeys for currency management and hotkeys for serving requests. The no coldkey should be present in an environment running mining code.
 :::
-
-### Rotating a compromised proxy coldkey
-
-If a proxy coldkey is leaked, remove it from your hardware wallet immediately. Because the primary coldkey is unaffected, the blast radius is limited to what the proxy was permitted to do and what it had time to execute before revocation.
 
 ### Team and multi-signature setups
 
-If a team collectively manages a coldkey, use a multisig to prevent a single compromised team member from acting unilaterally.
+If a team collectively manages a coldkey, you can use a multisig to prevent a single compromised team member from acting unilaterally.
 
 See [Multi-signature wallets](./multisig).
 
 ## Operations requiring the primary coldkey
 
-Initial proxy setup and coldkey rotation require the primary coldkey. For these, use your hardware wallet (Ledger or Polkadot Vault). Both support proxy creation and coldkey rotation.
+Only two operations strictly require the primary coldkey:
+
+1. **Initial proxy setup** — creating the very first proxy relationship on a new coldkey, since no proxy exists yet to act on its behalf.
+2. **Coldkey rotation** — swapping to a new coldkey.
+
+For these, use your hardware wallet (Ledger or Polkadot Vault). Both support proxy creation and coldkey rotation.
+
+**After the initial proxy is in place, use it to manage all subsequent proxy relationships.** A `NonCritical` or `NonTransfer` proxy can create and remove other proxies, reject announcements, and perform batch operations — so the primary coldkey never needs to leave cold storage again. The recommended pattern:
+
+1. From your hardware wallet, create a single `NonCritical` proxy with a non-zero delay.
+2. Use that proxy to create narrower, scoped proxies (`Staking`, `Registration`, etc.) as needed.
+3. Use those scoped proxies for day-to-day operations.
+4. Use the `NonCritical` proxy to revoke scoped proxies when they're no longer needed.
 
 If you find yourself needing to load your primary coldkey onto a machine to perform an operation, that is a signal to reconsider the approach — not to harden the machine. Hardening does not make a hot machine safe for primary coldkey operations; it only reduces the probability of compromise. The goal is to avoid the situation entirely.
 
