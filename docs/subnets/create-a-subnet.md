@@ -54,7 +54,17 @@ One option for subnet owners is to ask one of the root network (subnet 0) valida
 
 ### Subnet creation rate limits
 
-Subnet creations are limited to **one subnet creation per 28800 blocks** (approximately one every four days). The cost to register a new subnet is also dynamic. For these reason, picking the right time to create your subnet requires planning.
+Subnet creations are limited to **one subnet creation per 14400 blocks** (approximately one every two days). The cost to register a new subnet is also dynamic. For these reasons, picking the right time to create your subnet requires planning.
+
+<details>
+<summary><strong>Query rate limit on-chain</strong></summary>
+
+You can check the current rate limit and when the last subnet was registered using the [Polkadot.js browser app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Storage**:
+
+- **Rate limit (blocks between subnet creations):** Query `subtensorModule.networkRateLimit()`.
+- **Current burn cost:** Use `btcli subnet burn-cost`. The cost is dynamically computed from the last registration cost, the time since last registration, and a floor value (`NetworkMinLockCost`). It doubles on each registration and decays over time.
+
+</details>
 
 ## Prerequisites
 
