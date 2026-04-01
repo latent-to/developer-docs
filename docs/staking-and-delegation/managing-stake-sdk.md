@@ -26,25 +26,17 @@ See also:
 - [Batch Transactions](../learn/batch-transactions)
 
 
-:::tip
-Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.0005 TAO. To verify, query `subtensorModule.minStake()` on the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate). See [Inspecting the Chain](../concepts/inspecting-the-chain).
-:::
-
 ## Best practices for staking security
 
-When staking real-value liquidity (especially on mainnet), two practices significantly reduce your exposure to loss. (Using a proxy coldkey is covered in [Prerequisites](#for-mainnet) above.)
+When staking real-value liquidity (especially on mainnet), two tools can significantly reduce your exposure to loss, if properly used: proxies and price protection.
 
-### Use time-delay proxies
+### Proxies
 
-A **zero-delay** proxy executes transactions immediately — convenient, but if the proxy key is compromised, an attacker can drain your stake instantly.
+A proxy allows a separate key to sign staking transactions on behalf of your primary coldkey, which stays in cold storage. For mainnet staking, always use a proxy with a non-zero delay so that transactions must be announced on-chain before execution, giving you a window to detect and reject unauthorized activity.
 
-A **time-delay** proxy requires a two-step flow: first **announce** the transaction (publishing its hash on-chain), then **execute** it after a configurable delay (measured in blocks, where 1 block ≈ 12 seconds). During the delay window, the real account owner can review pending announcements and [**reject**](../keys/proxies/working-with-proxies#reject-an-announcement) any unauthorized ones before they execute. This gives you a safety window to respond to a compromised proxy key.
+See [Prerequisites: For mainnet](#for-mainnet) for the recommended proxy setup, and [Proxies: Overview](../keys/proxies/) and [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security) for the full security model.
 
-The tradeoff is latency and operational overhead. Are your tokens worth it?
-
-See: [Stake with a time-delay proxy](#stake-with-a-time-delay-proxy)
-
-### Use price protection (safe staking)
+### Price protection (safe staking)
 
 Every stake or unstake operation trades tokens through the subnet's AMM, which means your transaction itself moves the price. Without price protection, you're exposed to:
 
@@ -52,7 +44,14 @@ Every stake or unstake operation trades tokens through the subnet's AMM, which m
 - **MEV/sandwich attacks**: Adversaries can front-run your transaction to extract value.
 - **Organic volatility**: The price may move between when you submit and when your transaction lands.
 
-The SDK provides **price protection** through `add_stake_limit` and `remove_stake_limit` extrinsics, which accept a `limit_price` (the worst acceptable price in RAO per alpha) and an `allow_partial` flag:
+
+See: [Understand Price Protection](../learn/price-protection)
+
+
+<details>
+  <summary><strong>SDK Price Protection details</strong></summary>
+
+  The SDK provides **price protection** through `add_stake_limit` and `remove_stake_limit` extrinsics, which accept a `limit_price` (the worst acceptable price in RAO per alpha) and an `allow_partial` flag:
 
 - **Strict mode** (`allow_partial=False`): Transaction is rejected entirely if the final price would exceed your limit.
 - **Partial mode** (`allow_partial=True`): Executes the maximum amount that stays within your price limit.
@@ -68,11 +67,10 @@ limit_price = bt.Balance.from_tao(pool.price.tao * (1 + rate_tolerance)).rao
 limit_price = bt.Balance.from_tao(pool.price.tao * (1 - rate_tolerance)).rao
 ```
 
-See: [Understand Price Protection](../learn/price-protection)
-
 :::warning SDK default is unsafe
-Unlike `btcli`, the SDK does **not** enable price protection by default. You must explicitly use `add_stake_limit` / `remove_stake_limit` instead of the unprotected `add_stake` / `remove_stake` to get price protection.
+Unlike `btcli`, the SDK does **not** enable price protection by default, it must be explicitly configured.
 :::
+</details>
 
 ## Prerequisites
 
@@ -248,6 +246,9 @@ Note the call hash from the output.
 
 </TabItem>
 <TabItem value="sdk" label="Python SDK">
+
+
+
 
 ```python
 import asyncio
