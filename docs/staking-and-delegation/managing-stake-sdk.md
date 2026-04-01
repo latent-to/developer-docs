@@ -307,51 +307,77 @@ asyncio.run(main())
 
 ### Step 2. Monitor
 
+During the delay window, query the chain for pending announcements and verify the only pending hash is the one you announced. This script checks all delayed proxy delegates for your real account, cross-references against `announced_stake.json` from Step 1, and gives a clear verdict.
 
-During the delay window, query the chain for pending announcements and verify every hash matches what you announced. btcli cannot query on-chain announcements, so use the SDK or [Polkadot.js](../concepts/inspecting-the-chain).
+btcli cannot query on-chain announcements, so use the SDK or [Polkadot.js](../concepts/inspecting-the-chain).
+
+:::warning Run this more than once
+An attacker could announce after your first check. Run this at least twice: once shortly after announcing, and again immediately before executing Step 3.
+:::
 
 ```python
-import asyncio
+import asyncio, json, sys
 import bittensor as bt
 
-MY_COLDKEY_SS58 = "REAL_COLDKEY_SS58"  # replace with your coldkey SS58
+REAL_ACCOUNT_SS58 = "REAL_COLDKEY_SS58"  # replace with your coldkey SS58
+ANNOUNCED_FILE = "announced_stake.json"  # file saved by Step 1
 BLOCK_TIME_SECONDS = 12
 
-async def check_announcements():
+async def monitor():
     async with bt.AsyncSubtensor(network="test") as subtensor:
-        proxies, _ = await subtensor.get_proxies_for_real_account(
-            real_account_ss58=MY_COLDKEY_SS58
-        )
-        if not proxies:
-            print("No proxy relationships configured.")
-            return
-        print(proxies)
+        with open(ANNOUNCED_FILE) as f:
+            data = json.load(f)
+        # Single-stake file is a dict, not a list
+        expected_hashes = {data["call_hash"]} if isinstance(data, dict) else {a["call_hash"] for a in data}
+
+        proxies, _ = await subtensor.get_proxies_for_real_account(REAL_ACCOUNT_SS58)
+        delayed_proxies = [p for p in proxies if p.delay > 0]
+        if not delayed_proxies:
+            sys.exit("No delayed proxy relationships found.")
 
         current_block = await subtensor.get_current_block()
-        for proxy_info in proxies:
-            if proxy_info.delay == 0:
-                continue
+        on_chain_hashes = set()
+
+        for proxy_info in delayed_proxies:
             announcements = await subtensor.get_proxy_announcement(proxy_info.delegate)
             for ann in announcements:
-                if ann.real != MY_COLDKEY_SS58:
+                if ann.real != REAL_ACCOUNT_SS58:
                     continue
+                on_chain_hashes.add(ann.call_hash)
                 blocks_elapsed = current_block - ann.height
-                blocks_remaining = proxy_info.delay - blocks_elapsed
-                time_remaining_s = blocks_remaining * BLOCK_TIME_SECONDS
+                blocks_remaining = max(0, proxy_info.delay - blocks_elapsed)
+                is_ours = ann.call_hash in expected_hashes
+                executable_now = blocks_remaining == 0
+
+                if is_ours:
+                    status = "EXPECTED"
+                elif executable_now:
+                    status = "EXECUTABLE NOW — REJECT IMMEDIATELY"
+                else:
+                    status = "UNEXPECTED — NOT IN " + ANNOUNCED_FILE
+
                 print(
                     f"PENDING ANNOUNCEMENT\n"
                     f"  delegate:     {proxy_info.delegate}\n"
                     f"  proxy_type:   {proxy_info.proxy_type}\n"
                     f"  call_hash:    {ann.call_hash}\n"
                     f"  announced:    block {ann.height} ({blocks_elapsed} blocks ago)\n"
-                    f"  veto window:  {max(0, blocks_remaining)} blocks remaining "
-                    f"({max(0, time_remaining_s):.0f} s)\n"
+                    f"  veto window:  {blocks_remaining} blocks ({blocks_remaining * BLOCK_TIME_SECONDS}s)\n"
+                    f"  status:       {status}\n"
                 )
 
-asyncio.run(check_announcements())
+        unexpected = on_chain_hashes - expected_hashes
+        if unexpected:
+            print("UNAUTHORIZED announcements detected! Reject immediately and rotate keys.")
+            for h in unexpected:
+                print(f"  {h}")
+        else:
+            print("All on-chain announcements match expected hashes. Safe to proceed to Step 3.")
+
+asyncio.run(monitor())
 ```
 
-If you see an unexpected hash, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately using a `NonTransfer` proxy:
+If you see an unexpected hash, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately. To batch-reject all pending announcements, see [Reject all pending announcements](../keys/proxies/working-with-proxies#reject-all-pending-announcements). To reject a single announcement:
 
 ```python
 import asyncio
@@ -753,99 +779,134 @@ ANNOUNCED 9 STAKING TRANSACTIONS
 The entire security value of a time-delay proxy depends on monitoring. If you skip this step, a compromised proxy key can drain your account during the delay window by submitting its own announcements. **Always verify that the pending announcements match exactly what you announced**. 
 :::
 
-During the delay window, run this script to cross-reference on-chain announcements against the `announced_stakes.json` file saved in Step 1. It will flag any announcement you didn't create — which would indicate your proxy key has been compromised — and confirm which of your expected announcements are present.
+During the delay window, run this script to cross-reference on-chain announcements against the `announced_stakes.json` file saved in Step 1. It checks **all** proxy delegates for your real account (not just the one you used), filters for announcements targeting your coldkey, and flags anything you didn't create.
+
+:::warning Run this more than once
+A single check is not sufficient. An attacker could announce *after* your first check. Run this script at least twice: once shortly after announcing, and again immediately before executing Step 3.
+:::
 
 ```python
-import json
+import asyncio, json, sys
 import bittensor as bt
-import os
 
-sub = bt.Subtensor(network="test")
+REAL_ACCOUNT_SS58 = "YOUR_COLDKEY_SS58"  # replace with your real account SS58
+ANNOUNCED_FILE = "announced_stakes.json"  # file saved by Step 1
+BLOCK_TIME_SECONDS = 12
 
-delegate_ss58 = os.environ.get("BT_PROXY_WALLET_SS58", "YOUR_PROXY_WALLET_SS58")
-real_account_ss58 = os.environ.get("BT_REAL_ACCOUNT_SS58", "YOUR_COLDKEY_SS58")
-delay_blocks = 100
+async def monitor():
+    async with bt.AsyncSubtensor(network="test") as subtensor:
+        # Load the hashes we expect from Step 1
+        with open(ANNOUNCED_FILE) as f:
+            expected = json.load(f)
+        expected_hashes = {a["call_hash"] for a in expected}
 
-# Load the hashes we expect from Step 1
-with open("announced_stakes.json") as f:
-    expected = json.load(f)
-expected_hashes = {a["call_hash"] for a in expected}
+        # Get ALL proxy relationships for this real account
+        proxies, _ = await subtensor.get_proxies_for_real_account(REAL_ACCOUNT_SS58)
+        if not proxies:
+            sys.exit("No proxy relationships found for this account.")
 
-# Fetch proxy relationships to confirm setup
-proxies, deposit = sub.get_proxies_for_real_account(real_account_ss58)
-print(f"Proxy relationships for {real_account_ss58[:16]}...:")
-for p in proxies:
-    print(f"  {p}")
+        delayed_proxies = [p for p in proxies if p.delay > 0]
+        if not delayed_proxies:
+            sys.exit("No delayed proxy relationships found.")
 
-# Fetch pending announcements for our delegate (proxy) account
-announcements = sub.get_proxy_announcement(delegate_ss58)
-current_block = sub.block
-on_chain_hashes = set()
+        print(f"Checking {len(delayed_proxies)} delayed proxy delegate(s) for {REAL_ACCOUNT_SS58[:16]}...")
+        current_block = await subtensor.get_current_block()
+        on_chain_hashes = set()
 
-print(f"\n{'='*60}")
-print(f"PENDING ANNOUNCEMENTS (block {current_block})")
-print(f"{'='*60}")
+        print(f"\n{'='*60}")
+        print(f"PENDING ANNOUNCEMENTS (block {current_block})")
+        print(f"{'='*60}")
 
-for ann in announcements:
-    on_chain_hashes.add(ann.call_hash)
-    blocks_elapsed = current_block - ann.height
-    blocks_remaining = max(0, delay_blocks - blocks_elapsed)
-    is_ours = ann.call_hash in expected_hashes
-    status = "✅ EXPECTED" if is_ours else "🚨 UNEXPECTED — NOT IN announced_stakes.json"
+        found_any = False
+        for proxy_info in delayed_proxies:
+            announcements = await subtensor.get_proxy_announcement(proxy_info.delegate)
+            for ann in announcements:
+                # Only look at announcements targeting our real account
+                if ann.real != REAL_ACCOUNT_SS58:
+                    continue
+                found_any = True
+                on_chain_hashes.add(ann.call_hash)
+                blocks_elapsed = current_block - ann.height
+                blocks_remaining = max(0, proxy_info.delay - blocks_elapsed)
+                is_ours = ann.call_hash in expected_hashes
+                executable_now = blocks_remaining == 0
 
-    print(f"\n  call_hash:    {ann.call_hash}")
-    print(f"  real:         {ann.real}")
-    print(f"  announced:    block {ann.height} ({blocks_elapsed} blocks ago)")
-    print(f"  veto window:  {blocks_remaining} blocks remaining ({blocks_remaining * 12}s)")
-    print(f"  status:       {status}")
+                if is_ours:
+                    status = "EXPECTED"
+                elif executable_now:
+                    status = "EXECUTABLE NOW — REJECT IMMEDIATELY"
+                else:
+                    status = "UNEXPECTED — NOT IN " + ANNOUNCED_FILE
 
-# Check for expected announcements that are missing on-chain
-missing = expected_hashes - on_chain_hashes
-unexpected = on_chain_hashes - expected_hashes
+                print(f"\n  call_hash:    {ann.call_hash}")
+                print(f"  delegate:     {proxy_info.delegate}")
+                print(f"  proxy_type:   {proxy_info.proxy_type}")
+                print(f"  announced:    block {ann.height} ({blocks_elapsed} blocks ago)")
+                print(f"  veto window:  {blocks_remaining} blocks ({blocks_remaining * BLOCK_TIME_SECONDS}s)")
+                print(f"  status:       {status}")
 
-print(f"\n{'='*60}")
-print(f"SUMMARY")
-print(f"{'='*60}")
-print(f"  Expected:    {len(expected_hashes)}")
-print(f"  On-chain:    {len(on_chain_hashes)}")
-print(f"  Matched:     {len(expected_hashes & on_chain_hashes)}")
+        if not found_any:
+            print("\n  (no pending announcements found for this account)")
 
-if missing:
-    print(f"\n⚠️  MISSING announcements (expected but not on-chain):")
-    for h in missing:
-        print(f"    {h}")
+        # Cross-reference
+        missing = expected_hashes - on_chain_hashes
+        unexpected = on_chain_hashes - expected_hashes
 
-if unexpected:
-    print(f"\n🚨 UNAUTHORIZED announcements detected!")
-    print(f"   Your proxy key may be compromised. Reject these immediately")
-    print(f"   and rotate your keys.")
-    for h in unexpected:
-        print(f"    {h}")
-else:
-    print(f"\n✅ All on-chain announcements match expected hashes. Safe to proceed to Step 3.")
+        print(f"\n{'='*60}")
+        print(f"SUMMARY")
+        print(f"{'='*60}")
+        print(f"  Expected:    {len(expected_hashes)}")
+        print(f"  On-chain:    {len(on_chain_hashes)}")
+        print(f"  Matched:     {len(expected_hashes & on_chain_hashes)}")
+
+        if missing:
+            print(f"\n  MISSING announcements (expected but not on-chain):")
+            for h in missing:
+                print(f"    {h}")
+            print(f"  These may not have been finalized yet. Re-check shortly.")
+
+        if unexpected:
+            print(f"\n  UNAUTHORIZED announcements detected!")
+            print(f"  Your proxy key may be compromised.")
+            print(f"  Reject these immediately and rotate your keys.")
+            for h in unexpected:
+                print(f"    {h}")
+            return False
+        else:
+            print(f"\n  All on-chain announcements match expected hashes. Safe to proceed to Step 3.")
+            return True
+
+asyncio.run(monitor())
 ```
 
 
-If you see an **unexpected hash**, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately:
+If you see an **unexpected hash**, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately. To batch-reject all pending announcements at once, see [Reject all pending announcements](../keys/proxies/working-with-proxies#reject-all-pending-announcements). To reject a single announcement:
 
 ```python
+import asyncio
+import bittensor as bt
 from bittensor.core.chain_data.proxy import ProxyType
 from bittensor.core.extrinsics.pallets import Proxy
 
-nontransfer_proxy_wallet = bt.Wallet(name="YOUR_NONTRANSFER_PROXY")  # replace with your NonTransfer proxy wallet name
-real_account_ss58 = "YOUR_REAL_ACCOUNT_SS58"  # replace with your real account SS58
+async def main():
+    async with bt.AsyncSubtensor(network="test") as subtensor:
+        nontransfer_proxy_wallet = bt.Wallet(name="YOUR_NONTRANSFER_PROXY")  # replace
+        real_account_ss58 = "YOUR_REAL_ACCOUNT_SS58"  # replace
+        delegate_ss58 = "COMPROMISED_DELEGATE_SS58"  # the proxy that made the announcement
 
-reject_call = Proxy(sub).reject_announcement(
-    delegate=delegate_ss58,
-    call_hash="0xSUSPICIOUS_HASH_HERE",
-)
-response = sub.proxy(
-    wallet=nontransfer_proxy_wallet,
-    real_account_ss58=real_account_ss58,
-    force_proxy_type=ProxyType.NonTransfer,
-    call=reject_call,
-)
-print(response)
+        reject_call = await Proxy(subtensor).reject_announcement(
+            delegate=delegate_ss58,
+            call_hash="0xSUSPICIOUS_HASH_HERE",  # replace with the hash to reject
+        )
+        response = await subtensor.proxy(
+            wallet=nontransfer_proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            force_proxy_type=ProxyType.NonTransfer,
+            call=reject_call,
+        )
+        print(response)
+
+asyncio.run(main())
 ```
 
 ### Step 3: Execute
