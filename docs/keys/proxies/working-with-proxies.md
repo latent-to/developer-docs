@@ -57,7 +57,7 @@ The first proxy relationship on a coldkey must be created by the primary coldkey
 
 After creating the initial `NonTransfer` proxy from your hardware wallet, all subsequent proxy management (creating scoped proxies, revoking proxies, rejecting announcements) can be done through that proxy. The primary coldkey never needs to leave cold storage again.
 
-If you need `btcli` or the SDK for any operation, use a proxy key, not your primary coldkey. And remember to use scope limitations, delays, and prompt revokation to limit the risk exposure of your proxies.
+If you need `btcli` or the SDK for any operation, use a proxy key, not your primary coldkey. And remember to use scope limitations, delays, and prompt revocation to limit the risk exposure of your proxies.
 
 See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
 
@@ -78,9 +78,7 @@ Once you have practiced on a local or test chain, and you are ready to execute t
 - The proxy wallet, which will act on behalf of the safe wallet.
 
 :::warning fee
-The delegate account must hold enough funds to cover transaction fees, which are approximately 25 Rao (0.000025 TAO).
-
-See: [Fees](../../learn/fees)
+The delegate account must hold enough funds to cover transaction fees (fees are dynamic and weight-based; see [Transaction Fees](../../learn/fees) and [Estimating Fees](../../learn/fees#estimating-fees)).
 :::
 
 ## Add a Proxy Relationship
@@ -126,7 +124,7 @@ For our example, we'll use two wallets called `PracticeSafeWallet` and `Practice
 - **`PracticeSafeWallet`**: `5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt`
 - **`PracticeProxy`**: `5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe`
 
-To give the `PracticeProxy` account the ability to order small transfers from the `PracticeSafeWallet` wallet's balance immediately (with 0 delay), we'll use the following comand:
+To give the `PracticeProxy` account the ability to order small transfers from the `PracticeSafeWallet` wallet's balance immediately (with 0 delay), we'll use the following command:
 
 ```bash
 btcli proxy add \
@@ -417,7 +415,7 @@ Balances(subtensor).transfer_keep_alive(...)
 :::
 
 :::warning
-The delegate account must hold enough funds to cover transaction fees, which are approximately 25 µTAO (0.000025 TAO).
+The delegate account must hold enough funds to cover transaction fees (fees are dynamic and weight-based; see [Transaction Fees](../../learn/fees) and [Estimating Fees](../../learn/fees#estimating-fees)).
 :::
 
   </TabItem>
@@ -523,10 +521,10 @@ print(response)
 2. Under “using the selected account”, pick the delegator account.
 3. Under "submit the following extrinsic", choose the `proxy` pallet and call `removeProxy(delegate, proxyType, delay)`.
 4. Fill the parameters:
-   - `delegate`: select the imported delegate account from the _Accounts_ dropdown.
-   - `proxyType`: select `SmallTransfer`; this should allow us to transfer amounts that do not exceed 0.5τ.
-   - `delay`: Optionally, include a delay in blocks.
-5. Click **Submit Transaction** and sign with the _delegator_ account.
+   - `delegate`: select the delegate account to remove.
+   - `proxyType`: must match the proxy type used when the proxy was added.
+   - `delay`: must match the delay value used when the proxy was added.
+5. Click **Submit Transaction** and sign with the _delegator_ (real) account.
 
 </TabItem>
 </Tabs>
@@ -561,9 +559,9 @@ To remove all proxies in one operation, use the SDK's `remove_proxies()` method.
 ```python
 import bittensor as bt
 
-subtensor = bt.Subtensor(network="local")
+subtensor = bt.Subtensor(network="test")
 
-real_account = bt.Wallet(name="sn-creator")
+real_account = bt.Wallet(name="WALLET_NAME")
 
 response = subtensor.remove_proxies(wallet=real_account)
 
@@ -726,7 +724,7 @@ Block Hash: 0x1c6378ee38b8c27f161b646125ec301f1aa52bffd63b090ec0c0876c9cc56ba5
 Balance:
 98.4409 τ ➡ 98.4409 τ
 
-````
+```
 </details>
 **What this does:**
 
@@ -780,7 +778,7 @@ response = subtensor.announce_proxy(
 
 print(response)
 # Save the call_hash - you'll need it to execute after the delay
-````
+```
 
 :::info
 Next, wait for the duration of the configured delay before executing the call. During the waiting period, the delegate can cancel the announcement—`subtensor.remove_proxy_announcement()`, while the real account retains final authority to reject it—`subtensor.reject_proxy_announcement()`.

@@ -87,7 +87,7 @@ Everything above, plus:
 - **A hardware wallet** (Ledger or [Polkadot Vault](../keys/coldkey-hotkey-security#hardware-solution-polkadot-vault)) for your primary coldkey. Your primary coldkey should never be loaded onto an internet-connected machine.
 - **A `NonTransfer` proxy** created from your hardware wallet. This proxy manages all other proxies so the primary coldkey stays in cold storage permanently. See [Add a Proxy Relationship](../keys/proxies/working-with-proxies#add-a-proxy-relationship) and [Manage proxies through a NonTransfer proxy](../keys/proxies/working-with-proxies#manage-proxies-through-a-nontransfer-proxy).
 - **A `Staking` proxy with a non-zero delay**, created through your `NonTransfer` proxy. This is the key you will use for day-to-day staking operations on this page. The delay creates a veto window during which you can [reject unauthorized announcements](../keys/proxies/working-with-proxies#reject-an-announcement).
-- **Sufficient TAO** in the proxy wallet to cover transaction fees (~0.001 TAO per transaction).
+- **Sufficient TAO** in the proxy wallet to cover transaction fees (fees are dynamic and weight-based; see [Transaction Fees](../learn/fees) and [Estimating Fees](../learn/fees#estimating-fees)).
 
 See [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security) for the full security model.
 
@@ -110,7 +110,7 @@ btcli wallet balance
 ```python
 import bittensor as bt
 sub = bt.Subtensor(network="test")
-wallet = bt.Wallet(name="PracticeKey!")
+wallet = bt.Wallet(name="my_coldkey")
 balance = sub.get_balance(wallet.coldkeypub.ss58_address)
 print(balance)
 ```
@@ -223,7 +223,7 @@ print(response)
 
 ## Stake to a specific validator with a time-delay proxy
 
-Stake to a single validator on a specific subnet using a time-delay `Staking` proxy with [price protection](#use-price-protection-safe-staking). The process has three steps: announce the transaction, monitor for unauthorized announcements, then execute after the delay.
+Stake to a single validator on a specific subnet using a time-delay `Staking` proxy with [price protection](#price-protection-safe-staking). The process has three steps: announce the transaction, monitor for unauthorized announcements, then execute after the delay.
 
 ### Step 1. Announce
 
@@ -251,7 +251,7 @@ Note the call hash from the output.
 
 
 ```python
-import asyncio
+import asyncio, json
 import bittensor as bt
 from bittensor.core.extrinsics.pallets import SubtensorModule
 
@@ -266,7 +266,8 @@ async def main():
 
         # Build the call with price protection
         pool = await subtensor.subnet(netuid=netuid)
-        limit_price = bt.Balance.from_tao(pool.price.tao * 1.02).rao
+        rate_tolerance = 0.02  # 2%
+        limit_price = bt.Balance.from_tao(pool.price.tao * (1 + rate_tolerance)).rao
 
         add_stake_call = await SubtensorModule(subtensor).add_stake_limit(
             netuid=netuid,
@@ -284,6 +285,19 @@ async def main():
             call_hash=call_hash,
         )
         print(announce_result)
+
+        # Save exact parameters so the execute step can rebuild the identical call.
+        save_data = {
+            "netuid": netuid,
+            "hotkey": hotkey,
+            "call_hash": call_hash,
+            "amount_staked_rao": amount.rao,
+            "limit_price_rao": limit_price,
+            "allow_partial": False,
+        }
+        with open("announced_stake.json", "w") as f:
+            json.dump(save_data, f, indent=2)
+        print(f"Saved announcement data to announced_stake.json")
 
 asyncio.run(main())
 ```
@@ -383,7 +397,7 @@ btcli proxy execute \
 <TabItem value="sdk" label="Python SDK">
 
 ```python
-import asyncio
+import asyncio, json
 import bittensor as bt
 from bittensor.core.chain_data.proxy import ProxyType
 from bittensor.core.extrinsics.pallets import SubtensorModule
@@ -394,25 +408,23 @@ PROXY_DELAY_BLOCKS = 100  # must match delay configured when the proxy was creat
 
 async def main():
     async with bt.AsyncSubtensor(network='test') as subtensor:
-        # Rebuild the call with the EXACT same parameters used when announcing.
-        # If any parameter differs, the hash won't match and execution will fail.
-        netuid = 14
-        hotkey = "VALIDATOR_HOTKEY"  # must match announcement
-        amount = bt.Balance.from_tao(100)
-
-        pool = await subtensor.subnet(netuid=netuid)
-        limit_price = bt.Balance.from_tao(pool.price.tao * 1.02).rao
-        # WARNING: limit_price is computed from the current pool price, which may have
-        # changed since announcement. If the hash doesn't match, you need the exact
-        # limit_price from when you announced. See the multi-validator example below
-        # for how to save and reload exact parameters.
+        # Load the exact parameters saved during announcement.
+        with open("announced_stake.json") as f:
+            data = json.load(f)
 
         add_stake_call = await SubtensorModule(subtensor).add_stake_limit(
-            netuid=netuid,
-            hotkey=hotkey,
-            amount_staked=amount.rao,
-            limit_price=limit_price,
-            allow_partial=False,
+            netuid=data["netuid"],
+            hotkey=data["hotkey"],
+            amount_staked=data["amount_staked_rao"],
+            limit_price=data["limit_price_rao"],
+            allow_partial=data["allow_partial"],
+        )
+
+        # Verify the hash matches what was announced.
+        call_hash = "0x" + add_stake_call.call_hash.hex()
+        assert call_hash == data["call_hash"], (
+            f"Hash mismatch: rebuilt {call_hash} != announced {data['call_hash']}. "
+            f"Parameters must be identical to announcement."
         )
 
         current_block = await subtensor.get_current_block()
@@ -438,7 +450,7 @@ asyncio.run(main())
 
 ## Stake to top subnets and validators with a time-delay proxy
 
-This is the same script as above, adapted to use a **time-delay proxy** for stronger security. The process is split into three separate steps with a mandatory human verification step between them:
+This script automatically stakes across the top validators in the top subnets by emission, using a **time-delay proxy**. The process is split into three separate steps with a mandatory human verification step between them:
 
 1. **Announce**: Build all staking calls and announce their hashes on-chain. Record every hash.
 2. **Monitor**: Before doing anything else, verify that **all and only** the hashes you announced are pending. This is the critical security step — if an attacker has compromised your proxy key, unauthorized announcements will appear here. If you see any hash you don't recognize, reject it immediately and rotate your keys.
