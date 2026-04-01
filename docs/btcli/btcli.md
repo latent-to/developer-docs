@@ -486,76 +486,101 @@ alias: swap_hotkey
 
 ### `btcli wallet swap-coldkey`
 
-This command allows you to schedule a coldkey swap for a wallet. You can either provide a new wallet name, or SS58 address.
+Swap your coldkey to a new address using a two-step announcement process.
 
-**Example**
+Coldkey swaps require two steps for security:
 
-```sh
-btcli wallet swap-coldkey --new-wallet my_new_wallet
+1. **Announce**: Declare your intent to swap. This pays the swap fee and starts a delay period.
+
+2. **Execute**: After the delay (typically 5 days), complete the swap.
+
+:::info
+If you suspect compromise, you can Dispute an active announcement to freeze all activity for the coldkey until the triumvirate can intervene.
+If you want to withdraw your announcement, you can Clear (withdraw) an announcement once the
+reannouncement delay has elapsed.
+:::
+
+**EXAMPLES**
+
+Step 1 - Announce your intent to swap:
+
+```bash
+btcli wallet swap-coldkey announce --new-coldkey 5Dk...X3q
 ```
 
-```sh
-btcli wallet swap-coldkey --new-coldkey-ss58 5Dk...X3q
+Step 2 - After the delay period, execute the swap:
+
+```bash
+btcli wallet swap-coldkey execute --new-coldkey 5Dk...X3q
 ```
 
-**Usage:**
+Dispute an active swap (freezes the swap process):
 
-```sh
-btcli wallet swap-coldkey [OPTIONS]
+```bash
+btcli wallet swap-coldkey dispute
+```
 
-alias: swap_coldkey
+Clear (withdraw) an announcement:
+
+```bash
+btcli wallet swap-coldkey clear
+```
+
+Check status of your swap:
+
+```bash
+btcli wallet swap-coldkey check
 ```
 
 **Options**
 
-| Option                                                                      | Type | Description                                                                                                                           |
-| --------------------------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT | Name of the wallet.                                                                                                                   |
-| `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                     | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
-| `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT | Hotkey of the wallet                                                                                                                  |
-| `--new-coldkey`, `--new-coldkey-ss58`, `--new-wallet`, `--new`              | TEXT | SS58 address of the new coldkey that will replace the current one.                                                                    |
-| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT | The subtensor network to connect to. Default: finney.                                                                                 |
-| `--proxy`                                                                   | TEXT | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |      | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
-| `--no`                                                                      |      | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
-| `--quiet`                                                                   |      | Display only critical information on the console.                                                                                     |
-| `--verbose`                                                                 |      | Enable verbose output.                                                                                                                |
-| `--force`, `--force-swap`, `-f`                                             |      | Force the swap even if the new coldkey is already scheduled for a swap.                                                               |
-| `--help`                                                                    |      | Show this message and exit.                                                                                                           |
+| Option                                                                      | Type | Description                                                                                                          |
+| --------------------------------------------------------------------------- | ---- | -------------------------------------------------------------------------------------------------------------------- |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT | Name of the wallet.                                                                                                  |
+| `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                     | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                 |
+| `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT | Hotkey of the wallet                                                                                                 |
+| `--new-coldkey`, `--new-coldkey-ss58`, `--new-wallet`, `--new`              | TEXT | SS58 address or wallet name of the new coldkey.                                                                      |
+| `--mev-protection/--no-mev-protection`                                      |      | Enable or disable MEV protection (default: enabled).                                                                 |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT | The subtensor network to connect to. Default: finney.                                                                |
+| `--quiet`                                                                   |      | Display only critical information on the console.                                                                    |
+| `--verbose`                                                                 |      | Enable verbose output.                                                                                               |
+| `--no`                                                                      |      | Automatically decline any confirmation prompts. The prompt message is still displayed unless `--quiet` is specified. |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |      | Enable or disable interactive prompts.                                                                               |
+| `--help`                                                                    |      | Show this message and exit.                                                                                          |
 |                                                                             |
 
 ### `btcli wallet swap-check`
 
-This command checks the status of scheduled coldkey swaps. It can be used in one of three ways:
+Check the status of pending coldkey swap announcements.
 
-- Show all pending swaps using the `--all` flag.
-- Check status of a specific wallet's swap or SS58 address.
-- Check detailed swap status with block number using the `--block` flag.
+Coldkey swaps use a two-step announcement system. Use this command to check if you have any pending announcements and when they become executable.
+
+**USAGE**
+
+This command can be used in two ways:
+
+1. Show all pending announcements (`--all`)
+
+2. Check status of a specific wallet or SS58 address
 
 **Example**
 
-Show all pending swaps:
+1. Show all pending swap announcements:
 
-```sh
+```bash
 btcli wallet swap-check --all
 ```
 
-Check specific wallet's swap:
+2. Check specific wallet's announcement:
 
-```sh
-  btcli wallet swap-check --wallet-name my_wallet
+```bash
+btcli wallet swap-check --wallet-name my_wallet
 ```
 
-Check swap using SS58 address:
+3. Check announcement using SS58 address:
 
-```sh
- btcli wallet swap-check --ss58 5DkQ4...
-```
-
-Check swap details with block number:
-
-```sh
-  btcli wallet swap-check --wallet-name my_wallet --block 12345
+```bash
+btcli wallet swap-check --ss58 5DkQ4...
 ```
 
 **Usage:**
@@ -572,11 +597,13 @@ alias: swap_check
 | `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name` | TEXT | Name of the wallet. |
 | `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path` | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
 | `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey` | TEXT | Hotkey of the wallet |
+| `--all`, `-a` | | Show all pending coldkey swap announcements |
 | `--block` | INTEGER | Block number where the swap was scheduled. |
 | `--all` | | Show all pending coldkey swaps |
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT | The subtensor network to connect to. Default: finney. |
 | `--quiet` | | Display only critical information on the console. |
 | `--verbose` | | Enable verbose output. |
+| `--json-output`, `--json-out` | | Outputs the result of the command as JSON. |
 | `--help` | | Show this message and exit. |
 | |
 
@@ -2388,6 +2415,111 @@ btcli sudo trim [OPTIONS]
 | `--period`, `--era`                                                         | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                         |
 | `--help`                                                                    |         | Show this message and exit.                                                                                                           |
 
+### `btcli sudo stake-burn`
+
+Allows subnet owners to buy back alpha on their subnet by staking TAO and immediately burning the acquired alpha.
+
+Examples:
+
+1. Stake and burn 10 TAO on subnet 14:
+
+```bash
+btcli sudo stake-burn --netuid 14 --amount 10
+```
+
+2. Stake and burn 10 TAO on subnet 14 with safe staking and 5% rate tolerance:
+
+```bash
+btcli sudo stake-burn --netuid 14 --amount 10 --tolerance 0.05
+```
+
+3. Stake and burn 10 TAO on subnet 14 with a specific hotkey:
+
+```bash
+btcli sudo stake-burn --netuid 14 --amount 10 --wallet-hotkey <HOTKEY_SS58>
+```
+
+**Usage:**
+
+```bash
+btcli sudo stake-burn [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                                                                                    | Type    | Description                                                                                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint`                                                                |         | The subtensor network to connect to. Default: finney.                                                                                 |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                                                                                | TEXT    | Name of the wallet.                                                                                                                   |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                                                                                    | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
+| `--hotkey`, `--hotkey-ss58`, `-H`, `--wallet_hotkey`, `--wallet_hotkey_ss58`, `--wallet-hotkey`, `--wallet-hotkey-ss58`, `--wallet.hotkey` | TEXT    | Hotkey name or SS58 address of the hotkey                                                                                             |
+| `--netuid`                                                                                                                                 | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
+| `--amount`, `-a`                                                                                                                           | FLOAT   | Amount of TAO to stake and burn                                                                                                       |
+| `--proxy`                                                                                                                                  | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
+| `--tolerance`, `--rate-tolerance`                                                                                                          | FLOAT   | Set the rate tolerance percentage for transactions (default: 0.05 for 5%).                                                            |
+| `--safe-staking/--no-safe-staking`, `--safe/--unsafe`                                                                                      |         | Enable or disable safe staking mode (default: enabled).                                                                               |
+| `--mev-protection/--no-mev-protection`                                                                                                     |         | Enable or disable MEV protection (default: enabled).                                                                                  |
+| `--quiet`                                                                                                                                  |         | Display only critical information on the console.                                                                                     |
+| `--verbose`                                                                                                                                |         | Enable verbose output.                                                                                                                |
+| `--json-output`, `--json-out`                                                                                                              |         | Outputs the result of the command as JSON.                                                                                            |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                                                                                 |         | Enable or disable interactive prompts.                                                                                                |
+| `--no`                                                                                                                                     |         | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
+| `--period`, `--era`                                                                                                                        | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                         |
+| `--help`                                                                                                                                   |         | Show this message and exit.                                                                                                           |
+
+### `btcli sudo buyback`
+
+Allows subnet owners to buy back alpha on their subnet by staking TAO and immediately burning the acquired alpha.
+
+Examples:
+
+1. Stake and burn 10 TAO on subnet 14:
+
+```bash
+btcli sudo stake-burn --netuid 14 --amount 10
+```
+
+2. Stake and burn 10 TAO on subnet 14 with safe staking and 5% rate tolerance:
+
+```bash
+btcli sudo stake-burn --netuid 14 --amount 10 --tolerance 0.05
+```
+
+3. Stake and burn 10 TAO on subnet 14 with a specific hotkey:
+
+```bash
+btcli sudo stake-burn --netuid 14 --amount 10 --wallet-hotkey <HOTKEY_SS58>
+```
+
+**Usage:**
+
+```bash
+btcli sudo buyback [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                                                                                    | Type    | Description                                                                                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint`                                                                |         | The subtensor network to connect to. Default: finney.                                                                                 |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                                                                                | TEXT    | Name of the wallet.                                                                                                                   |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                                                                                    | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
+| `--hotkey`, `--hotkey-ss58`, `-H`, `--wallet_hotkey`, `--wallet_hotkey_ss58`, `--wallet-hotkey`, `--wallet-hotkey-ss58`, `--wallet.hotkey` | TEXT    | Hotkey name or SS58 address of the hotkey                                                                                             |
+| `--netuid`                                                                                                                                 | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
+| `--amount`, `-a`                                                                                                                           | FLOAT   | Amount of TAO to stake and burn                                                                                                       |
+| `--proxy`                                                                                                                                  | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
+| `--tolerance`, `--rate-tolerance`                                                                                                          | FLOAT   | Set the rate tolerance percentage for transactions (default: 0.05 for 5%).                                                            |
+| `--safe-staking/--no-safe-staking`, `--safe/--unsafe`                                                                                      |         | Enable or disable safe staking mode (default: enabled).                                                                               |
+| `--mev-protection/--no-mev-protection`                                                                                                     |         | Enable or disable MEV protection (default: enabled).                                                                                  |
+| `--quiet`                                                                                                                                  |         | Display only critical information on the console.                                                                                     |
+| `--verbose`                                                                                                                                |         | Enable verbose output.                                                                                                                |
+| `--json-output`, `--json-out`                                                                                                              |         | Outputs the result of the command as JSON.                                                                                            |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                                                                                 |         | Enable or disable interactive prompts.                                                                                                |
+| `--no`                                                                                                                                     |         | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
+| `--period`, `--era`                                                                                                                        | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                         |
+| `--help`                                                                                                                                   |         | Show this message and exit.                                                                                                           |
+|                                                                                                                                            |
+
 ## `btcli subnets`
 
 **Usage**:
@@ -3403,7 +3535,8 @@ btcli proxy remove [OPTIONS]
 
 | Options                                                                     | Type    | Description                                                                                                        |
 | --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------ |
-| `--delegate`                                                                |         | The SS58 address of the delegate to remove                                                                         |
+| `--delegate`                                                                |         | The SS58 address of the delegate to remove (required if --all is not used)                                         |
+| `--all`                                                                     |         | Remove all proxies associated with this account                                                                    |
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                                              |
 | `--proxy-type`                                                              |         | Type of proxy                                                                                                      |
 | `--delay`                                                                   | INTEGER | Delay, in number of blocks                                                                                         |
