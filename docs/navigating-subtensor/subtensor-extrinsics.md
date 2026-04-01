@@ -14,13 +14,13 @@ Each pallet exposes functions that users or other parts of the system can call. 
 
 For example, the Subtensor pallet contains functions related to Bittensor network operations, such as neuron registration, staking, or subnet management. When a user calls one of these functions—using BTCLI or another client interface—they submit an extrinsic to the chain. Some extrinsics may also trigger events on-chain, such as confirming a successful registration or updating staking balances.
 
-## Runtime pallet list
+## Subtensor runtime pallets
 
----INTRO---
+The Subtensor runtime is composed of multiple pallets that collectively define the behavior of the Bittensor blockchain. Each pallet manages a specific domain of the protocol. This section provides a reference table of Subtensor pallets, including their pallet indices and corresponding Rust crates.
 
-The runtime includes these pallets (name as in `RuntimeCall`):
+The runtime includes these pallets:
 
-| Index | Pallet name                | Crate / purpose                              |
+| Index | Pallet name                | Crate                                        |
 | ----- | -------------------------- | -------------------------------------------- |
 | 0     | `System`                   | `frame_system`                               |
 | 1     | `RandomnessCollectiveFlip` | `pallet_insecure_randomness_collective_flip` |
@@ -50,11 +50,11 @@ The runtime includes these pallets (name as in `RuntimeCall`):
 | 29    | `Contracts`                | `pallet_contracts`                           |
 | 30    | `MevShield`                | `pallet_shield`                              |
 
-## Subtensor pallets
+Below are key extrinsics from pallets included in the Subtensor runtime:
 
-The Subtensor runtime is composed of multiple pallets that collectively define the behavior of the Bittensor blockchain. Each pallet manages a specific domain of the protocol.
-
-Below are some of the key pallets included in the Subtensor runtime:
+:::info
+The following outline of subtensor extrinsics is provided for high-level reference and is not exhaustive. For a complete specification of all available extrinsics and their associated parameters, see the [Subtensor API reference](../subtensor-api/extrinsics.md).
+:::
 
 ### `AdminUtils`
 
@@ -139,7 +139,7 @@ Root and subnet-owner configuration: subnet hyperparameters, issuance, EVM, auth
 
 ### `Balances`
 
-Native token transfers and balance operations.
+TAO transfers and balance operations.
 
 | Method                        | Arguments                 |
 | ----------------------------- | ------------------------- |
