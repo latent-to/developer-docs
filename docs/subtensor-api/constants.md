@@ -2,10 +2,9 @@
 
 Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible via `api.consts.<Pallet>.<constant_name>`. Values read live from node.
 
-> **NOTE:** Generated from a live snapshot of the Subtensor runtime on **2026-03-31**.
+> **NOTE:** Generated from a live snapshot of the Subtensor runtime on **2026-04-01**.
 > Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 > On the API: `api.tx / api.query / api.events / api.errors / api.consts`
-
 
 - **[aura](#aura)**
 - **[balances](#balances)**
@@ -34,8 +33,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `12000`
 - **summary**: The slot duration Aura should run with, expressed in milliseconds. The effective value of this type should not change while the chain is running.
 
-    For backwards compatibility either use [`MinimumPeriodTimesTwo`] or a const.
-
+  For backwards compatibility either use [`MinimumPeriodTimesTwo`] or a const.
 
 ## `balances`
 
@@ -45,9 +43,9 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `500`
 - **summary**: The minimum amount required to keep an account open. MUST BE GREATER THAN ZERO!
 
-    If you *really* need it to be zero, you can enable the feature `insecure_zero_ed` for this pallet. However, you do so at your own risk: this will open up a major DoS vector. In case you have multiple sources of provider references, you may also get unexpected behaviour if you set this to zero.
+  If you _really_ need it to be zero, you can enable the feature `insecure_zero_ed` for this pallet. However, you do so at your own risk: this will open up a major DoS vector. In case you have multiple sources of provider references, you may also get unexpected behaviour if you set this to zero.
 
-    Bottom line: Do yourself a favour and make it at least one!
+  Bottom line: Do yourself a favour and make it at least one!
 
 ### `maxFreezes`: `u32`
 
@@ -61,7 +59,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `50`
 - **summary**: The maximum number of locks that should exist on an account. Not strictly enforced, but used for weight estimation.
 
-    Use of locks is deprecated in favour of freezes. See `https://github.com/paritytech/substrate/pull/12951/`
+  Use of locks is deprecated in favour of freezes. See `https://github.com/paritytech/substrate/pull/12951/`
 
 ### `maxReserves`: `u32`
 
@@ -69,8 +67,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `50`
 - **summary**: The maximum number of named reserves that can exist on an account.
 
-    Use of reserves is deprecated in favour of holds. See `https://github.com/paritytech/substrate/pull/12951/`
-
+  Use of reserves is deprecated in favour of holds. See `https://github.com/paritytech/substrate/pull/12951/`
 
 ## `commitments`
 
@@ -92,7 +89,6 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `3`
 - **summary**: The maximum number of additional fields that can be added to a commitment
 
-
 ## `contracts`
 
 ### `apiVersion`: `u16`
@@ -101,7 +97,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `4`
 - **summary**: The version of the HostFn APIs that are available in the runtime.
 
-    Only valid value is `()`.
+  Only valid value is `()`.
 
 ### `codeHashLockupDepositPercent`: `Perbill`
 
@@ -121,9 +117,9 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `30`
 - **summary**: The amount of balance a caller has to pay for each byte of storage.
 
-    **Note:**
+  **Note:**
 
-    Changing this value for an existing chain might need a storage migration.
+  Changing this value for an existing chain might need a storage migration.
 
 ### `depositPerItem`: `u64`
 
@@ -131,9 +127,9 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `75`
 - **summary**: The amount of balance a caller has to pay for each storage item.
 
-    **Note:**
+  **Note:**
 
-    Changing this value for an existing chain might need a storage migration.
+  Changing this value for an existing chain might need a storage migration.
 
 ### `environment`: `{"_alias":{"hash_":"hash"},"accountId":"Null","balance":"PalletContractsEnvironmentType","hash_":"PalletContractsEnvironmentTypeH256","hasher":"PalletContractsEnvironmentTypeBlakeTwo256","timestamp":"PalletContractsEnvironmentTypeU64","blockNumber":"PalletContractsEnvironmentTypeU32"}`
 
@@ -141,7 +137,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `{"accountId":null,"balance":null,"hash":null,"hasher":null,"timestamp":null,"blockNumber":null}`
 - **summary**: Type that bundles together all the runtime configurable interface types.
 
-    This is not a real config. We just mention the type here as constant so that its type appears in the metadata. Only valid value is `()`.
+  This is not a real config. We just mention the type here as constant so that its type appears in the metadata. Only valid value is `()`.
 
 ### `maxCodeLen`: `u32`
 
@@ -149,7 +145,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `131072`
 - **summary**: The maximum length of a contract code in bytes.
 
-    The value should be chosen carefully taking into the account the overall memory limit your runtime has, as well as the [maximum allowed callstack depth](#associatedtype.CallStack). Look into the `integrity_test()` for some insights.
+  The value should be chosen carefully taking into the account the overall memory limit your runtime has, as well as the [maximum allowed callstack depth](#associatedtype.CallStack). Look into the `integrity_test()` for some insights.
 
 ### `maxDebugBufferLen`: `u32`
 
@@ -187,12 +183,11 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `false`
 - **summary**: Make contract callable functions marked as `#[unstable]` available.
 
-    Contracts that use `#[unstable]` functions won't be able to be uploaded unless this is set to `true`. This is only meant for testnets and dev nodes in order to experiment with new features.
+  Contracts that use `#[unstable]` functions won't be able to be uploaded unless this is set to `true`. This is only meant for testnets and dev nodes in order to experiment with new features.
 
-    **Warning:**
+  **Warning:**
 
-    Do **not** set to `true` on productions chains.
-
+  Do **not** set to `true` on productions chains.
 
 ## `crowdloan`
 
@@ -237,7 +232,6 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `50`
 - **summary**: The maximum number of contributors that can be refunded in a single refund.
 
-
 ## `drand`
 
 ### `httpFetchTimeout`: `u64`
@@ -252,8 +246,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `1048576`
 - **summary**: A configuration for base priority of unsigned transactions.
 
-    This is exposed so that it can be tuned for particular runtime, when multiple pallets send unsigned transactions.
-
+  This is exposed so that it can be tuned for particular runtime, when multiple pallets send unsigned transactions.
 
 ## `grandpa`
 
@@ -275,8 +268,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `0`
 - **summary**: The maximum number of entries to keep in the set id to session index mapping.
 
-    Since the `SetIdSession` map is only used for validating equivocations this value should relate to the bonding duration of whatever staking system is being used (if any). If equivocation handling is not enabled then this value can be zero.
-
+  Since the `SetIdSession` map is only used for validating equivocations this value should relate to the bonding duration of whatever staking system is being used (if any). If equivocation handling is not enabled then this value can be zero.
 
 ## `multisig`
 
@@ -286,7 +278,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `132000000`
 - **summary**: The base amount of currency needed to reserve for creating a multisig execution or to store a dispatch call for later.
 
-    This is held for an additional storage item whose value size is `4 + sizeof((BlockNumber, Balance, AccountId))` bytes and whose key size is `32 + sizeof(AccountId)` bytes.
+  This is held for an additional storage item whose value size is `4 + sizeof((BlockNumber, Balance, AccountId))` bytes and whose key size is `32 + sizeof(AccountId)` bytes.
 
 ### `depositFactor`: `u64`
 
@@ -294,14 +286,13 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `32000000`
 - **summary**: The amount of currency needed per unit threshold when creating a multisig execution.
 
-    This is held for adding 32 bytes more into a pre-existing storage value.
+  This is held for adding 32 bytes more into a pre-existing storage value.
 
 ### `maxSignatories`: `u32`
 
 - **interface**: `api.consts.multisig.maxSignatories`
 - **value**: `100`
 - **summary**: The maximum amount of signatories allowed in the multisig.
-
 
 ## `proxy`
 
@@ -311,7 +302,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `36000000`
 - **summary**: The base amount of currency needed to reserve for creating an announcement.
 
-    This is held when a new storage item holding a `Balance` is created (typically 16 bytes).
+  This is held when a new storage item holding a `Balance` is created (typically 16 bytes).
 
 ### `announcementDepositFactor`: `u64`
 
@@ -319,7 +310,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `68000000`
 - **summary**: The amount of currency needed per announcement made.
 
-    This is held for adding an `AccountId`, `Hash` and `BlockNumber` (typically 68 bytes) into a pre-existing storage value.
+  This is held for adding an `AccountId`, `Hash` and `BlockNumber` (typically 68 bytes) into a pre-existing storage value.
 
 ### `maxPending`: `u32`
 
@@ -339,7 +330,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `60000000`
 - **summary**: The base amount of currency needed to reserve for creating a proxy.
 
-    This is held for an additional storage item whose value size is `sizeof(Balance)` bytes and whose key size is `sizeof(AccountId)` bytes.
+  This is held for an additional storage item whose value size is `sizeof(Balance)` bytes and whose key size is `sizeof(AccountId)` bytes.
 
 ### `proxyDepositFactor`: `u64`
 
@@ -347,8 +338,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `33000000`
 - **summary**: The amount of currency needed per proxy added.
 
-    This is held for adding 32 bytes plus an instance of `ProxyType` more into a pre-existing storage value. Thus, when configuring `ProxyDepositFactor` one should take into account `32 + proxy_type.encode().len()` bytes of data.
-
+  This is held for adding 32 bytes plus an instance of `ProxyType` more into a pre-existing storage value. Thus, when configuring `ProxyDepositFactor` one should take into account `32 + proxy_type.encode().len()` bytes of data.
 
 ## `registry`
 
@@ -370,7 +360,6 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `1`
 - **summary**: Configuration fields Maximum user-configured additional fields
 
-
 ## `safeMode`
 
 ### `enterDepositAmount`: `Option<u64>`
@@ -379,7 +368,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: ``
 - **summary**: The amount that will be reserved upon calling [`Pallet::enter`].
 
-    `None` disallows permissionlessly enabling the safe-mode and is a sane default.
+  `None` disallows permissionlessly enabling the safe-mode and is a sane default.
 
 ### `enterDuration`: `u32`
 
@@ -393,7 +382,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: ``
 - **summary**: The amount that will be reserved upon calling [`Pallet::extend`].
 
-    `None` disallows permissionlessly extending the safe-mode and is a sane default.
+  `None` disallows permissionlessly extending the safe-mode and is a sane default.
 
 ### `extendDuration`: `u32`
 
@@ -401,7 +390,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `0`
 - **summary**: For how many blocks the safe-mode can be extended by each [`Pallet::extend`] call.
 
-    This does not impose a hard limit as the safe-mode can be extended multiple times.
+  This does not impose a hard limit as the safe-mode can be extended multiple times.
 
 ### `releaseDelay`: `Option<u32>`
 
@@ -409,10 +398,9 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: ``
 - **summary**: The minimal duration a deposit will remain reserved after safe-mode is entered or extended, unless [`Pallet::force_release_deposit`] is successfully called sooner.
 
-    Every deposit is tied to a specific activation or extension, thus each deposit can be released independently after the delay for it has passed.
+  Every deposit is tied to a specific activation or extension, thus each deposit can be released independently after the delay for it has passed.
 
-    `None` disallows permissionlessly releasing the safe-mode deposits and is a sane default.
-
+  `None` disallows permissionlessly releasing the safe-mode deposits and is a sane default.
 
 ## `scheduler`
 
@@ -428,10 +416,8 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `50`
 - **summary**: The maximum number of scheduled calls in the queue for a single block.
 
-    **NOTE:**
-
-    + Dependent pallets' benchmarks might require a higher limit for the setting. Set a higher limit under `runtime-benchmarks` feature.
-
+  **NOTE:**
+  - Dependent pallets' benchmarks might require a higher limit for the setting. Set a higher limit under `runtime-benchmarks` feature.
 
 ## `subtensorModule`
 
@@ -793,14 +779,13 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 
 - **interface**: `api.consts.subtensorModule.minBurnUpperBound`
 - **value**: `1000000000`
-- **summary**: Min  burn upper bound.
+- **summary**: Min burn upper bound.
 
 ### `yuma3On`: `bool`
 
 - **interface**: `api.consts.subtensorModule.yuma3On`
 - **value**: `false`
 - **summary**: A flag to indicate if Yuma3 is enabled.
-
 
 ## `swap`
 
@@ -834,7 +819,6 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `0x74656e2f73776170`
 - **summary**: This type is used to derive protocol accoun ID.
 
-
 ## `system`
 
 ### `blockHashCount`: `u32`
@@ -867,14 +851,13 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `42`
 - **summary**: The designated SS58 prefix of this chain.
 
-    This replaces the "ss58Format" property declared in the chain spec. Reason is that the runtime should know about the prefix in order to make use of it as an identifier of the chain.
+  This replaces the "ss58Format" property declared in the chain spec. Reason is that the runtime should know about the prefix in order to make use of it as an identifier of the chain.
 
 ### `version`: `{"specName":"Text","implName":"Text","authoringVersion":"u32","specVersion":"u32","implVersion":"u32","apis":"Vec<([u8;8],u32)>","transactionVersion":"u32","systemVersion":"u8"}`
 
 - **interface**: `api.consts.system.version`
 - **value**: `{"specName":"node-subtensor","implName":"node-subtensor","authoringVersion":1,"specVersion":393,"implVersion":1,"apis":[["0xdf6acb689907609b",5],["0x37e397fc7c91f5e4",2],["0x40fe3ad401f8959a",6],["0xfbc577b9d747efd6",1],["0xd2bc9897eed08f15",3],["0xf78b278be53f454c",2],["0xdd718d5cc53262d4",1],["0xab3c0572291feb8b",1],["0xed99c5acb25eedf5",3],["0xbc9d89904f5b923f",1],["0x37c8bb1350a9a2a8",4],["0xf3ff14d5ab527059",3],["0x582211f65bb14b89",6],["0xe65b00e46cedd0aa",2],["0x68b66ba122c93fa7",2],["0x42e62be4a39e5b60",1],["0x806df4ccaa9ed485",1],["0x8375104b299b74c5",1],["0x5d1fbfbe852f2807",1],["0xc6886e2f8e598b0a",1],["0xcbca25e39f142387",2],["0xa8b093e6508d9e9c",1],["0x1c4585bd5c707202",1]],"transactionVersion":1,"systemVersion":1}`
 - **summary**: Get the chain's in-code version.
-
 
 ## `timestamp`
 
@@ -884,8 +867,7 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `6000`
 - **summary**: The minimum period between blocks.
 
-    Be aware that this is different to the *expected* period that the block production apparatus provides. Your chosen consensus system will generally work with this to determine a sensible block time. For example, in the Aura pallet it will be double this period on default settings.
-
+  Be aware that this is different to the _expected_ period that the block production apparatus provides. Your chosen consensus system will generally work with this to determine a sensible block time. For example, in the Aura pallet it will be double this period on default settings.
 
 ## `transactionPayment`
 
@@ -895,14 +877,13 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **value**: `5`
 - **summary**: A fee multiplier for `Operational` extrinsics to compute "virtual tip" to boost their `priority`
 
-    This value is multiplied by the `final_fee` to obtain a "virtual tip" that is later added to a tip component in regular `priority` calculations. It means that a `Normal` transaction can front-run a similarly-sized `Operational` extrinsic (with no tip), by including a tip value greater than the virtual tip.
+  This value is multiplied by the `final_fee` to obtain a "virtual tip" that is later added to a tip component in regular `priority` calculations. It means that a `Normal` transaction can front-run a similarly-sized `Operational` extrinsic (with no tip), by including a tip value greater than the virtual tip.
 
-    ```rust,ignore // For `Normal` let priority = priority_calc(tip);
+  ```rust,ignore // For `Normal` let priority = priority_calc(tip);
 
-    // For `Operational` let virtual_tip = (inclusion_fee + tip) * OperationalFeeMultiplier; let priority = priority_calc(tip + virtual_tip); ```
+  // For `Operational` let virtual_tip = (inclusion_fee + tip) \* OperationalFeeMultiplier; let priority = priority_calc(tip + virtual_tip); ```
 
-    Note that since we use `final_fee` the multiplier applies also to the regular `tip` sent with the transaction. So, not only does the transaction get a priority bump based on the `inclusion_fee`, but we also amplify the impact of tips applied to `Operational` transactions.
-
+  Note that since we use `final_fee` the multiplier applies also to the regular `tip` sent with the transaction. So, not only does the transaction get a priority bump based on the `inclusion_fee`, but we also amplify the impact of tips applied to `Operational` transactions.
 
 ## `utility`
 
@@ -911,6 +892,3 @@ Compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible
 - **interface**: `api.consts.utility.batchedCallsLimit`
 - **value**: `10922`
 - **summary**: The limit on the number of batched calls.
-
-
-*Generated by [subtensor-docs-gen](../../../subtensor-docs-gen) on 2026-03-31T20:04:56.294Z*

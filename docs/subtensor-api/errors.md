@@ -2,10 +2,9 @@
 
 Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
-> **NOTE:** Generated from a live snapshot of the Subtensor runtime on **2026-03-31**.
+> **NOTE:** Generated from a live snapshot of the Subtensor runtime on **2026-04-01**.
 > Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 > On the API: `api.tx / api.query / api.events / api.errors / api.consts`
-
 
 - **[adminUtils](#adminutils)**
 - **[balances](#balances)**
@@ -86,7 +85,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.adminUtils.ValueNotInBounds`
 - **summary**: Value not in allowed bounds.
 
-
 ## `balances`
 
 ### `DeadAccount`
@@ -149,7 +147,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.balances.VestingBalance`
 - **summary**: Vesting balance too high to send value.
 
-
 ## `commitments`
 
 ### `AccountNotAllowedCommit`
@@ -171,7 +168,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 
 - **interface**: `api.errors.commitments.UnexpectedUnreserveLeftover`
 - **summary**: Indicates that unreserve returned a leftover, which is unexpected.
-
 
 ## `contracts`
 
@@ -200,9 +196,9 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.contracts.CodeRejected`
 - **summary**: The contract's code was found to be invalid during validation.
 
-    The most likely cause of this is that an API was used which is not supported by the node. This happens if an older node is used with a new version of ink!. Try updating your node to the newest available version.
+  The most likely cause of this is that an API was used which is not supported by the node. This happens if an older node is used with a new version of ink!. Try updating your node to the newest available version.
 
-    A more detailed error can be found on the node console if debug messages are enabled by supplying `-lruntime::contracts=debug`.
+  A more detailed error can be found on the node console if debug messages are enabled by supplying `-lruntime::contracts=debug`.
 
 ### `CodeTooLarge`
 
@@ -282,7 +278,7 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 ### `NoChainExtension`
 
 - **interface**: `api.errors.contracts.NoChainExtension`
-- **summary**: The chain does not provide a chain extension. Calling the chain extension results in this error. Note that this usually  shouldn't happen as deploying such contracts is rejected.
+- **summary**: The chain does not provide a chain extension. Calling the chain extension results in this error. Note that this usually shouldn't happen as deploying such contracts is rejected.
 
 ### `NoMigrationPerformed`
 
@@ -339,7 +335,7 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.contracts.TerminatedInConstructor`
 - **summary**: A contract self destructed in its constructor.
 
-    This can be triggered by a call to `seal_terminate`.
+  This can be triggered by a call to `seal_terminate`.
 
 ### `TerminatedWhileReentrant`
 
@@ -365,7 +361,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 
 - **interface**: `api.errors.contracts.XCMDecodeFailed`
 - **summary**: Failed to decode the XCM program.
-
 
 ## `crowdloan`
 
@@ -479,7 +474,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.crowdloan.Underflow`
 - **summary**: An underflow occurred.
 
-
 ## `drand`
 
 ### `DrandConnectionFailure`
@@ -512,7 +506,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.drand.UnverifiedPulse`
 - **summary**: the pulse is invalid
 
-
 ## `ethereum`
 
 ### `InvalidSignature`
@@ -524,7 +517,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 
 - **interface**: `api.errors.ethereum.PreLogExists`
 - **summary**: Pre-log is present, therefore transact is not allowed.
-
 
 ## `evm`
 
@@ -603,7 +595,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.evm.WithdrawFailed`
 - **summary**: Withdraw fee failed
 
-
 ## `grandpa`
 
 ### `ChangePending`
@@ -641,7 +632,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.grandpa.TooSoon`
 - **summary**: Cannot signal forced change so soon after last.
 
-
 ## `mevShield`
 
 ### `BadEncKeyLen`
@@ -653,7 +643,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 
 - **interface**: `api.errors.mevShield.Unreachable`
 - **summary**: Unreachable.
-
 
 ## `multisig`
 
@@ -727,7 +716,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.multisig.WrongTimepoint`
 - **summary**: A different timepoint was given to the multisig operation that is underway.
 
-
 ## `preimage`
 
 ### `AlreadyNoted`
@@ -769,7 +757,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 
 - **interface**: `api.errors.preimage.TooMany`
 - **summary**: More than `MAX_HASH_UPGRADE_BULK_COUNT` hashes were requested to be upgraded at once.
-
 
 ## `proxy`
 
@@ -823,7 +810,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.proxy.Unproxyable`
 - **summary**: A call which is incompatible with the proxy type's filter was attempted.
 
-
 ## `registry`
 
 ### `CannotRegister`
@@ -840,7 +826,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 
 - **interface**: `api.errors.registry.TooManyFieldsInIdentityInfo`
 - **summary**: Account passed too many additional fields to their identity
-
 
 ## `safeMode`
 
@@ -879,7 +864,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.safeMode.NotConfigured`
 - **summary**: This functionality of the pallet is disabled by the configuration.
 
-
 ## `scheduler`
 
 ### `FailedToSchedule`
@@ -906,7 +890,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 
 - **interface**: `api.errors.scheduler.TargetBlockNumberInPast`
 - **summary**: Given target block number is in the past.
-
 
 ## `subtensorModule`
 
@@ -1585,14 +1568,12 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.subtensorModule.ZeroMaxStakeAmount`
 - **summary**: Zero max stake amount
 
-
 ## `sudo`
 
 ### `RequireSudo`
 
 - **interface**: `api.errors.sudo.RequireSudo`
 - **summary**: Sender must be the Sudo account.
-
 
 ## `swap`
 
@@ -1666,7 +1647,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.swap.UserLiquidityDisabled`
 - **summary**: User liquidity operations are disabled for this subnet
 
-
 ## `system`
 
 ### `CallFiltered`
@@ -1679,7 +1659,7 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.system.FailedToExtractRuntimeVersion`
 - **summary**: Failed to extract the runtime version from the new runtime.
 
-    Either calling `Core_version` or decoding `RuntimeVersion` failed.
+  Either calling `Core_version` or decoding `RuntimeVersion` failed.
 
 ### `InvalidSpecName`
 
@@ -1716,7 +1696,6 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 - **interface**: `api.errors.system.Unauthorized`
 - **summary**: The submitted code is not authorized.
 
-
 ## `utility`
 
 ### `InvalidDerivedAccount`
@@ -1728,6 +1707,3 @@ Error variants returned by the Bittensor (Subtensor) runtime. Accessible via `ap
 
 - **interface**: `api.errors.utility.TooManyCalls`
 - **summary**: Too many calls batched.
-
-
-*Generated by [subtensor-docs-gen](../../../subtensor-docs-gen) on 2026-03-31T20:04:56.273Z*

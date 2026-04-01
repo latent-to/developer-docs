@@ -16,6 +16,8 @@ For example, the Subtensor pallet contains functions related to Bittensor networ
 
 ## Runtime pallet list
 
+---INTRO---
+
 The runtime includes these pallets (name as in `RuntimeCall`):
 
 | Index | Pallet name                | Crate / purpose                              |
@@ -45,7 +47,7 @@ The runtime includes these pallets (name as in `RuntimeCall`):
 | 26    | `Drand`                    | `pallet_drand`                               |
 | 27    | `Crowdloan`                | `pallet_crowdloan`                           |
 | 28    | `Swap`                     | `pallet_subtensor_swap`                      |
-| 29    | `Contracts`                | `pallet_contracts` )                         |
+| 29    | `Contracts`                | `pallet_contracts`                           |
 | 30    | `MevShield`                | `pallet_shield`                              |
 
 ## Subtensor pallets

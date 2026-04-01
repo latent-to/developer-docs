@@ -2,10 +2,9 @@
 
 Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
-> **NOTE:** Generated from a live snapshot of the Subtensor runtime on **2026-03-31**.
+> **NOTE:** Generated from a live snapshot of the Subtensor runtime on **2026-04-01**.
 > Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 > On the API: `api.tx / api.query / api.events / api.errors / api.consts`
-
 
 - **[adminUtils](#adminutils)**
 - **[aura](#aura)**
@@ -43,11 +42,10 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `precompileEnable`: `Map<{"_enum":["BalanceTransfer","Staking","Subnet","Metagraph","Neuron","UidLookup","Alpha","Crowdloan","Proxy","Leasing","AddressMapping","VotingPower"]}, bool>`
+### `precompileEnable(PrecompileEnum)`: `bool`
 
 - **interface**: `api.query.adminUtils.precompileEnable`
 - **summary**: Map PrecompileEnum --> enabled
-
 
 ## `aura`
 
@@ -56,12 +54,12 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.aura.authorities`
 - **summary**: The current authority set.
 
-### `currentSlot`: `u64`
+### `currentSlot`: `Slot`
 
 - **interface**: `api.query.aura.currentSlot`
 - **summary**: The current slot of this block.
 
-    This will be set in `on_initialize`.
+  This will be set in `on_initialize`.
 
 ### `palletVersion`: `u16`
 
@@ -69,32 +67,31 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-
 ## `balances`
 
-### `account`: `Map<AccountId32, {"free":"u64","reserved":"u64","frozen":"u64","flags":"u128"}>`
+### `account(AccountId32)`: `AccountData`
 
 - **interface**: `api.query.balances.account`
 - **summary**: The Balances pallet example of storing the balance of an account.
 
-    **Example:**
+  **Example:**
 
-    ```nocompile impl pallet_balances::Config for Runtime { type AccountStore = StorageMapShim<Self::Account<Runtime>, frame_system::Provider<Runtime>, AccountId, Self::AccountData<Balance>> } ```
+  `nocompile impl pallet_balances::Config for Runtime { type AccountStore = StorageMapShim<Self::Account<Runtime>, frame_system::Provider<Runtime>, AccountId, Self::AccountData<Balance>> } `
 
-    You can also store the balance of an account in the `System` pallet.
+  You can also store the balance of an account in the `System` pallet.
 
-    **Example:**
+  **Example:**
 
-    ```nocompile impl pallet_balances::Config for Runtime { type AccountStore = System } ```
+  `nocompile impl pallet_balances::Config for Runtime { type AccountStore = System } `
 
-    But this comes with tradeoffs, storing account balances in the system pallet stores `frame_system` data alongside the account data contrary to storing account balances in the `Balances` pallet, which uses a `StorageMap` to store balances data only. NOTE: This is only used in the case that this pallet is used to store balances.
+  But this comes with tradeoffs, storing account balances in the system pallet stores `frame_system` data alongside the account data contrary to storing account balances in the `Balances` pallet, which uses a `StorageMap` to store balances data only. NOTE: This is only used in the case that this pallet is used to store balances.
 
-### `freezes`: `Map<AccountId32, Vec<FrameSupportTokensMiscIdAmountRuntimeFreezeReason>>`
+### `freezes(AccountId32)`: `Vec<FrameSupportTokensMiscIdAmountRuntimeFreezeReason>`
 
 - **interface**: `api.query.balances.freezes`
 - **summary**: Freeze locks on account balances.
 
-### `holds`: `Map<AccountId32, Vec<FrameSupportTokensMiscIdAmountRuntimeHoldReason>>`
+### `holds(AccountId32)`: `Vec<FrameSupportTokensMiscIdAmountRuntimeHoldReason>`
 
 - **interface**: `api.query.balances.holds`
 - **summary**: Holds on account balances.
@@ -104,12 +101,12 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.balances.inactiveIssuance`
 - **summary**: The total units of outstanding deactivated balance in the system.
 
-### `locks`: `Map<AccountId32, Vec<PalletBalancesBalanceLock>>`
+### `locks(AccountId32)`: `Vec<PalletBalancesBalanceLock>`
 
 - **interface**: `api.query.balances.locks`
 - **summary**: Any liquidity locks on some account balances. NOTE: Should only be accessed when setting, changing and freeing a lock.
 
-    Use of locks is deprecated in favour of freezes. See `https://github.com/paritytech/substrate/pull/12951/`
+  Use of locks is deprecated in favour of freezes. See `https://github.com/paritytech/substrate/pull/12951/`
 
 ### `palletVersion`: `u16`
 
@@ -117,18 +114,17 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `reserves`: `Map<AccountId32, Vec<PalletBalancesReserveData>>`
+### `reserves(AccountId32)`: `Vec<PalletBalancesReserveData>`
 
 - **interface**: `api.query.balances.reserves`
 - **summary**: Named reserves on some account balances.
 
-    Use of reserves is deprecated in favour of holds. See `https://github.com/paritytech/substrate/pull/12951/`
+  Use of reserves is deprecated in favour of holds. See `https://github.com/paritytech/substrate/pull/12951/`
 
 ### `totalIssuance`: `u64`
 
 - **interface**: `api.query.balances.totalIssuance`
 - **summary**: The total units issued in the system.
-
 
 ## `baseFee`
 
@@ -146,21 +142,20 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-
 ## `commitments`
 
-### `commitmentOf`: `Map<(u16,AccountId32), {"deposit":"u64","block":"u32","info":"PalletCommitmentsCommitmentInfo"}>`
+### `commitmentOf(u16, AccountId32)`: `Registration`
 
 - **interface**: `api.query.commitments.commitmentOf`
 - **modifier**: `Optional`
 - **summary**: Identity data by account
 
-### `lastBondsReset`: `Map<(u16,AccountId32), u32>`
+### `lastBondsReset(u16, AccountId32)`: `u32`
 
 - **interface**: `api.query.commitments.lastBondsReset`
 - **modifier**: `Optional`
 
-### `lastCommitment`: `Map<(u16,AccountId32), u32>`
+### `lastCommitment(u16, AccountId32)`: `u32`
 
 - **interface**: `api.query.commitments.lastCommitment`
 - **modifier**: `Optional`
@@ -175,48 +170,47 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `revealedCommitments`: `Map<(u16,AccountId32), Vec<(Bytes,u64)>>`
+### `revealedCommitments(u16, AccountId32)`: `Vec<(Bytes,u64)>`
 
 - **interface**: `api.query.commitments.revealedCommitments`
 - **modifier**: `Optional`
 
-### `timelockedIndex`: `BTreeSet<(u16,AccountId32)>`
+### `timelockedIndex`: `BTreeSet`
 
 - **interface**: `api.query.commitments.timelockedIndex`
 - **summary**: Tracks all CommitmentOf that have at least one timelocked field.
 
-### `usedSpaceOf`: `Map<(u16,AccountId32), {"lastEpoch":"u64","usedSpace":"u64"}>`
+### `usedSpaceOf(u16, AccountId32)`: `UsageTracker`
 
 - **interface**: `api.query.commitments.usedSpaceOf`
 - **modifier**: `Optional`
 - **summary**: Maps (netuid, who) -> usage (how many “bytes” they've committed) in the RateLimit window
 
-
 ## `contracts`
 
-### `codeInfoOf`: `Map<H256, {"owner":"AccountId32","deposit":"Compact<u64>","refcount":"Compact<u64>","determinism":"PalletContractsWasmDeterminism","codeLen":"u32"}>`
+### `codeInfoOf(H256)`: `CodeInfo`
 
 - **interface**: `api.query.contracts.codeInfoOf`
 - **modifier**: `Optional`
 - **summary**: A mapping from a contract's code hash to its code info.
 
-### `contractInfoOf`: `Map<AccountId32, {"trieId":"Bytes","codeHash":"H256","storageBytes":"u32","storageItems":"u32","storageByteDeposit":"u64","storageItemDeposit":"u64","storageBaseDeposit":"u64","delegateDependencies":"BTreeMap<H256, u64>"}>`
+### `contractInfoOf(AccountId32)`: `ContractInfo`
 
 - **interface**: `api.query.contracts.contractInfoOf`
 - **modifier**: `Optional`
 - **summary**: The code associated with a given account.
 
-    TWOX-NOTE: SAFE since `AccountId` is a secure hash.
+  TWOX-NOTE: SAFE since `AccountId` is a secure hash.
 
-### `deletionQueue`: `Map<u32, Bytes>`
+### `deletionQueue(u32)`: `Bytes`
 
 - **interface**: `api.query.contracts.deletionQueue`
 - **modifier**: `Optional`
 - **summary**: Evicted contracts that await child trie deletion.
 
-    Child trie deletion is a heavy operation depending on the amount of storage items stored in said trie. Therefore this operation is performed lazily in `on_idle`.
+  Child trie deletion is a heavy operation depending on the amount of storage items stored in said trie. Therefore this operation is performed lazily in `on_idle`.
 
-### `deletionQueueCounter`: `{"insertCounter":"u32","deleteCounter":"u32"}`
+### `deletionQueueCounter`: `DeletionQueueManager`
 
 - **interface**: `api.query.contracts.deletionQueueCounter`
 - **summary**: A pair of monotonic counters used to track the latest contract marked for deletion and the latest deleted contract in queue.
@@ -232,17 +226,16 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.contracts.nonce`
 - **summary**: This is a **monotonic** counter incremented on contract instantiation.
 
-    This is used in order to generate unique trie ids for contracts. The trie id of a new contract is calculated from hash(account_id, nonce). The nonce is required because otherwise the following sequence would lead to a possible collision of storage:
+  This is used in order to generate unique trie ids for contracts. The trie id of a new contract is calculated from hash(account_id, nonce). The nonce is required because otherwise the following sequence would lead to a possible collision of storage:
+  1. Create a new contract.
+  2. Terminate the contract.
+  3. Immediately recreate the contract with the same account_id.
 
-    1. Create a new contract.
-    2. Terminate the contract.
-    3. Immediately recreate the contract with the same account_id.
+  This is bad because the contents of a trie are deleted lazily and there might be storage of the old instantiation still in it when the new contract is created. Please note that we can't replace the counter by the block number because the sequence above can happen in the same block. We also can't keep the account counter in memory only because storage is the only way to communicate across different extrinsics in the same block.
 
-    This is bad because the contents of a trie are deleted lazily and there might be storage of the old instantiation still in it when the new contract is created. Please note that we can't replace the counter by the block number because the sequence above can happen in the same block. We also can't keep the account counter in memory only because storage is the only way to communicate across different extrinsics in the same block.
+  **Note:**
 
-    **Note:**
-
-    Do not use it to determine the number of contracts. It won't be decremented if a contract is destroyed.
+  Do not use it to determine the number of contracts. It won't be decremented if a contract is destroyed.
 
 ### `palletVersion`: `u16`
 
@@ -250,22 +243,21 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `pristineCode`: `Map<H256, Bytes>`
+### `pristineCode(H256)`: `Bytes`
 
 - **interface**: `api.query.contracts.pristineCode`
 - **modifier**: `Optional`
 - **summary**: A mapping from a contract's code hash to its code.
 
-
 ## `crowdloan`
 
-### `contributions`: `Map<(u32,AccountId32), u64>`
+### `contributions(u32, AccountId32)`: `u64`
 
 - **interface**: `api.query.crowdloan.contributions`
 - **modifier**: `Optional`
 - **summary**: A map of crowdloan ids to their contributors and their contributions.
 
-### `crowdloans`: `Map<u32, {"creator":"AccountId32","deposit":"u64","minContribution":"u64","end":"u32","cap":"u64","fundsAccount":"AccountId32","raised":"u64","targetAddress":"Option<AccountId32>","call":"Option<FrameSupportPreimagesBounded>","finalized":"bool","contributorsCount":"u32"}>`
+### `crowdloans(u32)`: `CrowdloanInfo`
 
 - **interface**: `api.query.crowdloan.crowdloans`
 - **modifier**: `Optional`
@@ -277,7 +269,7 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Optional`
 - **summary**: The current crowdloan id that will be set during the finalize call, making it temporarily accessible to the dispatched call.
 
-### `hasMigrationRun`: `Map<Bytes, bool>`
+### `hasMigrationRun(Bytes)`: `bool`
 
 - **interface**: `api.query.crowdloan.hasMigrationRun`
 - **summary**: Storage for the migration run status.
@@ -293,15 +285,14 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-
 ## `drand`
 
-### `beaconConfig`: `{"_alias":{"hash_":"hash"},"publicKey":"Bytes","period":"u32","genesisTime":"u32","hash_":"Bytes","groupHash":"Bytes","schemeId":"Bytes","metadata":"PalletDrandMetadata"}`
+### `beaconConfig`: `BeaconConfiguration`
 
 - **interface**: `api.query.drand.beaconConfig`
 - **summary**: the drand beacon configuration
 
-### `hasMigrationRun`: `Map<Bytes, bool>`
+### `hasMigrationRun(Bytes)`: `bool`
 
 - **interface**: `api.query.drand.hasMigrationRun`
 - **summary**: Storage for migration run status
@@ -315,7 +306,7 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.drand.nextUnsignedAt`
 - **summary**: Defines the block when next unsigned transaction will be accepted.
 
-    To prevent spam of unsigned (and unpaid!) transactions on the network, we only allow one transaction per block. This storage entry defines when new transaction is going to be accepted.
+  To prevent spam of unsigned (and unpaid!) transactions on the network, we only allow one transaction per block. This storage entry defines when new transaction is going to be accepted.
 
 ### `oldestStoredRound`: `u64`
 
@@ -328,16 +319,15 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `pulses`: `Map<u64, {"round":"u64","randomness":"Bytes","signature":"Bytes"}>`
+### `pulses(u64)`: `Pulse`
 
 - **interface**: `api.query.drand.pulses`
 - **modifier**: `Optional`
 - **summary**: map round number to pulse
 
-
 ## `ethereum`
 
-### `blockHash`: `Map<U256, H256>`
+### `blockHash(U256)`: `H256`
 
 - **interface**: `api.query.ethereum.blockHash`
 
@@ -346,7 +336,7 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.ethereum.counterForPending`
 - **summary**: Counter for the related counted storage map
 
-### `currentBlock`: `{"header":"EthereumHeader","transactions":"Vec<EthereumTransactionTransactionV3>","ommers":"Vec<EthereumHeader>"}`
+### `currentBlock`: `Block`
 
 - **interface**: `api.query.ethereum.currentBlock`
 - **modifier**: `Optional`
@@ -370,25 +360,24 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `pending`: `Map<u32, (EthereumTransactionTransactionV3,FpRpcTransactionStatus,EthereumReceiptReceiptV4)>`
+### `pending(u32)`: `(EthereumTransactionTransactionV3,FpRpcTransactionStatus,EthereumReceiptReceiptV4)`
 
 - **interface**: `api.query.ethereum.pending`
 - **modifier**: `Optional`
 - **summary**: Mapping from transaction index to transaction in the current building block.
 
-
 ## `evm`
 
-### `accountCodes`: `Map<H160, Bytes>`
+### `accountCodes(H160)`: `Bytes`
 
 - **interface**: `api.query.evm.accountCodes`
 
-### `accountCodesMetadata`: `Map<H160, {"_alias":{"size_":"size","hash_":"hash"},"size_":"u64","hash_":"H256"}>`
+### `accountCodesMetadata(H160)`: `CodeMetadata`
 
 - **interface**: `api.query.evm.accountCodesMetadata`
 - **modifier**: `Optional`
 
-### `accountStorages`: `Map<(H160,H256), H256>`
+### `accountStorages(H160, H256)`: `H256`
 
 - **interface**: `api.query.evm.accountStorages`
 
@@ -406,7 +395,6 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 
 - **interface**: `api.query.evm.whitelistedCreators`
 
-
 ## `evmChainId`
 
 ### `chainId`: `u64`
@@ -419,7 +407,6 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.evmChainId.palletVersion`
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
-
 
 ## `grandpa`
 
@@ -445,21 +432,21 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `pendingChange`: `{"scheduledAt":"u32","delay":"u32","nextAuthorities":"Vec<(SpConsensusGrandpaAppPublic,u64)>","forced":"Option<u32>"}`
+### `pendingChange`: `StoredPendingChange`
 
 - **interface**: `api.query.grandpa.pendingChange`
 - **modifier**: `Optional`
 - **summary**: Pending change: (signaled at, scheduled change).
 
-### `setIdSession`: `Map<u64, u32>`
+### `setIdSession(u64)`: `u32`
 
 - **interface**: `api.query.grandpa.setIdSession`
 - **modifier**: `Optional`
-- **summary**: A mapping from grandpa set ID to the index of the *most recent* session for which its members were responsible.
+- **summary**: A mapping from grandpa set ID to the index of the _most recent_ session for which its members were responsible.
 
-    This is only used for validating equivocation proofs. An equivocation proof must contains a key-ownership proof for a given session, therefore we need a way to tie together sessions and GRANDPA set ids, i.e. we need to validate that a validator was the owner of a given key on a given session, and what the active set ID was during that session.
+  This is only used for validating equivocation proofs. An equivocation proof must contains a key-ownership proof for a given session, therefore we need a way to tie together sessions and GRANDPA set ids, i.e. we need to validate that a validator was the owner of a given key on a given session, and what the active set ID was during that session.
 
-    TWOX-NOTE: `SetId` is not under user control.
+  TWOX-NOTE: `SetId` is not under user control.
 
 ### `stalled`: `(u32,u32)`
 
@@ -467,15 +454,14 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Optional`
 - **summary**: `true` if we are currently stalled.
 
-### `state`: `{"_enum":{"Live":"Null","PendingPause":"{\"scheduledAt\":\"u32\",\"delay\":\"u32\"}","Paused":"Null","PendingResume":"{\"scheduledAt\":\"u32\",\"delay\":\"u32\"}"}}`
+### `state`: `StoredState`
 
 - **interface**: `api.query.grandpa.state`
 - **summary**: State of the current authority set.
 
-
 ## `mevShield`
 
-### `authorKeys`: `Map<[u8;32], Bytes>`
+### `authorKeys(Public)`: `Bytes`
 
 - **interface**: `api.query.mevShield.authorKeys`
 - **modifier**: `Optional`
@@ -487,7 +473,7 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Optional`
 - **summary**: Current block author's ML-KEM-768 encapsulation key (internal, not for encryption).
 
-### `hasMigrationRun`: `Map<Bytes, bool>`
+### `hasMigrationRun(Bytes)`: `bool`
 
 - **interface**: `api.query.mevShield.hasMigrationRun`
 - **summary**: Stores whether some migration has been run.
@@ -522,10 +508,9 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Optional`
 - **summary**: Block number at which `PendingKey` is no longer valid (exclusive upper bound). Updated every block during rotation.
 
-
 ## `multisig`
 
-### `multisigs`: `Map<(AccountId32,[u8;32]), {"when":"PalletMultisigTimepoint","deposit":"u64","depositor":"AccountId32","approvals":"Vec<AccountId32>"}>`
+### `multisigs(AccountId32, [u8;32])`: `Multisig`
 
 - **interface**: `api.query.multisig.multisigs`
 - **modifier**: `Optional`
@@ -537,7 +522,6 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-
 ## `preimage`
 
 ### `palletVersion`: `u16`
@@ -546,32 +530,31 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `preimageFor`: `Map<(H256,u32), Bytes>`
+### `preimageFor(H256, u32)`: `Bytes`
 
 - **interface**: `api.query.preimage.preimageFor`
 - **modifier**: `Optional`
 
-### `requestStatusFor`: `Map<H256, {"_enum":{"Unrequested":"{\"ticket\":\"(AccountId32,u64)\",\"len\":\"u32\"}","Requested":"{\"maybeTicket\":\"Option<(AccountId32,u64)>\",\"count\":\"u32\",\"maybeLen\":\"Option<u32>\"}"}}>`
+### `requestStatusFor(H256)`: `RequestStatus`
 
 - **interface**: `api.query.preimage.requestStatusFor`
 - **modifier**: `Optional`
 - **summary**: The request status of a given hash.
 
-### `statusFor`: `Map<H256, {"_enum":{"Unrequested":"{\"deposit\":\"(AccountId32,u64)\",\"len\":\"u32\"}","Requested":"{\"deposit\":\"Option<(AccountId32,u64)>\",\"count\":\"u32\",\"len\":\"Option<u32>\"}"}}>`
+### `statusFor(H256)`: `OldRequestStatus`
 
 - **interface**: `api.query.preimage.statusFor`
 - **modifier**: `Optional`
 - **summary**: The request status of a given hash.
 
-
 ## `proxy`
 
-### `announcements`: `Map<AccountId32, (Vec<PalletSubtensorProxyAnnouncement>,u64)>`
+### `announcements(AccountId32)`: `(Vec<PalletSubtensorProxyAnnouncement>,u64)`
 
 - **interface**: `api.query.proxy.announcements`
 - **summary**: The announcements made by the proxy (key).
 
-### `lastCallResult`: `Map<AccountId32, Result<Null, SpRuntimeDispatchError>>`
+### `lastCallResult(AccountId32)`: `Result`
 
 - **interface**: `api.query.proxy.lastCallResult`
 - **modifier**: `Optional`
@@ -583,17 +566,16 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `proxies`: `Map<AccountId32, (Vec<PalletSubtensorProxyProxyDefinition>,u64)>`
+### `proxies(AccountId32)`: `(Vec<PalletSubtensorProxyProxyDefinition>,u64)`
 
 - **interface**: `api.query.proxy.proxies`
 - **summary**: The set of account proxies. Maps the account which has delegated to the accounts which are being delegated to, together with the amount held on deposit.
 
-### `realPaysFee`: `Map<(AccountId32,AccountId32), Null>`
+### `realPaysFee(AccountId32, AccountId32)`: `Null`
 
 - **interface**: `api.query.proxy.realPaysFee`
 - **modifier**: `Optional`
 - **summary**: Tracks which (real, delegate) pairs have opted in to the real account paying transaction fees for proxy calls made by the delegate. Existence of an entry means the real account pays; absence means the delegate pays (default).
-
 
 ## `randomnessCollectiveFlip`
 
@@ -608,10 +590,9 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.randomnessCollectiveFlip.randomMaterial`
 - **summary**: Series of block headers from the last 81 blocks that acts as random seed material. This is arranged as a ring buffer with `block_number % 81` being the index into the `Vec` of the oldest hash.
 
-
 ## `registry`
 
-### `identityOf`: `Map<AccountId32, {"deposit":"u64","info":"PalletRegistryIdentityInfo"}>`
+### `identityOf(AccountId32)`: `Registration`
 
 - **interface**: `api.query.registry.identityOf`
 - **modifier**: `Optional`
@@ -623,16 +604,15 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-
 ## `safeMode`
 
-### `deposits`: `Map<(AccountId32,u32), u64>`
+### `deposits(AccountId32, u32)`: `u64`
 
 - **interface**: `api.query.safeMode.deposits`
 - **modifier**: `Optional`
 - **summary**: Holds the reserve that was taken from an account at a specific block number.
 
-    This helps governance to have an overview of outstanding deposits that should be returned or slashed.
+  This helps governance to have an overview of outstanding deposits that should be returned or slashed.
 
 ### `enteredUntil`: `u32`
 
@@ -640,9 +620,9 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Optional`
 - **summary**: Contains the last block number that the safe-mode will remain entered in.
 
-    Set to `None` when safe-mode is exited.
+  Set to `None` when safe-mode is exited.
 
-    Safe-mode is automatically exited when the current block number exceeds this value.
+  Safe-mode is automatically exited when the current block number exceeds this value.
 
 ### `palletVersion`: `u16`
 
@@ -650,10 +630,9 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-
 ## `scheduler`
 
-### `agenda`: `Map<u32, Vec<Option<PalletSchedulerScheduled>>>`
+### `agenda(u32)`: `Vec<Option<PalletSchedulerScheduled>>`
 
 - **interface**: `api.query.scheduler.agenda`
 - **summary**: Items to be executed, indexed by the block number that they should be executed on.
@@ -664,13 +643,13 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Optional`
 - **summary**: Block number at which the agenda began incomplete execution.
 
-### `lookup`: `Map<[u8;32], (u32,u32)>`
+### `lookup([u8;32])`: `(u32,u32)`
 
 - **interface**: `api.query.scheduler.lookup`
 - **modifier**: `Optional`
 - **summary**: Lookup from a name to the block number and index of the task.
 
-    For v3 -> v4 the previously unbounded identities are Blake2-256 hashed to form the v4 identities.
+  For v3 -> v4 the previously unbounded identities are Blake2-256 hashed to form the v4 identities.
 
 ### `palletVersion`: `u16`
 
@@ -678,12 +657,11 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `retries`: `Map<(u32,u32), {"totalRetries":"u8","remaining":"u8","period":"u32"}>`
+### `retries(u32, u32)`: `RetryConfig`
 
 - **interface**: `api.query.scheduler.retries`
 - **modifier**: `Optional`
 - **summary**: Retry configurations for items to be executed, indexed by task address.
-
 
 ## `substrate`
 
@@ -723,30 +701,29 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Current intra-block entropy (a universally unique `[u8; 32]` value) is stored here.
 
-
 ## `subtensorModule`
 
-### `accumulatedLeaseDividends`: `Map<u32, u64>`
+### `accumulatedLeaseDividends(u32)`: `u64`
 
 - **interface**: `api.query.subtensorModule.accumulatedLeaseDividends`
 - **summary**: MAP ( lease_id ) --> accumulated_dividends | The accumulated dividends for a given lease that needs to be distributed.
 
-### `active`: `Map<u16, Vec<bool>>`
+### `active(u16)`: `Vec<bool>`
 
 - **interface**: `api.query.subtensorModule.active`
 - **summary**: MAP ( netuid ) --> active
 
-### `activityCutoff`: `Map<u16, u16>`
+### `activityCutoff(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.activityCutoff`
 - **summary**: MAP ( netuid ) --> activity_cutoff
 
-### `adjustmentAlpha`: `Map<u16, u64>`
+### `adjustmentAlpha(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.adjustmentAlpha`
 - **summary**: MAP ( netuid ) --> adjustment_alpha
 
-### `adjustmentInterval`: `Map<u16, u16>`
+### `adjustmentInterval(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.adjustmentInterval`
 - **summary**: MAP ( netuid ) --> adjustment_interval
@@ -756,55 +733,55 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.adminFreezeWindow`
 - **summary**: Global window (in blocks) at the end of each tempo where admin ops are disallowed
 
-### `alpha`: `Map<(AccountId32,AccountId32,u16), {"bits":"u128"}>`
+### `alpha(AccountId32, AccountId32, u16)`: `FixedU128`
 
 - **interface**: `api.query.subtensorModule.alpha`
 - **summary**: NMAP ( hot, cold, netuid ) --> alpha | Returns the alpha shares for a hotkey, coldkey, netuid triplet.
 
-### `alphaDividendsPerSubnet`: `Map<(u16,AccountId32), u64>`
+### `alphaDividendsPerSubnet(u16, AccountId32)`: `u64`
 
 - **interface**: `api.query.subtensorModule.alphaDividendsPerSubnet`
 - **summary**: DMAP ( netuid, hotkey ) --> u64 | Last alpha dividend this hotkey got on tempo.
 
-### `alphaMapLastKey`: `Option<Bytes>`
+### `alphaMapLastKey`: `Option`
 
 - **interface**: `api.query.subtensorModule.alphaMapLastKey`
 - **summary**: Contains last Alpha storage map key to iterate (check first)
 
-### `alphaSigmoidSteepness`: `Map<u16, i16>`
+### `alphaSigmoidSteepness(u16)`: `i16`
 
 - **interface**: `api.query.subtensorModule.alphaSigmoidSteepness`
 - **summary**: MAP ( netuid ) --> AlphaSigmoidSteepness
 
-### `alphaValues`: `Map<u16, (u16,u16)>`
+### `alphaValues(u16)`: `(u16,u16)`
 
 - **interface**: `api.query.subtensorModule.alphaValues`
 - **summary**: MAP ( netuid ) --> (alpha_low, alpha_high)
 
-### `associatedEvmAddress`: `Map<(u16,u16), (H160,u64)>`
+### `associatedEvmAddress(u16, u16)`: `(H160,u64)`
 
 - **interface**: `api.query.subtensorModule.associatedEvmAddress`
 - **modifier**: `Optional`
 - **summary**: ============================= ==== EVM related storage ==== ============================= --- DMAP (netuid, uid) --> (H160, last_block_where_ownership_was_proven)
 
-### `autoStakeDestination`: `Map<(AccountId32,u16), AccountId32>`
+### `autoStakeDestination(AccountId32, u16)`: `AccountId32`
 
 - **interface**: `api.query.subtensorModule.autoStakeDestination`
 - **modifier**: `Optional`
 - **summary**: DMAP ( cold, netuid )--> hot | Returns the hotkey a coldkey will autostake to with mining rewards.
 
-### `autoStakeDestinationColdkeys`: `Map<(AccountId32,u16), Vec<AccountId32>>`
+### `autoStakeDestinationColdkeys(AccountId32, u16)`: `Vec<AccountId32>`
 
 - **interface**: `api.query.subtensorModule.autoStakeDestinationColdkeys`
 - **summary**: DMAP ( hot, netuid )--> Vec\<cold> | Returns a list of coldkeys that are autostaking to a hotkey
 
-### `axons`: `Map<(u16,AccountId32), {"block":"u64","version":"u32","ip":"u128","port":"u16","ipType":"u8","protocol":"u8","placeholder1":"u8","placeholder2":"u8"}>`
+### `axons(u16, AccountId32)`: `AxonInfo`
 
 - **interface**: `api.query.subtensorModule.axons`
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid, hotkey ) --> axon_info
 
-### `blockAtRegistration`: `Map<(u16,u16), u64>`
+### `blockAtRegistration(u16, u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.blockAtRegistration`
 - **summary**: DMAP ( netuid, uid ) --> block_at_registration
@@ -814,47 +791,47 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.blockEmission`
 - **summary**: ================== ==== Coinbase ==== ================== --- ITEM ( global_block_emission )
 
-### `blocksSinceLastStep`: `Map<u16, u64>`
+### `blocksSinceLastStep(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.blocksSinceLastStep`
 - **summary**: MAP ( netuid ) --> blocks_since_last_step
 
-### `bonds`: `Map<(u16,u16), Vec<(u16,u16)>>`
+### `bonds(u16, u16)`: `Vec<(u16,u16)>`
 
 - **interface**: `api.query.subtensorModule.bonds`
 - **summary**: DMAP ( netuid, uid ) --> bonds
 
-### `bondsMovingAverage`: `Map<u16, u64>`
+### `bondsMovingAverage(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.bondsMovingAverage`
 - **summary**: MAP ( netuid ) --> bonds_moving_average
 
-### `bondsPenalty`: `Map<u16, u16>`
+### `bondsPenalty(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.bondsPenalty`
 - **summary**: MAP ( netuid ) --> bonds_penalty
 
-### `bondsResetOn`: `Map<u16, bool>`
+### `bondsResetOn(u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.bondsResetOn`
 - **summary**: MAP ( netuid ) --> bonds_reset
 
-### `burn`: `Map<u16, u64>`
+### `burn(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.burn`
 - **summary**: MAP ( netuid ) --> Burn
 
-### `burnRegistrationsThisInterval`: `Map<u16, u16>`
+### `burnRegistrationsThisInterval(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.burnRegistrationsThisInterval`
 - **summary**: MAP ( netuid ) --> burn_registrations_this_interval
 
-### `childKeys`: `Map<(AccountId32,u16), Vec<(u64,AccountId32)>>`
+### `childKeys(AccountId32, u16)`: `Vec<(u64,AccountId32)>`
 
 - **interface**: `api.query.subtensorModule.childKeys`
 - **summary**: DMAP ( parent, netuid ) --> Vec\<(proportion,child)>
 
-### `childkeyTake`: `Map<(AccountId32,u16), u16>`
+### `childkeyTake(AccountId32, u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.childkeyTake`
 - **summary**: DMAP ( hot, netuid ) --> take | Returns the hotkey childkey take for a specific subnet
@@ -869,13 +846,13 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.coldkeySwapAnnouncementDelay`
 - **summary**: The delay after an announcement before a coldkey swap can be performed.
 
-### `coldkeySwapAnnouncements`: `Map<AccountId32, (u32,H256)>`
+### `coldkeySwapAnnouncements(AccountId32)`: `(u32,H256)`
 
 - **interface**: `api.query.subtensorModule.coldkeySwapAnnouncements`
 - **modifier**: `Optional`
 - **summary**: A map of the coldkey swap announcements from a coldkey to the block number the coldkey swap can be performed.
 
-### `coldkeySwapDisputes`: `Map<AccountId32, u32>`
+### `coldkeySwapDisputes(AccountId32)`: `u32`
 
 - **interface**: `api.query.subtensorModule.coldkeySwapDisputes`
 - **modifier**: `Optional`
@@ -886,7 +863,7 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.coldkeySwapReannouncementDelay`
 - **summary**: The delay after the initial delay has passed before a new announcement can be made.
 
-### `commitRevealWeightsEnabled`: `Map<u16, bool>`
+### `commitRevealWeightsEnabled(u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.commitRevealWeightsEnabled`
 - **summary**: MAP ( netuid ) --> commit reveal v2 weights are enabled
@@ -896,27 +873,27 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.commitRevealWeightsVersion`
 - **summary**: ITEM ( CommitRevealWeightsVersion )
 
-### `consensus`: `Map<u16, Vec<u16>>`
+### `consensus(u16)`: `Vec<u16>`
 
 - **interface**: `api.query.subtensorModule.consensus`
 - **summary**: MAP ( netuid ) --> consensus
 
-### `crv3WeightCommits`: `Map<(u16,u64), Vec<(AccountId32,Bytes,u64)>>`
+### `crv3WeightCommits(u16, u64)`: `Vec<(AccountId32,Bytes,u64)>`
 
 - **interface**: `api.query.subtensorModule.crv3WeightCommits`
 - **summary**: MAP (netuid, epoch) → VecDeque\<(who, ciphertext, reveal_round)> DEPRECATED for CRV3WeightCommitsV2
 
-### `crv3WeightCommitsV2`: `Map<(u16,u64), Vec<(AccountId32,u64,Bytes,u64)>>`
+### `crv3WeightCommitsV2(u16, u64)`: `Vec<(AccountId32,u64,Bytes,u64)>`
 
 - **interface**: `api.query.subtensorModule.crv3WeightCommitsV2`
 - **summary**: MAP (netuid, epoch) → VecDeque\<(who, commit_block, ciphertext, reveal_round)> DEPRECATED for TimelockedWeightCommits
 
-### `delegates`: `Map<AccountId32, u16>`
+### `delegates(AccountId32)`: `u16`
 
 - **interface**: `api.query.subtensorModule.delegates`
 - **summary**: MAP ( hot ) --> take | Returns the hotkey delegation take. And signals that this key is open for delegation
 
-### `difficulty`: `Map<u16, u64>`
+### `difficulty(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.difficulty`
 - **summary**: MAP ( netuid ) --> Difficulty
@@ -926,22 +903,22 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.dissolveNetworkScheduleDuration`
 - **summary**: Duration of dissolve network schedule before execution
 
-### `dividends`: `Map<u16, Vec<u16>>`
+### `dividends(u16)`: `Vec<u16>`
 
 - **interface**: `api.query.subtensorModule.dividends`
 - **summary**: MAP ( netuid ) --> dividends
 
-### `emaPriceHalvingBlocks`: `Map<u16, u64>`
+### `emaPriceHalvingBlocks(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.emaPriceHalvingBlocks`
 - **summary**: MAP ( netuid ) --> Halving time of average moving price.
 
-### `emission`: `Map<u16, Vec<u64>>`
+### `emission(u16)`: `Vec<u64>`
 
 - **interface**: `api.query.subtensorModule.emission`
 - **summary**: MAP ( netuid ) --> emission
 
-### `firstEmissionBlockNumber`: `Map<u16, u64>`
+### `firstEmissionBlockNumber(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.firstEmissionBlockNumber`
 - **modifier**: `Optional`
@@ -952,130 +929,130 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.flowEmaSmoothingFactor`
 - **summary**: ITEM --> Flow EMA smoothing factor (flow alpha), u64 normalized
 
-### `flowNormExponent`: `{"bits":"u128"}`
+### `flowNormExponent`: `FixedU128`
 
 - **interface**: `api.query.subtensorModule.flowNormExponent`
 - **summary**: ITEM --> Flow Normalization Exponent (p)
 
-### `hasMigrationRun`: `Map<Bytes, bool>`
+### `hasMigrationRun(Bytes)`: `bool`
 
 - **interface**: `api.query.subtensorModule.hasMigrationRun`
 - **summary**: ================== ==== Genesis ===== ================== --- Storage for migration run status
 
-### `identitiesV2`: `Map<AccountId32, {"name":"Bytes","url":"Bytes","githubRepo":"Bytes","image":"Bytes","discord":"Bytes","description":"Bytes","additional":"Bytes"}>`
+### `identitiesV2(AccountId32)`: `ChainIdentityV2`
 
 - **interface**: `api.query.subtensorModule.identitiesV2`
 - **modifier**: `Optional`
 - **summary**: MAP ( coldkey ) --> identity
 
-### `immuneOwnerUidsLimit`: `Map<u16, u16>`
+### `immuneOwnerUidsLimit(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.immuneOwnerUidsLimit`
 - **summary**: MAP ( netuid ) --> Burn key limit
 
-### `immunityPeriod`: `Map<u16, u16>`
+### `immunityPeriod(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.immunityPeriod`
 - **summary**: MAP ( netuid ) --> immunity_period
 
-### `incentive`: `Map<u16, Vec<u16>>`
+### `incentive(u16)`: `Vec<u16>`
 
 - **interface**: `api.query.subtensorModule.incentive`
 - **summary**: MAP ( netuid ) --> incentive
 
-### `isNetworkMember`: `Map<(AccountId32,u16), bool>`
+### `isNetworkMember(AccountId32, u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.isNetworkMember`
 - **summary**: DMAP ( hotkey, netuid ) --> bool
 
-### `kappa`: `Map<u16, u16>`
+### `kappa(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.kappa`
 - **summary**: MAP ( netuid ) --> Kappa
 
-### `keys`: `Map<(u16,u16), AccountId32>`
+### `keys(u16, u16)`: `AccountId32`
 
 - **interface**: `api.query.subtensorModule.keys`
 - **summary**: DMAP ( netuid, uid ) --> hotkey
 
-### `largestLocked`: `Map<u16, u64>`
+### `largestLocked(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.largestLocked`
 - **summary**: MAP ( netuid ) --> largest_locked
 
-### `lastAdjustmentBlock`: `Map<u16, u64>`
+### `lastAdjustmentBlock(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastAdjustmentBlock`
-- **summary**: MAP ( netuid ) -->  Block at last adjustment.
+- **summary**: MAP ( netuid ) --> Block at last adjustment.
 
-### `lastColdkeyHotkeyStakeBlock`: `Map<(AccountId32,AccountId32), u64>`
+### `lastColdkeyHotkeyStakeBlock(AccountId32, AccountId32)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastColdkeyHotkeyStakeBlock`
 - **modifier**: `Optional`
 - **summary**: Map (coldkey, hotkey) --> u64 the last block at which stake was added/removed.
 
-### `lastHotkeyEmissionOnNetuid`: `Map<(AccountId32,u16), u64>`
+### `lastHotkeyEmissionOnNetuid(AccountId32, u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastHotkeyEmissionOnNetuid`
 - **summary**: DMap ( hot, netuid ) --> emission | last hotkey emission on network.
 
-### `lastHotkeySwapOnNetuid`: `Map<(u16,AccountId32), u64>`
+### `lastHotkeySwapOnNetuid(u16, AccountId32)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastHotkeySwapOnNetuid`
 - **summary**: DMap ( netuid, coldkey ) --> blocknumber | last hotkey swap on network.
 
-### `lastMechansimStepBlock`: `Map<u16, u64>`
+### `lastMechansimStepBlock(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastMechansimStepBlock`
 - **summary**: MAP ( netuid ) --> last_mechanism_step_block
 
-### `lastRateLimitedBlock`: `Map<{"_enum":{"SetSNOwnerHotkey":"u16","OwnerHyperparamUpdate":"(u16,PalletSubtensorUtilsRateLimitingHyperparameter)","NetworkLastRegistered":"Null","LastTxBlock":"AccountId32","LastTxBlockChildKeyTake":"AccountId32","LastTxBlockDelegateTake":"AccountId32","AddStakeBurn":"u16"}}, u64>`
+### `lastRateLimitedBlock(RateLimitKey)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastRateLimitedBlock`
 - **summary**: ============================ ==== Rate Limiting ===== ============================ --- MAP ( RateLimitKey ) --> Block number in which the last rate limited operation occured
 
-### `lastTxBlock`: `Map<AccountId32, u64>`
+### `lastTxBlock(AccountId32)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastTxBlock`
 - **summary**: MAP ( key ) --> last_block
 
-### `lastTxBlockChildKeyTake`: `Map<AccountId32, u64>`
+### `lastTxBlockChildKeyTake(AccountId32)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastTxBlockChildKeyTake`
 - **summary**: MAP ( key ) --> last_tx_block_childkey_take
 
-### `lastTxBlockDelegateTake`: `Map<AccountId32, u64>`
+### `lastTxBlockDelegateTake(AccountId32)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastTxBlockDelegateTake`
 - **summary**: MAP ( key ) --> last_tx_block_delegate_take
 
-### `lastUpdate`: `Map<u16, Vec<u64>>`
+### `lastUpdate(u16)`: `Vec<u64>`
 
 - **interface**: `api.query.subtensorModule.lastUpdate`
 - **summary**: MAP ( netuid ) --> last_update
 
-### `liquidAlphaOn`: `Map<u16, bool>`
+### `liquidAlphaOn(u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.liquidAlphaOn`
 - **summary**: MAP ( netuid ) --> Whether or not Liquid Alpha is enabled
 
-### `loadedEmission`: `Map<u16, Vec<(AccountId32,u64,u64)>>`
+### `loadedEmission(u16)`: `Vec<(AccountId32,u64,u64)>`
 
 - **interface**: `api.query.subtensorModule.loadedEmission`
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> (hotkey, se, ve)
 
-### `maxAllowedUids`: `Map<u16, u16>`
+### `maxAllowedUids(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.maxAllowedUids`
 - **summary**: MAP ( netuid ) --> max_allowed_uids
 
-### `maxAllowedValidators`: `Map<u16, u16>`
+### `maxAllowedValidators(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.maxAllowedValidators`
 - **summary**: MAP ( netuid ) --> max_allowed_validators
 
-### `maxBurn`: `Map<u16, u64>`
+### `maxBurn(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.maxBurn`
 - **summary**: MAP ( netuid ) --> MaxBurn
@@ -1090,7 +1067,7 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.maxDelegateTake`
 - **summary**: ITEM ( default_delegate_take )
 
-### `maxDifficulty`: `Map<u16, u64>`
+### `maxDifficulty(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.maxDifficulty`
 - **summary**: MAP ( netuid ) --> MaxDifficulty
@@ -1100,22 +1077,22 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.maxMechanismCount`
 - **summary**: ITEM( max_mechanism_count )
 
-### `maxRegistrationsPerBlock`: `Map<u16, u16>`
+### `maxRegistrationsPerBlock(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.maxRegistrationsPerBlock`
 - **summary**: ITEM( global_max_registrations_per_block )
 
-### `maxWeightsLimit`: `Map<u16, u16>`
+### `maxWeightsLimit(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.maxWeightsLimit`
 - **summary**: MAP ( netuid ) --> max_weight_limit
 
-### `mechanismCountCurrent`: `Map<u16, u8>`
+### `mechanismCountCurrent(u16)`: `u8`
 
 - **interface**: `api.query.subtensorModule.mechanismCountCurrent`
 - **summary**: MAP ( netuid ) --> Current number of subnet mechanisms
 
-### `mechanismEmissionSplit`: `Map<u16, Vec<u16>>`
+### `mechanismEmissionSplit(u16)`: `Vec<u16>`
 
 - **interface**: `api.query.subtensorModule.mechanismEmissionSplit`
 - **modifier**: `Optional`
@@ -1125,17 +1102,17 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 
 - **interface**: `api.query.subtensorModule.minActivityCutoff`
 
-### `minAllowedUids`: `Map<u16, u16>`
+### `minAllowedUids(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.minAllowedUids`
 - **summary**: MAP ( netuid ) --> min_allowed_uids
 
-### `minAllowedWeights`: `Map<u16, u16>`
+### `minAllowedWeights(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.minAllowedWeights`
 - **summary**: MAP ( netuid ) --> min_allowed_weights
 
-### `minBurn`: `Map<u16, u64>`
+### `minBurn(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.minBurn`
 - **summary**: MAP ( netuid ) --> MinBurn
@@ -1150,12 +1127,12 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.minDelegateTake`
 - **summary**: ITEM ( min_delegate_take )
 
-### `minDifficulty`: `Map<u16, u64>`
+### `minDifficulty(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.minDifficulty`
 - **summary**: MAP ( netuid ) --> MinDifficulty
 
-### `minNonImmuneUids`: `Map<u16, u16>`
+### `minNonImmuneUids(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.minNonImmuneUids`
 - **summary**: MAP ( netuid ) --> minimum required number of non-immortal & non-immune UIDs
@@ -1180,7 +1157,7 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.networkMinLockCost`
 - **summary**: ITEM( min_network_lock_cost )
 
-### `networkPowRegistrationAllowed`: `Map<u16, bool>`
+### `networkPowRegistrationAllowed(u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.networkPowRegistrationAllowed`
 - **summary**: MAP ( netuid ) --> network_pow_allowed
@@ -1190,12 +1167,12 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.networkRateLimit`
 - **summary**: ITEM( network_rate_limit )
 
-### `networkRegisteredAt`: `Map<u16, u64>`
+### `networkRegisteredAt(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.networkRegisteredAt`
 - **summary**: MAP ( netuid ) --> block_created
 
-### `networkRegistrationAllowed`: `Map<u16, bool>`
+### `networkRegistrationAllowed(u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.networkRegistrationAllowed`
 - **summary**: MAP ( netuid ) --> network_registration_allowed
@@ -1205,12 +1182,12 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.networkRegistrationStartBlock`
 - **summary**: ITEM( NetworkRegistrationStartBlock )
 
-### `networksAdded`: `Map<u16, bool>`
+### `networksAdded(u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.networksAdded`
 - **summary**: MAP ( netuid ) --> network_is_added
 
-### `neuronCertificates`: `Map<(u16,AccountId32), {"publicKey":"Bytes","algorithm":"u8"}>`
+### `neuronCertificates(u16, AccountId32)`: `NeuronCertificate`
 
 - **interface**: `api.query.subtensorModule.neuronCertificates`
 - **modifier**: `Optional`
@@ -1239,12 +1216,12 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 
 - **interface**: `api.query.subtensorModule.numStakingColdkeys`
 
-### `ownedHotkeys`: `Map<AccountId32, Vec<AccountId32>>`
+### `ownedHotkeys(AccountId32)`: `Vec<AccountId32>`
 
 - **interface**: `api.query.subtensorModule.ownedHotkeys`
 - **summary**: MAP ( cold ) --> Vec\<hot> | Returns the vector of hotkeys controlled by this coldkey.
 
-### `owner`: `Map<AccountId32, AccountId32>`
+### `owner(AccountId32)`: `AccountId32`
 
 - **interface**: `api.query.subtensorModule.owner`
 - **summary**: MAP ( hot ) --> cold | Returns the controlling coldkey for a hotkey
@@ -1260,7 +1237,7 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `parentKeys`: `Map<(AccountId32,u16), Vec<(u64,AccountId32)>>`
+### `parentKeys(AccountId32, u16)`: `Vec<(u64,AccountId32)>`
 
 - **interface**: `api.query.subtensorModule.parentKeys`
 - **summary**: DMAP ( child, netuid ) --> Vec\<(proportion,parent)>
@@ -1270,114 +1247,114 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.pendingChildKeyCooldown`
 - **summary**: Storage value for pending childkey cooldown, settable by root.
 
-### `pendingChildKeys`: `Map<(u16,AccountId32), (Vec<(u64,AccountId32)>,u64)>`
+### `pendingChildKeys(u16, AccountId32)`: `(Vec<(u64,AccountId32)>,u64)`
 
 - **interface**: `api.query.subtensorModule.pendingChildKeys`
 - **summary**: DMAP ( netuid, parent ) --> (Vec\<(proportion,child)>, cool_down_block)
 
-### `pendingOwnerCut`: `Map<u16, u64>`
+### `pendingOwnerCut(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.pendingOwnerCut`
 - **summary**: MAP ( netuid ) --> pending_owner_cut
 
-### `pendingRootAlphaDivs`: `Map<u16, u64>`
+### `pendingRootAlphaDivs(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.pendingRootAlphaDivs`
 - **summary**: MAP ( netuid ) --> pending_root_alpha_emission
 
-### `pendingServerEmission`: `Map<u16, u64>`
+### `pendingServerEmission(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.pendingServerEmission`
 - **summary**: MAP ( netuid ) --> pending_server_emission
 
-### `pendingValidatorEmission`: `Map<u16, u64>`
+### `pendingValidatorEmission(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.pendingValidatorEmission`
 - **summary**: MAP ( netuid ) --> pending_validator_emission
 
-### `powRegistrationsThisInterval`: `Map<u16, u16>`
+### `powRegistrationsThisInterval(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.powRegistrationsThisInterval`
 - **summary**: MAP ( netuid ) --> pow_registrations_this_interval
 
-### `prometheus`: `Map<(u16,AccountId32), {"block":"u64","version":"u32","ip":"u128","port":"u16","ipType":"u8"}>`
+### `prometheus(u16, AccountId32)`: `PrometheusInfo`
 
 - **interface**: `api.query.subtensorModule.prometheus`
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid, hotkey ) --> prometheus_info
 
-### `pruningScores`: `Map<u16, Vec<u16>>`
+### `pruningScores(u16)`: `Vec<u16>`
 
 - **interface**: `api.query.subtensorModule.pruningScores`
 - **summary**: MAP ( netuid ) --> pruning_scores
 
-### `rank`: `Map<u16, Vec<u16>>`
+### `rank(u16)`: `Vec<u16>`
 
 - **interface**: `api.query.subtensorModule.rank`
 - **summary**: MAP ( netuid ) --> rank
 
-### `raoRecycledForRegistration`: `Map<u16, u64>`
+### `raoRecycledForRegistration(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.raoRecycledForRegistration`
 - **summary**: MAP ( netuid ) --> global_RAO_recycled_for_registration
 
-### `recycleOrBurn`: `Map<u16, {"_enum":["Burn","Recycle"]}>`
+### `recycleOrBurn(u16)`: `RecycleOrBurnEnum`
 
 - **interface**: `api.query.subtensorModule.recycleOrBurn`
 - **summary**: MAP ( netuid ) --> recycle_or_burn
 
-### `registrationsThisBlock`: `Map<u16, u16>`
+### `registrationsThisBlock(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.registrationsThisBlock`
 - **summary**: MAP ( netuid ) --> Registrations of this Block.
 
-### `registrationsThisInterval`: `Map<u16, u16>`
+### `registrationsThisInterval(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.registrationsThisInterval`
 - **summary**: MAP ( netuid ) --> registrations_this_interval
 
-### `revealPeriodEpochs`: `Map<u16, u64>`
+### `revealPeriodEpochs(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.revealPeriodEpochs`
 - **summary**: Map (netuid) --> Number of epochs allowed for commit reveal periods
 
-### `rho`: `Map<u16, u16>`
+### `rho(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.rho`
 - **summary**: MAP ( netuid ) --> Rho
 
-### `rootAlphaDividendsPerSubnet`: `Map<(u16,AccountId32), u64>`
+### `rootAlphaDividendsPerSubnet(u16, AccountId32)`: `u64`
 
 - **interface**: `api.query.subtensorModule.rootAlphaDividendsPerSubnet`
 - **summary**: DMAP ( netuid, hotkey ) --> u64 | Last root alpha dividend this hotkey got on tempo.
 
-### `rootClaimable`: `Map<AccountId32, BTreeMap<u16, {"bits":"i128"}>>`
+### `rootClaimable(AccountId32)`: `BTreeMap`
 
 - **interface**: `api.query.subtensorModule.rootClaimable`
 
-### `rootClaimableThreshold`: `Map<u16, {"bits":"i128"}>`
+### `rootClaimableThreshold(u16)`: `FixedI128`
 
 - **interface**: `api.query.subtensorModule.rootClaimableThreshold`
 
-### `rootClaimed`: `Map<(u16,AccountId32,AccountId32), u128>`
+### `rootClaimed(u16, AccountId32, AccountId32)`: `u128`
 
 - **interface**: `api.query.subtensorModule.rootClaimed`
 
-### `rootClaimType`: `Map<AccountId32, {"_enum":{"Swap":"Null","Keep":"Null","KeepSubnets":"{\"subnets\":\"BTreeSet<u16>\"}"}}>`
+### `rootClaimType(AccountId32)`: `RootClaimTypeEnum`
 
 - **interface**: `api.query.subtensorModule.rootClaimType`
 
-### `rootProp`: `Map<u16, {"bits":"u128"}>`
+### `rootProp(u16)`: `FixedU128`
 
 - **interface**: `api.query.subtensorModule.rootProp`
 - **summary**: MAP ( netuid ) --> root_prop | The subnet root proportion.
 
-### `scalingLawPower`: `Map<u16, u16>`
+### `scalingLawPower(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.scalingLawPower`
 - **summary**: MAP ( netuid ) --> scaling_law_power
 
-### `servingRateLimit`: `Map<u16, u64>`
+### `servingRateLimit(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.servingRateLimit`
 - **summary**: MAP ( netuid ) --> serving_rate_limit
@@ -1387,27 +1364,27 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.stakeThreshold`
 - **summary**: ITEM( weights_min_stake )
 
-### `stakeWeight`: `Map<u16, Vec<u16>>`
+### `stakeWeight(u16)`: `Vec<u16>`
 
 - **interface**: `api.query.subtensorModule.stakeWeight`
-- **summary**: ======================================= ==== Subnetwork Consensus Storage  ==== ======================================= --- DMAP ( netuid ) --> stake_weight | weight for stake used in YC.
+- **summary**: ======================================= ==== Subnetwork Consensus Storage ==== ======================================= --- DMAP ( netuid ) --> stake_weight | weight for stake used in YC.
 
-### `stakingColdkeys`: `Map<AccountId32, u64>`
+### `stakingColdkeys(AccountId32)`: `u64`
 
 - **interface**: `api.query.subtensorModule.stakingColdkeys`
 - **modifier**: `Optional`
 
-### `stakingColdkeysByIndex`: `Map<u64, AccountId32>`
+### `stakingColdkeysByIndex(u64)`: `AccountId32`
 
 - **interface**: `api.query.subtensorModule.stakingColdkeysByIndex`
 - **modifier**: `Optional`
 
-### `stakingHotkeys`: `Map<AccountId32, Vec<AccountId32>>`
+### `stakingHotkeys(AccountId32)`: `Vec<AccountId32>`
 
 - **interface**: `api.query.subtensorModule.stakingHotkeys`
 - **summary**: MAP ( cold ) --> Vec\<hot> | Maps coldkey to hotkeys that stake to it
 
-### `stakingOperationRateLimiter`: `Map<(AccountId32,AccountId32,u16), bool>`
+### `stakingOperationRateLimiter(AccountId32, AccountId32, u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.stakingOperationRateLimiter`
 - **summary**: DMAP ( hot, cold, netuid ) --> rate limits for staking operations Value contains just a marker: we use this map as a set.
@@ -1417,50 +1394,50 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.startCallDelay`
 - **summary**: ITEM( start_call_delay )
 
-### `subnetAlphaIn`: `Map<u16, u64>`
+### `subnetAlphaIn(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.subnetAlphaIn`
 - **summary**: MAP ( netuid ) --> alpha_supply_in_pool | Returns the amount of alpha in the pool.
 
-### `subnetAlphaInEmission`: `Map<u16, u64>`
+### `subnetAlphaInEmission(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.subnetAlphaInEmission`
-- **summary**: MAP ( netuid ) --> alpha_in_emission | Returns the amount of alph in  emission into the pool per block.
+- **summary**: MAP ( netuid ) --> alpha_in_emission | Returns the amount of alph in emission into the pool per block.
 
-### `subnetAlphaInProvided`: `Map<u16, u64>`
+### `subnetAlphaInProvided(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.subnetAlphaInProvided`
 - **summary**: MAP ( netuid ) --> alpha_supply_user_in_pool | Returns the amount of alpha in the pool provided by users as liquidity.
 
-### `subnetAlphaOut`: `Map<u16, u64>`
+### `subnetAlphaOut(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.subnetAlphaOut`
 - **summary**: MAP ( netuid ) --> alpha_supply_in_subnet | Returns the amount of alpha in the subnet.
 
-### `subnetAlphaOutEmission`: `Map<u16, u64>`
+### `subnetAlphaOutEmission(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.subnetAlphaOutEmission`
 - **summary**: MAP ( netuid ) --> alpha_out_emission | Returns the amount of alpha out emission into the network per block.
 
-### `subnetEmaTaoFlow`: `Map<u16, (u64,SubstrateFixedFixedI128)>`
+### `subnetEmaTaoFlow(u16)`: `(u64,SubstrateFixedFixedI128)`
 
 - **interface**: `api.query.subtensorModule.subnetEmaTaoFlow`
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> subnet_ema_tao_flow | Returns the EMA of TAO inflow-outflow balance.
 
-### `subnetIdentitiesV3`: `Map<u16, {"subnetName":"Bytes","githubRepo":"Bytes","subnetContact":"Bytes","subnetUrl":"Bytes","discord":"Bytes","description":"Bytes","logoUrl":"Bytes","additional":"Bytes"}>`
+### `subnetIdentitiesV3(u16)`: `SubnetIdentityV3`
 
 - **interface**: `api.query.subtensorModule.subnetIdentitiesV3`
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> SubnetIdentityOfV3
 
-### `subnetLeases`: `Map<u32, {"beneficiary":"AccountId32","coldkey":"AccountId32","hotkey":"AccountId32","emissionsShare":"Percent","endBlock":"Option<u32>","netuid":"u16","cost":"u64"}>`
+### `subnetLeases(u32)`: `SubnetLease`
 
 - **interface**: `api.query.subtensorModule.subnetLeases`
 - **modifier**: `Optional`
 - **summary**: ======================== ==== Subnet Leasing ==== ======================== --- MAP ( lease_id ) --> subnet lease | The subnet lease for a given lease id.
 
-### `subnetLeaseShares`: `Map<(u32,AccountId32), {"bits":"u128"}>`
+### `subnetLeaseShares(u32, AccountId32)`: `FixedU128`
 
 - **interface**: `api.query.subtensorModule.subnetLeaseShares`
 - **summary**: DMAP ( lease_id, contributor ) --> shares | The shares of a contributor for a given lease.
@@ -1470,31 +1447,31 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.subnetLimit`
 - **summary**: ========================== ==== Staking Counters ==== ========================== The Subtensor [`TotalIssuance`] represents the total issuance of tokens on the Bittensor network.
 
-    It is comprised of three parts: The total amount of issued tokens, tracked in the TotalIssuance of the Balances pallet The total amount of tokens staked in the system, tracked in [`TotalStake`] The total amount of tokens locked up for subnet reg, tracked in [`TotalSubnetLocked`] attained by iterating over subnet lock.
+  It is comprised of three parts: The total amount of issued tokens, tracked in the TotalIssuance of the Balances pallet The total amount of tokens staked in the system, tracked in [`TotalStake`] The total amount of tokens locked up for subnet reg, tracked in [`TotalSubnetLocked`] attained by iterating over subnet lock.
 
-    Eventually, Bittensor should migrate to using Holds afterwhich time we will not require this separate accounting. --- ITEM ( maximum_number_of_networks )
+  Eventually, Bittensor should migrate to using Holds afterwhich time we will not require this separate accounting. --- ITEM ( maximum_number_of_networks )
 
-### `subnetLocked`: `Map<u16, u64>`
+### `subnetLocked(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.subnetLocked`
 - **summary**: MAP ( netuid ) --> total_subnet_locked
 
-### `subnetMechanism`: `Map<u16, u16>`
+### `subnetMechanism(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.subnetMechanism`
 - **summary**: MAP ( netuid ) --> subnet mechanism
 
-### `subnetMovingAlpha`: `{"bits":"i128"}`
+### `subnetMovingAlpha`: `FixedI128`
 
 - **interface**: `api.query.subtensorModule.subnetMovingAlpha`
 - **summary**: ITEM ( moving_alpha ) -- subnet moving alpha.
 
-### `subnetMovingPrice`: `Map<u16, {"bits":"i128"}>`
+### `subnetMovingPrice(u16)`: `FixedI128`
 
 - **interface**: `api.query.subtensorModule.subnetMovingPrice`
 - **summary**: MAP ( netuid ) --> moving_price | The subnet moving price.
 
-### `subnetOwner`: `Map<u16, AccountId32>`
+### `subnetOwner(u16)`: `AccountId32`
 
 - **interface**: `api.query.subtensorModule.subnetOwner`
 - **summary**: MAP ( netuid ) --> subnet_owner
@@ -1504,53 +1481,53 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.subnetOwnerCut`
 - **summary**: ITEM( subnet_owner_cut )
 
-### `subnetOwnerHotkey`: `Map<u16, AccountId32>`
+### `subnetOwnerHotkey(u16)`: `AccountId32`
 
 - **interface**: `api.query.subtensorModule.subnetOwnerHotkey`
 - **summary**: MAP ( netuid ) --> subnet_owner_hotkey
 
-### `subnetTAO`: `Map<u16, u64>`
+### `subnetTAO(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.subnetTAO`
 - **summary**: MAP ( netuid ) --> tao_in_subnet | Returns the amount of TAO in the subnet.
 
-### `subnetTaoFlow`: `Map<u16, i64>`
+### `subnetTaoFlow(u16)`: `i64`
 
 - **interface**: `api.query.subtensorModule.subnetTaoFlow`
 - **summary**: MAP ( netuid ) --> subnet_tao_flow | Returns the TAO inflow-outflow balance.
 
-### `subnetTaoInEmission`: `Map<u16, u64>`
+### `subnetTaoInEmission(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.subnetTaoInEmission`
 - **summary**: MAP ( netuid ) --> tao_in_emission | Returns the amount of tao emitted into this subent on the last block.
 
-### `subnetTaoProvided`: `Map<u16, u64>`
+### `subnetTaoProvided(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.subnetTaoProvided`
 - **summary**: MAP ( netuid ) --> tao_in_user_subnet | Returns the amount of TAO in the subnet reserve provided by users as liquidity.
 
-### `subnetUidToLeaseId`: `Map<u16, u32>`
+### `subnetUidToLeaseId(u16)`: `u32`
 
 - **interface**: `api.query.subtensorModule.subnetUidToLeaseId`
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> lease_id | The lease id for a given netuid.
 
-### `subnetVolume`: `Map<u16, u128>`
+### `subnetVolume(u16)`: `u128`
 
 - **interface**: `api.query.subtensorModule.subnetVolume`
 - **summary**: MAP ( netuid ) --> total_volume | The total amount of TAO bought and sold since the start of the network.
 
-### `subnetworkN`: `Map<u16, u16>`
+### `subnetworkN(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.subnetworkN`
 - **summary**: MAP ( netuid ) --> subnetwork_n (Number of UIDs in the network).
 
-### `subtokenEnabled`: `Map<u16, bool>`
+### `subtokenEnabled(u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.subtokenEnabled`
 - **summary**: MAP ( netuid ) --> If subtoken trading enabled
 
-### `taoFlowCutoff`: `{"bits":"i128"}`
+### `taoFlowCutoff`: `FixedI128`
 
 - **interface**: `api.query.subtensorModule.taoFlowCutoff`
 - **summary**: ITEM --> TAO Flow Cutoff
@@ -1560,41 +1537,41 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.taoWeight`
 - **summary**: ============================ ==== Staking Variables ==== ============================ The Subtensor [`TotalIssuance`] represents the total issuance of tokens on the Bittensor network.
 
-    It is comprised of three parts: The total amount of issued tokens, tracked in the TotalIssuance of the Balances pallet The total amount of tokens staked in the system, tracked in [`TotalStake`] The total amount of tokens locked up for subnet reg, tracked in [`TotalSubnetLocked`] attained by iterating over subnet lock.
+  It is comprised of three parts: The total amount of issued tokens, tracked in the TotalIssuance of the Balances pallet The total amount of tokens staked in the system, tracked in [`TotalStake`] The total amount of tokens locked up for subnet reg, tracked in [`TotalSubnetLocked`] attained by iterating over subnet lock.
 
-    Eventually, Bittensor should migrate to using Holds afterwhich time we will not require this separate accounting. --- ITEM --> Global weight
+  Eventually, Bittensor should migrate to using Holds afterwhich time we will not require this separate accounting. --- ITEM --> Global weight
 
-### `targetRegistrationsPerInterval`: `Map<u16, u16>`
+### `targetRegistrationsPerInterval(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.targetRegistrationsPerInterval`
 - **summary**: MAP ( netuid ) --> target_registrations_this_interval
 
-### `tempo`: `Map<u16, u16>`
+### `tempo(u16)`: `u16`
 
 - **interface**: `api.query.subtensorModule.tempo`
 - **summary**: ================= ==== Tempos ===== ================= --- MAP ( netuid ) --> tempo
 
-### `timelockedWeightCommits`: `Map<(u16,u64), Vec<(AccountId32,u64,Bytes,u64)>>`
+### `timelockedWeightCommits(u16, u64)`: `Vec<(AccountId32,u64,Bytes,u64)>`
 
 - **interface**: `api.query.subtensorModule.timelockedWeightCommits`
 - **summary**: MAP (netuid, epoch) → VecDeque\<(who, commit_block, ciphertext, reveal_round)> Stores a queue of weight commits for an account on a given subnet.
 
-### `tokenSymbol`: `Map<u16, Bytes>`
+### `tokenSymbol(u16)`: `Bytes`
 
 - **interface**: `api.query.subtensorModule.tokenSymbol`
 - **summary**: MAP ( netuid ) --> token_symbol | Returns the token symbol for a subnet.
 
-### `totalHotkeyAlpha`: `Map<(AccountId32,u16), u64>`
+### `totalHotkeyAlpha(AccountId32, u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.totalHotkeyAlpha`
 - **summary**: DMAP ( hot, netuid ) --> alpha | Returns the total amount of alpha a hotkey owns.
 
-### `totalHotkeyAlphaLastEpoch`: `Map<(AccountId32,u16), u64>`
+### `totalHotkeyAlphaLastEpoch(AccountId32, u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.totalHotkeyAlphaLastEpoch`
 - **summary**: DMAP ( hot, netuid ) --> alpha | Returns the total amount of alpha a hotkey owned in the last epoch.
 
-### `totalHotkeyShares`: `Map<(AccountId32,u16), {"bits":"u128"}>`
+### `totalHotkeyShares(AccountId32, u16)`: `FixedU128`
 
 - **interface**: `api.query.subtensorModule.totalHotkeyShares`
 - **summary**: DMAP ( hot, netuid ) --> total_alpha_shares | Returns the number of alpha shares for a hotkey on a subnet.
@@ -1614,17 +1591,17 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.totalStake`
 - **summary**: ITEM ( total_stake )
 
-### `transactionKeyLastBlock`: `Map<(AccountId32,u16,u16), u64>`
+### `transactionKeyLastBlock(AccountId32, u16, u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.transactionKeyLastBlock`
 - **summary**: ================================= ==== Axon / Promo Endpoints ===== ================================= --- NMAP ( hot, netuid, name ) --> last_block | Returns the last block of a transaction for a given key, netuid, and name.
 
-### `transferToggle`: `Map<u16, bool>`
+### `transferToggle(u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.transferToggle`
 - **summary**: ============================ ==== Subnet Locks ===== ============================ --- MAP ( netuid ) --> transfer_toggle
 
-### `trust`: `Map<u16, Vec<u16>>`
+### `trust(u16)`: `Vec<u16>`
 
 - **interface**: `api.query.subtensorModule.trust`
 - **summary**: MAP ( netuid ) --> trust
@@ -1644,69 +1621,69 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.txRateLimit`
 - **summary**: ITEM ( tx_rate_limit )
 
-### `uids`: `Map<(u16,AccountId32), u16>`
+### `uids(u16, AccountId32)`: `u16`
 
 - **interface**: `api.query.subtensorModule.uids`
 - **modifier**: `Optional`
 - **summary**: DMAP ( netuid, hotkey ) --> uid
 
-### `usedWork`: `Map<Bytes, u64>`
+### `usedWork(Bytes)`: `u64`
 
 - **interface**: `api.query.subtensorModule.usedWork`
 - **summary**: ============================ ==== Global Parameters ===== ============================ --- StorageItem Global Used Work.
 
-### `validatorPermit`: `Map<u16, Vec<bool>>`
+### `validatorPermit(u16)`: `Vec<bool>`
 
 - **interface**: `api.query.subtensorModule.validatorPermit`
 - **summary**: MAP ( netuid ) --> validator_permit
 
-### `validatorPruneLen`: `Map<u16, u64>`
+### `validatorPruneLen(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.validatorPruneLen`
 - **summary**: MAP ( netuid ) --> validator_prune_len
 
-### `validatorTrust`: `Map<u16, Vec<u16>>`
+### `validatorTrust(u16)`: `Vec<u16>`
 
 - **interface**: `api.query.subtensorModule.validatorTrust`
 - **summary**: MAP ( netuid ) --> validator_trust
 
-### `votingPower`: `Map<(u16,AccountId32), u64>`
+### `votingPower(u16, AccountId32)`: `u64`
 
 - **interface**: `api.query.subtensorModule.votingPower`
 - **summary**: DMAP ( netuid, hotkey ) --> voting_power | EMA of stake for voting This tracks stake EMA updated every epoch when VotingPowerTrackingEnabled is true. Used by smart contracts to determine validator voting power for subnet governance.
 
-### `votingPowerDisableAtBlock`: `Map<u16, u64>`
+### `votingPowerDisableAtBlock(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.votingPowerDisableAtBlock`
 - **summary**: MAP ( netuid ) --> block_number | Block at which voting power tracking will be disabled. When set (non-zero), tracking continues until this block, then automatically disables and clears VotingPower entries for the subnet. Provides a 14-day grace period.
 
-### `votingPowerEmaAlpha`: `Map<u16, u64>`
+### `votingPowerEmaAlpha(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.votingPowerEmaAlpha`
 - **summary**: MAP ( netuid ) --> u64 | EMA alpha value for voting power calculation. Higher alpha = faster response to stake changes. Stored as u64 with 18 decimal precision (1.0 = 10^18). Only settable by sudo/root.
 
-### `votingPowerTrackingEnabled`: `Map<u16, bool>`
+### `votingPowerTrackingEnabled(u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.votingPowerTrackingEnabled`
 - **summary**: MAP ( netuid ) --> bool | Whether voting power tracking is enabled for this subnet. When enabled, VotingPower EMA is updated every epoch. Default is false. When disabled with disable_at_block set, tracking continues until that block.
 
-### `weightCommits`: `Map<(u16,AccountId32), Vec<(H256,u64,u64,u64)>>`
+### `weightCommits(u16, AccountId32)`: `Vec<(H256,u64,u64,u64)>`
 
 - **interface**: `api.query.subtensorModule.weightCommits`
 - **modifier**: `Optional`
 - **summary**: MAP (netuid, who) --> VecDeque\<(hash, commit_block, first_reveal_block, last_reveal_block)> | Stores a queue of commits for an account on a given netuid.
 
-### `weights`: `Map<(u16,u16), Vec<(u16,u16)>>`
+### `weights(u16, u16)`: `Vec<(u16,u16)>`
 
 - **interface**: `api.query.subtensorModule.weights`
 - **summary**: DMAP ( netuid, uid ) --> weights
 
-### `weightsSetRateLimit`: `Map<u16, u64>`
+### `weightsSetRateLimit(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.weightsSetRateLimit`
 - **summary**: MAP ( netuid ) --> weights_set_rate_limit
 
-### `weightsVersionKey`: `Map<u16, u64>`
+### `weightsVersionKey(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.weightsVersionKey`
 - **summary**: MAP ( netuid ) --> weights_version_key
@@ -1716,11 +1693,10 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.subtensorModule.weightsVersionKeyRateLimit`
 - **summary**: ITEM( weights_version_key_rate_limit ) --- Rate limit in tempos.
 
-### `yuma3On`: `Map<u16, bool>`
+### `yuma3On(u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.yuma3On`
 - **summary**: MAP ( netuid ) --> Whether or not Yuma3 is enabled
-
 
 ## `sudo`
 
@@ -1736,38 +1712,37 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-
 ## `swap`
 
-### `alphaSqrtPrice`: `Map<u16, {"bits":"u128"}>`
+### `alphaSqrtPrice(u16)`: `FixedU128`
 
 - **interface**: `api.query.swap.alphaSqrtPrice`
 - **summary**: Storage for the square root price of Alpha token for each subnet.
 
-### `currentLiquidity`: `Map<u16, u64>`
+### `currentLiquidity(u16)`: `u64`
 
 - **interface**: `api.query.swap.currentLiquidity`
 - **summary**: Storage for the current liquidity amount for each subnet.
 
-### `currentTick`: `Map<u16, i32>`
+### `currentTick(u16)`: `TickIndex`
 
 - **interface**: `api.query.swap.currentTick`
 - **summary**: Storage for the current price tick.
 
-### `enabledUserLiquidity`: `Map<u16, bool>`
+### `enabledUserLiquidity(u16)`: `bool`
 
 - **interface**: `api.query.swap.enabledUserLiquidity`
 - **summary**: Indicates whether a subnet has been switched to V3 swap from V2. If `true`, the subnet is permanently on V3 swap mode allowing add/remove liquidity operations. Once set to `true` for a subnet, it cannot be changed back to `false`.
 
-### `feeGlobalAlpha`: `Map<u16, {"bits":"u128"}>`
+### `feeGlobalAlpha(u16)`: `FixedU128`
 
 - **interface**: `api.query.swap.feeGlobalAlpha`
 
-### `feeGlobalTao`: `Map<u16, {"bits":"u128"}>`
+### `feeGlobalTao(u16)`: `FixedU128`
 
 - **interface**: `api.query.swap.feeGlobalTao`
 
-### `feeRate`: `Map<u16, u16>`
+### `feeRate(u16)`: `u16`
 
 - **interface**: `api.query.swap.feeRate`
 - **summary**: The fee rate applied to swaps per subnet, normalized value between 0 and u16::MAX
@@ -1783,42 +1758,41 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `positions`: `Map<(u16,AccountId32,u128), {"id":"u128","netuid":"u16","tickLow":"i32","tickHigh":"i32","liquidity":"u64","feesTao":"SubstrateFixedFixedI128","feesAlpha":"SubstrateFixedFixedI128"}>`
+### `positions(u16, AccountId32, u128)`: `Position`
 
 - **interface**: `api.query.swap.positions`
 - **modifier**: `Optional`
 - **summary**: Storage for user positions, using subnet ID and account ID as keys The value is a bounded vector of Position structs with details about the liquidity positions
 
-### `scrapReservoirAlpha`: `Map<u16, u64>`
+### `scrapReservoirAlpha(u16)`: `u64`
 
 - **interface**: `api.query.swap.scrapReservoirAlpha`
 - **summary**: Alpha reservoir for scraps of protocol claimed fees.
 
-### `scrapReservoirTao`: `Map<u16, u64>`
+### `scrapReservoirTao(u16)`: `u64`
 
 - **interface**: `api.query.swap.scrapReservoirTao`
 - **summary**: TAO reservoir for scraps of protocol claimed fees.
 
-### `swapV3Initialized`: `Map<u16, bool>`
+### `swapV3Initialized(u16)`: `bool`
 
 - **interface**: `api.query.swap.swapV3Initialized`
 - **summary**: Storage to determine whether swap V3 was initialized for a specific subnet.
 
-### `tickIndexBitmapWords`: `Map<(u16,PalletSubtensorSwapTickLayerLevel,u32), u128>`
+### `tickIndexBitmapWords(u16, PalletSubtensorSwapTickLayerLevel, u32)`: `u128`
 
 - **interface**: `api.query.swap.tickIndexBitmapWords`
 - **summary**: Tick index bitmap words storage
 
-### `ticks`: `Map<(u16,i32), {"liquidityNet":"i128","liquidityGross":"u64","feesOutTao":"SubstrateFixedFixedI128","feesOutAlpha":"SubstrateFixedFixedI128"}>`
+### `ticks(u16, i32)`: `Tick`
 
 - **interface**: `api.query.swap.ticks`
 - **modifier**: `Optional`
 - **summary**: Storage for all ticks, using subnet ID as the primary key and tick index as the secondary key
 
-
 ## `system`
 
-### `account`: `Map<AccountId32, {"nonce":"u32","consumers":"u32","providers":"u32","sufficients":"u32","data":"PalletBalancesAccountData"}>`
+### `account(AccountId32)`: `AccountInfo`
 
 - **interface**: `api.query.system.account`
 - **summary**: The full account information for a particular account ID.
@@ -1829,23 +1803,23 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Optional`
 - **summary**: Total length (in bytes) for all extrinsics put together, for the current block.
 
-### `authorizedUpgrade`: `{"codeHash":"H256","checkVersion":"bool"}`
+### `authorizedUpgrade`: `CodeUpgradeAuthorization`
 
 - **interface**: `api.query.system.authorizedUpgrade`
 - **modifier**: `Optional`
 - **summary**: `Some` if a code upgrade has been authorized.
 
-### `blockHash`: `Map<u32, H256>`
+### `blockHash(u32)`: `H256`
 
 - **interface**: `api.query.system.blockHash`
 - **summary**: Map of block numbers to block hashes.
 
-### `blockWeight`: `{"normal":"SpWeightsWeightV2Weight","operational":"SpWeightsWeightV2Weight","mandatory":"SpWeightsWeightV2Weight"}`
+### `blockWeight`: `PerDispatchClass`
 
 - **interface**: `api.query.system.blockWeight`
 - **summary**: The current weight for the block.
 
-### `digest`: `{"logs":"Vec<SpRuntimeDigestDigestItem>"}`
+### `digest`: `Digest`
 
 - **interface**: `api.query.system.digest`
 - **summary**: Digest of the current block, also part of the block header.
@@ -1860,20 +1834,20 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.system.events`
 - **summary**: Events deposited for the current block.
 
-    NOTE: The item is unbound and should therefore never be read on chain. It could otherwise inflate the PoV size of a block.
+  NOTE: The item is unbound and should therefore never be read on chain. It could otherwise inflate the PoV size of a block.
 
-    Events have a large in-memory size. Box the events to not go out-of-memory just in case someone still reads them from within the runtime.
+  Events have a large in-memory size. Box the events to not go out-of-memory just in case someone still reads them from within the runtime.
 
-### `eventTopics`: `Map<H256, Vec<(u32,u32)>>`
+### `eventTopics(H256)`: `Vec<(u32,u32)>`
 
 - **interface**: `api.query.system.eventTopics`
 - **summary**: Mapping between a topic (represented by T::Hash) and a vector of indexes of events in the `<Events<T>>` list.
 
-    All topic vectors have deterministic storage locations depending on the topic. This allows light-clients to leverage the changes trie storage tracking mechanism and in case of changes fetch the list of events of interest.
+  All topic vectors have deterministic storage locations depending on the topic. This allows light-clients to leverage the changes trie storage tracking mechanism and in case of changes fetch the list of events of interest.
 
-    The value has the type `(BlockNumberFor<T>, EventIndex)` because if we used only just the `EventIndex` then in case if the topic has the same contents on the next block no notification will be triggered thus the event might be lost.
+  The value has the type `(BlockNumberFor<T>, EventIndex)` because if we used only just the `EventIndex` then in case if the topic has the same contents on the next block no notification will be triggered thus the event might be lost.
 
-### `executionPhase`: `{"_enum":{"ApplyExtrinsic":"u32","Finalization":"Null","Initialization":"Null"}}`
+### `executionPhase`: `Phase`
 
 - **interface**: `api.query.system.executionPhase`
 - **modifier**: `Optional`
@@ -1885,26 +1859,26 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Optional`
 - **summary**: Total extrinsics count for the current block.
 
-### `extrinsicData`: `Map<u32, Bytes>`
+### `extrinsicData(u32)`: `Bytes`
 
 - **interface**: `api.query.system.extrinsicData`
 - **summary**: Extrinsics data for the current block (maps an extrinsic's index to its data).
 
-### `extrinsicWeightReclaimed`: `{"refTime":"Compact<u64>","proofSize":"Compact<u64>"}`
+### `extrinsicWeightReclaimed`: `Weight`
 
 - **interface**: `api.query.system.extrinsicWeightReclaimed`
 - **summary**: The weight reclaimed for the extrinsic.
 
-    This information is available until the end of the extrinsic execution. More precisely this information is removed in `note_applied_extrinsic`.
+  This information is available until the end of the extrinsic execution. More precisely this information is removed in `note_applied_extrinsic`.
 
-    Logic doing some post dispatch weight reduction must update this storage to avoid duplicate reduction.
+  Logic doing some post dispatch weight reduction must update this storage to avoid duplicate reduction.
 
 ### `inherentsApplied`: `bool`
 
 - **interface**: `api.query.system.inherentsApplied`
 - **summary**: Whether all inherents have been applied.
 
-### `lastRuntimeUpgrade`: `{"specVersion":"Compact<u32>","specName":"Text"}`
+### `lastRuntimeUpgrade`: `LastRuntimeUpgradeInfo`
 
 - **interface**: `api.query.system.lastRuntimeUpgrade`
 - **modifier**: `Optional`
@@ -1936,7 +1910,6 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.system.upgradedToU32RefCount`
 - **summary**: True if we have upgraded so that `type RefCount` is `u32`. False (default) if not.
 
-
 ## `timestamp`
 
 ### `didUpdate`: `bool`
@@ -1944,7 +1917,7 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **interface**: `api.query.timestamp.didUpdate`
 - **summary**: Whether the timestamp has been updated in this block.
 
-    This value is updated to `true` upon successful submission of a timestamp by a node. It is then checked at the end of each block execution in the `on_finalize` hook.
+  This value is updated to `true` upon successful submission of a timestamp by a node. It is then checked at the end of each block execution in the `on_finalize` hook.
 
 ### `now`: `u64`
 
@@ -1957,10 +1930,9 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-
 ## `transactionPayment`
 
-### `nextFeeMultiplier`: `u128`
+### `nextFeeMultiplier`: `FixedU128`
 
 - **interface**: `api.query.transactionPayment.nextFeeMultiplier`
 
@@ -1970,9 +1942,6 @@ Storage query definitions for the Bittensor (Subtensor) runtime. Accessible via 
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `storageVersion`: `{"_enum":["V1Ancient","V2"]}`
+### `storageVersion`: `Releases`
 
 - **interface**: `api.query.transactionPayment.storageVersion`
-
-
-*Generated by [subtensor-docs-gen](../../../subtensor-docs-gen) on 2026-03-31T20:04:56.290Z*

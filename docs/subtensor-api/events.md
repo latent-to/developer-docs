@@ -2,10 +2,9 @@
 
 Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
-> **NOTE:** Generated from a live snapshot of the Subtensor runtime on **2026-03-31**.
+> **NOTE:** Generated from a live snapshot of the Subtensor runtime on **2026-04-01**.
 > Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 > On the API: `api.tx / api.query / api.events / api.errors / api.consts`
-
 
 - **[adminUtils](#adminutils)**
 - **[balances](#balances)**
@@ -47,7 +46,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 
 - **interface**: `api.events.adminUtils.Yuma3EnableToggled`
 - **summary**: Event emitted when the Yuma3 enable is toggled.
-
 
 ## `balances`
 
@@ -161,7 +159,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.balances.Withdraw`
 - **summary**: Some amount was withdrawn from the account (e.g. for transaction fees).
 
-
 ## `baseFee`
 
 ### `BaseFeeOverflow()`
@@ -175,7 +172,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 ### `NewElasticity(Permill)`
 
 - **interface**: `api.events.baseFee.NewElasticity`
-
 
 ## `commitments`
 
@@ -194,7 +190,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.commitments.TimelockCommitment`
 - **summary**: A timelock-encrypted commitment was set
 
-
 ## `contracts`
 
 ### `Called(Origin, AccountId)`
@@ -202,9 +197,9 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.contracts.Called`
 - **summary**: A contract was called either by a plain account or another contract.
 
-    **Note:**
+  **Note:**
 
-    Please keep in mind that like all events this is only emitted for successful calls. This is because on failure all storage changes including events are rolled back.
+  Please keep in mind that like all events this is only emitted for successful calls. This is because on failure all storage changes including events are rolled back.
 
 ### `CodeRemoved(H256, u128, AccountId)`
 
@@ -231,9 +226,9 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.contracts.DelegateCalled`
 - **summary**: A contract delegate called a code hash.
 
-    **Note:**
+  **Note:**
 
-    Please keep in mind that like all events this is only emitted for successful calls. This is because on failure all storage changes including events are rolled back.
+  Please keep in mind that like all events this is only emitted for successful calls. This is because on failure all storage changes including events are rolled back.
 
 ### `Instantiated(AccountId, AccountId)`
 
@@ -255,10 +250,9 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.contracts.Terminated`
 - **summary**: Contract has been removed.
 
-    **Note:**
+  **Note:**
 
-    The only way for a contract to be removed and emitting this event is by calling `seal_terminate`.
-
+  The only way for a contract to be removed and emitting this event is by calling `seal_terminate`.
 
 ## `crowdloan`
 
@@ -312,7 +306,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.crowdloan.Withdrew`
 - **summary**: A contribution was withdrawn from a failed crowdloan.
 
-
 ## `drand`
 
 ### `BeaconConfigChanged()`
@@ -330,14 +323,12 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.drand.SetOldestStoredRound`
 - **summary**: Oldest Stored Round has been set.
 
-
 ## `ethereum`
 
 ### `Executed(H160, H160, H256, ExitReason, Vec<u8>)`
 
 - **interface**: `api.events.ethereum.Executed`
 - **summary**: An ethereum transaction was successfully executed.
-
 
 ## `evm`
 
@@ -366,7 +357,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.evm.Log`
 - **summary**: Ethereum events from contracts.
 
-
 ## `grandpa`
 
 ### `NewAuthorities(AuthorityList)`
@@ -384,14 +374,12 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.grandpa.Resumed`
 - **summary**: Current authority set has been resumed.
 
-
 ## `mevShield`
 
 ### `EncryptedSubmitted(H256, AccountId)`
 
 - **interface**: `api.events.mevShield.EncryptedSubmitted`
 - **summary**: Encrypted wrapper accepted.
-
 
 ## `multisig`
 
@@ -420,7 +408,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.multisig.NewMultisig`
 - **summary**: A new multisig operation has begun.
 
-
 ## `preimage`
 
 ### `Cleared(H256)`
@@ -437,7 +424,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 
 - **interface**: `api.events.preimage.Requested`
 - **summary**: A preimage has been requested.
-
 
 ## `proxy`
 
@@ -481,7 +467,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.proxy.RealPaysFeeSet`
 - **summary**: The real-pays-fee setting was updated for a proxy relationship.
 
-
 ## `registry`
 
 ### `IdentityDissolved(AccountId)`
@@ -494,7 +479,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.registry.IdentitySet`
 - **summary**: Emitted when a user registers an identity
 
-
 ## `safeMode`
 
 ### `CannotDeposit()`
@@ -502,14 +486,14 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.safeMode.CannotDeposit`
 - **summary**: Could not hold funds for entering or extending the safe-mode.
 
-    This error comes from the underlying `Currency`.
+  This error comes from the underlying `Currency`.
 
 ### `CannotRelease()`
 
 - **interface**: `api.events.safeMode.CannotRelease`
 - **summary**: Could not release funds for entering or extending the safe-mode.
 
-    This error comes from the underlying `Currency`.
+  This error comes from the underlying `Currency`.
 
 ### `DepositPlaced(AccountId, u128)`
 
@@ -540,7 +524,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 
 - **interface**: `api.events.safeMode.Extended`
 - **summary**: The safe-mode was extended until inclusively this block.
-
 
 ## `scheduler`
 
@@ -594,7 +577,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.scheduler.Scheduled`
 - **summary**: Scheduled some task.
 
-
 ## `subtensorModule`
 
 ### `ActivityCutoffSet(NetUid, u16)`
@@ -632,18 +614,18 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.subtensorModule.AlphaBurned`
 - **summary**: Alpha have been burned without reducing AlphaOut.
 
-    **Parameters:**
+  **Parameters:**
 
-    (coldkey, hotkey, amount, subnet_id)
+  (coldkey, hotkey, amount, subnet_id)
 
 ### `AlphaRecycled(AccountId, AccountId, AlphaBalance, NetUid)`
 
 - **interface**: `api.events.subtensorModule.AlphaRecycled`
 - **summary**: Alpha has been recycled, reducing AlphaOut on a subnet.
 
-    **Parameters:**
+  **Parameters:**
 
-    (coldkey, hotkey, amount, subnet_id)
+  (coldkey, hotkey, amount, subnet_id)
 
 ### `AlphaSigmoidSteepnessSet(NetUid, i16)`
 
@@ -664,10 +646,9 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 
 - **interface**: `api.events.subtensorModule.AutoStakeDestinationSet`
 - **summary**: The auto stake destination has been set.
-
-    - **coldkey**: The account ID of the coldkey.
-    - **netuid**: The network identifier.
-    - **hotkey**: The account ID of the hotkey.
+  - **coldkey**: The account ID of the coldkey.
+  - **netuid**: The network identifier.
+  - **hotkey**: The account ID of the hotkey.
 
 ### `AxonServed(NetUid, AccountId)`
 
@@ -683,16 +664,14 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 
 - **interface**: `api.events.subtensorModule.BatchWeightItemFailed`
 - **summary**: A weight set among a batch of weights failed.
-
-    - **error**: The dispatch error emitted by the failed item.
+  - **error**: The dispatch error emitted by the failed item.
 
 ### `BatchWeightsCompleted(Vec<Compact<NetUid>>, AccountId)`
 
 - **interface**: `api.events.subtensorModule.BatchWeightsCompleted`
 - **summary**: A batch of weights (or commits) have been force-set.
-
-    - **netuids**: The netuids these weights were successfully set/committed for.
-    - **who**: The hotkey that set this batch.
+  - **netuids**: The netuids these weights were successfully set/committed for.
+  - **who**: The hotkey that set this batch.
 
 ### `BondsMovingAverageSet(NetUid, u64)`
 
@@ -773,41 +752,36 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 
 - **interface**: `api.events.subtensorModule.CommitRevealEnabled`
 - **summary**: Commit-Reveal has been successfully toggled.
-
-    - **netuid**: The network identifier.
-    - **Enabled**: Is Commit-Reveal enabled.
+  - **netuid**: The network identifier.
+  - **Enabled**: Is Commit-Reveal enabled.
 
 ### `CommitRevealPeriodsSet(NetUid, u64)`
 
 - **interface**: `api.events.subtensorModule.CommitRevealPeriodsSet`
 - **summary**: Commit-Reveal periods has been successfully set.
-
-    - **netuid**: The network identifier.
-    - **periods**: The number of epochs before the reveal.
+  - **netuid**: The network identifier.
+  - **periods**: The number of epochs before the reveal.
 
 ### `CommitRevealVersionSet(u16)`
 
 - **interface**: `api.events.subtensorModule.CommitRevealVersionSet`
 - **summary**: Commit Reveal Weights version has been updated.
-
-    - **version**: The required version.
+  - **version**: The required version.
 
 ### `CRV3WeightsCommitted(AccountId, NetUidStorageIndex, H256)`
 
 - **interface**: `api.events.subtensorModule.CRV3WeightsCommitted`
 - **summary**: Commit-reveal v3 weights have been successfully committed.
-
-    - **who**: The account ID of the user committing the weights.
-    - **netuid**: The network identifier.
-    - **commit_hash**: The hash representing the committed weights.
+  - **who**: The account ID of the user committing the weights.
+  - **netuid**: The network identifier.
+  - **commit_hash**: The hash representing the committed weights.
 
 ### `CRV3WeightsRevealed(NetUid, AccountId)`
 
 - **interface**: `api.events.subtensorModule.CRV3WeightsRevealed`
 - **summary**: CRV3 Weights have been successfully revealed.
-
-    - **netuid**: The network identifier.
-    - **who**: The account ID of the user revealing the weights.
+  - **netuid**: The network identifier.
+  - **who**: The account ID of the user revealing the weights.
 
 ### `DefaultTakeSet(u16)`
 
@@ -849,9 +823,9 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.subtensorModule.FirstEmissionBlockNumberSet`
 - **summary**: FirstEmissionBlockNumber is set via start call extrinsic
 
-    **Parameters:**
+  **Parameters:**
 
-    netuid block number
+  netuid block number
 
 ### `HotkeySwapped(AccountId, AccountId, AccountId)`
 
@@ -1028,18 +1002,18 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.subtensorModule.RootClaimed`
 - **summary**: Root emissions have been claimed for a coldkey on all subnets and hotkeys.
 
-    **Parameters:**
+  **Parameters:**
 
-    (coldkey)
+  (coldkey)
 
 ### `RootClaimTypeSet(AccountId, RootClaimTypeEnum)`
 
 - **interface**: `api.events.subtensorModule.RootClaimTypeSet`
 - **summary**: Root claim type for a coldkey has been set.
 
-    **Parameters:**
+  **Parameters:**
 
-    (coldkey, u8)
+  (coldkey, u8)
 
 ### `ScalingLawPowerSet(NetUid, u16)`
 
@@ -1081,9 +1055,9 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.subtensorModule.StakeSwapped`
 - **summary**: Stake has been swapped from one subnet to another for the same coldkey-hotkey pair.
 
-    **Parameters:**
+  **Parameters:**
 
-    (coldkey, hotkey, origin_netuid, destination_netuid, amount)
+  (coldkey, hotkey, origin_netuid, destination_netuid, amount)
 
 ### `StakeThresholdSet(u64)`
 
@@ -1095,9 +1069,9 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.subtensorModule.StakeTransferred`
 - **summary**: Stake has been transferred from one coldkey to another on the same subnet.
 
-    **Parameters:**
+  **Parameters:**
 
-    (origin_coldkey, destination_coldkey, hotkey, origin_netuid, destination_netuid, amount)
+  (origin_coldkey, destination_coldkey, hotkey, origin_netuid, destination_netuid, amount)
 
 ### `StartCallDelaySet(u64)`
 
@@ -1144,9 +1118,9 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.subtensorModule.SubnetOwnerHotkeySet`
 - **summary**: The owner hotkey for a subnet has been set.
 
-    **Parameters:**
+  **Parameters:**
 
-    (netuid, new_hotkey)
+  (netuid, new_hotkey)
 
 ### `Sudid(DispatchResult)`
 
@@ -1177,28 +1151,26 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 
 - **interface**: `api.events.subtensorModule.TimelockedWeightsCommitted`
 - **summary**: Timelocked weights have been successfully committed.
-
-    - **who**: The account ID of the user committing the weights.
-    - **netuid**: The network identifier.
-    - **commit_hash**: The hash representing the committed weights.
-    - **reveal_round**: The round at which weights can be revealed.
+  - **who**: The account ID of the user committing the weights.
+  - **netuid**: The network identifier.
+  - **commit_hash**: The hash representing the committed weights.
+  - **reveal_round**: The round at which weights can be revealed.
 
 ### `TimelockedWeightsRevealed(NetUidStorageIndex, AccountId)`
 
 - **interface**: `api.events.subtensorModule.TimelockedWeightsRevealed`
 - **summary**: Timelocked Weights have been successfully revealed.
-
-    - **netuid**: The network identifier.
-    - **who**: The account ID of the user revealing the weights.
+  - **netuid**: The network identifier.
+  - **who**: The account ID of the user revealing the weights.
 
 ### `TransferToggle(NetUid, bool)`
 
 - **interface**: `api.events.subtensorModule.TransferToggle`
 - **summary**: Event called when transfer is toggled on a subnet.
 
-    **Parameters:**
+  **Parameters:**
 
-    (netuid, bool)
+  (netuid, bool)
 
 ### `TxChildKeyTakeRateLimitSet(u64)`
 
@@ -1244,28 +1216,25 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 
 - **interface**: `api.events.subtensorModule.WeightsBatchRevealed`
 - **summary**: Weights have been successfully batch revealed.
-
-    - **who**: The account ID of the user revealing the weights.
-    - **netuid**: The network identifier.
-    - **revealed_hashes**: A vector of hashes representing each revealed weight set.
+  - **who**: The account ID of the user revealing the weights.
+  - **netuid**: The network identifier.
+  - **revealed_hashes**: A vector of hashes representing each revealed weight set.
 
 ### `WeightsCommitted(AccountId, NetUidStorageIndex, H256)`
 
 - **interface**: `api.events.subtensorModule.WeightsCommitted`
 - **summary**: Weights have been successfully committed.
-
-    - **who**: The account ID of the user committing the weights.
-    - **netuid**: The network identifier.
-    - **commit_hash**: The hash representing the committed weights.
+  - **who**: The account ID of the user committing the weights.
+  - **netuid**: The network identifier.
+  - **commit_hash**: The hash representing the committed weights.
 
 ### `WeightsRevealed(AccountId, NetUidStorageIndex, H256)`
 
 - **interface**: `api.events.subtensorModule.WeightsRevealed`
 - **summary**: Weights have been successfully revealed.
-
-    - **who**: The account ID of the user revealing the weights.
-    - **netuid**: The network identifier.
-    - **commit_hash**: The hash of the revealed weights.
+  - **who**: The account ID of the user revealing the weights.
+  - **netuid**: The network identifier.
+  - **commit_hash**: The hash of the revealed weights.
 
 ### `WeightsSet(NetUidStorageIndex, u16)`
 
@@ -1281,7 +1250,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 
 - **interface**: `api.events.subtensorModule.WeightsVersionKeySet`
 - **summary**: weights version key is set for a network.
-
 
 ## `sudo`
 
@@ -1304,7 +1272,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 
 - **interface**: `api.events.sudo.SudoAsDone`
 - **summary**: A sudo_as call just took place.
-
 
 ## `swap`
 
@@ -1332,7 +1299,6 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 
 - **interface**: `api.events.swap.UserLiquidityToggled`
 - **summary**: Event emitted when user liquidity operations are enabled for a subnet. First enable even indicates a switch from V2 to V3 swap.
-
 
 ## `system`
 
@@ -1376,14 +1342,12 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 - **interface**: `api.events.system.UpgradeAuthorized`
 - **summary**: An upgrade was authorized.
 
-
 ## `transactionPayment`
 
 ### `TransactionFeePaid(AccountId, u128, u128)`
 
 - **interface**: `api.events.transactionPayment.TransactionFeePaid`
 - **summary**: A transaction fee `actual_fee`, of which `tip` was added to the minimum inclusion fee, has been paid by `who`.
-
 
 ## `utility`
 
@@ -1426,6 +1390,3 @@ Runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api
 
 - **interface**: `api.events.utility.ItemFailed`
 - **summary**: A single item within a Batch of dispatches has completed with error.
-
-
-*Generated by [subtensor-docs-gen](../../../subtensor-docs-gen) on 2026-03-31T20:04:56.263Z*
