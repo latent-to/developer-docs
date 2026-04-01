@@ -108,13 +108,13 @@ netuid 2: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
 Sets the destination hotkey for your coldkey on a specific subnet.
 
 :::warning Use a proxy coldkey for this operation on mainnet
-`set_coldkey_auto_stake_hotkey` has no scoped proxy type. For mainnet operations, use a `NonCritical` proxy — it prohibits destructive operations (`dissolve_network`, `root_register`, `burned_register`, Sudo) but permits this extrinsic. Your primary coldkey should remain in cold storage. See [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security) and [Working with Proxies](../keys/proxies/working-with-proxies).
+`set_coldkey_auto_stake_hotkey` has no scoped proxy type, but a `NonTransfer` proxy permits it. Your primary coldkey should remain in cold storage. See [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security) and [Working with Proxies](../keys/proxies/working-with-proxies).
 :::
 
 <Tabs groupId="autostaking-method">
 <TabItem value="btcli" label="BTCLI">
 
-On mainnet, run with `--wallet.name PROXY_WALLET --proxy REAL_COLDKEY_SS58` (using a `NonCritical` proxy):
+On mainnet, run with `--wallet.name PROXY_WALLET --proxy REAL_COLDKEY_SS58` (using a `NonTransfer` proxy):
 
 ```bash
 btcli stake set-auto --wallet.name <wallet> --netuid <netuid>
@@ -177,11 +177,11 @@ async def main():
             netuid=netuid,
             hotkey=hotkey_ss58,
         )
-        # NonCritical is the narrowest proxy type that permits set_coldkey_auto_stake_hotkey
+        # NonTransfer is the narrowest proxy type that permits set_coldkey_auto_stake_hotkey
         response = await subtensor.proxy(
             wallet=proxy_wallet,
             real_account_ss58=real_account_ss58,
-            force_proxy_type=ProxyType.NonCritical,
+            force_proxy_type=ProxyType.NonTransfer,
             call=set_auto_call,
         )
         print(response)

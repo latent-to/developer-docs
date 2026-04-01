@@ -48,6 +48,19 @@ Before executing any operations with any coldkeys holding TAO on Bittensor main 
 
 See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
 
+### Hardware wallet requirements for initial proxy setup
+
+The first proxy relationship on a coldkey must be created by the primary coldkey itself. This is the one operation where you cannot use a proxy, since none exists yet. To do this without exposing your primary coldkey to a hot machine, you need a hardware wallet solution that supports arbitrary Subtensor extrinsics:
+
+- **Polkadot Vault + Polkadot.js Apps**: Polkadot Vault loads full chain metadata and can sign any extrinsic, including `proxy.addProxy`. Transactions are passed between the air-gapped device and [polkadot.js/apps](https://polkadot.js.org/apps/) via QR code. This is the most flexible option.
+- **Ledger + Talisman/SubWallet**: Ledger hardware wallets support proxy creation through compatible wallet apps like [Talisman](https://www.talisman.xyz/) and [SubWallet](https://www.subwallet.app/).
+
+After creating the initial `NonTransfer` proxy from your hardware wallet, all subsequent proxy management (creating scoped proxies, revoking proxies, rejecting announcements) can be done through that proxy. The primary coldkey never needs to leave cold storage again.
+
+If you need `btcli` or the SDK for any operation, use a proxy key, not your primary coldkey. And remember to use scope limitations, delays, and prompt revokation to limit the risk exposure of your proxies.
+
+See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
+
 ### Prerequisites
 
 #### Practice/Dev
