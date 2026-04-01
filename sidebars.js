@@ -110,10 +110,11 @@ const sidebars = {
       collapsed: true,
       items: [
         "staking-and-delegation/delegation",
-        "staking-and-delegation/stakers-btcli-guide",
-        "staking-and-delegation/managing-stake-btcli",
-        "staking-and-delegation/managing-stake-sdk",
-        "keys/proxies/staking-with-proxy",
+        {
+          type: "doc",
+          id: "staking-and-delegation/managing-stake-sdk",
+          label: "Managing Your Stakes",
+        },
         {
           type: "category",
           label: "Root claims",

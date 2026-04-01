@@ -137,7 +137,7 @@ Set up proxies from your hardware wallet so the primary coldkey is never involve
 
 - [Proxies: Overview](./proxies/index.md)
 - [Working with Proxies](./proxies/working-with-proxies.md)
-- [Staking with a Proxy](./proxies/staking-with-proxy.md)
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 
 ### Proxy lifecycle
 

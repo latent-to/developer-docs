@@ -160,19 +160,19 @@ Network Security Properties:
 
 A subnet validator that receives staked TAO tokens from delegators and performs validation tasks in one or more subnets.
 
-**See also:** [Delegation](../staking-and-delegation/delegation.md), [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md)
+**See also:** [Delegation](../staking-and-delegation/delegation.md), [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 
 ### Delegate Stake
 
 The amount of TAO staked by the delegate themselves.
 
-**See also:** [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
+**See also:** [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
 
 ### Delegation
 
 Also known as staking, delegating TAO to a validator (who is thereby the delegate), increases the validator's stake and secure a validator permit.
 
-**See also:** [Delegation](../staking-and-delegation/delegation.md), [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md)
+**See also:** [Delegation](../staking-and-delegation/delegation.md), [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 
 ### Dendrite
 
@@ -217,7 +217,7 @@ A cryptographic algorithm used to generate public and private key pairs for cold
 
 The total staked TAO amount of a delegate, including their own TAO tokens and those delegated by nominators.
 
-**See also:** [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
+**See also:** [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
 
 ### Emission
 
@@ -696,7 +696,7 @@ The amount of currency tokens delegated to a validator UID in a subnet. Includes
 
 Stake determines a validator's weight in consensus as well as their emissions.
 
-**See also:** [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md), [Delegation](../staking-and-delegation/delegation.md)
+**See also:** [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md), [Delegation](../staking-and-delegation/delegation.md)
 
 ### Stake Weight
 
@@ -742,7 +742,7 @@ The process of attaching TAO to a validator hotkey, i.e., locking TAO to a subne
 
 **See also:**
 
-- [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md)
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 - [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
 - [Delegation](../staking-and-delegation/delegation.md)
 - [Browse validators on TAO.app](https://www.tao.app/validators)
@@ -920,8 +920,7 @@ Unstaking incurs blockchain transaction fees, which are recycled back into the T
 **See also:**
 
 - [Staking/Delegation overview](../staking-and-delegation/delegation.md#unstaking)
-- [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md#unstaking-with-btcli)
-- [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md#unstaking-from-a-validator)
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md#unstake-from-a-validator)
 - [Understanding Pricing and Anticipating Slippage](../learn/slippage.md)
 - [Price Protection When Staking](../learn/price-protection.md)
 - [Transaction Fees](../learn/fees.md)

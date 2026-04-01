@@ -1,27 +1,30 @@
 ---
-title: "Managing stake with Bittensor Python SDK"
+title: "Managing Your Stakes"
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 import { ProxyColdkeyWarning } from "../keys/_proxy-warning.mdx";
 
-# Managing Stake with Bittensor Python SDK
+# Managing Your Stakes
 
-This page demonstrates usage of the Bittensor SDK for Python for managing stake.
+This guide covers staking operations in Bittensor.
 
 TAO holders can **stake** any amount of the liquidity they hold to a validator. Also known as **delegation**, staking supports validators, because their total stake in the subnet, including stake delegated to them by others, determines their consensus power and their share of emissions. After the validator/delegate extracts their **take** the remaining emissions are credited back to the stakers/delegators in proportion to their stake with that validator.
 
-Likewise, TAO holders can **unstake** from a subnet by converting subnet-specific alpha tokens back to TAO through the subnet's automated market maker (AMM).
+Subsequently, TAO holders **unstake** from a subnet by converting subnet-specific alpha tokens back to TAO through the subnet's automated market maker (AMM).
 
-<ProxyColdkeyWarning />
 
 See also:
 
 - [Staking/delegation overview](./delegation)
-- [Staking with a Proxy](../keys/proxies/staking-with-proxy)
+- [Working with Proxies](../keys/proxies/working-with-proxies)
 - [Understanding pricing and anticipating slippage](../learn/slippage)
 - [Price protection when staking](../learn/price-protection)
 - [MEV Shield Protection](../sdk/mev-protection.md)
+- [Batch Transactions](../learn/batch-transactions)
+
 
 :::tip
 Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.0005 TAO. To verify, query `subtensorModule.minStake()` on the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate). See [Inspecting the Chain](../concepts/inspecting-the-chain).
@@ -29,13 +32,7 @@ Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.000
 
 ## Best practices for staking security
 
-When staking real-value liquidity (especially on mainnet), three practices significantly reduce your exposure to loss:
-
-### Use a proxy coldkey
-
-Never expose your primary coldkey on any machine connected to the internet. Instead, create a **proxy coldkey** with `Staking` permissions and use it to sign transactions on behalf of your primary coldkey. Your primary coldkey's private key never needs to be present on the machine. All examples on this page use this pattern.
-
-See: [Working with Proxies](../keys/proxies/working-with-proxies)
+When staking real-value liquidity (especially on mainnet), two practices significantly reduce your exposure to loss. (Using a proxy coldkey is covered in [Prerequisites](#for-mainnet) above.)
 
 ### Use time-delay proxies
 
@@ -77,19 +74,40 @@ See: [Understand Price Protection](../learn/price-protection)
 Unlike `btcli`, the SDK does **not** enable price protection by default. You must explicitly use `add_stake_limit` / `remove_stake_limit` instead of the unprotected `add_stake` / `remove_stake` to get price protection.
 :::
 
-## Check your TAO balance
+## Prerequisites
+
+### For testing/practice
+
+- [Install btcli](../getting-started/install-btcli) and/or the [Bittensor Python SDK](../getting-started/installation)
+- [Create a wallet](../keys/working-with-keys#creating-a-wallet-with-btcli)
+- Get some test TAO: ask in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553), or [run a local blockchain](../local-build/deploy.md)
+
+### For mainnet
+
+Everything above, plus:
+
+- **A hardware wallet** (Ledger or [Polkadot Vault](../keys/coldkey-hotkey-security#hardware-solution-polkadot-vault)) for your primary coldkey. Your primary coldkey should never be loaded onto an internet-connected machine.
+- **A `NonTransfer` proxy** created from your hardware wallet. This proxy manages all other proxies so the primary coldkey stays in cold storage permanently. See [Add a Proxy Relationship](../keys/proxies/working-with-proxies#add-a-proxy-relationship) and [Manage proxies through a NonTransfer proxy](../keys/proxies/working-with-proxies#manage-proxies-through-a-nontransfer-proxy).
+- **A `Staking` proxy with a non-zero delay**, created through your `NonTransfer` proxy. This is the key you will use for day-to-day staking operations on this page. The delay creates a veto window during which you can [reject unauthorized announcements](../keys/proxies/working-with-proxies#reject-an-announcement).
+- **Sufficient TAO** in the proxy wallet to cover transaction fees (~0.001 TAO per transaction).
+
+See [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security) for the full security model.
 
 <SdkVersion />
 
-To stake, you'll first need some TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network. Alternatively, you can [run a local Bittensor blockchain instance](../local-build/deploy.md).
-
-:::danger
-The funds in a crypto wallet are only as secure as your private key and/or seed phrase, and the devices that have access to these.
-
-Test network tokens have no real value. Before managing liquidity on Bittensor mainnet, carefully consider all aspects of secrets management and endpoint security!
-:::
+## Check your TAO balance
 
 Checking a balance is a permissionless operation — only the public key (SS58 address) is needed:
+
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli wallet balance
+```
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
 
 ```python
 import bittensor as bt
@@ -98,6 +116,9 @@ wallet = bt.Wallet(name="PracticeKey!")
 balance = sub.get_balance(wallet.coldkeypub.ss58_address)
 print(balance)
 ```
+
+</TabItem>
+</Tabs>
 
 ## View exchange rates
 
@@ -125,6 +146,20 @@ print("alpha_to_tao", subnet.alpha_to_tao(alpha_amount))
 
 Use the metagraph to view validators and their stakes within a subnet. This helps you identify top validators before deciding where to stake.
 
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
+
+```bash
+# View validators on a specific subnet
+btcli subnet show --netuid 14
+
+# Or view the full metagraph
+btcli subnets metagraph --netuid 14
+```
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+
 ```python
 import bittensor as bt
 
@@ -149,203 +184,256 @@ for rank, (uid, hotkey, stake) in enumerate(top_validators, start=1):
     print(f"  {rank}. UID {uid} | Stake: {stake:.4f} | Hotkey: {hotkey}")
 ```
 
-## Register on a subnet
+</TabItem>
+</Tabs>
 
-Use a `Registration` proxy to register a hotkey on a subnet. The proxy coldkey signs the transaction; your primary coldkey never needs to be present on the machine.
+
+
+## Stake without a proxy (insecure, testnet only)
+
+:::danger Do not use this on mainnet
+Staking without a proxy requires your coldkey private key on the machine. This is acceptable for testing on testnet but is a serious security risk on mainnet. For mainnet, always use a proxy. See [Best practices](#best-practices-for-staking-security).
+:::
+
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli stake add --wallet.name my_coldkey --netuid 14 --amount 1.0
+```
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
 
 ```python
-import os
 import bittensor as bt
-from bittensor.core.chain_data.proxy import ProxyType
-from bittensor.core.extrinsics.pallets import SubtensorModule
 
 sub = bt.Subtensor(network="test")
+wallet = bt.Wallet(name="my_coldkey")
 
-proxy_wallet = bt.Wallet(name=os.environ['BT_PROXY_WALLET_NAME'])
-real_account_ss58 = os.environ['BT_REAL_ACCOUNT_SS58']
-
-hotkey_wallet = bt.Wallet(
-    name="ExampleWalletName",
-    hotkey="ExampleHotkey",
-)
-
-burned_register_call = SubtensorModule(sub).burned_register(
-    netuid=3,
-    hotkey=hotkey_wallet.hotkey.ss58_address,
-)
-
-response = sub.proxy(
-    wallet=proxy_wallet,
-    real_account_ss58=real_account_ss58,
-    force_proxy_type=ProxyType.Registration,
-    call=burned_register_call,
+response = sub.add_stake(
+    wallet=wallet,
+    hotkey_ss58="VALIDATOR_HOTKEY_SS58",  # replace with validator hotkey
+    netuid=14,
+    amount=bt.Balance.from_tao(1.0),
 )
 print(response)
 ```
 
-## View your registered subnets
+</TabItem>
+</Tabs>
 
-Querying which subnets a hotkey is registered on is a permissionless operation — only the public key is needed:
+## Stake to a specific validator
 
-```python
-import bittensor as bt
-sub = bt.Subtensor(network="test")
-wallet = bt.Wallet(
-    name="ExampleWalletName",
-    hotkey="ExampleHotkey",
-)
-netuids = sub.get_netuids_for_hotkey(wallet.hotkey.ss58_address)
-print(netuids)
+Stake to a single validator on a specific subnet using a time-delay `Staking` proxy with [price protection](#use-price-protection-safe-staking). The process has three steps: announce the transaction, monitor for unauthorized announcements, then execute after the delay.
+
+### Step 1. Announce
+
+Build the staking call and announce its hash on-chain. Record the hash for monitoring.
+
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli stake add \
+  --wallet.name PROXY_WALLET \
+  --proxy REAL_COLDKEY_SS58 \
+  --netuid 14 \
+  --hotkey VALIDATOR_HOTKEY \
+  --amount 100.0 \
+  --announce-only
 ```
 
-## Stake to top subnets and validators
+Note the call hash from the output.
 
-The following script uses a `Staking` proxy to stake a user-defined amount of TAO across the top subnets and validators, with [price protection](#use-price-protection-safe-staking). The proxy coldkey signs all transactions; the primary coldkey SS58 address is supplied as a read-only reference.
-
-**Why transactions are serialized**: Read-only operations (fetching metagraphs) run concurrently for speed. However, staking transactions must run **sequentially** because each transaction from the same signing key requires a unique, incrementing nonce. If multiple transactions are submitted concurrently, they all fetch the same nonce from the chain and all but the first are rejected with a "Transaction is temporarily banned" error.
-
-Set up the required environment variables before running:
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
 
 ```python
-import os
+import asyncio
+import bittensor as bt
+from bittensor.core.extrinsics.pallets import SubtensorModule
 
-os.environ['BT_PROXY_WALLET_NAME'] = 'PROXY_WALLET'       # proxy wallet name
-os.environ['BT_REAL_ACCOUNT_SS58'] = 'YOUR_COLDKEY_SS58'  # primary coldkey SS58 (no private key needed)
-os.environ['TOTAL_TAO_TO_STAKE'] = '1'
-os.environ['NUM_SUBNETS_TO_STAKE_IN'] = '3'
-os.environ['NUM_VALIDATORS_PER_SUBNET'] = '3'
+proxy_wallet = bt.Wallet(name="PROXY_WALLET")  # replace with your proxy wallet name
+real_account_ss58 = "REAL_COLDKEY_SS58"  # replace with your real account SS58
+
+async def main():
+    async with bt.AsyncSubtensor(network='test') as subtensor:
+        netuid = 14
+        hotkey = "VALIDATOR_HOTKEY"  # replace with validator hotkey
+        amount = bt.Balance.from_tao(100)
+
+        # Build the call with price protection
+        pool = await subtensor.subnet(netuid=netuid)
+        limit_price = bt.Balance.from_tao(pool.price.tao * 1.02).rao
+
+        add_stake_call = await SubtensorModule(subtensor).add_stake_limit(
+            netuid=netuid,
+            hotkey=hotkey,
+            amount_staked=amount.rao,
+            limit_price=limit_price,
+            allow_partial=False,
+        )
+
+        call_hash = "0x" + add_stake_call.call_hash.hex()
+        print(f"Announcing: {call_hash}")
+        announce_result = await subtensor.announce_proxy(
+            wallet=proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            call_hash=call_hash,
+        )
+        print(announce_result)
+
+asyncio.run(main())
 ```
 
+</TabItem>
+</Tabs>
+
+### Step 2. Monitor
+
+
+During the delay window, query the chain for pending announcements and verify every hash matches what you announced. btcli cannot query on-chain announcements, so use the SDK or [Polkadot.js](../concepts/inspecting-the-chain).
+
 ```python
-import os, sys, asyncio
+import asyncio
 import bittensor as bt
-import time
-from bittensor import tao
+
+MY_COLDKEY_SS58 = "REAL_COLDKEY_SS58"  # replace with your coldkey SS58
+BLOCK_TIME_SECONDS = 12
+
+async def check_announcements():
+    async with bt.AsyncSubtensor(network="test") as subtensor:
+        proxies, _ = await subtensor.get_proxies_for_real_account(
+            real_account_ss58=MY_COLDKEY_SS58
+        )
+        if not proxies:
+            print("No proxy relationships configured.")
+            return
+        print(proxies)
+
+        current_block = await subtensor.get_current_block()
+        for proxy_info in proxies:
+            if proxy_info.delay == 0:
+                continue
+            announcements = await subtensor.get_proxy_announcement(proxy_info.delegate)
+            for ann in announcements:
+                if ann.real != MY_COLDKEY_SS58:
+                    continue
+                blocks_elapsed = current_block - ann.height
+                blocks_remaining = proxy_info.delay - blocks_elapsed
+                time_remaining_s = blocks_remaining * BLOCK_TIME_SECONDS
+                print(
+                    f"PENDING ANNOUNCEMENT\n"
+                    f"  delegate:     {proxy_info.delegate}\n"
+                    f"  proxy_type:   {proxy_info.proxy_type}\n"
+                    f"  call_hash:    {ann.call_hash}\n"
+                    f"  announced:    block {ann.height} ({blocks_elapsed} blocks ago)\n"
+                    f"  veto window:  {max(0, blocks_remaining)} blocks remaining "
+                    f"({max(0, time_remaining_s):.0f} s)\n"
+                )
+
+asyncio.run(check_announcements())
+```
+
+If you see an unexpected hash, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately using a `NonTransfer` proxy:
+
+```python
+import asyncio
+import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import Proxy
+
+async def main():
+    async with bt.AsyncSubtensor(network="test") as subtensor:
+        nontransfer_proxy_wallet = bt.Wallet(name="YOUR_NONTRANSFER_PROXY")  # replace
+        real_account_ss58 = "REAL_COLDKEY_SS58"  # replace
+        delegate_ss58 = "DELEGATE_SS58"  # the proxy that made the announcement
+
+        reject_call = await Proxy(subtensor).reject_announcement(
+            delegate=delegate_ss58,
+            call_hash="0xSUSPICIOUS_HASH",  # replace with the hash to reject
+        )
+        response = await subtensor.proxy(
+            wallet=nontransfer_proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            force_proxy_type=ProxyType.NonTransfer,
+            call=reject_call,
+        )
+        print(response)
+
+asyncio.run(main())
+```
+
+### Step 3. Execute
+
+After the delay has passed and you have confirmed that only your announced hash is pending, execute the call. You must rebuild the call with exactly the same parameters so the hash matches.
+
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli proxy execute \
+  --wallet.name PROXY_WALLET \
+  --call-hash 0x...
+```
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+
+```python
+import asyncio
+import bittensor as bt
 from bittensor.core.chain_data.proxy import ProxyType
 from bittensor.core.extrinsics.pallets import SubtensorModule
 
-# Load environment variables
-proxy_wallet_name = os.environ.get('BT_PROXY_WALLET_NAME')
-real_account_ss58 = os.environ.get('BT_REAL_ACCOUNT_SS58')
-total_to_stake = os.environ.get('TOTAL_TAO_TO_STAKE')
-num_subnets = os.environ.get('NUM_SUBNETS_TO_STAKE_IN')
-validators_per_subnet = os.environ.get('NUM_VALIDATORS_PER_SUBNET')
+proxy_wallet = bt.Wallet(name="PROXY_WALLET")  # replace
+real_account_ss58 = "REAL_COLDKEY_SS58"  # replace
+PROXY_DELAY_BLOCKS = 100  # must match delay configured when the proxy was created
 
-if proxy_wallet_name is None:
-    sys.exit("❌ BT_PROXY_WALLET_NAME not specified.")
-if real_account_ss58 is None:
-    sys.exit("❌ BT_REAL_ACCOUNT_SS58 not specified.")
+async def main():
+    async with bt.AsyncSubtensor(network='test') as subtensor:
+        # Rebuild the call with the EXACT same parameters used when announcing.
+        # If any parameter differs, the hash won't match and execution will fail.
+        netuid = 14
+        hotkey = "VALIDATOR_HOTKEY"  # must match announcement
+        amount = bt.Balance.from_tao(100)
 
-if total_to_stake is None:
-    print("⚠️ TOTAL_TAO_TO_STAKE not specified. Defaulting to 1 TAO.")
-    total_to_stake = 1.0
-else:
-    try:
-        total_to_stake = float(total_to_stake)
-    except:
-        sys.exit("❌ Invalid TOTAL_TAO_TO_STAKE amount.")
-
-if num_subnets is None:
-    num_subnets = 3
-else:
-    try:
-        num_subnets = int(num_subnets)
-    except:
-        sys.exit("❌ Invalid NUM_SUBNETS_TO_STAKE_IN.")
-
-if validators_per_subnet is None:
-    validators_per_subnet = 3
-else:
-    try:
-        validators_per_subnet = int(validators_per_subnet)
-    except:
-        sys.exit("❌ Invalid NUM_VALIDATORS_PER_SUBNET.")
-
-print(f"\n🔓 Using proxy wallet: {proxy_wallet_name}")
-print(f"  Staking on behalf of: {real_account_ss58[:12]}...")
-print(f"  Dividing {total_to_stake} TAO across top {validators_per_subnet} validators in each of top {num_subnets} subnets.")
-
-proxy_wallet = bt.Wallet(proxy_wallet_name)
-
-# Price protection settings
-RATE_TOLERANCE = 0.02  # 2% price tolerance
-ALLOW_PARTIAL = False  # Strict mode: reject if price exceeds tolerance
-
-async def stake_via_proxy(subtensor, netuid, hotkey_ss58, amount_to_stake):
-    """Stake to a single validator with price protection."""
-    print(f"  Staking {amount_to_stake} to {hotkey_ss58} on subnet {netuid}...")
-    try:
-        # Fetch current subnet price to compute the limit price.
-        # limit_price is the worst acceptable price (in RAO per alpha).
-        # For staking, price goes up as you buy alpha, so the limit is above current price.
         pool = await subtensor.subnet(netuid=netuid)
-        limit_price = bt.Balance.from_tao(pool.price.tao * (1 + RATE_TOLERANCE)).rao
+        limit_price = bt.Balance.from_tao(pool.price.tao * 1.02).rao
+        # WARNING: limit_price is computed from the current pool price, which may have
+        # changed since announcement. If the hash doesn't match, you need the exact
+        # limit_price from when you announced. See the multi-validator example below
+        # for how to save and reload exact parameters.
 
-        # Use add_stake_limit for price protection.
-        # Note the `await`: with AsyncSubtensor, pallet helpers return awaitables.
         add_stake_call = await SubtensorModule(subtensor).add_stake_limit(
             netuid=netuid,
-            hotkey=hotkey_ss58,
-            amount_staked=amount_to_stake.rao,
+            hotkey=hotkey,
+            amount_staked=amount.rao,
             limit_price=limit_price,
-            allow_partial=ALLOW_PARTIAL,
+            allow_partial=False,
         )
-        result = await subtensor.proxy(
+
+        current_block = await subtensor.get_current_block()
+        target_block = current_block + PROXY_DELAY_BLOCKS
+        print(f"Waiting for block {target_block}...")
+        await subtensor.wait_for_block(target_block)
+
+        result = await subtensor.proxy_announced(
             wallet=proxy_wallet,
+            delegate_ss58=proxy_wallet.coldkey.ss58_address,
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.Staking,
             call=add_stake_call,
         )
-        return result
-    except Exception as e:
-        print(f"❌ Failed to stake to {hotkey_ss58} on subnet {netuid}: {e}")
-        return None
-
-async def find_top_validators(subtensor, subnet):
-    """Fetch metagraph and return top validators by stake. Read-only, safe to run concurrently."""
-    netuid = subnet.netuid
-    print(f"\n  Subnet {netuid} had {subnet.tao_in_emission} emissions!")
-    print(f"\n  Fetching metagraph for subnet {netuid}...")
-
-    start_time = time.time()
-    metagraph = await subtensor.metagraph(netuid)
-
-    print(f"✅ Retrieved metagraph for subnet {netuid} in {time.time() - start_time:.2f} seconds.")
-    hk_stake_pairs = [(metagraph.hotkeys[index], metagraph.stake[index]) for index in range(len(metagraph.stake))]
-    top_validators = sorted(hk_stake_pairs, key=lambda x: x[1], reverse=True)[0:validators_per_subnet]
-
-    print(f"\n  Top {validators_per_subnet} Validators for Subnet {netuid}:")
-    for rank, (hk, stake) in enumerate(top_validators, start=1):
-        print(f"  {rank}. {hk} - Stake: {stake}")
-
-    return {"netuid": netuid, "validators": top_validators}
-
-async def main():
-    async with bt.AsyncSubtensor(network='test') as subtensor:
-        print("Fetching information on top subnets by TAO emissions")
-
-        sorted_subnets = sorted(list(await subtensor.all_subnets()), key=lambda subnet: subnet.tao_in_emission, reverse=True)
-        top_subnets = sorted_subnets[0:num_subnets]
-        amount_to_stake = bt.Balance.from_tao(total_to_stake / (num_subnets * validators_per_subnet))
-
-        # Fetch metagraphs concurrently (read-only, no nonce needed)
-        top_vali_dicts = await asyncio.gather(*[find_top_validators(subtensor, subnet) for subnet in top_subnets])
-        top_validators_per_subnet = {}
-        for d in top_vali_dicts:
-            netuid = d['netuid']
-            top_validators_per_subnet[netuid] = [hk for hk, _ in d['validators']]
-
-        # Stake sequentially: each transaction must complete before the next
-        # to avoid nonce collisions from the same signing key.
-        start_time = time.time()
-        for netuid, top_validators in top_validators_per_subnet.items():
-            for hk in top_validators:
-                result = await stake_via_proxy(subtensor, netuid, hk, amount_to_stake)
-                print(result)
-        print(f"Staking completed in {time.time() - start_time:.2f}s")
+        print(result)
 
 asyncio.run(main())
 ```
+
+</TabItem>
+</Tabs>
+
 
 ## Stake to top subnets and validators with a time-delay proxy
 
@@ -818,31 +906,52 @@ asyncio.run(main())
 
 ## Unstake from a validator
 
-Set up the required environment variables:
+Unstake from a specific validator on a specific subnet. The `limit_price` for unstaking is computed as `price * (1 - tolerance)` since selling alpha pushes the price down — you're setting a floor on the worst price you'll accept.
 
-```python
-import os
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
 
-os.environ['BT_PROXY_WALLET_NAME'] = 'PROXY_WALLET'
-os.environ['BT_REAL_ACCOUNT_SS58'] = 'YOUR_COLDKEY_SS58'
+```bash
+btcli stake remove \
+  --wallet.name PROXY_WALLET \
+  --proxy REAL_COLDKEY_SS58 \
+  --netuid 14 \
+  --hotkey VALIDATOR_HOTKEY \
+  --amount 25.0
 ```
 
-Unstake from a specific validator on a specific subnet with price protection. The `limit_price` for unstaking is computed as `price * (1 - tolerance)` since selling alpha pushes the price down — you're setting a floor on the worst price you'll accept:
+To unstake all stake from a validator:
+
+```bash
+btcli stake remove --all \
+  --wallet.name PROXY_WALLET \
+  --proxy REAL_COLDKEY_SS58
+```
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+</TabItem>
+</Tabs>
+
+:::tip Time-delay proxy for unstaking
+The same [announce → monitor → execute](#stake-to-top-subnets-and-validators-with-a-time-delay-proxy) pattern applies to unstaking. The only difference is the inner call: use `remove_stake_limit` instead of `add_stake_limit`, and compute the limit price as `pool.price.tao * (1 - rate_tolerance)` (price floor instead of ceiling). Save the exact `amount_unstaked`, `limit_price_rao`, and `allow_partial` values to your JSON file, and rebuild the call identically in the execute step.
+:::
+
+The SDK example below uses price protection with `remove_stake_limit`. Replace the placeholder values with your proxy wallet name, real account SS58, target subnet, validator hotkey, and amount.
 
 ```python
 import asyncio
 import bittensor as bt
 from bittensor.core.chain_data.proxy import ProxyType
 from bittensor.core.extrinsics.pallets import SubtensorModule
-import os
 
-proxy_wallet = bt.Wallet(name=os.environ['BT_PROXY_WALLET_NAME'])
-real_account_ss58 = os.environ['BT_REAL_ACCOUNT_SS58']
+proxy_wallet = bt.Wallet(name="PROXY_WALLET")  # replace with your proxy wallet name
+real_account_ss58 = "REAL_COLDKEY_SS58"  # replace with your real account SS58
 
 async def main():
     async with bt.AsyncSubtensor(network='test') as subtensor:
         netuid = 17
-        hotkey = "5FvC..."
+        hotkey = "VALIDATOR_HOTKEY"  # replace with validator hotkey
         amount = bt.Balance.from_tao(10)
 
         # Compute limit price for unstaking (price floor).
@@ -1007,25 +1116,41 @@ asyncio.run(main())
 
 ## Move stake
 
-Move stake from one validator/subnet to another using a `Staking` proxy:
+Move stake from one validator/subnet to another using a `Staking` proxy. Moving stake converts alpha on the origin subnet to TAO (via the AMM), then converts TAO to alpha on the destination subnet. Both conversions incur slippage.
+
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli stake move \
+  --wallet.name PROXY_WALLET \
+  --proxy REAL_COLDKEY_SS58 \
+  --origin-netuid 5 \
+  --origin-hotkey ORIGIN_VALIDATOR_HOTKEY \
+  --dest-netuid 18 \
+  --dest-hotkey DEST_VALIDATOR_HOTKEY \
+  --amount 50.0
+```
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
 
 ```python
 import asyncio
 import bittensor as bt
 from bittensor.core.chain_data.proxy import ProxyType
 from bittensor.core.extrinsics.pallets import SubtensorModule
-import os
 
-proxy_wallet = bt.Wallet(name=os.environ['BT_PROXY_WALLET_NAME'])
-real_account_ss58 = os.environ['BT_REAL_ACCOUNT_SS58']
+proxy_wallet = bt.Wallet(name="PROXY_WALLET")  # replace with your proxy wallet name
+real_account_ss58 = "REAL_COLDKEY_SS58"  # replace with your real account SS58
 
 async def main():
     async with bt.AsyncSubtensor("test") as subtensor:
         move_stake_call = await SubtensorModule(subtensor).move_stake(
             origin_netuid=5,
-            origin_hotkey_ss58="5DyHnV9Wz6cnefGfczeBkQCzHZ5fJcVgy7x1eKVh8otMEd31",
+            origin_hotkey_ss58="ORIGIN_VALIDATOR_HOTKEY",  # replace
             destination_netuid=18,
-            destination_hotkey_ss58="5HidY9Danh9NhNPHL2pfrf97Zboew3v7yz4abuibZszcKEMv",
+            destination_hotkey_ss58="DEST_VALIDATOR_HOTKEY",  # replace
             alpha_amount=bt.Balance.from_tao(1.0).set_unit(5),
         )
         result = await subtensor.proxy(
@@ -1040,3 +1165,66 @@ async def main():
 
 asyncio.run(main())
 ```
+
+</TabItem>
+</Tabs>
+
+:::tip Time-delay proxy for moving stake
+The same [announce → monitor → execute](#stake-to-top-subnets-and-validators-with-a-time-delay-proxy) pattern applies to moving stake. The only difference is the inner call: use `move_stake` instead of `add_stake_limit`. Save the exact parameters to your JSON file and rebuild the call identically in the execute step.
+:::
+
+## Transfer stake ownership
+
+Transfer the ownership of staked alpha from one coldkey to another. The stake stays with the same validator on the same subnet, but the controlling coldkey changes. This requires a `Transfer` or `SmallTransfer` proxy type (not `Staking`).
+
+:::warning Transfer vs Move
+**Transfer stake** changes which coldkey owns the stake. **Move stake** changes which validator/subnet the stake is on. They are different operations.
+:::
+
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli stake transfer \
+  --wallet.name PROXY_WALLET \
+  --proxy REAL_COLDKEY_SS58
+```
+
+btcli will interactively prompt for the destination coldkey, hotkey, subnet, and amount.
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+
+```python
+import asyncio
+import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import SubtensorModule
+
+proxy_wallet = bt.Wallet(name="PROXY_WALLET")  # replace with your Transfer proxy wallet name
+real_account_ss58 = "REAL_COLDKEY_SS58"  # replace with your real account SS58
+
+async def main():
+    async with bt.AsyncSubtensor("test") as subtensor:
+        transfer_stake_call = await SubtensorModule(subtensor).transfer_stake(
+            destination_coldkey="DEST_COLDKEY_SS58",  # replace with destination coldkey
+            hotkey="VALIDATOR_HOTKEY",  # replace with the validator hotkey
+            origin_netuid=14,
+            destination_netuid=14,
+            alpha_amount=bt.Balance.from_tao(50).rao,
+        )
+        result = await subtensor.proxy(
+            wallet=proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            force_proxy_type=ProxyType.Transfer,
+            call=transfer_stake_call,
+            wait_for_inclusion=True,
+            wait_for_finalization=False,
+        )
+        print(result)
+
+asyncio.run(main())
+```
+
+</TabItem>
+</Tabs>

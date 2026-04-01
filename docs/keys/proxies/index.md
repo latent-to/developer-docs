@@ -27,7 +27,7 @@ Proxies are useful in many situations where the permissions of one coldkey shoul
 
 - **Staking operations**: Keep your coldkey secure in cold storage while using a proxy to manage staking operations.
 
-  See [Staking with a Proxy](../../keys/proxies/staking-with-proxy.md).
+  See [Managing Your Stakes](../../staking-and-delegation/managing-stake-sdk.md).
 
 - **Operational delegation**: run subnet operations tasks like setting hyperparameters from a designated operations wallet, allowing the owner wallet to remain in maximum-security deep storage.
 - **Least-privilege permissions**: allow an employee or other designated operator to perform a constrained set of calls on a project-owned wallet.

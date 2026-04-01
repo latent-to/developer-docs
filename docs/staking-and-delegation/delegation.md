@@ -16,9 +16,7 @@ Staking and unstaking operations incur transaction fees. See [Transaction Fees i
 See also:
 
 - [Browse validators on TAO.app](https://www.tao.app/validators), with on-chain identities, stake distributions, validator take percentages, etc.
-- [Managing Stake with 'btcli'](./managing-stake-btcli.md)
-- [Managing Stake with the Python SDK](./managing-stake-sdk.md)
-- [Staking with a Proxy](../keys/proxies/staking-with-proxy): Keep your coldkey secure while managing staking operations
+- [Managing Your Stakes](./managing-stake-sdk.md): Complete guide to staking operations with btcli and the Python SDK
 
 :::tip tips
 Validators/delegates can configure their take. The default value is 18%. See [`btcli sudo set-take`](../btcli#btcli-sudo-set-take).

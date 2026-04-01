@@ -8,7 +8,7 @@ This page details the requirements for all of the `btcli` commands.
 
 See also the `btcli` permissions guides for specific Bittensor personas:
 
-- [Staker's Guide to `BTCLI`](../staking-and-delegation/stakers-btcli-guide)
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk)
 - [Miner's Guide to `BTCLI`](../miners/miners-btcli-guide)
 - [Validator's Guide to `BTCLI`](../validators/validators-btcli-guide)
 - [Subnet Creator's Guide to `BTCLI`](../subnets/subnet-creators-btcli-guide)

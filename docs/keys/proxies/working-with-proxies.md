@@ -1118,7 +1118,53 @@ async def main():
 
 asyncio.run(main())
 ```
+## Register on a subnet with a proxy
 
+Use a `Registration` proxy to register a hotkey on a subnet. The proxy coldkey signs the transaction; your primary coldkey never needs to be present on the machine.
+
+```python
+import os
+import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import SubtensorModule
+
+sub = bt.Subtensor(network="test")
+
+proxy_wallet = bt.Wallet(name=os.environ['BT_PROXY_WALLET_NAME'])
+real_account_ss58 = os.environ['BT_REAL_ACCOUNT_SS58']
+
+hotkey_wallet = bt.Wallet(
+    name="ExampleWalletName",
+    hotkey="ExampleHotkey",
+)
+
+burned_register_call = SubtensorModule(sub).burned_register(
+    netuid=3,
+    hotkey=hotkey_wallet.hotkey.ss58_address,
+)
+
+response = sub.proxy(
+    wallet=proxy_wallet,
+    real_account_ss58=real_account_ss58,
+    force_proxy_type=ProxyType.Registration,
+    call=burned_register_call,
+)
+print(response)
+```
+
+
+Querying which subnets a hotkey is registered on is a permissionless operation — only the public key is needed:
+
+```python
+import bittensor as bt
+sub = bt.Subtensor(network="test")
+wallet = bt.Wallet(
+    name="ExampleWalletName",
+    hotkey="ExampleHotkey",
+)
+netuids = sub.get_netuids_for_hotkey(wallet.hotkey.ss58_address)
+print(netuids)
+```
 ## Troubleshooting
 
 - `proxy.Duplicate`: A proxy with the same configuration already exists on the real account. See [source code: `Duplicate` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L739).
