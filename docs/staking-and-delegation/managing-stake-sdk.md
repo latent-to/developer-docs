@@ -167,14 +167,11 @@ netuid = 14  # Change to your desired subnet
 # Fetch the metagraph for the subnet
 metagraph = sub.metagraph(netuid=netuid)
 
-# Get validator hotkeys and their stakes
-validators = []
-for uid in range(len(metagraph.hotkeys)):
-    hotkey = metagraph.hotkeys[uid]
-    stake = metagraph.stake[uid]
-    validators.append((uid, hotkey, stake))
-
-# Sort by stake (highest first) and show top 10
+# Pair each UID with its hotkey and stake, then sort by stake
+validators = [
+    (uid, hk, stake)
+    for uid, (hk, stake) in enumerate(zip(metagraph.hotkeys, metagraph.stake))
+]
 top_validators = sorted(validators, key=lambda x: x[2], reverse=True)[:10]
 
 print(f"Top 10 Validators in Subnet {netuid}:")
@@ -331,9 +328,22 @@ async def monitor():
         expected_hashes = {data["call_hash"]} if isinstance(data, dict) else {a["call_hash"] for a in data}
 
         proxies, _ = await subtensor.get_proxies_for_real_account(REAL_ACCOUNT_SS58)
+        if not proxies:
+            sys.exit("No proxy relationships found for this account.")
+
+        # Warn about 0-delay proxies — these can act immediately with no announcement
+        zero_delay = [p for p in proxies if p.delay == 0]
         delayed_proxies = [p for p in proxies if p.delay > 0]
+
+        if zero_delay:
+            print(f"WARNING: {len(zero_delay)} zero-delay proxy relationship(s) detected.")
+            print("  These proxies can execute instantly with no announcement or veto window:")
+            for p in zero_delay:
+                print(f"    delegate={p.delegate}  type={p.proxy_type}")
+            print("  If you do not recognize these, revoke them immediately.\n")
+
         if not delayed_proxies:
-            sys.exit("No delayed proxy relationships found.")
+            sys.exit("No delayed proxy relationships found. Nothing to monitor.")
 
         current_block = await subtensor.get_current_block()
         on_chain_hashes = set()
@@ -503,47 +513,30 @@ os.environ['NUM_VALIDATORS_PER_SUBNET'] = '3'
 ```python
 import os, sys, asyncio, json
 import bittensor as bt
-import time
-from bittensor import tao
-from bittensor.core.chain_data.proxy import ProxyType
 from bittensor.core.extrinsics.pallets import SubtensorModule
 
-# Load environment variables
 proxy_wallet_name = os.environ.get('BT_PROXY_WALLET_NAME')
 real_account_ss58 = os.environ.get('BT_REAL_ACCOUNT_SS58')
-total_to_stake = os.environ.get('TOTAL_TAO_TO_STAKE')
-num_subnets = os.environ.get('NUM_SUBNETS_TO_STAKE_IN')
-validators_per_subnet = os.environ.get('NUM_VALIDATORS_PER_SUBNET')
 
-if proxy_wallet_name is None:
+if not proxy_wallet_name:
     sys.exit("❌ BT_PROXY_WALLET_NAME not specified.")
-if real_account_ss58 is None:
+if not real_account_ss58:
     sys.exit("❌ BT_REAL_ACCOUNT_SS58 not specified.")
 
-if total_to_stake is None:
-    print("⚠️ TOTAL_TAO_TO_STAKE not specified. Defaulting to 1 TAO.")
-    total_to_stake = 1.0
-else:
-    try:
-        total_to_stake = float(total_to_stake)
-    except:
-        sys.exit("❌ Invalid TOTAL_TAO_TO_STAKE amount.")
+try:
+    total_to_stake = float(os.environ.get('TOTAL_TAO_TO_STAKE', '1'))
+except ValueError:
+    sys.exit("❌ TOTAL_TAO_TO_STAKE must be a number.")
 
-if num_subnets is None:
-    num_subnets = 3
-else:
-    try:
-        num_subnets = int(num_subnets)
-    except:
-        sys.exit("❌ Invalid NUM_SUBNETS_TO_STAKE_IN.")
+try:
+    num_subnets = int(os.environ.get('NUM_SUBNETS_TO_STAKE_IN', '3'))
+except ValueError:
+    sys.exit("❌ NUM_SUBNETS_TO_STAKE_IN must be an integer.")
 
-if validators_per_subnet is None:
-    validators_per_subnet = 3
-else:
-    try:
-        validators_per_subnet = int(validators_per_subnet)
-    except:
-        sys.exit("❌ Invalid NUM_VALIDATORS_PER_SUBNET.")
+try:
+    validators_per_subnet = int(os.environ.get('NUM_VALIDATORS_PER_SUBNET', '3'))
+except ValueError:
+    sys.exit("❌ NUM_VALIDATORS_PER_SUBNET must be an integer.")
 
 print(f"\n🔓 Using proxy wallet: {proxy_wallet_name}")
 print(f"  Staking on behalf of: {real_account_ss58[:12]}...")
@@ -604,16 +597,12 @@ async def find_top_validators(subtensor, subnet):
     """Fetch metagraph and return top validators by stake. Read-only, safe to run concurrently."""
     netuid = subnet.netuid
     print(f"\n  Subnet {netuid} had {subnet.tao_in_emission} emissions!")
-    print(f"\n  Fetching metagraph for subnet {netuid}...")
-
-    start_time = time.time()
     metagraph = await subtensor.metagraph(netuid)
 
-    print(f"✅ Retrieved metagraph for subnet {netuid} in {time.time() - start_time:.2f} seconds.")
-    hk_stake_pairs = [(metagraph.hotkeys[index], metagraph.stake[index]) for index in range(len(metagraph.stake))]
-    top_validators = sorted(hk_stake_pairs, key=lambda x: x[1], reverse=True)[0:validators_per_subnet]
+    hk_stake_pairs = list(zip(metagraph.hotkeys, metagraph.stake))
+    top_validators = sorted(hk_stake_pairs, key=lambda x: x[1], reverse=True)[:validators_per_subnet]
 
-    print(f"\n  Top {validators_per_subnet} Validators for Subnet {netuid}:")
+    print(f"  Top {validators_per_subnet} Validators for Subnet {netuid}:")
     for rank, (hk, stake) in enumerate(top_validators, start=1):
         print(f"  {rank}. {hk} - Stake: {stake}")
 
@@ -624,7 +613,7 @@ async def main():
         print("Fetching information on top subnets by TAO emissions")
 
         sorted_subnets = sorted(list(await subtensor.all_subnets()), key=lambda subnet: subnet.tao_in_emission, reverse=True)
-        top_subnets = sorted_subnets[0:num_subnets]
+        top_subnets = sorted_subnets[:num_subnets]
         amount_to_stake = bt.Balance.from_tao(total_to_stake / (num_subnets * validators_per_subnet))
 
         # Fetch metagraphs concurrently (read-only, no nonce needed)
@@ -656,30 +645,16 @@ async def main():
         print(f"   announcements and confirmed that all and only the above")
         print(f"   hashes are pending. See Step 2.")
 
-        # Save announced call data to a file so Step 3 can rebuild the exact same calls.
+        # Save announced call data so Step 3 can rebuild the exact same calls.
         # The limit_price and amount_staked RAO values must be preserved exactly —
-        # proxy_announced requires the full call (not just the hash), and the chain
-        # re-hashes it to verify it matches. If any parameter differs, the hash won't match.
-        save_data = [
-            {
-                "netuid": a["netuid"],
-                "hotkey": a["hotkey"],
-                "call_hash": a["call_hash"],
-                "amount_staked_rao": a["amount_staked_rao"],
-                "limit_price_rao": a["limit_price_rao"],
-                "allow_partial": a["allow_partial"],
-            }
-            for a in announced
-        ]
+        # the chain re-hashes the call to verify it matches the announcement.
         with open("announced_stakes.json", "w") as f:
-            json.dump(save_data, f, indent=2)
+            json.dump(announced, f, indent=2)
         print(f"\n   Saved announcement data to announced_stakes.json")
 
 asyncio.run(main())
 ```
 ```shell
-⚠️ TOTAL_TAO_TO_STAKE not specified. Defaulting to 1 TAO.
-
 🔓 Using proxy wallet: zingo
   Staking on behalf of: 5ECaCSR1tEzc...
   Dividing 1.0 TAO across top 3 validators in each of top 3 subnets.
@@ -687,29 +662,17 @@ Fetching information on top subnets by TAO emissions
 
   Subnet 31 had τ0.043267221 emissions!
 
-  Fetching metagraph for subnet 31...
-
   Subnet 119 had τ0.017303911 emissions!
 
-  Fetching metagraph for subnet 119...
-
   Subnet 26 had τ0.014446833 emissions!
-
-  Fetching metagraph for subnet 26...
-✅ Retrieved metagraph for subnet 31 in 1.30 seconds.
-
   Top 3 Validators for Subnet 31:
   1. 5H9iGnmydhRKbVNtC6tDr9ZbbEhHAKUE5xuLWZ1wJWsUw49z - Stake: 1130.682861328125
   2. 5CAbcrX6dDoCLYZrXzNCU9csL8JctBxhi9oZcvtc8hqz5Pri - Stake: 695.8594970703125
   3. 5DM5o384xnjsohycyLxX9umWKybCJLVoSjwzYBZ8NUwy5zXj - Stake: 83.06707763671875
-✅ Retrieved metagraph for subnet 26 in 1.34 seconds.
-
   Top 3 Validators for Subnet 26:
   1. 5FZijBVEXfmCqhJH8V6aXhSujVMMTPKGb76AiG4QfWVG6fvM - Stake: 2606.20849609375
   2. 5GYi8aRkGCqQH8YScK4yYDkfZx6DtLVz3G5WJigwwbennZz8 - Stake: 689.8923950195312
   3. 5DoRe6Zic5PUfnPUno3z8MngQEHvgqEMWhfFMEXB7wug9HsV - Stake: 106.76640319824219
-✅ Retrieved metagraph for subnet 119 in 1.41 seconds.
-
   Top 3 Validators for Subnet 119:
   1. 5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ - Stake: 993573.125
   2. 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT - Stake: 490129.15625
@@ -805,9 +768,19 @@ async def monitor():
         if not proxies:
             sys.exit("No proxy relationships found for this account.")
 
+        # Warn about 0-delay proxies — these can act immediately with no announcement
+        zero_delay = [p for p in proxies if p.delay == 0]
         delayed_proxies = [p for p in proxies if p.delay > 0]
+
+        if zero_delay:
+            print(f"WARNING: {len(zero_delay)} zero-delay proxy relationship(s) detected.")
+            print("  These proxies can execute instantly with no announcement or veto window:")
+            for p in zero_delay:
+                print(f"    delegate={p.delegate}  type={p.proxy_type}")
+            print("  If you do not recognize these, revoke them immediately.\n")
+
         if not delayed_proxies:
-            sys.exit("No delayed proxy relationships found.")
+            sys.exit("No delayed proxy relationships found. Nothing to monitor.")
 
         print(f"Checking {len(delayed_proxies)} delayed proxy delegate(s) for {REAL_ACCOUNT_SS58[:16]}...")
         current_block = await subtensor.get_current_block()
@@ -1048,17 +1021,6 @@ async def main():
 asyncio.run(main())
 ```
 
-:::tip Unsafe unstake (for development/testing)
-To skip price protection (e.g. on testnet), use `remove_stake` instead of `remove_stake_limit`:
-
-```python
-remove_stake_call = await SubtensorModule(subtensor).remove_stake(
-    netuid=netuid,
-    hotkey=hotkey,
-    amount_unstaked=amount.rao,
-)
-```
-:::
 
 </TabItem>
 </Tabs>
@@ -1235,37 +1197,28 @@ os.environ['MAX_STAKES_TO_UNSTAKE'] = '10'
 ```
 
 ```python
-import os, sys, asyncio, time
+import os, sys, asyncio
 import bittensor as bt
 from bittensor.core.chain_data.proxy import ProxyType
 from bittensor.core.extrinsics.pallets import SubtensorModule
 
 proxy_wallet_name = os.environ.get('BT_PROXY_WALLET_NAME')
 real_account_ss58 = os.environ.get('BT_REAL_ACCOUNT_SS58')
-total_to_unstake = os.environ.get('TOTAL_TAO_TO_UNSTAKE')
-max_stakes_to_unstake = os.environ.get('MAX_STAKES_TO_UNSTAKE')
 
-if proxy_wallet_name is None:
+if not proxy_wallet_name:
     sys.exit("BT_PROXY_WALLET_NAME not specified.")
-if real_account_ss58 is None:
+if not real_account_ss58:
     sys.exit("BT_REAL_ACCOUNT_SS58 not specified.")
 
-if total_to_unstake is None:
-    print("Unstaking total not specified, defaulting to 1 TAO.")
-    total_to_unstake = 1
-else:
-    try:
-        total_to_unstake = float(total_to_unstake)
-    except:
-        sys.exit("invalid TAO amount!")
+try:
+    total_to_unstake = float(os.environ.get('TOTAL_TAO_TO_UNSTAKE', '1'))
+except ValueError:
+    sys.exit("TOTAL_TAO_TO_UNSTAKE must be a number.")
 
-if max_stakes_to_unstake is None:
-    max_stakes_to_unstake = 10
-else:
-    try:
-        max_stakes_to_unstake = int(max_stakes_to_unstake)
-    except:
-        sys.exit("invalid number for MAX_STAKES_TO_UNSTAKE")
+try:
+    max_stakes_to_unstake = int(os.environ.get('MAX_STAKES_TO_UNSTAKE', '10'))
+except ValueError:
+    sys.exit("MAX_STAKES_TO_UNSTAKE must be an integer.")
 
 print(f"  Using proxy wallet: {proxy_wallet_name}")
 print(f"  Unstaking on behalf of: {real_account_ss58[:12]}...")
@@ -1282,7 +1235,6 @@ ALLOW_PARTIAL = False  # Strict mode
 async def perform_unstake(subtensor, stake, amount):
     try:
         print(f"⏳ Attempting to unstake {amount} from {stake.hotkey_ss58} on subnet {stake.netuid}")
-        start = time.time()
 
         # Compute limit price for this subnet (price floor)
         pool = await subtensor.subnet(netuid=stake.netuid)
@@ -1301,9 +1253,7 @@ async def perform_unstake(subtensor, stake, amount):
             force_proxy_type=ProxyType.Staking,
             call=remove_stake_call,
         )
-        elapsed = time.time() - start
         print(result)
-        print(f"Time elapsed: {elapsed:.2f}s")
         return result.success
     except Exception as e:
         print(f"❌ Error during unstake from {stake.hotkey_ss58} on subnet {stake.netuid}: {e}")
@@ -1316,9 +1266,8 @@ async def main():
         except Exception as e:
             sys.exit(f"❌ Failed to get stake info: {e}")
 
-        stakes = list(filter(lambda s: float(s.stake.tao) > unstake_minimum, stakes))
-        stakes = sorted(stakes, key=lambda s: s.emission.tao)
-        stakes = stakes[:max_stakes_to_unstake]
+        stakes = [s for s in stakes if float(s.stake.tao) > unstake_minimum]
+        stakes = sorted(stakes, key=lambda s: s.emission.tao)[:max_stakes_to_unstake]
 
         if not stakes:
             sys.exit("❌ No eligible stakes found to unstake.")
@@ -1378,7 +1327,7 @@ async def main():
             origin_hotkey_ss58="ORIGIN_VALIDATOR_HOTKEY",  # replace
             destination_netuid=18,
             destination_hotkey_ss58="DEST_VALIDATOR_HOTKEY",  # replace
-            alpha_amount=bt.Balance.from_tao(1.0).set_unit(5),
+            alpha_amount=bt.Balance.from_tao(50).rao,
         )
         result = await subtensor.proxy(
             wallet=proxy_wallet,
@@ -1438,7 +1387,7 @@ async def main():
         origin_hotkey = "ORIGIN_VALIDATOR_HOTKEY"  # replace
         destination_netuid = 18
         destination_hotkey = "DEST_VALIDATOR_HOTKEY"  # replace
-        alpha_amount = bt.Balance.from_tao(50).set_unit(origin_netuid)
+        alpha_amount = bt.Balance.from_tao(50).rao
 
         move_stake_call = await SubtensorModule(subtensor).move_stake(
             origin_netuid=origin_netuid,
@@ -1464,8 +1413,7 @@ async def main():
             "destination_netuid": destination_netuid,
             "destination_hotkey": destination_hotkey,
             "call_hash": call_hash,
-            "alpha_amount_rao": alpha_amount.rao,
-            "alpha_unit": origin_netuid,
+            "alpha_amount_rao": alpha_amount,
         }
         with open("announced_move_stake.json", "w") as f:
             json.dump(save_data, f, indent=2)
@@ -1517,14 +1465,12 @@ async def main():
         with open("announced_move_stake.json") as f:
             data = json.load(f)
 
-        alpha_amount = bt.Balance(data["alpha_amount_rao"]).set_unit(data["alpha_unit"])
-
         move_stake_call = await SubtensorModule(subtensor).move_stake(
             origin_netuid=data["origin_netuid"],
             origin_hotkey_ss58=data["origin_hotkey"],
             destination_netuid=data["destination_netuid"],
             destination_hotkey_ss58=data["destination_hotkey"],
-            alpha_amount=alpha_amount,
+            alpha_amount=data["alpha_amount_rao"],
         )
 
         # Verify the hash matches what was announced.
