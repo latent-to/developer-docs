@@ -49,14 +49,6 @@ Without a delay, even a staking proxy can use `swap_stake` to repeatedly move a 
 
 See: [Avoid Staking Proxy Attacks](../learn/avoid-staking-proxy-attacks)
 
-**Recommendations:**
-
-- **Always set a non-zero delay** for proxies that control financial operations. The delay creates a veto window during which you can reject unauthorized announcements from your hardware wallet.
-- **If you have a delayed proxy, monitor announcements** on a schedule shorter than your delay period. See [Monitor and Reject Announcements](../../keys/proxies/working-with-proxies#monitor-and-reject-announcements).
-- **If you are not monitoring a proxy, revoke it.** A dormant proxy — delayed or not — is a liability.
-- An `Any` proxy at zero delay is equivalent to giving away your coldkey.
-
-See [Coldkey and Hotkey Workstation Security](../../keys/coldkey-hotkey-security) for the full security model.
 :::
 
 ### Terminology and parameters
@@ -116,10 +108,19 @@ The following table shows the available `ProxyType` options and their descriptio
 
 When setting up and using proxies, it's important to follow practices that reduce security risks and operational overhead. The following guidelines highlight how to map permissions correctly, manage delays, and keep accounts secure while making proxy usage efficient:
 
+- Always set a non-zero delay for proxies that control financial operations. The delay creates a veto window during which you can reject unauthorized announcements from your hardware wallet.
+
+- If you have a delayed proxy, monitor announcements on a schedule shorter than your delay period. See [Monitor and Reject Announcements](../../keys/proxies/working-with-proxies#monitor-and-reject-announcements).
+
+- Clear announcements you don't plan to execute.
+
+- If you are not monitoring a proxy, revoke it. Every proxy relationship is a potential attack vector.
+
 - Map your operational needs to a minimal `ProxyType`. If a type seems overly broad, consider whether a more restrictive variant exists.
-- Use non-zero delays for high-risk actions; monitor announcements.
-- Track deposits and limits; batch or clear announcements to avoid dangling deposits.
-- Favor maximum security over convenience when protecting your real account coldkey, using a more convenient but less protected mode of access to your proxy wallet for day for operations.
+
+- An `Any` proxy at zero delay is an equal risk to the primary coldkey it should be protecting, so by creating one you actually increase your risk (since either of two keys could leak), rather than reducing it.
+
+- Understand and practice [Coldkey and Hotkey Workstation Security](../../keys/coldkey-hotkey-security).
 
 ### Choosing the Right `ProxyType`
 
