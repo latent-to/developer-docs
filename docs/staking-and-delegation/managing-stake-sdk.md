@@ -187,7 +187,7 @@ for rank, (uid, hotkey, stake) in enumerate(top_validators, start=1):
 
 
 
-## Stake without a proxy (insecure, testnet only)
+## Stake without a proxy (insecure)
 
 :::danger Do not use this on mainnet
 Staking without a proxy requires your coldkey private key on the machine. This is acceptable for testing on testnet but is a serious security risk on mainnet. For mainnet, always use a proxy. See [Best practices](#best-practices-for-staking-security).
@@ -221,7 +221,7 @@ print(response)
 </TabItem>
 </Tabs>
 
-## Stake to a specific validator
+## Stake to a specific validator with a time-delay proxy
 
 Stake to a single validator on a specific subnet using a time-delay `Staking` proxy with [price protection](#use-price-protection-safe-staking). The process has three steps: announce the transaction, monitor for unauthorized announcements, then execute after the delay.
 
@@ -931,14 +931,8 @@ btcli stake remove --all \
 
 </TabItem>
 <TabItem value="sdk" label="Python SDK">
-</TabItem>
-</Tabs>
 
-:::tip Time-delay proxy for unstaking
-The same [announce → monitor → execute](#stake-to-top-subnets-and-validators-with-a-time-delay-proxy) pattern applies to unstaking. The only difference is the inner call: use `remove_stake_limit` instead of `add_stake_limit`, and compute the limit price as `pool.price.tao * (1 - rate_tolerance)` (price floor instead of ceiling). Save the exact `amount_unstaked`, `limit_price_rao`, and `allow_partial` values to your JSON file, and rebuild the call identically in the execute step.
-:::
-
-The SDK example below uses price protection with `remove_stake_limit`. Replace the placeholder values with your proxy wallet name, real account SS58, target subnet, validator hotkey, and amount.
+Replace the placeholder values with your proxy wallet name, real account SS58, target subnet, validator hotkey, and amount.
 
 ```python
 import asyncio
@@ -992,6 +986,165 @@ remove_stake_call = await SubtensorModule(subtensor).remove_stake(
 )
 ```
 :::
+
+</TabItem>
+</Tabs>
+
+## Unstake with a time-delay proxy
+
+Unstake from a validator using a time-delay `Staking` proxy. This follows the same announce → monitor → execute pattern as [staking with a time-delay proxy](#stake-to-top-subnets-and-validators-with-a-time-delay-proxy), adapted for `remove_stake_limit`. The limit price is a **floor** (worst acceptable price when selling alpha for TAO) rather than a ceiling.
+
+### Step 1. Announce
+
+Build the unstaking call and announce its hash on-chain. Save the exact parameters to a file — you will need them to rebuild the identical call in Step 3.
+
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli stake remove \
+  --wallet.name PROXY_WALLET \
+  --proxy REAL_COLDKEY_SS58 \
+  --netuid 14 \
+  --hotkey VALIDATOR_HOTKEY \
+  --amount 25.0 \
+  --announce-only
+```
+
+Note the call hash from the output.
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+
+```python
+import asyncio, json
+import bittensor as bt
+from bittensor.core.extrinsics.pallets import SubtensorModule
+
+proxy_wallet = bt.Wallet(name="PROXY_WALLET")  # replace with your proxy wallet name
+real_account_ss58 = "REAL_COLDKEY_SS58"  # replace with your real account SS58
+
+async def main():
+    async with bt.AsyncSubtensor(network='test') as subtensor:
+        netuid = 14
+        hotkey = "VALIDATOR_HOTKEY"  # replace with validator hotkey
+        amount = bt.Balance.from_tao(25)
+
+        # Compute limit price for unstaking (price floor).
+        pool = await subtensor.subnet(netuid=netuid)
+        rate_tolerance = 0.02  # 2%
+        limit_price = bt.Balance.from_tao(pool.price.tao * (1 - rate_tolerance)).rao
+
+        remove_stake_call = await SubtensorModule(subtensor).remove_stake_limit(
+            netuid=netuid,
+            hotkey=hotkey,
+            amount_unstaked=amount.rao,
+            limit_price=limit_price,
+            allow_partial=False,
+        )
+
+        call_hash = "0x" + remove_stake_call.call_hash.hex()
+        print(f"Announcing: {call_hash}")
+        announce_result = await subtensor.announce_proxy(
+            wallet=proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            call_hash=call_hash,
+        )
+        print(announce_result)
+
+        # Save parameters so Step 3 can rebuild the exact same call.
+        save_data = {
+            "netuid": netuid,
+            "hotkey": hotkey,
+            "call_hash": call_hash,
+            "amount_unstaked_rao": amount.rao,
+            "limit_price_rao": limit_price,
+            "allow_partial": False,
+        }
+        with open("announced_unstake.json", "w") as f:
+            json.dump(save_data, f, indent=2)
+        print(f"Saved announcement data to announced_unstake.json")
+
+asyncio.run(main())
+```
+
+</TabItem>
+</Tabs>
+
+### Step 2. Monitor
+
+:::danger Monitoring is not optional
+The entire security value of a time-delay proxy depends on monitoring. If you skip this step, a compromised proxy key can drain your account during the delay window by submitting its own announcements. **Always verify that the pending announcements match exactly what you announced**.
+:::
+
+During the delay window, run the [monitoring script from the staking section](#step-2-monitor-announcements) to cross-reference on-chain announcements against your saved data. If you see any hash you didn't create, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately.
+
+### Step 3. Execute
+
+After the delay has passed and you have confirmed that only your announced hash is pending, rebuild the call with the exact same parameters and execute it.
+
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli proxy execute \
+  --wallet.name PROXY_WALLET \
+  --call-hash 0x...
+```
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+
+```python
+import asyncio, json
+import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import SubtensorModule
+
+proxy_wallet = bt.Wallet(name="PROXY_WALLET")  # replace
+real_account_ss58 = "REAL_COLDKEY_SS58"  # replace
+PROXY_DELAY_BLOCKS = 100  # must match delay configured when the proxy was created
+
+async def main():
+    async with bt.AsyncSubtensor(network='test') as subtensor:
+        # Load the exact parameters saved during announcement.
+        with open("announced_unstake.json") as f:
+            data = json.load(f)
+
+        remove_stake_call = await SubtensorModule(subtensor).remove_stake_limit(
+            netuid=data["netuid"],
+            hotkey=data["hotkey"],
+            amount_unstaked=data["amount_unstaked_rao"],
+            limit_price=data["limit_price_rao"],
+            allow_partial=data["allow_partial"],
+        )
+
+        # Verify the hash matches what was announced.
+        call_hash = "0x" + remove_stake_call.call_hash.hex()
+        assert call_hash == data["call_hash"], (
+            f"Hash mismatch: rebuilt {call_hash} != announced {data['call_hash']}. "
+            f"Parameters must be identical to announcement."
+        )
+
+        current_block = await subtensor.get_current_block()
+        target_block = current_block + PROXY_DELAY_BLOCKS
+        print(f"Waiting for block {target_block}...")
+        await subtensor.wait_for_block(target_block)
+
+        result = await subtensor.proxy_announced(
+            wallet=proxy_wallet,
+            delegate_ss58=proxy_wallet.coldkey.ss58_address,
+            real_account_ss58=real_account_ss58,
+            force_proxy_type=ProxyType.Staking,
+            call=remove_stake_call,
+        )
+        print(result)
+
+asyncio.run(main())
+```
+
+</TabItem>
+</Tabs>
 
 ## Unstake from low-emissions validators
 
@@ -1170,9 +1323,163 @@ asyncio.run(main())
 </TabItem>
 </Tabs>
 
-:::tip Time-delay proxy for moving stake
-The same [announce → monitor → execute](#stake-to-top-subnets-and-validators-with-a-time-delay-proxy) pattern applies to moving stake. The only difference is the inner call: use `move_stake` instead of `add_stake_limit`. Save the exact parameters to your JSON file and rebuild the call identically in the execute step.
+## Move stake with a time-delay proxy
+
+Move stake between validators/subnets using a time-delay `Staking` proxy. This follows the same announce → monitor → execute pattern as [staking with a time-delay proxy](#stake-to-top-subnets-and-validators-with-a-time-delay-proxy), adapted for `move_stake`.
+
+### Step 1. Announce
+
+Build the move-stake call and announce its hash on-chain. Save the exact parameters to a file — you will need them to rebuild the identical call in Step 3.
+
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli stake move \
+  --wallet.name PROXY_WALLET \
+  --proxy REAL_COLDKEY_SS58 \
+  --origin-netuid 5 \
+  --origin-hotkey ORIGIN_VALIDATOR_HOTKEY \
+  --dest-netuid 18 \
+  --dest-hotkey DEST_VALIDATOR_HOTKEY \
+  --amount 50.0 \
+  --announce-only
+```
+
+Note the call hash from the output.
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+
+```python
+import asyncio, json
+import bittensor as bt
+from bittensor.core.extrinsics.pallets import SubtensorModule
+
+proxy_wallet = bt.Wallet(name="PROXY_WALLET")  # replace with your proxy wallet name
+real_account_ss58 = "REAL_COLDKEY_SS58"  # replace with your real account SS58
+
+async def main():
+    async with bt.AsyncSubtensor(network='test') as subtensor:
+        origin_netuid = 5
+        origin_hotkey = "ORIGIN_VALIDATOR_HOTKEY"  # replace
+        destination_netuid = 18
+        destination_hotkey = "DEST_VALIDATOR_HOTKEY"  # replace
+        alpha_amount = bt.Balance.from_tao(50).set_unit(origin_netuid)
+
+        move_stake_call = await SubtensorModule(subtensor).move_stake(
+            origin_netuid=origin_netuid,
+            origin_hotkey_ss58=origin_hotkey,
+            destination_netuid=destination_netuid,
+            destination_hotkey_ss58=destination_hotkey,
+            alpha_amount=alpha_amount,
+        )
+
+        call_hash = "0x" + move_stake_call.call_hash.hex()
+        print(f"Announcing: {call_hash}")
+        announce_result = await subtensor.announce_proxy(
+            wallet=proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            call_hash=call_hash,
+        )
+        print(announce_result)
+
+        # Save parameters so Step 3 can rebuild the exact same call.
+        save_data = {
+            "origin_netuid": origin_netuid,
+            "origin_hotkey": origin_hotkey,
+            "destination_netuid": destination_netuid,
+            "destination_hotkey": destination_hotkey,
+            "call_hash": call_hash,
+            "alpha_amount_rao": alpha_amount.rao,
+            "alpha_unit": origin_netuid,
+        }
+        with open("announced_move_stake.json", "w") as f:
+            json.dump(save_data, f, indent=2)
+        print(f"Saved announcement data to announced_move_stake.json")
+
+asyncio.run(main())
+```
+
+</TabItem>
+</Tabs>
+
+### Step 2. Monitor
+
+:::danger Monitoring is not optional
+The entire security value of a time-delay proxy depends on monitoring. If you skip this step, a compromised proxy key can drain your account during the delay window by submitting its own announcements. **Always verify that the pending announcements match exactly what you announced**.
 :::
+
+During the delay window, run the [monitoring script from the staking section](#step-2-monitor-announcements) to cross-reference on-chain announcements against your saved data. If you see any hash you didn't create, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately.
+
+### Step 3. Execute
+
+After the delay has passed and you have confirmed that only your announced hash is pending, rebuild the call with the exact same parameters and execute it.
+
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli proxy execute \
+  --wallet.name PROXY_WALLET \
+  --call-hash 0x...
+```
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+
+```python
+import asyncio, json
+import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import SubtensorModule
+
+proxy_wallet = bt.Wallet(name="PROXY_WALLET")  # replace
+real_account_ss58 = "REAL_COLDKEY_SS58"  # replace
+PROXY_DELAY_BLOCKS = 100  # must match delay configured when the proxy was created
+
+async def main():
+    async with bt.AsyncSubtensor(network='test') as subtensor:
+        # Load the exact parameters saved during announcement.
+        with open("announced_move_stake.json") as f:
+            data = json.load(f)
+
+        alpha_amount = bt.Balance(data["alpha_amount_rao"]).set_unit(data["alpha_unit"])
+
+        move_stake_call = await SubtensorModule(subtensor).move_stake(
+            origin_netuid=data["origin_netuid"],
+            origin_hotkey_ss58=data["origin_hotkey"],
+            destination_netuid=data["destination_netuid"],
+            destination_hotkey_ss58=data["destination_hotkey"],
+            alpha_amount=alpha_amount,
+        )
+
+        # Verify the hash matches what was announced.
+        call_hash = "0x" + move_stake_call.call_hash.hex()
+        assert call_hash == data["call_hash"], (
+            f"Hash mismatch: rebuilt {call_hash} != announced {data['call_hash']}. "
+            f"Parameters must be identical to announcement."
+        )
+
+        current_block = await subtensor.get_current_block()
+        target_block = current_block + PROXY_DELAY_BLOCKS
+        print(f"Waiting for block {target_block}...")
+        await subtensor.wait_for_block(target_block)
+
+        result = await subtensor.proxy_announced(
+            wallet=proxy_wallet,
+            delegate_ss58=proxy_wallet.coldkey.ss58_address,
+            real_account_ss58=real_account_ss58,
+            force_proxy_type=ProxyType.Staking,
+            call=move_stake_call,
+        )
+        print(result)
+
+asyncio.run(main())
+```
+
+</TabItem>
+</Tabs>
 
 ## Transfer stake ownership
 
@@ -1221,6 +1528,156 @@ async def main():
             call=transfer_stake_call,
             wait_for_inclusion=True,
             wait_for_finalization=False,
+        )
+        print(result)
+
+asyncio.run(main())
+```
+
+</TabItem>
+</Tabs>
+
+## Transfer stake ownership with a time-delay proxy
+
+Transfer stake ownership using a time-delay proxy. Because this operation **permanently changes which coldkey controls the stake**, using a time-delay proxy is strongly recommended. This uses a `Transfer` (or `SmallTransfer`) proxy type.
+
+### Step 1. Announce
+
+Build the transfer-stake call and announce its hash on-chain. Save the exact parameters to a file — you will need them to rebuild the identical call in Step 3.
+
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli stake transfer \
+  --wallet.name PROXY_WALLET \
+  --proxy REAL_COLDKEY_SS58 \
+  --announce-only
+```
+
+btcli will interactively prompt for the destination coldkey, hotkey, subnet, and amount. Note the call hash from the output.
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+
+```python
+import asyncio, json
+import bittensor as bt
+from bittensor.core.extrinsics.pallets import SubtensorModule
+
+proxy_wallet = bt.Wallet(name="PROXY_WALLET")  # replace with your Transfer proxy wallet name
+real_account_ss58 = "REAL_COLDKEY_SS58"  # replace with your real account SS58
+
+async def main():
+    async with bt.AsyncSubtensor(network='test') as subtensor:
+        destination_coldkey = "DEST_COLDKEY_SS58"  # replace with destination coldkey
+        hotkey = "VALIDATOR_HOTKEY"  # replace with the validator hotkey
+        origin_netuid = 14
+        destination_netuid = 14
+        alpha_amount = bt.Balance.from_tao(50).rao
+
+        transfer_stake_call = await SubtensorModule(subtensor).transfer_stake(
+            destination_coldkey=destination_coldkey,
+            hotkey=hotkey,
+            origin_netuid=origin_netuid,
+            destination_netuid=destination_netuid,
+            alpha_amount=alpha_amount,
+        )
+
+        call_hash = "0x" + transfer_stake_call.call_hash.hex()
+        print(f"Announcing: {call_hash}")
+        announce_result = await subtensor.announce_proxy(
+            wallet=proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            call_hash=call_hash,
+        )
+        print(announce_result)
+
+        # Save parameters so Step 3 can rebuild the exact same call.
+        save_data = {
+            "destination_coldkey": destination_coldkey,
+            "hotkey": hotkey,
+            "origin_netuid": origin_netuid,
+            "destination_netuid": destination_netuid,
+            "call_hash": call_hash,
+            "alpha_amount_rao": alpha_amount,
+        }
+        with open("announced_transfer_stake.json", "w") as f:
+            json.dump(save_data, f, indent=2)
+        print(f"Saved announcement data to announced_transfer_stake.json")
+
+asyncio.run(main())
+```
+
+</TabItem>
+</Tabs>
+
+### Step 2. Monitor
+
+:::danger Monitoring is not optional
+The entire security value of a time-delay proxy depends on monitoring. A compromised Transfer proxy key could redirect your stake to an attacker-controlled coldkey. **Always verify that the pending announcements match exactly what you announced** — especially the `destination_coldkey`.
+:::
+
+During the delay window, run the [monitoring script from the staking section](#step-2-monitor-announcements) to cross-reference on-chain announcements against your saved data. If you see any hash you didn't create, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately.
+
+### Step 3. Execute
+
+After the delay has passed and you have confirmed that only your announced hash is pending, rebuild the call with the exact same parameters and execute it.
+
+<Tabs groupId="tool">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli proxy execute \
+  --wallet.name PROXY_WALLET \
+  --call-hash 0x...
+```
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+
+```python
+import asyncio, json
+import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import SubtensorModule
+
+proxy_wallet = bt.Wallet(name="PROXY_WALLET")  # replace
+real_account_ss58 = "REAL_COLDKEY_SS58"  # replace
+PROXY_DELAY_BLOCKS = 100  # must match delay configured when the proxy was created
+
+async def main():
+    async with bt.AsyncSubtensor(network='test') as subtensor:
+        # Load the exact parameters saved during announcement.
+        with open("announced_transfer_stake.json") as f:
+            data = json.load(f)
+
+        transfer_stake_call = await SubtensorModule(subtensor).transfer_stake(
+            destination_coldkey=data["destination_coldkey"],
+            hotkey=data["hotkey"],
+            origin_netuid=data["origin_netuid"],
+            destination_netuid=data["destination_netuid"],
+            alpha_amount=data["alpha_amount_rao"],
+        )
+
+        # Verify the hash matches what was announced.
+        call_hash = "0x" + transfer_stake_call.call_hash.hex()
+        assert call_hash == data["call_hash"], (
+            f"Hash mismatch: rebuilt {call_hash} != announced {data['call_hash']}. "
+            f"Parameters must be identical to announcement."
+        )
+
+        current_block = await subtensor.get_current_block()
+        target_block = current_block + PROXY_DELAY_BLOCKS
+        print(f"Waiting for block {target_block}...")
+        await subtensor.wait_for_block(target_block)
+
+        result = await subtensor.proxy_announced(
+            wallet=proxy_wallet,
+            delegate_ss58=proxy_wallet.coldkey.ss58_address,
+            real_account_ss58=real_account_ss58,
+            force_proxy_type=ProxyType.Transfer,
+            call=transfer_stake_call,
         )
         print(result)
 

@@ -96,11 +96,12 @@ See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
 :::info
 Multiple proxy relationships can exist between a pair of wallets, as long as each proxy entry uses a different `ProxyType`. Attempting to register a duplicate entry with the same delegate and `ProxyType` will result in a `proxy.Duplicate` error.
 :::
+### Add the on-chain proxy relationship
 <Tabs groupId="proxy">
 
 <TabItem value="btcli" label="BTCLI">
 
-### Add the on-chain proxy relationship
+
 
 Run `btcli proxy add` to create a proxy relationship between existing wallets on-chain.
 
