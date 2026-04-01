@@ -4,9 +4,9 @@ title: "Proxies: Overview"
 
 # Proxies: Overview
 
-This page introduces the theory and use of proxy wallets for enhanced security in Bittensor.
+This page introduces proxy wallets, a critical security feature in Bittensor.
 
-See [Working with Proxies](../../keys/proxies/working-with-proxies)
+Operational details are covered in [Working with Proxies](../../keys/proxies/working-with-proxies)
 
 ## Introduction: What is a proxy?
 
@@ -137,5 +137,12 @@ Only use the unrestricted `Any` type when no other option fits. If a proxy call 
 
 To ensure scalability and prevent abuse, proxy usage is subject to certain limits as shown:
 
-- **`MaxProxies`**: This refers to the maximum number of delegate accounts that can be linked to a single real account. Each account can register up to 20 proxies in total. See [source code: MaxProxies configuration](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L670).
-- **`MaxPending`**: This refers to the maximum number of pending announcements that a delegate account can have. This limit helps prevent excessive queuing. Each account can have up to 75 pending announcements at a time. See [source code: MaxPending configuration](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L671).
+- **`MaxProxies`**: The maximum number of delegate accounts that can be linked to a single real account. Each account can register up to 20 proxies in total. See [source code: MaxProxies configuration](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L670).
+- **`MaxPending`**: The maximum number of pending announcements that a delegate account can have. Each account can have up to 75 pending announcements at a time. See [source code: MaxPending configuration](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L671).
+
+<details>
+<summary><strong>Check current values on-chain</strong></summary>
+
+To verify these limits, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Constants**, select `proxy.maxProxies` and `proxy.maxPending`. See [Inspecting the Chain](../../concepts/inspecting-the-chain).
+
+</details>

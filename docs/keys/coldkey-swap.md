@@ -41,6 +41,13 @@ At this initiation step, the coldkey owner provides the destination wallet addre
 Next, a pending or lock-out period must elapse, during which the swap can be disputed but not finalized.
 Currently, the waiting/locked period is **36,000 blocks** (~ **5 days**).
 
+<details>
+<summary><strong>Check current value on-chain</strong></summary>
+
+To verify the current swap duration, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Storage**, query `subtensorModule.coldkeySwapScheduleDuration()`. See [Inspecting the Chain](../concepts/inspecting-the-chain).
+
+</details>
+
 3. **Disputation or Finalization**
    1. [Disputing a coldkey swap](#dispute-a-coldkey-swap) prevents the execution of the swap and completely blocks the coldkey from performing any operations. At this point, the triumvirate is required to resolve the dispute. The coldkey private key is required to dispute a swap.
    2. If the Pending Period expires without the swap being disputed, the coldkey owner must finalize the swap by providing the destination coldkey. It will be checked against the on-chain coldkey hash provided during announcement before proceeding.

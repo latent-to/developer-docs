@@ -24,7 +24,7 @@ See also:
 - [MEV Shield Protection](../sdk/mev-protection.md)
 
 :::tip
-Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.0005 TAO.
+Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.0005 TAO. To verify, query `subtensorModule.minStake()` on the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate). See [Inspecting the Chain](../concepts/inspecting-the-chain).
 :::
 
 ## Best practices for staking security

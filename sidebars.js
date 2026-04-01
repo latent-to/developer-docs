@@ -236,6 +236,7 @@ const sidebars = {
         "concepts/commit-reveal",
         "concepts/stake-burn",
         "concepts/consensus-based-weights",
+        "concepts/inspecting-the-chain",
         "concepts/bt-logging-levels",
         "resources/utilities",
       ],

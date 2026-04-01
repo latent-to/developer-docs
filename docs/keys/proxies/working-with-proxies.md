@@ -11,11 +11,11 @@ import { SdkVersion } from "../../sdk/\_sdk-version.mdx";
 This page covers each step in the use of proxy wallets as a security feature for Bittensor operations:
 
 - Creating proxy relationships between existing wallets
-- Executing transactions with 0-day proxy wallets.
+- Executing transactions with zero-delay proxy wallets.
 - Announcing and then executing transactions with a non-zero delay period.
-- Removing proxy relationships
-- Monitoring pending announcements on your proxy accounts
-- Rejecting unauthorized announcements
+- Removing proxy relationships.
+- Monitoring pending announcements on your proxy accounts.
+- Rejecting unauthorized announcements.
 
 See:
 
