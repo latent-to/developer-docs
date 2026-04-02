@@ -28,7 +28,7 @@ See also:
 
 ## Best practices for staking security
 
-When staking real-value liquidity (especially on mainnet), two tools can significantly reduce your exposure to loss, if properly used: proxies and price protection.
+When staking real-value liquidity (especially on mainnet), three tools can significantly reduce your exposure to loss, if properly used: proxies, price protection, and MEV shield.
 
 ### Proxies
 
@@ -41,9 +41,9 @@ See [Prerequisites: For mainnet](#for-mainnet) for the recommended proxy setup, 
 Every stake or unstake operation trades tokens through the subnet's AMM, which means your transaction itself moves the price. Without price protection, you're exposed to:
 
 - **Slippage**: Large transactions push the price against you.
-- **MEV/sandwich attacks**: Adversaries can front-run your transaction to extract value.
 - **Organic volatility**: The price may move between when you submit and when your transaction lands.
 
+Price protection sets a hard limit on the worst price you'll accept. If the price moves beyond your limit, the transaction is rejected (strict mode) or partially filled (partial mode).
 
 See: [Understand Price Protection](../learn/price-protection)
 
@@ -71,6 +71,28 @@ limit_price = bt.Balance.from_tao(pool.price.tao * (1 - rate_tolerance)).rao
 Unlike `btcli`, the SDK does **not** enable price protection by default, it must be explicitly configured.
 :::
 </details>
+
+### MEV shield
+
+MEV (maximal extractable value) attacks exploit the fact that pending transactions are visible in the mempool before they land in a block. An attacker who sees your staking transaction can front-run it (buying alpha before you, driving the price up) or sandwich it (buying before and selling after, extracting value from your trade). Price protection limits your losses from these attacks, but MEV shield prevents them entirely by encrypting your transaction so its contents are hidden until it is included in a block.
+
+MEV shield encrypts the signed extrinsic before submission. The chain decrypts and executes it only after block inclusion, so no one — including block producers — can see or front-run the transaction while it is pending.
+
+To enable MEV shield, add `mev_protection=True` to any supported SDK extrinsic call (or enable it globally):
+
+```python
+response = await subtensor.add_stake_extrinsic(
+    wallet=wallet,
+    hotkey_ss58=hotkey,
+    netuid=netuid,
+    amount=amount,
+    mev_protection=True,
+)
+```
+
+MEV shield and price protection are complementary — use both for maximum safety. Price protection caps your worst-case price; MEV shield prevents adversaries from manipulating that price in the first place.
+
+See: [MEV Shield](../concepts/mev-shield/), [Using MEV Shield with the SDK](../sdk/mev-protection)
 
 ## Prerequisites
 
@@ -280,6 +302,7 @@ async def main():
             wallet=proxy_wallet,
             real_account_ss58=real_account_ss58,
             call_hash=call_hash,
+            mev_protection=True,
         )
         print(announce_result)
 
@@ -410,6 +433,7 @@ async def main():
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.NonTransfer,
             call=reject_call,
+            mev_protection=True,
         )
         print(response)
 
@@ -474,6 +498,7 @@ async def main():
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.Staking,
             call=add_stake_call,
+            mev_protection=True,
         )
         print(result)
 
@@ -575,6 +600,7 @@ async def announce_stake(subtensor, netuid, hotkey_ss58, amount_to_stake):
             wallet=proxy_wallet,
             real_account_ss58=real_account_ss58,
             call_hash=call_hash,
+            mev_protection=True,
         )
         if not announce_result.success:
             print(f"    ❌ Announce failed: {announce_result.message}")
@@ -876,6 +902,7 @@ async def main():
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.NonTransfer,
             call=reject_call,
+            mev_protection=True,
         )
         print(response)
 
@@ -945,6 +972,7 @@ async def main():
                 real_account_ss58=real_account_ss58,
                 force_proxy_type=ProxyType.Staking,
                 call=add_stake_call,
+                mev_protection=True,
             )
             print(result)
 
@@ -1013,6 +1041,7 @@ async def main():
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.Staking,
             call=remove_stake_call,
+            mev_protection=True,
             wait_for_inclusion=True,
             wait_for_finalization=False,
         )
@@ -1084,6 +1113,7 @@ async def main():
             wallet=proxy_wallet,
             real_account_ss58=real_account_ss58,
             call_hash=call_hash,
+            mev_protection=True,
         )
         print(announce_result)
 
@@ -1172,6 +1202,7 @@ async def main():
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.Staking,
             call=remove_stake_call,
+            mev_protection=True,
         )
         print(result)
 
@@ -1252,6 +1283,7 @@ async def perform_unstake(subtensor, stake, amount):
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.Staking,
             call=remove_stake_call,
+            mev_protection=True,
         )
         print(result)
         return result.success
@@ -1334,6 +1366,7 @@ async def main():
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.Staking,
             call=move_stake_call,
+            mev_protection=True,
             wait_for_inclusion=True,
             wait_for_finalization=False,
         )
@@ -1403,6 +1436,7 @@ async def main():
             wallet=proxy_wallet,
             real_account_ss58=real_account_ss58,
             call_hash=call_hash,
+            mev_protection=True,
         )
         print(announce_result)
 
@@ -1491,6 +1525,7 @@ async def main():
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.Staking,
             call=move_stake_call,
+            mev_protection=True,
         )
         print(result)
 
@@ -1545,6 +1580,7 @@ async def main():
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.Transfer,
             call=transfer_stake_call,
+            mev_protection=True,
             wait_for_inclusion=True,
             wait_for_finalization=False,
         )
@@ -1609,6 +1645,7 @@ async def main():
             wallet=proxy_wallet,
             real_account_ss58=real_account_ss58,
             call_hash=call_hash,
+            mev_protection=True,
         )
         print(announce_result)
 
@@ -1697,6 +1734,7 @@ async def main():
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.Transfer,
             call=transfer_stake_call,
+            mev_protection=True,
         )
         print(result)
 
