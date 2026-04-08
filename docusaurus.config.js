@@ -285,7 +285,7 @@ const config = {
             type: "dropdown",
             label: "Docs",
             position: "left",
-            activeBaseRegex: "^/(?!subtensor-api).*$",
+            className: 'docs-dropdown',
             items: [
               {
                 label: "Introduction",
@@ -314,6 +314,7 @@ const config = {
             label: "Subtensor API",
             to: "subtensor-api/extrinsics",
             sidebarId: "apiSidebar",
+            className: 'subtensor-api',
             activeBasePath: "/subtensor-api",
           },
           {

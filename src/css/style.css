@@ -821,6 +821,15 @@ ul {
   background-color: var(--grey-100);
 }
 
+.dropdown--active > .navbar__link,
+a.subtensor-api.navbar__link--active {
+  font-weight: 900;
+  color: var(--ifm-color-primary);
+  border-bottom: 2px solid var(--ifm-color-primary);
+  padding-bottom: 6px;
+  margin-bottom: -8px;
+}
+
 .dropdown__menu ul {
   padding-left: 15px !important;
   height: 0;
@@ -1445,6 +1454,11 @@ footer .container.container-fluid {
 @media screen and (max-width: 1310px) {
   .navbar__inner .navbar__items--right a:nth-child(3) {
     margin-right: 20px !important;
+  }
+
+  .dropdown--active > .navbar__link,
+  .navbar__link--active {
+    border-bottom: none;
   }
 }
 
