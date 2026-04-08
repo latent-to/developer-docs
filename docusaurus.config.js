@@ -269,15 +269,6 @@ const config = {
         },
       },
 
-      // announcementBar: {
-      //   id: 'support_us',
-      //   content:
-      //     'The dynamic TAO docs are preliminary. Check <a target="_blank" rel="noopener noreferrer" href="#">this page for more.</a>',
-      //   backgroundColor: '#171717',
-      //   textColor: '#f43228',
-      //   isCloseable: false,
-      // },
-
       navbar: {
         logo: {
           alt: "Bittensor",
@@ -291,35 +282,83 @@ const config = {
         },
         items: [
           {
+            type: "dropdown",
+            label: "Docs",
             position: "left",
-            label: "Announcements",
-            to: "learn/announcements",
+            activeBaseRegex: "^/(?!subtensor-api).*$",
+            items: [
+              {
+                label: "Introduction",
+                to: "learn/introduction",
+              },
+              {
+                label: "Wallets and Keys",
+                to: "keys/wallets",
+              },
+              {
+                label: "Mining",
+                to: "miners",
+              },
+              {
+                label: "Validating",
+                to: "validators",
+              },
+              {
+                label: "Manage subnets",
+                to: "subnets/create-a-subnet",
+              },
+            ],
           },
           {
             position: "left",
-            label: "Bittensor SDKv10 Migration Guide",
-            to: "sdk/migration-guide",
+            label: "Subtensor API",
+            to: "subtensor-api/extrinsics",
+            sidebarId: "apiSidebar",
+            activeBasePath: "/subtensor-api",
           },
           {
+            type: "dropdown",
+            label: "References",
             position: "left",
-            label: "What is Bittensor?",
-            to: "learn/introduction",
+            items: [
+              {
+                label: "SDK Reference",
+                to: "sdk/bt-api-ref",
+              },
+              {
+                label: "BTCLI Reference",
+                to: "btcli",
+              },
+            ],
           },
           {
+            type: "dropdown",
+            label: "Bittensor EVM",
             position: "left",
-            label: "Bittensor SDK Reference",
-            to: "sdk/bt-api-ref",
-          },
-
-          {
-            position: "left",
-            label: "EVM on Bittensor",
-            to: "evm-tutorials",
+            items: [
+              {
+                label: "EVM smart contracts",
+                to: "evm-tutorials",
+              },
+              {
+                label: "Token Bridging",
+                to: "evm-tutorials/bridge-vtao",
+              },
+              {
+                label: "Convert h160 to SS58",
+                to: "evm-tutorials/convert-h160-to-ss58",
+              },
+            ],
           },
           {
             type: "search",
             position: "left",
             className: "custom_algolia",
+          },
+          {
+            position: "left",
+            label: "Announcements",
+            to: "learn/announcements",
           },
           {
             to: "resources/bittensor-rel-notes",
@@ -328,8 +367,9 @@ const config = {
           },
           {
             href: "https://github.com/latent-to/developer-docs",
-            label: "Docs GitHub",
             position: "right",
+            className: "header-github-link",
+            "aria-label": "GitHub repository",
           },
         ],
       },
