@@ -285,7 +285,7 @@ const config = {
             type: "dropdown",
             label: "Docs",
             position: "left",
-            className: 'docs-dropdown',
+            className: "docs-dropdown",
             items: [
               {
                 label: "Introduction",
@@ -314,7 +314,7 @@ const config = {
             label: "Subtensor API",
             to: "subtensor-api/extrinsics",
             sidebarId: "apiSidebar",
-            className: 'subtensor-api',
+            className: "subtensor-api",
             activeBasePath: "/subtensor-api",
           },
           {
@@ -340,6 +340,7 @@ const config = {
               {
                 label: "EVM smart contracts",
                 to: "evm-tutorials",
+                activeBaseRegex: "^/evm-tutorials/?$",
               },
               {
                 label: "Token Bridging",

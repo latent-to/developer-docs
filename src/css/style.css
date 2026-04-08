@@ -821,6 +821,12 @@ ul {
   background-color: var(--grey-100);
 }
 
+.navbar__link--active[aria-current="page"],
+.dropdown__link--active[aria-current="page"] {
+  font-weight: 900;
+  color: var(--ifm-color-primary);
+}
+
 .dropdown--active > .navbar__link,
 a.subtensor-api.navbar__link--active {
   font-weight: 900;
