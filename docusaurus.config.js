@@ -310,14 +310,6 @@ const config = {
             ],
           },
           {
-            position: "left",
-            label: "Subtensor API",
-            to: "subtensor-api/extrinsics",
-            sidebarId: "apiSidebar",
-            className: "subtensor-api",
-            activeBasePath: "/subtensor-api",
-          },
-          {
             type: "dropdown",
             label: "References",
             position: "left",
@@ -366,6 +358,14 @@ const config = {
             to: "resources/bittensor-rel-notes",
             label: "Releases",
             position: "left",
+          },
+          {
+            position: "right",
+            label: "Subtensor API",
+            to: "subtensor-api/extrinsics",
+            sidebarId: "apiSidebar",
+            className: "subtensor-api",
+            activeBasePath: "/subtensor-api",
           },
           {
             href: "https://github.com/latent-to/developer-docs",
