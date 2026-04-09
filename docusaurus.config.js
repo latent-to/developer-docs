@@ -283,7 +283,7 @@ const config = {
         items: [
           {
             type: "dropdown",
-            label: "Docs",
+            label: "Get started",
             position: "left",
             className: "docs-dropdown",
             items: [
