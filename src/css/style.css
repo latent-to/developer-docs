@@ -316,6 +316,10 @@ p {
   text-transform: uppercase;
 }
 
+ul.theme-doc-sidebar-menu.menu__list {
+  padding-top: 0.8rem;
+}
+
 .theme-doc-sidebar-item-category > ul > li > a {
   padding-left: 48px;
 }
