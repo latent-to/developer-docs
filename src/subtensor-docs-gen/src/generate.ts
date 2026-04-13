@@ -24,7 +24,7 @@ import { generateErrors } from "./generators/errors";
 import { generateStorage } from "./generators/storage";
 import { generateConstants } from "./generators/constants";
 import { generateRpc } from "./generators/rpc";
-import { generateRuntimeCalls } from "./generators/runtimeCalls";
+import { generateRuntimeCalls } from "./generators/runtime";
 
 // ── Configuration ─────────────────────────────────────────────────────────────
 

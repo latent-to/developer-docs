@@ -1,11 +1,6 @@
 import * as path from "path";
 import type { ApiPromise } from "@polkadot/api";
-import {
-  extractDocs,
-  resolveTypeById,
-  fileHeader,
-  writeFile,
-} from "../utils";
+import { extractDocs, resolveTypeById, fileHeader, writeFile } from "../utils";
 
 /**
  * Attempt to derive a readable type name from a type ID via the registry.
@@ -19,16 +14,13 @@ function readableType(typeId: any, registry: any): string {
   }
 }
 
-export function generateRuntimeCalls(
-  api: ApiPromise,
-  outputDir: string,
-): void {
+export function generateRuntimeCalls(api: ApiPromise, outputDir: string): void {
   const lines: string[] = [];
 
   lines.push(
     fileHeader(
       "Runtime Calls",
-      "Runtime API calls exposed by the Bittensor (Subtensor) runtime. " +
+      "This page includes runtime API calls exposed by the Bittensor (Subtensor) runtime. " +
         "Accessible via `api.call.<RuntimeApi>.<method_name>`.",
       (api as any)._options?.provider?.endpoint ?? "subtensor node",
     ),
@@ -59,7 +51,7 @@ export function generateRuntimeCalls(
         const apiName =
           traitNameParts.length > 0
             ? traitNameParts[traitNameParts.length - 1]
-            : runtimeApi.name?.toString?.() ?? "Unknown";
+            : (runtimeApi.name?.toString?.() ?? "Unknown");
 
         const methods: ApiEntry["methods"] = [];
 
@@ -69,7 +61,10 @@ export function generateRuntimeCalls(
           const params = (method.inputs ?? [])
             .map((input: any) => {
               const name = input.name?.toString?.() ?? "_";
-              const typeStr = readableType(input.type ?? input.ty, api.registry);
+              const typeStr = readableType(
+                input.type ?? input.ty,
+                api.registry,
+              );
               return `${name}: ${typeStr}`;
             })
             .join(", ");
@@ -79,7 +74,9 @@ export function generateRuntimeCalls(
             api.registry,
           );
 
-          const docs = extractDocs(method.docs?.toJSON?.() ?? method.docs ?? []);
+          const docs = extractDocs(
+            method.docs?.toJSON?.() ?? method.docs ?? [],
+          );
 
           methods.push({ methodName, params, returnType, docs });
         }
@@ -151,9 +148,7 @@ export function generateRuntimeCalls(
 
   // ── Table of contents ─────────────────────────────────────────────────────
   for (const entry of apiEntries) {
-    lines.push(
-      `- **[${entry.apiName}](#${entry.apiName.toLowerCase()})**`,
-    );
+    lines.push(`- **[${entry.apiName}](#${entry.apiName.toLowerCase()})**`);
   }
 
   // ── Per-API sections ──────────────────────────────────────────────────────
@@ -161,14 +156,10 @@ export function generateRuntimeCalls(
     lines.push(`\n## \`${apiName}\`\n`);
 
     for (const { methodName, params, returnType, docs } of methods) {
-      const signature = `${methodName}(${params})`
-        .replace(/\s+/g, " ")
-        .trim();
+      const signature = `${methodName}(${params})`.replace(/\s+/g, " ").trim();
 
       lines.push(`### \`${signature}\`: \`${returnType}\`\n`);
-      lines.push(
-        `- **interface**: \`api.call.${apiName}.${methodName}\``,
-      );
+      lines.push(`- **interface**: \`api.call.${apiName}.${methodName}\``);
       if (docs) {
         lines.push(`- **summary**: ${docs}`);
       }
@@ -182,5 +173,5 @@ export function generateRuntimeCalls(
     );
   }
 
-  writeFile(path.join(outputDir, "runtime-calls.md"), lines.join("\n"));
+  writeFile(path.join(outputDir, "runtime.md"), lines.join("\n"));
 }

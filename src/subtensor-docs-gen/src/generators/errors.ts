@@ -14,7 +14,7 @@ export function generateErrors(api: ApiPromise, outputDir: string): void {
   lines.push(
     fileHeader(
       "Errors",
-      "Error variants returned by the Bittensor (Subtensor) runtime. " +
+      "This page contains error variants returned by the Bittensor (Subtensor) runtime. " +
         "Accessible via `api.errors.<Pallet>.<ErrorName>`.",
       (api as any)._options?.provider?.endpoint ?? "subtensor node",
     ),

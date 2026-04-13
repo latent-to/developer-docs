@@ -20,30 +20,8 @@ yarn install
 
 ## Usage
 
-### Against mainnet (finney)
-
 ```bash
 yarn generate
-```
-
-Connects to `wss://entrypoint-finney.opentensor.ai:443`.
-
-### Against a local dev node
-
-```bash
-# In one terminal — start the node
-cargo run --release -- --dev
-
-# In another terminal — generate
-yarn generate:local
-```
-
-Connects to `ws://127.0.0.1:9944`.
-
-### Against testnet
-
-```bash
-yarn generate:test
 ```
 
 ### Custom endpoint or output path
@@ -57,17 +35,17 @@ OUTPUT_DIR=/tmp/subtensor-docs yarn generate
 
 ## Output
 
-All files are written to `../docs/api-reference/` (i.e. `subtensor/docs/api-reference/`):
+All files are written to `../docs/api-reference/`:
 
 | File            | Contents                                                |
 | --------------- | ------------------------------------------------------- |
-| `README.md`     | Overview + live pallet inventory table                  |
 | `extrinsics.md` | All `api.tx.*` dispatchable calls                       |
 | `events.md`     | All `api.events.*` event definitions                    |
 | `errors.md`     | All `api.errors.*` error variants                       |
 | `storage.md`    | All `api.query.*` storage items                         |
 | `constants.md`  | All `api.consts.*` runtime constants (with live values) |
 | `rpc.md`        | Custom Subtensor JSON-RPC methods                       |
+| `runtime.md`    | Custom Subtensor runtime calls methods                  |
 
 ## Project structure
 
@@ -85,6 +63,8 @@ subtensor-docs-gen/
 │       ├── errors.ts
 │       ├── storage.ts
 │       ├── constants.ts
+│       ├── rpc.ts
+│       ├── runtime.ts
 ```
 
 ## How it works
