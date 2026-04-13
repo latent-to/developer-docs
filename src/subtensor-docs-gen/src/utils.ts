@@ -435,10 +435,9 @@ export function fileHeader(title: string, description: string, endpoint: string)
 
 ${description}
 
-> **NOTE:** Generated from a live snapshot of the Subtensor runtime on **${today()}**.
-> Connected to: \`${endpoint}\`
-> On the API: \`api.tx / api.query / api.events / api.errors / api.consts\`
-
+:::info
+Generated from a live snapshot of the Subtensor runtime on **${today()}**. Connected to: \`${endpoint}\`
+:::
 `;
 }
 

@@ -23,21 +23,17 @@ import { generateEvents } from "./generators/events";
 import { generateErrors } from "./generators/errors";
 import { generateStorage } from "./generators/storage";
 import { generateConstants } from "./generators/constants";
+import { generateRpc } from "./generators/rpc";
+import { generateRuntimeCalls } from "./generators/runtimeCalls";
 
 // ── Configuration ─────────────────────────────────────────────────────────────
 
 const WS_ENDPOINT =
   process.env.SUBTENSOR_WS ?? "wss://entrypoint-finney.opentensor.ai:443";
 
-/**
- * Output directory.
- * Default is ../docs/api-reference relative to this file (i.e. inside the
- * cloned subtensor repo at subtensor/docs/api-reference/).
- * Override with OUTPUT_DIR env var.
- */
 const OUTPUT_DIR =
   process.env.OUTPUT_DIR ??
-  path.resolve(__dirname, "..", "..", "docs", "subtensor-api");
+  path.resolve(__dirname, "..", "..", "..", "docs", "subtensor-api");
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 
@@ -79,6 +75,8 @@ async function main(): Promise<void> {
   generateErrors(api, OUTPUT_DIR);
   generateStorage(api, OUTPUT_DIR);
   generateConstants(api, OUTPUT_DIR);
+  await generateRpc(api, OUTPUT_DIR);
+  generateRuntimeCalls(api, OUTPUT_DIR);
 
   console.log("\n▶ Done.\n");
 

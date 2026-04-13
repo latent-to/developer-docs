@@ -13,7 +13,7 @@ on:
 
 env:
   NODE_VERSION: "20"
-  GENERATOR_DIR: "subtensor-docs-gen"
+  GENERATOR_DIR: "src/subtensor-docs-gen"
   DOCS_DIR: "docs/subtensor-api"
   BRANCH_PREFIX: "docs/auto-update"
   SUBTENSOR_WS: >-
@@ -57,7 +57,7 @@ jobs:
         working-directory: ${{ env.GENERATOR_DIR }}
         env:
           SUBTENSOR_WS: ${{ env.SUBTENSOR_WS }}
-          OUTPUT_DIR: "../${{ env.DOCS_DIR }}"
+          OUTPUT_DIR: "../../${{ env.DOCS_DIR }}"
         run: yarn generate
         timeout-minutes: 10
 
@@ -68,7 +68,22 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No changes in $DOCS_DIR — nothing to PR."
           else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
+            # Check whether changes go beyond the generation-date stamp.
+            # Extract added/removed content lines, then strip out lines
+            # that only update the "Generated from a live snapshot … on **DATE**" header.
+            SUBSTANTIVE=$(git diff HEAD -- "$DOCS_DIR" \
+              | grep -E '^[+-]' \
+              | grep -vE '^(\+\+\+|---) ' \
+              | grep -vE 'Generated from a live snapshot of the Subtensor runtime on' \
+              | wc -l)
+
+            if [ "$SUBSTANTIVE" -eq 0 ]; then
+              echo "changed=false" >> "$GITHUB_OUTPUT"
+              echo "Only generation-date changes detected — skipping PR."
+              git checkout -- "$DOCS_DIR"
+            else
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+            fi
           fi
 
       - name: Commit updated docs to new branch

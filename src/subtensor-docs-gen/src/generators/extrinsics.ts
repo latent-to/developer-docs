@@ -11,7 +11,6 @@ import {
   writeFile,
   sortedPallets,
   palletAnchor,
-  BITTENSOR_PALLETS,
 } from "../utils";
 
 export function generateExtrinsics(api: ApiPromise, outputDir: string): void {
@@ -27,21 +26,7 @@ export function generateExtrinsics(api: ApiPromise, outputDir: string): void {
   );
 
   const pallets = sortedPallets(api.tx as any);
-  const bittensorPallets = pallets.filter(([n]) => BITTENSOR_PALLETS.has(n));
-  const stdPallets = pallets.filter(([n]) => !BITTENSOR_PALLETS.has(n));
-
-  if (bittensorPallets.length > 0) {
-    lines.push("**Bittensor-specific pallets**\n");
-    for (const [n] of bittensorPallets)
-      lines.push(`- **[${n}](#${palletAnchor(n)})**`);
-    lines.push("");
-  }
-  if (stdPallets.length > 0) {
-    lines.push("**Standard Subtensor pallets**\n");
-    for (const [n] of stdPallets)
-      lines.push(`- **[${n}](#${palletAnchor(n)})**`);
-    lines.push("");
-  }
+  for (const [n] of pallets) lines.push(`- **[${n}](#${palletAnchor(n)})**`);
 
   for (const [palletName, palletTx] of pallets) {
     // Backtick-wrapped pallet name, no horizontal rule
