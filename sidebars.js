@@ -345,6 +345,8 @@ const sidebars = {
     "subtensor-api/storage",
     "subtensor-api/events",
     "subtensor-api/constants",
+    "subtensor-api/runtime",
+    "subtensor-api/rpc",
   ],
 };
 
