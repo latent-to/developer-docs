@@ -28,10 +28,6 @@ jobs:
     name: Regenerate docs and open PR
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-      pull-requests: write
-
     steps:
       - name: Generate GitHub App token
         uses: actions/create-github-app-token@d72941d797fd3113feb6b93fd0dec494b13a2547 # v1
