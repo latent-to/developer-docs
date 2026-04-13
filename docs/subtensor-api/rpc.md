@@ -1,6 +1,6 @@
 # RPC
 
-JSON-RPC methods available on a Bittensor (Subtensor) node. Accessible via `api.rpc.<namespace>.<method_name>`.
+This page shows JSON-RPC methods available on a Bittensor (Subtensor) node. Accessible via `api.rpc.<namespace>.<method_name>`.
 
 :::info
 Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
