@@ -35,7 +35,7 @@ Note that hotkeys are not encrypted by default, but can be password [optionally 
 - Create and register a hotkey on a secure coldkey workstation then transfer the hotkey file or mnemonic to the validator workstation: `btcli wallet new-hotkey` , `btcli wallet regen-hotkey`
 - Transfer/rotate TAO and alpha stake in case of key compromise
 - Rotate hotkeys in case of compromise
-- Register a hotkey on a subnet with `btcli subnets register`, `btcli subnets pow-register`
+- Register a hotkey on a subnet with `btcli subnets register` (or `btcli subnets pow-register`); non-root registration is **burn-based**
 - Set validator take with `btcli sudo set-take`
 
 ### Validator node (hotkey workstation)

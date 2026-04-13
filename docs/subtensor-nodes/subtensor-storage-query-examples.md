@@ -58,7 +58,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 4. AdjustmentAlpha
 
-- **Description**: Alpha adjustment value for the network.
+- **Description**: Alpha adjustment value for the network. Not used for neuron registration.
 - **Query Type**: `u16 -> u64`
 - **Parameters**:
   - `netuid`: `u16`
@@ -74,7 +74,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 5. AdjustmentInterval
 
-- **Description**: Adjustment interval for networks.
+- **Description**: Adjustment interval for networks. Not used for neuron registration.
 - **Query Type**: `u16 -> u16`
 - **Parameters**:
   - `netuid`: `u16`
@@ -1194,7 +1194,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 74. MaxRegistrationsPerBlock
 
-- **Description**: Maximum registrations allowed per block.
+- **Description**: Maximum registrations allowed per block. Neuron registration rate limits are removed for non-root subnets; this item is unused for non-root neuron registration.
 - **Query Type**: `u16 -> u16`
 - **Parameters**:
   - `block`: `u16`
@@ -1419,7 +1419,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 89. NetworkPowRegistrationAllowed
 
-- **Description**: Whether PoW registration is allowed in the network.
+- **Description**: Whether PoW registration is allowed in the network. Non-root neuron registration is burn-based; this flag is unused for that path.
 - **Query Type**: `u16 -> bool`
 - **Parameters**:
   - `netuid`: `u16`
@@ -1748,7 +1748,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 110. POWRegistrationsThisInterval
 
-- **Description**: Number of PoW registrations in this interval.
+- **Description**: Number of PoW registrations in this interval. Removed for non-root neuron registration; verify in metadata before use.
 - **Query Type**: `u16 -> u16`
 - **Parameters**:
   - `netuid`: `u16`
@@ -2572,7 +2572,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 161. TargetRegistrationsPerInterval
 
-- **Description**: Target registrations per interval for the network.
+- **Description**: Target registrations per interval for the network. Per-interval neuron registration caps are removed for non-root subnets; this item is unused for non-root neuron admission.
 - **Query Type**: `u16 -> u16`
 - **Parameters**:
   - `netuid`: `u16`

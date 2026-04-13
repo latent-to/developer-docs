@@ -30,7 +30,9 @@ To participate as a miner, you must first register a hotkey with the subnet in o
 You **do not** have to create a subnet to mine on the Bittensor network. Most miners work on already established subnets.
 :::
 
-Registration has a cost in TAO, which fluctuates dynamically based on the time since the last registration. When you secure a UID slot in a subnet on the main chain, this TAO is sunk cost and cannot be recovered.
+Registration has a cost in TAO that fluctuates dynamically: the price **decays** over time and **increases** each time a registration succeeds. The subnet owner controls the decay rate (`BurnHalfLife`) and increase factor (`BurnIncreaseMult`), with floor and ceiling set by `MinBurn` and `MaxBurn`. When you secure a UID slot in a subnet on the main chain, this TAO is sunk cost and cannot be recovered.
+
+To protect against price movement between when you check the cost and when your transaction lands, use `register_limit` with a `limit_price`—the registration will fail if the burn would exceed your specified price.
 
 A subnet can have a maximum of 64 subnet validator UIDs and 192 subnet miner UIDs (256 total) in subnets other than Subnet 1.
 

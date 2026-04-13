@@ -73,7 +73,18 @@ Registers a neuron in a subnet by burning TAO tokens.
 - `hotkey` (bytes32): The hotkey public key (32 bytes) of the neuron to register
 
 **Description:**
-This function registers a new neuron in the specified subnet by burning a certain amount of TAO tokens. The amount burned depends on the current network conditions and subnet parameters. The hotkey represents the neuron's identity on the network.
+This function registers a new neuron in the specified subnet by burning TAO at the **current dynamic registration price**. The price **decays** over time (governed by `BurnHalfLife`) and **increases** after each successful registration (governed by `BurnIncreaseMult`), clamped by `MinBurn` and `MaxBurn`. The hotkey represents the neuron's identity on the network.
+
+#### `registerLimit`
+Registers a neuron but **only if** the burn price does not exceed a caller-supplied cap (slippage protection).
+
+**Parameters:**
+- `netuid` (uint16): The subnet ID to register the neuron in
+- `hotkey` (bytes32): The hotkey public key (32 bytes) of the neuron to register
+- `limitPrice` (uint64): Maximum acceptable burn price in the chain’s fixed-point balance representation—confirm encoding with the deployed precompile ABI and metadata
+
+**Description:**
+Use this when you want the transaction to **fail** if the registration cost would be higher than `limitPrice`.
 
 ### Axon Services
 

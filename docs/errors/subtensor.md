@@ -332,11 +332,11 @@ The stake burn operation has exceeded its rate limit. Try again in the next temp
 
 ### `TooManyRegistrationsThisBlock`
 
-Too many registrations in this block.
+Too many registrations in this block. Neuron registration rate limits are removed for non-root subnets; this error does not apply to non-root neuron registration.
 
 ### `TooManyRegistrationsThisInterval`
 
-Too many registration attempts in interval.
+Too many registration attempts in interval. Per-interval neuron registration caps are removed for non-root subnets; this error does not apply to non-root neuron registration.
 
 ### `CouldNotJoinSenate`
 

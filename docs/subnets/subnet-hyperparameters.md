@@ -8,6 +8,8 @@ Bittensor subnets are configured with a set of state variables (known as hyperpa
 
 Note that the names of the variables may be slightly different in various representations, e.g. in `btcli` and in the [chain codebase](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1038).
 
+Non-root neuron (UID) registration pricing is driven by **`BurnHalfLife`** and **`BurnIncreaseMult`**, with **`MinBurn`** and **`MaxBurn`** as bounds. Confirm live names and values with `btcli subnet hyperparameters`.
+
 ## Manage hyperparams with `btcli`
 
 This section covers how to use BTCLI to view, update, and verify network hyperparameters directly from the terminal.
@@ -22,57 +24,9 @@ Any user can view the hyperparameters of any subnet by using the `btcli subnets 
 btcli subnet hyperparameters --netuid 14
 ```
 
-```console
-                                                                                           Subnet Hyperparameters
-                                                                                    NETUID: 14 (TAOHash) - Network: finney
+<!-- TODO: refresh sample output of `btcli subnet hyperparameters --netuid 14` once the neuron registration rework (subtensor PR #2382) is live on finney. -->
 
-
- HYPERPARAMETER                    VALUE                  NORMALIZED        OWNER SETTABLE             DESCRIPTION
- ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-   activity_cutoff                 5000                   5000              Yes                        Minimum activity level required for neurons to remain active. link
-   adjustment_alpha                14757395258967641292   0.8               Yes                        Alpha parameter for difficulty adjustment algorithm. link
-   adjustment_interval             360                    360               No (Root Only)             Number of blocks between automatic difficulty adjustments. link
-   alpha_high                      58982                  0.9000076295      Yes                        High bound of the alpha range for stake calculations. link
-   alpha_low                       45875                  0.7000076295      Yes                        Low bound of the alpha range for stake calculations. link
-   alpha_sigmoid_steepness         0.0                    0                 No (Root Only)             Steepness parameter for alpha sigmoid function. link
-   bonds_moving_avg                1                      5.421010862e-20   Yes                        Moving average window size for bond calculations. link
-   bonds_reset_enabled             False                  False             Yes                        Enable or disable periodic bond resets. link
-   commit_reveal_period            1                      1                 Yes                        Duration (in blocks) for commit-reveal weight submission scheme. link
-   commit_reveal_weights_enabled   True                   True              Yes                        Enable or disable commit-reveal scheme for weight submissions. link
-   difficulty                      10000000               5.421010862e-13   No (Root Only)             Current proof-of-work difficulty for registration. link
-   immunity_period                 5000                   5000              Yes                        Duration (in blocks) during which newly registered neurons are protected from certain penalties. link
-   kappa                           32767                  0.4999923705      No (Root Only)             Kappa determines the scaling factor for consensus calculations. link
-   liquid_alpha_enabled            False                  False             Yes                        Enable or disable liquid alpha staking mechanism. link
-   max_burn                        100000000000           ‎100.0000 τ‎        No (Root Only)             Maximum TAO burn amount cap for subnet registration. link
-   max_difficulty                  18446744073709551615   1                 Yes                        Maximum proof-of-work difficulty cap. link
-   max_regs_per_block              1                      1                 No (Root Only)             Maximum number of registrations allowed per block. link
-   max_validators                  64                     64                No (Root Only)             Maximum number of validators allowed in the subnet. link
-   max_weight_limit                65535                  1                 Yes                        No description available.
-   min_allowed_weights             1                      1                 Yes                        Minimum number of weight connections a neuron must maintain to stay active. link
-   min_burn                        500000                 ‎0.0005 τ‎          Yes                        Minimum TAO burn amount required for subnet registration. link
-   min_difficulty                  10000000               5.421010862e-13   No (Root Only)             Minimum proof-of-work difficulty required for registration link
-   registration_allowed            True                   True              No (Root Only)             Enable or disable new registrations to the subnet. link
-   rho                             10                     10                Yes                        Rho controls the rate at which weights decay over time. link
-   serving_rate_limit              50                     50                Yes                        Rate limit for serving requests. link
-   subnet_is_active                True                   True              Yes                        Whether the subnet is currently active and operational. link
-   target_regs_per_interval        1                      1                 No (Root Only)             Target number of new registrations per adjustment interval. link
-   tempo                           360                    360               No (Root Only)             Number of blocks between epoch transitions link
-   transfers_enabled               True                   True              Yes                        Enable or disable TAO transfers within the subnet. link
-   user_liquidity_enabled          False                  False             COMPLICATED (Owner/Sudo)   Enable or disable user liquidity features. link
-   weights_rate_limit              100                    100               No (Root Only)             Maximum number of weight updates allowed per epoch. link
-   weights_version                 28                     28                Yes                        Version key for weight sets. link
-   yuma_version                    2                      2                 Yes                        Version of the Yuma consensus mechanism. link
- ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-
-
-
-💡 Tip: Use btcli sudo set --param <name> --value <value> to modify hyperparameters.
-💡 Tip: Subnet owners can set parameters marked 'Yes'. Parameters marked 'No (Root Only)' require root sudo access.
-💡 Tip: To set custom hyperparameters not in this list, use the exact parameter name from the chain metadata.
-   Example: btcli sudo set --netuid 14 --param custom_param_name --value 123
-   The parameter name must match exactly as defined in the chain's AdminUtils pallet metadata.
-📚 For detailed documentation, visit: https://docs.bittensor.com
-```
+Run the command against your target network to see current hyperparameter names, values, and descriptions.
 
 ### Set hyperparameters on BTCLI {#set-hyperparameters}
 
@@ -200,7 +154,8 @@ The number of blocks for the stake to become inactive for the purpose of epoch i
 **Permissions required to set**: Subnet owner
 
 **Description**:
-`AdjustmentAlpha` is the rate at which difficulty and burn are adjusted up or down.
+
+Not used for neuron registration. Non-root neuron registration pricing is governed by [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult).
 
 ### AdjustmentInterval
 
@@ -216,7 +171,7 @@ The number of blocks for the stake to become inactive for the purpose of epoch i
 
 **Description**:
 
-`AdjustmentInterval` is number of blocks that pass between difficulty and burn adjustments.
+Not used for neuron registration. Non-root neuron registration pricing is continuous and governed by [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult).
 
 ### AlphaSigmoidSteepness
 
@@ -299,6 +254,38 @@ See [Yuma Consensus: Penalizing out-of-consensus bonds](../learn/yuma-consensus#
 
 Determines whether or not bonds are reset-enabled.
 
+### BurnHalfLife
+
+**Type**: Confirm on target network (typically a block count)
+
+**Default**: Network-dependent; use `btcli subnet hyperparameters`
+
+**`btcli` setter**: Use the parameter name as listed by `btcli subnet hyperparameters` on your network (often `burn_half_life`)
+
+**Setter extrinsic**: See Subtensor `AdminUtils` / chain metadata for the subnet-owner setter corresponding to this storage (naming follows `sudo_set_*` conventions)
+
+**Permissions required to set**: Subnet owner (unless metadata indicates root-only)
+
+**Description**:
+
+**`BurnHalfLife`** sets the decay horizon (in blocks) for the **neuron registration burn cost** between registrations: a longer half-life means the price falls more slowly when nobody registers.
+
+### BurnIncreaseMult
+
+**Type**: Confirm on target network (floating-point multiplier in the runtime)
+
+**Default**: Network-dependent; use `btcli subnet hyperparameters`
+
+**`btcli` setter**: Use the parameter name as listed by `btcli subnet hyperparameters` on your network (often `burn_increase_mult`)
+
+**Setter extrinsic**: See Subtensor `AdminUtils` / chain metadata for the subnet-owner setter corresponding to this storage
+
+**Permissions required to set**: Subnet owner (unless metadata indicates root-only)
+
+**Description**:
+
+**`BurnIncreaseMult`** is the factor by which the **current** neuron registration burn cost is **multiplied when a registration succeeds** (before **`MinBurn`** / **`MaxBurn`** clamping). Higher values make rapid successive registrations more expensive.
+
 ### CommitRevealPeriod
 
 **Type**: u64
@@ -349,9 +336,7 @@ Enables [Commit Reveal](../concepts/commit-reveal)
 
 **Description**:
 
-Current dynamically computed value for the proof-of-work (POW) requirement for POW hotkey registration. Decreases over time but increases after new registrations, between the min and the maximum set by the Subnet owner. see [MaxDifficulty](#maxdifficulty).
-
-<!-- What are the units here? What does this actually mean, how are miners supposed to read/understand this? -->
+Not used for neuron registration. Neuron registration uses TAO burn pricing; see [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult).
 
 ### EMAPriceHalvingPeriod
 
@@ -481,7 +466,7 @@ Maximum validators on a subnet.
 
 **Description**:
 
-The maximum of the dynamic range for TAO cost of burn registration on the subnet.
+Upper bound for the **dynamic TAO burn** required for **neuron (UID) registration** on the subnet. This clamps the price together with [MinBurn](#minburn); **`BurnHalfLife`** and **`BurnIncreaseMult`** shape how the price moves over time and on each registration.
 
 ### MaxDifficulty
 
@@ -497,7 +482,7 @@ The maximum of the dynamic range for TAO cost of burn registration on the subnet
 
 **Description**:
 
-The maximum of the dynamic range for difficulty of proof-of-work registration on the subnet.
+Not used for neuron registration. Neuron registration uses TAO burn pricing; see [MaxBurn](#maxburn).
 
 ### MaxRegistrationsPerBlock
 
@@ -513,7 +498,7 @@ The maximum of the dynamic range for difficulty of proof-of-work registration on
 
 **Description**:
 
-Maximum neuron registrations per block. Note: Actual limit may be lower, as there is also per interval limit [`TargetRegistrationsPerInterval`](#targetregistrationsperinterval).
+Not used for neuron registration. Neuron admission is governed by continuous burn pricing; see [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult).
 
 ### MechanismCount
 
@@ -589,7 +574,7 @@ Minimum number of weights for a validator to set when setting weights.
 
 **Description**:
 
-The minimum of the range of the dynamic burn cost for registering on the subnet.
+Lower bound for the **dynamic TAO burn** required for **neuron (UID) registration** on the subnet. This clamps the price together with [MaxBurn](#maxburn).
 
 ### MinDifficulty
 
@@ -605,7 +590,7 @@ The minimum of the range of the dynamic burn cost for registering on the subnet.
 
 **Description**:
 
-The minimum of the range of the proof-of-work for registering on the subnet.
+Not used for neuron registration. Neuron registration uses TAO burn pricing; see [MinBurn](#minburn).
 
 ### MinNonImmuneUids
 
@@ -638,7 +623,7 @@ Sets the minimum number non-immune UIDs that must remain in a subnet. It is only
 
 **Description**:
 
-`NetworkPowRegistrationAllowed` is a flag that toggles PoW registrations on a subnet
+Not used for neuron registration. Neuron registration is burn-based and always open; see [Understanding Neurons](../learn/neurons.md).
 
 ### NetworkRateLimit
 
@@ -670,7 +655,7 @@ Rate limit for network registrations expressed in blocks
 
 **Description**:
 
-`NetworkRegistrationAllowed` determines if burned registrations are allowed. If both burned and pow registrations are disabled, the subnet will not get emissions.
+`NetworkRegistrationAllowed` determines whether neuron registration is enabled on the subnet. If disabled, the subnet will not receive new neurons.
 
 ### OwnerHyperparamRateLimit
 
@@ -795,11 +780,7 @@ Changes the hotkey of the subnet owner on the subnet.
 
 **Description**:
 
-Target number of neuron registrations allowed per interval. Interval is `AdjustmentInterval`.
-
-:::info
-The hyperparameter triggers a rate limit when the registration attempts in the current interval exceed three times the `TargetRegistrationsPerInterval` value.
-:::
+Not used for neuron registration. Neuron admission is governed by continuous burn pricing; see [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult).
 
 ### Tempo
 
