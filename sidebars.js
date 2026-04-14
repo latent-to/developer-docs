@@ -72,6 +72,7 @@ const sidebars = {
             "navigating-subtensor/swap-stake",
           ],
         },
+        "navigating-subtensor/subtensor-extrinsics",
         "resources/community-links",
       ],
     },
@@ -339,6 +340,15 @@ const sidebars = {
     "resources/glossary",
     "resources/community-links",
     "resources/media-assets",
+  ],
+  apiSidebar: [
+    "subtensor-api/extrinsics",
+    "subtensor-api/errors",
+    "subtensor-api/storage",
+    "subtensor-api/events",
+    "subtensor-api/constants",
+    "subtensor-api/runtime",
+    "subtensor-api/rpc",
   ],
 };
 
