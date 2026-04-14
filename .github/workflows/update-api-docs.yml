@@ -151,4 +151,5 @@ jobs:
             --title "docs: API reference update $(date -u +%Y-%m-%d)" \
             --head  "$BRANCH" \
             --base  main \
-            --body  "${{ steps.pr_body.outputs.body }}"
+            --body  "${{ steps.pr_body.outputs.body }}" \
+            --reviewer chideraao
