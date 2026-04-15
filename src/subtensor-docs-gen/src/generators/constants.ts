@@ -15,7 +15,7 @@ export function generateConstants(api: ApiPromise, outputDir: string): void {
   lines.push(
     fileHeader(
       "Constants",
-      "This page contains compile-time runtime constants for the Bittensor (Subtensor) runtime. " +
+      "This page contains compile-time runtime constants for the Subtensor runtime and their respective values. " +
         "Accessible via `api.consts.<Pallet>.<constant_name>`. Values read live from node.",
       (api as any)._options?.provider?.endpoint ?? "subtensor node",
     ),

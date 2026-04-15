@@ -1,9 +1,14 @@
+---
+title: Errors
+description: "This page contains error variants returned by the Subtensor runtime."
+---
+
 # Errors
 
-This page contains error variants returned by the Bittensor (Subtensor) runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
+This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**

@@ -431,7 +431,15 @@ export function today(): string {
 }
 
 export function fileHeader(title: string, description: string, endpoint: string): string {
-  return `# ${title}
+  // Use only the first sentence, stripped of Markdown backticks, for frontmatter
+  const fmDescription = description.split(/\.\s/)[0].replace(/`/g, '') + '.';
+
+  return `---
+title: ${title}
+description: "${fmDescription}"
+---
+
+# ${title}
 
 ${description}
 

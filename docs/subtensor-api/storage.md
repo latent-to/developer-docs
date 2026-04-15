@@ -1,9 +1,14 @@
+---
+title: Storage
+description: "This page contains storage query definitions for the Subtensor runtime."
+---
+
 # Storage
 
-This page contains storage query definitions for the Bittensor (Subtensor) runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
+This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**

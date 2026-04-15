@@ -20,7 +20,7 @@ export function generateRuntimeCalls(api: ApiPromise, outputDir: string): void {
   lines.push(
     fileHeader(
       "Runtime Calls",
-      "This page includes runtime API calls exposed by the Bittensor (Subtensor) runtime. " +
+      "This page includes runtime API calls exposed by the Subtensor runtime. " +
         "Accessible via `api.call.<RuntimeApi>.<method_name>`.",
       (api as any)._options?.provider?.endpoint ?? "subtensor node",
     ),

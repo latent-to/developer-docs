@@ -15,7 +15,7 @@ export function generateEvents(api: ApiPromise, outputDir: string): void {
   lines.push(
     fileHeader(
       "Events",
-      "The following page contains runtime events emitted by the Bittensor (Subtensor) runtime. " +
+      "The following page contains runtime events emitted by the Subtensor runtime. " +
         "Accessible via `api.events.<Pallet>.<EventName>`.",
       (api as any)._options?.provider?.endpoint ?? "subtensor node",
     ),
