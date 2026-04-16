@@ -4,7 +4,7 @@ title: "Subtensor Node Basics"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 # Subtensor Node Basics
 
@@ -30,49 +30,47 @@ style={{width: 550}}
 
 ## Lite node vs archive node
 
-A public subtensor node refers to an internet-connected computer that is synchronized with the Bittensor blockchain database. A **lite node** or an **archive node** is a type of public subtensor node. 
+A public subtensor node refers to an internet-connected computer that is synchronized with the Bittensor blockchain database. A **lite node** or an **archive node** is a type of public subtensor node.
 
 :::tip a subtensor node is not a neuron
-A subtensor node is different from a Bittensor neuron. A Bittensor neuron is either a subnet validator node or a subnet miner node&mdash;it exists in a subnet, and it does not contain blockchain database. 
+A subtensor node is different from a Bittensor neuron. A Bittensor neuron is either a subnet validator node or a subnet miner node&mdash;it exists in a subnet, and it does not contain blockchain database.
 :::
 
 Normally, a node in Bittensor blockchain must always be synchronized to the latest blockchain ledger state. Such a blockchain node accomplishes this by holding a copy of the entire Bittensor blockchain database, from the genesis block all the way to the current block. However, holding an entire copy of blockchain ledger state, which is continuously increasing in size, can be expensive. Hence, two types of nodes, a lite node and an archive node, are defined for subtensor, as below:
 
 ### Lite node
 
-A **lite node** is configured to perform warp synchronization, which primarily syncs with the blocks that have been finalized, and not the entire blockchain. 
+A **lite node** is configured to perform warp synchronization, which primarily syncs with the blocks that have been finalized, and not the entire blockchain.
 
 :::tip flags for lite node
-Use `--sync=warp` when starting a subtensor node. See [Using Source Code](./using-source.md#run-the-subtensor-node).
+Use `--sync=warp` when starting a subtensor node. See [Using Source Code](./run/using-source.md#run-the-subtensor-node).
 :::
 
-The lite node warps (jumps) directly to the latest finalized block, downloading the complete blockchain state at that point. The purpose of a lite node is to get up and running quickly and serve, with minimal storage requirements, as a local entry point into the Bittensor mainchain or testchain. 
+The lite node warps (jumps) directly to the latest finalized block, downloading the complete blockchain state at that point. The purpose of a lite node is to get up and running quickly and serve, with minimal storage requirements, as a local entry point into the Bittensor mainchain or testchain.
 
-  **Verification of chain history**: To ensure blockchain validity, a lite node downloads and verifies finality proofs all the way back to the genesis block (the first block). These proofs confirm the legitimacy of the chain's history without processing every single block.
+**Verification of chain history**: To ensure blockchain validity, a lite node downloads and verifies finality proofs all the way back to the genesis block (the first block). These proofs confirm the legitimacy of the chain's history without processing every single block.
 
-  **Background fill**: The lite node, while actively participating in the network, still downloads and processes historical blocks in the background to build the complete blockchain database. This download happens when the node is less busy.
- 
-  :::tip lite node for a subnet miner
-  A subnet miner should use a local lite node to communicate with the Bittensor blockchain. 
-  :::
+**Background fill**: The lite node, while actively participating in the network, still downloads and processes historical blocks in the background to build the complete blockchain database. This download happens when the node is less busy.
+
+:::tip lite node for a subnet miner
+A subnet miner should use a local lite node to communicate with the Bittensor blockchain.
+:::
 
 ### Archive node
 
-On the other hand, an **archive node** downloads and validates  all the Bittensor blockchain blocks from genesis up to the most recent block.
+On the other hand, an **archive node** downloads and validates all the Bittensor blockchain blocks from genesis up to the most recent block.
 
 :::tip flags for archive node
-Use `--sync=full` and `--pruning archive` when starting a subtensor node. See [Using Source Code](./using-source.md#run-the-subtensor-node).
+Use `--sync=full` and `--pruning archive` when starting a subtensor node. See [Using Source Code](./run/using-source.md#run-the-subtensor-node).
 :::
 
 The full synchronization performed by an archive node can be significantly slower than warp sync (done by a lite node) as it involves processing every block. Also, archive nodes require substantially more storage space due to the complete historical data.
 
-  :::tip archive node for a blockchain explorer
-  Applications such as Bittensor blockchain explorer, for example, [TAO.app](https://tao.app) that require access to historical blockchain data use an archive node. 
-  :::
+:::tip archive node for a blockchain explorer
+Applications such as Bittensor blockchain explorer, for example, [TAO.app](https://tao.app) that require access to historical blockchain data use an archive node.
+:::
 
-
-
-## Query archived data 
+## Query archived data
 
 <SdkVersion />
 
@@ -89,5 +87,3 @@ print(meta)
 :::tip See also
 Also see the [`metagraph` API reference](https://docs.bittensor.com/python-api/html/autoapi/bittensor/metagraph/index.html#bittensor.metagraph.metagraph.sync).
 :::
-
-

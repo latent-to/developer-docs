@@ -206,10 +206,6 @@ const config = {
             to: "/resources/utilities",
           },
           {
-            from: "/governance",
-            to: "/governance",
-          },
-          {
             from: "/senate",
             to: "/governance/senate",
           },
@@ -220,6 +216,14 @@ const config = {
           {
             from: "/media-assets",
             to: "/resources/media-assets",
+          },
+          {
+            from: "/subtensor-nodes/using-docker",
+            to: "/subtensor-nodes/run/using-docker",
+          },
+          {
+            from: "/subtensor-nodes/using-source",
+            to: "/subtensor-nodes/run/using-source",
           },
         ],
       },

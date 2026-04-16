@@ -1,5 +1,5 @@
 ---
-title: "Using Docker"
+title: "Run with Docker"
 ---
 
 import ThemedImage from '@theme/ThemedImage';
@@ -7,7 +7,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Using Docker
+# Run with Docker
 
 To run a subtensor node with Docker, follow the below steps.
 

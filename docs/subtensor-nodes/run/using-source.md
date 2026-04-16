@@ -1,11 +1,13 @@
 ---
-title: "Using Source Code"
+title: "Run with Source Code"
 ---
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-# Using Source Code
+# Run with Source Code
 
 To install and run a subtensor node by compiling the source code, follow the below steps.
 
@@ -85,34 +87,45 @@ cargo build -p node-subtensor --profile=production --features=metadata-hash
 
 You can now run the public subtensor node either as a lite node or as an archive node. See below:
 
-### Lite node on mainchain
+### Using lite node
 
+<Tabs queryString="subtensor-node" groupId="subtensor-node">
+<TabItem value="mainchain" label="On mainchain">
 To run a lite node connected to the mainchain, execute the below command (note the `--sync=warp` flag which runs the subtensor node in lite mode):
 
 ```bash
 ./target/production/node-subtensor --chain ./chainspecs/raw_spec_finney.json --base-path /var/lib/subtensor --sync=warp --port 30333 --max-runtime-instances 32 --database paritydb --db-cache 4096 --trie-cache-size 2048 --rpc-max-response-size 2048 --rpc-cors all --rpc-port 9944 --bootnodes /dns/bootnode.finney.chain.opentensor.ai/tcp/30333/ws/p2p/12D3KooWRwbMb85RWnT8DSXSYMWQtuDwh4LJzndoRrTDotTR5gDC --no-mdns --rpc-external
 ```
 
-### Archive node on mainchain
-
-To run an archive node connected to the mainchain, execute the below command (note the `--sync=full` which syncs the node to the full chain and `--pruning archive` flags, which disables the node's automatic pruning of older historical data):
-
-```bash
-./target/production/node-subtensor --chain ./chainspecs/raw_spec_finney.json --base-path /var/lib/subtensor --sync=full --pruning archive --port 30333 --max-runtime-instances 32 --rpc-max-response-size 2048 --rpc-cors all --rpc-port 9944 --bootnodes /dns/bootnode.finney.chain.opentensor.ai/tcp/30333/ws/p2p/12D3KooWRwbMb85RWnT8DSXSYMWQtuDwh4LJzndoRrTDotTR5gDC --no-mdns --prometheus-external --rpc-external
-```
-
-### Lite node on testchain
-
+</TabItem>
+<TabItem value="testchain" label="on testchain">
 To run a lite node connected to the testchain, execute the below command:
 
 ```bash
 ./target/production/node-subtensor --chain ./chainspecs/raw_spec_testfinney.json --base-path /var/lib/subtensor --sync=warp --port 30333 --max-runtime-instances 32 --database paritydb --db-cache 4096 --trie-cache-size 2048 --rpc-max-response-size 2048 --rpc-cors all --rpc-port 9944 --bootnodes /dns/bootnode.test.finney.opentensor.ai/tcp/30333/ws/p2p/12D3KooWPM4mLcKJGtyVtkggqdG84zWrd7Rij6PGQDoijh1X86Vr --no-mdns --rpc-external
 ```
 
-### Archive node on testchain
+</TabItem>
+</Tabs>
+
+### Using archive node
+
+<Tabs queryString="subtensor-node" groupId="subtensor-node">
+<TabItem value="mainchain" label="On mainchain">
+To run an archive node connected to the mainchain, execute the below command (note the `--sync=full` which syncs the node to the full chain and `--pruning archive` flags, which disables the node's automatic pruning of older historical data):
+
+```bash
+./target/production/node-subtensor --chain ./chainspecs/raw_spec_finney.json --base-path /var/lib/subtensor --sync=full --pruning archive --port 30333 --max-runtime-instances 32 --rpc-max-response-size 2048 --rpc-cors all --rpc-port 9944 --bootnodes /dns/bootnode.finney.chain.opentensor.ai/tcp/30333/ws/p2p/12D3KooWRwbMb85RWnT8DSXSYMWQtuDwh4LJzndoRrTDotTR5gDC --no-mdns --prometheus-external --rpc-external
+```
+
+</TabItem>
+<TabItem value="testchain" label="on testchain">
 
 To run an archive node connected to the testchain, execute the below command:
 
 ```bash
 ./target/production/node-subtensor --chain ./chainspecs/raw_spec_testfinney.json --base-path /var/lib/subtensor --sync=full --pruning archive --port 30333 --max-runtime-instances 32 --rpc-max-response-size 2048 --rpc-cors all --rpc-port 9944 --bootnodes /dns/bootnode.test.finney.opentensor.ai/tcp/30333/ws/p2p/12D3KooWPM4mLcKJGtyVtkggqdG84zWrd7Rij6PGQDoijh1X86Vr --no-mdns --prometheus-external --rpc-external
 ```
+
+</TabItem>
+</Tabs>
