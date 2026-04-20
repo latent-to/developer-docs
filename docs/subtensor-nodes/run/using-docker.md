@@ -62,6 +62,10 @@ Adding a user to the `docker` group is only necessary on Linux, where `sudo` pri
 
 Now you can run the subtensor nodes for either mainchain or testchain using any of available options.
 
+:::info Start your docker engine
+Before running the command to run the Subtensor node on Docker, ensure that you have a Docker engine running on your device.
+:::
+
 ### Using lite nodes
 
 A lite node which primarily syncs with the only blocks that have been finalized, and not the entire blockchain. Run a lite node using the command corresponding to your target chain:

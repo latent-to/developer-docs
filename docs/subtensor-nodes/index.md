@@ -40,7 +40,9 @@ Normally, a node in Bittensor blockchain must always be synchronized to the late
 
 ### Lite node
 
-A **lite node** is configured to perform warp synchronization, which primarily syncs with the blocks that have been finalized, and not the entire blockchain.
+A **lite node** is configured to perform warp synchronization, which primarily syncs with the blocks that have been finalized, and not the entire blockchain. They retain only recent data, offer limited historical access, and use significantly less storage.
+
+A lite node is suitable for miners, most neurons, block validators, and subnet validators.
 
 :::tip flags for lite node
 Use `--sync=warp` when starting a subtensor node. See [Using Source Code](./run/using-source.md#run-the-subtensor-node).
@@ -58,7 +60,9 @@ A subnet miner should use a local lite node to communicate with the Bittensor bl
 
 ### Archive node
 
-On the other hand, an **archive node** downloads and validates all the Bittensor blockchain blocks from genesis up to the most recent block.
+On the other hand, an **archive node** downloads and validates all the Bittensor blockchain blocks from genesis up to the most recent block. Archive nodes store the entire blockchain history, providing full state access for tasks requiring historical data, such as analytics and audits.
+
+Archive nodes are suitable for block explorers, indexers, analytics, and querying data older blocks.
 
 :::tip flags for archive node
 Use `--sync=full` and `--pruning archive` when starting a subtensor node. See [Using Source Code](./run/using-source.md#run-the-subtensor-node).
