@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -52,7 +52,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.adminUtils.precompileEnable`
 - **summary**: Map PrecompileEnum --> enabled
 
-
 ## `aura`
 
 ### `authorities`: `Vec<SpConsensusAuraSr25519AppSr25519Public>`
@@ -65,14 +64,13 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.aura.currentSlot`
 - **summary**: The current slot of this block.
 
-    This will be set in `on_initialize`.
+  This will be set in `on_initialize`.
 
 ### `palletVersion`: `u16`
 
 - **interface**: `api.query.aura.palletVersion`
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
-
 
 ## `balances`
 
@@ -81,17 +79,17 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.balances.account`
 - **summary**: The Balances pallet example of storing the balance of an account.
 
-    **Example:**
+  **Example:**
 
-    ```nocompile impl pallet_balances::Config for Runtime { type AccountStore = StorageMapShim<Self::Account<Runtime>, frame_system::Provider<Runtime>, AccountId, Self::AccountData<Balance>> } ```
+  `nocompile impl pallet_balances::Config for Runtime { type AccountStore = StorageMapShim<Self::Account<Runtime>, frame_system::Provider<Runtime>, AccountId, Self::AccountData<Balance>> } `
 
-    You can also store the balance of an account in the `System` pallet.
+  You can also store the balance of an account in the `System` pallet.
 
-    **Example:**
+  **Example:**
 
-    ```nocompile impl pallet_balances::Config for Runtime { type AccountStore = System } ```
+  `nocompile impl pallet_balances::Config for Runtime { type AccountStore = System } `
 
-    But this comes with tradeoffs, storing account balances in the system pallet stores `frame_system` data alongside the account data contrary to storing account balances in the `Balances` pallet, which uses a `StorageMap` to store balances data only. NOTE: This is only used in the case that this pallet is used to store balances.
+  But this comes with tradeoffs, storing account balances in the system pallet stores `frame_system` data alongside the account data contrary to storing account balances in the `Balances` pallet, which uses a `StorageMap` to store balances data only. NOTE: This is only used in the case that this pallet is used to store balances.
 
 ### `freezes(AccountId32)`: `Vec<FrameSupportTokensMiscIdAmountRuntimeFreezeReason>`
 
@@ -113,7 +111,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.balances.locks`
 - **summary**: Any liquidity locks on some account balances. NOTE: Should only be accessed when setting, changing and freeing a lock.
 
-    Use of locks is deprecated in favour of freezes. See `https://github.com/paritytech/substrate/pull/12951/`
+  Use of locks is deprecated in favour of freezes. See `https://github.com/paritytech/substrate/pull/12951/`
 
 ### `palletVersion`: `u16`
 
@@ -126,13 +124,12 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.balances.reserves`
 - **summary**: Named reserves on some account balances.
 
-    Use of reserves is deprecated in favour of holds. See `https://github.com/paritytech/substrate/pull/12951/`
+  Use of reserves is deprecated in favour of holds. See `https://github.com/paritytech/substrate/pull/12951/`
 
 ### `totalIssuance`: `u64`
 
 - **interface**: `api.query.balances.totalIssuance`
 - **summary**: The total units issued in the system.
-
 
 ## `baseFee`
 
@@ -149,7 +146,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.baseFee.palletVersion`
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
-
 
 ## `commitments`
 
@@ -195,7 +191,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Optional`
 - **summary**: Maps (netuid, who) -> usage (how many “bytes” they've committed) in the RateLimit window
 
-
 ## `contracts`
 
 ### `codeInfoOf(H256)`: `CodeInfo`
@@ -210,7 +205,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Optional`
 - **summary**: The code associated with a given account.
 
-    TWOX-NOTE: SAFE since `AccountId` is a secure hash.
+  TWOX-NOTE: SAFE since `AccountId` is a secure hash.
 
 ### `deletionQueue(u32)`: `Bytes`
 
@@ -218,7 +213,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Optional`
 - **summary**: Evicted contracts that await child trie deletion.
 
-    Child trie deletion is a heavy operation depending on the amount of storage items stored in said trie. Therefore this operation is performed lazily in `on_idle`.
+  Child trie deletion is a heavy operation depending on the amount of storage items stored in said trie. Therefore this operation is performed lazily in `on_idle`.
 
 ### `deletionQueueCounter`: `DeletionQueueManager`
 
@@ -236,17 +231,16 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.contracts.nonce`
 - **summary**: This is a **monotonic** counter incremented on contract instantiation.
 
-    This is used in order to generate unique trie ids for contracts. The trie id of a new contract is calculated from hash(account_id, nonce). The nonce is required because otherwise the following sequence would lead to a possible collision of storage:
+  This is used in order to generate unique trie ids for contracts. The trie id of a new contract is calculated from hash(account_id, nonce). The nonce is required because otherwise the following sequence would lead to a possible collision of storage:
+  1. Create a new contract.
+  2. Terminate the contract.
+  3. Immediately recreate the contract with the same account_id.
 
-    1. Create a new contract.
-    2. Terminate the contract.
-    3. Immediately recreate the contract with the same account_id.
+  This is bad because the contents of a trie are deleted lazily and there might be storage of the old instantiation still in it when the new contract is created. Please note that we can't replace the counter by the block number because the sequence above can happen in the same block. We also can't keep the account counter in memory only because storage is the only way to communicate across different extrinsics in the same block.
 
-    This is bad because the contents of a trie are deleted lazily and there might be storage of the old instantiation still in it when the new contract is created. Please note that we can't replace the counter by the block number because the sequence above can happen in the same block. We also can't keep the account counter in memory only because storage is the only way to communicate across different extrinsics in the same block.
+  **Note:**
 
-    **Note:**
-
-    Do not use it to determine the number of contracts. It won't be decremented if a contract is destroyed.
+  Do not use it to determine the number of contracts. It won't be decremented if a contract is destroyed.
 
 ### `palletVersion`: `u16`
 
@@ -259,7 +253,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.contracts.pristineCode`
 - **modifier**: `Optional`
 - **summary**: A mapping from a contract's code hash to its code.
-
 
 ## `crowdloan`
 
@@ -297,7 +290,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-
 ## `drand`
 
 ### `beaconConfig`: `BeaconConfiguration`
@@ -319,7 +311,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.drand.nextUnsignedAt`
 - **summary**: Defines the block when next unsigned transaction will be accepted.
 
-    To prevent spam of unsigned (and unpaid!) transactions on the network, we only allow one transaction per block. This storage entry defines when new transaction is going to be accepted.
+  To prevent spam of unsigned (and unpaid!) transactions on the network, we only allow one transaction per block. This storage entry defines when new transaction is going to be accepted.
 
 ### `oldestStoredRound`: `u64`
 
@@ -337,7 +329,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.drand.pulses`
 - **modifier**: `Optional`
 - **summary**: map round number to pulse
-
 
 ## `ethereum`
 
@@ -380,7 +371,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Optional`
 - **summary**: Mapping from transaction index to transaction in the current building block.
 
-
 ## `evm`
 
 ### `accountCodes(H160)`: `Bytes`
@@ -410,7 +400,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 
 - **interface**: `api.query.evm.whitelistedCreators`
 
-
 ## `evmChainId`
 
 ### `chainId`: `u64`
@@ -423,7 +412,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.evmChainId.palletVersion`
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
-
 
 ## `grandpa`
 
@@ -459,11 +447,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 
 - **interface**: `api.query.grandpa.setIdSession`
 - **modifier**: `Optional`
-- **summary**: A mapping from grandpa set ID to the index of the *most recent* session for which its members were responsible.
+- **summary**: A mapping from grandpa set ID to the index of the _most recent_ session for which its members were responsible.
 
-    This is only used for validating equivocation proofs. An equivocation proof must contains a key-ownership proof for a given session, therefore we need a way to tie together sessions and GRANDPA set ids, i.e. we need to validate that a validator was the owner of a given key on a given session, and what the active set ID was during that session.
+  This is only used for validating equivocation proofs. An equivocation proof must contains a key-ownership proof for a given session, therefore we need a way to tie together sessions and GRANDPA set ids, i.e. we need to validate that a validator was the owner of a given key on a given session, and what the active set ID was during that session.
 
-    TWOX-NOTE: `SetId` is not under user control.
+  TWOX-NOTE: `SetId` is not under user control.
 
 ### `stalled`: `(u32,u32)`
 
@@ -476,7 +464,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.grandpa.state`
 - **summary**: State of the current authority set.
 
-
 ## `mevShield`
 
 ### `authorKeys(Public)`: `Bytes`
@@ -485,16 +472,36 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Optional`
 - **summary**: Per-author ML-KEM-768 encapsulation key, updated each time the author produces a block.
 
+### `counterForPendingExtrinsics`: `u32`
+
+- **interface**: `api.query.mevShield.counterForPendingExtrinsics`
+- **summary**: Counter for the related counted storage map
+
 ### `currentKey`: `Bytes`
 
 - **interface**: `api.query.mevShield.currentKey`
 - **modifier**: `Optional`
 - **summary**: Current block author's ML-KEM-768 encapsulation key (internal, not for encryption).
 
+### `extrinsicLifetime`: `u32`
+
+- **interface**: `api.query.mevShield.extrinsicLifetime`
+- **summary**: Configurable extrinsic lifetime (max block difference between submission and execution). Defaults to 10 blocks if not explicitly set.
+
 ### `hasMigrationRun(Bytes)`: `bool`
 
 - **interface**: `api.query.mevShield.hasMigrationRun`
 - **summary**: Stores whether some migration has been run.
+
+### `maxExtrinsicWeight`: `u64`
+
+- **interface**: `api.query.mevShield.maxExtrinsicWeight`
+- **summary**: Configurable maximum weight for a single extrinsic dispatched during on_initialize. Extrinsics exceeding this limit are removed from the queue.
+
+### `maxPendingExtrinsicsLimit`: `u32`
+
+- **interface**: `api.query.mevShield.maxPendingExtrinsicsLimit`
+- **summary**: Configurable maximum number of pending extrinsics. Defaults to 100 if not explicitly set via `set_max_pending_extrinsics`.
 
 ### `nextKey`: `Bytes`
 
@@ -508,11 +515,27 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Optional`
 - **summary**: Block number at which `NextKey` is no longer valid (exclusive upper bound). Updated every block during rotation.
 
+### `nextPendingExtrinsicIndex`: `u32`
+
+- **interface**: `api.query.mevShield.nextPendingExtrinsicIndex`
+- **summary**: Next index to use when inserting a pending extrinsic (unique auto-increment).
+
+### `onInitializeWeight`: `u64`
+
+- **interface**: `api.query.mevShield.onInitializeWeight`
+- **summary**: Configurable maximum weight for on_initialize processing. Defaults to 500_000_000_000 ref_time if not explicitly set.
+
 ### `palletVersion`: `u16`
 
 - **interface**: `api.query.mevShield.palletVersion`
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
+
+### `pendingExtrinsics(u32)`: `PendingExtrinsic`
+
+- **interface**: `api.query.mevShield.pendingExtrinsics`
+- **modifier**: `Optional`
+- **summary**: Storage map for encrypted extrinsics to be executed in on_initialize. Uses u32 index for `O(1)` insertion and removal. Count is maintained automatically.
 
 ### `pendingKey`: `Bytes`
 
@@ -525,7 +548,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.mevShield.pendingKeyExpiresAt`
 - **modifier**: `Optional`
 - **summary**: Block number at which `PendingKey` is no longer valid (exclusive upper bound). Updated every block during rotation.
-
 
 ## `multisig`
 
@@ -540,7 +562,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.multisig.palletVersion`
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
-
 
 ## `preimage`
 
@@ -566,7 +587,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.preimage.statusFor`
 - **modifier**: `Optional`
 - **summary**: The request status of a given hash.
-
 
 ## `proxy`
 
@@ -598,7 +618,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Optional`
 - **summary**: Tracks which (real, delegate) pairs have opted in to the real account paying transaction fees for proxy calls made by the delegate. Existence of an entry means the real account pays; absence means the delegate pays (default).
 
-
 ## `randomnessCollectiveFlip`
 
 ### `palletVersion`: `u16`
@@ -611,7 +630,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 
 - **interface**: `api.query.randomnessCollectiveFlip.randomMaterial`
 - **summary**: Series of block headers from the last 81 blocks that acts as random seed material. This is arranged as a ring buffer with `block_number % 81` being the index into the `Vec` of the oldest hash.
-
 
 ## `registry`
 
@@ -627,7 +645,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-
 ## `safeMode`
 
 ### `deposits(AccountId32, u32)`: `u64`
@@ -636,7 +653,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Optional`
 - **summary**: Holds the reserve that was taken from an account at a specific block number.
 
-    This helps governance to have an overview of outstanding deposits that should be returned or slashed.
+  This helps governance to have an overview of outstanding deposits that should be returned or slashed.
 
 ### `enteredUntil`: `u32`
 
@@ -644,16 +661,15 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Optional`
 - **summary**: Contains the last block number that the safe-mode will remain entered in.
 
-    Set to `None` when safe-mode is exited.
+  Set to `None` when safe-mode is exited.
 
-    Safe-mode is automatically exited when the current block number exceeds this value.
+  Safe-mode is automatically exited when the current block number exceeds this value.
 
 ### `palletVersion`: `u16`
 
 - **interface**: `api.query.safeMode.palletVersion`
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
-
 
 ## `scheduler`
 
@@ -674,7 +690,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Optional`
 - **summary**: Lookup from a name to the block number and index of the task.
 
-    For v3 -> v4 the previously unbounded identities are Blake2-256 hashed to form the v4 identities.
+  For v3 -> v4 the previously unbounded identities are Blake2-256 hashed to form the v4 identities.
 
 ### `palletVersion`: `u16`
 
@@ -687,7 +703,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.scheduler.retries`
 - **modifier**: `Optional`
 - **summary**: Retry configurations for items to be executed, indexed by task address.
-
 
 ## `substrate`
 
@@ -726,7 +741,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.substrate.intrablockEntropy`
 - **modifier**: `Required`
 - **summary**: Current intra-block entropy (a universally unique `[u8; 32]` value) is stored here.
-
 
 ## `subtensorModule`
 
@@ -780,6 +794,16 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.subtensorModule.alphaSigmoidSteepness`
 - **summary**: MAP ( netuid ) --> AlphaSigmoidSteepness
 
+### `alphaV2(AccountId32, AccountId32, u16)`: `SafeFloat`
+
+- **interface**: `api.query.subtensorModule.alphaV2`
+- **summary**: NMAP ( hot, cold, netuid ) --> alpha | Returns the alpha shares for a hotkey, coldkey, netuid triplet, stores SafeFloat.
+
+### `alphaV2MapLastKey`: `Option`
+
+- **interface**: `api.query.subtensorModule.alphaV2MapLastKey`
+- **summary**: Contains last AlphaV2 storage map key to iterate (check first)
+
 ### `alphaValues(u16)`: `(u16,u16)`
 
 - **interface**: `api.query.subtensorModule.alphaValues`
@@ -790,6 +814,13 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.subtensorModule.associatedEvmAddress`
 - **modifier**: `Optional`
 - **summary**: ============================= ==== EVM related storage ==== ============================= --- DMAP (netuid, uid) --> (H160, last_block_where_ownership_was_proven)
+
+### `autoParentDelegationEnabled(AccountId32)`: `bool`
+
+- **interface**: `api.query.subtensorModule.autoParentDelegationEnabled`
+- **summary**: MAP ( hotkey ) --> parent_delegation_enabled
+
+  When `true`, this root validator allows auto parent delegation. Defaults to `true`; validators can opt out at any time by calling `set_auto_parent_delegation_enabled(false)`.
 
 ### `autoStakeDestination(AccountId32, u16)`: `AccountId32`
 
@@ -847,6 +878,16 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 
 - **interface**: `api.query.subtensorModule.burn`
 - **summary**: MAP ( netuid ) --> Burn
+
+### `burnHalfLife(u16)`: `u16`
+
+- **interface**: `api.query.subtensorModule.burnHalfLife`
+- **summary**: MAP ( netuid ) --> BurnHalfLife (blocks)
+
+### `burnIncreaseMult(u16)`: `FixedU128`
+
+- **interface**: `api.query.subtensorModule.burnIncreaseMult`
+- **summary**: MAP ( netuid ) --> BurnIncreaseMult
 
 ### `burnRegistrationsThisInterval(u16)`: `u16`
 
@@ -1010,7 +1051,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 ### `lastAdjustmentBlock(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastAdjustmentBlock`
-- **summary**: MAP ( netuid ) -->  Block at last adjustment.
+- **summary**: MAP ( netuid ) --> Block at last adjustment.
 
 ### `lastColdkeyHotkeyStakeBlock(AccountId32, AccountId32)`: `u64`
 
@@ -1310,16 +1351,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid, hotkey ) --> prometheus_info
 
-### `pruningScores(u16)`: `Vec<u16>`
-
-- **interface**: `api.query.subtensorModule.pruningScores`
-- **summary**: MAP ( netuid ) --> pruning_scores
-
-### `rank(u16)`: `Vec<u16>`
-
-- **interface**: `api.query.subtensorModule.rank`
-- **summary**: MAP ( netuid ) --> rank
-
 ### `raoRecycledForRegistration(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.raoRecycledForRegistration`
@@ -1329,6 +1360,13 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 
 - **interface**: `api.query.subtensorModule.recycleOrBurn`
 - **summary**: MAP ( netuid ) --> recycle_or_burn
+
+### `registeredSubnetCounter(u16)`: `u64`
+
+- **interface**: `api.query.subtensorModule.registeredSubnetCounter`
+- **summary**: MAP ( netuid ) --> registered_subnet_counter
+
+  Monotonic counter incremented on every successful `do_register_network` for a given netuid. Consumers that persist per-netuid state keyed by `(user, netuid)` (e.g. the staking precompile `AllowancesStorage`) can mix the current counter value into their storage key so that entries written under a previous registration of the same netuid become unreachable after the netuid is re-registered, without requiring unbounded storage iteration on deregistration.
 
 ### `registrationsThisBlock(u16)`: `u16`
 
@@ -1394,7 +1432,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 ### `stakeWeight(u16)`: `Vec<u16>`
 
 - **interface**: `api.query.subtensorModule.stakeWeight`
-- **summary**: ======================================= ==== Subnetwork Consensus Storage  ==== ======================================= --- DMAP ( netuid ) --> stake_weight | weight for stake used in YC.
+- **summary**: ======================================= ==== Subnetwork Consensus Storage ==== ======================================= --- DMAP ( netuid ) --> stake_weight | weight for stake used in YC.
 
 ### `stakingColdkeys(AccountId32)`: `u64`
 
@@ -1429,7 +1467,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 ### `subnetAlphaInEmission(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.subnetAlphaInEmission`
-- **summary**: MAP ( netuid ) --> alpha_in_emission | Returns the amount of alph in  emission into the pool per block.
+- **summary**: MAP ( netuid ) --> alpha_in_emission | Returns the amount of alph in emission into the pool per block.
 
 ### `subnetAlphaInProvided(u16)`: `u64`
 
@@ -1474,9 +1512,9 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.subtensorModule.subnetLimit`
 - **summary**: ========================== ==== Staking Counters ==== ========================== The Subtensor [`TotalIssuance`] represents the total issuance of tokens on the Bittensor network.
 
-    It is comprised of three parts: The total amount of issued tokens, tracked in the TotalIssuance of the Balances pallet The total amount of tokens staked in the system, tracked in [`TotalStake`] The total amount of tokens locked up for subnet reg, tracked in [`TotalSubnetLocked`] attained by iterating over subnet lock.
+  It is comprised of three parts: The total amount of issued tokens, tracked in the TotalIssuance of the Balances pallet The total amount of tokens staked in the system, tracked in [`TotalStake`] The total amount of tokens locked up for subnet reg, tracked in [`TotalSubnetLocked`] attained by iterating over subnet lock.
 
-    Eventually, Bittensor should migrate to using Holds afterwhich time we will not require this separate accounting. --- ITEM ( maximum_number_of_networks )
+  Eventually, Bittensor should migrate to using Holds afterwhich time we will not require this separate accounting. --- ITEM ( maximum_number_of_networks )
 
 ### `subnetLocked(u16)`: `u64`
 
@@ -1564,9 +1602,9 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.subtensorModule.taoWeight`
 - **summary**: ============================ ==== Staking Variables ==== ============================ The Subtensor [`TotalIssuance`] represents the total issuance of tokens on the Bittensor network.
 
-    It is comprised of three parts: The total amount of issued tokens, tracked in the TotalIssuance of the Balances pallet The total amount of tokens staked in the system, tracked in [`TotalStake`] The total amount of tokens locked up for subnet reg, tracked in [`TotalSubnetLocked`] attained by iterating over subnet lock.
+  It is comprised of three parts: The total amount of issued tokens, tracked in the TotalIssuance of the Balances pallet The total amount of tokens staked in the system, tracked in [`TotalStake`] The total amount of tokens locked up for subnet reg, tracked in [`TotalSubnetLocked`] attained by iterating over subnet lock.
 
-    Eventually, Bittensor should migrate to using Holds afterwhich time we will not require this separate accounting. --- ITEM --> Global weight
+  Eventually, Bittensor should migrate to using Holds afterwhich time we will not require this separate accounting. --- ITEM --> Global weight
 
 ### `targetRegistrationsPerInterval(u16)`: `u16`
 
@@ -1603,6 +1641,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.subtensorModule.totalHotkeyShares`
 - **summary**: DMAP ( hot, netuid ) --> total_alpha_shares | Returns the number of alpha shares for a hotkey on a subnet.
 
+### `totalHotkeySharesV2(AccountId32, u16)`: `SafeFloat`
+
+- **interface**: `api.query.subtensorModule.totalHotkeySharesV2`
+- **summary**: DMAP ( hot, netuid ) --> total_alpha_shares | Returns the number of alpha shares for a hotkey on a subnet, stores SafeFloat.
+
 ### `totalIssuance`: `u64`
 
 - **interface**: `api.query.subtensorModule.totalIssuance`
@@ -1627,11 +1670,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 
 - **interface**: `api.query.subtensorModule.transferToggle`
 - **summary**: ============================ ==== Subnet Locks ===== ============================ --- MAP ( netuid ) --> transfer_toggle
-
-### `trust(u16)`: `Vec<u16>`
-
-- **interface**: `api.query.subtensorModule.trust`
-- **summary**: MAP ( netuid ) --> trust
 
 ### `txChildkeyTakeRateLimit`: `u64`
 
@@ -1725,7 +1763,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.subtensorModule.yuma3On`
 - **summary**: MAP ( netuid ) --> Whether or not Yuma3 is enabled
 
-
 ## `sudo`
 
 ### `key`: `AccountId32`
@@ -1739,7 +1776,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.sudo.palletVersion`
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
-
 
 ## `swap`
 
@@ -1819,7 +1855,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **modifier**: `Optional`
 - **summary**: Storage for all ticks, using subnet ID as the primary key and tick index as the secondary key
 
-
 ## `system`
 
 ### `account(AccountId32)`: `AccountInfo`
@@ -1864,18 +1899,18 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.system.events`
 - **summary**: Events deposited for the current block.
 
-    NOTE: The item is unbound and should therefore never be read on chain. It could otherwise inflate the PoV size of a block.
+  NOTE: The item is unbound and should therefore never be read on chain. It could otherwise inflate the PoV size of a block.
 
-    Events have a large in-memory size. Box the events to not go out-of-memory just in case someone still reads them from within the runtime.
+  Events have a large in-memory size. Box the events to not go out-of-memory just in case someone still reads them from within the runtime.
 
 ### `eventTopics(H256)`: `Vec<(u32,u32)>`
 
 - **interface**: `api.query.system.eventTopics`
 - **summary**: Mapping between a topic (represented by T::Hash) and a vector of indexes of events in the `<Events<T>>` list.
 
-    All topic vectors have deterministic storage locations depending on the topic. This allows light-clients to leverage the changes trie storage tracking mechanism and in case of changes fetch the list of events of interest.
+  All topic vectors have deterministic storage locations depending on the topic. This allows light-clients to leverage the changes trie storage tracking mechanism and in case of changes fetch the list of events of interest.
 
-    The value has the type `(BlockNumberFor<T>, EventIndex)` because if we used only just the `EventIndex` then in case if the topic has the same contents on the next block no notification will be triggered thus the event might be lost.
+  The value has the type `(BlockNumberFor<T>, EventIndex)` because if we used only just the `EventIndex` then in case if the topic has the same contents on the next block no notification will be triggered thus the event might be lost.
 
 ### `executionPhase`: `Phase`
 
@@ -1899,9 +1934,9 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.system.extrinsicWeightReclaimed`
 - **summary**: The weight reclaimed for the extrinsic.
 
-    This information is available until the end of the extrinsic execution. More precisely this information is removed in `note_applied_extrinsic`.
+  This information is available until the end of the extrinsic execution. More precisely this information is removed in `note_applied_extrinsic`.
 
-    Logic doing some post dispatch weight reduction must update this storage to avoid duplicate reduction.
+  Logic doing some post dispatch weight reduction must update this storage to avoid duplicate reduction.
 
 ### `inherentsApplied`: `bool`
 
@@ -1940,7 +1975,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.system.upgradedToU32RefCount`
 - **summary**: True if we have upgraded so that `type RefCount` is `u32`. False (default) if not.
 
-
 ## `timestamp`
 
 ### `didUpdate`: `bool`
@@ -1948,7 +1982,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.timestamp.didUpdate`
 - **summary**: Whether the timestamp has been updated in this block.
 
-    This value is updated to `true` upon successful submission of a timestamp by a node. It is then checked at the end of each block execution in the `on_finalize` hook.
+  This value is updated to `true` upon successful submission of a timestamp by a node. It is then checked at the end of each block execution in the `on_finalize` hook.
 
 ### `now`: `u64`
 
@@ -1960,7 +1994,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 - **interface**: `api.query.timestamp.palletVersion`
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
-
 
 ## `transactionPayment`
 

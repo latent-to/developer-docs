@@ -8,7 +8,7 @@ description: "This page includes runtime API calls exposed by the Subtensor runt
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[accountNonceApi](#accountnonceapi)**
@@ -33,7 +33,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 
 - **interface**: `api.call.accountNonceApi.accountNonce`
 
-
 ## `auraApi`
 
 ### `authorities()`: `Vec<AuthorityId>`
@@ -43,7 +42,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 ### `slotDuration()`: `SlotDuration`
 
 - **interface**: `api.call.auraApi.slotDuration`
-
 
 ## `babeApi`
 
@@ -71,7 +69,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 
 - **interface**: `api.call.babeApi.submitReportEquivocationUnsignedExtrinsic`
 
-
 ## `blockBuilder`
 
 ### `applyExtrinsic(extrinsic: Extrinsic)`: `ApplyExtrinsicResult`
@@ -89,7 +86,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 ### `inherentExtrinsics(inherent: InherentData)`: `Vec<Extrinsic>`
 
 - **interface**: `api.call.blockBuilder.inherentExtrinsics`
-
 
 ## `contractsApi`
 
@@ -109,13 +105,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 
 - **interface**: `api.call.contractsApi.uploadCode`
 
-
 ## `convertTransactionRuntimeApi`
 
 ### `convertTransaction(transaction: TransactionV2)`: `Extrinsic`
 
 - **interface**: `api.call.convertTransactionRuntimeApi.convertTransaction`
-
 
 ## `core`
 
@@ -131,7 +125,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 
 - **interface**: `api.call.core.version`
 
-
 ## `genesisBuilder`
 
 ### `buildConfig(json: Vec<u8>)`: `Result<(), GenesisBuildErr>`
@@ -141,7 +134,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 ### `createDefaultConfig()`: `Vec<u8>`
 
 - **interface**: `api.call.genesisBuilder.createDefaultConfig`
-
 
 ## `grandpaApi`
 
@@ -161,7 +153,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 
 - **interface**: `api.call.grandpaApi.submitReportEquivocationUnsignedExtrinsic`
 
-
 ## `metadata`
 
 ### `metadata()`: `OpaqueMetadata`
@@ -176,13 +167,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 
 - **interface**: `api.call.metadata.metadataVersions`
 
-
 ## `offchainWorkerApi`
 
 ### `offchainWorker(header: Header)`: `Null`
 
 - **interface**: `api.call.offchainWorkerApi.offchainWorker`
-
 
 ## `sessionKeys`
 
@@ -194,13 +183,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 
 - **interface**: `api.call.sessionKeys.generateSessionKeys`
 
-
 ## `taggedTransactionQueue`
 
 ### `validateTransaction(source: TransactionSource, tx: Extrinsic, blockHash: BlockHash)`: `TransactionValidity`
 
 - **interface**: `api.call.taggedTransactionQueue.validateTransaction`
-
 
 ## `transactionPaymentApi`
 
@@ -219,7 +206,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-15**. Conne
 ### `queryWeightToFee(weight: Weight)`: `Balance`
 
 - **interface**: `api.call.transactionPaymentApi.queryWeightToFee`
-
 
 ## `transactionPaymentCallApi`
 
