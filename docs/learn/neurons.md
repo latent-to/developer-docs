@@ -8,6 +8,13 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Understanding Neurons
 
+A neuron is the generalized name for a participant in a subnet, which can be either a miner or a validator.
+
+See:
+- [Validating in Bittensor](../validators/)
+- [Mining in Bittensor](../miners/)
+
+
 The design of Bittensor subnets is inspired by the structure of a simple neural network, with each **neuron** being either a miner or validator. Each neuron is identified by a unique UID within its subnet and associated with a hotkey-coldkey pair for authentication and operations.
 
 :::tip Neuron requirements
@@ -26,7 +33,7 @@ Additionally, the Metagraph serves as a global directory for managing subnet nod
 
 ## Complete Neuron Lifecycle
 
-1. **Registration** → Neuron pays the **dynamic TAO burn** to obtain a UID (`register` and `burned_register` share one burn-based flow for non-root subnets; `root_register` is separate)
+1. **Registration** → Registrant pays the current burn cost to obtain a UID (`register` and `burned_register` share one burn-based flow for non-root subnets; `root_register` is separate)
 2. **UID Assignment** → Neuron receives unique UID within subnet
 3. **Immunity Period** → Neuron is protected from pruning for configurable blocks
 4. **Performance Building** → Neuron accumulates rank, trust, consensus, and incentive
@@ -41,7 +48,7 @@ Additionally, the Metagraph serves as a global directory for managing subnet nod
 
 ### Registration and UID Assignment
 
-Neurons register with subnets by paying the **current dynamic TAO burn** for their subnet, receiving a unique UID (User ID). Non-root registration is always open: the burn price **decays** over time (set by the owner-configurable `BurnHalfLife` hyperparameter) and **increases** each time a registration succeeds (scaled by `BurnIncreaseMult`), clamped between `MinBurn` and `MaxBurn`. The extrinsics `register` and `burned_register` share the same burn path for non-root subnets. To guard against price movement, callers can use `register_limit(netuid, hotkey, limit_price)`—the registration fails if the actual burn would exceed `limit_price`. **Root** (`root_register`) follows separate rules. The registration process follows an append-or-replace algorithm where new neurons either expand the subnet or replace existing low-performing neurons.
+Neurons register with subnets by paying the current burn cost for the subnet, receiving a unique UID (User ID). Non-root registration is always open: the burn price **decays** over time (set by the owner-configurable `BurnHalfLife` hyperparameter) and **increases** each time a registration succeeds (scaled by `BurnIncreaseMult`), clamped between `MinBurn` and `MaxBurn`. The extrinsics `register` and `burned_register` share the same burn path for non-root subnets. To guard against price movement, callers can use `register_limit(netuid, hotkey, limit_price)`—the registration fails if the actual burn would exceed `limit_price`. **Root** (`root_register`) follows separate rules. The registration process follows an append-or-replace algorithm where new neurons either expand the subnet or replace existing low-performing neurons.
 
 See:
 

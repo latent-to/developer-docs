@@ -80,7 +80,7 @@ Some operations require a TAO balance or alpha stake balance to execute.
 
 - Transfers of TAO fail if you lack the specified amount
 - Staking and unstaking operations fail if they specify more than the owner has
-- Registering a hotkey on a subnet to mine or validate requires paying the **current neuron registration burn** in TAO. The extrinsics `register` and `burned_register` share the same burn-based path for non-root subnets.
+- Registering a hotkey on a subnet to mine or validate requires paying the **current neuron registration burn** in TAO.
 - Creating a subnet requires a fee, which is computed dynamically. The price to create a subnet doubles when someone creates a subnet, and then gradually decreases. This system is designed as a kind of distributed auction, where price is determined by what people are willing to pay given the uncertain estimation of what others are willing to pay.
 
 ### Validator Permit
@@ -269,9 +269,9 @@ See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
 
 #### Write commands (require coldkey)
 
-- **`create`**: Create a subnet (requires burn fee)
-- **`register`** (and **`pow-register`** alias): Register a UID for the hotkey on a given subnet; non-root registration is **burn-based**
-- **`start`**: Starts a subnet's emission schedule
+- **`create`**: Create a subnet (requires burn fee).
+- **`register`**: Register a UID for the hotkey on a given subnet (requires burn fee).
+- **`start`**: Starts a subnet's emission schedule.
 - **`set-identity`**: Sets on-chain identity for a given subnet.
 - **`set-symbol`**: Sets on-chain symbol for a given subnet.
 - **`mechanisms set`**: Configures how many mechanisms are registered for a subnet.
