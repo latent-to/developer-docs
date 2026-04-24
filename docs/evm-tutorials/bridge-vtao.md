@@ -6,7 +6,7 @@ title: "Token Bridging"
 
 This guide provides an overview of two related topics:
 
-- how to moves TAO between Substrate-style wallets (SS58) and the Etherum style wallets on Bittensor EVM
+- how to move TAO between Substrate-style wallets (SS58) and the Etherum style wallets on Bittensor EVM
 - how to use vTAO as a token bridge between Bittensor EVM and other EVM chains.
 
 :::info

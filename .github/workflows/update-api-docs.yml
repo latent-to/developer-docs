@@ -1,0 +1,152 @@
+name: Update API Reference Docs
+
+on:
+  schedule:
+    - cron: "0 6 * * 5"
+
+  workflow_dispatch:
+    inputs:
+      endpoint:
+        description: "WebSocket endpoint (blank = mainnet)"
+        required: false
+        default: ""
+
+env:
+  NODE_VERSION: "20"
+  GENERATOR_DIR: "src/subtensor-docs-gen"
+  DOCS_DIR: "docs/subtensor-api"
+  BRANCH_PREFIX: "docs/auto-update"
+  SUBTENSOR_WS: >-
+    ${{
+      inputs.endpoint != '' && inputs.endpoint
+      || secrets.SUBTENSOR_WS_ENDPOINT != '' && secrets.SUBTENSOR_WS_ENDPOINT
+      || 'wss://entrypoint-finney.opentensor.ai:443'
+    }}
+
+jobs:
+  regenerate-docs:
+    name: Regenerate docs and open PR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate GitHub App token
+        uses: actions/create-github-app-token@d72941d797fd3113feb6b93fd0dec494b13a2547 # v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "yarn"
+          cache-dependency-path: ${{ env.GENERATOR_DIR }}/yarn.lock
+
+      - name: Install generator dependencies
+        working-directory: ${{ env.GENERATOR_DIR }}
+        run: yarn install --frozen-lockfile
+
+      - name: Generate API reference docs
+        working-directory: ${{ env.GENERATOR_DIR }}
+        env:
+          SUBTENSOR_WS: ${{ env.SUBTENSOR_WS }}
+          OUTPUT_DIR: "../../${{ env.DOCS_DIR }}"
+        run: yarn generate
+        timeout-minutes: 10
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet HEAD -- "$DOCS_DIR"; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes in $DOCS_DIR — nothing to PR."
+          else
+            # Check whether changes go beyond the generation-date stamp.
+            # Extract added/removed content lines, then strip out lines
+            # that only update the "Generated from a live snapshot … on **DATE**" header.
+            SUBSTANTIVE=$(git diff HEAD -- "$DOCS_DIR" \
+              | grep -E '^[+-]' \
+              | grep -vE '^(\+\+\+|---) ' \
+              | grep -vE 'Generated from a live snapshot of the Subtensor runtime on' \
+              | wc -l)
+
+            if [ "$SUBSTANTIVE" -eq 0 ]; then
+              echo "changed=false" >> "$GITHUB_OUTPUT"
+              echo "Only generation-date changes detected — skipping PR."
+              git checkout -- "$DOCS_DIR"
+            else
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+      - name: Commit updated docs to new branch
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          DATE=$(date -u +%Y-%m-%d)
+          BRANCH="${BRANCH_PREFIX}-${DATE}"
+          echo "BRANCH=${BRANCH}" >> "$GITHUB_ENV"
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$BRANCH"
+          git add "$DOCS_DIR"
+          git commit -m "docs: regenerate API reference $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push origin "$BRANCH"
+
+      - name: Build PR body
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          STAT=$(git diff origin/main..HEAD -- "$DOCS_DIR" --stat | tail -6)
+          ADDED=$(git diff origin/main..HEAD -- "$DOCS_DIR" | grep -c '^+### ' || true)
+          REMOVED=$(git diff origin/main..HEAD -- "$DOCS_DIR" | grep -c '^-### ' || true)
+          CHANGED_FILES=$(git diff origin/main..HEAD -- "$DOCS_DIR" --name-only | sed 's/^/- /')
+
+          {
+            echo "## 🤖 Automated API reference update"
+            echo ""
+            echo "Generated from the live Subtensor runtime on **$(date -u '+%Y-%m-%d %H:%M UTC')**."
+            echo ""
+            echo "**Endpoint:** \`${SUBTENSOR_WS}\`"
+            echo ""
+            echo "### Changed files"
+            echo "${CHANGED_FILES}"
+            echo ""
+            echo "### Diff summary"
+            echo "\`\`\`"
+            echo "${STAT}"
+            echo "\`\`\`"
+            echo ""
+            echo "| | Count |"
+            echo "|---|---|"
+            echo "| Headings added | ${ADDED} |"
+            echo "| Headings removed | ${REMOVED} |"
+            echo ""
+            echo "### Review checklist"
+            echo "- [ ] New \`###\` headings look correct (new extrinsics / storage items)"
+            echo "- [ ] Removed \`###\` headings are expected (renames / deprecations)"
+            echo "- [ ] Parameter types match the Rust source"
+            echo "- [ ] Summary text changes make sense"
+            echo ""
+            echo "---"
+            echo "_Opened automatically by the \`update-api-docs\` workflow. Merge once the diff looks correct._"
+          } > /tmp/pr-body.md
+
+      - name: Open Pull Request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh pr create \
+            --title "docs: API reference update $(date -u +%Y-%m-%d)" \
+            --head  "$BRANCH" \
+            --base  main \
+            --body-file /tmp/pr-body.md \
+            --reviewer chideraao
