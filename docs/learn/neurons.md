@@ -8,18 +8,12 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Understanding Neurons
 
-A neuron is the generalized name for a participant in a subnet, which can be either a miner or a validator.
+A neuron is the generalized name for a participant in a subnet, which can be either a miner or a validator. Each neuron is identified by a unique UID within its subnet and associated with a hotkey-coldkey pair for authentication and operations.
 
 See:
 - [Validating in Bittensor](../validators/)
 - [Mining in Bittensor](../miners/)
 
-
-The design of Bittensor subnets is inspired by the structure of a simple neural network, with each **neuron** being either a miner or validator. Each neuron is identified by a unique UID within its subnet and associated with a hotkey-coldkey pair for authentication and operations.
-
-:::tip Neuron requirements
-See [minimum compute requirements](https://github.com/opentensor/bittensor-subnet-template/blob/main/min_compute.yml) for compute, memory, bandwidth and storage requirements for neurons.
-:::
 
 ## Neuron Architecture Overview
 
