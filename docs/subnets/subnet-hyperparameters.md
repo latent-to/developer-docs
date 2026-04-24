@@ -262,9 +262,9 @@ Determines whether or not bonds are reset-enabled.
 
 **`btcli` setter**: Use the parameter name as listed by `btcli subnet hyperparameters` on your network (often `burn_half_life`)
 
-**Setter extrinsic**: See Subtensor `AdminUtils` / chain metadata for the subnet-owner setter corresponding to this storage (naming follows `sudo_set_*` conventions)
+**Setter extrinsic**: `sudo_set_burn_half_life`
 
-**Permissions required to set**: Subnet owner (unless metadata indicates root-only)
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
@@ -278,9 +278,9 @@ Determines whether or not bonds are reset-enabled.
 
 **`btcli` setter**: Use the parameter name as listed by `btcli subnet hyperparameters` on your network (often `burn_increase_mult`)
 
-**Setter extrinsic**: See Subtensor `AdminUtils` / chain metadata for the subnet-owner setter corresponding to this storage
+**Setter extrinsic**: `sudo_set_burn_increase_mult`
 
-**Permissions required to set**: Subnet owner (unless metadata indicates root-only)
+**Permissions required to set**: Subnet owner
 
 **Description**:
 
