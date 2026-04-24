@@ -44,6 +44,10 @@ When you delegate your TAO to a subnet validator, you attach your delegated TAO 
 A hotkey can hold multiple UIDs across **separate** subnets. However, within one subnet, each UID must have a unique hotkey.
 :::
 
+:::tip Check the current registration cost
+Run `btcli subnets show --netuid <netuid>` to see the current **Registration cost (recycled)** before registering. The burn price rises with each registration and decays over time.
+:::
+
 To register your keys with a subnet, run the following command on your terminal, replacing `<your_preferred_netuid>`, `<my_coldkey>`, `<my_hotkey>`.
 `<your_preferred_netuid>` is the `netuid` of your preferred subnet.
 

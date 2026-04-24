@@ -48,7 +48,9 @@ Additionally, the Metagraph serves as a global directory for managing subnet nod
 
 ### Registration and UID Assignment
 
-Neurons register with subnets by paying the current burn cost for the subnet, receiving a unique UID (User ID). Non-root registration is always open: the burn price **decays** over time (set by the owner-configurable `BurnHalfLife` hyperparameter) and **increases** each time a registration succeeds (scaled by `BurnIncreaseMult`), clamped between `MinBurn` and `MaxBurn`. The extrinsics `register` and `burned_register` share the same burn path for non-root subnets. To guard against price movement, callers can use `register_limit(netuid, hotkey, limit_price)`—the registration fails if the actual burn would exceed `limit_price`. **Root** (`root_register`) follows separate rules. The registration process follows an append-or-replace algorithm where new neurons either expand the subnet or replace existing low-performing neurons.
+Neurons register with subnets by paying the current burn cost for the subnet, receiving a unique UID (User ID). Non-root registration is always open: the burn price **decays** over time (set by the owner-configurable `BurnHalfLife` hyperparameter) and **increases** each time a registration succeeds, clamped between `MinBurn` and `MaxBurn`. To guard against price movement, callers can use `register_limit(netuid, hotkey, limit_price)`, in which case registration fails if the actual burn would exceed `limit_price`.
+
+Note that **Root** (`root_register`) follows separate rules. The registration process follows an append-or-replace algorithm where new neurons either expand the subnet or replace existing low-performing neurons.
 
 See:
 
