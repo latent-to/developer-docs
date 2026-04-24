@@ -3,7 +3,7 @@
 This page contains error variants returned by the Bittensor (Subtensor) runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -74,6 +74,16 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 
 - **interface**: `api.errors.adminUtils.NegativeSigmoidSteepness`
 - **summary**: Only root can set negative sigmoid steepness values
+
+### `NotPermittedOnRootSubnet`
+
+- **interface**: `api.errors.adminUtils.NotPermittedOnRootSubnet`
+- **summary**: Operation is not permitted on the root network.
+
+### `POWRegistrationDisabled`
+
+- **interface**: `api.errors.adminUtils.POWRegistrationDisabled`
+- **summary**: POW Registration has been deprecated
 
 ### `SubnetDoesNotExist`
 
@@ -648,10 +658,20 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 - **interface**: `api.errors.mevShield.BadEncKeyLen`
 - **summary**: The announced ML‑KEM encapsulation key length is invalid.
 
+### `TooManyPendingExtrinsics`
+
+- **interface**: `api.errors.mevShield.TooManyPendingExtrinsics`
+- **summary**: Too many pending extrinsics in storage.
+
 ### `Unreachable`
 
 - **interface**: `api.errors.mevShield.Unreachable`
 - **summary**: Unreachable.
+
+### `WeightExceedsAbsoluteMax`
+
+- **interface**: `api.errors.mevShield.WeightExceedsAbsoluteMax`
+- **summary**: Weight exceeds the absolute maximum (half of total block weight).
 
 
 ## `multisig`
@@ -1314,6 +1334,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 - **interface**: `api.errors.subtensorModule.NewHotKeyIsSameWithOld`
 - **summary**: The new hotkey is the same as old one
 
+### `NewHotKeyNotCleanForRootSwap`
+
+- **interface**: `api.errors.subtensorModule.NewHotKeyNotCleanForRootSwap`
+- **summary**: The new hotkey has outstanding root claimable or non-zero root stake, so the root rate-book cannot be merged without misallocating dividends.
+
 ### `NonAssociatedColdKey`
 
 - **interface**: `api.errors.subtensorModule.NonAssociatedColdKey`
@@ -1384,11 +1409,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 - **interface**: `api.errors.subtensorModule.Overflow`
 - **summary**: An overflow occurred.
 
-### `PrecisionLoss`
-
-- **interface**: `api.errors.subtensorModule.PrecisionLoss`
-- **summary**: Unintended precision loss when unstaking alpha
-
 ### `ProportionOverflow`
 
 - **interface**: `api.errors.subtensorModule.ProportionOverflow`
@@ -1398,6 +1418,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 
 - **interface**: `api.errors.subtensorModule.RegistrationNotPermittedOnRootSubnet`
 - **summary**: Operation is not permitted on the root subnet.
+
+### `RegistrationPriceLimitExceeded`
+
+- **interface**: `api.errors.subtensorModule.RegistrationPriceLimitExceeded`
+- **summary**: Registration Price Limit Exceeded
 
 ### `RevealPeriodTooLarge`
 

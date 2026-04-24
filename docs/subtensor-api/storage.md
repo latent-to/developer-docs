@@ -3,7 +3,7 @@
 This page contains storage query definitions for the Bittensor (Subtensor) runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -480,16 +480,36 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 - **modifier**: `Optional`
 - **summary**: Per-author ML-KEM-768 encapsulation key, updated each time the author produces a block.
 
+### `counterForPendingExtrinsics`: `u32`
+
+- **interface**: `api.query.mevShield.counterForPendingExtrinsics`
+- **summary**: Counter for the related counted storage map
+
 ### `currentKey`: `Bytes`
 
 - **interface**: `api.query.mevShield.currentKey`
 - **modifier**: `Optional`
 - **summary**: Current block author's ML-KEM-768 encapsulation key (internal, not for encryption).
 
+### `extrinsicLifetime`: `u32`
+
+- **interface**: `api.query.mevShield.extrinsicLifetime`
+- **summary**: Configurable extrinsic lifetime (max block difference between submission and execution). Defaults to 10 blocks if not explicitly set.
+
 ### `hasMigrationRun(Bytes)`: `bool`
 
 - **interface**: `api.query.mevShield.hasMigrationRun`
 - **summary**: Stores whether some migration has been run.
+
+### `maxExtrinsicWeight`: `u64`
+
+- **interface**: `api.query.mevShield.maxExtrinsicWeight`
+- **summary**: Configurable maximum weight for a single extrinsic dispatched during on_initialize. Extrinsics exceeding this limit are removed from the queue.
+
+### `maxPendingExtrinsicsLimit`: `u32`
+
+- **interface**: `api.query.mevShield.maxPendingExtrinsicsLimit`
+- **summary**: Configurable maximum number of pending extrinsics. Defaults to 100 if not explicitly set via `set_max_pending_extrinsics`.
 
 ### `nextKey`: `Bytes`
 
@@ -503,11 +523,27 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 - **modifier**: `Optional`
 - **summary**: Block number at which `NextKey` is no longer valid (exclusive upper bound). Updated every block during rotation.
 
+### `nextPendingExtrinsicIndex`: `u32`
+
+- **interface**: `api.query.mevShield.nextPendingExtrinsicIndex`
+- **summary**: Next index to use when inserting a pending extrinsic (unique auto-increment).
+
+### `onInitializeWeight`: `u64`
+
+- **interface**: `api.query.mevShield.onInitializeWeight`
+- **summary**: Configurable maximum weight for on_initialize processing. Defaults to 500_000_000_000 ref_time if not explicitly set.
+
 ### `palletVersion`: `u16`
 
 - **interface**: `api.query.mevShield.palletVersion`
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
+
+### `pendingExtrinsics(u32)`: `PendingExtrinsic`
+
+- **interface**: `api.query.mevShield.pendingExtrinsics`
+- **modifier**: `Optional`
+- **summary**: Storage map for encrypted extrinsics to be executed in on_initialize. Uses u32 index for `O(1)` insertion and removal. Count is maintained automatically.
 
 ### `pendingKey`: `Bytes`
 
@@ -775,6 +811,16 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 - **interface**: `api.query.subtensorModule.alphaSigmoidSteepness`
 - **summary**: MAP ( netuid ) --> AlphaSigmoidSteepness
 
+### `alphaV2(AccountId32, AccountId32, u16)`: `SafeFloat`
+
+- **interface**: `api.query.subtensorModule.alphaV2`
+- **summary**: NMAP ( hot, cold, netuid ) --> alpha | Returns the alpha shares for a hotkey, coldkey, netuid triplet, stores SafeFloat.
+
+### `alphaV2MapLastKey`: `Option`
+
+- **interface**: `api.query.subtensorModule.alphaV2MapLastKey`
+- **summary**: Contains last AlphaV2 storage map key to iterate (check first)
+
 ### `alphaValues(u16)`: `(u16,u16)`
 
 - **interface**: `api.query.subtensorModule.alphaValues`
@@ -785,6 +831,13 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 - **interface**: `api.query.subtensorModule.associatedEvmAddress`
 - **modifier**: `Optional`
 - **summary**: ============================= ==== EVM related storage ==== ============================= --- DMAP (netuid, uid) --> (H160, last_block_where_ownership_was_proven)
+
+### `autoParentDelegationEnabled(AccountId32)`: `bool`
+
+- **interface**: `api.query.subtensorModule.autoParentDelegationEnabled`
+- **summary**: MAP ( hotkey ) --> parent_delegation_enabled
+
+    When `true`, this root validator allows auto parent delegation. Defaults to `true`; validators can opt out at any time by calling `set_auto_parent_delegation_enabled(false)`.
 
 ### `autoStakeDestination(AccountId32, u16)`: `AccountId32`
 
@@ -842,6 +895,16 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 
 - **interface**: `api.query.subtensorModule.burn`
 - **summary**: MAP ( netuid ) --> Burn
+
+### `burnHalfLife(u16)`: `u16`
+
+- **interface**: `api.query.subtensorModule.burnHalfLife`
+- **summary**: MAP ( netuid ) --> BurnHalfLife (blocks)
+
+### `burnIncreaseMult(u16)`: `FixedU128`
+
+- **interface**: `api.query.subtensorModule.burnIncreaseMult`
+- **summary**: MAP ( netuid ) --> BurnIncreaseMult
 
 ### `burnRegistrationsThisInterval(u16)`: `u16`
 
@@ -1305,16 +1368,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid, hotkey ) --> prometheus_info
 
-### `pruningScores(u16)`: `Vec<u16>`
-
-- **interface**: `api.query.subtensorModule.pruningScores`
-- **summary**: MAP ( netuid ) --> pruning_scores
-
-### `rank(u16)`: `Vec<u16>`
-
-- **interface**: `api.query.subtensorModule.rank`
-- **summary**: MAP ( netuid ) --> rank
-
 ### `raoRecycledForRegistration(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.raoRecycledForRegistration`
@@ -1324,6 +1377,13 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 
 - **interface**: `api.query.subtensorModule.recycleOrBurn`
 - **summary**: MAP ( netuid ) --> recycle_or_burn
+
+### `registeredSubnetCounter(u16)`: `u64`
+
+- **interface**: `api.query.subtensorModule.registeredSubnetCounter`
+- **summary**: MAP ( netuid ) --> registered_subnet_counter
+
+    Monotonic counter incremented on every successful `do_register_network` for a given netuid. Consumers that persist per-netuid state keyed by `(user, netuid)` (e.g. the staking precompile `AllowancesStorage`) can mix the current counter value into their storage key so that entries written under a previous registration of the same netuid become unreachable after the netuid is re-registered, without requiring unbounded storage iteration on deregistration.
 
 ### `registrationsThisBlock(u16)`: `u16`
 
@@ -1598,6 +1658,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 - **interface**: `api.query.subtensorModule.totalHotkeyShares`
 - **summary**: DMAP ( hot, netuid ) --> total_alpha_shares | Returns the number of alpha shares for a hotkey on a subnet.
 
+### `totalHotkeySharesV2(AccountId32, u16)`: `SafeFloat`
+
+- **interface**: `api.query.subtensorModule.totalHotkeySharesV2`
+- **summary**: DMAP ( hot, netuid ) --> total_alpha_shares | Returns the number of alpha shares for a hotkey on a subnet, stores SafeFloat.
+
 ### `totalIssuance`: `u64`
 
 - **interface**: `api.query.subtensorModule.totalIssuance`
@@ -1622,11 +1687,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 
 - **interface**: `api.query.subtensorModule.transferToggle`
 - **summary**: ============================ ==== Subnet Locks ===== ============================ --- MAP ( netuid ) --> transfer_toggle
-
-### `trust(u16)`: `Vec<u16>`
-
-- **interface**: `api.query.subtensorModule.trust`
-- **summary**: MAP ( netuid ) --> trust
 
 ### `txChildkeyTakeRateLimit`: `u64`
 
