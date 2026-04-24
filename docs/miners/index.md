@@ -30,7 +30,7 @@ To participate as a miner, you must first register a hotkey with the subnet in o
 You **do not** have to create a subnet to mine on the Bittensor network. Most miners work on already established subnets.
 :::
 
-Registration has a cost in TAO that fluctuates dynamically: the price **decays** over time and **increases** each time a registration succeeds. The subnet owner controls the decay rate (`BurnHalfLife`) and increase factor (`BurnIncreaseMult`), with floor and ceiling set by `MinBurn` and `MaxBurn`. When you secure a UID slot in a subnet on the main chain, this TAO is sunk cost and cannot be recovered.
+Registration has a cost in TAO that fluctuates dynamically: the price **decays** over time and **increases** each time a registration succeeds. The subnet owner controls the decay rate (`BurnHalfLife`) and the increase factor (`BurnIncreaseMult`), with the floor and ceiling set by the `MinBurn` and `MaxBurn` hyperparameters, respectively. When you secure a UID slot in a subnet on the main chain, this TAO is sunk cost and cannot be recovered.
 
 By default, [`btcli subnets register`](../btcli/btcli.md#btcli-subnets-register) runs in **safe mode**: it prompts for a price tolerance and aborts if the burn exceeds it. Pass `--unsafe` to skip the guard.
 

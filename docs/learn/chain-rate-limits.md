@@ -158,7 +158,7 @@ This rate limit controls how frequently a subnet validator can set weights to th
 
 ### Neuron (UID) registration
 
-Neuron registration is **continuous**: there are no registration windows, rate limits, or per-block/per-interval caps. Admission is governed by a burn price that decays over time and rises with each registration. Recall that neurons is a general term including both miners and validators, who have different registration requirements:
+Neuron registration is **continuous**: there are no registration windows, rate limits, or per-block/per-interval caps. Admission is governed by a burn price that decays over time and rises with each registration. Recall that _neurons_ is a general term including both miners and validators, who have different registration requirements:
 
 - [Miner Registration](../miners/#miner-registration)
 - [Validator Registration](../validators/#validator-registration)
