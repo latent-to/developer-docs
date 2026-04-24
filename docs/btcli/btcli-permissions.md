@@ -289,7 +289,6 @@ Creating subnets requires a coldkey with sufficient balance to cover burn costs.
 #### `btcli subnets list`
 #### `btcli subnets burn-cost`
 #### `btcli subnets create`
-#### `btcli subnets pow-register`
 #### `btcli subnets register`
 #### `btcli subnets metagraph`
 #### `btcli subnets show`
