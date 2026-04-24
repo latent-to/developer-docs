@@ -63,7 +63,7 @@ Miners will need coldkeys to manage their TAO and alpha currency, as well as hot
 
 `btcli wallet new-hotkey` , `btcli wallet regen-hotkey`, : Create and register a hotkey on a secure coldkey workstation then transfer the hotkey file or mnemonic to the mining workstation.
 
-`btcli subnets register`: register a UID; neuron registration requires paying the **current TAO burn**. By default the command runs in safe mode and prompts for a price tolerance—pass `--unsafe` to skip. Check the current burn first with `btcli subnets show --netuid <netuid>`.
+[`btcli subnets register`](../btcli/btcli#btcli-subnets-register): register a UID; neuron registration requires paying the **current TAO burn**. By default the command runs in safe mode and prompts for a price tolerance—pass `--unsafe` to skip. Check the current burn first with `btcli subnets show --netuid <netuid>`.
 
 ## Key rotation
 
