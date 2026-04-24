@@ -2542,7 +2542,6 @@ aliases: subnet, s
 - `burn-cost`: Shows the required amount of TAO to be recycled for creating a new subnet, i.e., cost of registering a new subnet.
 - `create`: Registers a new subnet on the network.
 - `start`: Starts a subnet's emission schedule.
-- `pow-register`: Register a neuron (a subnet validator or a subnet miner) using Proof of Work (POW).
 - `register`: Register a neuron (a subnet validator or a subnet miner) in the specified subnet by recycling some TAO.
 - `metagraph`: Displays detailed information about a...
 - `show`: Displays detailed information about a subnet including participants and their state.
@@ -2889,66 +2888,24 @@ btcli subnets create [OPTIONS]
 | `--json-output`, `--json-out`                                               |      | Outputs the result of the command as JSON.                                                                                            |
 | `--help`                                                                    |      | Show this message and exit.                                                                                                           |
 
-### `btcli subnets pow-register`
-
-Register a neuron (a subnet validator or a subnet miner) using Proof of Work (POW).
-
-This method is an alternative registration process that uses computational work for securing a neuron's place on the subnet.
-
-The command starts by verifying the existence of the specified subnet. If the subnet does not exist, it terminates with an error message. On successful verification, the POW registration process is initiated, which requires solving computational puzzles.
-
-The command also supports additional wallet and subtensor arguments, enabling further customization of the registration process.
-
-**Example:**
-
-```
-btcli pow_register --netuid 1 --num_processes 4 --cuda
-```
-
-Note: This command is suitable for users with adequate computational resources to participate in POW registration.
-It requires a sound understanding of the network's operations and POW mechanics. Users should ensure their systems meet the necessary hardware and software requirements, particularly when opting for CUDA-based GPU acceleration.
-
-This command may be disabled by the subnet owner. For example, on netuid 1 this is permanently disabled.
-
-**Usage**:
-
-```console
-btcli subnets pow-register [OPTIONS]
-
-alias pow_register
-```
-
-**Options**:
-
-| Option                                                                      | Type    | Description                                                                            |
-| --------------------------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------- |
-| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                    |
-| `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.   |
-| `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                   |
-| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT    | The subtensor network to connect to. Default: finney.                                  |
-| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                     |
-| `--processors`                                                              | INTEGER | Number of processors to use for POW registration.                                      |
-| `-u`, `--update-interval`                                                   | INTEGER | The number of nonces to process before checking for the next block during registration |
-| `--output-in-place`/`--no-output-in-place`                                  |         | Whether to output the registration statistics in-place.                                |
-| `--verbose`, `-v`                                                           |         | Enable verbose output.                                                                 |
-| `--use-cuda`, `--cuda`/`--no-use-cuda`, `--no-cuda`                         |         | Set the flag to use CUDA for POW registration.                                         |
-| `--dev-id`, `-d`                                                            | INTEGER | Set the CUDA device id(s), in the order of the device speed (0 is the fastest).        |
-| `--threads-per-block`, `-tpb`                                               | INTEGER | Set the number of threads per block for CUDA.                                          |
-| `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`         |         | Enable or disable interactive prompts.                                                 |
-| `--help`                                                                    |         | Show this message and exit.                                                            |
-
 ### `btcli subnets register`
 
-Register a neuron (a subnet validator or a subnet miner) in the specified subnet by recycling some TAO.
+Register a neuron (a subnet validator or a subnet miner) in the specified subnet by paying the current TAO burn.
 
-Before registering, the command checks if the specified subnet exists and whether the user's balance is sufficient to cover the registration cost.
+The command verifies the subnet exists and that your balance covers the registration cost. By default it runs in **safe mode**: it prompts for a price tolerance and aborts if the burn price would exceed it. Pass `--unsafe` to skip this guard and proceed at any price.
 
-The registration cost is determined by the current recycle amount for the specified subnet. If the balance is insufficient or the subnet does not exist, the command will exit with an error message.
+To check the current burn before registering: `btcli subnets show --netuid <netuid>`.
 
 **Example:**
 
 ```
 btcli subnets register --netuid 1
+```
+
+Safe mode with 5% tolerance:
+
+```
+btcli subnets register --netuid 1 --safe --tolerance 0.05
 ```
 
 **Usage**:
@@ -2966,6 +2923,8 @@ btcli subnets register [OPTIONS]
 | `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                                                                                 |
 | `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                                                                                 |
 | `--netuid`,                                                                 | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                                                                                   |
+| `--safe-register/--unsafe-register`, `--safe/--unsafe`                      |         | Enable or disable safe registration mode (default: enabled). In safe mode the command aborts if the burn price exceeds the tolerance limit.                                                          |
+| `--tolerance`, `--rate-tolerance`                                           | FLOAT   | Maximum allowed burn increase as a decimal fraction (e.g. 0.05 for 5%). Applies in safe mode only.                                                                                                  |
 | `--period`, `-era`                                                          | INTEGER | Length (in blocks) for which the transaction should be valid. Note that it is possible that if you use an era for this transaction that you may pay a different fee to register than the one stated. |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy.                                                                |
 | `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                                                                                  |

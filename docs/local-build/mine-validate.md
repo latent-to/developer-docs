@@ -309,7 +309,7 @@ This section discusses errors that could arise while running the validator or mi
 
 **Insufficient funds**
 
-The coldkey signing the `btcli subnet register` transaction must have a sufficient $\tau$ balance to cover the recycling cost of the registration.
+The coldkey signing the `btcli subnet register` transaction must have a sufficient $\tau$ balance to cover the registration burn cost.
 
 <details>
 <summary><strong>Show sample error</strong></summary>

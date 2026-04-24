@@ -156,25 +156,12 @@ This rate limit controls how frequently a subnet validator can set weights to th
 - Error message: [`SettingWeightsTooFast`](../errors/subtensor.md#settingweightstoofast)
 - Effective Period: Formula is `Tempo × WeightsSetRateLimit × 12 seconds`
 
-### Registration rate limits
+### Neuron (UID) registration
 
-This section covers rate limits related to neuron registrations on a subnet.
+Neuron registration is **continuous**: there are no registration windows, rate limits, or per-block/per-interval caps. Admission is governed by a burn price that decays over time and rises with each registration. Recall that _neurons_ is a general term including both miners and validators, who have different registration requirements:
 
-#### Per-block registration limit
-
-This rate limit controls how frequently registrations can occur on a particular subnet. This rate limit can be modified by changing the `max_regs_per_block` parameter in the subnet hyperparameters. For more information, see [subnet hyperparameters](../subnets/subnet-hyperparameters.md#maxregistrationsperblock).
-
-- Rate Limit: Configurable per subnet (default: 1 registration per block)
-- Chain State Variable: `MaxRegistrationsPerBlock`
-- Error message: [`TooManyRegistrationsThisBlock`](../errors/subtensor.md#toomanyregistrationsthisblock)
-
-#### Per-interval registration limit
-
-This rate limit controls the frequency of neuron registrations within an [interval](../subnets/subnet-hyperparameters#adjustmentinterval). This limit occurs when registration attempts in the current interval exceed three times the target registrations per interval.
-
-- Rate Limit: 3x the target registrations per interval
-- Chain State Variable: `TargetRegistrationsPerInterval`
-- Error message: [`TooManyRegistrationsThisInterval`](../errors/subtensor.md#toomanyregistrationsthisinterval)
+- [Miner Registration](../miners/#miner-registration)
+- [Validator Registration](../validators/#validator-registration)
 
 ## Subtensor Node Rate Limits
 
