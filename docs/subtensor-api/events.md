@@ -3,7 +3,7 @@
 The following page contains runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -36,6 +36,16 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 
 - **interface**: `api.events.adminUtils.BondsResetToggled`
 - **summary**: Event emitted when Bonds Reset is toggled.
+
+### `BurnHalfLifeSet(NetUid, u16)`
+
+- **interface**: `api.events.adminUtils.BurnHalfLifeSet`
+- **summary**: Event emitted when the burn half-life parameter is set for a subnet.
+
+### `BurnIncreaseMultSet(NetUid, U64F64)`
+
+- **interface**: `api.events.adminUtils.BurnIncreaseMultSet`
+- **summary**: Event emitted when the burn increase multiplier is set for a subnet.
 
 ### `PrecompileUpdated(PrecompileEnum, bool)`
 
@@ -391,6 +401,61 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 - **interface**: `api.events.mevShield.EncryptedSubmitted`
 - **summary**: Encrypted wrapper accepted.
 
+### `ExtrinsicDecodeFailed(u32)`
+
+- **interface**: `api.events.mevShield.ExtrinsicDecodeFailed`
+- **summary**: Extrinsic decode failed during on_initialize.
+
+### `ExtrinsicDispatched(u32)`
+
+- **interface**: `api.events.mevShield.ExtrinsicDispatched`
+- **summary**: Extrinsic was successfully dispatched during on_initialize.
+
+### `ExtrinsicDispatchFailed(u32, DispatchError)`
+
+- **interface**: `api.events.mevShield.ExtrinsicDispatchFailed`
+- **summary**: Extrinsic dispatch failed during on_initialize.
+
+### `ExtrinsicExpired(u32)`
+
+- **interface**: `api.events.mevShield.ExtrinsicExpired`
+- **summary**: Extrinsic expired (exceeded max block lifetime).
+
+### `ExtrinsicLifetimeSet(u32)`
+
+- **interface**: `api.events.mevShield.ExtrinsicLifetimeSet`
+- **summary**: Extrinsic lifetime was updated.
+
+### `ExtrinsicPostponed(u32)`
+
+- **interface**: `api.events.mevShield.ExtrinsicPostponed`
+- **summary**: Extrinsic postponed due to weight limit.
+
+### `ExtrinsicStored(u32, AccountId)`
+
+- **interface**: `api.events.mevShield.ExtrinsicStored`
+- **summary**: Encrypted extrinsic was stored for later execution.
+
+### `ExtrinsicWeightExceeded(u32)`
+
+- **interface**: `api.events.mevShield.ExtrinsicWeightExceeded`
+- **summary**: Extrinsic exceeded the per-extrinsic weight limit and was removed.
+
+### `MaxExtrinsicWeightSet(u64)`
+
+- **interface**: `api.events.mevShield.MaxExtrinsicWeightSet`
+- **summary**: Maximum per-extrinsic weight was updated.
+
+### `MaxPendingExtrinsicsNumberSet(u32)`
+
+- **interface**: `api.events.mevShield.MaxPendingExtrinsicsNumberSet`
+- **summary**: Maximum pending extrinsics limit was updated.
+
+### `OnInitializeWeightSet(u64)`
+
+- **interface**: `api.events.mevShield.OnInitializeWeightSet`
+- **summary**: Maximum on_initialize weight was updated.
+
 
 ## `multisig`
 
@@ -654,6 +719,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 - **interface**: `api.events.subtensorModule.ArbitrationPeriodExtended`
 - **summary**: The arbitration period has been extended
 
+### `AutoParentDelegationEnabledSet(AccountId, bool)`
+
+- **interface**: `api.events.subtensorModule.AutoParentDelegationEnabledSet`
+- **summary**: A root validator toggled the "auto parent delegation" flag.
+
 ### `AutoStakeAdded(NetUid, AccountId, AccountId, AccountId, AlphaBalance)`
 
 - **interface**: `api.events.subtensorModule.AutoStakeAdded`
@@ -717,6 +787,16 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 
 - **interface**: `api.events.subtensorModule.BulkNeuronsRegistered`
 - **summary**: multiple uids have been concurrently registered.
+
+### `BurnHalfLifeSet(NetUid, u16)`
+
+- **interface**: `api.events.subtensorModule.BurnHalfLifeSet`
+- **summary**: Burn half-life set for neuron registration.
+
+### `BurnIncreaseMultSet(NetUid, u64)`
+
+- **interface**: `api.events.subtensorModule.BurnIncreaseMultSet`
+- **summary**: Burn increase multiplier set for neuron registration.
 
 ### `BurnSet(NetUid, TaoBalance)`
 
@@ -1189,6 +1269,13 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
 
     - **netuid**: The network identifier.
     - **who**: The account ID of the user revealing the weights.
+
+### `TransactionFeePaidWithAlpha(AccountId, NetUid, AlphaBalance, TaoBalance)`
+
+- **interface**: `api.events.subtensorModule.TransactionFeePaidWithAlpha`
+- **summary**: Transaction fee was paid in Alpha.
+
+    Emitted in addition to `TransactionFeePaid` when the fee payment path is Alpha. `alpha_fee` is the exact Alpha amount deducted.
 
 ### `TransferToggle(NetUid, bool)`
 

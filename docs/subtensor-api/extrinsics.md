@@ -3,7 +3,7 @@
 The following sections contain Extrinsic methods that are part of the Bittensor (Subtensor) runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -115,6 +115,16 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
     **Weight:**
 
     This function has a fixed weight of 0 and is classified as an operational transaction that does not incur any fees.
+
+### `sudoSetBurnHalfLife(netuid: NetUid, burn_half_life: u16)`
+
+- **interface**: `api.tx.adminUtils.sudoSetBurnHalfLife`
+- **summary**: Set BurnHalfLife for a subnet. It is only callable by root and subnet owner.
+
+### `sudoSetBurnIncreaseMult(netuid: NetUid, burn_increase_mult: U64F64)`
+
+- **interface**: `api.tx.adminUtils.sudoSetBurnIncreaseMult`
+- **summary**: Set BurnIncreaseMult for a subnet. It is only callable by root and subnet owner.
 
 ### `sudoSetCkBurn(burn: u64)`
 
@@ -1053,6 +1063,31 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
     2. PendingKey  ← NextKey
     3. NextKey     ← next-next author's key  (user-facing)
     4. AuthorKeys[current] ← announced key
+
+### `setMaxExtrinsicWeight(value: u64)`
+
+- **interface**: `api.tx.mevShield.setMaxExtrinsicWeight`
+- **summary**: Set the maximum weight allowed for a single extrinsic during on_initialize processing. Extrinsics exceeding this limit are removed from the queue. Rejects values exceeding the absolute limit.
+
+### `setMaxPendingExtrinsicsNumber(value: u32)`
+
+- **interface**: `api.tx.mevShield.setMaxPendingExtrinsicsNumber`
+- **summary**: Set the maximum number of pending extrinsics allowed in the queue.
+
+### `setOnInitializeWeight(value: u64)`
+
+- **interface**: `api.tx.mevShield.setOnInitializeWeight`
+- **summary**: Set the maximum weight allowed for on_initialize processing. Rejects values exceeding the absolute limit (half of total block weight).
+
+### `setStoredExtrinsicLifetime(value: u32)`
+
+- **interface**: `api.tx.mevShield.setStoredExtrinsicLifetime`
+- **summary**: Set the extrinsic lifetime (max blocks between submission and execution).
+
+### `storeEncrypted(encrypted_call: BoundedVec<u8, MaxEncryptedCallSize>)`
+
+- **interface**: `api.tx.mevShield.storeEncrypted`
+- **summary**: Store an encrypted extrinsic for later execution in on_initialize.
 
 ### `submitEncrypted(ciphertext: BoundedVec<u8, ConstU32<8192>>)`
 
@@ -2173,6 +2208,13 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
     - `end_block` (Option\<BlockNumberFor\<T>>):
     The block at which the lease will end. If not defined, the lease is perpetual.
 
+### `registerLimit(netuid: NetUid, hotkey: AccountId, limit_price: u64)`
+
+- **interface**: `api.tx.subtensorModule.registerLimit`
+- **summary**: User register a new subnetwork via burning token, but only if the on-chain burn price for this block is \<= `limit_price`.
+
+    `limit_price` is expressed in the same TaoCurrency/u64 units as `Burn`.
+
 ### `registerNetwork(hotkey: AccountId)`
 
 - **interface**: `api.tx.subtensorModule.registerNetwork`
@@ -2426,6 +2468,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-13**. Conne
     - `ip` (u128) — The prometheus ip information as a u128 encoded integer.
     - `port` (u16) — The prometheus port information as a u16 encoded integer.
     - `ip_type` (u8) — The ip type v4 or v6.
+
+### `setAutoParentDelegationEnabled(hotkey: AccountId, enabled: bool)`
+
+- **interface**: `api.tx.subtensorModule.setAutoParentDelegationEnabled`
+- **summary**: Allows a root validator to toggle auto parent delegation for new subnets owner hotkey
 
 ### `setChildkeyTake(hotkey: AccountId, netuid: NetUid, take: u16)`
 
