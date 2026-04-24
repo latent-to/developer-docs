@@ -103,7 +103,6 @@ jobs:
 
       - name: Build PR body
         if: steps.diff.outputs.changed == 'true'
-        id: pr_body
         run: |
           STAT=$(git diff origin/main..HEAD -- "$DOCS_DIR" --stat | tail -6)
           ADDED=$(git diff origin/main..HEAD -- "$DOCS_DIR" | grep -c '^+### ' || true)
@@ -111,7 +110,6 @@ jobs:
           CHANGED_FILES=$(git diff origin/main..HEAD -- "$DOCS_DIR" --name-only | sed 's/^/- /')
 
           {
-            echo 'body<<PRBODYEOF'
             echo "## 🤖 Automated API reference update"
             echo ""
             echo "Generated from the live Subtensor runtime on **$(date -u '+%Y-%m-%d %H:%M UTC')**."
@@ -139,8 +137,7 @@ jobs:
             echo ""
             echo "---"
             echo "_Opened automatically by the \`update-api-docs\` workflow. Merge once the diff looks correct._"
-            echo 'PRBODYEOF'
-          } >> "$GITHUB_OUTPUT"
+          } > /tmp/pr-body.md
 
       - name: Open Pull Request
         if: steps.diff.outputs.changed == 'true'
@@ -151,5 +148,5 @@ jobs:
             --title "docs: API reference update $(date -u +%Y-%m-%d)" \
             --head  "$BRANCH" \
             --base  main \
-            --body  "${{ steps.pr_body.outputs.body }}" \
+            --body-file /tmp/pr-body.md \
             --reviewer chideraao
