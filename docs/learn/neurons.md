@@ -8,11 +8,12 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Understanding Neurons
 
-The design of Bittensor subnets is inspired by the structure of a simple neural network, with each **neuron** being either a miner or validator. Each neuron is identified by a unique UID within its subnet and associated with a hotkey-coldkey pair for authentication and operations.
+A neuron is the generalized name for a participant in a subnet, which can be either a miner or a validator. Each neuron is identified by a unique UID within its subnet and associated with a hotkey-coldkey pair for authentication and operations.
 
-:::tip Neuron requirements
-See [minimum compute requirements](https://github.com/opentensor/bittensor-subnet-template/blob/main/min_compute.yml) for compute, memory, bandwidth and storage requirements for neurons.
-:::
+See:
+- [Validating in Bittensor](../validators/)
+- [Mining in Bittensor](../miners/)
+
 
 ## Neuron Architecture Overview
 
@@ -26,7 +27,7 @@ Additionally, the Metagraph serves as a global directory for managing subnet nod
 
 ## Complete Neuron Lifecycle
 
-1. **Registration** → Neuron registers via PoW or burned registration
+1. **Registration** → Registrant pays the current burn cost to obtain a UID (`register` and `burned_register` share one burn-based flow for non-root subnets; `root_register` is separate)
 2. **UID Assignment** → Neuron receives unique UID within subnet
 3. **Immunity Period** → Neuron is protected from pruning for configurable blocks
 4. **Performance Building** → Neuron accumulates rank, trust, consensus, and incentive
@@ -41,7 +42,9 @@ Additionally, the Metagraph serves as a global directory for managing subnet nod
 
 ### Registration and UID Assignment
 
-Neurons register with subnets through proof-of-work or burned registration methods, receiving a unique UID (User ID) within their subnet. The registration process follows an append-or-replace algorithm where new neurons either expand the subnet or replace existing low-performing neurons.
+Neurons register with subnets by paying the current burn cost for the subnet, receiving a unique UID (User ID). Non-root registration is always open: the burn price **decays** over time (set by the owner-configurable `BurnHalfLife` hyperparameter) and **increases** each time a registration succeeds, clamped between the `MinBurn` and `MaxBurn` hyperparameters. To guard against price movement, callers can use `register_limit(netuid, hotkey, limit_price)`, in which case registration fails if the actual burn would exceed `limit_price`.
+
+Note that **Root** (`root_register`) follows separate rules. The registration process follows an append-or-replace algorithm where new neurons either expand the subnet or replace existing low-performing neurons.
 
 See:
 
@@ -76,7 +79,7 @@ Only permitted neurons can set non-self weights, though all neurons can set self
 <!-- TODO: Add detailed implementation sections from glossary:
 - Neuron Data Structures (NeuronInfo vs NeuronInfoLite)
 - Blockchain Storage Implementation (Core Storage Maps, Performance Metrics Storage)
-- Registration Process (PoW, Burned, Root registration methods)
+- Registration Process (burn-based non-root registration, `register_limit`, Root registration)
 - Lifecycle Management (Append vs Replace, Pruning Algorithm, Immunity Period)
 - API and Retrieval (Python SDK methods, Blockchain RPC methods)
 - State Management (Active Status, Validator Permits, Performance Metrics)

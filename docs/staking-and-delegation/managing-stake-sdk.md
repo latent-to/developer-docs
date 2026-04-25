@@ -106,10 +106,14 @@ for rank, (uid, hotkey, stake) in enumerate(top_validators, start=1):
 
 ## Register on a subnet
 
-You can register your hotkey on a subnet using the `burned_register` method. This is necessary for staking, mining or validating.
+Register your hotkey on a subnet using `register()`. This is necessary for staking, mining, or validating.
+
+`register()` automatically calculates a `limit_price` of `recycle * 1.005` (0.5% tolerance) to protect against price movement between when you read the burn cost and when your transaction lands. Pass an explicit `limit_price` to set your own cap, or use `register_limit()` if you always want to specify one.
 
 ```python
 import bittensor as bt
+from bittensor.utils.balance import Balance
+
 logging = bt.logging
 logging.set_info()
 sub = bt.Subtensor(network="test")
@@ -118,7 +122,12 @@ wallet = bt.Wallet(
     hotkey="ExampleHotkey",
 )
 wallet.unlock_coldkey()
-reg = sub.burned_register(wallet=wallet, netuid=3)
+
+# Auto price protection (0.5% tolerance)
+reg = sub.register(wallet=wallet, netuid=3)
+
+# Explicit cap — fails if burn exceeds 2.5 TAO
+reg = sub.register(wallet=wallet, netuid=3, limit_price=Balance.from_tao(2.5))
 ```
 
 ## View your registered subnets

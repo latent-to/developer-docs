@@ -74,6 +74,10 @@ To register:
 btcli subnet register --netuid <desired netuid> --wallet.name  <wallet name> --hotkey <your hotkey>
 ```
 
+:::tip Check the current registration cost
+Run `btcli subnets show --netuid <netuid>` to see the current **Registration cost (recycled)** before registering. The burn price rises with each registration and decays over time.
+:::
+
 ## Validator deregistration
 
 Validators, like miners, can be deregistered if their emissions are low. However, validator deregistration involves additional steps compared to miner deregistration. This is because an active validator must be among the top 64 nodes in the subnet and, therefore, cannot be instantly "pruned" by a newly registered node.
