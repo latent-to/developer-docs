@@ -12,6 +12,10 @@ Related:
 - [Subtensor Custom Errors](./custom.md)
 - [Substrate Errors](https://polkadot.js.org/docs/substrate/errors/) - Errors from the underlying Substrate framework
 
+:::info
+The following outline of subtensor errors is provided for high-level reference and is not exhaustive. For a complete specification of all available errors, see the [Subtensor API reference](../subtensor-api/errors.md).
+:::
+
 ## Network and Subnet Errors
 
 ### `SubNetworkDoesNotExist`
