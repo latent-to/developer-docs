@@ -251,17 +251,9 @@ Build the staking call and announce its hash on-chain. Record the hash for monit
 <Tabs groupId="tool">
 <TabItem value="btcli" label="btcli">
 
-```bash
-btcli stake add \
-  --wallet.name PROXY_WALLET \
-  --proxy REAL_COLDKEY_SS58 \
-  --netuid 14 \
-  --hotkey VALIDATOR_HOTKEY \
-  --amount 100.0 \
-  --announce-only
-```
-
-Note the call hash from the output.
+:::note Coming in btcli v10
+`btcli stake add --announce-only` is not yet available. Use the SDK tab to announce staking calls with a time-delay proxy.
+:::
 
 </TabItem>
 <TabItem value="sdk" label="Python SDK">
@@ -1065,17 +1057,9 @@ Build the unstaking call and announce its hash on-chain. Save the exact paramete
 <Tabs groupId="tool">
 <TabItem value="btcli" label="btcli">
 
-```bash
-btcli stake remove \
-  --wallet.name PROXY_WALLET \
-  --proxy REAL_COLDKEY_SS58 \
-  --netuid 14 \
-  --hotkey VALIDATOR_HOTKEY \
-  --amount 25.0 \
-  --announce-only
-```
-
-Note the call hash from the output.
+:::note Coming in btcli v10
+`btcli stake remove --announce-only` is not yet available. Use the SDK tab to announce unstaking calls with a time-delay proxy.
+:::
 
 </TabItem>
 <TabItem value="sdk" label="Python SDK">
@@ -1389,19 +1373,9 @@ Build the move-stake call and announce its hash on-chain. Save the exact paramet
 <Tabs groupId="tool">
 <TabItem value="btcli" label="btcli">
 
-```bash
-btcli stake move \
-  --wallet.name PROXY_WALLET \
-  --proxy REAL_COLDKEY_SS58 \
-  --origin-netuid 5 \
-  --origin-hotkey ORIGIN_VALIDATOR_HOTKEY \
-  --dest-netuid 18 \
-  --dest-hotkey DEST_VALIDATOR_HOTKEY \
-  --amount 50.0 \
-  --announce-only
-```
-
-Note the call hash from the output.
+:::note Coming in btcli v10
+`btcli stake move --announce-only` is not yet available. Use the SDK tab to announce move-stake calls with a time-delay proxy.
+:::
 
 </TabItem>
 <TabItem value="sdk" label="Python SDK">
@@ -1603,14 +1577,9 @@ Build the transfer-stake call and announce its hash on-chain. Save the exact par
 <Tabs groupId="tool">
 <TabItem value="btcli" label="btcli">
 
-```bash
-btcli stake transfer \
-  --wallet.name PROXY_WALLET \
-  --proxy REAL_COLDKEY_SS58 \
-  --announce-only
-```
-
-btcli will interactively prompt for the destination coldkey, hotkey, subnet, and amount. Note the call hash from the output.
+:::note Coming in btcli v10
+`btcli stake transfer --announce-only` is not yet available. Use the SDK tab to announce stake transfer calls with a time-delay proxy.
+:::
 
 </TabItem>
 <TabItem value="sdk" label="Python SDK">
