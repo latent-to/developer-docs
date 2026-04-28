@@ -610,9 +610,9 @@ The process of recreating a lost or deleted coldkey or hotkey using the associat
 
 ### Register
 
-The process of registering keys with a subnet and purchasing a UID slot.
+The process of registering keys with a subnet and purchasing a UID slot by paying the **dynamic neuron registration burn** (TAO). The burn price is bounded by **`MinBurn`** and **`MaxBurn`**, decays over time (governed by `BurnHalfLife`), and increases on each registration (scaled by `BurnIncreaseMult`). The extrinsics `register` and `burned_register` share the same non-root burn path. **Root** registration is separate.
 
-**See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/), [Working with Subnets](../subnets/working-with-subnets.md)
+**See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/), [Working with Subnets](../subnets/working-with-subnets.md), [Understanding Neurons](../learn/neurons.md)
 
 ### Relative stake weight
 

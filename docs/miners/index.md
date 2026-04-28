@@ -4,7 +4,7 @@ title: "Mining in Bittensor"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 # Mining in Bittensor
 
@@ -30,7 +30,9 @@ To participate as a miner, you must first register a hotkey with the subnet in o
 You **do not** have to create a subnet to mine on the Bittensor network. Most miners work on already established subnets.
 :::
 
-Registration has a cost in TAO, which fluctuates dynamically based on the time since the last registration. When you secure a UID slot in a subnet on the main chain, this TAO is sunk cost and cannot be recovered.
+Registration has a cost in TAO that fluctuates dynamically: the price **decays** over time and **increases** each time a registration succeeds. The subnet owner controls the decay rate (`BurnHalfLife`) and the increase factor (`BurnIncreaseMult`), with the floor and ceiling set by the `MinBurn` and `MaxBurn` hyperparameters, respectively. When you secure a UID slot in a subnet on the main chain, this TAO is sunk cost and cannot be recovered.
+
+By default, [`btcli subnets register`](../btcli/btcli.md#btcli-subnets-register) runs in **safe mode**: it prompts for a price tolerance and aborts if the burn exceeds it. Pass `--unsafe` to skip the guard.
 
 A subnet can have a maximum of 64 subnet validator UIDs and 192 subnet miner UIDs (256 total) in subnets other than Subnet 1.
 
@@ -40,6 +42,10 @@ Upon registration, your hotkey, which is part of your wallet, becomes the holder
 When you delegate your TAO to a subnet validator, you attach your delegated TAO to that validator’s hotkey. See [Delegation](../staking-and-delegation/delegation.md).
 
 A hotkey can hold multiple UIDs across **separate** subnets. However, within one subnet, each UID must have a unique hotkey.
+:::
+
+:::tip Check the current registration cost
+Run `btcli subnets show --netuid <netuid>` to see the current **Registration cost (recycled)** before registering. The burn price rises with each registration and decays over time.
 :::
 
 To register your keys with a subnet, run the following command on your terminal, replacing `<your_preferred_netuid>`, `<my_coldkey>`, `<my_hotkey>`.

@@ -204,6 +204,7 @@ for rank, (uid, hotkey, stake) in enumerate(top_validators, start=1):
 </TabItem>
 </Tabs>
 
+<<<<<<< HEAD
 
 
 ## Stake without a proxy (insecure)
@@ -225,6 +226,18 @@ btcli stake add --wallet.name my_coldkey --netuid 14 --amount 1.0
 ```python
 import bittensor as bt
 
+=======
+Register your hotkey on a subnet using `register()`. This is necessary for staking, mining, or validating.
+
+`register()` automatically calculates a `limit_price` of `recycle * 1.005` (0.5% tolerance) to protect against price movement between when you read the burn cost and when your transaction lands. Pass an explicit `limit_price` to set your own cap, or use `register_limit()` if you always want to specify one.
+
+```python
+import bittensor as bt
+from bittensor.utils.balance import Balance
+
+logging = bt.logging
+logging.set_info()
+>>>>>>> main
 sub = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="my_coldkey")
 
@@ -234,7 +247,17 @@ response = sub.add_stake(
     netuid=14,
     amount=bt.Balance.from_tao(1.0),
 )
+<<<<<<< HEAD
 print(response)
+=======
+wallet.unlock_coldkey()
+
+# Auto price protection (0.5% tolerance)
+reg = sub.register(wallet=wallet, netuid=3)
+
+# Explicit cap — fails if burn exceeds 2.5 TAO
+reg = sub.register(wallet=wallet, netuid=3, limit_price=Balance.from_tao(2.5))
+>>>>>>> main
 ```
 
 </TabItem>

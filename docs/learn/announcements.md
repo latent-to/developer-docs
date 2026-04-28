@@ -6,6 +6,18 @@ title: "Announcements and Developments"
 
 This page tracks recent and upcoming changes to the Bittensor protocol and other major events in the Bittensor ecosystem.
 
+**April, 2026**
+
+## Neuron registration rework
+
+**Status**: Merged in Subtensor ([PR #2382](https://github.com/opentensor/subtensor/pull/2382)); rolling out with network upgrades. Tracking issue: [#2351](https://github.com/opentensor/subtensor/issues/2351).
+
+- **What**: Non-root neuron (UID) registration moves to a **continuous TAO-burn** model, similar in spirit to subnet registration pricing. Legacy **adjustment-interval** mechanics, separate **burned** vs **PoW** admission paths, and **neuron registration rate limits** (including per-interval caps) are removed on upgraded runtimes.
+- **Extrinsics**: `register` and `burned_register` remain; both use the **same** burn-based flow under the hood (legacy `register` fields are compatibility-only). **`root_register` / root subnet** behavior is **unchanged**.
+- **New owner-tunable pricing hyperparameters**: `BurnHalfLife` (blocks over which the registration cost decays) and `BurnIncreaseMult` (multiplier applied to the current price when a registration succeeds). **`MinBurn`** and **`MaxBurn`** still cap the dynamic price.
+- **Optional slippage guard**: `register_limit` (and the EVM neuron precompile `registerLimit`) lets callers specify a maximum acceptable burn; the call fails if the price would exceed it.
+- **Docs**: See [Understanding Neurons](neurons.md), [Subnet hyperparameters](../subnets/subnet-hyperparameters.md), [Rate limits](chain-rate-limits.md), and [Neuron precompile](../evm-tutorials/neuron-precompile.md). Confirm exact parameter names, types, and defaults on your target network with `btcli subnet hyperparameters` and chain metadata.
+
 **February, 2026**
 
 ## Subnet stake burn
