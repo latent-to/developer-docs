@@ -27,7 +27,7 @@ Additionally, the Metagraph serves as a global directory for managing subnet nod
 
 ## Complete Neuron Lifecycle
 
-1. **Registration** → Registrant pays the current burn cost to obtain a UID (`register` and `burned_register` share one burn-based flow for non-root subnets; `root_register` is separate)
+1. **Registration** → Registrant pays the current burn cost to obtain a UID (`register` is recommended—it wraps `register_limit` with automatic 0.5% price tolerance; `burned_register` is the direct no-guard version; `root_register` is separate for netuid 0)
 2. **UID Assignment** → Neuron receives unique UID within subnet
 3. **Immunity Period** → Neuron is protected from pruning for configurable blocks
 4. **Performance Building** → Neuron accumulates rank, trust, consensus, and incentive
