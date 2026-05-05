@@ -271,7 +271,7 @@ BTCLI does not currently provide a command to query on-chain proxy state directl
 real_account = bt.Wallet(name="WALLET_NAME")
 
 proxies, deposit = subtensor.get_proxies_for_real_account(
-   real_account_ss58=real_account.coldkey.ss58_address
+   real_account_ss58=real_account.coldkeypub.ss58_address
  )
 
 print(f"Proxies: {proxies}")

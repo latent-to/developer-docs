@@ -107,7 +107,7 @@ proxy_wallet = bittensor.Wallet(name="PracticeProxy")
 # Create the staking proxy relationship
 response = subtensor.add_proxy(
     wallet=coldkey_wallet,                      # Signs this transaction (authorizes the proxy)
-    delegate_ss58=proxy_wallet.coldkey.ss58_address,  # The proxy wallet address
+    delegate_ss58=proxy_wallet.coldkeypub.ss58_address,  # The proxy wallet address
     proxy_type=ProxyType.Staking,               # Grant only staking permissions
     delay=0,                                    # No delay (immediate execution)
 )
@@ -185,7 +185,7 @@ proxy = bittensor.Wallet(name='PracticeProxy')
 # This covers transaction fees for proxy operations
 response = subtensor.transfer(
     wallet=coldkey_wallet,                            # Sending from coldkey
-    destination_ss58=proxy.coldkey.ss58_address,      # Sending to proxy wallet
+    destination_ss58=proxy.coldkeypub.ss58_address,      # Sending to proxy wallet
     amount=bittensor.Balance.from_tao(1),             # Transfer 1 TAO for fees
     wait_for_inclusion=True,
     wait_for_finalization=False,
