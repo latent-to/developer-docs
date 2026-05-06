@@ -5,6 +5,8 @@ title: "Mining in Bittensor"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { SdkVersion } from "../sdk/\_sdk-version.mdx";
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Mining in Bittensor
 
@@ -48,18 +50,41 @@ A hotkey can hold multiple UIDs across **separate** subnets. However, within one
 Run `btcli subnets show --netuid <netuid>` to see the current **Registration cost (recycled)** before registering. The burn price rises with each registration and decays over time.
 :::
 
-To register your keys with a subnet, run the following command on your terminal, replacing `<your_preferred_netuid>`, `<my_coldkey>`, `<my_hotkey>`.
-`<your_preferred_netuid>` is the `netuid` of your preferred subnet.
+<Tabs groupId="registration">
+<TabItem value="btcli" label="BTCLI">
+
+Run the following command, replacing `<your_preferred_netuid>`, `<my_coldkey>`, `<my_hotkey>` with your values. `<your_preferred_netuid>` is the `netuid` of your preferred subnet.
 
 ```bash
 btcli subnet register --netuid <your_preferred_netuid>  --wallet.name  <my_coldkey> --wallet.hotkey <my_hotkey>
 ```
 
-For example, to register your keys with subnet 1—netuid of 1:
+For example, to register with subnet 1:
 
 ```bash
 btcli subnet register --netuid 1 --wallet.name test-coldkey --wallet.hotkey test-hotkey
 ```
+
+</TabItem>
+<TabItem value="sdk" label="Bittensor SDK">
+
+<SdkVersion />
+
+```python
+import bittensor as bt
+
+sub = bt.Subtensor(network="finney")
+wallet = bt.Wallet(name="<my_coldkey>", hotkey="<my_hotkey>")
+wallet.unlock_coldkey()
+
+response = sub.register(wallet=wallet, netuid=<your_preferred_netuid>)
+print(response)
+```
+
+`register` auto-sets a 0.5% price tolerance against the current burn. To set an explicit maximum burn price, use `sub.register_limit(wallet=wallet, netuid=<netuid>, limit_price=<max_price>)` instead.
+
+</TabItem>
+</Tabs>
 
 ## Miner deregistration
 
