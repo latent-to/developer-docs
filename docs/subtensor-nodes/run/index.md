@@ -24,3 +24,8 @@ There are two supported ways to run a Subtensor node:
 - **Run with Source Code**: Builds and runs the node directly from the Subtensor repository. Use this approach if you need full control over the build, plan to modify or inspect the runtime, or are debugging or contributing to Subtensor.
 
 Both approaches result in the same node behavior. The difference is in setup, control, and operational complexity.
+
+## Next steps
+
+- [From source code](./using-source.md)
+- [Using Docker](./using-source.md)

@@ -129,3 +129,30 @@ To run an archive node connected to the testchain, execute the below command:
 
 </TabItem>
 </Tabs>
+
+## Additional flags
+
+Running a Subtensor node from the source code offers various levels of customization to the user. This includes the ability to modify the runtime by including additional flags to the run script.
+
+Some examples of these flags are:
+
+| Flag                                     | Description                                                                                                            |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `--validator`                            | Enable validator mode. The node will be started with the authority role and actively participate in any consensus task |
+| `--ws-external`                          | Expose WebSocket server to external connections.                                                                       |
+| `--ws-port <port>`                       | WebSocket port (default: `9944`).                                                                                      |
+| `--rpc-rate-limit`                       | RPC rate limiting (calls/minute) for each connection. This is disabled by default.                                     |
+| `--rpc-max-subscriptions-per-connection` | Set the maximum concurrent subscriptions per connection [default: 1024]                                                |
+| `--rpc-max-connections`                  | Maximum number of RPC server connections [default: 100]                                                                |
+| `--log <target>=<level>`                 | Logging configuration.                                                                                                 |
+
+:::info all supported flags
+You can view all supported flags when running a subtensor by running the following command in the `subtensor` directory:
+
+```bash
+./target/production/node-subtensor --help
+```
+
+This command requires a local Subtensor build. Ensure the Subtensor node has been compiled before running it.
+
+:::

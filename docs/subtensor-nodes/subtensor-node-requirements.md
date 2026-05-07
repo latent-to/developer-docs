@@ -28,7 +28,7 @@ Requirements:
 ## Storage requirements
 
 - **Lite node**: 128 GB is sufficient.
-- **Archive node**: Minimum 2 TB for the current size of the chain, as of block # 5029000 on 28 Feb 2025.
+- **Archive node**: Minimum ~3.5 TB for the current size of the chain, as of block # 7929000 on 28 March 2026.
 
 ## Network requirements and port settings
 
