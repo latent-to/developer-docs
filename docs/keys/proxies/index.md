@@ -10,15 +10,15 @@ Operational details are covered in [Working with Proxies](../../keys/proxies/wor
 
 ## Introduction: What is a proxy?
 
-Proxies allow one wallet to perform sign blockchains transactions on behalf of another. Used correctly, this allows you to add a strong layer of additional protection for your most important wallets and the valuable assets they control, such as large TAO or alpha holdings, or subnet ownership.
+Proxies allow one wallet to sign blockchain transactions on behalf of another. Used correctly, this allows you to add a strong layer of additional protection for your most important wallets and the valuable assets they control, such as large TAO or alpha holdings, or subnet ownership.
 
-The private key and seed phrase for a highly valuable wallet's coldkey should be kept offline in cold storage, and, and only used to sign transactions via a secure connection to a hardware wallet. 
+The private key and seed phrase for a highly valuable wallet's coldkey should be kept offline in cold storage, and only used to sign transactions via a secure connection to a hardware wallet.
 
 See [Workstation Security](../../keys/coldkey-hotkey-security.md).
 
 By allowing one coldkey to serve as a _proxy_ or stand-in for another, the "real account" or "safe wallet", we add an additional layer of security for the safe wallet by leaving it in cold storage and using the proxy instead.
 
-Proxy relationships are useful both for one person managing their own coldkey security, and also for allowing one person to on behalf of another person or an organization.
+Proxy relationships are useful both for one person managing their own coldkey security, and also for allowing one person to act on behalf of another person or an organization.
 
 
 ### Common use cases

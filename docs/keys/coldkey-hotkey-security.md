@@ -100,7 +100,7 @@ If you suspect the primary coldkey has been compromised, you can swap it out usi
 
 See [Rotate/Swap your Coldkey](./coldkey-swap).
 
-If a proxy coldkey is comporomised it may be easier, and is certainly quicker, to revoke its proxy status and purge any references to it from your system.
+If a proxy coldkey is compromised it may be easier, and is certainly quicker, to revoke its proxy status and purge any references to it from your system.
 
 
 ## Using BTCLI and the SDK with proxy coldkeys
@@ -108,7 +108,7 @@ If a proxy coldkey is comporomised it may be easier, and is certainly quicker, t
 `btcli` and the Bittensor SDK run on internet-connected machines. Any coldkey loaded onto such a machine is exposed to network risk regardless of how the machine is configured.
 
 
-Proxies can be set to act with a requried delay, allowing a window to reject unauthorized transactions. A properly maintained, adequately monitored system of scoped, delayed proxies offers the best way to securely conduct operations that require a coldkey for advanced functionality requiring the SDK or `btcli`, such as managing subnets or hotkeys.
+Proxies can be set to act with a required delay, allowing a window to reject unauthorized transactions. A properly maintained, adequately monitored system of scoped, delayed proxies is the safest way to perform `btcli` and SDK operations that require a coldkey, such as managing subnets or hotkeys.
 
 ### Recommended proxy configuration
 
@@ -124,12 +124,11 @@ Configure proxies with:
 - **Non-zero delay**: a delayed proxy must announce its intent on-chain and wait a specified number of blocks before the call executes. During this window, you can reject and veto the transaction using a `NonTransfer` proxy.
 
 
-:::warning Transfer proxy type
-A proxy with `Transfer` permissions and zero delay provides little protection over direct coldkey access. It can drain your entire TAO balance in a single transaction. If transfer capability is needed, prefer `SmallTransfer`.
-:::
+:::danger Zero-delay proxies provide no veto window
 
-:::danger Zero-delay proxies
-A proxy with `delay: 0` executes immediately with no veto window. Always set a non-zero delay for proxies that control financial operations.
+A proxy with `delay: 0` executes immediately — there is no announcement period and no window to reject unauthorized transactions. Always set a non-zero delay for proxies that control financial operations.
+
+The `Transfer` proxy type at zero delay is particularly dangerous: it can drain your entire TAO balance in a single transaction with no opportunity to intervene. If transfer capability is needed at all, prefer `SmallTransfer`.
 :::
 
 
@@ -164,7 +163,7 @@ A delayed proxy must broadcast its intent on-chain before executing, which allow
 See [Monitor and Reject Announcements](./proxies/working-with-proxies#monitor-and-reject-proxy-announcements) for how to query pending announcements, run a monitoring script, and reject.
 
 :::warning Do not mine with primary coldkeys
-Miners need coldkeys for currency management and hotkeys for serving requests. The no coldkey should be present in an environment running mining code.
+Miners need coldkeys for currency management and hotkeys for serving requests. No coldkey should be present in an environment running mining code.
 :::
 
 ### Team and multi-signature setups
