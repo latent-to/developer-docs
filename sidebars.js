@@ -113,6 +113,7 @@ const sidebars = {
         "staking-and-delegation/stakers-btcli-guide",
         "staking-and-delegation/managing-stake-btcli",
         "staking-and-delegation/managing-stake-sdk",
+        "staking-and-delegation/conviction-staking",
         "keys/proxies/staking-with-proxy",
         {
           type: "category",

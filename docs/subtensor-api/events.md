@@ -957,6 +957,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Conne
 - **interface**: `api.events.subtensorModule.KappaSet`
 - **summary**: Kappa is set for a subnet.
 
+### `LockMoved(coldkey: AccountId, origin_hotkey: AccountId, destination_hotkey: AccountId, netuid: NetUid)`
+
+- **interface**: `api.events.subtensorModule.LockMoved`
+- **summary**: A conviction lock has been moved from one hotkey to another. Emitted by `move_lock`. Conviction is reset to zero when the hotkeys have different owners; preserved when the same coldkey owns both.
+
 ### `MaxAllowedUidsSet(NetUid, u16)`
 
 - **interface**: `api.events.subtensorModule.MaxAllowedUidsSet`
@@ -1145,6 +1150,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Conne
 - **interface**: `api.events.subtensorModule.StakeAdded`
 - **summary**: stake has been transferred from the a coldkey account onto the hotkey staking account.
 
+### `StakeLocked(coldkey: AccountId, hotkey: AccountId, netuid: NetUid, amount: AlphaBalance)`
+
+- **interface**: `api.events.subtensorModule.StakeLocked`
+- **summary**: Alpha stake has been locked to a hotkey on a subnet. Emitted by `lock_stake` and by the automatic owner lock on each epoch's distribution.
+
 ### `StakeMoved(AccountId, AccountId, NetUid, AccountId, NetUid, TaoBalance)`
 
 - **interface**: `api.events.subtensorModule.StakeMoved`
@@ -1177,6 +1187,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Conne
     **Parameters:**
 
     (origin_coldkey, destination_coldkey, hotkey, origin_netuid, destination_netuid, amount)
+
+### `StakeUnlocked(coldkey: AccountId, hotkey: AccountId, netuid: NetUid, amount: AlphaBalance)`
+
+- **interface**: `api.events.subtensorModule.StakeUnlocked`
+- **summary**: Alpha stake has been moved from the locked state into the unlock decay period. Emitted by `unlock_stake`. The stake is not immediately available — it becomes gradually withdrawable over ≈30 days.
 
 ### `StartCallDelaySet(u64)`
 

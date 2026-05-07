@@ -2118,6 +2118,26 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Conne
     - `NonAssociatedColdKey` — The hotkey we are delegating is not owned by the calling coldkey.
     - `DelegateTakeTooHigh` — The delegate is setting a take which is not greater than the previous.
 
+### `lockStake(hotkey: AccountId, netuid: NetUid, amount: AlphaBalance)`
+
+- **interface**: `api.tx.subtensorModule.lockStake`
+- **summary**: Locks `amount` alpha from the signing coldkey's stake on `netuid` to `hotkey`, building conviction over time. If no lock exists for this coldkey on `netuid`, a new lock is created with conviction 0. If a lock already exists, `amount` is added to the locked mass (the hotkey must match). The lock is indefinite — it persists until `unlock_stake` is called. See [Conviction Staking](../staking-and-delegation/conviction-staking.md) for full mechanics.
+
+    **Errors:**
+
+    - `InsufficientStakeForLock` — Available (unlocked) alpha is less than `amount`.
+    - `LockHotkeyMismatch` — A lock already exists for a different hotkey on this subnet.
+    - `AmountTooLow` — Amount is zero.
+
+### `moveLock(destination_hotkey: AccountId, netuid: NetUid)`
+
+- **interface**: `api.tx.subtensorModule.moveLock`
+- **summary**: Moves the signing coldkey's existing lock on `netuid` from its current hotkey to `destination_hotkey`. The locked and unlocking mass are preserved. Conviction is reset to zero if the old and destination hotkeys are owned by different coldkeys; conviction is preserved if both are owned by the same coldkey. See [Conviction Staking](../staking-and-delegation/conviction-staking.md) for full mechanics.
+
+    **Errors:**
+
+    - `NoExistingLock` — No lock exists for this coldkey on the subnet.
+
 ### `moveStake(origin_hotkey: AccountId, destination_hotkey: AccountId, origin_netuid: NetUid, destination_netuid: NetUid, alpha_amount: AlphaBalance)`
 
 - **interface**: `api.tx.subtensorModule.moveStake`
@@ -2959,6 +2979,15 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Conne
     **Note:**
 
     Will charge based on the weight even if the hotkey is already associated with a coldkey.
+
+### `unlockStake(netuid: NetUid, amount: AlphaBalance)`
+
+- **interface**: `api.tx.subtensorModule.unlockStake`
+- **summary**: Begins unlocking `amount` alpha from the signing coldkey's existing lock on `netuid`. The locked mass is reduced by `amount` immediately and the same amount enters an exponential unlock period (time constant ≈ 30 days). Stake in the unlock period cannot be unstaked or re-locked until it has decayed sufficiently. See [Conviction Staking](../staking-and-delegation/conviction-staking.md) for the decay formula.
+
+    **Errors:**
+
+    - `UnlockAmountTooHigh` — Amount exceeds the current locked mass.
 
 ### `unstakeAll(hotkey: AccountId)`
 

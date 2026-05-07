@@ -524,3 +524,12 @@ print(response)
 A coldkey swap announcement can only be cleared after the [ColdkeySwapReannouncementDelay](https://github.com/opentensor/subtensor/blob/devnet-ready/runtime/src/lib.rs#:~:text=pub%20const%20InitialColdkeySwapReannouncementDelay) period has elapsed. By default, this is 7,200 blocks (~1 day) after the initial announcement delay expires. The announcement must also not be under dispute to be cleared.
 
 :::
+
+## Conviction locks and coldkey swap
+
+If the coldkey being swapped has [conviction locks](../staking-and-delegation/conviction-staking.md) on any subnet, the swap behavior depends on the destination coldkey's lock state:
+
+- **Destination coldkey has active locked mass on any subnet**: the swap is **rejected**. The destination coldkey must have no active locks before the swap can proceed.
+- **Destination coldkey has only expired or zero-mass locks**: the swap proceeds. The source coldkey's locks are transferred to the destination coldkey and consolidated with any existing (zero-mass) lock records there.
+
+Locked mass and conviction are preserved through the swap — the lock follows the coldkey identity to the new key pair.
