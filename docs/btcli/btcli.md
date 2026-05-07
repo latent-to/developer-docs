@@ -429,7 +429,6 @@ alias: associate_hotkey
 | `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT | Hotkey name or SS58 address of the hotkey.                                                                                            |
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT | The subtensor network to connect to. Default: finney.                                                                                 |
 | `--proxy`                                                                   | TEXT | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |      | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--quiet`                                                                   |      | Display only critical information on the console.                                                                                     |
 | `--verbose`                                                                 |      | Enable verbose output.                                                                                                                |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`         |      | Enable or disable interactive prompts.                                                                                                |
@@ -481,7 +480,6 @@ alias: swap_hotkey
 | `--no`                                                                      |         | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
 | `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                                                                            |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--help`                                                                    |         | Show this message and exit.                                                                                                           |
 
 ### `btcli wallet swap-coldkey`
@@ -1050,6 +1048,72 @@ btcli wallet transfer [OPTIONS]
 | `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                                                                            |
 | `--help`                                                                    |         | Show this message and exit.                                                                                                           |
 
+### `btcli wallet inspect`
+
+Displays the details of the user's wallet (coldkey) on the Bittensor network.
+
+The output is presented as two separate tables:
+
+Coldkey Overview:
+
+- Coldkey: The coldkey associated with the user's wallet.
+- Balance: The balance of the coldkey.
+- Delegate: The name of the delegate to which the coldkey has staked TAO.
+- Stake: The amount of stake delegated.
+- Emission: The daily emission earned from delegation.
+
+Hotkey Details:
+
+- Coldkey: The parent coldkey of the hotkey.
+- Netuid: The network unique identifier of the subnet where the hotkey is active.
+- Hotkey: The hotkey associated with the neuron on the network.
+- Stake: The amount of stake held by the hotkey.
+- Emission: The emission or rewards earned from staking.
+
+**USAGE**
+
+This command can be used to inspect a single wallet or all the wallets located at a specified path. It is useful for a comprehensive overview of a user's participation and performance in the Bittensor network.
+
+**EXAMPLE**
+
+```bash
+btcli wallet inspect
+```
+
+```bash
+btcli wallet inspect --all -n 1 -n 2 -n 3
+```
+
+```bash
+btcli wallet inspect --ss58-address 5FHneW46...
+```
+
+:::info
+The `inspect` command is for displaying information only and does not perform any transactions or state changes on the blockchain. It is intended to be used with Bittensor CLI and not as a standalone function in user code.
+:::
+
+**Usage:**
+
+```bash
+btcli wallet inspect [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type | Description                                                                                        |
+| --------------------------------------------------------------------------- | ---- | -------------------------------------------------------------------------------------------------- |
+| `--all`, `--all-wallets`, `-a`                                              |      | Inspect all the wallets at the specified wallet path.                                              |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT | Name of the wallet.                                                                                |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.               |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT | Deprecated option, preserved for backwards compatibility to not break workflows which utilise it.  |
+| `--ss58-address`, `--ss58`                                                  | TEXT | SS58 address of the coldkey to inspect. Allows inspecting any coldkey without a local wallet file. |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |      | The subtensor network to connect to. Default: finney.                                              |
+| `--netuids`, `--netuid`, `-n`                                               | TEXT | Set the netuid(s) to exclude. Separate multiple netuids with a comma, for example: `-n 0,1,2`.     |
+| `--quiet`                                                                   |      | Display only critical information on the console.                                                  |
+| `--verbose`                                                                 |      | Enable verbose output.                                                                             |
+| `--json-output`, `--json-out`                                               |      | Outputs the result of the command as JSON.                                                         |
+| `--help`                                                                    |      | Show this message and exit.                                                                        |
+
 ### `btcli wallet set-identity`
 
 Create or update the on-chain identity of a coldkey or a hotkey on the Bittensor network. Incurs a 1 TAO transaction fee.
@@ -1096,7 +1160,6 @@ alias: set_identity
 | `--additional`                                                              | TEXT | Additional details for the identity.                                                                                                  |
 | `--github`                                                                  | TEXT | The GitHub repository for the identity.                                                                                               |
 | `--proxy`                                                                   | TEXT | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |      | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`         |      | Enable or disable interactive prompts.                                                                                                |
 | `--no`                                                                      |      | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
 | `--quiet`                                                                   |      | Display only critical information on the console.                                                                                     |
@@ -1331,7 +1394,6 @@ btcli stake add [OPTIONS]
 | `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                                                   | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                      |
 | `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`                                 | TEXT    | Hotkey of the wallet                                                                                                                      |
 | `--proxy`                                                                                                 | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy.     |
-| `--announce-only`/`--no-announce-only`                                                                    |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                       |
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint`                               | TEXT    | The subtensor network to connect to. Default: finney.                                                                                     |
 | `--tolerance`, `--rate-tolerance`                                                                         | FLOAT   | Set the rate tolerance percentage for transactions (e.g. 0.1 for 0.1%)                                                                    |
 | `--safe-staking`, `--safe`/`--no-safe-staking`, `--unsafe`                                                |         | Enable or disable safe staking mode.                                                                                                      |
@@ -1387,7 +1449,6 @@ btcli stake set-auto [OPTIONS]
 | `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
 | `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--no`                                                                      |         | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
 | `--quiet`                                                                   |         | Display only critical information on the console.                                                                                     |
 | `--verbose`                                                                 |         | Enable verbose output.                                                                                                                |
@@ -1474,7 +1535,6 @@ btcli stake remove [OPTIONS]
 | `--exclude-hotkeys`, `-ex`                                                                                | TEXT    | Specifies hotkeys by name or ss58 address to not to unstake from (use this option only with `--all-hotkeys`) i.e. `--all-hotkeys -ex hk3,hk4` |
 | `--all-hotkeys`/ `--no-all-hotkeys`                                                                       |         | When set, this command unstakes from all hotkeys associated with the wallet. Do not use if specifying hotkeys in `--include-hotkeys`.         |
 | `--proxy`                                                                                                 | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy.         |
-| `--announce-only`/`--no-announce-only`                                                                    |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                           |
 | `--tolerance`, `--rate-tolerance`                                                                         | FLOAT   | Set the rate tolerance percentage for transactions (e.g. 0.1 for 0.1%)                                                                        |
 | `--safe-staking`, `--safe`/`--no-safe-staking`, `--unsafe`                                                |         | Enable or disable safe staking mode.                                                                                                          |
 | `--allow-partial-stake`, `--partial`, `--allow`/`--no-allow-partial-stake`, `--no-partial`, `--not-allow` |         | Allow or prevent partial stakes                                                                                                               |
@@ -1593,7 +1653,6 @@ btcli stake move [OPTIONS]
 | `--amount`                                                                                         | FLOAT   | The amount of TAO to stake                                                                                                            |
 | `--stake-all`, `--all`                                                                             |         | Stake all.                                                                                                                            |
 | `--proxy`                                                                                          | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                                             |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--mev-protection/--no-mev-protection`                                                             |         | Enable or disable MEV protection (default: enabled).                                                                                  |
 | `--period`, `-era`                                                                                 | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                         |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                                |         | Enable or disable interactive prompts.                                                                                                |
@@ -1674,7 +1733,6 @@ btcli stake transfer [OPTIONS]
 | `--amount`                                                                                 | FLOAT   | The amount of stake to transfer.                                                                                                      |
 | `--stake-all`, `--all`                                                                     |         | Stake all.                                                                                                                            |
 | `--proxy`                                                                                  | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                                     |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--mev-protection/--no-mev-protection`                                                     |         | Enable or disable MEV protection (default: enabled).                                                                                  |
 | `--period`, `-era`                                                                         | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                         |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                        |         | Enable or disable interactive prompts.                                                                                                |
@@ -1747,7 +1805,6 @@ btcli stake swap [OPTIONS]
 | `--amount`, `-a`                                                                                                                   | FLOAT   | The amount of stake to swap.                                                                                                          |
 | `--swap-all`, `--all`                                                                                                              |         | Swap all available stake.                                                                                                             |
 | `--proxy`                                                                                                                          | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                                                                             |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--period`, `-era`                                                                                                                 | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                         |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                                                                |         | Enable or disable interactive prompts.                                                                                                |
 | `--no`                                                                                                                             |         | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
@@ -1860,7 +1917,6 @@ If a claim type—`keep` or `swap`—is not provided, you'll be prompted to choo
 | `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT | Hotkey of the wallet                                                                                                                  |
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |      | The subtensor network to connect to. Default: finney.                                                                                 |
 | `--proxy`                                                                   | TEXT | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |      | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |      | Enable or disable interactive prompts.                                                                                                |
 | `--no`                                                                      |      | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
 | `--quiet`                                                                   |      | Display only critical information on the console.                                                                                     |
@@ -2011,7 +2067,6 @@ alias: children
 | `--all-netuids`/`--no-all-netuids`                                                         |         | Use all netuids.                                                                                                                      |
 | `--proportions`, `--prop`                                                                  | FLOAT   | Enter the stake weight proportions for the child hotkeys (sum should be less than or equal to 1)                                      |
 | `--proxy`                                                                                  | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                                     |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--wait-for-inclusion`/ `--no-wait-for-inclusion`                                          |         | If `True`, waits until the transaction is included in a block.                                                                        |
 | `--wait-for-finalization`/ `--no-wait-for-finalization`                                    |         | If `True`, waits until the transaction is finalized on the blockchain.                                                                |
 | `--quiet`                                                                                  |         | Display only critical information on the console.                                                                                     |
@@ -2051,7 +2106,6 @@ alias: children
 | `--netuid`                                                                                 | INTEGER | The netuid of the subnet in the network.                                                                                              |
 | `--all-netuids`, `--all`, `--allnetuids`                                                   |         | When this flag is used it sets child hotkeys on all the subnets.                                                                      |
 | `--proxy`                                                                                  | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                                     |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--wait-for-inclusion`/ `--no-wait-for-inclusion`                                          |         | If `True`, waits until the transaction is included in a block.                                                                        |
 | `--wait-for-finalization`/ `--no-wait-for-finalization`                                    |         | If `True`, waits until the transaction is finalized on the blockchain.                                                                |
 | `--quiet`                                                                                  |         | Display only critical information on the console.                                                                                     |
@@ -2101,10 +2155,10 @@ alias: children
 | `--all-netuids`, `--all`, `--allnetuids`                                                   |         | When this flag is used it sets child hotkeys on all the subnets.                                                                      |
 | `--take`                                                                                   | FLOAT   | Use to set the take value for your child hotkey. When not used, the command will fetch the current take value.                        |
 | `--proxy`                                                                                  | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                                     |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--wait-for-inclusion`/ `--no-wait-for-inclusion`                                          |         | If `True`, waits until the transaction is included in a block.                                                                        |
 | `--wait-for-finalization`/ `--no-wait-for-finalization`                                    |         | If `True`, waits until the transaction is finalized on the blockchain.                                                                |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                        |         | Enable or disable interactive prompts.                                                                                                |
+| `--no`                                                                                     |         | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
 | `--quiet`                                                                                  |         | Display only critical information on the console.                                                                                     |
 | `--verbose`                                                                                |         | Enable verbose output.                                                                                                                |
 | `--json-output`, `--json-out`                                                              |         | Outputs the result of the command as JSON.                                                                                            |
@@ -2172,11 +2226,11 @@ btcli sudo set [OPTIONS]
 | `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                                    | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
 | `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`, `--hotkey-ss58` | TEXT    | Hotkey name or SS58 address of the hotkey                                                                                             |
 | `--netuid`                                                                                 | INTEGER | The netuid of the subnet in the network.                                                                                              |
+| `--normalize`                                                                              |         | Whether to accept input as the normalized value.                                                                                      |
 | `--param`, `--parameter`                                                                   | TEXT    | The subnet hyperparameter to set                                                                                                      |
 | `--value`                                                                                  | TEXT    | Value to set the hyperparameter to.                                                                                                   |
 | `--proxy`                                                                                  | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
 | `--no`                                                                                     |         | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
-| `--announce-only`/`--no-announce-only`                                                     |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                        |         | Enable or disable interactive prompts.                                                                                                |
 | `--quiet`                                                                                  |         | Display only critical information on the console.                                                                                     |
 | `--verbose`                                                                                |         | Enable verbose output.                                                                                                                |
@@ -2301,7 +2355,6 @@ alias: senate_vote
 | `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`, `--hotkey-ss58` | TEXT | Hotkey name or SS58 address of the hotkey                                                                                             |
 | `--proposal`, `--proposal-hash`                                                            | TEXT | The hash of the proposal to vote on.                                                                                                  |
 | `--proxy`                                                                                  | TEXT | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                                     |      | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                        |      | Enable or disable interactive prompts.                                                                                                |
 | `--quiet`                                                                                  |      | Display only critical information on the console.                                                                                     |
 | `--verbose`                                                                                |      | Enable verbose output.                                                                                                                |
@@ -2338,7 +2391,6 @@ alias: set_take
 | `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                                    | TEXT  | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
 | `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`, `--hotkey-ss58` | TEXT  | Hotkey name or SS58 address of the hotkey                                                                                             |
 | `--proxy`                                                                                  | TEXT  | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                                     |       | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--take`                                                                                   | FLOAT | The new take value.                                                                                                                   |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`                        |       | Enable or disable interactive prompts.                                                                                                |
 | `--quiet`                                                                                  |       | Display only critical information on the console.                                                                                     |
@@ -2405,7 +2457,6 @@ btcli sudo trim [OPTIONS]
 | `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
 | `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--max`, `--max-uids`                                                       | INTEGER | The maximum number of allowed uids to which to trim                                                                                   |
 | `--quiet`                                                                   |         | Display only critical information on the console.                                                                                     |
 | `--verbose`                                                                 |         | Enable verbose output.                                                                                                                |
@@ -2634,7 +2685,6 @@ btcli subnet mechanisms set [OPTIONS]
 | `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
 | `--count`, `--mech-count`                                                   | INTEGER | Number of mechanisms to set for the subnet.                                                                                           |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--wait-for-inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                                                                        |
 | `--wait-for-finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.                                                                |
 | `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
@@ -2708,7 +2758,6 @@ alias: emissions-split
 | `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
 | `--split`                                                                   | TEXT    | Comma-separated relative weights for each mechanism (normalised automatically).                                                       |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--wait-for-inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                                                                        |
 | `--wait-for-finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.                                                                |
 | `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
@@ -2872,7 +2921,6 @@ btcli subnets create [OPTIONS]
 | `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT | Hotkey of the wallet                                                                                                                  |
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT | The subtensor network to connect to. Default: finney.                                                                                 |
 | `--proxy`                                                                   | TEXT | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |      | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--subnet-name`                                                             | TEXT | Name of the subnet.                                                                                                                   |
 | `--github-repo`, `repo`                                                     | TEXT | The GitHub repository URL.                                                                                                            |
 | `--subnet-contact`, `--contact`, `--email`                                  | TEXT | Contact email for subnet.                                                                                                             |
@@ -2923,11 +2971,10 @@ btcli subnets register [OPTIONS]
 | `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                                                                                 |
 | `-H`, `--hotkey`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                                                                                 |
 | `--netuid`,                                                                 | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                                                                                   |
-| `--safe-register/--unsafe-register`, `--safe/--unsafe`                      |         | Enable or disable safe registration mode (default: enabled). In safe mode the command aborts if the burn price exceeds the tolerance limit.                                                          |
-| `--tolerance`, `--rate-tolerance`                                           | FLOAT   | Maximum allowed burn increase as a decimal fraction (e.g. 0.05 for 5%). Applies in safe mode only.                                                                                                  |
+| `--safe-register/--unsafe-register`, `--safe/--unsafe`                      |         | Enable or disable safe registration mode (default: enabled).                                                                                                                                         |
+| `--tolerance`, `--rate-tolerance`                                           | FLOAT   | Set the rate tolerance percentage for transactions (default: 0.05 for 5%).                                                                                                                           |
 | `--period`, `-era`                                                          | INTEGER | Length (in blocks) for which the transaction should be valid. Note that it is possible that if you use an era for this transaction that you may pay a different fee to register than the one stated. |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy.                                                                |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                                                                                  |
 | `--prompt`, `--prompt`, `--no-prompt`, `--yes`, `--no_prompt`, `-y`         |         | Enable or disable interactive prompts.                                                                                                                                                               |
 | `--quiet`                                                                   |         | Display only critical information on the console.                                                                                                                                                    |
 | `--verbose`                                                                 |         | Enable verbose output.                                                                                                                                                                               |
@@ -3129,7 +3176,6 @@ alias: set_identity
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT    | The subtensor network to connect to. Default: finney.                                                                                 |
 | `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--subnet-name`, `--sn-name`                                                | TEXT    | Name of the subnet                                                                                                                    |
 | `--github-repo`, `repo`                                                     | TEXT    | The GitHub repository URL.                                                                                                            |
 | `--subnet-contact`, `--contact`, `--email`                                  | TEXT    | Contact email for subnet.                                                                                                             |
@@ -3201,7 +3247,6 @@ btcli subnets start [OPTIONS]
 | `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                                                                 |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
 | `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
 | `--no`                                                                      |         | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
@@ -3241,7 +3286,6 @@ btcli subnets set-symbol [OPTIONS]
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                                                                 |
 | `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--period`, `--era`                                                         | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                         |
 | `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                                                                            |
 | `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
@@ -3297,7 +3341,6 @@ btcli weights reveal [OPTIONS]
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT    | The subtensor network to connect to. Default: finney.                                                                                 |
 | `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--uids`, `-u`                                                              | TEXT    | Corresponding UIDs for the specified netuid, e.g. -u 1,2,3 ..                                                                         |
 | `--weights`, `-w`                                                           | TEXT    | Weights for the specified UIDs, e.g. `-w 0.2,0.4,0.1 ...` Must correspond to the order of the specified UIDs.                         |
 | `--salt`, `-s`                                                              | TEXT    | Corresponding salt for the hash function, e.g. -s 163,241,217 ...                                                                     |
@@ -3338,7 +3381,6 @@ btcli weights commit [OPTIONS]
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT    | The subtensor network to connect to. Default: finney.                                                                                 |
 | `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--uids`, `-u`                                                              | TEXT    | Corresponding UIDs for the specified netuid, e.g. -u 1,2,3 ..                                                                         |
 | `--weights`, `-w`                                                           | TEXT    | Weights for the specified UIDs, e.g. `-w 0.2,0.4,0.1 ...` Must correspond to the order of the specified UIDs.                         |
 | `--salt`, `-s`                                                              | TEXT    | Corresponding salt for the hash function, e.g. -s 163,241,217 ...                                                                     |
@@ -3695,7 +3737,6 @@ btcli crowd create [OPTIONS]
 | `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
 | `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--deposit`                                                                 | FLOAT   | Initial deposit in TAO to secure the crowdloan.                                                                                       |
 | `--min-contribution`, `--min_contribution`                                  | FLOAT   | Minimum contribution amount in TAO.                                                                                                   |
 | `--cap`                                                                     | INTEGER | Maximum amount in TAO the crowdloan will raise.                                                                                       |
@@ -3749,7 +3790,6 @@ btcli crowd contribute [OPTIONS]
 | `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
 | `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
 | `--wait-for-inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                                                                        |
 | `--wait-for-finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.                                                                |
@@ -3782,7 +3822,6 @@ btcli crowd withdraw [OPTIONS]
 | `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
 | `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
 | `--wait-for-inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                                                                        |
 | `--wait-for-finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.                                                                |
@@ -3816,7 +3855,6 @@ btcli crowd finalize [OPTIONS]
 | `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
 | `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
 | `--wait-for-inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                                                                        |
 | `--wait-for-finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.                                                                |
@@ -3854,7 +3892,6 @@ btcli crowd update [OPTIONS]
 | `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
 | `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
 | `--wait-for-inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                                                                        |
 | `--wait-for-finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.                                                                |
@@ -3886,7 +3923,6 @@ btcli crowd refund [OPTIONS]
 | --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `--crowdloan-id`, `--crowdloan_id`, `--id`                                  | INTEGER | The ID of the crowdloan to refund                                                                                                     |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                                                                 |
 | `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                                                                   |
 | `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
@@ -3926,7 +3962,6 @@ btcli crowd dissolve [OPTIONS]
 | `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
 | `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
 | `--wait-for-inclusion`                                                      |         | If `True`, waits until the transaction is included in a block.                                                                        |
 | `--wait-for-finalization`                                                   |         | If `True`, waits until the transaction is finalized on the blockchain.                                                                |
@@ -4131,7 +4166,6 @@ btcli liquidity add [OPTIONS]
 | `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`          | TEXT    | Hotkey of the wallet                                                                                                                  |
 | `--netuid`                                                                         | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
 | `--proxy`                                                                          | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                             |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--liquidity`                                                                      | FLOAT   | Amount of liquidity to add to the subnet.                                                                                             |
 | `--price-low`, `--price_low`, `--liquidity-price-low`, `--liquidity_price_low`     | FLOAT   | Low price for the adding liquidity position.                                                                                          |
 | `--price-high`, `--price_high`, `--liquidity-price-high`, `--liquidity_price_high` | FLOAT   | High price for the adding liquidity position.                                                                                         |
@@ -4186,7 +4220,6 @@ btcli liquidity modify [OPTIONS]
 | `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
 | `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--position-id`, `--position_id`                                            | INTEGER | Position ID for modification or removing.                                                                                             |
 | `--liquidity-delta`, `--liquidity_delta`                                    | FLOAT   | Liquidity amount for modification.                                                                                                    |
 | `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
@@ -4216,7 +4249,6 @@ btcli liquidity remove [OPTIONS]
 | `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
 | `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--announce-only`/`--no-announce-only`                                      |         | If set along with --proxy, will not actually make the extrinsic call, but rather just announce it to be made later.                   |
 | `--position-id`, `--position_id`                                            | INTEGER | Position ID for modification or removal.                                                                                              |
 | `--all`, `--a`                                                              |         | Whether to remove all liquidity positions for given subnet.                                                                           |
 | `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
