@@ -41,6 +41,17 @@ where:
 
 Conviction is computed lazily — the locked mass does not change, only the evaluation time advances. No periodic transactions are required to keep conviction growing.
 
+![Conviction growth and unlock availability, side by side](/img/conviction-panels.svg)
+
+_Left — Conviction growth: `f(t) = 1 − exp(−t / τ)`, τ = 648,000 blocks ≈ 90 days. Dot marks one time constant (63.2% of max)._
+_Right — Unlock availability: `f(t) = 1 − exp(−t / τ)`, τ = 216,000 blocks ≈ 30 days. Dot marks one time constant (63.2% of unlocked amount available). Both x-axes span 3τ._
+
+The same formula governs both curves — only the time constant differs. The lifecycle graph below shows how they interact in sequence:
+
+![Conviction lifecycle: lock then unlock](/img/conviction-lifecycle.svg)
+
+_Scenario: lock 100α at day 0; call `unlock_stake(50α)` at day 90. Conviction (blue) drops instantly by the unlocked amount and then rebuilds toward the new lower ceiling. Unlocked α (orange) becomes gradually withdrawable over the following ~30 days._
+
 **The core idea: conviction chases the locked amount, and the gap shrinks exponentially.**
 
 Rewrite the equation as:
@@ -193,3 +204,75 @@ Lock state is stored in two maps:
 - `HotkeyLock[(netuid, hotkey)]` — aggregate lock totals per hotkey (used for conviction queries without iterating all coldkeys)
 
 The maturity time constant (`MaturityRate`) and unlock time constant (`UnlockRate`) are configurable runtime storage values, defaulting to 648,000 and 216,000 blocks respectively. These values can be adjusted by governance — the unlock and maturity windows are key parameters in the mechanism's attack surface, and tuning them changes how quickly conviction can build or unwind.
+
+## Appendix: implementation — lazy evaluation and checkpointing
+
+The conviction formula is closed-form — no iteration, no history — because the runtime stores only a checkpoint at the last mutation and evaluates forward on demand.
+
+**What's stored** (`LockState`, `lib.rs`):
+
+```rust
+pub struct LockState {
+    pub locked_mass: AlphaBalance,   // constant between user actions
+    pub unlocked_mass: AlphaBalance, // amount pending the 30-day decay
+    pub conviction: U64F64,          // c0: conviction at last_update
+    pub last_update: u64,            // block number of last write
+}
+```
+
+No history. Just a snapshot at a single block. The four fields are sufficient to reconstruct conviction at any future block.
+
+**The formula** (`calculate_matured_values`, `lock.rs`):
+
+```rust
+let decay = Self::exp_decay(dt, tau);  // exp(-dt/tau)
+let new_conviction =
+    mass_fixed.saturating_sub(
+        decay.saturating_mul(mass_fixed.saturating_sub(conviction))
+    );
+// = m - exp(-dt/tau) * (m - c0)
+```
+
+One call, no loop. This is the same equation shown in the [Conviction](#conviction) section above.
+
+**On-demand evaluation** (`roll_forward_lock`, `lock.rs`):
+
+```rust
+pub fn roll_forward_lock(lock: LockState, now: u64) -> LockState {
+    let dt = now.saturating_sub(lock.last_update);
+    let (new_unlocked_mass, new_conviction) =
+        Self::calculate_matured_values(
+            lock.locked_mass, lock.unlocked_mass, lock.conviction, dt,
+        );
+    LockState {
+        locked_mass: lock.locked_mass,
+        unlocked_mass: new_unlocked_mass,
+        conviction: new_conviction,
+        last_update: now,
+    }
+}
+```
+
+**The mutation pattern** (from `do_lock_stake`, `lock.rs`):
+
+```rust
+// Roll to current block before modifying
+let lock = Self::roll_forward_lock(existing, now);
+let new_locked = lock.locked_mass.saturating_add(amount);
+Self::insert_lock_state(coldkey, netuid, hotkey, LockState {
+    locked_mass: new_locked,
+    unlocked_mass: lock.unlocked_mass,
+    conviction: lock.conviction,  // current conviction becomes new c0
+    last_update: now,             // checkpoint resets to now
+});
+```
+
+Every mutation — `lock_stake`, `unlock_stake`, `move_lock` — calls `roll_forward_lock` first. This advances conviction to the current block and writes it as the new `c0`. From that point, the stored `(c0, m, last_update)` triple is sufficient to evaluate conviction at any future block without needing history.
+
+Conviction is therefore a pure function of elapsed time between mutations. Given the stored checkpoint, conviction at any future block `b` is:
+
+```
+c(b) = m - (m - c0) × exp(-(b - last_update) / τ)
+```
+
+This is exactly what `get_hotkey_conviction` evaluates when queried. You can also project forward: if no mutations occur between now and block `b`, the formula gives the exact future conviction. A mutation (top-up, partial unlock, `move_lock`) resets `c0` and `last_update` to a new checkpoint, restarting the forecast from there.
