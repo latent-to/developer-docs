@@ -6,7 +6,9 @@ title: "Conviction Staking (Stake Locks)"
 
 Conviction staking lets coldkey holders lock alpha stake to a specific hotkey on a subnet. Locked stake builds **conviction** — a score that grows over time toward the locked amount — providing a public, on-chain signal of long-term commitment that cannot be silently reversed.
 
-The primary use case is investor confidence in subnet owners. A subnet owner whose alpha is locked has made a cryptographic commitment: unwinding a large position requires calling `unlock_stake` and then waiting through a 30-day exponential decay period before the stake can be withdrawn. This gives other stakers advance warning before any large exit completes.
+The immediate use case is investor confidence in subnet owners. A subnet owner whose alpha is locked has made a cryptographic commitment: unwinding a large position requires calling `unlock_stake` and then waiting through an exponential decay period before the stake can be withdrawn. This gives other stakers advance warning before any large exit completes.
+
+Conviction is also the foundation for future **subnet governance**. The hotkey with the highest total conviction on a subnet (the "subnet king") is expected to gain voting or veto rights over subnet parameters and ownership as the system matures. The lock/conviction mechanism gives token holders a path to hold subnet owners accountable — and a slow, visible process by which control of a subnet can shift over time, rather than abruptly.
 
 :::note Testnet launch
 Conviction staking is live on testnet (spec version 403) as of May 2026 and is tentatively scheduled for mainnet on May 13, 2026.
@@ -38,6 +40,31 @@ where:
 - $\tau$ — maturity time constant: **648,000 blocks (≈ 90 days)**
 
 Conviction is computed lazily — the locked mass does not change, only the evaluation time advances. No periodic transactions are required to keep conviction growing.
+
+**The core idea: conviction chases the locked amount, and the gap shrinks exponentially.**
+
+Rewrite the equation as:
+
+```
+gap  = m - c0          (distance between current conviction and max)
+c1   = m - gap × exp(-dt/τ)
+```
+
+`exp(-dt/τ)` is a number between 0 and 1 — it's the fraction of the gap that *survives* after `dt` blocks. So:
+
+- `dt = 0` → `exp(0) = 1` → gap unchanged → c1 = c0 ✓
+- `dt = τ` (90 days) → `exp(-1) ≈ 0.368` → 36.8% of the gap remains → you've closed ~63% of it
+- `dt → ∞` → `exp(-∞) = 0` → gap gone → c1 = m ✓
+
+Starting from c0 = 0 (fresh lock of 100 alpha):
+
+```
+gap = 100 - 0 = 100
+at 90 days:  c1 = 100 - 100 × 0.368 = 63.2
+at 180 days: c1 = 100 - 100 × 0.135 = 86.5
+```
+
+Conviction is always chasing `m` — getting closer every block, never quite arriving.
 
 **Example:** Lock 100 alpha at block 0 with no prior lock.
 
@@ -90,6 +117,10 @@ Begins the process of unlocking `amount` alpha from the coldkey's existing lock 
 
 **Event emitted:** `StakeUnlocked { coldkey, hotkey, netuid, amount }`
 
+:::note Unlock transactions are public
+Calling `unlock_stake` emits the `StakeUnlocked` event on-chain immediately, before any stake is actually withdrawable. This is by design: the unlock period exists specifically so that other stakers can observe the signal and act accordingly. An unlock by a subnet owner should be interpreted as a potential intent to reduce their position, not a completed exit.
+:::
+
 ### `move_lock`
 
 ```
@@ -109,6 +140,10 @@ This gives the previous hotkey's stakers a window to react before conviction reb
 
 **Event emitted:** `LockMoved { coldkey, origin_hotkey, destination_hotkey, netuid }`
 
+:::note Locking does not affect emissions
+Locking stake does not change the amount of emissions you receive. Emissions are determined by stake weight and consensus participation. Conviction is a governance/signaling mechanism only.
+:::
+
 ## Subnet owner auto-locking
 
 When a subnet owner receives their distribution cut each epoch, **it is automatically locked** to the subnet owner's hotkey. If the owner already has a lock, the auto-lock tops it up using the existing lock's hotkey. If no lock exists, the auto-lock targets the subnet owner's hotkey.
@@ -123,17 +158,18 @@ This means subnet owners start accumulating locked alpha and conviction from the
 
 ## Transferring locked stake
 
-Locked stake can be transferred to another coldkey (e.g., for OTC sales). When stake is transferred:
+When stake is moved to another coldkey **within the same subnet**, lock obligations follow the alpha proportionally. The runtime resolves how much of the transfer carries lock state:
 
-- Freely available (unlocked, not-in-unlock-period) stake transfers first.
-- If the transfer amount exceeds available stake, the shortfall is drawn from unlocking stake, then from locked stake.
-- Locked mass and conviction transfer proportionally.
-- The lock follows the stake to the destination coldkey.
+1. **Freely available alpha transfers first** — alpha above the locked + unlocking amount moves with no lock implications.
+2. **Unlocking alpha is drawn next** — if the transfer exceeds freely available alpha, the shortfall comes from the source's unlocking mass. That amount arrives at the destination still in its decay period.
+3. **Locked alpha is drawn last** — if the transfer still exceeds what's available, the remainder comes from locked mass. Conviction transfers proportionally. This step **fails with `LockHotkeyMismatch`** if the destination coldkey already has a lock pointing at a different hotkey.
 
-This means a subnet owner can lock their stake and then transfer it to an investor — the investor receives the stake already locked and must wait through the unlock period before they can unstake.
+**Cross-subnet moves are different**: moving stake between subnets goes through unstake → TAO transfer → restake, which must satisfy `ensure_available_stake`. You cannot drag locked or unlocking alpha across subnets.
+
+**OTC use case**: a subnet owner with all their alpha locked can transfer some of it to an investor within the same subnet. Because available alpha is zero, the transferred amount comes entirely from locked mass — the investor receives it locked, pointing at the same hotkey, and must wait through the unlock period before they can unstake.
 
 :::warning For exchanges and tools accepting alpha transfers
-If your system accepts alpha stake transfers, check whether the incoming stake carries a lock. Locked alpha cannot be unstaked immediately — an unlock transaction and the 30-day decay period are required first.
+If your system accepts same-subnet alpha transfers, check whether the incoming stake carries a lock. Locked alpha cannot be unstaked immediately — an unlock transaction and the subsequent decay period are required first.
 :::
 
 ## Querying conviction
@@ -156,4 +192,4 @@ Lock state is stored in two maps:
 - `Lock[(coldkey, netuid, hotkey)]` — per-coldkey lock record containing locked mass, unlocking mass, conviction score, and last update block
 - `HotkeyLock[(netuid, hotkey)]` — aggregate lock totals per hotkey (used for conviction queries without iterating all coldkeys)
 
-The maturity time constant (`MaturityRate`) and unlock time constant (`UnlockRate`) are configurable runtime storage values, defaulting to 648,000 and 216,000 blocks respectively.
+The maturity time constant (`MaturityRate`) and unlock time constant (`UnlockRate`) are configurable runtime storage values, defaulting to 648,000 and 216,000 blocks respectively. These values can be adjusted by governance — the unlock and maturity windows are key parameters in the mechanism's attack surface, and tuning them changes how quickly conviction can build or unwind.
