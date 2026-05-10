@@ -55,6 +55,7 @@ const sidebars = {
         "learn/ema",
         "learn/yuma-consensus",
         "learn/yc3-blog",
+        "learn/conviction-staking-deep-dive",
         "concepts/weight-copying-in-bittensor",
         "learn/yuma3-migration-guide",
         "learn/fees",

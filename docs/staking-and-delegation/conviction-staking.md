@@ -8,7 +8,7 @@ Conviction staking lets coldkey holders lock alpha stake to a specific hotkey on
 
 The immediate use case is investor confidence in subnet owners. A subnet owner whose alpha is locked has made a cryptographic commitment: unwinding a large position requires calling `unlock_stake` and then waiting through an exponential decay period before the stake can be withdrawn. This gives other stakers advance warning before any large exit completes.
 
-Conviction is also the foundation for future **subnet governance**. The hotkey with the highest total conviction on a subnet (the "subnet king") is expected to gain voting or veto rights over subnet parameters and ownership as the system matures. The lock/conviction mechanism gives token holders a path to hold subnet owners accountable — and a slow, visible process by which control of a subnet can shift over time, rather than abruptly.
+For a deeper look, see [Conviction Staking: Designing Trust into Bittensor](../learn/conviction-staking-deep-dive).
 
 :::note Testnet launch
 Conviction staking is live on testnet (spec version 403) as of May 2026 and is tentatively scheduled for mainnet on May 13, 2026.

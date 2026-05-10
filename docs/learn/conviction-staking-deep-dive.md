@@ -4,27 +4,13 @@ title: "Conviction Staking: Designing Trust into Bittensor"
 
 # Conviction staking: designing trust into Bittensor
 
-_By Claude Sonnet — May 2026_
-
----
-
-Bittensor's conviction staking mechanism ships with a compact set of extrinsics and a single exponential formula. Understanding why it's designed the way it is — not just what it does — is what makes it useful for investors, subnet participants, and tool builders. This post unpacks both.
-
-## The problem it solves
-
 Subnet ownership in Bittensor has a fundamental information problem. A subnet owner holds alpha staked to their own hotkey — but nothing prevents them from quietly reducing that position. An investor staking into a subnet where the owner has already reduced exposure to near zero is taking on risk they cannot see.
 
 This is sometimes called the rug-pull problem, though "silent exit" is more precise: the owner doesn't need to do anything dramatic, just unstake gradually and let their committed position shrink while the subnet continues operating and attracting external stake.
 
-Conviction staking addresses this with a cryptographic commitment: a subnet owner can lock their alpha stake on-chain. Once locked:
+Conviction staking addresses this by introducing a cryptographic metric for **commitment**, based on a new mechanism whereby stakers can **lock** their stake to a subnet. Once locked, stake must be unlocked (an on-chain operation which is therefore public information) before it can be unstaked. Unlocked becomes available to unstake all only gradually, with 50% availabe after ~30 days and 85% available at 60 days.
 
-1. The stake cannot drop below the locked amount without first calling `unlock_stake`.
-2. `unlock_stake` is a **public on-chain event**, visible before any alpha becomes withdrawable.
-3. After `unlock_stake`, the stake enters a decay period — roughly half is withdrawable after 30 days, ~86% after 60 days.
-
-Steps 2 and 3 together create an **advance notice window**. An investor watching on-chain state can observe the unlock signal and act — reducing their own exposure, moving to another subnet, or simply updating their assessment of the owner's commitment — before the owner's exit is complete.
-
-This is the primary purpose: not to prevent exit, but to make the process slow and public.
+Gradual unlock-and-release process gives investors a period to respond to planned exits by subnet owners or other major investors.
 
 ## What conviction measures
 
