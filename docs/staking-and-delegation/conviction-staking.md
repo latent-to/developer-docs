@@ -1,22 +1,20 @@
 ---
-title: "Conviction Staking (Stake Locks)"
+title: "Conviction and locked stake"
 ---
 
-# Conviction staking (stake locks)
+# Conviction and locked stake
 
-Conviction staking lets coldkey holders lock alpha stake to a specific hotkey on a subnet. Locked stake builds **conviction** — a score that grows over time toward the locked amount — providing a public, on-chain signal of long-term commitment that cannot be silently reversed.
+The locked stake features lets coldkey holders lock alpha stake to a specific hotkey on a subnet. Locked stake builds **conviction** — a score that grows over time toward the locked amount — providing a public, on-chain signal of long-term commitment that cannot be silently reversed.
 
-The immediate use case is investor confidence in subnet owners. A subnet owner whose alpha is locked has made a cryptographic commitment: unwinding a large position requires calling `unlock_stake` and then waiting through an exponential decay period before the stake can be withdrawn. This gives other stakers advance warning before any large exit completes.
-
-For a deeper look, see [Conviction Staking: Designing Trust into Bittensor](../learn/conviction-staking-deep-dive).
+Conviction provides information about subnet owners and other large investors in a subnet. A subnet owner whose alpha is locked has made a cryptographic commitment: unwinding a large position requires calling `unlock_stake` and then waiting through an exponential decay period before the stake can be withdrawn. This gives other stakers advance warning before any large exit completes.
 
 :::note Testnet launch
 Conviction staking is live on testnet (spec version 403) as of May 2026 and is tentatively scheduled for mainnet on May 13, 2026.
 :::
 
-## How locks work
+## The stake lock mechanism
 
-A lock binds a specific **amount** of a coldkey's alpha on a subnet to a specific **hotkey**. The lock enforces one invariant:
+Locking stake binds a specific amount of a coldkey's staked alpha, on a subnet to a specific delegate (stake recipient) hotkey. The lock enforces one invariant:
 
 > **Total alpha staked by the coldkey on that subnet ≥ locked amount**
 
@@ -28,7 +26,9 @@ One lock per coldkey per subnet is enforced. If a lock already exists for a cold
 
 ## Conviction
 
-Conviction is a score that grows from zero toward the locked amount following an exponential curve:
+The conviction score grows over time, from zero toward the locked amount. It therefore provides a combined signal of how long *and* how much a staker had invested in the subnet.
+
+Growth follow an exponential curve:
 
 $$c_1 = m - (m - c_0) \cdot e^{-\Delta t / \tau}$$
 
@@ -194,7 +194,7 @@ Two runtime API calls expose conviction state on-chain:
 
 Conviction is a rolling value — querying at different blocks yields different results as time passes and the exponential grows.
 
-Tools like [tao.app](https://www.tao.app) and tau.stats are expected to surface per-subnet lock state, including subnet owner lock percentage and conviction scores, providing investors with at-a-glance commitment signals.
+Tools like [tao.app](https://www.tao.app) and [taostats.io](https://taostats.io/) are expected to surface per-subnet lock state, including subnet owner lock percentage and conviction scores, providing investors with at-a-glance commitment signals.
 
 ## Storage
 
