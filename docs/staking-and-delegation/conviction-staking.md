@@ -39,14 +39,19 @@ where:
 - $\Delta t$ — blocks elapsed since last update
 - $\tau$ — maturity time constant: **648,000 blocks (≈ 90 days)**
 
-Conviction is computed lazily — the locked mass does not change, only the evaluation time advances. No periodic transactions are required to keep conviction growing.
+
+## Dynamics locking and unlocking
+
+When someone locks stake, their conviction increases over time, up to the locked amount. When someone unlocks stake, their available unlocked stake increases over time up to the amount the just unlocked.
+
+The same formula governs both curves, only the time constant differs. The lifecycle graph below shows how they interact in sequence:
+
+**Conviction growth**: `f(t) = 1 − exp(−t / τ)`, τ = 648,000 blocks ≈ 90 days. Dot marks one time constant (63.2% of max).
+**Unlock availability**: `f(t) = 1 − exp(−t / τ)`, τ = 216,000 blocks ≈ 30 days. Dot marks one time constant (63.2% of unlocked amount available). Both x-axes span 3τ.
+
 
 ![Conviction growth and unlock availability, side by side](/img/conviction-panels.svg)
 
-_Left — Conviction growth: `f(t) = 1 − exp(−t / τ)`, τ = 648,000 blocks ≈ 90 days. Dot marks one time constant (63.2% of max)._
-_Right — Unlock availability: `f(t) = 1 − exp(−t / τ)`, τ = 216,000 blocks ≈ 30 days. Dot marks one time constant (63.2% of unlocked amount available). Both x-axes span 3τ._
-
-The same formula governs both curves — only the time constant differs. The lifecycle graph below shows how they interact in sequence:
 
 ![Conviction lifecycle: lock then unlock](/img/conviction-lifecycle.svg)
 
