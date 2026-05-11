@@ -195,7 +195,7 @@ Two runtime API calls expose conviction state on-chain:
 | `get_hotkey_conviction(hotkey, netuid)` | Current total conviction for `hotkey` on `netuid`, summed over all coldkeys that have locked to it |
 | `get_most_convicted_hotkey_on_subnet(netuid)` | The hotkey with the highest conviction on `netuid`, or `None` if no locks exist |
 
-Conviction is a rolling value — querying at different blocks yields different results as time passes and the exponential grows.
+Conviction is a rolling value, so querying at different blocks yields different results as time passes and the exponential grows.
 
 Explorer tools like [tao.app](https://www.tao.app) and [taostats.io](https://taostats.io/) are expected to surface per-subnet lock state, including subnet owner lock percentage and conviction scores, providing investors with at-a-glance commitment signals.
 
@@ -206,11 +206,11 @@ Lock state is stored in two maps:
 - `Lock[(coldkey, netuid, hotkey)]`: per-coldkey lock record containing locked mass, unlocking mass, conviction score, and last update block
 - `HotkeyLock[(netuid, hotkey)]`: aggregate lock totals per hotkey (used for conviction queries without iterating all coldkeys)
 
-The maturity time constant (`MaturityRate`) and unlock time constant (`UnlockRate`) are configurable runtime storage values, defaulting to 648,000 and 216,000 blocks respectively. These values can be adjusted by governance — the unlock and maturity windows are key parameters in the mechanism's attack surface, and tuning them changes how quickly conviction can build or unwind.
+The maturity time constant (`MaturityRate`) and unlock time constant (`UnlockRate`) are configurable runtime storage values, defaulting to 648,000 and 216,000 blocks respectively. These values can be adjusted by governance. The unlock and maturity windows are key parameters in the mechanism's attack surface, and tuning them changes how quickly conviction can build or unwind.
 
-## Appendix: implementation — lazy evaluation and checkpointing
+## Appendix: implementation
 
-The conviction formula is closed-form — no iteration, no history — because the runtime stores only a checkpoint at the last mutation and evaluates forward on demand.
+The conviction formula is closed-form with no iteration or history, because the runtime stores only a checkpoint at the last mutation and evaluates forward on demand.
 
 **What's stored** (`LockState`, `lib.rs`):
 
@@ -270,7 +270,7 @@ Self::insert_lock_state(coldkey, netuid, hotkey, LockState {
 });
 ```
 
-Every mutation — `lock_stake`, `unlock_stake`, `move_lock` — calls `roll_forward_lock` first. This advances conviction to the current block and writes it as the new `c0`. From that point, the stored `(c0, m, last_update)` triple is sufficient to evaluate conviction at any future block without needing history.
+Every mutation (`lock_stake`, `unlock_stake`, `move_lock`) calls `roll_forward_lock` first. This advances conviction to the current block and writes it as the new `c0`. From that point, the stored `(c0, m, last_update)` triple is sufficient to evaluate conviction at any future block without needing history.
 
 Conviction is therefore a pure function of elapsed time between mutations. Given the stored checkpoint, conviction at any future block `b` is:
 
