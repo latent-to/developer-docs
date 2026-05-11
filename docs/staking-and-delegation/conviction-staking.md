@@ -57,16 +57,19 @@ The same formula governs both curves, only the time constant differs. The lifecy
 
 _Scenario: lock 100α at day 0; call `unlock_stake(50α)` at day 90. Conviction (blue) drops instantly by the unlocked amount and then rebuilds toward the new lower ceiling. Unlocked α (orange) becomes gradually withdrawable over the following ~30 days._
 
-**The core idea: conviction chases the locked amount, and the gap shrinks exponentially.**
 
-Rewrite the equation as:
+To understand the design intent, notice that the math is about *closing a gap*, either gap between locked amount and eventual conviction, or unlocked amount and available amount.
+
+If we re-arrange the equation to focus on the gap:
 
 ```
 gap  = m - c0          (distance between current conviction and max)
 c1   = m - gap × exp(-dt/τ)
 ```
 
-`exp(-dt/τ)` is a number between 0 and 1 — it's the fraction of the gap that *survives* after `dt` blocks. So:
+`exp(-dt/τ)` is a number between 0 and 1 — it's the fraction of the gap that remains after `dt` blocks.
+
+So:
 
 - `dt = 0` → `exp(0) = 1` → gap unchanged → c1 = c0 ✓
 - `dt = τ` (90 days) → `exp(-1) ≈ 0.368` → 36.8% of the gap remains → you've closed ~63% of it
@@ -80,7 +83,7 @@ at 90 days:  c1 = 100 - 100 × 0.368 = 63.2
 at 180 days: c1 = 100 - 100 × 0.135 = 86.5
 ```
 
-Conviction is always chasing `m` — getting closer every block, never quite arriving.
+Conviction is always closing in on `m`, getting closer every block, never quite arriving.
 
 **Example:** Lock 100 alpha at block 0 with no prior lock.
 
