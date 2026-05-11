@@ -26,19 +26,19 @@ One lock per coldkey per subnet is enforced. If a lock already exists for a cold
 
 ## Conviction
 
-The conviction score grows over time, from zero toward the locked amount. It therefore provides a combined signal of how long *and* how much a staker had invested in the subnet.
+The conviction score grows over time, from zero toward the locked amount. It therefore provides a combined signal of how long _and_ how much a staker had invested in the subnet.
 
 Growth follow an exponential curve:
 
 $$c_1 = m - (m - c_0) \cdot e^{-\Delta t / \tau}$$
 
 where:
+
 - $c_0$: conviction at last update
 - $c_1$: conviction now
 - $m$: locked mass (alpha units)
 - $\Delta t$: blocks elapsed since last update
 - $\tau$: maturity time constant: **648,000 blocks (≈ 90 days)**
-
 
 ## Dynamics locking and unlocking
 
@@ -49,16 +49,16 @@ The same formula governs both curves, only the time constant differs. The lifecy
 **Conviction growth**: `f(t) = 1 − exp(−t / τ)`, τ = 648,000 blocks ≈ 90 days. Dot marks one time constant (63.2% of max).
 **Unlock availability**: `f(t) = 1 − exp(−t / τ)`, τ = 216,000 blocks ≈ 30 days. Dot marks one time constant (63.2% of unlocked amount available). Both x-axes span 3τ.
 
-
 ![Conviction growth and unlock availability, side by side](/img/conviction-panels.svg)
-
 
 ![Conviction lifecycle: lock then unlock](/img/conviction-lifecycle.svg)
 
+<details>
+  <summary><strong>See how it's calculated!</strong></summary>
+
 _Scenario: lock 100α at day 0; call `unlock_stake(50α)` at day 90. Conviction (blue) drops instantly by the unlocked amount and then rebuilds toward the new lower ceiling. Unlocked α (orange) becomes gradually withdrawable over the following ~30 days._
 
-
-To understand the design intent, notice that the math is about *closing a gap*, either gap between locked amount and eventual conviction, or unlocked amount and available amount.
+To understand the design intent, notice that the math is about _closing a gap_, either gap between locked amount and eventual conviction, or unlocked amount and available amount.
 
 If we re-arrange the equation to focus on the gap:
 
@@ -88,15 +88,17 @@ Conviction is always closing in on `m`, getting closer every block, never quite 
 **Example:** Lock 100 alpha at block 0 with no prior lock.
 
 | Elapsed time | Conviction |
-|---|---|
-| 0 days | 0 |
-| 30 days | ≈ 28.3 |
-| 62 days | ≈ 50.0 |
-| 90 days | ≈ 63.2 |
-| 180 days | ≈ 86.5 |
-| 270 days | ≈ 95.0 |
+| ------------ | ---------- |
+| 0 days       | 0          |
+| 30 days      | ≈ 28.3     |
+| 62 days      | ≈ 50.0     |
+| 90 days      | ≈ 63.2     |
+| 180 days     | ≈ 86.5     |
+| 270 days     | ≈ 95.0     |
 
 Maximum conviction equals the locked mass. Topping up an existing lock adds to locked mass immediately; conviction continues growing from its current value toward the new (higher) maximum.
+
+</details>
 
 ## Extrinsics
 
@@ -113,6 +115,7 @@ Locks `amount` alpha from the coldkey's stake on `netuid` to `hotkey`.
 - `amount` must not exceed the coldkey's available (unlocked) alpha on the subnet.
 
 **Errors:**
+
 - `InsufficientStakeForLock`: available alpha is less than `amount`
 - `LockHotkeyMismatch`: a lock exists for a different hotkey on this subnet
 - `AmountTooLow`: amount is zero
@@ -132,6 +135,7 @@ Begins the process of unlocking `amount` alpha from the coldkey's existing lock 
 - While stake is in the unlocking period, it **cannot be unstaked or re-locked**. The available stake formula excludes both locked and unlocking amounts.
 
 **Errors:**
+
 - `UnlockAmountTooHigh`: amount exceeds current locked mass
 
 **Event emitted:** `StakeUnlocked { coldkey, hotkey, netuid, amount }`
@@ -155,6 +159,7 @@ Reassigns the coldkey's existing lock on `netuid` from its current hotkey to `de
 This gives the previous hotkey's stakers a window to react before conviction rebuilds on the new hotkey.
 
 **Errors:**
+
 - `NoExistingLock`: no lock exists for this coldkey on the subnet
 
 **Event emitted:** `LockMoved { coldkey, origin_hotkey, destination_hotkey, netuid }`
@@ -185,15 +190,14 @@ When stake is moved to another coldkey **within the same subnet**, lock obligati
 
 **Cross-subnet moves are different**: moving stake between subnets goes through unstake → TAO transfer → restake, which must satisfy `ensure_available_stake`. You cannot drag locked or unlocking alpha across subnets.
 
-
 ## Querying conviction
 
 Two runtime API calls expose conviction state on-chain:
 
-| Method | Returns |
-|---|---|
-| `get_hotkey_conviction(hotkey, netuid)` | Current total conviction for `hotkey` on `netuid`, summed over all coldkeys that have locked to it |
-| `get_most_convicted_hotkey_on_subnet(netuid)` | The hotkey with the highest conviction on `netuid`, or `None` if no locks exist |
+| Method                                        | Returns                                                                                            |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `get_hotkey_conviction(hotkey, netuid)`       | Current total conviction for `hotkey` on `netuid`, summed over all coldkeys that have locked to it |
+| `get_most_convicted_hotkey_on_subnet(netuid)` | The hotkey with the highest conviction on `netuid`, or `None` if no locks exist                    |
 
 Conviction is a rolling value, so querying at different blocks yields different results as time passes and the exponential grows.
 
