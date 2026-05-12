@@ -60,6 +60,14 @@ Hence, in the context of Bittensor EVM we can distinguish between:
 - 'Bittensor wallets': created using the Bittensor tool chain and therefore able to sign transactions using Bittensor transaction clients (BTCLI and the Bittensor SDK), but not EVM smart contracts, on the Bittensor blockchain.
 - 'EVM wallets': created using an EVM client such as MetaMask and therefore able to sign EVM smart contracts, but not Subtensor extrinsics, on the Bittensor blockchain.
 
+## Gas and Transaction Fees
+
+EVM transactions on Bittensor use **TAO** as the gas token. EVM tooling (MetaMask, Hardhat, ethers.js) displays amounts in wei (18-decimal), the same convention as Ethereum.
+
+The conversion between EVM and Substrate units is exact: **1 Gwei = 1 rao** (because 1 TAO = 10¹⁸ wei = 10⁹ rao). The default base fee is 20 Gwei, and MetaMask and Hardhat call `eth_estimateGas` automatically — no manual gas configuration is needed.
+
+See [EVM Transaction Fees](/learn/fees#evm-transaction-fees) for the full fee model, denomination table, and worked examples.
+
 ## Ethereum vs Bittensor EVM smart contract runtime
 
 On the Ethereum network, nodes such as full nodes, validator nodes and archive nodes run the Ethereum Virtual Environment (EVM) run-time environment. Smart contracts operate under this EVM. See the below high-level diagram.
@@ -125,6 +133,11 @@ style={{width: 400}}
     title='TAO transfer from Metamask to SS58'
     link='/evm-tutorials/transfer-from-metamask-to-ss58'
     body='Learn how to transfer TAO from Metamask to SS58.' />
+    <ResponsiveCard
+    icon={FaMoneyBillTransfer}
+    title='Transaction Fees'
+    link='/learn/fees#evm-transaction-fees'
+    body='Gas model, TAO/wei/rao denominations, base fee, and fee estimation for EVM transactions.' />
     <ResponsiveCard
     icon={FaMoneyBillTransfer}
     title='Transfer TAO between two H160 addresses'

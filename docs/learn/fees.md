@@ -16,6 +16,7 @@ Staking and unstaking operations incur this fee as well as amount-based **swap f
 Reading the state of the chain is always free.
 
 This page also covers:
+- [EVM transaction fees](#evm-transaction-fees) — gas-based fees for MetaMask, Hardhat, and contract interactions
 - The [alpha fallback](#alpha-fallback) mechanism, whereby transaction fees are paid in alpha when a wallet's TAO balance is insufficient
 - [Fee-free extrinsics](#fee-free-extrinsics).
 - [Fees for proxy calls](#proxy-call-fees)
@@ -115,6 +116,65 @@ impl WeightToFeePolynomial for LinearWeightToFee {
 ```
 
 **Length fee** — runtime config sets [`LengthToFee = IdentityFee`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L564): 1 rao per byte of the encoded extrinsic. Source: [`runtime/src/lib.rs`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs) and the [FRAME Transaction Payment pallet](https://docs.substrate.io/reference/frame-pallets/transaction-payment/).
+
+</details>
+
+
+## EVM Transaction Fees
+
+EVM transactions (via MetaMask, Hardhat, ethers.js, etc.) use a **gas-based** fee model instead of the weight-based model used by Substrate extrinsics.
+
+$$\text{EVM fee} = \text{gas\_used} \times (\text{base\_fee} + \text{priority\_fee})$$
+
+### Gas token and denomination
+
+TAO is the gas token. EVM tooling denominates amounts in **wei** (18-decimal), the same convention as Ethereum. The conversion between EVM and Substrate units is exact:
+
+$$1 \text{ Gwei} = 10^9 \text{ wei} = 1 \text{ rao}$$
+
+This holds because 1 TAO equals 10^18 wei in EVM representation and 10^9 rao in Substrate — so the Gwei and rao scales coincide precisely.
+
+| EVM unit | Substrate unit | TAO |
+|---|---|---|
+| 1 wei | 10⁻⁹ rao | τ 0.000000000000000001 |
+| 1 Gwei (10⁹ wei) | 1 rao | τ 0.000000001 |
+| 10¹⁸ wei | 10⁹ rao | τ 1 |
+
+### Base fee and block gas limit
+
+The base fee starts at **20 Gwei** (20 rao per gas unit) and adjusts dynamically each block using [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) rules:
+
+- **Ideal block fill:** 50%. When blocks are consistently above 50% full the base fee rises; below 50% it falls.
+- **Max adjustment per block:** ±12.5%.
+- **Block gas limit:** 75,000,000 gas.
+
+### Fee disposal
+
+- **Base fee** — burned (reduces total TAO supply, same as Substrate extrinsic fees).
+- **Priority fee (tip)** — paid to the block author (validator).
+
+### Example fee calculations
+
+At the default 20 Gwei base fee with no priority fee:
+
+| Operation | Typical gas | Fee (rao) | Fee (TAO) |
+|---|---|---|---|
+| ETH transfer | 21,000 | 420,000 | τ 0.00042 |
+| ERC-20 transfer | ~65,000 | 1,300,000 | τ 0.0013 |
+| Contract interaction | ~200,000 | 4,000,000 | τ 0.004 |
+
+The actual base fee at execution time may differ from the default. EVM clients call `eth_estimateGas` and read the current `eth_gasPrice` automatically — you do not need to set gas manually in MetaMask or Hardhat.
+
+See [Troubleshooting](../evm-tutorials/troubleshooting) for gas estimation failure handling.
+
+<details>
+<summary><strong>Source code references</strong></summary>
+
+- [`DefaultBaseFeePerGas`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1438) — 20 Gwei (20,000,000,000 wei) default
+- [`BlockGasLimit`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1316) — 75,000,000 gas
+- [`DefaultElasticity`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1439) — 12.5% per-block adjustment cap
+- [`pallet_evm::Config`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1389-L1414) — `OnChargeTransaction = ()`, fee disposal via `EVMFungibleAdapter`
+- [`SubtensorEvmBalanceConverter`](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1341-L1387) — 10⁹ scale factor between EVM and Substrate balances
 
 </details>
 
