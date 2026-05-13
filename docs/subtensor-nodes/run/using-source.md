@@ -132,13 +132,15 @@ To run an archive node connected to the testchain, execute the below command:
 
 ## Additional flags
 
-Running a Subtensor node from the source code offers various levels of customization to the user. This includes the ability to modify the runtime by including additional flags to the run script.
+Running a Subtensor node from the source code offers various levels of customization to the user. This includes the ability to modify the runtime by including additional flags to the run node.
 
-Some examples of these flags are:
+Some of these flags are:
 
 | Flag                                     | Description                                                                                                            |
 | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `--validator`                            | Enable validator mode. The node will be started with the authority role and actively participate in any consensus task |
+| `--name`                                 | The human-readable name for this node. It's used as network node name.                                                 |
+| `--dev`                                  | Specify the development chain.                                                                                         |
 | `--ws-external`                          | Expose WebSocket server to external connections.                                                                       |
 | `--ws-port <port>`                       | WebSocket port (default: `9944`).                                                                                      |
 | `--rpc-rate-limit`                       | RPC rate limiting (calls/minute) for each connection. This is disabled by default.                                     |
