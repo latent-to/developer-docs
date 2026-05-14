@@ -30,7 +30,7 @@ The SDK uses `False ` if the variable is not set.
 
 ### `BT_NO_PARSE_CLI_ARGS`
 
-When `BT_NO_PARSE_CLI_ARGS=1` (default), this disables CLI argument parsing on the SDK. Setting its value to `false` or `0` enables CLI argument parsing and allows the SDK to read command-line arguments.
+When `BT_NO_PARSE_CLI_ARGS=1` (default), this disables CLI argument parsing on the SDK. Setting its value to `false` or `0` enables CLI argument parsing and allows the SDK to read additional command-line arguments.
 
 ## Subtensor
 
