@@ -3,7 +3,7 @@
 This page contains error variants returned by the Bittensor (Subtensor) runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
