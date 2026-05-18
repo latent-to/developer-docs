@@ -31,3 +31,7 @@ You can also explore Bittensor's many Subnets and find links to their websites a
 - **[BTCLI](https://github.com/opentensor/btcli)**, the Bittensor CLI
 - The **[Bittensor SDK](https://github.com/opentensor/bittensor)**
 - **[Subtensor](https://github.com/opentensor/subtensor)**, Bittensor's substrate blockchain
+
+## Ecosystem Tools
+
+- **[OmniRisk](https://omnirisk.io)** — Real-time risk intelligence for the Bittensor ecosystem. OmniScore rates subnet health across emission stability, validator concentration, and liquidity depth, helping TAO stakers and dTAO participants assess subnet exposure before allocating stake.
