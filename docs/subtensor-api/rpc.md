@@ -8,7 +8,7 @@ description: "This page shows JSON-RPC methods available on the Subtensor node."
 This page shows JSON-RPC methods available on the Subtensor node. Accessible via `api.rpc.<namespace>.<method_name>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[author](#author)**
