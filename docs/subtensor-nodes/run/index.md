@@ -25,7 +25,11 @@ There are two supported ways to run a Subtensor node:
 
 Both approaches result in the same node behavior. The difference is in setup, control, and operational complexity.
 
+:::tip
+Run the subtensor node using the source code if you need full control over node configuration, including the ability to pass additional flags to modify the Subtensor runtime. Use Docker for a fixed, preconfigured setup where the runtime configuration is predefined.
+:::
+
 ## Next steps
 
-- [From source code](./using-source.md)
-- [Using Docker](./using-source.md)
+- [Install from source](./using-source.md) — compile and run the `node-subtensor` binary directly.
+- [Install with Docker](./using-docker.md) — pull the official image and run it in a container.
