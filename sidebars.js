@@ -42,7 +42,6 @@ const sidebars = {
     {
       type: "category",
       label: "Understand Bittensor",
-      link: { type: "doc", id: "learn/introduction" },
       collapsible: true,
       collapsed: true,
       items: [
@@ -50,16 +49,16 @@ const sidebars = {
         "resources/questions-and-answers",
         "subnets/understanding-subnets",
         "learn/anatomy-of-incentive-mechanism",
-
         "subnets/understanding-multiple-mech-subnets",
         "learn/neurons",
-
         "learn/emissions",
         "learn/ema",
         "learn/yuma-consensus",
         "learn/yc3-blog",
+        "concepts/weight-copying-in-bittensor",
         "learn/yuma3-migration-guide",
         "learn/fees",
+        "learn/batch-transactions",
         "learn/chain-rate-limits",
         {
           type: "category",
@@ -73,6 +72,7 @@ const sidebars = {
             "navigating-subtensor/swap-stake",
           ],
         },
+        "navigating-subtensor/subtensor-extrinsics",
         "resources/community-links",
       ],
     },
@@ -83,7 +83,7 @@ const sidebars = {
       collapsed: true,
       items: [
         "keys/wallets",
-        "keys/working-with-keys",        
+        "keys/working-with-keys",
         "keys/handle-seed-phrase",
         "keys/coldkey-hotkey-security",
         "keys/address-poisoning-scams",
@@ -92,26 +92,38 @@ const sidebars = {
           label: "Proxies",
           collapsible: true,
           collapsed: true,
-          link: { type: "doc", id: "keys/proxies/index" },
-          items: ["keys/proxies/create-proxy", "keys/proxies/pure-proxies"],
+          items: [
+            "keys/proxies/index",
+            "keys/proxies/working-with-proxies",
+            "keys/proxies/pure-proxies",
+          ],
         },
         "keys/multisig",
-        "keys/schedule-coldkey-swap",
+        "keys/coldkey-swap",
       ],
     },
-
 
     {
       type: "category",
       label: "Staking/Delegation",
       collapsible: true,
       collapsed: true,
-      link: { type: "doc", id: "staking-and-delegation/delegation" },
       items: [
         "staking-and-delegation/delegation",
         "staking-and-delegation/stakers-btcli-guide",
         "staking-and-delegation/managing-stake-btcli",
         "staking-and-delegation/managing-stake-sdk",
+        "keys/proxies/staking-with-proxy",
+        {
+          type: "category",
+          label: "Root claims",
+          collapsible: true,
+          collapsed: true,
+          items: [
+            "staking-and-delegation/root-claims/index",
+            "staking-and-delegation/root-claims/managing-root-claims",
+          ],
+        },
         "learn/price-protection",
         "learn/slippage",
         "staking-and-delegation/staking-polkadot-js",
@@ -123,8 +135,11 @@ const sidebars = {
       label: "Mining",
       collapsible: true,
       collapsed: true,
-      link: { type: "doc", id: "miners/index" },
-      items: ["miners/index", "miners/miners-btcli-guide"],
+      items: [
+        "miners/index",
+        "miners/miners-btcli-guide",
+        "miners/autostaking",
+      ],
     },
 
     {
@@ -132,7 +147,6 @@ const sidebars = {
       label: "Validating",
       collapsible: true,
       collapsed: true,
-      link: { type: "doc", id: "validators/index" },
       items: [
         "validators/index",
         "validators/child-hotkeys",
@@ -155,7 +169,6 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "subnets/metagraph",
         "subnets/create-a-subnet",
         {
           type: "category",
@@ -170,6 +183,7 @@ const sidebars = {
         "subnets/working-with-subnets",
         "subnets/managing-mechanisms-with-sdk",
         "subnets/managing-mechanisms-btcli",
+        "subnets/metagraph",
         "subnets/uid-trimming",
         "subnets/subnet-deregistration",
         "subnets/walkthrough-prompting",
@@ -185,10 +199,8 @@ const sidebars = {
       link: { type: "doc", id: "btcli/overview" },
       items: [
         "getting-started/install-btcli",
-        "btcli/btcli-playground",
         "btcli/btcli-permissions",
         "btcli/btcli",
-        "staking-and-delegation/managing-stake-btcli",
       ],
     },
     {
@@ -197,17 +209,20 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
+        "sdk/index",
         "getting-started/installation",
         "sdk/env-vars",
         "sdk/bt-api-ref",
         "sdk/subtensor-api",
+        "sdk/mev-protection",
         "getting-started/install-wallet-sdk",
+        "sdk/call",
         "sdk/migration-guide",
         "subnets/asyncio",
         "sdk/managing-subtensor-connections",
       ],
     },
-    
+
     {
       type: "category",
       label: "Tools and Special Features",
@@ -216,7 +231,10 @@ const sidebars = {
       collapsed: true,
       items: [
         "concepts/bittensor-networks",
+        "concepts/halving",
+        "concepts/mev-shield/index",
         "concepts/commit-reveal",
+        "concepts/stake-burn",
         "concepts/consensus-based-weights",
         "concepts/bt-logging-levels",
         "resources/utilities",
@@ -226,7 +244,6 @@ const sidebars = {
     {
       type: "category",
       label: "Local Development",
-      link: { type: "doc", id: "local-build/deploy" },
       collapsible: true,
       collapsed: true,
       items: [
@@ -254,7 +271,6 @@ const sidebars = {
     {
       type: "category",
       label: "Bittensor EVM",
-      link: { type: "doc", id: "evm-tutorials/index" },
       items: [
         "evm-tutorials/index",
         "evm-tutorials/subtensor-networks",
@@ -264,7 +280,6 @@ const sidebars = {
         "evm-tutorials/evm-mainnet-with-metamask-wallet",
         "evm-tutorials/hardhat-config-for-subtensor-evm",
         "evm-tutorials/remix-config-for-subtensor-evm",
-        "evm-tutorials/bridge-vtao",
         "evm-tutorials/troubleshooting",
       ],
     },
@@ -273,10 +288,11 @@ const sidebars = {
       link: { type: "doc", id: "evm-tutorials/examples" },
       label: "Bittensor EVM: Examples and Precompiles",
       items: [
-        "evm-tutorials/examples",
         "evm-tutorials/convert-h160-to-ss58",
         "evm-tutorials/transfer-from-metamask-to-ss58",
         "evm-tutorials/transfer-between-two-h160-accounts",
+        "evm-tutorials/vtao-bridge-tutorial",
+        "evm-tutorials/vtao-liquidity-on-aerodrome",
         "evm-tutorials/withdraw-from-alice",
         "evm-tutorials/ed25519-verify-precompile",
         "evm-tutorials/staking-precompile",
@@ -308,21 +324,12 @@ const sidebars = {
         "governance/senators-btcli-guide",
       ],
     },
-    {
-      type: "category",
-      label: "Dynamic TAO",
-      link: { type: "doc", id: "dynamic-tao/index" },
-      collapsible: true,
-      collapsed: true,
-      items: ["dynamic-tao/dtao-faq", "dynamic-tao/sdk-cheat-sheet"],
-    },
 
     {
       type: "category",
       label: "Errors and Troubleshooting",
       collapsible: true,
       collapsed: true,
-      link: { type: "doc", id: "errors/index" },
       items: [
         "errors/index",
         "errors/custom",
@@ -333,6 +340,15 @@ const sidebars = {
     "resources/glossary",
     "resources/community-links",
     "resources/media-assets",
+  ],
+  apiSidebar: [
+    "subtensor-api/extrinsics",
+    "subtensor-api/errors",
+    "subtensor-api/storage",
+    "subtensor-api/events",
+    "subtensor-api/constants",
+    "subtensor-api/runtime",
+    "subtensor-api/rpc",
   ],
 };
 

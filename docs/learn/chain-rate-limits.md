@@ -36,13 +36,6 @@ This rate limit prevents frequent changes to delegate take percentages.
 - Chain State Variable: `TxDelegateTakeRateLimit`
 - Error message: [`DelegateTxRateLimitExceeded`](../errors/subtensor.md#delegatetxratelimitexceeded)
 
-### Child key take rate limit
-
-This rate limit prevents the owner of a child hotkey from making frequent changes to the child key take percentages. This protects against rapid manipulation of child key relationships and ensures stability in the child key delegation system.
-
-- Rate Limit: 216,000 blocks (~30 days)
-- Chain State Variable: `TxChildkeyTakeRateLimit`
-- Error message: [`TxChildkeyTakeRateLimitExceeded`](../errors/subtensor.md#txchildkeytakeratelimitexceeded)
 
 ### Hotkey swap rate limit
 
@@ -123,6 +116,24 @@ This rate limit controls how frequently a user can perform staking operations (a
 - Rate Limit: 1 per block
 - Chain State Variable: `StakingOperationRateLimiter` (Bool, since limit is 1 operation)
 - Error message: [`StakingOperationRateLimitExceeded`](../errors/subtensor.md#stakingoperationratelimitexceeded)
+
+
+### Child hotkey operations rate limit
+
+This rate limit controls how frequently a parent hotkey can set or revoke child hotkeys on a specific subnet. Note that revoking children is implemented by calling `set_children` with an empty list, so both operations share the same rate limit.
+
+- Rate Limit: 150 blocks (~30 minutes)
+- Source Code: [rate_limiting.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L25-L28)
+- Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
+
+### Child key take rate limit
+
+This rate limit prevents the owner of a child hotkey from making frequent changes to the child key take percentages.
+
+- Rate Limit: 216,000 blocks (~30 days)
+- Chain State Variable: `TxChildkeyTakeRateLimit`
+- Error message: [`TxChildkeyTakeRateLimitExceeded`](../errors/subtensor.md#txchildkeytakeratelimitexceeded)
+
 ## Subnet-specific rate limits
 
 This section discusses rate limits that apply within a specific subnet on the network. These limits are typically configurable at the subnet level.
@@ -145,25 +156,12 @@ This rate limit controls how frequently a subnet validator can set weights to th
 - Error message: [`SettingWeightsTooFast`](../errors/subtensor.md#settingweightstoofast)
 - Effective Period: Formula is `Tempo × WeightsSetRateLimit × 12 seconds`
 
-### Registration rate limits
+### Neuron (UID) registration
 
-This section covers rate limits related to neuron registrations on a subnet.
+Neuron registration is **continuous**: there are no registration windows, rate limits, or per-block/per-interval caps. Admission is governed by a burn price that decays over time and rises with each registration. Recall that _neurons_ is a general term including both miners and validators, who have different registration requirements:
 
-#### Per-block registration limit
-
-This rate limit controls how frequently registrations can occur on a particular subnet. This rate limit can be modified by changing the `max_regs_per_block` parameter in the subnet hyperparameters. For more information, see [subnet hyperparameters](../subnets/subnet-hyperparameters.md#maxregistrationsperblock).
-
-- Rate Limit: Configurable per subnet (default: 1 registration per block)
-- Chain State Variable: `MaxRegistrationsPerBlock`
-- Error message: [`TooManyRegistrationsThisBlock`](../errors/subtensor.md#toomanyregistrationsthisblock)
-
-#### Per-interval registration limit
-
-This rate limit controls the frequency of neuron registrations within an [interval](../subnets/subnet-hyperparameters#adjustmentinterval). This limit occurs when registration attempts in the current interval exceed three times the target registrations per interval.
-
-- Rate Limit: 3x the target registrations per interval
-- Chain State Variable: `TargetRegistrationsPerInterval`
-- Error message: [`TooManyRegistrationsThisInterval`](../errors/subtensor.md#toomanyregistrationsthisinterval)
+- [Miner Registration](../miners/#miner-registration)
+- [Validator Registration](../validators/#validator-registration)
 
 ## Subtensor Node Rate Limits
 

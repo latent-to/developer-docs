@@ -12,6 +12,10 @@ Related:
 - [Subtensor Custom Errors](./custom.md)
 - [Substrate Errors](https://polkadot.js.org/docs/substrate/errors/) - Errors from the underlying Substrate framework
 
+:::info
+The following outline of subtensor errors is provided for high-level reference and is not exhaustive. For a complete specification of all available errors, see the [Subtensor API reference](../subtensor-api/errors.md).
+:::
+
 ## Network and Subnet Errors
 
 ### `SubNetworkDoesNotExist`
@@ -101,10 +105,6 @@ New coldkey is hotkey.
 ### `ColdKeyAlreadyAssociated`
 
 The coldkey has already been swapped.
-
-### `ColdkeyIsInArbitration`
-
-The coldkey is in arbitration.
 
 ### `UnableToRecoverPublicKey`
 
@@ -328,6 +328,10 @@ Childkey take rate limit exceeded.
 
 Attempting staking operations too frequently.
 
+### `AddStakeBurnRateLimitExceeded`
+
+The stake burn operation has exceeded its rate limit. Try again in the next tempo.
+
 ## Registration and Network Management
 
 ### `TooManyRegistrationsThisBlock`
@@ -426,6 +430,44 @@ Beneficiary does not own hotkey.
 
 Expected beneficiary origin.
 
+## Proxy Errors
+
+### `TooMany`
+
+There are too many proxies registered or too many announcements pending.
+
+### `NotFound`
+
+Proxy registration not found.
+
+### `NotProxy`
+
+Sender is not a proxy of the account to be proxied.
+
+### `Duplicate`
+
+Proxy or relationship already exists.
+
+### `Unproxyable`
+
+A call which is incompatible with the proxy type's filter was attempted.
+
+### `NoPermission`
+
+Call may not be made by proxy because it may escalate its privileges.
+
+### `Unannounced`
+
+Announcement was made too recently or does not exist.
+
+### `NoSelfProxy`
+
+Account cannot add self as proxy.
+
+### `AnnouncementDepositInvariantViolated`
+
+Invariant violated: deposit recomputation returned None after updating announcements.
+
 ## Other Errors
 
 ### `InvalidIpType`
@@ -456,13 +498,33 @@ PoW hash seal does not match work.
 
 Faucet is disabled.
 
-### `SwapAlreadyScheduled`
+### ColdkeySwapAnnounced
 
-Swap already scheduled.
+A coldkey swap has been announced for this account.
 
-### `FailedToSchedule`
+### ColdkeySwapDisputed
 
-Failed to schedule swap.
+A coldkey swap for this account is under dispute.
+
+### `ColdkeySwapAnnouncementNotFound`
+
+Coldkey swap announcement not found
+
+### `ColdkeySwapTooEarly`
+
+Coldkey swap too early.
+
+### `ColdkeySwapReannouncedTooEarly`
+
+Coldkey swap reannounced too early.
+
+### `AnnouncedColdkeyHashDoesNotMatch`
+
+The announced coldkey hash does not match the new coldkey hash.
+
+### `ColdkeySwapAlreadyDisputed`
+
+Coldkey swap already disputed.
 
 ### `InvalidIdentity`
 
@@ -503,3 +565,7 @@ Wallet not authorized. Ensure that the account has the correct root or subnet ow
 ### `InvalidValue`
 
 Generic error for out-of-range parameter value
+
+### `Deprecated`
+
+Deprecated call.

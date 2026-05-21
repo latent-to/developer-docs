@@ -48,6 +48,16 @@ A unit of data in the Bittensor blockchain, containing a collection of transacti
 
 **See also:** [Subtensor API](../sdk/subtensor-api.md)
 
+### Blockchain validator
+
+A node that participates in the Subtensor blockchain’s consensus mechanism to produce and validate blocks. Blockchain validators operate at the blockchain level, not within individual subnets.
+
+#### Blockchain validator vs subnet validator
+
+A blockchain validator participates in the network-wide consensus by validating transactions, producing blocks, and participating in network-wide consensus. In contrast, a subnet validator operates only within a specific subnet's consensus mechanism, where it evaluates miners' tasks and performances.
+
+Blockchain validators function at the core consensus layer and affect the entire network, while subnet validators belong to the application layer and influence only local subnet incentives and rewards.
+
 ### Burn cost
 
 This refers to the required amount of TAO to be recycled when creating a new subnet, i.e., cost of registering a new subnet.
@@ -70,13 +80,14 @@ A combination of two keys, a coldkey for secure storage and high-risk operations
 
 ### Commit Reveal
 
-The commit reveal feature is designed to solve the weight-copying problem by giving would-be weight-copiers access only to stale weights. Copying stale weights should result in validators departing from consensus.
+The Commit Reveal feature is designed to solve the weight-copying problem by giving would-be weight-copiers access only to stale weights. Copying stale weights should result in validators departing from consensus.
 
-**See also:** [Commit Reveal](../concepts/commit-reveal.md)
+**See also:**
+
+- [Commit Reveal](../concepts/commit-reveal.md)
+- [The Weight Copying Problem](../concepts/weight-copying-in-bittensor)
 
 ### Consensus Score
-
-<!-- To fix: immunity period -->
 
 The consensus score is calculated as the stake-weighted median of all weights assigned to a specific neuron by validators. This creates a consensus threshold that filters out outlier weights, ensuring that only weights near the median consensus are used in final rank calculations.
 
@@ -175,6 +186,25 @@ The process of removing a subnet miner or a subnet validator from the subnet due
 
 **See also:** [Miner Deregistration](../miners/#miner-deregistration), [Subnet Miners](../miners/)
 
+### Drand/time-lock encryption
+
+[Drand](https://drand.love)) is a distributed randomness beacon network that provides publicly verifiable, unpredictable, and unbiased random numbers. It is operated by the [League of Entropy](https://drand.love/league-of-entropy/), a consortium of independent organizations running Drand nodes.
+
+Drand provides **time-lock encryption**, a cryptographic technique that encrypts data so that it can only be decrypted _after a specific time has passed_. Drand provides this capability by regularly producing randomness "pulses" at fixed intervals. Data encrypted for a future Drand round cannot be decrypted—even by the person who encrypted it—until that round's randomness is published.
+
+Key properties that make Drand suitable for applications in Bittensor, such as [Commit Reveal](#commit-reveal):
+
+- **Decentralized**: No single entity controls the randomness generation
+- **Verifiable**: Anyone can verify that randomness was generated correctly
+- **Predictable timing**: Pulses are produced at regular intervals
+- **Industry adoption**: Used by multiple blockchain and cryptographic protocols
+- **Open source**: Fully transparent implementation
+
+Learn more:
+
+- [Drand Time-Lock Encryption documentation](https://drand.love/docs/timelock-encryption/)
+- [Commit Reveal](../concepts/commit-reveal)
+
 ## E
 
 ### EdDSA Cryptographic Keypairs
@@ -191,7 +221,7 @@ The total staked TAO amount of a delegate, including their own TAO tokens and th
 
 ### Emission
 
-Every block, currency is injected into each subnet in Bittensor, and every tempo (or 360 blocks), it is extracted by participants (miners, validators, stakers, and subnet creators).
+Every block, TAO is injected into each subnet in Bittensor, and every tempo (or 360 blocks), it is extracted by participants (miners, validators, stakers, and subnet creators).
 
 Emission is this process of generating and allocating currency to participants. The amount allocated to a given participant over some duration of time is also often referred to as 'their emissions' for the period.
 
@@ -205,16 +235,43 @@ An optional security measure for the hotkey.
 
 **See also:** [Coldkey-Hotkey Security](../keys/coldkey-hotkey-security.md), [Working with Keys](../keys/working-with-keys.md)
 
+### Epoch
+
+An epoch in Bittensor is the period during which a subnet executes its consensus mechanism. Its is determined number of blocks defined by the subnet's [tempo](#tempo) hyperparameter.
+
+**See also:** [Tempo](#tempo), [Yuma Consensus](../learn/yuma-consensus.md)
+
+### Existential Deposit
+
+The minimum amount of TAO required for an account to exist on the Bittensor blockchain. Accounts with balances below this threshold can be reaped (removed) to conserve network resources and prevent blockchain bloat from dust accounts.
+
+The existential deposit is a runtime constant set in the Balances pallet configuration. While the default value is defined in the runtime code as 500 RAO (0.0000005 TAO), the actual on-chain value can be queried from the blockchain using the `Balances::ExistentialDeposit` constant.
+
+Use the Bittensor SDK to query the current existential deposit:
+
+```python
+import asyncio
+import json
+from bittensor.core.async_subtensor import AsyncSubtensor
+from bittensor.utils.balance import Balance
+
+async def main():
+	async with AsyncSubtensor(network="finney") as subtensor:
+		deposit = await subtensor.get_existential_deposit()
+	print(f"Existential deposit: {deposit.tao} TAO")
+asyncio.run(main())
+
+```
+
 ### Exponential Moving Average (EMA)
 
 A weighted moving average that prioritizes recent observations while exponentially decreasing the weight of older data points. In Bittensor, EMA is used in two critical stability mechanisms:
 
 1. **Validator-Miner Bond Smoothing**: Smooths the evolution of bonds between validators and miners over time, rewarding early discovery while preventing abrupt manipulation attempts. Has two modes:
-
    - **Basic Mode**: Single α ≈ 0.1 (~7-22 blocks for significant changes)
    - **Liquid Alpha Mode**: Dynamic α range 0.7-0.9 based on consensus alignment (~1-13 blocks depending on consensus)
 
-2. **Subnet Price Emission Smoothing**: Protects emissions from price manipulation by extremely slowly incorporating price changes into emission calculations (α ≈ 0.000003, ~30 days for 50% adjustment)
+2. **Subnet Flow Emission Smoothing**: Protects emissions from manipulation by extremely slowly incorporating TAO flow changes (net staking minus unstaking) into emission calculations (α ≈ 0.000003209, ~30 day half-life, ~86.8 day effective window)
 
 **Formula**: `EMA(t) = α × Current_Value + (1 - α) × EMA(t-1)`
 
@@ -225,6 +282,14 @@ A weighted moving average that prioritizes recent observations while exponential
 - Bittensor prioritizes stability with conservative α values
 
 **See also:** [Understanding Exponential Moving Averages](../learn/ema.md), [Consensus-based Weights](../concepts/consensus-based-weights.md), [Validator-Miner Bonds](#validator-miner-bonds), [Emission](#emission)
+
+### Existential deposit
+
+An existential deposit is the minumum required TAO in a wallet (i.e., in a coldkey).
+If a wallet balance goes below the existential deposit, then this wallet account is deactivated and the remaining TAO in it is destroyed.
+**This is set to 500 RAO for any Bittensor wallet**.
+
+See also [What is the Existential Deposit?](https://support.polkadot.network/support/solutions/articles/65000168651-what-is-the-existential-deposit-).
 
 ### External Wallet
 
@@ -241,6 +306,19 @@ A development-only configuration that accelerates block production to 250ms inte
 **See also:** [Create a local instance](../local-build/deploy.md?local-chain=docker#2-run-the-container)
 
 ## H
+
+### Halving
+
+The process where Bittensor's daily token emission rate cuts in half, similar to Bitcoin's halving mechanism. Halvings reduce the rate of new TAO tokens entering circulation.
+
+Unlike Bitcoin which halves based on block numbers, Bittensor implements halvings based on total token supply. When specific supply thresholds are reached, the emission rate of TAO is cut in half.
+
+The actual date of each halving is not fixed—it changes based on the amount of TAO being recycled each day.
+
+**See also:**
+
+- Halving countdown on [TAO.app Tokenomics Dashboard](https://www.tao.app/tokenomics)
+- [Emission](../learn/emissions.md)
 
 ### Hotkey
 
@@ -276,13 +354,13 @@ A system that drives the behavior of subnet miners and governs consensus among s
 
 ### Issuance
 
-The total amount of TAO circulating in the Bittensor network. Includes TAO that is help in wallets and subnet liquidity pools, as well as TAO that is locked as subnet registration fees.
+The total amount of TAO circulating in the Bittensor network. Includes TAO that is held in wallets and subnet liquidity pools.
 
-This can be viewed on Bittensor explorers such as [TAO.app](https://tao.app) and [TAOstats](https://taostats.io).
+This can be viewed on Bittensor explorers such as [TAO.app's Tokenomics Dashboard](https://www.tao.app/tokenomics), or [TAOstats](https://taostats.io).
 
-To query it directly from the change, see: [Subtensor Storage Query Example: Total Issuance](../subtensor-nodes/subtensor-storage-query-examples.md#123-totalissuance)
+To query it directly from the chain, see: [Subtensor Storage Query Example: Total Issuance](../subtensor-nodes/subtensor-storage-query-examples.md#168-totalissuance)
 
-See also: [Recycling, burning, and locking](#recycling-and-burning)
+See also: [Recycling and burning](#recycling-and-burning)
 
 ## L
 
@@ -318,11 +396,29 @@ The primary Bittensor blockchain network, used for production purposes and conne
 
 **See also:** [Bittensor Networks](../concepts/bittensor-networks.md), [Subtensor Nodes](../subtensor-nodes/)
 
+### Mempool
+
+The _mempool_ is a temporary holding area in blockchain networks where pending and unconfirmed transactions sit before being included in a block. When you submit a transaction, it first enters the mempool, where it becomes visible to all network participants.
+
 ### Metagraph
 
 A data structure that contains comprehensive information about the current state of a subnet, including detailed information on all the nodes (neurons) such as subnet validator stakes and subnet weights in the subnet. Metagraph aids in calculating emissions.
 
 **See:** [The Subnet Metagraph](../subnets/metagraph)
+
+### MEV (Maximal Extractable Value)
+
+In blockchain networks, MEV refers to the profit that can be extracted by reordering, inserting, or censoring transactions within a block.
+
+Common MEV attacks include:
+
+- **Front-running**: Observing a pending transaction and submitting a similar transaction with higher priority to execute first
+- **Sandwich attacks**: Placing transactions before and after a target transaction to profit from the price movement caused by that transaction
+- **Back-running**: Submitting a transaction immediately after a target transaction to capitalize on its effects
+
+In Bittensor, MEV attacks can affect staking and unstaking operations, where attackers might exploit knowledge of pending transactions to manipulate token prices. The MEV Shield feature protects against these attacks by encrypting transactions until they are included in a block.
+
+**See also:** [MEV Shield](../sdk/mev-protection.md), [Price Protection](../learn/price-protection.md)
 
 ### Multiple Incentive Mechanisms
 
@@ -364,19 +460,17 @@ Neurons participate in the network through axon servers (miners) and dendrite cl
 
 **See also:** [Understanding Neurons](../learn/neurons.md), [Subnet Validators](../validators/), [Subnet Miners](../miners/), [NeuronInfo class](pathname:///python-api/html/autoapi/bittensor/core/chain_data/neuron_info/index.html)
 
-## N
-
 ### Nominate
 
-The process of a delegate registering themselves as a candidate for others to stake their $TAO to.
+The process of a staking TAO on a validator's hotkey. Nomination allows token holders to participate in subnet emissions by staking their TAO to active validators, earning proportional rewards based on the validator's performance.
+
+**See also:** [Staking and delegation](../staking-and-delegation/delegation.md)
 
 ### Nominator
 
-Another term for a delegator. A subnet validator who nominates their own hotkey as a delegate, allowing others to delegate their TAO to the nominator's hotkey.
+An account that stakes TAO on a validator's hotkey. Nominators are token holders who nominate their TAO to validators/delegates to participate in subnet's consensus and earn dividends while keeping control of their tokens.
 
-### Nominator (Delegator)
-
-A TAO holder who delegates their stake.
+**See also:** [Staking and delegation](../staking-and-delegation/delegation.md)
 
 ### Non-fast blocks
 
@@ -504,7 +598,7 @@ Tokens are recycled in several cases in Bittensor operations:
 
 Subnet-specific alpha tokens are burned in several contexts:
 
-- **Creator emissions burning**: Alpha emissions for mining on a subnet are automatically burned if they are emitted to the hotkey with creator permissions on the subnet. This allows validators to burn some or all of the subnet's emissions to prevent token inflation (by weighting the subnet creator hotkey).
+- **Creator emissions burning**: Alpha emissions for mining on a subnet are automatically burned if they are emitted to the hotkey with creator permissions on the subnet, or if they are emitted to a hotkey controlled by the subnet owner's coldkey. This allows validators to burn some or all of the subnet's emissions to prevent token inflation (by weighting the subnet creator hotkey).
 - **Extrinsic transaction**: Alpha can be burned on demand using the `burn_alpha` Subtensor extrinsic. Unlike recycling, burning does not reduce `SubnetAlphaOut`.
 - **Root Subnet automated burning**: Subnet Zero (Root Subnet) alpha tokens are burned under specific economic conditions to maintain system stability.
 
@@ -516,9 +610,47 @@ The process of recreating a lost or deleted coldkey or hotkey using the associat
 
 ### Register
 
-The process of registering keys with a subnet and purchasing a UID slot.
+The process of registering keys with a subnet and purchasing a UID slot by paying the **dynamic neuron registration burn** (TAO). The burn price is bounded by **`MinBurn`** and **`MaxBurn`**, decays over time (governed by `BurnHalfLife`), and increases on each registration (scaled by `BurnIncreaseMult`). The extrinsics `register` and `burned_register` share the same non-root burn path. **Root** registration is separate.
 
-**See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/), [Working with Subnets](../subnets/working-with-subnets.md)
+**See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/), [Working with Subnets](../subnets/working-with-subnets.md), [Understanding Neurons](../learn/neurons.md)
+
+### Relative stake weight
+
+A validator's relative stake weight in a subnet is the validator's individual stake expressed as a proportion of the total stake held by all active validators within the subnet. It measures a single validator's "share" of the total pool and directly determines how much influence their votes have on miner scoring and the distribution of network emissions.
+
+A validator's relative influence in a subnet is calculated as:
+
+$$
+\text{Relative Stake Weight} = \frac{\text{Stake Weight}_i}{\sum_{v \in \text{validators}} \text{Stake Weight}_v}
+$$
+
+### Root Proportion
+
+For a given subnet, the relative weight of TAO staked to validators on that subnet through staking to the Root Subnet (rather than directly to the subnet). Mathematically it is the ratio of stake on Root to the total issuance of the subnet's alpha token.
+
+**Properties:**
+
+- **Range**: [0, 1] representing the proportion of dividends going to root stakers
+- **Higher root proportion**: More of the total stake in the subnet is held by stakers in root, rather than directly in the subnet.
+- **Lower root proportion**: More dividends remain as alpha for subnet stakers
+
+**Mathematical Definition:**
+
+$$
+\text{Root proportion} = \frac{\text{Root TAO} \times \text{TAO weight}}{\text{Root TAO} \times \text{TAO weight} + \text{alpha issuance}}
+$$
+
+Where:
+
+- `Root TAO`: Total TAO staked in Root Subnet
+- `TAO weight`: Global parameter ([TAO Weight](#tao-weight)) determining TAO vs alpha influence (currently 0.18)
+
+See also:
+
+- [Root Subnet/Subnet Zero](#root-subnetsubnet-zero)
+- [TAO Weight](#tao-weight)
+- [Coinbase Implementation](../navigating-subtensor/emissions-coinbase.md#6-calculating-root-proportion)
+- [Emissions](../learn/emissions.md)
 
 ### Root Subnet/Subnet Zero
 
@@ -577,6 +709,8 @@ $$
 \text{Relative Stake Weight} = \frac{\text{Stake Weight}_i}{\sum_{v \in \text{validators}} \text{Stake Weight}_v}
 $$
 
+See [Relative stake weight](#relative-stake-weight).
+
 **Consensus Power:**
 
 - **Weight Setting**: Higher stake weight means more influence when setting weights
@@ -596,7 +730,12 @@ $$
 
 The process of attaching TAO to a validator hotkey, i.e., locking TAO to a subnet validator's hotkey to increase their total stake and increase their consensus power and share of dividends.
 
-**See also:** [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md), [Delegation](../staking-and-delegation/delegation.md)
+**See also:**
+
+- [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md)
+- [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
+- [Delegation](../staking-and-delegation/delegation.md)
+- [Browse validators on TAO.app](https://www.tao.app/validators)
 
 ### Subnet
 
@@ -636,7 +775,7 @@ A key component of any incentive mechanism that defines the work the subnet mine
 
 ### Subnet Weights
 
-The importance assigned to each subnet determined by relative price among subnets and used to determine the percentage emissions to subnets.
+The importance assigned to each subnet determined by net TAO flows (staking minus unstaking activity) and used to determine the percentage emissions to subnets. As of November 2025, this is based on EMA-smoothed TAO flows rather than token prices.
 
 **See also:** [Emissions](../learn/emissions.md), [Consensus-Based Weights](../concepts/consensus-based-weights.md)
 
@@ -664,7 +803,7 @@ A data object used by subnet validators and subnet miners as the main vehicle to
 
 ### TAO ($\tau$)
 
-The cryptocurrency of the Bittensor network, used to incentivize participation in network activities (mining, validation, subnet creation and management). A single TAO is newly created (i.e., minted) every 12 seconds on the Bittensor blockchain.
+The cryptocurrency of the Bittensor network, used to incentivize participation in network activities (mining, validation, subnet creation and management). Currently, 0.5 TAO is minted every 12 seconds on the Bittensor blockchain.
 
 **See also:** [Emissions](../learn/emissions.md), [Wallets](../keys/wallets.md)
 
@@ -676,7 +815,7 @@ A global parameter (currently set to 0.18) that determines the relative influenc
 
 ### Tempo
 
-A 360-block period during which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo occurs every 4320 seconds or 72 minutes.
+Tempo is a subnet-specific hyperparameter that determines how frequently epochs run. It is a 360-block period over which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo passes every 4320 seconds or ~72 minutes.
 
 **See also:** [Yuma Consensus](../learn/yuma-consensus.md), [Emissions](../learn/emissions.md)
 
@@ -758,9 +897,24 @@ A position occupied by a subnet miner or subnet validator within a subnet, ident
 
 ### Unstaking
 
-The process of detaching TAO from a validator hotkey.
+The process of withdrawing staked TAO from a validator hotkey, converting subnet-specific alpha tokens back to TAO through the subnet's automated market maker (AMM). Unstaking operations are subject to slippage—the transaction impacts pool prices, with larger amounts experiencing more slippage. Bittensor provides price protection mechanisms including tolerance limits and partial execution options to guard against unfavorable exchange rates.
 
-**See also:** [Staking/Delegation overview](../staking-and-delegation/delegation.md)
+When you unstake:
+
+1. Alpha tokens are removed from the validator's hotkey and added to the subnet's alpha reserves
+2. The AMM calculates equivalent TAO using the current exchange rate
+3. TAO is removed from the subnet's TAO reserves and transferred to your coldkey
+
+Unstaking incurs blockchain transaction fees, which are recycled back into the TAO emission pool.
+
+**See also:**
+
+- [Staking/Delegation overview](../staking-and-delegation/delegation.md#unstaking)
+- [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md#unstaking-with-btcli)
+- [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md#unstaking-from-a-validator)
+- [Understanding Pricing and Anticipating Slippage](../learn/slippage.md)
+- [Price Protection When Staking](../learn/price-protection.md)
+- [Transaction Fees](../learn/fees.md)
 
 ## V
 
@@ -776,11 +930,14 @@ A list of subnet IDs (netuids) indicating which subnets a delegate is authorized
 
 **See also:** [Validator Permits](#validator-permit), [Delegation](../staking-and-delegation/delegation.md), [Validator Requirements](../validators/index.md#requirements-for-validation)
 
-### Validator
+### Validator (or subnet validator) {#subnet-validator}
 
-A type of node in a subnet that creates tasks, evaluates the performance of subnet miners and sets weights based on their output. A subnet validator is connected only to subnet miners and to the external world. Subnet validators receive inputs from the external world and communicate bidirectionally with subnet miners.
+A type of node in a subnet that evaluates the performance of miners and sets weights based on their output
 
-**See also:** [Subnet Validators](../validators/), [Validators btcli Guide](../validators/validators-btcli-guide.md)
+**See also:**
+
+- [Validating in Bittensor](../validators/)
+- [Browse validators on TAO.app](https://www.tao.app/validators)
 
 ### Validator Trust
 
@@ -953,6 +1110,10 @@ A unique identifier derived from the public key, used as a destination for sendi
 The directory path where the generated Bittensor wallets are stored locally on the user's machine.
 
 **See also:** [Wallets](../keys/wallets.md), [Installation](../getting-started/installation.md)
+
+### Weight Copying
+
+A free-riding exploit possible for validators, which can be guarded against using Commit Reveal.
 
 ### Weight Matrix
 

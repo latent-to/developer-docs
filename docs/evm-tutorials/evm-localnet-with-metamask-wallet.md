@@ -9,7 +9,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 This page covers getting set up to use EVM on a locally deployed Bittensor blockchain.
 
-Consider first trying [EVM with Bittensor testnet](./evm-testnet-with-metamask-wallet.md). This allows you to try EVM without having to deploy a blockchain locally, but you will have to obtain testnet TAO by inquiring in discord, or by completing the [BTCLI playground](../btcli/btcli-playground)challenge to obtain testnet TAO.
+Consider first trying [EVM with Bittensor testnet](./evm-testnet-with-metamask-wallet.md). This allows you to try EVM without having to deploy a blockchain locally, but you will have to obtain testnet TAO by inquiring in discord. Alternatively, you can [run a local Bittensor blockchain instance](../local-build/deploy.md).
 
 Key values:
 

@@ -1,18 +1,21 @@
 ---
-title: "Bittensor SDK v10.0 Migration Guide"
+title: "Bittensor SDK v10 Migration Guide"
 ---
 
-# Bittensor SDK v10.0 Migration Guide
+import { SdkVersion } from "./\_sdk-version.mdx";
 
-This page documents breaking changes and new features for the Bittensor Python SDK `v10.0`. This is a major release with significant refactoring, standardization, and new functionality.
+# Bittensor SDK v10 Migration Guide
+
+This page documents breaking changes and new features for the Bittensor Python SDK `v10`. This is a major release with significant refactoring, standardization, and new functionality.
 
 See [Bittensor Python SDK Reference Docs](./bt-api-ref)
 
 ## Executive Summary
 
-Bittensor SDK v10.0 is a **major breaking release** with significant improvements to consistency, type safety, and functionality. Key changes include:
+Bittensor SDK v10 is a **major breaking release** with significant improvements to consistency, type safety, and functionality. Key changes include:
 
 **Breaking Changes:**
+
 - **Python 3.10+ required** - Python 3.9 no longer supported ([details](#python-version-support))
 - **ExtrinsicResponse return type** - All blockchain transaction functions now return structured `ExtrinsicResponse` objects instead of `bool` or tuples ([details](#extrinsicresponse-return-type))
 - **Strict Balance type checking** - All amount parameters require `Balance` objects. ([details](#balance-handling))
@@ -20,13 +23,19 @@ Bittensor SDK v10.0 is a **major breaking release** with significant improvement
 - **Method renames and removals** - Several methods renamed or removed for consistency ([details](#breaking-changes-method-renames))
 
 **New Features:**
+
 - **Multiple Incentive Mechanisms** - Full SDK support for running multiple evaluation mechanisms per subnet with independent weight matrices and emissions ([details](#multiple-incentive-mechanisms-support))
+- **Root claim implementation**: Adds support for setting and managing root claims directly through the SDK
+- **Proxy implementation**: Complete SDK support for creating, managing, and executing calls through proxy accounts ([details](#proxy-support))
 - **Crowdloan implementation**: Adds support for creating, managing, and interacting with crowdloans directly through the SDK
+- **MEV Shield protection**: Encrypt transactions to protect against front-running and MEV attacks ([details](./mev-protection.md))
+- **GenericCall and CallBuilder** - Create, compose, and submit blockchain calls with enhanced validation ([details](./call.md))
 - **Transaction simulation** - `sim_swap()` calculates exact token yields without executing transactions ([details](#simulate-token-swaps))
 - **Fee estimation** - `get_extrinsic_fee()` estimates blockchain transaction costs before submission ([details](#estimate-transaction-fees))
 - **BlockInfo class** - Rich blockchain block information objects ([details](#blockinfo-class))
 
 **Major Improvements:**
+
 - Standardized parameter ordering across all functions ([details](#standardized-parameters))
 - Centralized extrinsic parameters in `bittensor.core.extrinsics.params` ([details](#extrinsic-parameters-package))
 - Enhanced metagraph support for mechanism-specific queries ([details](#metagraph-changes))
@@ -37,14 +46,12 @@ See the [Migration Checklist](#migration-checklist) for step-by-step upgrade ins
 
 ---
 
-
 ## Python Version Support
 
 **Python 3.9 is no longer supported.** The SDK now requires **Python 3.10 or higher**.
 
-
-
 ## New Features
+
 ### Structured Extrinsic Responses (ExtrinsicResponse)
 
 `ExtrinsicResponse` provides rich, structured data for both outgoing requests and incoming on-chain results. While it is a breaking change in return types, it primarily unlocks better development, testing, and debugging workflows by standardizing success flags, messages, fees, receipts, and operation-specific data in one object.
@@ -55,15 +62,11 @@ See the [Migration Checklist](#migration-checklist) for step-by-step upgrade ins
 
 See details: [ExtrinsicResponse Return Type](#extrinsicresponse-return-type)
 
-
-
-
 ### Multiple Incentive Mechanisms Support
 
 Full SDK support for **multiple incentive mechanisms within subnets** is now implemented, a major new Subtensor blockchain feature.
 
 Previously referred to as "sub-subnets" during development, this feature allows subnet creators to run multiple independent evaluation mechanisms within a single subnet, each with separate weight matrices, bond pools, and emission distributions. This is a significant architectural change that enables more sophisticated subnet designs. See [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets) for a complete overview.
-
 
 **Key Concepts:**
 
@@ -71,8 +74,9 @@ Previously referred to as "sub-subnets" during development, this feature allows 
 - **Default behavior**: All methods default to `mechid=0`, so existing single-mechanism subnets work unchanged
 - **Backward compatible**: Subnets with only one mechanism (the default) don't need code changes
 
-
 #### Setting Mechanism Weights:
+
+<SdkVersion />
 
 Validators must set weights independently for each mechanism in a subnet:
 
@@ -93,6 +97,12 @@ mechanism2_response = subtensor.set_weights(wallet, netuid=1, uids, weights2, me
 
 #### Querying Mechanism-Specific Data on the Metagraph:
 
+### Proxy Support
+
+Full SDK support for **proxy accounts** is now implemented. Proxies allow one wallet to perform Bittensor operations on behalf of another, enabling enhanced security by keeping your main coldkey in cold storage while a proxy handles day-to-day operations.
+
+See [Proxies: Overview](../keys/proxies/index.md) and [Working with Proxies](../keys/proxies/working-with-proxies.md) for complete documentation.
+
 All metagraph queries now accept a `mechid` parameter:
 
 ```python
@@ -109,7 +119,7 @@ bonds = subtensor.bonds(netuid=1, mechid=0)
 commits = subtensor.get_timelocked_weight_commits(netuid=1, mechid=0)
 ```
 
-###  Simulate Token Swaps
+### Simulate Token Swaps
 
 `sim_swap()` calculates the **exact token yields** for stake or unstake operations at a given block, without actually executing the transaction.
 
@@ -136,32 +146,29 @@ result = subtensor.sim_swap(
 
 ### Build Extrinsic Calls
 
-Compose an extrinsic call without submitting it to the blockchain with `compose_call`. Useful for fee estimation and transaction preparation.
+Compose an extrinsic call without submitting it to the blockchain with `compose_call` or `CallBuilder`. Useful for fee estimation, transaction preparation, proxies, crowdloans, and MEV protection.
 
 ```python
-from bittensor.core.extrinsics.params import StakingParams
-
 # Compose a call for later submission or fee estimation
 call = subtensor.compose_call(
     call_module="SubtensorModule",
     call_function="add_stake",
-    call_params=StakingParams.add_stake(
-        netuid=1,
-        hotkey_ss58=hotkey_ss58,
-        amount=amount
-    )
+    call_params={
+        "netuid": 1,
+        "hotkey": hotkey_ss58,
+        "amount_staked": amount.rao
+    }
 )
 
 # Use the composed call to estimate fees (requires keypair)
 fee = subtensor.get_extrinsic_fee(call, wallet.coldkeypub)
 ```
 
-
-
+For detailed documentation on `GenericCall`, `CallBuilder`, and practical examples including proxy calls and MEV protection, see **[Working with Blockchain Calls](./call.md)**.
 
 ### SimSwap Fee Calculation Methods
 
-The SDK now provides dedicated methods for calculating swap-based fees for staking operations. These methods use the new `sim_swap()` functionality (see [New Subtensor Methods](#new-subtensor-methods)) to query the Subtensor blockchain and return precise fee calculations:
+The SDK now provides dedicated methods for calculating swap-based fees for staking operations. These methods use the new `sim_swap()` functionality to query the Subtensor blockchain and return precise fee calculations:
 
 ```python
 # Get fee for adding stake (staking operation)
@@ -177,7 +184,6 @@ fee = subtensor.get_unstake_fee(netuid, amount)
 ```
 
 **Note:** These are **application-level swap fees** (0.05% of transacted liquidity), separate from **blockchain transaction fees** (weight-based). See [Transaction Fees in Bittensor](../learn/fees) for details on both fee types.
-
 
 ### Verbose Logging Control
 
@@ -218,6 +224,7 @@ for extrinsic in block.extrinsics:
 ```
 
 **BlockInfo attributes:**
+
 - **`number`** (int): The block number
 - **`hash`** (str): The block hash
 - **`timestamp`** (Optional[int]): Unix timestamp when the block was created (from `Timestamp.Now` extrinsic)
@@ -226,6 +233,7 @@ for extrinsic in block.extrinsics:
 - **`explorer`** (str): Direct link to view the block on [tao.app/](https://tao.app) block explorer
 
 **Use cases:**
+
 - Inspect transaction history and block contents
 - Debug blockchain interactions
 - Verify transaction inclusion in specific blocks
@@ -254,32 +262,33 @@ New developer testing utilities provide helpers and fixtures for rapid local tes
 
 Learn more: [`bittensor/extras/dev_framework`](https://github.com/opentensor/bittensor/tree/SDKv10/bittensor/extras/dev_framework)
 
-
 ### Estimate Transaction Fees
 
-Query the estimated fee for submitting an extrinsic to the Subtensor blockchain before actually sending it, with ``get_extrinsic_fee()`.
+Query the estimated fee for submitting an extrinsic to the Subtensor blockchain before actually sending it, with `get_extrinsic_fee()`.
 
 ```python
-# Estimate the fee for a transfer extrinsic
-extrinsic = subtensor.compose_call(
+# Compose a call first
+call = subtensor.compose_call(
     call_module="Balances",
     call_function="transfer_keep_alive",
-    call_params={
-        "dest": destination_address,
-        "value": amount.rao
-    }
+    call_params={"dest": destination_address, "value": amount.rao}
 )
-fee = subtensor.get_extrinsic_fee(extrinsic, wallet.coldkeypub)
+
+# Estimate fee without submitting
+fee = subtensor.get_extrinsic_fee(call, wallet.coldkeypub)
 print(f"Estimated fee: {fee}")  # Returns Balance object
 ```
 
 **Use cases:**
+
 - Check if wallet has sufficient balance before submitting transactions
 - Display estimated costs to users
 - Optimize transaction batching based on fee estimates
 
-See also: [Transaction Fees in Bittensor](../learn/fees) for complete fee information.
+See also:
 
+- [Working with Blockchain Calls](./call.md) for more examples of composing and submitting calls
+- [Transaction Fees in Bittensor](../learn/fees) for complete fee information
 
 ### Parameter Validation
 
@@ -333,8 +342,6 @@ The `blocks_since_last_update` method has been improved and can now be used to q
 # Query blocks since last update with archive node support
 blocks = subtensor.blocks_since_last_update(netuid=1, uid=0)
 ```
-
-
 
 ## Breaking Changes: Method Renames
 
@@ -395,7 +402,7 @@ commits_v2 = subtensor.get_current_weight_commit_info_v2(netuid, mechid)
 commits = subtensor.get_timelocked_weight_commits(netuid, mechid)
 ```
 
-## Breaking Changes: Parameter Changes
+## Breaking Changes: Parameter Changes {#parameter-changes}
 
 ### Consistent Parameter Ordering
 
@@ -412,6 +419,7 @@ subtensor.move_stake(wallet, origin_netuid, origin_hotkey_ss58, destination_netu
 ```
 
 **Methods with reordered parameters:**
+
 - `add_stake_multiple`
 - `set_children`
 - `move_stake`
@@ -489,7 +497,25 @@ fee = subtensor.get_transfer_fee(wallet, destination, amount)
 
 The `value` parameter has been renamed to `amount` for consistency with other amount parameters across the SDK.
 
-## Breaking Changes:Removed Methods
+#### Weight Setting Methods Parameter Rename
+
+The following weight-setting methods have renamed `max_retries` to `max_attempts`:
+
+```python
+# ❌ Old:
+subtensor.commit_weights(wallet, netuid, uids, weights, max_retries=5)
+subtensor.reveal_weights(wallet, netuid, uids, weights, salt, max_retries=5)
+subtensor.set_weights(wallet, netuid, uids, weights, max_retries=5)
+
+# ✅ New:
+subtensor.commit_weights(wallet, netuid, uids, weights, max_attempts=5)
+subtensor.reveal_weights(wallet, netuid, uids, weights, salt, max_attempts=5)
+subtensor.set_weights(wallet, netuid, uids, weights, max_attempts=5)
+```
+
+**New Validation:** The `max_attempts` parameter now includes validation. If `max_attempts=0` or negative, the method will return an `ExtrinsicResponse` with `success=False` and an appropriate error message instead of attempting the operation.
+
+## Breaking Changes:Removed Methods {#removed-methods}
 
 ### Duplicate References
 
@@ -554,6 +580,49 @@ This ensures the SDK function response correctly reflects the blockchain transac
 When `raise_error=False`, extrinsic functions do not raise exceptions; all error information is captured inside the returned `ExtrinsicResponse` object. Set `raise_error=True` if you prefer exceptions to be raised directly for error cases.
 :::
 
+### Keyword-Only Arguments
+
+All extrinsics and related `Subtensor` methods now use **keyword-only arguments** (indicated by `*,` in the function signature). This means that certain parameters must be passed by name rather than position, improving code clarity and preventing accidental argument misplacement.
+
+The `*` symbol in Python function signatures creates a boundary: all parameters after `*` must be passed as keyword arguments. This helps prevent bugs from positional argument confusion, especially when functions have many parameters.
+
+#### Example: Keyword-Only Arguments
+
+```python
+# Before (positional arguments could cause confusion):
+subtensor.add_stake(
+    wallet,
+    1,
+    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+    amount,
+    False,
+    False,
+    0.005,
+    False,
+    None,
+    False,
+    True,
+    True
+)
+# Which parameter is which? Hard to tell!
+
+# After (keyword-only arguments enforce clarity):
+subtensor.add_stake(
+    wallet,
+    1,
+    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+    amount,
+    False,
+    False,
+    0.005,
+    mev_protection=True,  # Must be passed by name if provided
+    period=None,  # Must be passed by name if provided
+    raise_error=False,  # Must be passed by name if provided
+    wait_for_inclusion=True,  # Must be passed by name if provided
+    wait_for_finalization=True  # Must be passed by name if provided
+)
+```
+
 ### ExtrinsicResponse Return Type
 
 All SDK functions that submit extrinsics to the blockchain now return an `ExtrinsicResponse` object instead of `bool` or tuples.
@@ -570,7 +639,6 @@ All SDK functions that submit extrinsics to the blockchain now return an `Extrin
   - Metadata: `{"encrypted": bytes, "reveal_round": int}`
   - Stake operations: balance information
 - **`error`**: Python exception for programmatic error handling when `raise_error=False`
-
 
 See [source code](https://github.com/opentensor/bittensor/blob/main/bittensor/core/types.py#L290-L484).
 
@@ -591,6 +659,7 @@ subtensor.move_stake(wallet, origin_netuid, origin_hotkey_ss58, destination_netu
 ```
 
 **Affected methods:**
+
 - `hotkey` → `hotkey_ss58` (all methods)
 - `hotkey_ss58_address` → `hotkey_ss58` (all methods)
 - `coldkey` → `coldkey_ss58` (all methods)
@@ -657,6 +726,7 @@ subtensor.add_stake(
 ```
 
 **Affected functions:**
+
 - `add_stake_extrinsic`: `netuid`, `hotkey_ss58`, `amount` now required
 - `add_stake_multiple_extrinsic`: `amounts` now required
 - `unstake_extrinsic`: `netuid`, `hotkey_ss58`, `amount` now required
@@ -749,7 +819,6 @@ response_dec = set_take_extrinsic(
 )
 ```
 
-
 **Note:** The method automatically calls `increase_take` or `decrease_take` internally based on whether the new take is higher or lower than the current take.
 
 #### Mechanism-specific weight functions consolidated
@@ -772,9 +841,6 @@ from bittensor.core.extrinsics.weights import (
     set_weights_extrinsic,
 )
 ```
-
-
-
 
 ## Balance Handling
 
@@ -853,6 +919,7 @@ subtensor.transfer(wallet, destination, rao(1000000000))
 ```
 
 **Affected methods:**
+
 - `transfer`
 - `add_stake`
 - `add_stake_multiple`
@@ -865,8 +932,6 @@ subtensor.transfer(wallet, destination, rao(1000000000))
 - `get_stake_add_fee`
 - `get_stake_movement_fee`
 - `get_unstake_fee`
-
-
 
 ## Import Changes
 
@@ -940,7 +1005,6 @@ Parameters for functions that submit extrinsics are now centralized in a dedicat
 
 This makes it easier to discover available parameters and ensures consistency across sync/async implementations of blockchain transaction functions.
 
-
 ## Environment Variables
 
 ### Renamed Variables
@@ -956,29 +1020,33 @@ BT_SUBTENSOR_NETWORK=local
 ```
 
 **All renamed environment variables:**
+
 - `BT_CHAIN_ENDPOINT` → `BT_SUBTENSOR_CHAIN_ENDPOINT`
 - `BT_NETWORK` → `BT_SUBTENSOR_NETWORK`
 
-### Disabling CLI Argument Parsing
+### Enabling CLI Argument Parsing
 
-If your script uses the SDK and receives unwanted `--config` or other CLI parameters:
+CLI argument passing is disabled by default. Therefore, if your script uses the SDK and receives unwanted `--config` or other CLI parameters, you must explicitly enable this by using the `BT_NO_PARSE_CLI_ARGS`.
 
-```python
-# Set environment variable to disable config processing:
-BT_NO_PARSE_CLI_ARGS=1  # or: true, yes, on
+Set environment variable to `0`, `false`, `no`, or `off` to enable parsing as shown:
 
-# In code:
+```bash
+BT_NO_PARSE_CLI_ARGS=0 python your_script.py --logging.debug
+```
+
+Or in code:
+
+```py
 import os
-os.environ['BT_NO_PARSE_CLI_ARGS'] = '1'
+os.environ['BT_NO_PARSE_CLI_ARGS'] = '0'
 
 from bittensor import Subtensor
-# CLI args will no longer be processed
+# CLI arguments will now be processed by the SDK
 ```
 
 :::tip
-When `BT_NO_PARSE_CLI_ARGS` is set, the SDK skips CLI parsing entirely and falls back to default configuration values defined in `bittensor.core.settings.DEFAULTS` for all configuration options across the SDK. This is useful when embedding the SDK in applications that manage their own configuration.
+CLI parsing is disabled by default (`BT_NO_PARSE_CLI_ARGS=1`). This means that the SDK skips CLI parsing entirely and falls back to default configuration values defined in `bittensor.core.settings.DEFAULTS` for all configuration options across the SDK. This is useful when embedding the SDK in applications that manage their own configuration.
 :::
-
 
 ## Metagraph Changes
 
@@ -997,6 +1065,7 @@ commits = subtensor.get_timelocked_weight_commits(netuid=1, mechid=0)
 ```
 
 **Methods with mechid parameter:**
+
 - `bonds(netuid, mechid=0, block=None)`
 - `weights(netuid, mechid=0, block=None)`
 - `metagraph(netuid, mechid=0, lite=True, block=None)`
@@ -1026,7 +1095,6 @@ info = MetagraphInfo(
 ### Async Metagraph Initialization
 
 The async `AsyncMetagraph.sync` method no longer terminates the subtensor instance after use, improving resource management and allowing for reuse of connections in async contexts.
-
 
 ## Migration Checklist
 

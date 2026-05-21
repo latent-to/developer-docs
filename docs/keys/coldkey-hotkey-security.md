@@ -2,7 +2,7 @@
 title: "Coldkey and Hotkey Workstation Security"
 ---
 
-import { SecurityWarning } from "./_security-warning.mdx";
+import { SecurityWarning } from "./\_security-warning.mdx";
 
 # Coldkey and Hotkey Workstation Security
 
@@ -98,7 +98,7 @@ Even on a minimal or air-gapped machine, follow standard security hygiene:
 
 If you suspect your coldkey may have been leaked, you can request to swap it out of your wallet, using an extrinsic blockchain transaction. This operation has a 5 day waiting period, during which your coldkey will be locked. The cost of this coldkey swap transaction is 0.1 TAO.
 
-See [Rotate/Swap your Coldkey](./schedule-coldkey-swap)
+See [Rotate/Swap your Coldkey](./coldkey-swap)
 
 Effectively, this transfers all of your TAO and alpha stake balances, as well as your `sudo` control over any subnets you have created:
 
@@ -109,6 +109,26 @@ Effectively, this transfers all of your TAO and alpha stake balances, as well as
 - The list of staking hotkeys transfers from the old coldkey to the new coldkey.
 - For each hotkey owned by the old coldkey, ownership transfers to the new coldkey. The list of owned hotkeys for both old and new coldkeys updates.
 - Any remaining balances transfer from the old coldkey to the new coldkey.
+
+### Proxy wallets for coldkey protection
+
+**Proxies are one of the most effective tools for protecting your coldkey** while maintaining operational flexibility. By setting up proxy relationships, you can perform routine operations like staking without exposing your coldkey to any online environment.
+
+Key benefits:
+
+- **Least-privilege permissions**: Configure proxies with only the specific permissions needed (e.g., `Staking` type for stake management only)
+- **Time-delayed operations**: Set a non-zero delay so you have time to reject unauthorized transactions if a proxy is compromised
+- **Coldkey stays in cold storage**: Your high-value coldkey never needs to leave secure offline storage for day-to-day operations
+
+:::warning Zero-delay proxies
+A proxy with `delay: 0` and `ProxyType: Any` offers **no additional security** over direct coldkey access. Always use the narrowest `ProxyType` possible and consider adding delays for high-value operations.
+:::
+
+See:
+
+- [Proxies: Overview](./proxies/index.md)
+- [Working with Proxies](./proxies/working-with-proxies.md)
+- [Staking with a Proxy](./proxies/staking-with-proxy.md)
 
 ### Hardware Wallets and Hardware Security Modules (HSMs)
 

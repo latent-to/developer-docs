@@ -46,14 +46,6 @@ btcli subnet burn-cost --network test
 </codapi-snippet>
 :::
 
-### A new subnet is not automatically active
-
-To allow subnet owners to fully set up their subnets and to prevent extraction of emissions to subnet participants before the subnet is contributing to the network, new subnets are inactive and cannot be started for 7 \* 7200 blocks (roughly one week) after they are registered. During this time, you can register and activate validators and invite miners into the subnet.
-
-:::info
-The subnet and its participants will receive **no emissions** during the time that the subnet is inactive.
-:::
-
 ### Validating in your own subnet
 
 You must meet the same [requirements for validation](../validators#requirements-for-validation) as other validators in order to set weights in your own subnet.
@@ -62,7 +54,7 @@ One option for subnet owners is to ask one of the root network (subnet 0) valida
 
 ### Subnet creation rate limits
 
-Subnet creations are limited to **one subnet creation per 7200 blocks** (approximately one per day). The cost to register a new subnet is also dynamic. For these reason, picking the right time to create your subnet requires planning.
+Subnet creations are limited to **one subnet creation per 14400 blocks** (approximately one every two days). The cost to register a new subnet is also dynamic. For these reason, picking the right time to create your subnet requires planning.
 
 ## Prerequisites
 
@@ -118,21 +110,14 @@ Output:
 ✅ Registered subnetwork with netuid: 1 # Your subnet netuid will show here, save this for later.
 ```
 
-### Check to see if you can start the subnet
+:::info starting a subnet
 
-Use the below command to check whether the subnet can be started.
-
-```bash
-btcli subnet check-start --netuid x
-```
-
-Where "x" is the subnet ID.
-
-The output will provide you with the block registered and the block at which the subnet can be started, with "blocks remaining" and an estimated time. When this time has passed, the `check-start` command will return `Emission schedule can be started.`
+Newly created subnets are inactive by default and do not begin emitting until they have been started by the subnet owner. This allows subnet owners to configure the subnet, register and activate validators, and onboard miners before activation.
+:::
 
 ### Start the subnet
 
-Use the below command to start the subnet once `check-start` returns `Emission schedule can be started.`
+Use the following command to start the subnet:
 
 ```bash
 btcli subnet start --netuid x

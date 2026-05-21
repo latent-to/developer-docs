@@ -14,10 +14,17 @@ For detailed procedures for handling wallets and keys, see: [Working with keys](
 
 For detailed security considerations, see: [Coldkey and Hotkey Workstation Security](./coldkey-hotkey-security.md)
 
+:::tip Protect your coldkey with proxies
+For operations you perform regularly (like staking), consider using **proxy wallets** to keep your coldkey in secure cold storage. Proxies allow limited, delayed operations on behalf of your main wallet—if a proxy is compromised, delays give you time to reject unauthorized transactions, and restricted permissions limit the damage.
+
+See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey with least-privilege proxy relationships.
+:::
+
 ## What are wallets and keys?
 
-There are many different _wallet applications_, but the core of your wallet is one or more cryptographic key-pairs, referred to as **coldkey** and **hotkey**.
-Each is actually a cryptographic [key-pair](https://en.wikipedia.org/wiki/Public-key_cryptography), a private and a public key.
+The core of your wallet is one or more cryptographic key-pairs, referred to as **coldkey** and **hotkey**. Your wallet essentially consists of the records associated with your key-pairs on the blockchain, including your balances of TAO and alpha currencies, and your history of transactions and interactions with subnets and other wallets (such as mining or validating).
+
+Each coldkey or hotkey is actually a cryptographic [key-pair](https://en.wikipedia.org/wiki/Public-key_cryptography)with a private and a public key.
 The public key is mathematically derived from the private key.
 The private key is a closely held secret: it allows the owner to sign transactions and decrypt secrets, essentially serving as a cryptographic authentication or identity.
 This is a general feature of decentralized, trustless systems like distributed ledgers/blockchains: your private key _is_ your identity, in that theft or loss of your key results in _unrecoverable_ loss of access.
@@ -28,6 +35,15 @@ The coldkey private key is needed to authorize highly sensitive operations invol
 
 The coldkey public key uniquely identifies a wallet on the network and serves as its address for transactions. To transfer ownership of TAO or alpha stake from one wallet to another, the sender needs only the public key of the recipient, and their own private key.
 
+:::info Existential deposit
+
+An existential deposit is the minumum required TAO in a wallet (i.e., in a coldkey).
+If a wallet balance goes below the existential deposit, then this wallet account is deactivated and the remaining TAO in it is destroyed.
+**This is set to 500 RAO for any Bittensor wallet**.
+
+See also [What is the Existential Deposit?](https://support.polkadot.network/support/solutions/articles/65000168651-what-is-the-existential-deposit-).
+:::
+
 ## Wallets and wallet applications
 
 We must be careful to distinguish two senses of the term 'wallet' that can otherwise be confusing:
@@ -37,6 +53,7 @@ We must be careful to distinguish two senses of the term 'wallet' that can other
 - The **wallet application** is software that runs on your device and allows you to interact with the blockchain by entering your keys. There are several officially supported Bittensor wallet applications:
 
   - The Bittensor wallet app for mobile: [bittensor.com/wallet](https://bittensor.com/wallet)
+  - [The Crucible wallet](https://cruciblelabs.com) a Tao wallet featuring an auto-allocator for dynamic TAO staking across subnets, with full Ledger integration.
   - [The Polkadot browser extension](https://polkadot.js.org/extension/) which can be used with Polkadot Vault.
 
   - [The Bitensor wallet browser extension](https://chromewebstore.google.com/detail/bittensor-wallet/bdgmdoedahdcjmpmifafdhnffjinddgc), which is also compatible with use of a Ledger hardware wallet. See [Using Ledger Hardware Wallet](../staking-and-delegation/using-ledger-hw-wallet.md)
@@ -87,10 +104,11 @@ In theory this means that without your encryption password, it is impossible to 
 However, still consider that using your coldkey on a device offers other ways for attackers to steal your key, even without decrypting it.
 See [Coldkey workstation security](./coldkey-hotkey-security#coldkey-workstation).
 
-Secure wallet apps supported by Opentensor Foundation include:
+Secure wallet apps include:
 
-- The Bittensor wallet app for mobile: [bittensor.com/wallet](https://bittensor.com/wallet)
-- [The Chrome extension](https://chromewebstore.google.com/detail/bittensor-wallet/bdgmdoedahdcjmpmifafdhnffjinddgc), which is also compatible with use of a Ledger hardware wallet. See [Using Ledger Hardware Wallet](../staking-and-delegation/using-ledger-hw-wallet.md)
+- The Bittensor wallet app for mobile, by Opentensor Foundation: [bittensor.com/wallet](https://bittensor.com/wallet)
+- [The Chrome extension](https://chromewebstore.google.com/detail/bittensor-wallet/bdgmdoedahdcjmpmifafdhnffjinddgc), which is also compatible with use of a Ledger hardware wallet, by Opentensor Foundation. See [Using Ledger Hardware Wallet](../staking-and-delegation/using-ledger-hw-wallet.md)
+- [The Crucible wallet](https://cruciblelabs.com) by Crucible Labs a Tao wallet featuring an auto-allocator for dynamic TAO staking across subnets, with full Ledger integration.
 
 ### `btcli` and the Bittensor Python SDK
 
@@ -128,13 +146,6 @@ style={{width: 750}}
 
 <br /> -->
 
-### Existential deposit
-
-An existential deposit is the minumum required TAO in a wallet (i.e., in a coldkey).
-If a wallet balance goes below the existential deposit, then this wallet account is deactivated and the remaining TAO in it is destroyed.
-**This is set to 500 RAO for any Bittensor wallet**.
-
-See also [What is the Existential Deposit?](https://support.polkadot.network/support/solutions/articles/65000168651-what-is-the-existential-deposit-).
 
 ## Hotkey details
 

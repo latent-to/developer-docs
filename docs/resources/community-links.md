@@ -14,16 +14,16 @@ You can also explore Bittensor's many Subnets and find links to their websites a
 - **Podcast**: [Novelty Search](https://www.youtube.com/@Opentensor/podcasts) - Official Opentensor Foundation podcast
 - **Discord**: [Join the Bittensor Discord Server](https://discord.com/invite/bittensor) - Connect with the community, ask questions, and stay updated
 
-
 ## Block Explorers
 
-- **[TAO.app](https://tao.app)** - Recommended (maintained by [Latent](https://latent.to/), the team behind these docs and core contributors to the Bittensor ecosystem). Includes [Savant](https://tao.app/savant), the chain explorer AI assistant.
+- **[TAO.app](https://tao.app)**: Recommended, as it is maintained by [Latent](https://latent.to/), the team behind these docs and core contributors to the Bittensor ecosystem. Includes [Savant](https://tao.app/savant), the Bittensor AI assistant capable of querying tokenomic data directly from the blockchain.
 - **[Taostats](https://taostats.io/)**
 - **[Taomarketcap](https://taomarketcap.com/)**
 
 ## Wallet Applications
 
-- **[Bittensor Wallet](https://bittensor.com/wallet)** - Recommended (maintained by OTF).
+- **[Bittensor Wallet](https://www.tao.com/)** - Recommended (maintained by Tao.com).
+- [Crucible wallet](https://cruciblelabs.com/)
 - **[Other Polkadot Wallets](https://polkadot.com/get-started/wallets/)** - Multi-chain wallets capable of interacting with Bittensor.
 
 ## Development Resources
@@ -31,5 +31,3 @@ You can also explore Bittensor's many Subnets and find links to their websites a
 - **[BTCLI](https://github.com/opentensor/btcli)**, the Bittensor CLI
 - The **[Bittensor SDK](https://github.com/opentensor/bittensor)**
 - **[Subtensor](https://github.com/opentensor/subtensor)**, Bittensor's substrate blockchain
-
-

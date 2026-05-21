@@ -6,17 +6,101 @@ title: "Announcements and Developments"
 
 This page tracks recent and upcoming changes to the Bittensor protocol and other major events in the Bittensor ecosystem.
 
-## Bittensor SDK v10
+**April, 2026**
+
+## Neuron registration rework
+
+**Status**: Merged in Subtensor ([PR #2382](https://github.com/opentensor/subtensor/pull/2382)); rolling out with network upgrades. Tracking issue: [#2351](https://github.com/opentensor/subtensor/issues/2351).
+
+- **What**: Non-root neuron (UID) registration moves to a **continuous TAO-burn** model, similar in spirit to subnet registration pricing. Legacy **adjustment-interval** mechanics, separate **burned** vs **PoW** admission paths, and **neuron registration rate limits** (including per-interval caps) are removed on upgraded runtimes.
+- **Extrinsics**: `register` and `burned_register` remain; both use the **same** burn-based flow under the hood (legacy `register` fields are compatibility-only). **`root_register` / root subnet** behavior is **unchanged**.
+- **New owner-tunable pricing hyperparameters**: `BurnHalfLife` (blocks over which the registration cost decays) and `BurnIncreaseMult` (multiplier applied to the current price when a registration succeeds). **`MinBurn`** and **`MaxBurn`** still cap the dynamic price.
+- **Optional slippage guard**: `register_limit` (and the EVM neuron precompile `registerLimit`) lets callers specify a maximum acceptable burn; the call fails if the price would exceed it.
+- **Docs**: See [Understanding Neurons](neurons.md), [Subnet hyperparameters](../subnets/subnet-hyperparameters.md), [Rate limits](chain-rate-limits.md), and [Neuron precompile](../evm-tutorials/neuron-precompile.md). Confirm exact parameter names, types, and defaults on your target network with `btcli subnet hyperparameters` and chain metadata.
+
+**February, 2026**
+
+## Subnet stake burn
 
 **Status**: In development
 
-- **What**: A new major version of the Bittensor SDK is in development and will introduce breaking changes.
+- **What**: Subnet stake burn stake mechanism works as a combination of the `add_stake`/`add_stake_limit` extrinsics and the `burn_alpha` extrinsic. It allows subnet owners to permanently remove alpha from circulation.
 - **Key Features**:
-  - Comprehensive error handling for all extrinsics and related calls.
-  - New standardized extrinsic response class with success status, error objects, receipts, and transaction fees in TAO and alpha.
-  - Amount handling standardized to balance type only for consistent calculations.
+  - Subnets owner calls `add_stake_burn` extrinsic. Extrinsic initially stakes TAO for alpha and immediately burns the acquired alpha.
+  - As a result, the circulating alpha decreases, the AMM pool reserves adjust, and the alpha price updates according to the new reserve ratio.
 
-<!-- For detailed information, see: [Bittensor SDK v10 Migration guide](../subnets/understanding-multiple-mech-subnets). -->
+## Max Subnet Mechanisms
+
+**Status**: In development
+
+- **What**: Maintains current limit of 256 UIDs across all subnet mechanisms.
+- **Key Features**:
+  - Subnet owners must trim UIDs before increasing the mechanism count.
+  - Product of multiplying max UIDs and mechanism count must not excess 256.
+
+**January, 2026**
+
+## Updated coldkey swap mechanism
+
+**Status**: In development
+
+- **What**: Coldkey swap transitions from a schedule-based system to an "Announce-and-Execute" workflow, requiring users to finalize the swap after a mandatory delay.
+- **Key Features**:
+  - Swaps are no longer automatic. After announcing, the user must execute the swap by providing the destination coldkey to verify it against the announced hash.
+  - A default waiting period of 36,000 blocks (~5 days) must elapse before the announced swap can be executed.
+  - To prevent spam or frontrunning, a 7,200-block (~1 day) buffer is required after the initial delay expires before a new announcement can be submitted.
+  - The source coldkey is locked upon announcement. Once executed, all TAO, delegated stakes, and subnet ownership transfer to the destination key.
+
+**December, 2025**
+
+## Upcoming TAO halving
+
+The first TAO halving event is approaching, which will reduce block rewards by 50%—0.5 TAO per block. This change means less liquidity will be injected each block into the subnet pools. For more information, see the [TAO halving documentation](../concepts/halving.md).
+
+You can track the halving schedule and countdown on the [tao.app explorer](https://tao.app/halving), which provides real-time block data and the estimated time remaining until the reward reduction occurs.
+
+## Proxies
+
+**Status**: Implemented
+
+- **What**: Proxies allow one wallet to perform Bittensor operations on behalf of another, adding a security layer for valuable wallets.
+- **Key Features**:
+  - Keep high-value coldkeys in cold storage while using proxies for daily operations.
+  - Constrain proxy permissions using `ProxyType` (e.g., staking-only, transfer-only).
+  - Add time-lock delays with public announcements for high-risk actions.
+
+For detailed information, see: [Proxies Overview](../keys/proxies/index.md).
+
+## MEV Shield
+
+**Status**: Implemented
+
+MEV Shield encrypts transactions to protect them from maximal extractable value (MEV) attacks.
+
+For detailed information, see: [MEV Shield](../sdk/mev-protection.md).
+
+## Bittensor SDK v10
+
+**Status**: Released
+
+A new major version of the Bittensor SDK has arrived!
+
+See: [Bittensor SDK v10 Migration guide](../sdk/migration-guide).
+
+---
+
+**October, 2025**
+
+## Root claim
+
+**Status**: Implemented
+
+- **What**: Root claim replaces the automatic selling of root-alpha dividends and allows users to either accumulate their alpha dividends or enable autosell to sell them off immediately.
+- **Key Features**:
+  - Taking no action means your root alpha is kept as Alpha tokens (the new default is `Keep`).
+  - Auto-claims happen automatically and randomly—roughly once every two days per account. Your `Keep`/`Swap` setting will apply.
+  - To swap your alpha to TAO, call the `set_root_claim_type(Swap)` extrinsic.
+  - Manually claim accumulated alpha on specific subnets by calling the `claim_root()` extrinsic and providing the list of subnets.
 
 ## Subnet UID trimming
 
@@ -76,7 +160,6 @@ A percentage fee will be deducted from emissions bound to validator hotkeys thro
 **Status**: Ready for deployment on September 16, 2025
 
 - **Key Changes**:
-
   - Subnet limit remains at 128 initially with no new registrations available immediately
   - Immunity period reduced from 6 months to 4 months from registration block
   - Network rate limit increased to 4 days between registrations

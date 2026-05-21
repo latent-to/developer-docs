@@ -31,10 +31,6 @@ import { VscFileMedia } from "react-icons/vsc";
 
 ## General
 
-## Where can I get answers to my questions about Dynamic TAO?
-
-This [Dynamic TAO FAQ](../dynamic-tao/dtao-faq).
-
 ### Is Bittensor a blockchain or an AI platform?
 
 It is both!
@@ -55,7 +51,7 @@ The work to be performed by miners is set by the subnet creator in the form of t
 
 The validators then rank the quality of the work done by the miners within the subnet. The aggregated scores of the validators determine the quantity of TAO emitted to each miner.
 
-At the same time, validators are also incentivized to do their best work, because their emissionsk depend on how well their miner scorings agree with the general consensus of other validators.
+At the same time, validators are also incentivized to do their best work, because their emissions depend on how well their miner scorings agree with the general consensus of other validators.
 
 ### What exactly is the task of a subnet miner?
 
@@ -89,7 +85,7 @@ Yes indeed. In Bittensor, the work of validating the blockchain is performed by 
 
 ### What is the incentive to be a miner or a validator, or create a subnet?
 
-Bittensor incentivizes participation through emission of TAO. Each day, 7200 TAO are emitted into the network (one TAO every 12 seconds).
+Bittensor incentivizes participation through emission of TAO. Each day, 3600 TAO are emitted into the network (0.5 TAO every 12 seconds).
 
 The emission of TAO within each subnet is as follows:
 
@@ -119,3 +115,9 @@ Browse the subnets at [TAO.app](https://tao.app), or on [Discord](https://discor
 You can keep trying forever, but your success depends on your performance. Mining and validating in a subnet is competitive. If a miner or validator is one of the three lowest in the subnet, it may be de-registered at the end of the tempo, and have to register again.
 
 See [miner deregistration](../miners/index.md#miner-deregistration).
+
+## Who maintains the Bittensor blockchain, software, and documentation?
+
+Bittensor is an open-source project and is open to contributions from the community. Most of the core development on the Subtensor blockchain is done by engineers working for the [Opentensor Foundation](https://github.com/opentensor), a nonprofit organization. The Bittensor CLI (`btcli`), the Bittensor Python SDK, and this documentation, are developed by members of [Latent Holdings](https://latent.to/), a Bittensor development startup that also own maintains the blockchain explorer [tao.app](https://www.tao.app/), the Bittensor AI Assistant [Savant](https://tao.app/savant), and [Subnet 14: TAOHASH](https://taohash.com/).
+
+The Head of Documentation for Bittensor is Michael 'Trexman' Trestman, who can be reached at m@latent.to, on [Github](https://github.com/MichaelTrestman), or [Discord](https://discord.com/users/1025598777425404006).

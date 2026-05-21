@@ -1,55 +1,57 @@
 ---
-title: Subtensor API
+title: SubtensorAPI
 ---
+
+import { SdkVersion } from "./_sdk-version.mdx";
 
 # Subtensor API
 
-
 ## Overview
 
-The SubtensorApi is a unified interface for the Bittensor blockchain. It wraps both the synchronous and asynchronous Subtensor implementations, providing modular access to chain subsystems like wallets, delegates, neurons, and more.
-
+The `SubtensorAPI` is a unified interface for the Bittensor blockchain. It wraps both the synchronous and asynchronous Subtensor implementations, providing modular access to chain subsystems like wallets, delegates, neurons, and more.
 
 ### Modules
 
-All methods are grouped into logical modules for better organization and readability. Some methods may belong to more than one group if they span multiple functional areas. This does not compromise the internal logic — rather, it enhances discoverability and cohesion. Method equivalence between `SubtensorApi` and the original `Subtensor` is automatically verified by test coverage on every pull request (PR).
-
+All methods are grouped into logical modules for better organization and readability. Some methods may belong to more than one group if they span multiple functional areas. This does not compromise the internal logic — rather, it enhances discoverability and cohesion. Method equivalence between `SubtensorAPI` and the original `Subtensor` is automatically verified by test coverage on every pull request (PR).
 
 <details>
   <summary>Subsystem modules</summary>
 
-| Property | Description |
-|----------|-------------|
-| chain | Blockchain interaction methods |
-| commitments | Commitment and reveal logic |
-| delegates | Delegate management tools |
-| extrinsics | Transaction construction and signing |
-| metagraphs | Metagraph data and operations |
-| neurons | Neuron-level APIs |
-| queries | General query endpoints |
-| staking | Staking operations |
-| subnets | Subnet access and management |
-| wallets | Wallet creation, import/export |
+| Property    | Description                          |
+| ----------- | ------------------------------------ |
+| chain       | Blockchain interaction methods       |
+| commitments | Commitment and reveal logic          |
+| crowdloans  | Crowdloan management operations      |
+| delegates   | Delegate management tools            |
+| extrinsics  | Transaction construction and signing |
+| metagraphs  | Metagraph data and operations        |
+| neurons     | Neuron-level APIs                    |
+| queries     | General query endpoints              |
+| staking     | Staking operations                   |
+| subnets     | Subnet access and management         |
+| wallets     | Wallet creation, import/export       |
+
 </details>
 
 ### Configuration
 
-The behavior of the `SubtensorApi` object is configured with the following parameters.
+The behavior of the `SubtensorAPI` object is configured with the following parameters.
+
 <details>
   <summary>Parameters</summary>
 
-| Parameter         | Type              | Description                                                                                              | Default Value                 |
-|-------------------|-------------------|----------------------------------------------------------------------------------------------------------|-------------------------------|
-| `network`         | `str` or `None`   | The network to connect to. If not specified, defaults to `"finney"`.                                        | `None` (interpreted as "finney")|
-| `config`          | `Config` or `None`| Pre-built Bittensor configuration object.                                                                  | `None`                         |
-| `async_subtensor` | `bool`            | Whether to use the asynchronous version of the API.                                                        | `False`                        |
-| `legacy_methods`  | `bool`            | If `True`, all methods from the legacy `Subtensor` class are added to this class.                           | `False`                        |
-| `fallback_endpoints` | `list[str]` or `None`| List of fallback endpoints to use if default or provided network is not available.                                      | `None`                         |
-| `retry_forever`   | `bool`            | If `True`, continuously retries on connection errors until successful.                                      | `False`                        |
-| `log_verbose`     | `bool`            | Enables detailed logging output when set to `True`.                                                        | `False`                        |
-| `mock`            | `bool`            | Enables mock mode for testing without connecting to the blockchain.                                         | `False`                        |
-</details>
+| Parameter            | Type                  | Description                                                                        | Default Value                    |
+| -------------------- | --------------------- | ---------------------------------------------------------------------------------- | -------------------------------- |
+| `network`            | `str` or `None`       | The network to connect to. If not specified, defaults to `"finney"`.               | `None` (interpreted as "finney") |
+| `config`             | `Config` or `None`    | Pre-built Bittensor configuration object.                                          | `None`                           |
+| `async_subtensor`    | `bool`                | Whether to use the asynchronous version of the API.                                | `False`                          |
+| `legacy_methods`     | `bool`                | If `True`, all methods from the legacy `Subtensor` class are added to this class.  | `False`                          |
+| `fallback_endpoints` | `list[str]` or `None` | List of fallback endpoints to use if default or provided network is not available. | `None`                           |
+| `retry_forever`      | `bool`                | If `True`, continuously retries on connection errors until successful.             | `False`                          |
+| `log_verbose`        | `bool`                | Enables detailed logging output when set to `True`.                                | `False`                          |
+| `mock`               | `bool`                | Enables mock mode for testing without connecting to the blockchain.                | `False`                          |
 
+</details>
 
 Reference docs: [SubtensorApi](pathname:///python-api/html/autoapi/bittensor/core/subtensor_api/index.html)
 
@@ -57,12 +59,16 @@ Reference docs: [SubtensorApi](pathname:///python-api/html/autoapi/bittensor/cor
 
 :::tip
 Upgrade to the [latest Bittensor release](https://pypi.org/project/bittensor/).
+
 ```shell
 pip install bittensor
 ```
+
 :::
 
 ### Synchronous (Default)
+
+<SdkVersion />
 
 ```python
 import bittensor as bt
@@ -91,12 +97,12 @@ import bittensor as bt
 sub = bt.SubtensorApi()
 netuid = 14
 
-count = sub.get_mechanism_count(netuid=netuid)
-split = sub.get_mechanism_emission_split(netuid=netuid)
+count = sub.subnets.get_mechanism_count(netuid=netuid)
+split = sub.subnets.get_mechanism_emission_split(netuid=netuid)
 
 # Set weights for mechanism 1
-ok, msg = sub.set_weights(
-    wallet=bt.Wallet("alice"),
+ok, msg = sub.extrinsics.set_weights(
+    wallet=bt.Wallet(name="alice", hotkey="alice"),
     netuid=netuid,
     mechid=1,
     uids=[0,1,2],
@@ -119,6 +125,7 @@ async def main():
 
 asyncio.run(main())
 ```
+
 ### Legacy Method Support
 
 You can enable all legacy methods from the original `Subtensor` class directly on this interface:
@@ -131,6 +138,7 @@ print(sub.bonds(0))  # Classic method usage
 ```
 
 ## Advanced Usage
+
 ### Retry and Fallback RPC Nodes
 
 Enable redundancy and resilience with fallback endpoints and retry logic:
@@ -170,7 +178,7 @@ import bittensor as bt
 
 parser = argparse.ArgumentParser('Miner')
 bt.SubtensorApi.add_args(parser)
-config = bt.config(parser)
+config = bt.Config(parser)
 sub = bt.SubtensorApi(config=config)
 
 print(sub)
@@ -198,4 +206,4 @@ async def main():
         print(await sub.block)
 
 asyncio.run(main())
-``` 
+```

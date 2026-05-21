@@ -29,7 +29,228 @@ This guide assumes that you have a Ledger device and the Ledger Live app install
 Proceed only after you successfully ran the above steps. The rest of this guide is described using Talisman wallet app.
 :::
 
-## Step 1. Connect Talisman app to Ledger device
+
+## Crucible Wallet Set Up
+
+[Video](https://www.youtube.com/watch?v=0crPZTE69Eo)
+
+### Connect Ledger device to Crucible Wallet
+To ensure the connection to Crucible Wallet goes smoothly, make sure you have:
+
+<div style={{paddingLeft: '40px'}}>
+
+>**A. Plugged in your Ledger device into your computer**
+>
+>**B. Unlocked your device by entering your PIN**
+>
+>**C. Opened the Polkadot app on your Ledger**
+
+</div>
+
+Once you have completed the above, follow the steps below to import your Ledger wallet.
+
+#### 1. Open the Crucible Wallet extension and click on **Import Wallet**
+
+      <center id="Crcuible-1.1">
+      <ThemedImage
+      alt="Crcuible-1.1"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-1.1.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-1.1.png'),
+        }}
+      style={{width: 600}}
+      />
+      </center>
+      <br />
+#### 2. Click **Connect Ledger Wallet**
+
+      <center id="Crcuible-1.2">
+      <ThemedImage
+      alt="Crcuible-1.2"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-1.2.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-1.2.png'),
+        }}
+      style={{width: 600}}
+      />
+      </center>
+      <br />
+
+#### 3. Allow USB permissions 
+
+You will be directed to a webpage where you can allow USB permissions. This ensures your Ledger device is discoverable by the Crucible Wallet. When you click “Connect Wallet” the Crucible Wallet will grab your public key and ask you to give a name to your wallet.
+
+      <center id="Crcuible-1.3">
+      <ThemedImage
+      alt="Crcuible-1.3"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-1.3.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-1.3.png'),
+        }}
+      style={{width: 600}}
+      />
+      </center>
+      <br />
+
+Once named, your Ledger is connected — you can now use Crucible Wallet with hardware-level security.
+
+### Stake to Core Alpha
+
+[Video](https://www.youtube.com/watch?v=Jq1cD6kUZiI)
+
+To stake to Core Alpha (automatically reinvests root yield into subnets), click on **Stake to Core Alpha**.
+
+  <center id="Crcuible-2.1">
+      <ThemedImage
+      alt="Crcuible-2.1"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.1.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.1.png'),
+        }}
+      style={{width: 600}}
+      />
+    </center>
+
+You will first need to verify that you own your ledger device by signing a challange. This challange is free, never sent to the blockchain and is use donly to authenticate you with the Crucible Labs server.
+
+  <center id="Crcuible-2.2">
+      <ThemedImage
+      alt="Crcuible-2.2"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.2.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.2.png'),
+        }}
+      style={{width: 600}}
+      />
+  </center>
+
+  <center id="Crcuible-2.5">
+      <ThemedImage
+      alt="Crcuible-2.5"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.5.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.5.png'),
+        }}
+      style={{width: 900}}
+      />
+    </center>
+
+You will then need to authorize the creation of a proxy wallet and fund said proxy wallet with 0.1 TAO in 2 seperate transactions. This proxy wallet will complete the unstaking yield from root and staking said yield into subnets. 
+
+<div style={{display: 'flex', justifyContent: 'space-around', gap: '20px', flexWrap: 'wrap'}}>
+      <div id="Crcuible-2.3">
+      <ThemedImage
+      alt="Crcuible-2.3"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.3.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.3.png'),
+        }}
+      style={{width: 400}}
+      />
+      </div>
+
+      <div id="Crcuible-2.4">
+      <ThemedImage
+      alt="Crcuible-2.4"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.4.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.4.png'),
+        }}
+      style={{width: 400}}
+      />
+      </div>
+</div>
+
+After creating and funding the proxy wallet, you will be directed to the allocation screen where you can enter the amount you wish to allocate, customize your allocation strategy and sign the final staking transaction. 
+
+  <center id="Crcuible-2.6">
+      <ThemedImage
+      alt="Crcuible-2.6"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.6.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.6.png'),
+        }}
+      style={{width: 600}}
+      />
+      </center>
+
+  <center id="Crcuible-2.7">
+      <ThemedImage
+      alt="Crcuible-2.7"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.7.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-2.7.png'),
+        }}
+      style={{width: 900}}
+      />
+      </center>
+
+<div style={{marginTop: '60px'}} />
+
+
+### Manual Staking to Subnets
+To manually stake to a subnet click the **Allocate** button on the bottom of the dashboard screen.Select *Manual Stake* on the following screen to then open a list of all subnets.
+
+  <center id="Crcuible-3.1">
+      <ThemedImage
+      alt="Crcuible-3.1"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-3.1.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-3.1.png'),
+        }}
+      style={{width: 600}}
+      />
+  </center>
+
+After selecting the subnet, you'll be directed to the allocation page where you to enter in the amount you wish to allocate and click **Allocate** to send the transaction to your Ledger device.
+
+  <center id="Crcuible-3.2">
+      <ThemedImage
+      alt="Crcuible-3.2"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-3.2.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-3.2.png'),
+        }}
+      style={{width: 900}}
+      />
+  </center>
+
+<div style={{marginTop: '60px'}} />
+
+### Transfering TAO
+[Video](https://www.youtube.com/watch?v=0IBjbUwm_2U)
+
+To transfer TAO from your Ledger wallet, click on the transfer button in the bottom right corner of the Crucible Wallet.
+
+Enter the recipiant address and amount you wish to transfer, then confirm the transactions, on your Ledger Device.
+     
+  <center id="Crcuible-4.1">
+      <ThemedImage
+      alt="Crcuible-4.1"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-4.1.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-4.1.png'),
+        }}
+      style={{width: 600}}
+      />
+    </center>
+    <br /> 
+    
+  <center id="Crcuible-4.2">
+      <ThemedImage
+      alt="Crcuible-4.2"
+      sources={{
+          light: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-4.2.png'),
+          dark: useBaseUrl('/img/docs/ledger-hw-wallet//Crucible/Crucible-4.2.png'),
+        }}
+      style={{width: 900}}
+      />
+      </center>
+      <br />
+
+## Talisman Wallet Set Up
+
+### Step 1. Connect Talisman app to Ledger device
 
   1. Connect Ledger hardware wallet device to your computer.
   2. Open Talisman wallet app and select **Add Account**.
@@ -111,7 +332,7 @@ Proceed only after you successfully ran the above steps. The rest of this guide 
 
 ---
 
-## Step 2. Transfer TAO from Ledger hardware wallet
+### Step 2. Transfer TAO from Ledger hardware wallet
 
 To transfer TAO from your connected Ledger hardware wallet, execute the following steps:
 
@@ -269,7 +490,7 @@ style={{width: 550}}
 </center>
 <br />
 
-## Copying TAO address from Ledger device
+### Copying TAO address from Ledger device
 
 While using any crypto wallet, you might need to bring over your Ledger device's TAO address to this wallet. Follow the below steps.
 

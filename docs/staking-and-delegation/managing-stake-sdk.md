@@ -2,24 +2,39 @@
 title: "Managing stake with Bittensor Python SDK"
 ---
 
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
+
 # Managing Stake with Bittensor Python SDK
 
-This pages demonstrates usage of the Bittensor SDK for Python for managing stake.
+This page demonstrates usage of the Bittensor SDK for Python for managing stake.
 
 TAO holders can **stake** any amount of the liquidity they hold to a validator. Also known as **delegation**, staking supports validators, because their total stake in the subnet, including stake delegated to them by others, determines their consensus power and their share of emissions. After the validator/delegate extracts their **take** the remaining emissions are credited back to the stakers/delegators in proportion to their stake with that validator.
+
+Likewise, TAO holders can **unstake** from a subnet by converting subnet-specific alpha tokens back to TAO through the subnet's automated market maker (AMM).
 
 See also:
 
 - [Staking/delegation overview](./delegation)
 - [Understanding pricing and anticipating slippage](../learn/slippage)
+- [Price protection when staking](../learn/price-protection)
+- [MEV Shield Protection](../sdk/mev-protection.md)
+- [Staking with a Proxy](../keys/proxies/staking-with-proxy)
 
 :::tip
 Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.0005 TAO.
 :::
 
+:::warning Keep your coldkey secure
+Staking is a regular operation for most TAO holders. Every time you stake or unstake directly, you must decrypt and use your coldkey—exposing it to potential compromise.
+
+**For better security, use a [Staking Proxy](../keys/proxies/staking-with-proxy)**. With a `Staking` proxy configured with a delay, you can manage your stake without ever exposing your coldkey. If the proxy is compromised, the delay gives you time to reject unauthorized unstaking attempts.
+:::
+
 ## Check your TAO balance
 
-To stake, you'll first need some TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network. Alternatively, you can obtain some by completing the [BTCLI Live Coding Playground](../btcli/btcli-playground.md#transfer).
+<SdkVersion />
+
+To stake, you'll first need some TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network. Alternatively, you can [run a local Bittensor blockchain instance](../local-build/deploy.md).
 
 :::danger
 The funds in a crypto wallet are only as secure as your private key and/or seed phrase, and the devices that have access to these.
@@ -30,7 +45,7 @@ Test network tokens have no real value. Before managing liquidity on Bittensor m
 ```python
 import bittensor as bt
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(
+wallet = bt.Wallet(
     name="PracticeKey!",
     hotkey="stakinkey1",
 )
@@ -49,31 +64,70 @@ import bittensor as bt
 sub = bt.Subtensor(network="test")
 subnet = sub.subnet(netuid=1)
 
-print("alpha_to_tao_with_slippage", subnet.alpha_to_tao_with_slippage(100))
-print("alpha_to_tao_with_slippage percentage", subnet.alpha_to_tao_with_slippage(100, percentage=True))
+alpha_amount = bt.Balance.from_tao(100).set_unit(1)
+
+print("alpha_to_tao_with_slippage", subnet.alpha_to_tao_with_slippage(alpha_amount))
+print("alpha_to_tao_with_slippage percentage", subnet.alpha_to_tao_with_slippage(alpha_amount, percentage=True))
 
 print("tao_to_alpha_with_slippage", subnet.tao_to_alpha_with_slippage(100))
 print("tao_to_alpha_with_slippage percentage", subnet.tao_to_alpha_with_slippage(100, percentage=True))
 
 print("tao_to_alpha", subnet.tao_to_alpha(100))
-print("alpha_to_tao", subnet.alpha_to_tao(100))
+print("alpha_to_tao", subnet.alpha_to_tao(alpha_amount))
+```
+
+## View top validators in a subnet
+
+Use the metagraph to view validators and their stakes within a subnet. This helps you identify top validators before deciding where to stake.
+
+```python
+import bittensor as bt
+
+sub = bt.Subtensor(network="test")
+netuid = 14  # Change to your desired subnet
+
+# Fetch the metagraph for the subnet
+metagraph = sub.metagraph(netuid=netuid)
+
+# Get validator hotkeys and their stakes
+validators = []
+for uid in range(len(metagraph.hotkeys)):
+    hotkey = metagraph.hotkeys[uid]
+    stake = metagraph.stake[uid]
+    validators.append((uid, hotkey, stake))
+
+# Sort by stake (highest first) and show top 10
+top_validators = sorted(validators, key=lambda x: x[2], reverse=True)[:10]
+
+print(f"Top 10 Validators in Subnet {netuid}:")
+for rank, (uid, hotkey, stake) in enumerate(top_validators, start=1):
+    print(f"  {rank}. UID {uid} | Stake: {stake:.4f} | Hotkey: {hotkey}")
 ```
 
 ## Register on a subnet
 
-You can register your hotkey on a subnet using the `burned_register` method. This is necessary for staking, mining or validating.
+Register your hotkey on a subnet using `register()`. This is necessary for staking, mining, or validating.
+
+`register()` automatically calculates a `limit_price` of `recycle * 1.005` (0.5% tolerance) to protect against price movement between when you read the burn cost and when your transaction lands. Pass an explicit `limit_price` to set your own cap, or use `register_limit()` if you always want to specify one.
 
 ```python
 import bittensor as bt
+from bittensor.utils.balance import Balance
+
 logging = bt.logging
 logging.set_info()
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(
+wallet = bt.Wallet(
     name="ExampleWalletName",
     hotkey="ExampleHotkey",
 )
 wallet.unlock_coldkey()
-reg = sub.burned_register(wallet=wallet, netuid=3)
+
+# Auto price protection (0.5% tolerance)
+reg = sub.register(wallet=wallet, netuid=3)
+
+# Explicit cap — fails if burn exceeds 2.5 TAO
+reg = sub.register(wallet=wallet, netuid=3, limit_price=Balance.from_tao(2.5))
 ```
 
 ## View your registered subnets
@@ -81,7 +135,7 @@ reg = sub.burned_register(wallet=wallet, netuid=3)
 ```python
 import bittensor as bt
 sub = bt.Subtensor(network="test")
-wallet = bt.wallet(
+wallet = bt.Wallet(
     name="ExampleWalletName",
     hotkey="ExampleHotkey",
 )
@@ -100,6 +154,21 @@ Note that it uses asynchronous calls to the Bittensor blockchain via the `async_
 
 See [Working with Concurrency](/subnets/asyncio).
 
+:::info
+You must create some environment variables before running the following script. To do this, paste the following in your Python environment:
+
+```python
+import os
+
+os.environ['BT_WALLET_NAME'] = 'STAKE_WALLET'
+os.environ['TOTAL_TAO_TO_STAKE'] = '1'
+os.environ['NUM_SUBNETS_TO_STAKE_IN'] = '3'
+os.environ['NUM_VALIDATORS_PER_SUBNET'] = '3'
+```
+
+Replace `STAKE_WALLET` with the name of the funded wallet you intend to use.
+:::
+
 ```python
 import os, sys, asyncio
 import bittensor as bt
@@ -107,7 +176,7 @@ import time
 from bittensor import tao
 
 # Load environmental variables
-wallet_name=os.environ.get('WALLET')
+wallet_name=os.environ.get('BT_WALLET_NAME')
 total_to_stake=os.environ.get('TOTAL_TAO_TO_STAKE')
 num_subnets= os.environ.get('NUM_SUBNETS_TO_STAKE_IN')
 validators_per_subnet = os.environ.get('NUM_VALIDATORS_PER_SUBNET')
@@ -142,14 +211,14 @@ else:
         sys.exit("❌ Invalid NUM_VALIDATORS_PER_SUBNET.")
 
 print(f"\n🔓 Using wallet: {wallet_name}")
-print(f"📊 Dividing {total_to_stake} TAO across top {validators_per_subnet} validators in each of top {num_subnets} subnets.")
+print(f"  Dividing {total_to_stake} TAO across top {validators_per_subnet} validators in each of top {num_subnets} subnets.")
 
-wallet = bt.wallet(wallet_name)
+wallet = bt.Wallet(wallet_name)
 
 # Initialize the subtensor connection within a block scope to ensure it is garbage collected
 async def stake_batch(subtensor, netuid, top_validators, amount_to_stake):
     for hk in top_validators:
-        print(f"💰 Staking {amount_to_stake} to {hk} on subnet {netuid}...")
+        print(f"  Staking {amount_to_stake} to {hk} on subnet {netuid}...")
     try:
         results = await asyncio.gather(*[ subtensor.add_stake(wallet=wallet, netuid=netuid, hotkey_ss58=hk, amount=amount_to_stake) for hk in top_validators ] )
         print(results)
@@ -158,8 +227,8 @@ async def stake_batch(subtensor, netuid, top_validators, amount_to_stake):
 
 async def find_top_three_valis(subtensor,subnet):
     netuid = subnet.netuid
-    print(f"\n🔍 Subnet {netuid} had {subnet.tao_in_emission} emissions!")
-    print(f"\n🔍 Fetching metagraph for subnet {netuid}...")
+    print(f"\n  Subnet {netuid} had {subnet.tao_in_emission} emissions!")
+    print(f"\n  Fetching metagraph for subnet {netuid}...")
 
     start_time = time.time()
     metagraph = await subtensor.metagraph(netuid)
@@ -172,7 +241,7 @@ async def find_top_three_valis(subtensor,subnet):
     top_validators = sorted(hk_stake_pairs, key=lambda x: x[1], reverse=True)[0:3]
 
     # Print the top 3 validators for this subnet
-    print(f"\n🏆 Top 3 Validators for Subnet {netuid}:")
+    print(f"\n  Top 3 Validators for Subnet {netuid}:")
     for rank, (index, stake) in enumerate(top_validators, start=1):
         print(f"  {rank}. Validator index {index} - Stake: {stake}")
 
@@ -183,7 +252,7 @@ async def find_top_three_valis(subtensor,subnet):
     }
 
 async def main():
-    async with bt.async_subtensor(network='test') as subtensor:
+    async with bt.AsyncSubtensor(network='test') as subtensor:
 
         print("Fetching information on top subnets by TAO emissions")
 
@@ -212,60 +281,155 @@ async def main():
 asyncio.run(main())
 ```
 
+<details>
+  <summary><strong>Show sample response!</strong></summary>
+
 ```console
-🔍 Using wallet: PracticeKey!
+  Using wallet: PracticeKey!
 Staking total not specified, dividing 1 TAO across top 3 validators in each of top 3 subnets by default.
  Usage: `TOTAL_TAO_TO STAKE=1 WALLET=my-wallet-name ./stakerscript.py`
 Fetching information on top subnets by TAO emissions
 
-🔍 Subnet 277 had τ0.415595173 emissions!
+  Subnet 277 had τ0.415595173 emissions!
 
-🔍 Fetching metagraph for subnet 277...
+  Fetching metagraph for subnet 277...
 
-🔍 Subnet 3 had τ0.170148635 emissions!
+  Subnet 3 had τ0.170148635 emissions!
 
-🔍 Fetching metagraph for subnet 3...
+  Fetching metagraph for subnet 3...
 
-🔍 Subnet 119 had τ0.137442127 emissions!
+  Subnet 119 had τ0.137442127 emissions!
 
-🔍 Fetching metagraph for subnet 119...
+  Fetching metagraph for subnet 119...
 ✅ Retrieved metagraph for subnet 277 in 1.60 seconds.
 
-🏆 Top 3 Validators for Subnet 277:
+  Top 3 Validators for Subnet 277:
   1. Validator index 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT - Stake: 550446.75
   2. Validator index 5EFtEvPcgZHheW36jGXMPMrDETzbngziR3DPPVVp5L5Gt7Wo - Stake: 123175.8515625
   3. Validator index 5GNyf1SotvL34mEx86C2cvEGJ563hYiPZWazXUueJ5uu16EK - Stake: 54379.609375
 ✅ Retrieved metagraph for subnet 119 in 1.97 seconds.
 
-🏆 Top 3 Validators for Subnet 119:
+  Top 3 Validators for Subnet 119:
   1. Validator index 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT - Stake: 231810.8125
   2. Validator index 5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ - Stake: 118400.6328125
   3. Validator index 5CFZ9xDaFQVLA9ERsTs9S3i6jp1VDydvjQH5RDsyWCCJkTM4 - Stake: 30794.974609375
 ✅ Retrieved metagraph for subnet 3 in 2.00 seconds.
 
-🏆 Top 3 Validators for Subnet 3:
+  Top 3 Validators for Subnet 3:
   1. Validator index 5EHammhTy9rV9FhDdYeFY98YTMvU8Vz9Zv2FuFQQQyMTptc6 - Stake: 285393.71875
   2. Validator index 5FupG35rCCMghVEAzdYuxxb4SWHU7HtpKeveDmSoyCN8vHyb - Stake: 190750.453125
   3. Validator index 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT - Stake: 57048.80859375
-💰 Staking τ0.111111111 to 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT on subnet 277...
-💰 Staking τ0.111111111 to 5EFtEvPcgZHheW36jGXMPMrDETzbngziR3DPPVVp5L5Gt7Wo on subnet 277...
-💰 Staking τ0.111111111 to 5GNyf1SotvL34mEx86C2cvEGJ563hYiPZWazXUueJ5uu16EK on subnet 277...
+  Staking τ0.111111111 to 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT on subnet 277...
+  Staking τ0.111111111 to 5EFtEvPcgZHheW36jGXMPMrDETzbngziR3DPPVVp5L5Gt7Wo on subnet 277...
+  Staking τ0.111111111 to 5GNyf1SotvL34mEx86C2cvEGJ563hYiPZWazXUueJ5uu16EK on subnet 277...
 Enter your password:
 Decrypting...
 [True, True, True]
-💰 Staking 0.111111111इ to 5EHammhTy9rV9FhDdYeFY98YTMvU8Vz9Zv2FuFQQQyMTptc6 on subnet 3...
-💰 Staking 0.111111111इ to 5FupG35rCCMghVEAzdYuxxb4SWHU7HtpKeveDmSoyCN8vHyb on subnet 3...
-💰 Staking 0.111111111इ to 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT on subnet 3...
+  Staking 0.111111111इ to 5EHammhTy9rV9FhDdYeFY98YTMvU8Vz9Zv2FuFQQQyMTptc6 on subnet 3...
+  Staking 0.111111111इ to 5FupG35rCCMghVEAzdYuxxb4SWHU7HtpKeveDmSoyCN8vHyb on subnet 3...
+  Staking 0.111111111इ to 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT on subnet 3...
 [True, True, True]
-💰 Staking 0.111111111γ to 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT on subnet 119...
-💰 Staking 0.111111111γ to 5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ on subnet 119...
-💰 Staking 0.111111111γ to 5CFZ9xDaFQVLA9ERsTs9S3i6jp1VDydvjQH5RDsyWCCJkTM4 on subnet 119...
+  Staking 0.111111111γ to 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT on subnet 119...
+  Staking 0.111111111γ to 5FRxKzKrBDX3cCGqXFjYb6zCNC7GMTEaam1FWtsE8Nbr1EQJ on subnet 119...
+  Staking 0.111111111γ to 5CFZ9xDaFQVLA9ERsTs9S3i6jp1VDydvjQH5RDsyWCCJkTM4 on subnet 119...
 [True, True, True]
 ```
 
+</details>
+
+## Unstaking From a Validator
+
+Unstaking is the process of withdrawing your staked TAO from validators, converting subnet-specific alpha tokens back to TAO through the subnet's AMM. When you unstake, slippage applies similar to staking operations—your transaction affects pool prices, with larger amounts experiencing more slippage.
+
+Here's a basic example of unstaking from a specific validator on a specific subnet.
+
+`amount` specifies the amount of alpha to unstake.
+
+```python
+import asyncio
+import bittensor as bt
+async def main():
+    async with bt.AsyncSubtensor(network='test') as subtensor:
+        wallet = bt.Wallet(name="PracticeKey!")
+        wallet.unlock_coldkey()
+
+
+        result = await subtensor.unstake(
+            wallet=wallet,
+            netuid=17,
+            hotkey_ss58="5FvC...",
+            amount=bt.Balance.from_tao(10),
+            wait_for_inclusion=True,
+            wait_for_finalization=False,
+        )
+
+        print(result)
+asyncio.run(main())
+```
+
+To unstake all your stake from a specific validator on a subnet:
+
+```python
+import asyncio
+import bittensor as bt
+
+async def main():
+    async with bt.async_subtensor(network='test') as subtensor:
+        wallet = bt.Wallet(name="ExampleWallet")
+        wallet.unlock_coldkey()
+
+        # Unstake all from this validator
+        result = await subtensor.unstake_all(
+            wallet=wallet,
+            netuid=1,
+            hotkey_ss58="5FCP...",
+            rate_tolerance=0.005,
+            wait_for_inclusion=True,
+            wait_for_finalization=True,
+        )
+
+        print(result)
+
+asyncio.run(main())
+```
+
+<details>
+  <summary><strong>Show sample response!</strong></summary>
+```console
+Enter your password:
+Decrypting...
+ExtrinsicResponse:
+	success: True
+	message: Success
+	extrinsic_function: unstake_all_extrinsic
+	extrinsic: {'account_id': '0xb0fec20486c9cf366c90bf1c93ad1bbc6b50596653f8832ee6c40483aa73d851', 'signature': {'Sr25519': '0xee6ee6315786232da41a7cc79e583a41179dd28357843ba1d017c11e8d1d52185586bacd5aad5ac52d205a9bcaa49725a572784b1f2a45dbbd8e10d16a0a1e82'}, 'call_function': 'remove_stake_full_limit', 'call_module': 'SubtensorModule', 'call_args': {'hotkey': '5FupG35rCCMghVEAzdYuxxb4SWHU7HtpKeveDmSoyCN8vHyb', 'netuid': 3, 'limit_price': τ0.110584903}, 'nonce': 629, 'era': {'period': 128, 'current': 5844829}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0xb0fec20486c9cf366c90bf1c93ad1bbc6b50596653f8832ee6c40483aa73d851', 'call': {'call_function': 'remove_stake_full_limit', 'call_module': 'SubtensorModule', 'call_args': {'hotkey': '5FupG35rCCMghVEAzdYuxxb4SWHU7HtpKeveDmSoyCN8vHyb', 'netuid': 3, 'limit_price': τ0.110584903}}}
+	extrinsic_fee: τ0.000136575
+	extrinsic_receipt: ExtrinsicReceipt<hash:0x4359edd7eca08f8225451058ce32a492516e6277dd5f84a8ca7817a234632a84>
+	transaction_tao_fee: None
+	transaction_alpha_fee: None
+	data: None
+	error: None
+```
+</details>
+
 ## Asynchronously unstake from low-emissions validators
 
-The script below will unstake from the delegations (stakes) to validators on particular subnets that have yielded the least emissions in the last tempo.
+The more advanced script below will unstake from the delegations (stakes) to validators on particular subnets that have yielded the least emissions in the last tempo.
+
+:::info
+You must create some environment variables before running the following script. To do this, paste the following in your Python environment:
+
+```python
+import os
+
+os.environ['WALLET'] = 'STAKE_WALLET'
+os.environ['TOTAL_TAO_TO_STAKE'] = '1'
+os.environ['NUM_SUBNETS_TO_STAKE_IN'] = '3'
+os.environ['NUM_VALIDATORS_PER_SUBNET'] = '3'
+```
+
+Replace `STAKE_WALLET` with the name of the funded wallet you intend to use.
+:::
 
 ```python
 import os, sys, asyncio, time
@@ -281,22 +445,19 @@ async def perform_unstake(subtensor, stake, amount):
             wallet, hotkey_ss58=stake.hotkey_ss58, netuid=stake.netuid, amount=amount
         )
         elapsed = time.time() - start
-        if result:
-            print(f"✅ Successfully unstaked {amount} from {stake.hotkey_ss58} on subnet {stake.netuid} in {elapsed:.2f}s")
-            return True
-        else:
-            print(f"❌ Failed to unstake from {stake.hotkey_ss58} on subnet {stake.netuid}")
-            return False
+        print(result)
+        print(f"Time elapsed: {elapsed:.2f}s")
+        return result.success
     except Exception as e:
         print(f"❌ Error during unstake from {stake.hotkey_ss58} on subnet {stake.netuid}: {e}")
         return False
 
 
 async def main():
-    async with bt.async_subtensor(network='test') as subtensor:
+    async with bt.AsyncSubtensor(network='test') as subtensor:
         try:
             # Retrieve all active active stakes asscociated with the coldkey
-            stakes = await subtensor.get_stake_for_coldkey(wallet_ck)
+            stakes = await subtensor.get_stake_info_for_coldkey(wallet_ck)
         except Exception as e:
             sys.exit(f"❌ Failed to get stake info: {e}")
 
@@ -311,25 +472,25 @@ async def main():
         if not stakes:
             sys.exit("❌ No eligible stakes found to unstake.")
 
-        print(f"\n📊 Preparing to unstake from {len(stakes)} validators:\n")
+        print(f"\n  Preparing to unstake from {len(stakes)} validators:\n")
         for s in stakes:
             print(f"Validator: {s.hotkey_ss58}\n  NetUID: {s.netuid}\n  Stake: {s.stake.tao}\n  Emission: {s.emission}\n-----------")
 
         # Determine how much TAO to unstake per validator
-        amount_per_stake = total_to_unstake / len(stakes)
+        amount_per_stake = total_to_unstake.tao / len(stakes)
 
         # Prepare concurrent unstake tasks, then execute as a batch
         tasks = [
-            perform_unstake(subtensor, stake, min(amount_per_stake, stake.stake))
+            perform_unstake(subtensor, stake, bt.Balance.from_tao(min(amount_per_stake, stake.stake.tao)).set_unit(stake.netuid))
             for stake in stakes
         ]
         results = await asyncio.gather(*tasks)
 
         # Count successes and print final report
         success_count = sum(results)
-        print(f"\n🎯 Unstake complete. Success: {success_count}/{len(stakes)}")
+        print(f"\n  Unstake complete. Success: {success_count}/{len(stakes)}")
 
-wallet_name = os.environ.get('WALLET')
+wallet_name = os.environ.get('BT_WALLET_NAME')
 total_to_unstake = os.environ.get('TOTAL_TAO_TO_UNSTAKE')
 max_stakes_to_unstake = os.environ.get('MAX_STAKES_TO_UNSTAKE')
 
@@ -353,11 +514,11 @@ else:
     except:
         sys.exit("invalid number for MAX_STAKES_TO_UNSTAKE")
 
-print(f"🔍 Using wallet: {wallet_name}")
-print(f"🧮 Unstaking a total of {total_to_unstake} TAO across up to {max_stakes_to_unstake} lowest-emission validators")
+print(f"  Using wallet: {wallet_name}")
+print(f"  Unstaking a total of {total_to_unstake} TAO across up to {max_stakes_to_unstake} lowest-emission validators")
 
 total_to_unstake = bt.Balance.from_tao(total_to_unstake)
-wallet = bt.wallet(wallet_name)
+wallet = bt.Wallet(wallet_name)
 wallet_ck = wallet.coldkeypub.ss58_address
 
 unstake_minimum = 0.0005  # TAO
@@ -365,12 +526,15 @@ asyncio.run(main())
 
 ```
 
+<details>
+  <summary><strong>Show sample response!</strong></summary>
+
 ```console
 Unstaking total not specified, defaulting to 1 TAO.
-🔍 Using wallet: PracticeKey!
-🧮 Unstaking a total of 1 TAO across up to 10 lowest-emission validators
+  Using wallet: PracticeKey!
+  Unstaking a total of 1 TAO across up to 10 lowest-emission validators
 
-📊 Preparing to unstake from 10 validators:
+  Preparing to unstake from 10 validators:
 
 Validator: 5GEXJdUXxLVmrkaHBfkFmoodXrCSUMFSgPXULbnrRicEt1kK
   NetUID: 119
@@ -445,12 +609,14 @@ Decrypting...
 ✅ Successfully unstaked 0.100000000इ from 5GNyf1SotvL34mEx86C2cvEGJ563hYiPZWazXUueJ5uu16EK on subnet 277 in 10.84s
 ✅ Successfully unstaked 0.100000000इ from 5CFZ9xDaFQVLA9ERsTs9S3i6jp1VDydvjQH5RDsyWCCJkTM4 on subnet 119 in 10.89s
 
-🎯 Unstake complete. Success: 10/10
+  Unstake complete. Success: 10/10
 ```
+
+</details>
 
 ## Move stake
 
-This stake moves stake from one delegate to another.
+This operation moves stake from one delegate to another.
 
 ```python
 import asyncio
@@ -461,24 +627,24 @@ from bittensor.core.async_subtensor import AsyncSubtensor
 
 async def main():
     async with AsyncSubtensor("test") as subtensor:
-        wallet = bt.wallet(
-            name="PracticeKey!"
-        )
+        wallet = bt.Wallet()
         wallet.unlock_coldkey()
+        amount = bt.Balance.from_tao(1.0).set_unit(5) # set amount in origin subnet
         result = await subtensor.move_stake(wallet = wallet,
-            origin_hotkey = "5DyHnV9Wz6cnefGfczeBkQCzHZ5fJcVgy7x1eKVh8otMEd31",
+            origin_hotkey_ss58 = "5DyHnV9Wz6cnefGfczeBkQCzHZ5fJcVgy7x1eKVh8otMEd31",
             origin_netuid = 5,
-            destination_hotkey = "5HidY9Danh9NhNPHL2pfrf97Zboew3v7yz4abuibZszcKEMv",
+            destination_hotkey_ss58 = "5HidY9Danh9NhNPHL2pfrf97Zboew3v7yz4abuibZszcKEMv",
             destination_netuid = 18,
-            amount = bt.Balance.from_tao(1.0),
+            amount = amount,
             wait_for_inclusion = True,
             wait_for_finalization = False,
         )
-        if result:
-            print("Stake was successfully moved!")
-        else:
-            print("Failed to move stake.")
+        print(result)
 # Because move_stake is asynchronous, we run it in an event loop:
 asyncio.run(main())
 
 ```
+
+:::info
+Replace `WALLET_NAME` with the name of the funded wallet you intend to use.
+:::

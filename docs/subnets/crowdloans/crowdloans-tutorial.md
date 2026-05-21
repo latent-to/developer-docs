@@ -69,7 +69,7 @@ We will create a campaign whose purpose is to register a leased subnet on finali
    :::info
 
    - Set the `cap` value higher than the projected subnet lock cost plus proxy deposit (and a small fee buffer). On most dev setups the baseline lock cost is 1,000 TAO (1,000,000,000,000 RAO). If `cap` equals the lock cost exactly, the lease coldkey may lack enough to pay proxy deposits and finalize can fail with insufficient balance.
-   - If your local subtensor node uses non-fast blocks, the minimum duration for a crowdloan is one week (≈ 50,400 blocks). Therefore, the `end` value must be set at least 50,400 blocks after the current block. This limitation also applies on testnet and mainnet.
+   - Crowdloans must have a duration between **7 days** (50,400 blocks minimum) and **60 days** (432,000 blocks maximum) on production chains. Therefore, the `end` value must be set at least 50,400 blocks and at most 432,000 blocks after the current block. This limitation also applies on testnet and mainnet.
      :::
 
 5. Click **Submit Transaction** and sign with the `creator` account.
@@ -290,9 +290,9 @@ Before finalization:
 - Call fails with `InvalidOrigin`
   - Ensure that the selected account that is responsible for signing the transaction.
 - Call fails with `BlockDurationTooShort`
-  - Ensure that the crowdloan `end` is set at least one week away—~50,400 blocks.
+  - Ensure that the crowdloan `end` is set at least 7 days (50,400 blocks) from the current block.
 - Call fails with `BlockDurationTooLong`
-  - Ensure that the crowdloan `end` is set between a week to 2 months away.
+  - Ensure that the crowdloan `end` is set at most 60 days (432,000 blocks) from the current block.
 - Contribution call fails with `ContributionPeriodEnded`
   - Extend the `end` value on the crowdloan using the `crowdloan.updateEnd` extrinsic.
 - Finalize fails with `CapNotRaised`

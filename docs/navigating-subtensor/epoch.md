@@ -4,7 +4,7 @@ title: "Implementation of the Yuma Consensus Epoch"
 
 # Implementation of the Yuma Consensus Epoch
 
-If [Yuma Consensus (YC](../resources/glossary.md#yuma-consensus) is the heart of Bittensor, the epoch is the heartbeat, a regular pulse of calculations that processes [validator](../resources/glossary.md#validator) weights and determines [emissions](../resources/glossary.md#emission) for participants. This page takes a deep dive into how the code accomplishes its purpose.
+If [Yuma Consensus (YC](../resources/glossary.md#yuma-consensus) is the heart of Bittensor, the epoch is the heartbeat, a regular pulse of calculations that processes [validator](../resources/glossary.md#subnet-validator) weights and determines [emissions](../resources/glossary.md#emission) for participants. This page takes a deep dive into how the code accomplishes its purpose.
 
 The epoch function takes as its input the matrix of values assigned to each miner by each validator, and returns emission tuples of hotkey, emission for mining, and emission for validating.
 
@@ -18,12 +18,12 @@ The basic flow of the epoch is:
 4. Bonds update via [exponential moving averages](../resources/glossary.md#exponential-moving-average-ema).
 5. Emissions are allocated to miners and validators.
 
-
 ## Core Function: `epoch()`
 
 Source code: [`run_epoch.rs`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs).
 
 ### Function Signature
+
 ```rust
 pub fn epoch(
     netuid: NetUid,
@@ -59,6 +59,7 @@ let active: Vec<bool> = inactive.iter().map(|&b| !b).collect();
 
 **Activity Determination:**
 A [neuron](../resources/glossary.md#neuron) is considered inactive if:
+
 ```
 last_update + activity_cutoff < current_block
 ```
@@ -82,6 +83,7 @@ let min_stake = Self::get_stake_threshold();
 ```
 
 Filter out hotkeys below minimum stake threshold.
+
 ```rust
 let mut filtered_stake: Vec<I64F64> = total_stake
     .iter()
@@ -102,10 +104,10 @@ let stake: Vec<I32F32> = vec_fixed64_to_fixed32(filtered_stake);
 **Stake-Weight** = alpha_stake + (tao_stake × tao_weight)
 
 The `get_stake_weights_for_network()` function combines:
+
 - **Alpha stake**: Subnet-specific token holdings
 - **TAO stake**: [Root subnet](../resources/glossary.md#root-subnetsubnet-zero) holdings weighted by `[tao_weight](../resources/glossary.md#tao-weight)` (default: 18%)
-:::
-
+  :::
 
 Filter validator permit candidates for minimum stake-weight.
 
@@ -123,7 +125,6 @@ let mut filtered_stake: Vec<I64F64> = total_stake
     })
     .collect();
 ```
-
 
 ### 3. Validator Permit Management
 
@@ -152,6 +153,7 @@ The `is_topk_nonzero()` function implements a filtering process:
 4. **Stable Sorting**: Uses ascending stable sort to ensure deterministic selection when stakes are equal
 
 **Algorithm Details:**
+
 ```rust
 pub fn is_topk_nonzero(vector: &[I32F32], k: usize) -> Vec<bool> {
     let n: usize = vector.len();
@@ -196,16 +198,19 @@ new_validator_permits
 ```
 
 **Key Features:**
+
 - **Dynamic Updates**: Permits are recalculated every epoch based on current stake distribution
 - **Bond Preservation**: Neurons retain their bonds only while holding validator permits
 - **Automatic Cleanup**: Bonds are cleared when permits are lost, preventing stale relationships
 - **Stake Threshold**: Minimum stake requirement (typically 1000 stake weight) filters out low-commitment participants
 
 **Related Documentation:**
+
 - For validator setup and requirements, see [Validating in Bittensor](../validators/index.md)
 - For detailed permit lifecycle management, see [Validator Permits section](../validators/index.md#validator-permits)
 
 **Code References:**
+
 - Validator permit calculation: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:520-537`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L520-537)
 - Top-K selection algorithm: [`subtensor/pallets/subtensor/src/epoch/math.rs:250-263`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/math.rs#L250-263)
 - Bond cleanup logic: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:903-921`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L903-921)
@@ -218,7 +223,7 @@ let mut active_stake: Vec<I32F32> = stake.clone();
 // Remove inactive stake
 inplace_mask_vector(&inactive, &mut active_stake);
 
-// Remove non-validator stake  
+// Remove non-validator stake
 inplace_mask_vector(&validator_forbids, &mut active_stake);
 
 // Normalize active stake
@@ -226,6 +231,7 @@ inplace_normalize(&mut active_stake);
 ```
 
 **Active stake** represents the consensus power of validators who are:
+
 1. Recently active (within `activity_cutoff`)
 2. Hold validator permits
 3. Meet minimum stake requirements
@@ -258,6 +264,7 @@ weights = vec_mask_sparse_matrix(
 
 **Weight Filtering:**
 Weights are filtered to remove:
+
 - **Self-weights**: Prevent validators from voting for themselves (except [subnet creator](../resources/glossary.md#subnet-creator))
 - **Outdated weights**: Weights set before target neuron's latest registration
 - **Non-validator weights**: Only permitted validators can influence consensus
@@ -267,7 +274,7 @@ Weights are filtered to remove:
 ```rust
 if Self::get_commit_reveal_weights_enabled(netuid) {
     let mut commit_blocks: Vec<u64> = vec![u64::MAX; n as usize];
-    
+
     // Process v2 commits
     for (who, q) in WeightCommits::<T>::iter_prefix(netuid) {
         for (_, cb, _, _) in q.iter() {
@@ -279,8 +286,8 @@ if Self::get_commit_reveal_weights_enabled(netuid) {
             }
         }
     }
-    
-    // Process v3 commits  
+
+    // Process v3 commits
     for (_epoch, q) in CRV3WeightCommitsV2::<T>::iter_prefix(netuid) {
         for (who, cb, ..) in q.iter() {
             if !Self::is_commit_expired(netuid, *cb) {
@@ -290,7 +297,7 @@ if Self::get_commit_reveal_weights_enabled(netuid) {
             }
         }
     }
-    
+
     // Mask weights from validators with active commits
     weights = vec_mask_sparse_matrix(
         &weights,
@@ -303,6 +310,7 @@ if Self::get_commit_reveal_weights_enabled(netuid) {
 
 **[Commit Reveal](../resources/glossary.md#commit-reveal) Logic:**
 When enabled, validators must commit to weights before revealing them. Weights are masked if:
+
 - Validator has an active (non-expired) commit
 - Commit was made before target neuron's registration
 
@@ -359,6 +367,7 @@ let incentive: Vec<I32F32> = ranks.clone();
 ```
 
 **[Trust](../resources/glossary.md#trust) Calculation:**
+
 - **[Validator trust](../resources/glossary.md#validator-trust)**: Sum of a validator's clipped weights (measures alignment with consensus)
 - **Server trust**: Ratio of post-clip to pre-clip [rank](../resources/glossary.md#rank) (measures consensus adherence)
 
@@ -375,7 +384,7 @@ The bond mechanism depends on whether Yuma3 is enabled:
 if Yuma3On::<T>::get(netuid) {
     // Get existing bonds
     let mut bonds = Self::get_bonds_sparse_fixed_proportion(netuid);
-    
+
     // Remove bonds to recently registered neurons
     let last_tempo: u64 = current_block.saturating_sub(tempo);
     bonds = scalar_vec_mask_sparse_matrix(
@@ -384,17 +393,17 @@ if Yuma3On::<T>::get(netuid) {
         &block_at_registration,
         &|last_tempo, registered| last_tempo <= registered,
     );
-    
+
     // Compute new bonds with liquid alpha
     ema_bonds = Self::compute_bonds_sparse(netuid, &weights_for_bonds, &bonds, &consensus);
-    
+
     // Normalize bonds and calculate validator emissions
     let mut ema_bonds_norm = ema_bonds.clone();
     inplace_col_normalize_sparse(&mut ema_bonds_norm, n);
-    
+
     let total_bonds_per_validator: Vec<I32F32> =
         row_sum_sparse(&mat_vec_mul_sparse(&ema_bonds_norm, &incentive));
-        
+
     dividends = vec_mul(&total_bonds_per_validator, &active_stake);
     inplace_normalize(&mut dividends);
 }
@@ -404,22 +413,22 @@ if Yuma3On::<T>::get(netuid) {
 
 ```rust
 else {
-    // Get existing bonds  
+    // Get existing bonds
     let mut bonds: Vec<Vec<(u16, I32F32)>> = Self::get_bonds_sparse(netuid);
-    
+
     // Remove bonds to recently registered neurons
     bonds = scalar_vec_mask_sparse_matrix(/* ... */);
     inplace_col_normalize_sparse(&mut bonds, n);
-    
+
     // Compute bond deltas from weights and stake
     let mut bonds_delta: Vec<Vec<(u16, I32F32)>> =
         row_hadamard_sparse(&weights_for_bonds, &active_stake);
     inplace_col_normalize_sparse(&mut bonds_delta, n);
-    
+
     // Apply EMA to bonds
     ema_bonds = Self::compute_ema_bonds_normal_sparse(&bonds_delta, &bonds, netuid);
     inplace_col_normalize_sparse(&mut ema_bonds, n);
-    
+
     // Calculate dividends: d_i = SUM(j) b_ij * incentive_j
     dividends = matmul_transpose_sparse(&ema_bonds, &incentive);
     inplace_normalize(&mut dividends);
@@ -427,6 +436,7 @@ else {
 ```
 
 **Bond Dynamics:**
+
 - **[Bonds](../resources/glossary.md#validator-miner-bonds)**: Measure validator-miner relationships over time
 - **EMA Updates**: $B_{ij}^{(t)} = \alpha \Delta B_{ij} + (1-\alpha) B_{ij}^{(t-1)}$
 - **Validator Emissions**: Validators earn based on bonds to high-incentive miners
@@ -533,6 +543,7 @@ new_validator_permits
 
 **Storage Updates:**
 All computed values are stored for:
+
 - **External queries**: Allow inspection of consensus state
 - **Next epoch**: Bonds and permits carry forward
 - **Pruning**: Combined emission determines neuron removal

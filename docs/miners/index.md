@@ -4,6 +4,9 @@ title: "Mining in Bittensor"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Mining in Bittensor
 
@@ -29,7 +32,9 @@ To participate as a miner, you must first register a hotkey with the subnet in o
 You **do not** have to create a subnet to mine on the Bittensor network. Most miners work on already established subnets.
 :::
 
-Registration has a cost in TAO, which fluctuates dynamically based on the time since the last registration. When you secure a UID slot in a subnet on the main chain, this TAO is sunk cost and cannot be recovered.
+Registration has a cost in TAO that fluctuates dynamically: the price **decays** over time and **increases** each time a registration succeeds. The subnet owner controls the decay rate (`BurnHalfLife`) and the increase factor (`BurnIncreaseMult`), with the floor and ceiling set by the `MinBurn` and `MaxBurn` hyperparameters, respectively. When you secure a UID slot in a subnet on the main chain, this TAO is sunk cost and cannot be recovered.
+
+By default, [`btcli subnets register`](../btcli/btcli.md#btcli-subnets-register) runs in **safe mode**: it prompts for a price tolerance and aborts if the burn exceeds it. Pass `--unsafe` to skip the guard.
 
 A subnet can have a maximum of 64 subnet validator UIDs and 192 subnet miner UIDs (256 total) in subnets other than Subnet 1.
 
@@ -41,18 +46,45 @@ When you delegate your TAO to a subnet validator, you attach your delegated TAO 
 A hotkey can hold multiple UIDs across **separate** subnets. However, within one subnet, each UID must have a unique hotkey.
 :::
 
-To register your keys with a subnet, run the following command on your terminal, replacing `<your_preferred_netuid>`, `<my_coldkey>`, `<my_hotkey>`.
-`<your_preferred_netuid>` is the `netuid` of your preferred subnet.
+:::tip Check the current registration cost
+Run `btcli subnets show --netuid <netuid>` to see the current **Registration cost (recycled)** before registering. The burn price rises with each registration and decays over time.
+:::
+
+<Tabs groupId="registration">
+<TabItem value="btcli" label="BTCLI">
+
+Run the following command, replacing `<your_preferred_netuid>`, `<my_coldkey>`, `<my_hotkey>` with your values. `<your_preferred_netuid>` is the `netuid` of your preferred subnet.
 
 ```bash
 btcli subnet register --netuid <your_preferred_netuid>  --wallet.name  <my_coldkey> --wallet.hotkey <my_hotkey>
 ```
 
-For example, to register your keys with subnet 1—netuid of 1:
+For example, to register with subnet 1:
 
 ```bash
 btcli subnet register --netuid 1 --wallet.name test-coldkey --wallet.hotkey test-hotkey
 ```
+
+</TabItem>
+<TabItem value="sdk" label="Bittensor SDK">
+
+<SdkVersion />
+
+```python
+import bittensor as bt
+
+sub = bt.Subtensor(network="finney")
+wallet = bt.Wallet(name="<my_coldkey>", hotkey="<my_hotkey>")
+wallet.unlock_coldkey()
+
+response = sub.register(wallet=wallet, netuid=<your_preferred_netuid>)
+print(response)
+```
+
+`register` auto-sets a 0.5% price tolerance against the current burn. To set an explicit maximum burn price, use `sub.register_limit(wallet=wallet, netuid=<netuid>, limit_price=<max_price>)` instead.
+
+</TabItem>
+</Tabs>
 
 ## Miner deregistration
 
@@ -131,6 +163,12 @@ style={{width: 990}}
 Emissions may not always appear as a smooth curve. Emission might only update at the end of tempo periods, or subnet validators might do more frequent internal updates. For example, a validator might detect new miners and refresh every 100 blocks.
 :::
 
+## Auto Staking
+
+Miners can enable auto staking to automatically stake their mining income to a validator of their choice. This feature streamlines compound staking by eliminating the need for manual staking operations.
+
+See [Auto Staking for Miners](./autostaking.md) for detailed information on setting up and managing auto staking.
+
 ## Moving a subnet miner to a different machine
 
 Once your subnet miner has begun mining, you can move it to a different machine, but proceed with caution.
@@ -174,6 +212,8 @@ After providing your wallet name when prompted, you will see output such as:
 
 ## Checking miner registration status
 
+<SdkVersion />
+
 Use any of the Python snippets below:
 
 - **Using Python interpreter**: Type "python" or "python3" in your terminal, then paste a snippet.
@@ -186,7 +226,7 @@ import bittensor as bt
 # Replace below with your SS58 hotkey
 hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
 network = "finney"
-sub = bt.subtensor(network)
+sub = bt.Subtensor(network)
 print(f"Registration status for hotkey {hotkey} is: {sub.is_hotkey_registered(hotkey)}")
 ```
 
@@ -198,7 +238,7 @@ import bittensor as bt
 hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
 network = "finney"
 netuid = 1 # subnet uid
-sub = bt.subtensor(network)
+sub = bt.Subtensor(network)
 mg = sub.metagraph(netuid)
 if hotkey not in mg.hotkeys:
   print(f"Hotkey {hotkey} deregistered")
@@ -214,7 +254,7 @@ import bittensor as bt
 hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
 network = "finney"
 netuid = 1 # subnet uid
-sub = bt.subtensor(network)
+sub = bt.Subtensor(network)
 mg = sub.metagraph(netuid)
 uid = 2 # Your UID
 registered = mg.hotkeys[uid] == hotkey

@@ -4,9 +4,11 @@ title: "Managing Stake with BTCLI"
 
 # Managing stake with `btcli`
 
-This pages demonstrates usage of `btcli`, the Bittensor CLI, for managing stake.
+This page demonstrates usage of `btcli`, the Bittensor CLI, for managing stake.
 
 TAO holders can **stake** any amount of the liquidity they hold to a validator. Also known as **delegation**, staking supports validators, because their total stake in the subnet, including stake delegated to them by others, determines their consensus power and their share of emissions. After the validator/delegate extracts their **take** the remaining emissions are credited back to the stakers/delegators in proportion to their stake with that validator.
+
+Likewise, TAO holders can **unstake** to withdraw their delegated tokens from validators, converting subnet-specific alpha tokens back to TAO through the subnet's automated market maker (AMM).
 
 :::note Transaction Fees
 Staking and unstaking operations incur transaction fees for the underlying blockchain transactions they trigger. See [Transaction Fees in Bittensor](../learn/fees.md) for details.
@@ -16,9 +18,17 @@ See also:
 
 - [Staking/delegation overview](./delegation)
 - [Understanding pricing and anticipating slippage](../learn/slippage)
+- [Price protection when staking](../learn/price-protection)
+- [Staking with a proxy](../keys/proxies/staking-with-proxy)
 
 :::tip
 Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO or 0.0005 TAO.
+:::
+
+:::warning Keep your coldkey secure
+Staking is a regular operation for most TAO holders. Every time you stake or unstake directly, you must decrypt and use your coldkey—exposing it to potential compromise. 
+
+**For better security, use a [Staking Proxy](../keys/proxies/staking-with-proxy)**. With a `Staking` proxy configured with a delay, you can manage your stake without ever exposing your coldkey. If the proxy is compromised, the delay gives you time to reject unauthorized unstaking attempts.
 :::
 
 ## Pre-requisite: Create a wallet
@@ -37,7 +47,7 @@ Test network tokens have no real value. Before managing liquidity on Bittensor m
 
 ## View TAO balance
 
-To stake, you'll first need some TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network. Alternatively, you can obtain some by completing the [BTCLI Live Coding Playground](../btcli/btcli-playground.md#transfer).
+To stake, you'll first need some TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network. Alternatively, you can [run a local Bittensor blockchain instance](../local-build/deploy.md).
 
 After creating a wallet, ensure that you are targeting the test network by running the `btcli config set` command. Next, select network, and set it to `test`.
 
@@ -88,7 +98,7 @@ You should see something like the following output. Notice that next to the subn
   ...
 ```
 
-## View a subnet's nodes
+## View a subnet's validator neurons
 
 ```shell
 btcli subnet show --netuid 119
@@ -123,7 +133,7 @@ Using the specified network test from config
  46  │  928.60 Ⲃ │  928.23 Ⲃ │   τ 0.38 │  0.00439  │  0.0088   │   0.35965 Ⲃ   │ 5GuqX1 │ 5Ehuid  │ ~
 ```
 
-## Stake into a node
+## Stake to a validator
 
 Use `btcli stake add` to stake to a validator on a subnet. You'll be prompted to choose a subnet and validator, as well as specify an amount of TAO to stake into the validator's hotkey as alpha.
 
@@ -172,7 +182,7 @@ You'll then see the details of the trade, including [slippage](../learn/slippage
 
 ```console
                                                         Staking to:
-                   Wallet: PracticeKey!, Coldkey ss58: 5G4mxrN8msvc4jjwp7xoBrtAejTfAMLCMTFGCivY5inmySbq
+                   Wallet: PracticeKey!, Coldkey ss58: 5G4m...
                                                        Network: test
 
  Netuid ┃                      Hotkey                      ┃ Amount (τ) ┃      Rate (per τ)      ┃   Received   ┃ Slippage
@@ -196,9 +206,9 @@ Would you like to continue? [y/n]:
 
 If you confirm, the staking operation will execute.
 
-### Staking into multiple nodes
+### Staking to multiple validators
 
-You can also stake into multiple nodes by running the following command in your terminal:
+You can add stake to multiple validators at once by running the following command:
 
 ```shell
 btcli stake add -n 4,14,70
@@ -231,6 +241,137 @@ Stake is held in alpha, but note that value at the current price is also display
  2      │           │   τ 32.10 │           │             │          τ 31.57 │            │
 
 Press Enter to continue to the next hotkey...
+```
+
+## Unstaking with btcli
+
+Unstaking is the process of withdrawing your staked TAO from validators, converting subnet-specific alpha tokens back to TAO through the subnet's AMM. When you unstake, slippage applies similar to staking operations—your transaction affects pool prices, with larger amounts experiencing more slippage.
+
+:::important Key considerations when unstaking
+**Slippage**: Unstaking operations are subject to slippage as your transaction affects the subnet's AMM pool prices. The CLI will show you the expected slippage before confirming. See [Understanding Pricing and Anticipating Slippage](../learn/slippage.md).
+
+**Price protection**: btcli provides built-in confirmation screens showing rates and slippage before execution. See [Price Protection When Staking](../learn/price-protection.md).
+
+**Transaction fees**: Unstaking incurs blockchain transaction fees. See [Transaction Fees in Bittensor](../learn/fees.md).
+:::
+
+### Remove stake from a validator
+
+Use `btcli stake remove` to unstake from a specific validator. You'll be prompted to select the subnet and validator, then specify the amount to unstake.
+
+```shell
+btcli stake remove
+```
+
+You'll see a confirmation screen showing:
+
+- The amount you're unstaking (in alpha)
+- The current exchange rate
+- How much TAO you'll receive
+- The slippage percentage
+
+```console
+Enter the hotkey name or ss58 address to unstake from (or Press Enter to view existing staked hotkeys):
+Using the wallet path from config: /Users/michaeltrestman/.bittensor/wallets
+Using the specified network test from config
+
+
+
+                                           Hotkeys with Stakes
+
+ Index ┃ Identity         ┃ Netuids                    ┃ Hotkey Address
+━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     0 │ SuperNetOwnerGuy │ 0, 2-3, 320, 324, 119, 250 │ 5GEXJdUXxLVmrkaHBfkFmoodXrCSUMFSgPXULbnrRicEt1kK
+     1 │ Owner3           │ 3                          │ 5FupG35rCCMghVEAzdYuxxb4SWHU7HtpKeveDmSoyCN8vHyb
+     2 │ CrypticMax       │ 3                          │ 5EHammhTy9rV9FhDdYeFY98YTMvU8Vz9Zv2FuFQQQyMTptc6
+     3 │ muv              │ 5, 277, 45                 │ 5FCPTnjevGqAuTttetBy4a24Ej3pH9fiQ8fmvP1ZkrVsLUoT
+     4 │ Brainlock        │ 277                        │ 5EFtEvPcgZHheW36jGXMPMrDETzbngziR3DPPVVp5L5Gt7Wo
+     5 │ merit            │ 119                        │ 5CFZ9xDaFQVLA9ERsTs9S3i6jp1VDydvjQH5RDsyWCCJkTM4
+───────┼──────────────────┼────────────────────────────┼──────────────────────────────────────────────────
+       │                  │                            │
+
+Enter the index of the hotkey you want to unstake from [0/1/2/3/4/5]: 0
+
+
+
+                  Stakes for hotkey
+                  SuperNetOwnerGuy
+  5GEXJdUXxLVmrkaHBfkFmoodXrCSUMFSgPXULbnrRicEt1kK
+
+ Subnet ┃ Symbol ┃ Stake Amount      ┃ Rate (Τ/α)
+━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━
+      0 │ Τ      │ Τ 7.3947          │ 1.000000 τ/Τ
+      2 │ β      │ 0.0243 β          │ 0.001754 τ/β
+      3 │ γ      │ 0.0414 γ          │ 0.111141 τ/γ
+    320 │ イ     │ 1,724,839.6158 イ │ 0.000000 τ/イ
+    324 │ カ     │ 1,677,528.1530 カ │ 0.000522 τ/カ
+    119 │ Ⲃ      │ 474.0460 Ⲃ        │ 0.077959 τ/Ⲃ
+    250 │ ኤ      │ 981.1793 ኤ        │ 0.015457 τ/ኤ
+────────┼────────┼───────────────────┼───────────────
+        │        │                   │
+
+
+
+Enter the netuids of the subnets to unstake from (comma-separated), or 'all' to unstake from all (all): all
+
+Do you want to:
+Yes: Unstake from all subnets and automatically re-stake to subnet 0 (root)
+No: Unstake everything (including subnet 0) [y/n] (y): y
+🌏  Retrieving stake information & identities from test...[Error]: Not enough Alpha to pay the transaction fee.
+
+
+                                           Unstaking Summary - All Alpha Stakes
+                   Wallet: PracticeKey!, Coldkey ss58: 5G4m...
+                                                      Network: test
+
+ Netuid ┃          Hotkey           ┃ Current Stake (α) ┃   Rate (τ/α)   ┃   Fee (α)   ┃ Extrinsic Fee (τ) ┃ Received (τ)
+━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━
+   3    │ 5GEXJdUXxLVmrkaHBfkFmood… │     0.0414 γ      │ 0.111141(Τ/γ)  │  0.0000 γ   │     0.0002 τ      │   0.0044 τ
+  320   │ 5GEXJdUXxLVmrkaHBfkFmood… │ 1,724,839.6158 イ │ 0.000000(Τ/イ) │ 868.5391 イ │     0.0002 τ      │   0.0092 τ
+  324   │ 5GEXJdUXxLVmrkaHBfkFmood… │ 1,677,528.1530 カ │ 0.000522(Τ/カ) │ 844.7155 カ │     0.0002 τ      │  164.4346 τ
+  119   │ 5GEXJdUXxLVmrkaHBfkFmood… │    474.0460 Ⲃ     │ 0.077959(Τ/Ⲃ)  │  0.2387 Ⲃ   │     0.0002 τ      │  36.9276 τ
+  250   │ 5GEXJdUXxLVmrkaHBfkFmood… │    981.1793 ኤ     │ 0.015457(Τ/ኤ)  │  0.4941 ኤ   │     0.0002 τ      │  15.1467 τ
+────────┼───────────────────────────┼───────────────────┼────────────────┼─────────────┼───────────────────┼──────────────
+        │                           │                   │                │             │                   │
+Total expected return: 216.5224 τ
+
+Do you want to proceed with unstaking everything? [y/n]: y
+```
+
+### Unstake all from a validator
+
+To unstake all your stake from a specific validator, or from all validators use the `--all` flag:
+
+```shell
+btcli stake remove --all
+```
+
+Either specify the hotkey, to remove all stake on all subnets, or `all` for all stake on all subnets for all validator hotkeys.
+
+```console
+Enter the hotkey name or ss58 address to unstake all from (or enter 'all' to unstake from all hotkeys) (default): all
+Using the specified network test from config
+
+                                    Unstaking Summary - All Stakes
+         Wallet: PracticeKey!, Coldkey ss58: 5G4mx...
+                                             Network: test
+
+ Netuid ┃   Hotkey   ┃ Current Stake (α) ┃  Rate (τ/α)   ┃ Fee (α)  ┃ Extrinsic Fee (τ) ┃ Received (τ)
+━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━
+   0    │ stakinkey1 │    Τ 223.9187     │ 1.000000(Τ/Τ) │ Τ 0.0000 │     0.0000 τ      │  223.9187 τ
+   3    │ CrypticMax │     55.3817 γ     │ 0.111113(Τ/γ) │ 0.0279 γ │     0.0000 τ      │   6.1504 τ
+   5    │    muv     │   2,433.6223 ε    │ 0.000400(Τ/ε) │ 1.2254 ε │     0.0000 τ      │   0.9727 τ
+   17   │  Owner16   │   10,660.8115 ρ   │ 0.000209(Τ/ρ) │ 5.3682 ρ │     0.0000 τ      │   2.2171 τ
+  277   │    muv     │     20.0331 इ     │ 0.274036(Τ/इ) │ 0.0101 इ │     0.0000 τ      │   5.4870 τ
+  277   │ Brainlock  │     16.3792 इ     │ 0.274036(Τ/इ) │ 0.0082 इ │     0.0000 τ      │   4.4862 τ
+   45   │    muv     │   1,452.0454 פ    │ 0.000207(Τ/פ) │ 0.7312 פ │     0.0000 τ      │   0.2998 τ
+  119   │   merit    │    107.4401 Ⲃ     │ 0.077918(Τ/Ⲃ) │ 0.0541 Ⲃ │     0.0000 τ      │   8.3667 τ
+  250   │ stakinkey1 │     6.7777 ኤ      │ 0.015434(Τ/ኤ) │ 0.0034 ኤ │     0.0000 τ      │   0.1045 τ
+────────┼────────────┼───────────────────┼───────────────┼──────────┼───────────────────┼──────────────
+        │            │                   │               │          │                   │
+Total expected return: 252.0030 τ
+
+Do you want to proceed with unstaking everything? [y/n]:
 ```
 
 ## Transferring stake
@@ -314,7 +455,7 @@ Using the specified network test from config
 
 
 Wallet:
-  Coldkey SS58: 5F1TCdVcRWLYyKiS2kF2nBZ21EwQDDFr8hEqrDhRL6YvdtgQ
+  Coldkey SS58: 5F1T...
   Free Balance: τ 0.0000
   Total TAO (τ): τ 2.51
   Total Value (τ): τ 2.56
