@@ -4,7 +4,9 @@ title: "Keypair"
 
 # Keypair
 
-A `Keypair` holds a cryptographic key pair and is the core primitive of the Bittensor Wallet SDK. It can be constructed from a mnemonic, seed, URI, or raw key material — and it supports signing, verification, and (for ED25519 keypairs) asymmetric message encryption.
+A `Keypair` holds a cryptographic key pair and is the core primitive of a Bittensor wallet. It can be constructed from a mnemonic, seed, URI, or raw key material, and supports signing, verification, and (for ED25519 keypairs) asymmetric message encryption.
+
+For background on what coldkeys and hotkeys are and how they're used in Bittensor, see [Wallets, Coldkeys and Hotkeys](../wallets.md). This page covers the SDK API for working with them programmatically.
 
 ```python
 from bittensor_wallet import Keypair, CRYPTO_ED25519, CRYPTO_SR25519
@@ -107,3 +109,35 @@ valid = kp.verify(b"my message", signature)  # returns bool
 ## Next step: encryption
 
 ED25519 keypairs support asymmetric message encryption. See [Encrypt and decrypt](./encrypt-decrypt).
+
+## Example: create a keypair and inspect it
+
+```python
+from bittensor_wallet import Keypair, CRYPTO_SR25519, CRYPTO_ED25519
+
+# Generate a fresh mnemonic and create an SR25519 keypair (the Bittensor default)
+mnemonic = Keypair.generate_mnemonic()
+kp = Keypair.create_from_mnemonic(mnemonic)
+
+print("Mnemonic:    ", mnemonic)
+print("SS58 address:", kp.ss58_address)
+print("Public key:  ", kp.public_key.hex())
+print("Crypto type: ", kp.crypto_type, "(SR25519)" if kp.crypto_type == CRYPTO_SR25519 else "(ED25519)")
+print("SS58 format: ", kp.ss58_format)
+
+# Sign a message and verify it
+message = b"hello bittensor"
+signature = kp.sign(message)
+print("Signature:   ", signature.hex())
+print("Verified:    ", kp.verify(message, signature))
+```
+
+```
+Mnemonic:     useless maid combine fancy capable plate program paper trade media erupt leopard
+SS58 address: 5GEvXU7qb1nDG3jooFduExugxEzcQcLbyntqs4J7EwVQF8sM
+Public key:   b8bc090e304e2d815c37a0025154462161e48bae4dc034e25dd339e3149fa07f
+Crypto type:  1 (SR25519)
+SS58 format:  42
+Signature:    2e5628d73b24545603a147b65b5db20679176b149796acf09357b0b2831e395f068aae49ec889407328bfe2a98ef8b6dcfb7d87cbdb3e79b3e00a97afedc3a8a
+Verified:     True
+```
