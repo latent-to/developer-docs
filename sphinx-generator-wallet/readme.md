@@ -45,6 +45,7 @@ This folder contains the Sphinx configuration for generating documentation for t
    This will build the PyO3 extension from the Rust sources and install it in editable mode.
 
 5. **Build docs**
+   (Optional) run `rm -rf build/html/` to remove previous build
 
    ```bash
    make html
@@ -57,16 +58,16 @@ This folder contains the Sphinx configuration for generating documentation for t
 
 ## Publishing Workflow
 
-1. (Optional) remove previous build `rm -rf build/html/`
-
-2. Copy output into `developer-docs`. The generated docs must be copied to the `static/btwallet-api/html` folder within your `develoer docs` directory e.g.
+1. Copy output into `developer-docs`. The generated docs must be copied to the `static/btwallet-api/html` folder within your `developer docs` directory e.g.
 
    ```bash
    rm -rf /path/to/developer-docs/static/btwallet-api/html
    cp -r build/html /path/to/developer-docs/static/btwallet-api/html
    ```
 
-3. Commit/push from the developer-docs repo.
+After running the command, you might need to restart your local server to see the actual changes in the files.
+
+2. Commit/push from the developer-docs repo.
    ```bash
    git add static/wallet-api/html
    git commit -m "Update Wallet SDK API docs"
