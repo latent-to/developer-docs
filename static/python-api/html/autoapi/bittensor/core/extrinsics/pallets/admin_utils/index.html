@@ -30,9 +30,9 @@
   <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../../../../../_static/bittensor-custom.css?v=c1dfe055" />
   
   <!-- So that users can add custom icons -->
@@ -42,9 +42,9 @@
 <link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/extrinsics/pallets/admin_utils/index';</script>
     <link rel="index" title="Index" href="../../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../../search.html" />
@@ -353,7 +353,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -377,7 +377,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -497,7 +497,7 @@ environments as they can potentially disrupt network stability.</p>
 of these functions outside of development/testing contexts could have severe consequences for network operation.</p>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.pallets.admin_utils.AdminUtils" title="bittensor.core.extrinsics.pallets.admin_utils.AdminUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AdminUtils</span></code></a></p></td>
 <td><p>Factory class for creating GenericCall objects for AdminUtils pallet functions.</p></td>
@@ -510,7 +510,7 @@ of these functions outside of development/testing contexts could have severe con
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.admin_utils.AdminUtils">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.pallets.admin_utils.</span></span><span class="sig-name descname"><span class="pre">AdminUtils</span></span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.admin_utils.AdminUtils" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.pallets.admin_utils.</span></span><span class="sig-name descname"><span class="pre">AdminUtils</span></span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.admin_utils.AdminUtils" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.CallBuilder" title="bittensor.core.extrinsics.pallets.base.CallBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bittensor.core.extrinsics.pallets.base.CallBuilder</span></code></a></p>
 <p>Factory class for creating GenericCall objects for AdminUtils pallet functions.</p>
 <p>This class provides methods to create GenericCall instances for all AdminUtils pallet extrinsics.</p>
@@ -552,7 +552,7 @@ is already pending.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -575,7 +575,7 @@ The extrinsic will call the Subtensor pallet to set the activity cutoff.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -598,7 +598,7 @@ The extrinsic will call the Subtensor pallet to set the adjustment alpha.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -621,7 +621,7 @@ The extrinsic will call the Subtensor pallet to set the adjustment interval.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -640,7 +640,7 @@ Only callable by root.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -662,7 +662,7 @@ negative values are reserved for future use).</p></li>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -684,7 +684,7 @@ negative values are reserved for future use).</p></li>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -707,7 +707,7 @@ The extrinsic will call the Subtensor pallet to set the bonds moving average.</p
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -730,7 +730,7 @@ The extrinsic will call the Subtensor pallet to set the bonds penalty.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -751,7 +751,7 @@ The extrinsic will call the Subtensor pallet to set the bonds penalty.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -771,7 +771,7 @@ The extrinsic will call the Subtensor pallet to set the childkey burn.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -791,7 +791,7 @@ The coldkey swap schedule determines how long it takes for a coldkey swap operat
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -809,7 +809,7 @@ The coldkey swap schedule determines how long it takes for a coldkey swap operat
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -832,7 +832,7 @@ The extrinsic will call the Subtensor pallet to set the value.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -855,7 +855,7 @@ The commit-reveal mechanism ensures that users commit weights in advance and rev
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -875,7 +875,7 @@ The extrinsic will call the Subtensor pallet to set the default take.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -898,7 +898,7 @@ The extrinsic will call the Subtensor pallet to set the difficulty.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -918,7 +918,7 @@ The dissolve network schedule determines how long it takes for a network dissolu
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -939,7 +939,7 @@ The dissolve network schedule determines how long it takes for a network dissolu
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -957,7 +957,7 @@ The dissolve network schedule determines how long it takes for a network dissolu
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -980,7 +980,7 @@ The extrinsic will call the Subtensor pallet to set the immunity period.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1003,7 +1003,7 @@ The extrinsic will call the Subtensor pallet to set the kappa.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1024,7 +1024,7 @@ The extrinsic will call the Subtensor pallet to set the kappa.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1044,7 +1044,7 @@ The extrinsic will call the Subtensor pallet to set the lock reduction interval.
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1067,7 +1067,7 @@ The extrinsic will call the Subtensor pallet to set the maximum allowed UIDs for
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1090,7 +1090,7 @@ The extrinsic will call the Subtensor pallet to set the maximum allowed validato
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1113,7 +1113,7 @@ The extrinsic will call the Subtensor pallet to set the maximum burn.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1136,7 +1136,7 @@ The extrinsic will call the Subtensor pallet to set the maximum difficulty.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1159,7 +1159,7 @@ The extrinsic will call the Subtensor pallet to set the maximum registrations pe
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1180,7 +1180,7 @@ The extrinsic will call the Subtensor pallet to set the maximum registrations pe
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1201,7 +1201,7 @@ The extrinsic will call the Subtensor pallet to set the maximum registrations pe
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1223,7 +1223,7 @@ It is only callable by the root account.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1246,7 +1246,7 @@ The extrinsic will call the Subtensor pallet to set the minimum allowed weights.
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1269,7 +1269,7 @@ The extrinsic will call the Subtensor pallet to set the minimum burn.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1289,7 +1289,7 @@ The extrinsic will call the Subtensor pallet to set the minimum delegate take.</
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1312,7 +1312,7 @@ The extrinsic will call the Subtensor pallet to set the minimum difficulty.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1332,7 +1332,7 @@ The extrinsic will call the Subtensor pallet to set the immunity period for the 
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1352,7 +1352,7 @@ The extrinsic will call the Subtensor pallet to set the min lock cost for the ne
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1375,7 +1375,7 @@ The extrinsic will call the Subtensor pallet to set the network PoW registration
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1395,7 +1395,7 @@ The extrinsic will call the Subtensor pallet to set the network rate limit.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1418,7 +1418,7 @@ The extrinsic will call the Subtensor pallet to set the network registration all
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1438,7 +1438,7 @@ The extrinsic will call the Subtensor pallet to set the minimum stake required f
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1457,7 +1457,7 @@ Only callable by root.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1478,7 +1478,7 @@ Only callable by root.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1501,7 +1501,7 @@ The extrinsic will call the Subtensor pallet to set the recycled RAO.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1524,7 +1524,7 @@ If set to <cite>Recycle</cite>, the miner emission sent to the burn UID(s) will 
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1547,7 +1547,7 @@ The extrinsic will call the Subtensor pallet to set the rho.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1570,7 +1570,7 @@ The extrinsic will call the Subtensor pallet to set the serving rate limit.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1594,7 +1594,7 @@ rate-limited to once per configured interval (default: one week) per subnet.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1614,7 +1614,7 @@ The extrinsic will call the Subtensor pallet to set the weights min stake.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1634,7 +1634,7 @@ The extrinsic will call the Subtensor pallet to set the subnet limit.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1652,7 +1652,7 @@ The extrinsic will call the Subtensor pallet to set the subnet limit.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1672,7 +1672,7 @@ The extrinsic will call the Subtensor pallet to set the subnet owner cut.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1693,7 +1693,7 @@ The extrinsic will call the Subtensor pallet to set the subnet owner cut.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1714,7 +1714,7 @@ The extrinsic will call the Subtensor pallet to set the subnet owner cut.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1732,7 +1732,7 @@ The extrinsic will call the Subtensor pallet to set the subnet owner cut.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1750,7 +1750,7 @@ The extrinsic will call the Subtensor pallet to set the subnet owner cut.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1768,7 +1768,7 @@ The extrinsic will call the Subtensor pallet to set the subnet owner cut.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1791,7 +1791,7 @@ The extrinsic will call the Subtensor pallet to set the target registrations per
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1814,7 +1814,7 @@ The extrinsic will call the Subtensor pallet to set the tempo.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1835,7 +1835,7 @@ The extrinsic will call the Subtensor pallet to set the tempo.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1855,7 +1855,7 @@ The extrinsic will call the Subtensor pallet to set the issuance for the network
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1875,7 +1875,7 @@ The extrinsic will call the Subtensor pallet to set the rate limit for delegate 
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1895,7 +1895,7 @@ The extrinsic will call the Subtensor pallet to set the transaction rate limit.<
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1918,7 +1918,7 @@ The extrinsic will call the Subtensor pallet to set the weights set rate limit.<
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1941,7 +1941,7 @@ The extrinsic will call the Subtensor pallet to set the weights version key.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1962,7 +1962,7 @@ The extrinsic will call the Subtensor pallet to set the weights version key.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1983,7 +1983,7 @@ The extrinsic will call the Subtensor pallet to set the weights version key.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2007,7 +2007,7 @@ then compressed to the left and storage is migrated to the new compressed UIDs.<
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2027,7 +2027,7 @@ The extrinsic will call the Aura pallet to change the authorities.</p>
 <dd class="field-even"><p>GenericCall instance.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
+<dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2077,11 +2077,12 @@ The extrinsic will call the Aura pallet to change the authorities.</p>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
@@ -2184,7 +2185,7 @@ By Opentensor Foundation
 
   <p class="copyright">
     
-      © Copyright 2024, Opentensor Foundation.
+      © Copyright 2025, Opentensor Foundation.
       <br/>
     
   </p>

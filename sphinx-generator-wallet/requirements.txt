@@ -1,0 +1,9 @@
+# Main Sphinx documentation generator
+sphinx>=7.1.0
+
+# Theme that we use for Python reference
+sphinx-book-theme>=1.0.1    
+
+# Required extensions
+sphinx-autoapi>=3.0.0  # For autoapi.extension
+myst-parser>=2.0.0     # For MyST Markdown support
