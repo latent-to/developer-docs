@@ -158,6 +158,8 @@ btcli wallet new_hotkey --use-password --wallet.name test-coldkey --wallet.hotke
 
 ## Creating a wallet using Python
 
+For full coverage of the `Wallet` and `Keypair` classes — including key types, regeneration from mnemonics, and at-rest encryption — see the [Wallet SDK docs](./btwallet/wallet-class.md).
+
 <SdkVersion />
 
 <Tabs queryString="create-wallet" groupId="create-wallet">

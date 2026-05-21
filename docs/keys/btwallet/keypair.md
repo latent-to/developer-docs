@@ -25,7 +25,7 @@ Bittensor supports two key types, selected via the `crypto_type` parameter:
 
 SR25519 is the default throughout the SDK. All existing Bittensor wallets use SR25519.
 
-ED25519 is required for `encrypt`/`decrypt`. SR25519 keys cannot be converted to X25519 for sealed-box encryption; ED25519 keys can (this conversion is standardized in libsodium).
+ED25519 is required for `encrypt`/`decrypt`. SR25519 keys cannot be converted to X25519 for sealed-box encryption whereas ED25519 keys can (this conversion is standardized in [libsodium](https://libsodium.gitbook.io/doc/advanced/ed25519-curve25519)).
 
 ## Creating keypairs
 

@@ -10,6 +10,8 @@ The `Wallet` class represents a named Bittensor wallet on disk. It manages a col
 from bittensor_wallet import Wallet, CRYPTO_ED25519, CRYPTO_SR25519
 ```
 
+For the `btcli` equivalents of these operations, see [Creating/Importing a Bittensor Wallet](../working-with-keys.md). For background on coldkeys and hotkeys, see [Wallets, Coldkeys and Hotkeys](../wallets.md).
+
 ## Wallet structure on disk
 
 A wallet is stored under `~/.bittensor/wallets/` by default:

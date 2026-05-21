@@ -102,6 +102,10 @@ assert plaintext == b"hey bob, this is alice"
 
 Keyfile encryption (the `Keyfile.encrypt(password)` / `Keyfile.decrypt(password)` API) is a separate, unrelated mechanism. It encrypts the key file at rest on disk using a password-derived symmetric key. The `Keypair.encrypt`/`decrypt` API described on this page encrypts arbitrary message payloads in application code using asymmetric key material. They operate at different layers and serve different purposes.
 
+## Security considerations
+
+Keypairs used for encryption should follow the same operational security practices as any other sensitive key material. See [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security.md) for guidance on protecting keys on the devices where they're used.
+
 ## Use cases
 
 - Subnet validators securely exchanging configuration or scoring data that should not be visible to observers
