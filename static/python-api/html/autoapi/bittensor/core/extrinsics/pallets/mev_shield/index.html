@@ -42,15 +42,9 @@
 <link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
-<<<<<<< HEAD
     <script src="../../../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
-=======
-    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
->>>>>>> main
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/extrinsics/pallets/mev_shield/index';</script>
     <link rel="index" title="Index" href="../../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../../search.html" />
@@ -442,11 +436,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.mev_shield.MevShield">
-<<<<<<< HEAD
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.pallets.mev_shield.</span></span><span class="sig-name descname"><span class="pre">MevShield</span></span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.mev_shield.MevShield" title="Link to this definition">#</a></dt>
-=======
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.pallets.mev_shield.</span></span><span class="sig-name descname"><span class="pre">MevShield</span></span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.mev_shield.MevShield" title="Link to this definition">#</a></dt>
->>>>>>> main
 <dd><p>Bases: <a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.CallBuilder" title="bittensor.core.extrinsics.pallets.base.CallBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bittensor.core.extrinsics.pallets.base.CallBuilder</span></code></a></p>
 <p>Factory class for creating GenericCall objects for MevShield pallet functions.</p>
 <p>This class provides methods to create GenericCall instances for all MevShield pallet extrinsics.</p>
@@ -457,76 +447,42 @@ instance and await the result.</p>
 <p># Sync usage
 call = MevShield(subtensor).submit_encrypted(</p>
 <blockquote>
-<<<<<<< HEAD
 <div><p>ciphertext=b”encrypted_data…”</p>
-=======
-<div><p>commitment=”0x1234…”,
-ciphertext=b”encrypted_data…”</p>
->>>>>>> main
 </div></blockquote>
 <p>)
 response = subtensor.sign_and_send_extrinsic(call=call, …)</p>
 <p># Async usage
 call = await MevShield(async_subtensor).submit_encrypted(</p>
 <blockquote>
-<<<<<<< HEAD
 <div><p>ciphertext=b”encrypted_data…”</p>
-=======
-<div><p>commitment=”0x1234…”,
-ciphertext=b”encrypted_data…”</p>
->>>>>>> main
 </div></blockquote>
 <p>)
 response = await async_subtensor.sign_and_send_extrinsic(call=call, …)</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.extrinsics.pallets.mev_shield.MevShield.submit_encrypted">
-<<<<<<< HEAD
 <span class="sig-name descname"><span class="pre">submit_encrypted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ciphertext</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.mev_shield.MevShield.submit_encrypted" title="Link to this definition">#</a></dt>
-=======
-<span class="sig-name descname"><span class="pre">submit_encrypted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commitment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ciphertext</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.pallets.mev_shield.MevShield.submit_encrypted" title="Link to this definition">#</a></dt>
->>>>>>> main
 <dd><p>Returns GenericCall instance for MevShield function submit_encrypted.</p>
 <p>This function submits an encrypted extrinsic to the MEV Shield pallet. The extrinsic remains encrypted in the
 transaction pool until it is included in a block and decrypted by validators.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<<<<<<< HEAD
 <dd class="field-odd"><p><strong>ciphertext</strong> (<a class="reference internal" href="../../../../extras/dev_framework/calls/non_sudo_calls/index.html#bittensor.extras.dev_framework.calls.non_sudo_calls.NOTE_PREIMAGE.bytes" title="bittensor.extras.dev_framework.calls.non_sudo_calls.NOTE_PREIMAGE.bytes"><em>bytes</em></a>) – The encrypted blob containing the payload and signature.
 Format: [key_hash(16)][u16 kem_len LE][kem_ct][nonce24][aead_ct]
 Maximum size: 8192 bytes.</p>
-=======
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>commitment</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The blake2_256 hash of the payload_core (signer + nonce + SCALE(call)). Must be a hex string
-with “0x” prefix.</p></li>
-<li><p><strong>ciphertext</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><em>bytes</em></a>) – The encrypted blob containing the payload and signature.
-Format: [u16 kem_len LE][kem_ct][nonce24][aead_ct]
-Maximum size: 8192 bytes.</p></li>
-</ul>
->>>>>>> main
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>GenericCall instance ready for extrinsic submission.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<<<<<<< HEAD
 <dd class="field-odd"><p><a class="reference internal" href="../base/index.html#bittensor.core.extrinsics.pallets.base.Call" title="bittensor.core.extrinsics.pallets.base.Call">bittensor.core.extrinsics.pallets.base.Call</a></p>
-=======
-<dd class="field-odd"><p>bittensor.core.extrinsics.pallets.base.Call</p>
->>>>>>> main
 </dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<<<<<<< HEAD
 <p>The ciphertext is encrypted using ML-KEM-768 + XChaCha20Poly1305 with the public key from the NextKey
 storage item, which rotates every block. The key_hash prefix (twox_128 of the public key) is validated
 on-chain by CheckShieldedTxValidity.</p>
-=======
-<p>The commitment is used to verify the ciphertext’s content at decryption time. The ciphertext is encrypted
-using ML-KEM-768 + XChaCha20Poly1305 with the public key from the NextKey storage item, which rotates every
-block.</p>
->>>>>>> main
 </div>
 </dd></dl>
 
