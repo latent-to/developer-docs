@@ -30,9 +30,9 @@
   <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/bittensor-custom.css?v=c1dfe055" />
   
   <!-- So that users can add custom icons -->
@@ -42,9 +42,9 @@
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/types/index';</script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -150,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../config/index.html">bittensor.core.config</a></li>
@@ -352,7 +353,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -376,7 +377,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -403,10 +404,10 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.as_dict"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.as_dict()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.certificate"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.certificate</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.coldkey"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.coldkey</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.copy"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.copy()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.dict"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.dict()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.hotkey"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.hotkey</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.ip"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.ip</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.ip_type"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.ip_type</span></code></a></li>
@@ -427,6 +428,51 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.timestamp"><code class="docutils literal notranslate"><span class="pre">BlockInfo.timestamp</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CommitmentOfResponse"><code class="docutils literal notranslate"><span class="pre">CommitmentOfResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CommitmentOfResponse.block"><code class="docutils literal notranslate"><span class="pre">CommitmentOfResponse.block</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CommitmentOfResponse.deposit"><code class="docutils literal notranslate"><span class="pre">CommitmentOfResponse.deposit</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CommitmentOfResponse.info"><code class="docutils literal notranslate"><span class="pre">CommitmentOfResponse.info</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.call"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.call</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.cap"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.cap</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.contributors_count"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.contributors_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.creator"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.creator</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.deposit"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.deposit</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.end"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.end</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.finalized"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.finalized</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.funds_account"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.funds_account</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.min_contribution"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.min_contribution</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.raised"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.raised</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.target_address"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.target_address</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.alpha_in"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.alpha_in</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.alpha_in_emission"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.alpha_in_emission</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.alpha_out"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.alpha_out</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.alpha_out_emission"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.alpha_out_emission</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.blocks_since_last_step"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.blocks_since_last_step</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.emission"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.emission</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.last_step"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.last_step</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.moving_price"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.moving_price</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.netuid"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.netuid</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.network_registered_at"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.network_registered_at</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.owner_coldkey"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.owner_coldkey</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.owner_hotkey"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.owner_hotkey</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.pending_alpha_emission"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.pending_alpha_emission</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.pending_root_emission"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.pending_root_emission</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.price"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.price</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.subnet_identity"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.subnet_identity</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.subnet_name"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.subnet_name</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.subnet_volume"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.subnet_volume</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.tao_in"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.tao_in</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.tao_in_emission"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.tao_in_emission</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.tempo"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.tempo</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.token_symbol"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.token_symbol</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.as_dict"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.as_dict()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.data"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.data</span></code></a></li>
@@ -437,6 +483,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_receipt"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.extrinsic_receipt</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.from_exception"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.from_exception()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.message"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.message</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.mev_extrinsic"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.mev_extrinsic</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.success"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.success</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.transaction_alpha_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.transaction_alpha_fee</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.transaction_tao_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.transaction_tao_fee</span></code></a></li>
@@ -444,9 +491,19 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.with_log"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.with_log()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ParamWithTypes"><code class="docutils literal notranslate"><span class="pre">ParamWithTypes</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ParamWithTypes.name"><code class="docutils literal notranslate"><span class="pre">ParamWithTypes.name</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ParamWithTypes.type"><code class="docutils literal notranslate"><span class="pre">ParamWithTypes.type</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.NeuronCertificateResponse"><code class="docutils literal notranslate"><span class="pre">NeuronCertificateResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.NeuronCertificateResponse.algorithm"><code class="docutils literal notranslate"><span class="pre">NeuronCertificateResponse.algorithm</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.NeuronCertificateResponse.public_key"><code class="docutils literal notranslate"><span class="pre">NeuronCertificateResponse.public_key</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse"><code class="docutils literal notranslate"><span class="pre">PositionResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.fees_alpha"><code class="docutils literal notranslate"><span class="pre">PositionResponse.fees_alpha</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.fees_tao"><code class="docutils literal notranslate"><span class="pre">PositionResponse.fees_tao</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.id"><code class="docutils literal notranslate"><span class="pre">PositionResponse.id</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.liquidity"><code class="docutils literal notranslate"><span class="pre">PositionResponse.liquidity</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.netuid"><code class="docutils literal notranslate"><span class="pre">PositionResponse.netuid</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.tick_high"><code class="docutils literal notranslate"><span class="pre">PositionResponse.tick_high</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.tick_low"><code class="docutils literal notranslate"><span class="pre">PositionResponse.tick_low</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PrometheusServeCallParams"><code class="docutils literal notranslate"><span class="pre">PrometheusServeCallParams</span></code></a><ul class="nav section-nav flex-column">
@@ -458,6 +515,17 @@
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.Salt"><code class="docutils literal notranslate"><span class="pre">Salt</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.additional"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.additional</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.description"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.description</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.discord"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.discord</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.github_repo"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.github_repo</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.logo_url"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.logo_url</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.subnet_contact"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.subnet_contact</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.subnet_name"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.subnet_name</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.subnet_url"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.subnet_url</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin.add_args"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin.add_args()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin.chain_endpoint"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin.chain_endpoint</span></code></a></li>
@@ -487,7 +555,7 @@
 <span id="bittensor-core-types"></span><h1>bittensor.core.types<a class="headerlink" href="#module-bittensor.core.types" title="Link to this heading">#</a></h1>
 <section id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.types.Salt" title="bittensor.core.types.Salt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Salt</span></code></a></p></td>
 <td><p></p></td>
@@ -504,7 +572,7 @@
 </section>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.types.AxonServeCallParams" title="bittensor.core.types.AxonServeCallParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AxonServeCallParams</span></code></a></p></td>
 <td><p></p></td>
@@ -512,16 +580,31 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.types.BlockInfo" title="bittensor.core.types.BlockInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BlockInfo</span></code></a></p></td>
 <td><p>Class that holds information about a blockchain block.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExtrinsicResponse</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.types.CommitmentOfResponse" title="bittensor.core.types.CommitmentOfResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CommitmentOfResponse</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.types.CrowdloansResponse" title="bittensor.core.types.CrowdloansResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CrowdloansResponse</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.types.DynamicInfoResponse" title="bittensor.core.types.DynamicInfoResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DynamicInfoResponse</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.types.ExtrinsicResponse" title="bittensor.core.types.ExtrinsicResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExtrinsicResponse</span></code></a></p></td>
 <td><p>A standardized response container for handling the extrinsic results submissions and related operations in the SDK.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.types.ParamWithTypes" title="bittensor.core.types.ParamWithTypes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParamWithTypes</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.types.NeuronCertificateResponse" title="bittensor.core.types.NeuronCertificateResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NeuronCertificateResponse</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.types.PositionResponse" title="bittensor.core.types.PositionResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PositionResponse</span></code></a></p></td>
 <td><p>dict() -&gt; new empty dictionary</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.types.PrometheusServeCallParams" title="bittensor.core.types.PrometheusServeCallParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PrometheusServeCallParams</span></code></a></p></td>
 <td><p>Prometheus serve chain call parameters.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.types.SubtensorMixin" title="bittensor.core.types.SubtensorMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubtensorMixin</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.core.types.SubnetIdentityResponse" title="bittensor.core.types.SubnetIdentityResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubnetIdentityResponse</span></code></a></p></td>
+<td><p>dict() -&gt; new empty dictionary</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.types.SubtensorMixin" title="bittensor.core.types.SubtensorMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubtensorMixin</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 </tbody>
@@ -532,7 +615,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.types.AxonServeCallParams">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">AxonServeCallParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coldkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">certificate</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/types.html#AxonServeCallParams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.types.AxonServeCallParams" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">AxonServeCallParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hotkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coldkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">certificate</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.AxonServeCallParams" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -550,6 +633,17 @@
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="bittensor.core.types.AxonServeCallParams.as_dict">
+<span class="sig-name descname"><span class="pre">as_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.AxonServeCallParams.as_dict" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dict representation of this object. If <cite>self.certificate</cite> is <cite>None</cite>, it is not included in this.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.AxonServeCallParams.certificate">
 <span class="sig-name descname"><span class="pre">certificate</span></span><a class="headerlink" href="#bittensor.core.types.AxonServeCallParams.certificate" title="Link to this definition">#</a></dt>
@@ -562,22 +656,10 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.types.AxonServeCallParams.copy">
-<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/types.html#AxonServeCallParams.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.types.AxonServeCallParams.copy" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.AxonServeCallParams.copy" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#bittensor.core.types.AxonServeCallParams" title="bittensor.core.types.AxonServeCallParams">AxonServeCallParams</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="bittensor.core.types.AxonServeCallParams.dict">
-<span class="sig-name descname"><span class="pre">dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/types.html#AxonServeCallParams.dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.types.AxonServeCallParams.dict" title="Link to this definition">#</a></dt>
-<dd><p>Returns a dict representation of this object. If <cite>self.certificate</cite> is <cite>None</cite>,
-it is not included in this.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -631,7 +713,7 @@ it is not included in this.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.types.BlockInfo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">BlockInfo</span></span><a class="headerlink" href="#bittensor.core.types.BlockInfo" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">BlockInfo</span></span><a class="headerlink" href="#bittensor.core.types.BlockInfo" title="Link to this definition">#</a></dt>
 <dd><p>Class that holds information about a blockchain block.</p>
 <p>This class encapsulates all relevant information about a block in the blockchain, including its number, hash,
 timestamp, and contents.</p>
@@ -649,39 +731,285 @@ timestamp, and contents.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.BlockInfo.explorer">
-<span class="sig-name descname"><span class="pre">explorer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.BlockInfo.explorer" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">explorer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.BlockInfo.explorer" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.BlockInfo.extrinsics">
-<span class="sig-name descname"><span class="pre">extrinsics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a></em><a class="headerlink" href="#bittensor.core.types.BlockInfo.extrinsics" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">extrinsics</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a></span><a class="headerlink" href="#bittensor.core.types.BlockInfo.extrinsics" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.BlockInfo.hash">
-<span class="sig-name descname"><span class="pre">hash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.BlockInfo.hash" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">hash</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.BlockInfo.hash" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.BlockInfo.header">
-<span class="sig-name descname"><span class="pre">header</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a></em><a class="headerlink" href="#bittensor.core.types.BlockInfo.header" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">header</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a></span><a class="headerlink" href="#bittensor.core.types.BlockInfo.header" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.BlockInfo.number">
-<span class="sig-name descname"><span class="pre">number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.BlockInfo.number" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">number</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.BlockInfo.number" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.BlockInfo.timestamp">
-<span class="sig-name descname"><span class="pre">timestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.types.BlockInfo.timestamp" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">timestamp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#bittensor.core.types.BlockInfo.timestamp" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bittensor.core.types.CommitmentOfResponse">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">CommitmentOfResponse</span></span><a class="headerlink" href="#bittensor.core.types.CommitmentOfResponse" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>dict() -&gt; new empty dictionary
+dict(mapping) -&gt; new dictionary initialized from a mapping object’s</p>
+<blockquote>
+<div><p>(key, value) pairs</p>
+</div></blockquote>
+<dl>
+<dt>dict(iterable) -&gt; new dictionary initialized as if via:</dt><dd><p>d = {}
+for k, v in iterable:</p>
+<blockquote>
+<div><p>d[k] = v</p>
+</div></blockquote>
+</dd>
+<dt>dict(<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs) -&gt; new dictionary initialized with the name=value pairs</dt><dd><p>in the keyword argument list.  For example:  dict(one=1, two=2)</p>
+</dd>
+</dl>
+<p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CommitmentOfResponse.block">
+<span class="sig-name descname"><span class="pre">block</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.CommitmentOfResponse.block" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CommitmentOfResponse.deposit">
+<span class="sig-name descname"><span class="pre">deposit</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.CommitmentOfResponse.deposit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CommitmentOfResponse.info">
+<span class="sig-name descname"><span class="pre">info</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">_CommitmentFields</span></span><a class="headerlink" href="#bittensor.core.types.CommitmentOfResponse.info" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bittensor.core.types.CrowdloansResponse">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">CrowdloansResponse</span></span><a class="headerlink" href="#bittensor.core.types.CrowdloansResponse" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>dict() -&gt; new empty dictionary
+dict(mapping) -&gt; new dictionary initialized from a mapping object’s</p>
+<blockquote>
+<div><p>(key, value) pairs</p>
+</div></blockquote>
+<dl>
+<dt>dict(iterable) -&gt; new dictionary initialized as if via:</dt><dd><p>d = {}
+for k, v in iterable:</p>
+<blockquote>
+<div><p>d[k] = v</p>
+</div></blockquote>
+</dd>
+<dt>dict(<a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) -&gt; new dictionary initialized with the name=value pairs</dt><dd><p>in the keyword argument list.  For example:  dict(one=1, two=2)</p>
+</dd>
+</dl>
+<p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CrowdloansResponse.call">
+<span class="sig-name descname"><span class="pre">call</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#bittensor.core.types.CrowdloansResponse.call" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CrowdloansResponse.cap">
+<span class="sig-name descname"><span class="pre">cap</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.CrowdloansResponse.cap" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CrowdloansResponse.contributors_count">
+<span class="sig-name descname"><span class="pre">contributors_count</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.CrowdloansResponse.contributors_count" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CrowdloansResponse.creator">
+<span class="sig-name descname"><span class="pre">creator</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.CrowdloansResponse.creator" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CrowdloansResponse.deposit">
+<span class="sig-name descname"><span class="pre">deposit</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.CrowdloansResponse.deposit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CrowdloansResponse.end">
+<span class="sig-name descname"><span class="pre">end</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.CrowdloansResponse.end" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CrowdloansResponse.finalized">
+<span class="sig-name descname"><span class="pre">finalized</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#bittensor.core.types.CrowdloansResponse.finalized" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CrowdloansResponse.funds_account">
+<span class="sig-name descname"><span class="pre">funds_account</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.CrowdloansResponse.funds_account" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CrowdloansResponse.min_contribution">
+<span class="sig-name descname"><span class="pre">min_contribution</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.CrowdloansResponse.min_contribution" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CrowdloansResponse.raised">
+<span class="sig-name descname"><span class="pre">raised</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.CrowdloansResponse.raised" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.CrowdloansResponse.target_address">
+<span class="sig-name descname"><span class="pre">target_address</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.CrowdloansResponse.target_address" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">DynamicInfoResponse</span></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>dict() -&gt; new empty dictionary
+dict(mapping) -&gt; new dictionary initialized from a mapping object’s</p>
+<blockquote>
+<div><p>(key, value) pairs</p>
+</div></blockquote>
+<dl>
+<dt>dict(iterable) -&gt; new dictionary initialized as if via:</dt><dd><p>d = {}
+for k, v in iterable:</p>
+<blockquote>
+<div><p>d[k] = v</p>
+</div></blockquote>
+</dd>
+<dt>dict(<a href="#id5"><span class="problematic" id="id6">**</span></a>kwargs) -&gt; new dictionary initialized with the name=value pairs</dt><dd><p>in the keyword argument list.  For example:  dict(one=1, two=2)</p>
+</dd>
+</dl>
+<p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.alpha_in">
+<span class="sig-name descname"><span class="pre">alpha_in</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.alpha_in" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.alpha_in_emission">
+<span class="sig-name descname"><span class="pre">alpha_in_emission</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.alpha_in_emission" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.alpha_out">
+<span class="sig-name descname"><span class="pre">alpha_out</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.alpha_out" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.alpha_out_emission">
+<span class="sig-name descname"><span class="pre">alpha_out_emission</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.alpha_out_emission" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.blocks_since_last_step">
+<span class="sig-name descname"><span class="pre">blocks_since_last_step</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.blocks_since_last_step" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.emission">
+<span class="sig-name descname"><span class="pre">emission</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.emission" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.last_step">
+<span class="sig-name descname"><span class="pre">last_step</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.last_step" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.moving_price">
+<span class="sig-name descname"><span class="pre">moving_price</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scalecodec.utils.math.FixedPoint</span></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.moving_price" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.netuid">
+<span class="sig-name descname"><span class="pre">netuid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.netuid" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.network_registered_at">
+<span class="sig-name descname"><span class="pre">network_registered_at</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.network_registered_at" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.owner_coldkey">
+<span class="sig-name descname"><span class="pre">owner_coldkey</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.owner_coldkey" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.owner_hotkey">
+<span class="sig-name descname"><span class="pre">owner_hotkey</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.owner_hotkey" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.pending_alpha_emission">
+<span class="sig-name descname"><span class="pre">pending_alpha_emission</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.pending_alpha_emission" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.pending_root_emission">
+<span class="sig-name descname"><span class="pre">pending_root_emission</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.pending_root_emission" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.price">
+<span class="sig-name descname"><span class="pre">price</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NotRequired</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.price" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.subnet_identity">
+<span class="sig-name descname"><span class="pre">subnet_identity</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#bittensor.core.types.SubnetIdentityResponse" title="bittensor.core.types.SubnetIdentityResponse"><span class="pre">SubnetIdentityResponse</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.subnet_identity" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.subnet_name">
+<span class="sig-name descname"><span class="pre">subnet_name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.subnet_name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.subnet_volume">
+<span class="sig-name descname"><span class="pre">subnet_volume</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.subnet_volume" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.tao_in">
+<span class="sig-name descname"><span class="pre">tao_in</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.tao_in" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.tao_in_emission">
+<span class="sig-name descname"><span class="pre">tao_in_emission</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.tao_in_emission" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.tempo">
+<span class="sig-name descname"><span class="pre">tempo</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.tempo" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.DynamicInfoResponse.token_symbol">
+<span class="sig-name descname"><span class="pre">token_symbol</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.types.DynamicInfoResponse.token_symbol" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">ExtrinsicResponse</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">ExtrinsicResponse</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse" title="Link to this definition">#</a></dt>
 <dd><p>A standardized response container for handling the extrinsic results submissions and related operations in the SDK.</p>
 <p>This class is designed to give developers a consistent way to represent the outcome of an extrinsic call — whether
 it succeeded or failed — along with useful metadata for debugging, logging, or higher-level business logic.</p>
@@ -708,6 +1036,11 @@ submitted to the chain.</p></li>
 contains the most detailed execution data available, including the block number and hash, triggered events,
 extrinsic index, execution phase, and other low-level details. This allows deep debugging or post-analysis
 of on-chain execution.</p></li>
+<li><p><strong>mev_extrinsic</strong> – The extrinsic object of the revealed (decrypted and executed) MEV Shield extrinsic. This is
+populated when using MEV Shield protection (<code class="docutils literal notranslate"><span class="pre">with_mev_protection=True</span></code>) and contains the execution details
+of the second extrinsic that decrypts and executes the originally encrypted call. Contains triggered events,
+block information, and other execution metadata. Set to <code class="docutils literal notranslate"><span class="pre">None</span></code> for non-MEV Shield transactions or when the
+revealed extrinsic receipt is not available.</p></li>
 <li><p><strong>transaction_tao_fee</strong> – TAO fee charged by the transaction in TAO (e.g., fee for add_stake), if available.</p></li>
 <li><p><strong>transaction_alpha_fee</strong> – Alpha fee charged by the transaction (e.g., fee for transfer_stake), if available.</p></li>
 <li><p><strong>error</strong> – Captures the underlying exception if the extrinsic failed, otherwise <cite>None</cite>.</p></li>
@@ -735,10 +1068,11 @@ print(response)</p>
 message: Successfully registered subnet
 extrinsic_function: register_subnet_extrinsic
 extrinsic: {‘account_id’: ‘0xd43593c715fdd31c…
+transaction_fee: τ1.0
+extrinsic_receipt: Extrinsic Receipt data of of the submitted extrinsic
+mev_extrinsic: None
 transaction_tao_fee: τ1.0
 transaction_alpha_fee: 1.0β
-extrinsic_receipt: Extrinsic Receipt data of of the submitted extrinsic
-transaction_fee: τ1.0
 error: None
 data: None</p>
 </dd>
@@ -764,37 +1098,37 @@ print(response[1])
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.data">
-<span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.data" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../chain_data/proxy/index.html#bittensor.core.chain_data.proxy.ProxyType.Any" title="bittensor.core.chain_data.proxy.ProxyType.Any"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.data" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.error">
-<span class="sig-name descname"><span class="pre">error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><span class="pre">Exception</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.error" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">error</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><span class="pre">Exception</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.error" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.extrinsic">
-<span class="sig-name descname"><span class="pre">extrinsic</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scalecodec.types.GenericExtrinsic</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.extrinsic" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">extrinsic</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scalecodec.types.GenericExtrinsic</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.extrinsic" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.extrinsic_fee">
-<span class="sig-name descname"><span class="pre">extrinsic_fee</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_fee" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">extrinsic_fee</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_fee" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.extrinsic_function">
-<span class="sig-name descname"><span class="pre">extrinsic_function</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_function" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">extrinsic_function</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_function" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.extrinsic_receipt">
-<span class="sig-name descname"><span class="pre">extrinsic_receipt</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">async_substrate_interface.async_substrate.AsyncExtrinsicReceipt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">async_substrate_interface.sync_substrate.ExtrinsicReceipt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_receipt" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">extrinsic_receipt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AsyncExtrinsicReceipt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ExtrinsicReceipt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_receipt" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.from_exception">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raise_error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.from_exception" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raise_error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.from_exception" title="Link to this definition">#</a></dt>
 <dd><p>Check if error is raised and return ExtrinsicResponse accordingly.
 :param raise_error: Raises a relevant exception rather than returning <cite>False</cite> if unsuccessful.
 :param error: Exception raised during extrinsic execution.</p>
@@ -816,27 +1150,32 @@ print(response[1])
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.message">
-<span class="sig-name descname"><span class="pre">message</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.message" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">message</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.message" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.mev_extrinsic">
+<span class="sig-name descname"><span class="pre">mev_extrinsic</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AsyncExtrinsicReceipt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ExtrinsicReceipt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.mev_extrinsic" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.success">
-<span class="sig-name descname"><span class="pre">success</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.success" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">success</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.success" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.transaction_alpha_fee">
-<span class="sig-name descname"><span class="pre">transaction_alpha_fee</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.transaction_alpha_fee" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">transaction_alpha_fee</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.transaction_alpha_fee" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.transaction_tao_fee">
-<span class="sig-name descname"><span class="pre">transaction_tao_fee</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.transaction_tao_fee" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">transaction_tao_fee</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.transaction_tao_fee" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.types.ExtrinsicResponse.unlock_wallet">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unlock_wallet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unlock_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coldkey'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonce_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.unlock_wallet" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">unlock_wallet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unlock_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coldkey'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonce_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.ExtrinsicResponse.unlock_wallet" title="Link to this definition">#</a></dt>
 <dd><p>Check if keypair is unlocked and return ExtrinsicResponse accordingly.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -883,8 +1222,8 @@ message.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="bittensor.core.types.ParamWithTypes">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">ParamWithTypes</span></span><a class="reference internal" href="../../../../_modules/bittensor/core/types.html#ParamWithTypes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.types.ParamWithTypes" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="bittensor.core.types.NeuronCertificateResponse">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">NeuronCertificateResponse</span></span><a class="headerlink" href="#bittensor.core.types.NeuronCertificateResponse" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
 <p>dict() -&gt; new empty dictionary
 dict(mapping) -&gt; new dictionary initialized from a mapping object’s</p>
@@ -898,51 +1237,108 @@ for k, v in iterable:</p>
 <div><p>d[k] = v</p>
 </div></blockquote>
 </dd>
-<dt>dict(<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs) -&gt; new dictionary initialized with the name=value pairs</dt><dd><p>in the keyword argument list.  For example:  dict(one=1, two=2)</p>
+<dt>dict(<a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs) -&gt; new dictionary initialized with the name=value pairs</dt><dd><p>in the keyword argument list.  For example:  dict(one=1, two=2)</p>
 </dd>
 </dl>
 <p>Initialize self.  See help(type(self)) for accurate signature.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="bittensor.core.types.ParamWithTypes.name">
-<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.ParamWithTypes.name" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="bittensor.core.types.NeuronCertificateResponse.algorithm">
+<span class="sig-name descname"><span class="pre">algorithm</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.NeuronCertificateResponse.algorithm" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="bittensor.core.types.ParamWithTypes.type">
-<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.ParamWithTypes.type" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="bittensor.core.types.NeuronCertificateResponse.public_key">
+<span class="sig-name descname"><span class="pre">public_key</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.NeuronCertificateResponse.public_key" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bittensor.core.types.PositionResponse">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">PositionResponse</span></span><a class="headerlink" href="#bittensor.core.types.PositionResponse" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>dict() -&gt; new empty dictionary
+dict(mapping) -&gt; new dictionary initialized from a mapping object’s</p>
+<blockquote>
+<div><p>(key, value) pairs</p>
+</div></blockquote>
+<dl>
+<dt>dict(iterable) -&gt; new dictionary initialized as if via:</dt><dd><p>d = {}
+for k, v in iterable:</p>
+<blockquote>
+<div><p>d[k] = v</p>
+</div></blockquote>
+</dd>
+<dt>dict(<a href="#id9"><span class="problematic" id="id10">**</span></a>kwargs) -&gt; new dictionary initialized with the name=value pairs</dt><dd><p>in the keyword argument list.  For example:  dict(one=1, two=2)</p>
+</dd>
+</dl>
+<p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.PositionResponse.fees_alpha">
+<span class="sig-name descname"><span class="pre">fees_alpha</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scalecodec.utils.math.FixedPoint</span></span><a class="headerlink" href="#bittensor.core.types.PositionResponse.fees_alpha" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.PositionResponse.fees_tao">
+<span class="sig-name descname"><span class="pre">fees_tao</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scalecodec.utils.math.FixedPoint</span></span><a class="headerlink" href="#bittensor.core.types.PositionResponse.fees_tao" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.PositionResponse.id">
+<span class="sig-name descname"><span class="pre">id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.PositionResponse.id" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.PositionResponse.liquidity">
+<span class="sig-name descname"><span class="pre">liquidity</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.PositionResponse.liquidity" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.PositionResponse.netuid">
+<span class="sig-name descname"><span class="pre">netuid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.PositionResponse.netuid" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.PositionResponse.tick_high">
+<span class="sig-name descname"><span class="pre">tick_high</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.PositionResponse.tick_high" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.PositionResponse.tick_low">
+<span class="sig-name descname"><span class="pre">tick_low</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.PositionResponse.tick_low" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.types.PrometheusServeCallParams">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">PrometheusServeCallParams</span></span><a class="reference internal" href="../../../../_modules/bittensor/core/types.html#PrometheusServeCallParams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">PrometheusServeCallParams</span></span><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
 <p>Prometheus serve chain call parameters.</p>
 <p>Initialize self.  See help(type(self)) for accurate signature.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.PrometheusServeCallParams.ip">
-<span class="sig-name descname"><span class="pre">ip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.ip" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ip</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.ip" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.PrometheusServeCallParams.ip_type">
-<span class="sig-name descname"><span class="pre">ip_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.ip_type" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ip_type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.ip_type" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.PrometheusServeCallParams.netuid">
-<span class="sig-name descname"><span class="pre">netuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.netuid" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">netuid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.netuid" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.PrometheusServeCallParams.port">
-<span class="sig-name descname"><span class="pre">port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.port" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">port</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.port" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.PrometheusServeCallParams.version">
-<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.version" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">version</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.types.PrometheusServeCallParams.version" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -953,14 +1349,76 @@ for k, v in iterable:</p>
 <dd></dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="bittensor.core.types.SubnetIdentityResponse">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">SubnetIdentityResponse</span></span><a class="headerlink" href="#bittensor.core.types.SubnetIdentityResponse" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>dict() -&gt; new empty dictionary
+dict(mapping) -&gt; new dictionary initialized from a mapping object’s</p>
+<blockquote>
+<div><p>(key, value) pairs</p>
+</div></blockquote>
+<dl>
+<dt>dict(iterable) -&gt; new dictionary initialized as if via:</dt><dd><p>d = {}
+for k, v in iterable:</p>
+<blockquote>
+<div><p>d[k] = v</p>
+</div></blockquote>
+</dd>
+<dt>dict(<a href="#id11"><span class="problematic" id="id12">**</span></a>kwargs) -&gt; new dictionary initialized with the name=value pairs</dt><dd><p>in the keyword argument list.  For example:  dict(one=1, two=2)</p>
+</dd>
+</dl>
+<p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.SubnetIdentityResponse.additional">
+<span class="sig-name descname"><span class="pre">additional</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.SubnetIdentityResponse.additional" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.SubnetIdentityResponse.description">
+<span class="sig-name descname"><span class="pre">description</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.SubnetIdentityResponse.description" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.SubnetIdentityResponse.discord">
+<span class="sig-name descname"><span class="pre">discord</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.SubnetIdentityResponse.discord" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.SubnetIdentityResponse.github_repo">
+<span class="sig-name descname"><span class="pre">github_repo</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.SubnetIdentityResponse.github_repo" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.SubnetIdentityResponse.logo_url">
+<span class="sig-name descname"><span class="pre">logo_url</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.SubnetIdentityResponse.logo_url" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.SubnetIdentityResponse.subnet_contact">
+<span class="sig-name descname"><span class="pre">subnet_contact</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.SubnetIdentityResponse.subnet_contact" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.SubnetIdentityResponse.subnet_name">
+<span class="sig-name descname"><span class="pre">subnet_name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.SubnetIdentityResponse.subnet_name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.core.types.SubnetIdentityResponse.subnet_url">
+<span class="sig-name descname"><span class="pre">subnet_url</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.SubnetIdentityResponse.subnet_url" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.types.SubtensorMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">SubtensorMixin</span></span><a class="reference internal" href="../../../../_modules/bittensor/core/types.html#SubtensorMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.types.SubtensorMixin" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.types.</span></span><span class="sig-name descname"><span class="pre">SubtensorMixin</span></span><a class="headerlink" href="#bittensor.core.types.SubtensorMixin" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
 <p>Helper class that provides a standard way to create an ABC using
 inheritance.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.types.SubtensorMixin.add_args">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/types.html#SubtensorMixin.add_args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.add_args" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">add_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.add_args" title="Link to this definition">#</a></dt>
 <dd><p>Adds command-line arguments to the provided ArgumentParser for configuring the Subtensor settings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -988,46 +1446,42 @@ Subtensor.add_args(parser)</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.SubtensorMixin.chain_endpoint">
-<span class="sig-name descname"><span class="pre">chain_endpoint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.chain_endpoint" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">chain_endpoint</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.chain_endpoint" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.types.SubtensorMixin.config">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/types.html#SubtensorMixin.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.config" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.config" title="Link to this definition">#</a></dt>
 <dd><p>Creates and returns a Bittensor configuration object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>A Bittensor configuration object configured with arguments added by</dt><dd><p>the <cite>subtensor.add_args</cite> method.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-odd"><p>A Bittensor configuration object configured with arguments added by the <cite>subtensor.add_args</cite> method.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>config (<a class="reference internal" href="../config/index.html#bittensor.core.config.Config" title="bittensor.core.config.Config">bittensor.core.config.Config</a>)</p>
+<dd class="field-even"><p><a class="reference internal" href="../config/index.html#bittensor.core.config.Config" title="bittensor.core.config.Config">bittensor.core.config.Config</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.types.SubtensorMixin.help">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">help</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/types.html#SubtensorMixin.help"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.help" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">help</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.help" title="Link to this definition">#</a></dt>
 <dd><p>Print help to stdout.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.SubtensorMixin.log_verbose">
-<span class="sig-name descname"><span class="pre">log_verbose</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.log_verbose" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">log_verbose</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.log_verbose" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.types.SubtensorMixin.network">
-<span class="sig-name descname"><span class="pre">network</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.network" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">network</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.network" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.types.SubtensorMixin.setup_config">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/core/types.html#SubtensorMixin.setup_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.setup_config" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">setup_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.types.SubtensorMixin.setup_config" title="Link to this definition">#</a></dt>
 <dd><p>Sets up and returns the configuration for the Subtensor network and endpoint.</p>
 <dl class="simple">
 <dt>This method determines the appropriate network and chain endpoint based on the provided network string or</dt><dd><p>configuration object. It evaluates the network and endpoint in the following order of precedence:
@@ -1110,20 +1564,21 @@ Subtensor.add_args(parser)</p>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.as_dict"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.as_dict()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.certificate"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.certificate</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.coldkey"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.coldkey</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.copy"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.copy()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.dict"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.dict()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.hotkey"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.hotkey</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.ip"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.ip</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.AxonServeCallParams.ip_type"><code class="docutils literal notranslate"><span class="pre">AxonServeCallParams.ip_type</span></code></a></li>
@@ -1144,6 +1599,51 @@ Subtensor.add_args(parser)</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.BlockInfo.timestamp"><code class="docutils literal notranslate"><span class="pre">BlockInfo.timestamp</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CommitmentOfResponse"><code class="docutils literal notranslate"><span class="pre">CommitmentOfResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CommitmentOfResponse.block"><code class="docutils literal notranslate"><span class="pre">CommitmentOfResponse.block</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CommitmentOfResponse.deposit"><code class="docutils literal notranslate"><span class="pre">CommitmentOfResponse.deposit</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CommitmentOfResponse.info"><code class="docutils literal notranslate"><span class="pre">CommitmentOfResponse.info</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.call"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.call</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.cap"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.cap</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.contributors_count"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.contributors_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.creator"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.creator</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.deposit"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.deposit</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.end"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.end</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.finalized"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.finalized</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.funds_account"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.funds_account</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.min_contribution"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.min_contribution</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.raised"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.raised</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.CrowdloansResponse.target_address"><code class="docutils literal notranslate"><span class="pre">CrowdloansResponse.target_address</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.alpha_in"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.alpha_in</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.alpha_in_emission"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.alpha_in_emission</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.alpha_out"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.alpha_out</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.alpha_out_emission"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.alpha_out_emission</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.blocks_since_last_step"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.blocks_since_last_step</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.emission"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.emission</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.last_step"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.last_step</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.moving_price"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.moving_price</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.netuid"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.netuid</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.network_registered_at"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.network_registered_at</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.owner_coldkey"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.owner_coldkey</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.owner_hotkey"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.owner_hotkey</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.pending_alpha_emission"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.pending_alpha_emission</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.pending_root_emission"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.pending_root_emission</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.price"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.price</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.subnet_identity"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.subnet_identity</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.subnet_name"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.subnet_name</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.subnet_volume"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.subnet_volume</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.tao_in"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.tao_in</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.tao_in_emission"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.tao_in_emission</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.tempo"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.tempo</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.DynamicInfoResponse.token_symbol"><code class="docutils literal notranslate"><span class="pre">DynamicInfoResponse.token_symbol</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.as_dict"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.as_dict()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.data"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.data</span></code></a></li>
@@ -1154,6 +1654,7 @@ Subtensor.add_args(parser)</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.extrinsic_receipt"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.extrinsic_receipt</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.from_exception"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.from_exception()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.message"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.message</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.mev_extrinsic"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.mev_extrinsic</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.success"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.success</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.transaction_alpha_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.transaction_alpha_fee</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.transaction_tao_fee"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.transaction_tao_fee</span></code></a></li>
@@ -1161,9 +1662,19 @@ Subtensor.add_args(parser)</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ExtrinsicResponse.with_log"><code class="docutils literal notranslate"><span class="pre">ExtrinsicResponse.with_log()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ParamWithTypes"><code class="docutils literal notranslate"><span class="pre">ParamWithTypes</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ParamWithTypes.name"><code class="docutils literal notranslate"><span class="pre">ParamWithTypes.name</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.ParamWithTypes.type"><code class="docutils literal notranslate"><span class="pre">ParamWithTypes.type</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.NeuronCertificateResponse"><code class="docutils literal notranslate"><span class="pre">NeuronCertificateResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.NeuronCertificateResponse.algorithm"><code class="docutils literal notranslate"><span class="pre">NeuronCertificateResponse.algorithm</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.NeuronCertificateResponse.public_key"><code class="docutils literal notranslate"><span class="pre">NeuronCertificateResponse.public_key</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse"><code class="docutils literal notranslate"><span class="pre">PositionResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.fees_alpha"><code class="docutils literal notranslate"><span class="pre">PositionResponse.fees_alpha</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.fees_tao"><code class="docutils literal notranslate"><span class="pre">PositionResponse.fees_tao</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.id"><code class="docutils literal notranslate"><span class="pre">PositionResponse.id</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.liquidity"><code class="docutils literal notranslate"><span class="pre">PositionResponse.liquidity</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.netuid"><code class="docutils literal notranslate"><span class="pre">PositionResponse.netuid</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.tick_high"><code class="docutils literal notranslate"><span class="pre">PositionResponse.tick_high</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PositionResponse.tick_low"><code class="docutils literal notranslate"><span class="pre">PositionResponse.tick_low</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.PrometheusServeCallParams"><code class="docutils literal notranslate"><span class="pre">PrometheusServeCallParams</span></code></a><ul class="nav section-nav flex-column">
@@ -1175,6 +1686,17 @@ Subtensor.add_args(parser)</p>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.Salt"><code class="docutils literal notranslate"><span class="pre">Salt</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.additional"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.additional</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.description"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.description</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.discord"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.discord</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.github_repo"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.github_repo</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.logo_url"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.logo_url</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.subnet_contact"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.subnet_contact</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.subnet_name"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.subnet_name</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubnetIdentityResponse.subnet_url"><code class="docutils literal notranslate"><span class="pre">SubnetIdentityResponse.subnet_url</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin.add_args"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin.add_args()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.core.types.SubtensorMixin.chain_endpoint"><code class="docutils literal notranslate"><span class="pre">SubtensorMixin.chain_endpoint</span></code></a></li>
@@ -1213,7 +1735,7 @@ By Opentensor Foundation
 
   <p class="copyright">
     
-      © Copyright 2024, Opentensor Foundation.
+      © Copyright 2025, Opentensor Foundation.
       <br/>
     
   </p>

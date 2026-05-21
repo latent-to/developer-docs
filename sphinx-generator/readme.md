@@ -39,7 +39,7 @@ This installs:
 
 Edit `source/conf.py` and update these paths:
 
-**Line 72** - Point to your Bittensor repository:
+**Line 72** - Point to your Bittensor SDK repository:
 
 ```python
 autoapi_dirs = ["/path/to/your/bittensor"]

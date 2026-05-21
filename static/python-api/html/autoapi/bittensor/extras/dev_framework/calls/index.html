@@ -30,9 +30,9 @@
   <link href="../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/bittensor-custom.css?v=c1dfe055" />
   
   <!-- So that users can add custom icons -->
@@ -42,9 +42,9 @@
 <link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/extras/dev_framework/calls/index';</script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" />
@@ -150,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/config/index.html">bittensor.core.config</a></li>
@@ -352,7 +353,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -376,7 +377,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -439,7 +440,7 @@ structure of available Subtensor operations.</p>
 </section>
 <section id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.HEADER" title="bittensor.extras.dev_framework.calls.HEADER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HEADER</span></code></a></p></td>
 <td><p></p></td>
@@ -453,7 +454,7 @@ structure of available Subtensor operations.</p>
 </section>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.recreate_calls_subpackage" title="bittensor.extras.dev_framework.calls.recreate_calls_subpackage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">recreate_calls_subpackage</span></code></a>([network])</p></td>
 <td><p>Fetch the list of pallets and their call and save them to the corresponding modules.</p></td>
@@ -466,16 +467,16 @@ structure of available Subtensor operations.</p>
 <h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">#</a></h2>
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.HEADER">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.</span></span><span class="sig-name descname"><span class="pre">HEADER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Multiline-String</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.HEADER" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.</span></span><span class="sig-name descname"><span class="pre">HEADER</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Multiline-String</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.HEADER" title="Link to this definition">#</a></dt>
 <dd><details><summary>Show Value</summary><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
 <span class="n">This</span> <span class="n">file</span> <span class="ow">is</span> <span class="n">auto</span><span class="o">-</span><span class="n">generated</span><span class="o">.</span> <span class="n">Do</span> <span class="ow">not</span> <span class="n">edit</span> <span class="n">manually</span><span class="o">.</span>
 
 <span class="n">For</span> <span class="n">developers</span><span class="p">:</span>
 <span class="o">-</span> <span class="n">Use</span> <span class="n">the</span> <span class="n">function</span> <span class="err">`</span><span class="n">recreate_calls_subpackage</span><span class="p">()</span><span class="err">`</span> <span class="n">to</span> <span class="n">regenerate</span> <span class="n">this</span> <span class="n">file</span><span class="o">.</span>
-<span class="o">-</span> <span class="n">The</span> <span class="n">command</span> <span class="n">lists</span> <span class="n">are</span> <span class="n">built</span> <span class="n">dynamically</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">current</span> <span class="n">Subtensor</span> <span class="n">metadata</span> <span class="p">(</span><span class="err">`</span><span class="n">Subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">metadata</span><span class="err">`</span><span class="p">)</span><span class="o">.</span>
+<span class="o">-</span> <span class="n">The</span> <span class="n">command</span> <span class="n">lists</span> <span class="n">are</span> <span class="n">built</span> <span class="n">dynamically</span> <span class="kn">from</span><span class="w"> </span><span class="nn">the</span> <span class="n">current</span> <span class="n">Subtensor</span> <span class="n">metadata</span> <span class="p">(</span><span class="err">`</span><span class="n">Subtensor</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">metadata</span><span class="err">`</span><span class="p">)</span><span class="o">.</span>
 <span class="o">-</span> <span class="n">Each</span> <span class="n">command</span> <span class="ow">is</span> <span class="n">represented</span> <span class="k">as</span> <span class="n">a</span> <span class="err">`</span><span class="n">namedtuple</span><span class="err">`</span> <span class="k">with</span> <span class="n">fields</span><span class="p">:</span>
     <span class="o">*</span> <span class="n">System</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">wallet</span><span class="p">,</span> <span class="n">pallet</span> <span class="p">(</span><span class="ow">and</span> <span class="err">`</span><span class="n">sudo</span><span class="err">`</span> <span class="k">for</span> <span class="n">sudo</span> <span class="n">calls</span><span class="p">)</span><span class="o">.</span>
-    <span class="o">*</span> <span class="n">Additional</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">taken</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">extrinsic</span> <span class="n">definition</span> <span class="p">(</span><span class="k">with</span> <span class="nb">type</span> <span class="n">hints</span> <span class="k">for</span> <span class="n">reference</span><span class="p">)</span><span class="o">.</span>
+    <span class="o">*</span> <span class="n">Additional</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">taken</span> <span class="kn">from</span><span class="w"> </span><span class="nn">the</span> <span class="n">extrinsic</span> <span class="n">definition</span> <span class="p">(</span><span class="k">with</span> <span class="nb">type</span> <span class="n">hints</span> <span class="k">for</span> <span class="n">reference</span><span class="p">)</span><span class="o">.</span>
 <span class="o">-</span> <span class="n">These</span> <span class="n">namedtuples</span> <span class="n">are</span> <span class="n">intended</span> <span class="k">as</span> <span class="n">convenient</span> <span class="n">templates</span> <span class="k">for</span> <span class="n">building</span> <span class="n">commands</span> <span class="ow">in</span> <span class="n">tests</span> <span class="ow">and</span> <span class="n">end</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">end</span> <span class="n">scenarios</span><span class="o">.</span>
 
 <span class="n">Note</span><span class="p">:</span>
@@ -487,11 +488,11 @@ structure of available Subtensor operations.</p>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.IMPORT_TEXT">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.</span></span><span class="sig-name descname"><span class="pre">IMPORT_TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Multiline-String</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.IMPORT_TEXT" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.</span></span><span class="sig-name descname"><span class="pre">IMPORT_TEXT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Multiline-String</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.IMPORT_TEXT" title="Link to this definition">#</a></dt>
 <dd><details><summary>Show Value</summary><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">namedtuple</span>
 
 
 <span class="s2">&quot;&quot;&quot;</span>
@@ -548,11 +549,12 @@ structure of available Subtensor operations.</p>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a></li>
@@ -587,7 +589,7 @@ By Opentensor Foundation
 
   <p class="copyright">
     
-      © Copyright 2024, Opentensor Foundation.
+      © Copyright 2025, Opentensor Foundation.
       <br/>
     
   </p>

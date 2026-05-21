@@ -30,9 +30,9 @@
   <link href="../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/bittensor-custom.css?v=c1dfe055" />
   
   <!-- So that users can add custom icons -->
@@ -42,9 +42,9 @@
 <link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/extras/subtensor_api/staking/index';</script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" />
@@ -150,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../../index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core/config/index.html">bittensor.core.config</a></li>
@@ -352,7 +353,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -376,7 +377,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -403,19 +404,30 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking"><code class="docutils literal notranslate"><span class="pre">Staking</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.add_stake"><code class="docutils literal notranslate"><span class="pre">Staking.add_stake</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.add_stake_burn"><code class="docutils literal notranslate"><span class="pre">Staking.add_stake_burn</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.add_stake_multiple"><code class="docutils literal notranslate"><span class="pre">Staking.add_stake_multiple</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.claim_root"><code class="docutils literal notranslate"><span class="pre">Staking.claim_root</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_auto_stakes"><code class="docutils literal notranslate"><span class="pre">Staking.get_auto_stakes</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_hotkey_stake"><code class="docutils literal notranslate"><span class="pre">Staking.get_hotkey_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_minimum_required_stake"><code class="docutils literal notranslate"><span class="pre">Staking.get_minimum_required_stake</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_alpha_dividends_per_subnet"><code class="docutils literal notranslate"><span class="pre">Staking.get_root_alpha_dividends_per_subnet</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claim_type"><code class="docutils literal notranslate"><span class="pre">Staking.get_root_claim_type</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claimable_all_rates"><code class="docutils literal notranslate"><span class="pre">Staking.get_root_claimable_all_rates</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claimable_rate"><code class="docutils literal notranslate"><span class="pre">Staking.get_root_claimable_rate</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claimable_stake"><code class="docutils literal notranslate"><span class="pre">Staking.get_root_claimable_stake</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claimed"><code class="docutils literal notranslate"><span class="pre">Staking.get_root_claimed</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_add_fee"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake_add_fee</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_for_coldkey_and_hotkey"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake_for_coldkey_and_hotkey</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_info_for_coldkey"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake_info_for_coldkey</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_info_for_coldkeys"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake_info_for_coldkeys</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_movement_fee"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake_movement_fee</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_weight"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake_weight</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_staking_hotkeys"><code class="docutils literal notranslate"><span class="pre">Staking.get_staking_hotkeys</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_unstake_fee"><code class="docutils literal notranslate"><span class="pre">Staking.get_unstake_fee</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.move_stake"><code class="docutils literal notranslate"><span class="pre">Staking.move_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.set_auto_stake"><code class="docutils literal notranslate"><span class="pre">Staking.set_auto_stake</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.set_root_claim_type"><code class="docutils literal notranslate"><span class="pre">Staking.set_root_claim_type</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.sim_swap"><code class="docutils literal notranslate"><span class="pre">Staking.sim_swap</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.swap_stake"><code class="docutils literal notranslate"><span class="pre">Staking.swap_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.transfer_stake"><code class="docutils literal notranslate"><span class="pre">Staking.transfer_stake</span></code></a></li>
@@ -441,7 +453,7 @@
 <span id="bittensor-extras-subtensor-api-staking"></span><h1>bittensor.extras.subtensor_api.staking<a class="headerlink" href="#module-bittensor.extras.subtensor_api.staking" title="Link to this heading">#</a></h1>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.subtensor_api.staking.Staking" title="bittensor.extras.subtensor_api.staking.Staking"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Staking</span></code></a></p></td>
 <td><p>Class for managing staking operations.</p></td>
@@ -454,11 +466,11 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.extras.subtensor_api.staking.</span></span><span class="sig-name descname"><span class="pre">Staking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.extras.subtensor_api.staking.</span></span><span class="sig-name descname"><span class="pre">Staking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking" title="Link to this definition">#</a></dt>
 <dd><p>Class for managing staking operations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>subtensor</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../../../core/subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>, </em><em>bittensor.core.async_subtensor.AsyncSubtensor</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>subtensor</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../../../core/subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a><em>, </em><a class="reference internal" href="../../../core/async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor" title="bittensor.core.async_subtensor.AsyncSubtensor"><em>bittensor.core.async_subtensor.AsyncSubtensor</em></a><em>]</em>)</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -467,8 +479,18 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.add_stake_burn">
+<span class="sig-name descname"><span class="pre">add_stake_burn</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.add_stake_burn" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.add_stake_multiple">
 <span class="sig-name descname"><span class="pre">add_stake_multiple</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.add_stake_multiple" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.claim_root">
+<span class="sig-name descname"><span class="pre">claim_root</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.claim_root" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -484,6 +506,36 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.get_minimum_required_stake">
 <span class="sig-name descname"><span class="pre">get_minimum_required_stake</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.get_minimum_required_stake" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.get_root_alpha_dividends_per_subnet">
+<span class="sig-name descname"><span class="pre">get_root_alpha_dividends_per_subnet</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_alpha_dividends_per_subnet" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.get_root_claim_type">
+<span class="sig-name descname"><span class="pre">get_root_claim_type</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claim_type" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.get_root_claimable_all_rates">
+<span class="sig-name descname"><span class="pre">get_root_claimable_all_rates</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claimable_all_rates" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.get_root_claimable_rate">
+<span class="sig-name descname"><span class="pre">get_root_claimable_rate</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claimable_rate" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.get_root_claimable_stake">
+<span class="sig-name descname"><span class="pre">get_root_claimable_stake</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claimable_stake" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.get_root_claimed">
+<span class="sig-name descname"><span class="pre">get_root_claimed</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claimed" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -507,6 +559,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.get_stake_info_for_coldkeys">
+<span class="sig-name descname"><span class="pre">get_stake_info_for_coldkeys</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_info_for_coldkeys" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.get_stake_movement_fee">
 <span class="sig-name descname"><span class="pre">get_stake_movement_fee</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_movement_fee" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
@@ -514,6 +571,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.get_stake_weight">
 <span class="sig-name descname"><span class="pre">get_stake_weight</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_weight" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.get_staking_hotkeys">
+<span class="sig-name descname"><span class="pre">get_staking_hotkeys</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.get_staking_hotkeys" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -529,6 +591,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.set_auto_stake">
 <span class="sig-name descname"><span class="pre">set_auto_stake</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.set_auto_stake" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bittensor.extras.subtensor_api.staking.Staking.set_root_claim_type">
+<span class="sig-name descname"><span class="pre">set_root_claim_type</span></span><a class="headerlink" href="#bittensor.extras.subtensor_api.staking.Staking.set_root_claim_type" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -606,29 +673,41 @@
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking"><code class="docutils literal notranslate"><span class="pre">Staking</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.add_stake"><code class="docutils literal notranslate"><span class="pre">Staking.add_stake</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.add_stake_burn"><code class="docutils literal notranslate"><span class="pre">Staking.add_stake_burn</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.add_stake_multiple"><code class="docutils literal notranslate"><span class="pre">Staking.add_stake_multiple</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.claim_root"><code class="docutils literal notranslate"><span class="pre">Staking.claim_root</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_auto_stakes"><code class="docutils literal notranslate"><span class="pre">Staking.get_auto_stakes</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_hotkey_stake"><code class="docutils literal notranslate"><span class="pre">Staking.get_hotkey_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_minimum_required_stake"><code class="docutils literal notranslate"><span class="pre">Staking.get_minimum_required_stake</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_alpha_dividends_per_subnet"><code class="docutils literal notranslate"><span class="pre">Staking.get_root_alpha_dividends_per_subnet</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claim_type"><code class="docutils literal notranslate"><span class="pre">Staking.get_root_claim_type</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claimable_all_rates"><code class="docutils literal notranslate"><span class="pre">Staking.get_root_claimable_all_rates</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claimable_rate"><code class="docutils literal notranslate"><span class="pre">Staking.get_root_claimable_rate</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claimable_stake"><code class="docutils literal notranslate"><span class="pre">Staking.get_root_claimable_stake</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_root_claimed"><code class="docutils literal notranslate"><span class="pre">Staking.get_root_claimed</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_add_fee"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake_add_fee</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_for_coldkey_and_hotkey"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake_for_coldkey_and_hotkey</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_info_for_coldkey"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake_info_for_coldkey</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_info_for_coldkeys"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake_info_for_coldkeys</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_movement_fee"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake_movement_fee</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_stake_weight"><code class="docutils literal notranslate"><span class="pre">Staking.get_stake_weight</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_staking_hotkeys"><code class="docutils literal notranslate"><span class="pre">Staking.get_staking_hotkeys</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.get_unstake_fee"><code class="docutils literal notranslate"><span class="pre">Staking.get_unstake_fee</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.move_stake"><code class="docutils literal notranslate"><span class="pre">Staking.move_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.set_auto_stake"><code class="docutils literal notranslate"><span class="pre">Staking.set_auto_stake</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.set_root_claim_type"><code class="docutils literal notranslate"><span class="pre">Staking.set_root_claim_type</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.sim_swap"><code class="docutils literal notranslate"><span class="pre">Staking.sim_swap</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.swap_stake"><code class="docutils literal notranslate"><span class="pre">Staking.swap_stake</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.subtensor_api.staking.Staking.transfer_stake"><code class="docutils literal notranslate"><span class="pre">Staking.transfer_stake</span></code></a></li>
@@ -663,7 +742,7 @@ By Opentensor Foundation
 
   <p class="copyright">
     
-      © Copyright 2024, Opentensor Foundation.
+      © Copyright 2025, Opentensor Foundation.
       <br/>
     
   </p>

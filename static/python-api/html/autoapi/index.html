@@ -30,9 +30,9 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/bittensor-custom.css?v=c1dfe055" />
   
   <!-- So that users can add custom icons -->
@@ -42,11 +42,9 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/index';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -152,6 +150,7 @@
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="bittensor/index.html">bittensor</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="bittensor/core/index.html">bittensor.core</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/index.html">bittensor.core.chain_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/config/index.html">bittensor.core.config</a></li>
@@ -354,7 +353,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -410,10 +409,13 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="bittensor/index.html">bittensor</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="bittensor/core/index.html">bittensor.core</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bittensor/core/async_subtensor/index.html">bittensor.core.async_subtensor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bittensor/core/axon/index.html">bittensor.core.axon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bittensor/core/chain_data/index.html">bittensor.core.chain_data</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/axon_info/index.html">bittensor.core.chain_data.axon_info</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/chain_identity/index.html">bittensor.core.chain_data.chain_identity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/coldkey_swap/index.html">bittensor.core.chain_data.coldkey_swap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/crowdloan_info/index.html">bittensor.core.chain_data.crowdloan_info</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/delegate_info/index.html">bittensor.core.chain_data.delegate_info</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/delegate_info_lite/index.html">bittensor.core.chain_data.delegate_info_lite</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/dynamic_info/index.html">bittensor.core.chain_data.dynamic_info</a></li>
@@ -424,6 +426,8 @@
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/neuron_info_lite/index.html">bittensor.core.chain_data.neuron_info_lite</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/prometheus_info/index.html">bittensor.core.chain_data.prometheus_info</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/proposal_vote_data/index.html">bittensor.core.chain_data.proposal_vote_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/proxy/index.html">bittensor.core.chain_data.proxy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/root_claim/index.html">bittensor.core.chain_data.root_claim</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/scheduled_coldkey_swap_info/index.html">bittensor.core.chain_data.scheduled_coldkey_swap_info</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/sim_swap/index.html">bittensor.core.chain_data.sim_swap</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/chain_data/stake_info/index.html">bittensor.core.chain_data.stake_info</a></li>
@@ -441,8 +445,12 @@
 <li class="toctree-l3"><a class="reference internal" href="bittensor/core/extrinsics/index.html">bittensor.core.extrinsics</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/extrinsics/asyncex/index.html">bittensor.core.extrinsics.asyncex</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/asyncex/children/index.html">bittensor.core.extrinsics.asyncex.children</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/asyncex/coldkey_swap/index.html">bittensor.core.extrinsics.asyncex.coldkey_swap</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/asyncex/crowdloan/index.html">bittensor.core.extrinsics.asyncex.crowdloan</a></li>
 <li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/asyncex/liquidity/index.html">bittensor.core.extrinsics.asyncex.liquidity</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/asyncex/mev_shield/index.html">bittensor.core.extrinsics.asyncex.mev_shield</a></li>
 <li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/asyncex/move_stake/index.html">bittensor.core.extrinsics.asyncex.move_stake</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/asyncex/proxy/index.html">bittensor.core.extrinsics.asyncex.proxy</a></li>
 <li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/asyncex/registration/index.html">bittensor.core.extrinsics.asyncex.registration</a></li>
 <li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/asyncex/root/index.html">bittensor.core.extrinsics.asyncex.root</a></li>
 <li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/asyncex/serving/index.html">bittensor.core.extrinsics.asyncex.serving</a></li>
@@ -457,23 +465,25 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/extrinsics/children/index.html">bittensor.core.extrinsics.children</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/core/extrinsics/coldkey_swap/index.html">bittensor.core.extrinsics.coldkey_swap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/core/extrinsics/crowdloan/index.html">bittensor.core.extrinsics.crowdloan</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/extrinsics/liquidity/index.html">bittensor.core.extrinsics.liquidity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/core/extrinsics/mev_shield/index.html">bittensor.core.extrinsics.mev_shield</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/extrinsics/move_stake/index.html">bittensor.core.extrinsics.move_stake</a></li>
-<li class="toctree-l4"><a class="reference internal" href="bittensor/core/extrinsics/params/index.html">bittensor.core.extrinsics.params</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/params/children/index.html">bittensor.core.extrinsics.params.children</a></li>
-<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/params/liquidity/index.html">bittensor.core.extrinsics.params.liquidity</a></li>
-<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/params/move_stake/index.html">bittensor.core.extrinsics.params.move_stake</a></li>
-<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/params/registration/index.html">bittensor.core.extrinsics.params.registration</a></li>
-<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/params/root/index.html">bittensor.core.extrinsics.params.root</a></li>
-<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/params/serving/index.html">bittensor.core.extrinsics.params.serving</a></li>
-<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/params/staking/index.html">bittensor.core.extrinsics.params.staking</a></li>
-<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/params/start_call/index.html">bittensor.core.extrinsics.params.start_call</a></li>
-<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/params/take/index.html">bittensor.core.extrinsics.params.take</a></li>
-<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/params/transfer/index.html">bittensor.core.extrinsics.params.transfer</a></li>
-<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/params/unstaking/index.html">bittensor.core.extrinsics.params.unstaking</a></li>
-<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/params/weights/index.html">bittensor.core.extrinsics.params.weights</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/core/extrinsics/pallets/index.html">bittensor.core.extrinsics.pallets</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/pallets/admin_utils/index.html">bittensor.core.extrinsics.pallets.admin_utils</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/pallets/balances/index.html">bittensor.core.extrinsics.pallets.balances</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/pallets/base/index.html">bittensor.core.extrinsics.pallets.base</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/pallets/commitments/index.html">bittensor.core.extrinsics.pallets.commitments</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/pallets/crowdloan/index.html">bittensor.core.extrinsics.pallets.crowdloan</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/pallets/mev_shield/index.html">bittensor.core.extrinsics.pallets.mev_shield</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/pallets/proxy/index.html">bittensor.core.extrinsics.pallets.proxy</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/pallets/subtensor_module/index.html">bittensor.core.extrinsics.pallets.subtensor_module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/pallets/sudo/index.html">bittensor.core.extrinsics.pallets.sudo</a></li>
+<li class="toctree-l5"><a class="reference internal" href="bittensor/core/extrinsics/pallets/swap/index.html">bittensor.core.extrinsics.pallets.swap</a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/core/extrinsics/proxy/index.html">bittensor.core.extrinsics.proxy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/extrinsics/registration/index.html">bittensor.core.extrinsics.registration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/extrinsics/root/index.html">bittensor.core.extrinsics.root</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/core/extrinsics/serving/index.html">bittensor.core.extrinsics.serving</a></li>
@@ -512,10 +522,13 @@
 <li class="toctree-l3"><a class="reference internal" href="bittensor/extras/subtensor_api/index.html">bittensor.extras.subtensor_api</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/extras/subtensor_api/chain/index.html">bittensor.extras.subtensor_api.chain</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/extras/subtensor_api/commitments/index.html">bittensor.extras.subtensor_api.commitments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/extras/subtensor_api/crowdloans/index.html">bittensor.extras.subtensor_api.crowdloans</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/extras/subtensor_api/delegates/index.html">bittensor.extras.subtensor_api.delegates</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/extras/subtensor_api/extrinsics/index.html">bittensor.extras.subtensor_api.extrinsics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/extras/subtensor_api/metagraphs/index.html">bittensor.extras.subtensor_api.metagraphs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/extras/subtensor_api/mev_shield/index.html">bittensor.extras.subtensor_api.mev_shield</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/extras/subtensor_api/neurons/index.html">bittensor.extras.subtensor_api.neurons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/extras/subtensor_api/proxy/index.html">bittensor.extras.subtensor_api.proxy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/extras/subtensor_api/queries/index.html">bittensor.extras.subtensor_api.queries</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/extras/subtensor_api/staking/index.html">bittensor.extras.subtensor_api.staking</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bittensor/extras/subtensor_api/subnets/index.html">bittensor.extras.subtensor_api.subnets</a></li>
@@ -543,9 +556,7 @@
 <li class="toctree-l3"><a class="reference internal" href="bittensor/utils/liquidity/index.html">bittensor.utils.liquidity</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bittensor/utils/networking/index.html">bittensor.utils.networking</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bittensor/utils/registration/index.html">bittensor.utils.registration</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="bittensor/utils/registration/async_pow/index.html">bittensor.utils.registration.async_pow</a></li>
-<li class="toctree-l4"><a class="reference internal" href="bittensor/utils/registration/pow/index.html">bittensor.utils.registration.pow</a></li>
-<li class="toctree-l4"><a class="reference internal" href="bittensor/utils/registration/register_cuda/index.html">bittensor.utils.registration.register_cuda</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bittensor/utils/registration/torch_utils/index.html">bittensor.utils.registration.torch_utils</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="bittensor/utils/subnets/index.html">bittensor.utils.subnets</a></li>
@@ -620,7 +631,7 @@ By Opentensor Foundation
 
   <p class="copyright">
     
-      © Copyright 2024, Opentensor Foundation.
+      © Copyright 2025, Opentensor Foundation.
       <br/>
     
   </p>
