@@ -4,9 +4,11 @@ title: "Bittensor Wallet SDK"
 
 # Bittensor Wallet SDK
 
-The Bittensor Wallet SDK (`bittensor-wallet`) is a Python package backed by a Rust core compiled to a native extension. Cryptographic operations, including key generation, signing, verification, keyfile management, and asymmetric message encryption, all execute in Rust.
+The Bittensor Wallet SDK (bittensor-wallet) is a Python wrapper around a Rust core compiled to a native extension. Key generation, signing, verification, keyfile management, and asymmetric message encryption all execute in Rust, the language of Subtensor. The Bittensor Wallet SDK operates within the Bittensor Python SDK and BTCLI to interact with the cryptographic wallet.
 
-The package exposes a Python API through three main classes:
+You do not need to know Rust to use this library, its purpose is to provide an interface for Python developers.
+
+This interface includes through three main classes:
 
 | Class | Role |
 |---|---|
