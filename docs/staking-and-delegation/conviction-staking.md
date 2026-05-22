@@ -43,7 +43,7 @@ When someone locks stake, their conviction increases over time, up to the locked
 The same formula governs both curves, only the time constant differs. The lifecycle graph below shows how they interact in sequence:
 
 **Conviction growth**: `f(t) = 1 − exp(−t / τ)`, τ = 216,000 blocks ≈ 30 days. Dot marks one time constant (63.2% of max); 90% conviction is reached in ~70 days.
-**Unlock availability**: exponential decay with ~90% of unlocked stake withdrawable after ~365 days. Dot marks one time constant (63.2% of unlocked amount available). Both x-axes span 3τ.
+**Unlock availability**: exponential decay with ~90% of unlocked stake withdrawable after ~365 days. Dot marks one time constant (63.2% of unlocked amount available). Each x-axis spans 3τ for that panel's time constant.
 
 ![Conviction growth and unlock availability, side by side](/img/conviction-panels.svg)
 
@@ -154,7 +154,7 @@ Reassigns the coldkey's existing lock on `netuid` from its current hotkey to `de
 - Conviction is **preserved** when both hotkeys are owned by the same coldkey (moving between your own hotkeys).
 - The locked mass and unlocking mass are preserved in both cases.
 
-This gives the previous hotkey's stakers a window to react before conviction rebuilds on the new hotkey.
+When moving to a different-coldkey hotkey, conviction resets to zero, giving the previous hotkey's stakers a window to react before conviction rebuilds.
 
 **Errors:**
 
@@ -192,13 +192,12 @@ When stake is moved to another coldkey **within the same subnet**, lock obligati
 
 ## Querying conviction
 
-Three runtime API calls expose conviction state on-chain:
+Two runtime API calls expose conviction state on-chain:
 
 | Method                                        | Returns                                                                                            |
 | --------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | `get_hotkey_conviction(hotkey, netuid)`       | Current total conviction for `hotkey` on `netuid`, summed over all coldkeys that have locked to it |
-| `get_most_convicted_hotkey_on_subnet(netuid)` | The hotkey with the highest conviction on `netuid`, or `None` if no locks exist                    |
-| `subnet_king(netuid)`                         | The hotkey that would become subnet owner based on current conviction scores, or `None`            |
+| `get_most_convicted_hotkey_on_subnet(netuid)` | The hotkey with the highest conviction on `netuid`, or `None` if no locks exist. Internally calls `subnet_king`. |
 
 Conviction is a rolling value, so querying at different blocks yields different results as time passes and the exponential grows.
 
@@ -211,7 +210,7 @@ Lock state is stored in two maps:
 - `Lock[(coldkey, netuid, hotkey)]`: per-coldkey lock record containing locked mass, unlocking mass, conviction score, and last update block
 - `HotkeyLock[(netuid, hotkey)]`: aggregate lock totals per hotkey (used for conviction queries without iterating all coldkeys)
 
-The maturity time constant (`MaturityRate`) and unlock time constant (`UnlockRate`) are configurable on-chain storage values adjustable by governance. At launch, `MaturityRate` is set to produce 90% conviction in ~70 days (~216,000 blocks) and `UnlockRate` is set to release ~90% of unlocked stake after ~365 days. The unlock and maturity windows are key parameters in the mechanism's attack surface, and tuning them changes how quickly conviction can build or unwind.
+The maturity time constant (`MaturityRate`) and unlock time constant (`UnlockRate`) are configurable on-chain storage values adjustable by governance. At launch, `MaturityRate` is set to ~216,000 blocks (τ ≈ 30 days), which produces 90% conviction in ~70 days. `UnlockRate` is set to release ~90% of unlocked stake after ~365 days. The unlock and maturity windows are key parameters in the mechanism's attack surface, and tuning them changes how quickly conviction can build or unwind.
 
 ## Appendix: implementation
 

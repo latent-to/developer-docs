@@ -57,7 +57,7 @@ As a TAO holder, you will stake to a validator’s hotkey on a specific subnet. 
 
 **Transaction fees**: Unstaking operations incur blockchain transaction fees. These fees are recycled back into the TAO emission pool. See [Transaction Fees in Bittensor](../learn/fees.md).
 
-**Conviction locks**: If you or the previous owner of your stake has called `lock_stake` on a subnet, a portion of your alpha may be locked and cannot be unstaked immediately. Locked stake must first be unlocked via `unlock_stake`, after which a ≈30-day exponential decay period applies before the stake is fully withdrawable. See [Conviction Staking](./conviction-staking.md) for details.
+**Conviction locks**: If you or the previous owner of your stake has called `lock_stake` on a subnet, a portion of your alpha may be locked and cannot be unstaked immediately. Locked stake must first be unlocked via `unlock_stake`, after which an exponential decay period applies — ~90% of the unlocked amount becomes withdrawable after ~365 days. See [Conviction Staking](./conviction-staking.md) for details.
 :::
 
 ### Unstaking methods

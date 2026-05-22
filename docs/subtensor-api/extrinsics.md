@@ -2983,7 +2983,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `unlockStake(netuid: NetUid, amount: AlphaBalance)`
 
 - **interface**: `api.tx.subtensorModule.unlockStake`
-- **summary**: Begins unlocking `amount` alpha from the signing coldkey's existing lock on `netuid`. The locked mass is reduced by `amount` immediately and the same amount enters an exponential unlock period (time constant ≈ 30 days). Stake in the unlock period cannot be unstaked or re-locked until it has decayed sufficiently. See [Conviction Staking](../staking-and-delegation/conviction-staking.md) for the decay formula.
+- **summary**: Begins unlocking `amount` alpha from the signing coldkey's existing lock on `netuid`. The locked mass is reduced by `amount` immediately and the same amount enters an exponential unlock period (~90% withdrawable after ~365 days). Stake in the unlock period cannot be unstaked or re-locked until it has decayed sufficiently. See [Conviction Staking](../staking-and-delegation/conviction-staking.md) for the decay formula.
 
     **Errors:**
 
