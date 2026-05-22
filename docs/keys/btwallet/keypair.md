@@ -38,10 +38,6 @@ kp = Keypair.create_from_uri("//Alice")                            # SR25519 (de
 kp = Keypair.create_from_uri("//Alice", crypto_type=CRYPTO_ED25519)  # ED25519
 ```
 
-:::warning
-URI-based keypairs like `//Alice` are deterministic and publicly known. Never use them with real funds.
-:::
-
 ### From a mnemonic
 
 ```python
