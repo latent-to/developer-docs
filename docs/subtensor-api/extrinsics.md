@@ -3,7 +3,7 @@
 The following sections contain Extrinsic methods that are part of the Bittensor (Subtensor) runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**

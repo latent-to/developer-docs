@@ -224,7 +224,7 @@ Begin by starting the miner process to produce and submit work to the subnet. Th
 To start the miner, run the following Python script in the `subnet-template` directory:
 
 ```sh
-python miner.py \
+BT_NO_PARSE_CLI_ARGS=0 python miner.py \
   --wallet.name WALLET_NAME \
   --wallet.hotkey HOTKEY \
   --netuid NETUID \
@@ -239,7 +239,7 @@ The script launches an Axon server on port `8901`, which the miner uses to recei
 To start the validator process, run the following Python script in the `subnet-template` directory:
 
 ```sh
-python validator.py \
+BT_NO_PARSE_CLI_ARGS=0 python validator.py \
   --wallet.name WALLET_NAME \
   --wallet.hotkey HOTKEY \
   --netuid NETUID \
