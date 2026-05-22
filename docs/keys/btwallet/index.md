@@ -4,17 +4,15 @@ title: "Bittensor Wallet SDK"
 
 # Bittensor Wallet SDK
 
-The Bittensor Wallet SDK (`bittensor-wallet`) is a Python wrapper around a Rust core compiled to a native extension. Key generation, signing, verification, keyfile management, and asymmetric message encryption all execute in Rust, the language of Subtensor. The Bittensor Wallet SDK operates within the Bittensor Python SDK and BTCLI to interact with the cryptographic wallet.
+The Bittensor Wallet SDK (`bittensor-wallet`) is a Python package backed by a Rust core compiled to a native extension. Cryptographic operations, including key generation, signing, verification, keyfile management, and asymmetric message encryption, all execute in Rust.
 
-You do not need to know Rust to use this library, its purpose is to provide an interface for Python developers.
+The package exposes a Python API through three main classes:
 
-It encapsulates the cryptographic concerns into 3 main classes:
-
-| Class | Meaning |
+| Class | Role |
 |---|---|
 | `Keypair` | A cryptographic key pair (public + optional private key). The primitive for signing, verifying, and encrypting. |
-| `Wallet` | A named wallet, prsent on disk: a coldkey and optionally hotkey, and their corresponding public-key files. Wraps `Keypair` objects and handles persistence. |
-| `Keyfile` | A single key file on disk, used for at-rest password encryption and deserialization. |
+| `Wallet` | A named wallet present on disk: a coldkey and optionally a hotkey, with their corresponding public-key files. Wraps `Keypair` objects and handles persistence. |
+| `Keyfile` | A single key file on disk. Handles at-rest password encryption and serialization. Typically accessed through `Wallet` properties rather than directly. |
 
 ## Install
 
@@ -26,7 +24,7 @@ For installation from source, virtual environment setup, and supported Python ve
 
 ## API reference
 
-Full API reference (auto-generated from source): [Bittensor Wallet SDK reference](pathname:///btwallet-api/html/index.html).
+Full auto-generated API reference: [Bittensor Wallet SDK reference](pathname:///btwallet-api/html/index.html).
 
 ## In this section
 
