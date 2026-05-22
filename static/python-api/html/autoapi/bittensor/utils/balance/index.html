@@ -30,9 +30,9 @@
   <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/bittensor-custom.css?v=c1dfe055" />
   
   <!-- So that users can add custom icons -->
@@ -42,9 +42,9 @@
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/utils/balance/index';</script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -353,7 +353,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -377,7 +377,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -416,12 +416,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.Balance.unit"><code class="docutils literal notranslate"><span class="pre">Balance.unit</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.FixedPoint"><code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.FixedPoint.bits"><code class="docutils literal notranslate"><span class="pre">FixedPoint.bits</span></code></a></li>
-</ul>
-</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.check_balance_amount"><code class="docutils literal notranslate"><span class="pre">check_balance_amount()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.fixed_to_float"><code class="docutils literal notranslate"><span class="pre">fixed_to_float()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.rao"><code class="docutils literal notranslate"><span class="pre">rao()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.tao"><code class="docutils literal notranslate"><span class="pre">tao()</span></code></a></li>
 </ul>
@@ -441,13 +436,10 @@
 <span id="bittensor-utils-balance"></span><h1>bittensor.utils.balance<a class="headerlink" href="#module-bittensor.utils.balance" title="Link to this heading">#</a></h1>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Balance</span></code></a></p></td>
 <td><p>Represents the bittensor balance of the wallet, stored as rao (int).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.balance.FixedPoint" title="bittensor.utils.balance.FixedPoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixedPoint</span></code></a></p></td>
-<td><p>Represents a fixed point <code class="docutils literal notranslate"><span class="pre">U64F64</span></code> number.</p></td>
 </tr>
 </tbody>
 </table>
@@ -455,18 +447,15 @@
 </section>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.balance.check_balance_amount" title="bittensor.utils.balance.check_balance_amount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_balance_amount</span></code></a>(amount[, allow_none])</p></td>
 <td><p>Validate that the provided value is a Balance instance.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.balance.fixed_to_float" title="bittensor.utils.balance.fixed_to_float"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fixed_to_float</span></code></a>(fixed[, frac_bits, total_bits])</p></td>
-<td><p>Converts a fixed-point value (e.g., U64F64) into a floating-point number.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.balance.rao" title="bittensor.utils.balance.rao"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rao</span></code></a>(amount[, netuid])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.balance.rao" title="bittensor.utils.balance.rao"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rao</span></code></a>(amount[, netuid])</p></td>
 <td><p>Helper function to create a Balance object from an int (Rao)</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.utils.balance.tao" title="bittensor.utils.balance.tao"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tao</span></code></a>(amount[, netuid])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.balance.tao" title="bittensor.utils.balance.tao"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tao</span></code></a>(amount[, netuid])</p></td>
 <td><p>Helper function to create a Balance object from a float (Tao)</p></td>
 </tr>
 </tbody>
@@ -477,7 +466,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.utils.balance.Balance">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.utils.balance.</span></span><span class="sig-name descname"><span class="pre">Balance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">balance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/balance.html#Balance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.balance.Balance" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.utils.balance.</span></span><span class="sig-name descname"><span class="pre">Balance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">balance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.balance.Balance" title="Link to this definition">#</a></dt>
 <dd><p>Represents the bittensor balance of the wallet, stored as rao (int).</p>
 <p>This class provides a way to interact with balances in two different units: rao and tao. It provides methods to
 convert between these units, as well as to perform arithmetic and comparison operations.</p>
@@ -537,7 +526,7 @@ If balance is a float, it’s assumed to be in tao.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.utils.balance.Balance.from_float">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/balance.html#Balance.from_float"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.balance.Balance.from_float" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.balance.Balance.from_float" title="Link to this definition">#</a></dt>
 <dd><p>Given tao, return <a class="reference internal" href="#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><code class="xref py py-func docutils literal notranslate"><span class="pre">Balance()</span></code></a> object with rao(<code class="docutils literal notranslate"><span class="pre">int</span></code>) and tao(<code class="docutils literal notranslate"><span class="pre">float</span></code>), where rao = int(tao*pow(10,9))</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -557,7 +546,7 @@ If balance is a float, it’s assumed to be in tao.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.utils.balance.Balance.from_rao">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_rao</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/balance.html#Balance.from_rao"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.balance.Balance.from_rao" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_rao</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.balance.Balance.from_rao" title="Link to this definition">#</a></dt>
 <dd><p>Given rao, return Balance object with rao(<code class="docutils literal notranslate"><span class="pre">int</span></code>) and tao(<code class="docutils literal notranslate"><span class="pre">float</span></code>), where rao = int(tao*pow(10,9))</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -577,7 +566,7 @@ If balance is a float, it’s assumed to be in tao.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.utils.balance.Balance.from_tao">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_tao</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/balance.html#Balance.from_tao"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.balance.Balance.from_tao" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_tao</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.balance.Balance.from_tao" title="Link to this definition">#</a></dt>
 <dd><p>Given tao, return Balance object with rao(<code class="docutils literal notranslate"><span class="pre">int</span></code>) and tao(<code class="docutils literal notranslate"><span class="pre">float</span></code>), where rao = int(tao*pow(10,9))</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -597,7 +586,7 @@ If balance is a float, it’s assumed to be in tao.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.utils.balance.Balance.get_unit">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/balance.html#Balance.get_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.balance.Balance.get_unit" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.balance.Balance.get_unit" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p>
@@ -610,22 +599,22 @@ If balance is a float, it’s assumed to be in tao.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.balance.Balance.netuid">
-<span class="sig-name descname"><span class="pre">netuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#bittensor.utils.balance.Balance.netuid" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">netuid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#bittensor.utils.balance.Balance.netuid" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.balance.Balance.rao">
-<span class="sig-name descname"><span class="pre">rao</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.balance.Balance.rao" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rao</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.utils.balance.Balance.rao" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.balance.Balance.rao_unit">
-<span class="sig-name descname"><span class="pre">rao_unit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.utils.balance.Balance.rao_unit" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rao_unit</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.utils.balance.Balance.rao_unit" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.utils.balance.Balance.set_unit">
-<span class="sig-name descname"><span class="pre">set_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/balance.html#Balance.set_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.balance.Balance.set_unit" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netuid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.balance.Balance.set_unit" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>netuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p>
@@ -635,27 +624,12 @@ If balance is a float, it’s assumed to be in tao.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="bittensor.utils.balance.Balance.tao">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tao</span></span><a class="headerlink" href="#bittensor.utils.balance.Balance.tao" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">tao</span></span><a class="headerlink" href="#bittensor.utils.balance.Balance.tao" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.utils.balance.Balance.unit">
-<span class="sig-name descname"><span class="pre">unit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.utils.balance.Balance.unit" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="bittensor.utils.balance.FixedPoint">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.utils.balance.</span></span><span class="sig-name descname"><span class="pre">FixedPoint</span></span><a class="reference internal" href="../../../../_modules/bittensor/utils/balance.html#FixedPoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.balance.FixedPoint" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
-<p>Represents a fixed point <code class="docutils literal notranslate"><span class="pre">U64F64</span></code> number.
-Where <code class="docutils literal notranslate"><span class="pre">bits</span></code> is a U128 representation of the fixed point number.</p>
-<p>This matches the type of the Alpha shares.</p>
-<p>Initialize self.  See help(type(self)) for accurate signature.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="bittensor.utils.balance.FixedPoint.bits">
-<span class="sig-name descname"><span class="pre">bits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.utils.balance.FixedPoint.bits" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">unit</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.utils.balance.Balance.unit" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -686,26 +660,8 @@ a <cite>BalanceTypeError</cite> to enforce consistent usage of Balance objects a
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="bittensor.utils.balance.fixed_to_float">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.balance.</span></span><span class="sig-name descname"><span class="pre">fixed_to_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fixed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frac_bits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_bits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/balance.html#fixed_to_float"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.balance.fixed_to_float" title="Link to this definition">#</a></dt>
-<dd><p>Converts a fixed-point value (e.g., U64F64) into a floating-point number.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fixed</strong> (<em>Union</em><em>[</em><a class="reference internal" href="#bittensor.utils.balance.FixedPoint" title="bittensor.utils.balance.FixedPoint"><em>FixedPoint</em></a><em>, </em><em>scalecodec.ScaleType</em><em>]</em>)</p></li>
-<li><p><strong>frac_bits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
-<li><p><strong>total_bits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.balance.rao">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.balance.</span></span><span class="sig-name descname"><span class="pre">rao</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/balance.html#rao"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.balance.rao" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.balance.</span></span><span class="sig-name descname"><span class="pre">rao</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.balance.rao" title="Link to this definition">#</a></dt>
 <dd><p>Helper function to create a Balance object from an int (Rao)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -722,7 +678,7 @@ a <cite>BalanceTypeError</cite> to enforce consistent usage of Balance objects a
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.balance.tao">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.balance.</span></span><span class="sig-name descname"><span class="pre">tao</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/balance.html#tao"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.balance.tao" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.balance.</span></span><span class="sig-name descname"><span class="pre">tao</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.balance.tao" title="Link to this definition">#</a></dt>
 <dd><p>Helper function to create a Balance object from a float (Tao)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -780,11 +736,12 @@ a <cite>BalanceTypeError</cite> to enforce consistent usage of Balance objects a
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
@@ -802,12 +759,7 @@ a <cite>BalanceTypeError</cite> to enforce consistent usage of Balance objects a
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.Balance.unit"><code class="docutils literal notranslate"><span class="pre">Balance.unit</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.FixedPoint"><code class="docutils literal notranslate"><span class="pre">FixedPoint</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.FixedPoint.bits"><code class="docutils literal notranslate"><span class="pre">FixedPoint.bits</span></code></a></li>
-</ul>
-</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.check_balance_amount"><code class="docutils literal notranslate"><span class="pre">check_balance_amount()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.fixed_to_float"><code class="docutils literal notranslate"><span class="pre">fixed_to_float()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.rao"><code class="docutils literal notranslate"><span class="pre">rao()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.utils.balance.tao"><code class="docutils literal notranslate"><span class="pre">tao()</span></code></a></li>
 </ul>
@@ -836,7 +788,7 @@ By Opentensor Foundation
 
   <p class="copyright">
     
-      © Copyright 2024, Opentensor Foundation.
+      © Copyright 2025, Opentensor Foundation.
       <br/>
     
   </p>
