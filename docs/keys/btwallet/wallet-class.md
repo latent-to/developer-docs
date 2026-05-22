@@ -194,9 +194,6 @@ wallet.create_hotkey_from_uri("//Bob", use_password=False)
 wallet.create_hotkey_from_uri("//Bob", use_password=False, crypto_type=CRYPTO_ED25519)
 ```
 
-:::warning
-URI-based keys like `//Alice` are deterministic and publicly known. Use them only on local devnets or testnets, never with real funds.
-:::
 
 ## Error conditions
 
