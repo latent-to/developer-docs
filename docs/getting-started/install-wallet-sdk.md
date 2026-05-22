@@ -22,7 +22,7 @@ The Bittensor Wallet SDK is a Python interface for a powerful Rust-based Bittens
 
 ## Developer reference
 
-For narrative guides covering the `Keypair`, `Wallet`, and encryption APIs, see the [Wallet SDK docs](../keys/btwallet/index.md). For the auto-generated API reference, see the [Bittensor Wallet SDK reference](pathname:///btwallet-api/html/index.html).
+For guides covering the `Keypair`, `Wallet`, and encryption APIs, see the [Wallet SDK docs](../keys/btwallet/index.md).
 
 ---
 
