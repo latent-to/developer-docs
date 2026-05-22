@@ -30,6 +30,6 @@ Full auto-generated API reference: [Bittensor Wallet reference](pathname:///btwa
 
 ## In this section
 
-- [Keypair](./keypair): creating and importing keypairs, signing, verification, SR25519 vs ED25519
-- [Encrypt and decrypt](./encrypt-decrypt): asymmetric message encryption using ED25519 keypairs
-- [Wallet and Keyfile](./wallet-class): the `Wallet` object, key access patterns, at-rest encryption
+- [Keypair](./btwallet/keypair): creating and importing keypairs, signing, verification, SR25519 vs ED25519
+- [Encrypt and decrypt](./btwallet/encrypt-decrypt): asymmetric message encryption using ED25519 keypairs
+- [Wallet and Keyfile](./btwallet/wallet-class): the `Wallet` object, key access patterns, at-rest encryption
