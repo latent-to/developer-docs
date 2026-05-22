@@ -1,12 +1,15 @@
 """
 Generate conviction-panels.svg — two clean side-by-side charts:
-  Left:  Conviction growth   f(t) = 1 − exp(−t / 90)   τ = 90 days
-  Right: Unlock availability f(t) = 1 − exp(−t / 30)   τ = 30 days
+  Left:  Conviction growth   f(t) = 1 − exp(−t / 30)   τ = 30 days  (90% at ~70 days)
+  Right: Unlock availability f(t) = 1 − exp(−t / τ)    τ ≈ 158 days (90% at ~365 days)
 
 Both y-axes run 0→1 (fraction of maximum). Each x-axis spans 3τ.
 Output: ../static/img/conviction-panels.svg
 """
 import math, os
+
+TAU_CONV   = 30                        # conviction τ (days)
+TAU_UNLOCK = 365 / math.log(10)        # unlock τ (days) — 90% at 365 days ≈ 158.5 days
 
 # ── layout ───────────────────────────────────────────────────────────────────
 W, H   = 720, 370
@@ -19,15 +22,16 @@ PW     = (W - ML - MR - GAP) // 2  # each panel plot width = 304
 P1X = ML              # left panel plot-area left edge
 P2X = ML + PW + GAP  # right panel plot-area left edge
 
-X1, X2 = 270, 90      # x-range for each panel (3τ each)
+X1 = 3 * TAU_CONV              # left panel x-range = 3τ = 90 days
+X2 = 3 * TAU_UNLOCK            # right panel x-range = 3τ ≈ 476 days
 
 def x1(d): return P1X + (d / X1) * PW
 def x2(d): return P2X + (d / X2) * PW
 def yy(f): return MT + PH * (1 - f)
 
 N = 600
-conv_pts   = [(d, 1 - math.exp(-d / 90)) for d in (i * X1 / N for i in range(N + 1))]
-unlock_pts = [(d, 1 - math.exp(-d / 30)) for d in (i * X2 / N for i in range(N + 1))]
+conv_pts   = [(d, 1 - math.exp(-d / TAU_CONV))   for d in (i * X1 / N for i in range(N + 1))]
+unlock_pts = [(d, 1 - math.exp(-d / TAU_UNLOCK)) for d in (i * X2 / N for i in range(N + 1))]
 
 def polyline(pts, xfn):
     return " ".join(f"{xfn(x):.2f},{yy(y):.2f}" for x, y in pts)
@@ -100,14 +104,14 @@ def panel(pxfn, x_max, x_ticks, tau_day, color, pts, label, formula):
     l(f'  <text x="{xmid:.2f}" y="{MT-5}" text-anchor="middle" font-size="11" fill="{MUTED}" font-family="sans-serif">{formula}</text>')
 
 # ── left panel (conviction) ───────────────────────────────────────────────────
-panel(x1, X1, [0, 90, 180, 270], 90, BLUE, conv_pts,
+panel(x1, X1, [0, 30, 60, 90], TAU_CONV, BLUE, conv_pts,
       "Conviction Growth",
-      "f(t) = 1 − exp(−t / 90)    τ = 648,000 blocks ≈ 90 days")
+      "f(t) = 1 − exp(−t / 30)    τ = 216,000 blocks ≈ 30 days")
 
 # ── right panel (unlock) ──────────────────────────────────────────────────────
-panel(x2, X2, [0, 30, 60, 90], 30, ORANGE, unlock_pts,
+panel(x2, X2, [0, 150, 300, 450], TAU_UNLOCK, ORANGE, unlock_pts,
       "Unlock Availability",
-      "f(t) = 1 − exp(−t / 30)    τ = 216,000 blocks ≈ 30 days")
+      "f(t) = 1 − exp(−t / τ)    ~90% available after ~365 days")
 
 # ── shared y-axis label ───────────────────────────────────────────────────────
 ymid = MT + PH / 2

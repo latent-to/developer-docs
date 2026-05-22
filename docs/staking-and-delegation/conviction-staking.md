@@ -8,10 +8,6 @@ The locked stake features lets coldkey holders lock alpha stake to a specific ho
 
 Conviction provides information about subnet owners and other large investors in a subnet. A subnet owner whose alpha is locked has made a cryptographic commitment: unwinding a large position requires calling `unlock_stake` and then waiting through an exponential decay period before the stake can be withdrawn. This gives other stakers advance warning before any large exit completes.
 
-:::note Testnet launch
-Conviction staking is live on testnet (spec version 403) as of May 2026 and is tentatively scheduled for mainnet on May 13, 2026.
-:::
-
 ## The stake lock mechanism
 
 Locking stake binds a specific amount of a coldkey's staked alpha, on a subnet to a specific delegate (stake recipient) hotkey. The lock enforces one invariant:
@@ -38,7 +34,7 @@ where:
 - $c_1$: conviction now
 - $m$: locked mass (alpha units)
 - $\Delta t$: blocks elapsed since last update
-- $\tau$: maturity time constant: **648,000 blocks (≈ 90 days)**
+- $\tau$: maturity time constant: **216,000 blocks (≈ 30 days)**
 
 ## Dynamics locking and unlocking
 
@@ -46,8 +42,8 @@ When someone locks stake, their conviction increases over time, up to the locked
 
 The same formula governs both curves, only the time constant differs. The lifecycle graph below shows how they interact in sequence:
 
-**Conviction growth**: `f(t) = 1 − exp(−t / τ)`, τ = 648,000 blocks ≈ 90 days. Dot marks one time constant (63.2% of max).
-**Unlock availability**: `f(t) = 1 − exp(−t / τ)`, τ = 216,000 blocks ≈ 30 days. Dot marks one time constant (63.2% of unlocked amount available). Both x-axes span 3τ.
+**Conviction growth**: `f(t) = 1 − exp(−t / τ)`, τ = 216,000 blocks ≈ 30 days. Dot marks one time constant (63.2% of max); 90% conviction is reached in ~70 days.
+**Unlock availability**: exponential decay with ~90% of unlocked stake withdrawable after ~365 days. Dot marks one time constant (63.2% of unlocked amount available). Both x-axes span 3τ.
 
 ![Conviction growth and unlock availability, side by side](/img/conviction-panels.svg)
 
@@ -56,7 +52,7 @@ The same formula governs both curves, only the time constant differs. The lifecy
 <details>
   <summary><strong>See how it's calculated!</strong></summary>
 
-_Scenario: lock 100α at day 0; call `unlock_stake(50α)` at day 90. Conviction (blue) drops instantly by the unlocked amount and then rebuilds toward the new lower ceiling. Unlocked α (orange) becomes gradually withdrawable over the following ~30 days._
+_Scenario: lock 100α at day 0; call `unlock_stake(50α)` at day 90 (≈ 3τ, so conviction is ~95% of max). Conviction (blue) drops instantly by the unlocked amount and then rebuilds toward the new lower ceiling. Unlocked α (orange) becomes gradually withdrawable over the following ~365 days._
 
 To understand the design intent, notice that the math is about _closing a gap_, either gap between locked amount and eventual conviction, or unlocked amount and available amount.
 
@@ -72,15 +68,15 @@ c1   = m - gap × exp(-dt/τ)
 So:
 
 - `dt = 0` → `exp(0) = 1` → gap unchanged → c1 = c0 ✓
-- `dt = τ` (90 days) → `exp(-1) ≈ 0.368` → 36.8% of the gap remains → you've closed ~63% of it
+- `dt = τ` (30 days) → `exp(-1) ≈ 0.368` → 36.8% of the gap remains → you've closed ~63% of it
 - `dt → ∞` → `exp(-∞) = 0` → gap gone → c1 = m ✓
 
 Starting from c0 = 0 (fresh lock of 100 alpha):
 
 ```
 gap = 100 - 0 = 100
-at 90 days:  c1 = 100 - 100 × 0.368 = 63.2
-at 180 days: c1 = 100 - 100 × 0.135 = 86.5
+at 30 days:  c1 = 100 - 100 × 0.368 = 63.2
+at 60 days:  c1 = 100 - 100 × 0.135 = 86.5
 ```
 
 Conviction is always closing in on `m`, getting closer every block, never quite arriving.
@@ -90,11 +86,12 @@ Conviction is always closing in on `m`, getting closer every block, never quite 
 | Elapsed time | Conviction |
 | ------------ | ---------- |
 | 0 days       | 0          |
-| 30 days      | ≈ 28.3     |
-| 62 days      | ≈ 50.0     |
-| 90 days      | ≈ 63.2     |
-| 180 days     | ≈ 86.5     |
-| 270 days     | ≈ 95.0     |
+| 10 days      | ≈ 28.3     |
+| 21 days      | ≈ 50.0     |
+| 30 days      | ≈ 63.2     |
+| 60 days      | ≈ 86.5     |
+| 70 days      | ≈ 90.3     |
+| 90 days      | ≈ 95.0     |
 
 Maximum conviction equals the locked mass. Topping up an existing lock adds to locked mass immediately; conviction continues growing from its current value toward the new (higher) maximum.
 
@@ -113,6 +110,7 @@ Locks `amount` alpha from the coldkey's stake on `netuid` to `hotkey`.
 - If no lock exists for this coldkey on `netuid`, a new lock is created with conviction 0.
 - If a lock already exists, `amount` is added to the locked mass. The hotkey must match the existing lock. Use `move_lock` first if switching hotkeys.
 - `amount` must not exceed the coldkey's available (unlocked) alpha on the subnet.
+- Locked alpha continues to earn staking rewards normally.
 
 **Errors:**
 
@@ -131,7 +129,7 @@ api.tx.subtensorModule.unlockStake(netuid, amount)
 Begins the process of unlocking `amount` alpha from the coldkey's existing lock on `netuid`.
 
 - Immediately reduces locked mass by `amount` and conviction by `amount`.
-- The unlocked amount enters an exponential decay period. It becomes gradually withdrawable over time with a time constant of **216,000 blocks (≈ 30 days)**: roughly half is available after 30 days, ~86% after 60 days, and so on.
+- The unlocked amount enters an exponential decay period and becomes gradually withdrawable over time: ~90% is available after ~365 days, with roughly half available after ~110 days.
 - While stake is in the unlocking period, it **cannot be unstaked or re-locked**. The available stake formula excludes both locked and unlocking amounts.
 
 **Errors:**
@@ -172,7 +170,9 @@ Locking stake does not change the amount of emissions you receive. Emissions are
 
 When a subnet owner receives their distribution cut each epoch, **it is automatically locked** to the subnet owner's hotkey. If the owner already has a lock, the auto-lock tops it up using the existing lock's hotkey. If no lock exists, the auto-lock targets the subnet owner's hotkey.
 
-This means subnet owners start accumulating locked alpha and conviction from the moment they own a subnet. Unlocking requires a conscious `unlock_stake` transaction followed by the 30-day unlock delay.
+This means subnet owners start accumulating locked alpha and conviction from the moment they own a subnet. Unlocking requires a conscious `unlock_stake` transaction followed by the unlock delay (~90% available after ~365 days).
+
+Subnet owners receive an additional benefit: locking alpha to themselves instantly matures their conviction to the locked amount, rather than building up over ~70 days. This applies only to the owner locking to their own hotkey.
 
 ## Key swap behavior
 
@@ -192,12 +192,13 @@ When stake is moved to another coldkey **within the same subnet**, lock obligati
 
 ## Querying conviction
 
-Two runtime API calls expose conviction state on-chain:
+Three runtime API calls expose conviction state on-chain:
 
 | Method                                        | Returns                                                                                            |
 | --------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | `get_hotkey_conviction(hotkey, netuid)`       | Current total conviction for `hotkey` on `netuid`, summed over all coldkeys that have locked to it |
 | `get_most_convicted_hotkey_on_subnet(netuid)` | The hotkey with the highest conviction on `netuid`, or `None` if no locks exist                    |
+| `subnet_king(netuid)`                         | The hotkey that would become subnet owner based on current conviction scores, or `None`            |
 
 Conviction is a rolling value, so querying at different blocks yields different results as time passes and the exponential grows.
 
@@ -210,7 +211,7 @@ Lock state is stored in two maps:
 - `Lock[(coldkey, netuid, hotkey)]`: per-coldkey lock record containing locked mass, unlocking mass, conviction score, and last update block
 - `HotkeyLock[(netuid, hotkey)]`: aggregate lock totals per hotkey (used for conviction queries without iterating all coldkeys)
 
-The maturity time constant (`MaturityRate`) and unlock time constant (`UnlockRate`) are configurable runtime storage values, defaulting to 648,000 and 216,000 blocks respectively. These values can be adjusted by governance. The unlock and maturity windows are key parameters in the mechanism's attack surface, and tuning them changes how quickly conviction can build or unwind.
+The maturity time constant (`MaturityRate`) and unlock time constant (`UnlockRate`) are configurable on-chain storage values adjustable by governance. At launch, `MaturityRate` is set to produce 90% conviction in ~70 days (~216,000 blocks) and `UnlockRate` is set to release ~90% of unlocked stake after ~365 days. The unlock and maturity windows are key parameters in the mechanism's attack surface, and tuning them changes how quickly conviction can build or unwind.
 
 ## Appendix: implementation
 
@@ -221,7 +222,7 @@ The conviction formula is closed-form with no iteration or history, because the 
 ```rust
 pub struct LockState {
     pub locked_mass: AlphaBalance,   // constant between user actions
-    pub unlocked_mass: AlphaBalance, // amount pending the 30-day decay
+    pub unlocked_mass: AlphaBalance, // amount pending the unlock decay period
     pub conviction: U64F64,          // c0: conviction at last_update
     pub last_update: u64,            // block number of last write
 }
