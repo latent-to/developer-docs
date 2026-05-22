@@ -119,7 +119,7 @@ The Bittensor Command Line Interface (BTCLI) and Bittensor Python SDK offer more
 - Creating and configuring subnets
 - Participating in governance
 
-For working with keys programmatically, the SDK exposes the `Keypair` and `Wallet` classes from the [Bittensor Wallet SDK](./btwallet/index.md), which handles key generation, signing, and asymmetric message encryption.
+For working with keys programmatically, the SDK exposes the `Keypair` and `Wallet` classes from [Bittensor Wallet](./btwallet/index.md), which handles key generation, signing, and asymmetric message encryption.
 
 ## Coldkey details
 

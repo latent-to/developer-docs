@@ -4,7 +4,7 @@ title: "Encrypt and decrypt"
 
 # Encrypt and decrypt
 
-The Bittensor Wallet SDK supports asymmetric message encryption on `Keypair` objects. This lets one party encrypt a message to a recipient using only their public key; only the recipient's private key can decrypt it.
+Bittensor Wallet supports asymmetric message encryption on `Keypair` objects. This lets one party encrypt a message to a recipient using only their public key; only the recipient's private key can decrypt it.
 
 :::info ED25519 only
 `encrypt` and `decrypt` require **ED25519 keypairs** (`crypto_type=0`). SR25519 keypairs will raise a `ValueError`. This is a cryptographic constraint: SR25519 keys cannot be converted to X25519 for sealed-box encryption. If you're building a feature that uses encryption, generate your keypairs with `crypto_type=0`.

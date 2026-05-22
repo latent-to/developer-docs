@@ -22,7 +22,8 @@ A wallet is stored under `~/.bittensor/wallets/` by default:
     ├── coldkey              # password-encrypted coldkey
     ├── coldkeypub.txt       # unencrypted coldkey public key
     └── hotkeys/
-        └── default          # hotkey (unencrypted by default)
+        ├── default          # hotkey (unencrypted by default)
+        └── defaultpub.txt   # unencrypted hotkey public key
 ```
 
 Each file is a `Keyfile`. The coldkey is encrypted at rest by default; the hotkey is not.
@@ -92,7 +93,7 @@ Regenerate from a seed or JSON export:
 
 ```python
 wallet.regenerate_coldkey(seed=b"...")
-wallet.regenerate_coldkey(json='{"encoded": "...", ...}')
+wallet.regenerate_coldkey(json=('{"encoded": "..."}', "passphrase"))
 ```
 
 All `regenerate_*` methods accept a `crypto_type` parameter. Use it when recovering a key that was originally created as ED25519:
@@ -163,7 +164,14 @@ For automated environments where interactive prompts are not possible:
 wallet.coldkey_file.save_password_to_env("my-password")
 ```
 
-The SDK will read the password from the environment variable `BT_WALLET_<NAME>_COLDKEY_PASSWORD` (uppercased wallet name) when unlocking.
+The environment variable name is derived from the full keyfile path. Use `env_var_name()` to get the exact name for any keyfile:
+
+```python
+print(wallet.coldkey_file.env_var_name())
+# example: BT_PW__BITTENSOR_WALLETS_ALICE_COLDKEY
+```
+
+Set that variable before loading the wallet and the SDK will use it automatically.
 
 You can also pass it directly at wallet creation:
 

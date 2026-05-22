@@ -83,6 +83,18 @@ const sidebars = {
       collapsed: true,
       items: [
         "keys/wallets",
+         {
+          type: "category",
+          label: "Bittensor Wallet",
+          collapsible: true,
+          collapsed: true,
+          items: [
+            "keys/btwallet/index",
+            "keys/btwallet/keypair",
+            "keys/btwallet/encrypt-decrypt",
+            "keys/btwallet/wallet-class",
+          ],
+        },
         "keys/working-with-keys",
         "keys/handle-seed-phrase",
         "keys/coldkey-hotkey-security",
@@ -210,19 +222,7 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "sdk/index",
-        {
-          type: "category",
-          label: "Wallet SDK",
-          collapsible: true,
-          collapsed: true,
-          items: [
-            "keys/btwallet/index",
-            "keys/btwallet/keypair",
-            "keys/btwallet/encrypt-decrypt",
-            "keys/btwallet/wallet-class",
-          ],
-        },
+        "sdk/index",       
         "getting-started/installation",
         "sdk/env-vars",
         "sdk/bt-api-ref",

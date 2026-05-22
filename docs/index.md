@@ -172,5 +172,5 @@ See [Legacy Bittensor 7.4.0 Documentation](pathname:///legacy-python-api/html/in
     icon={FaPython}
     title=''
     link='keys/btwallet'
-    body='Wallet SDK' />
+    body='Bittensor Wallet' />
 </Cards>
