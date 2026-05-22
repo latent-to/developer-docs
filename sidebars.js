@@ -100,18 +100,7 @@ const sidebars = {
         },
         "keys/multisig",
         "keys/coldkey-swap",
-        {
-          type: "category",
-          label: "Wallet SDK",
-          collapsible: true,
-          collapsed: true,
-          items: [
-            "keys/btwallet/index",
-            "keys/btwallet/keypair",
-            "keys/btwallet/encrypt-decrypt",
-            "keys/btwallet/wallet-class",
-          ],
-        },
+        
       ],
     },
 
@@ -222,6 +211,18 @@ const sidebars = {
       collapsed: true,
       items: [
         "sdk/index",
+        {
+          type: "category",
+          label: "Wallet SDK",
+          collapsible: true,
+          collapsed: true,
+          items: [
+            "keys/btwallet/index",
+            "keys/btwallet/keypair",
+            "keys/btwallet/encrypt-decrypt",
+            "keys/btwallet/wallet-class",
+          ],
+        },
         "getting-started/installation",
         "sdk/env-vars",
         "sdk/bt-api-ref",

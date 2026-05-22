@@ -16,6 +16,7 @@ The Bittensor Python SDK provides a programmable interface to the Bittensor bloc
 Learn how to create wallets, manage keys, and handle credentials programmatically.
 
 - [Install Wallet SDK](../getting-started/install-wallet-sdk.md): Set up wallet functionality
+- [Wallet SDK](../keys/btwallet/index.md): `Keypair`, `Wallet`, and encryption API — narrative guides for the `bittensor-wallet` package
 - [Working with Keys](../keys/working-with-keys.md): Create and manage keys with the SDK
 - [Handle Seed Phrase](../keys/handle-seed-phrase.md): Save and restore wallets securely
 
