@@ -207,7 +207,11 @@ URI-based keys like `//Alice` are deterministic and publicly known. Use them onl
 | `set_coldkey` / `set_hotkey` with `overwrite=False` when key already exists | `KeyFileError` |
 | `regenerate_coldkey` with `overwrite=False` when key already exists | `KeyFileError` |
 
-## Full runnable example
+## Full example
+
+:::note Why "alicia" and "bobby"?
+`//Alice` and `//Bob` are reserved Polkadot dev-key URIs, so we use the variant names to keep things separate (but familiar).
+:::
 
 ```python
 import tempfile
@@ -225,7 +229,7 @@ from bittensor_wallet.keyfile import (
 WALLET_PATH = tempfile.mkdtemp(prefix="btwallet-test-")
 
 # --- Wallet init ---
-w = Wallet(name="alice", hotkey="default", path=WALLET_PATH)
+w = Wallet(name="alicia", hotkey="default", path=WALLET_PATH)
 w.create_if_non_existent(coldkey_use_password=False, hotkey_use_password=False, suppress=True)
 
 print(w)
@@ -256,8 +260,8 @@ print(f"keyfile_data_is_encrypted: {keyfile_data_is_encrypted(enc)}")
 
 # --- regenerate_coldkey: deterministic ---
 mnemonic = Keypair.generate_mnemonic()
-w2 = Wallet(name="bob", hotkey="default", path=WALLET_PATH)
-w3 = Wallet(name="bob-copy", hotkey="default", path=WALLET_PATH)
+w2 = Wallet(name="bobby", hotkey="default", path=WALLET_PATH)
+w3 = Wallet(name="bobby-copy", hotkey="default", path=WALLET_PATH)
 w2.regenerate_coldkey(mnemonic=mnemonic, use_password=False, overwrite=True, suppress=True)
 w3.regenerate_coldkey(mnemonic=mnemonic, use_password=False, overwrite=True, suppress=True)
 assert w2.coldkey.ss58_address == w3.coldkey.ss58_address
@@ -290,7 +294,7 @@ print("All assertions passed.")
 ```
 
 ```
-Wallet (Name: 'alice', Hotkey: 'default', Path: '/tmp/btwallet-test-...')
+Wallet (Name: 'alicia', Hotkey: 'default', Path: '/tmp/btwallet-test-...')
 coldkey SS58:  5CXy6RkRGWYFadcdf39stZgi69J1EpgTztMYGV2Qh9nEju4A
 coldkey type:  SR25519
 hotkey SS58:   5CM46xcEGhag8UQwH65PcvsZxkj2JitGtWnmMoG22iVAFLxh

@@ -24,14 +24,14 @@ Encryption uses a **NaCl sealed box** (libsodium): the ED25519 public key is con
 ```python
 from bittensor_wallet import Keypair
 
-# Alice creates an ED25519 keypair
-alice = Keypair.create_from_mnemonic(Keypair.generate_mnemonic(), crypto_type=0)
+# Alicia creates an ED25519 keypair
+alicia = Keypair.create_from_mnemonic(Keypair.generate_mnemonic(), crypto_type=0)
 
-# Encrypt a message for Alice (needs only her public key)
-ciphertext = alice.encrypt(b"a secret message")
+# Encrypt a message for Alicia (needs only her public key)
+ciphertext = alicia.encrypt(b"a secret message")
 
-# Decrypt (requires Alice's private key)
-plaintext = alice.decrypt(ciphertext)
+# Decrypt (requires Alicia's private key)
+plaintext = alicia.decrypt(ciphertext)
 assert plaintext == b"a secret message"
 ```
 
@@ -61,22 +61,27 @@ recipient = Keypair.create_from_mnemonic(my_mnemonic, crypto_type=0)
 plaintext = recipient.decrypt(ciphertext)
 ```
 
-### Example: Alice encrypts for Bob to decrypt
+### Example: Alicia encrypts for Bobby to decrypt
+
+:::note Why "Alicia" and "Bobby"?
+`//Alice` and `//Bob` are reserved Polkadot dev-key URIs, so we use the variant names Alicia and Bobby to keep things separate (but familiar) for the encryption example.
+:::
+
 
 
 ```python
 from bittensor_wallet import Keypair
 
 # Both parties created ED25519 keypairs explicitly (crypto_type=0)
-alice = Keypair.create_from_mnemonic(Keypair.generate_mnemonic(), crypto_type=0)
-bob = Keypair.create_from_mnemonic(Keypair.generate_mnemonic(), crypto_type=0)
+alicia = Keypair.create_from_mnemonic(Keypair.generate_mnemonic(), crypto_type=0)
+bobby = Keypair.create_from_mnemonic(Keypair.generate_mnemonic(), crypto_type=0)
 
-# Alice encrypts using only Bob's SS58 address
-ciphertext = Keypair.encrypt_for(bob.ss58_address, b"hey bob, this is alice")
+# Alicia encrypts using only Bobby's SS58 address
+ciphertext = Keypair.encrypt_for(bobby.ss58_address, b"hey bobby, this is alicia")
 
-# Bob decrypts with his private key
-plaintext = bob.decrypt(ciphertext)
-assert plaintext == b"hey bob, this is alice"
+# Bobby decrypts with his private key
+plaintext = bobby.decrypt(ciphertext)
+assert plaintext == b"hey bobby, this is alicia"
 ```
 
 ## Error conditions
@@ -94,32 +99,32 @@ assert plaintext == b"hey bob, this is alice"
 from bittensor_wallet import Keypair
 
 # ED25519 keypairs required for all encrypt/decrypt operations
-alice = Keypair.create_from_mnemonic(Keypair.generate_mnemonic(), crypto_type=0)
-bob = Keypair.create_from_mnemonic(Keypair.generate_mnemonic(), crypto_type=0)
+alicia = Keypair.create_from_mnemonic(Keypair.generate_mnemonic(), crypto_type=0)
+bobby = Keypair.create_from_mnemonic(Keypair.generate_mnemonic(), crypto_type=0)
 
 print("=== Keypairs ===")
-print(f"Alice SS58:       {alice.ss58_address}")
-print(f"Alice public key: {alice.public_key.hex()}")
-print(f"Bob SS58:         {bob.ss58_address}")
+print(f"Alicia SS58:       {alicia.ss58_address}")
+print(f"Alicia public key: {alicia.public_key.hex()}")
+print(f"Bobby SS58:         {bob.ss58_address}")
 
 print("\n=== Basic roundtrip: encrypt and decrypt to self ===")
-ciphertext = alice.encrypt(b"a secret message")
-plaintext = alice.decrypt(ciphertext)
+ciphertext = alicia.encrypt(b"a secret message")
+plaintext = alicia.decrypt(ciphertext)
 print(f"Original:        {b'a secret message'}")
 print(f"Ciphertext ({len(ciphertext)} bytes): {ciphertext.hex()}")
 print(f"Decrypted:       {plaintext}")
 assert plaintext == b"a secret message"
 
-print("\n=== encrypt_for: Alice encrypts to Bob using only his SS58 address ===")
-ciphertext2 = Keypair.encrypt_for(bob.ss58_address, b"hey bob, this is alice")
-plaintext2 = bob.decrypt(ciphertext2)
+print("\n=== encrypt_for: Alicia encrypts to Bobby using only his SS58 address ===")
+ciphertext2 = Keypair.encrypt_for(bobby.ss58_address, b"hey bobby, this is alicia")
+plaintext2 = bobby.decrypt(ciphertext2)
 print(f"Ciphertext: {ciphertext2.hex()[:48]}...")
 print(f"Decrypted:  {plaintext2}")
-assert plaintext2 == b"hey bob, this is alice"
+assert plaintext2 == b"hey bobby, this is alicia"
 
 print("\n=== Each call to encrypt produces a unique ciphertext (randomized nonce) ===")
-c1 = alice.encrypt(b"same message")
-c2 = alice.encrypt(b"same message")
+c1 = alicia.encrypt(b"same message")
+c2 = alicia.encrypt(b"same message")
 assert c1 != c2
 print("Different ciphertexts for the same plaintext — confirmed")
 
@@ -131,34 +136,34 @@ except ValueError as e:
     print(f"ValueError: {e}")
 
 print("\n=== Error: wrong key cannot decrypt ===")
-ciphertext3 = alice.encrypt(b"for alice only")
+ciphertext3 = alicia.encrypt(b"for alicia only")
 try:
-    bob.decrypt(ciphertext3)
+    bobby.decrypt(ciphertext3)
 except ValueError as e:
     print(f"ValueError: {e}")
 
 print("\n=== Error: public-key-only keypair cannot decrypt ===")
-alice_pubonly = Keypair(ss58_address=alice.ss58_address, crypto_type=0)
+alicia_pubonly = Keypair(ss58_address=alicia.ss58_address, crypto_type=0)
 try:
-    alice_pubonly.decrypt(ciphertext)
+    alicia_pubonly.decrypt(ciphertext)
 except ValueError as e:
     print(f"ValueError: {e}")
 ```
 
 ```
 === Keypairs ===
-Alice SS58:       5HkhGLgYLmELcqtJ4nvQaTiv1JJfztArYPj9qa2qGGgQRkcU
-Alice public key: fbacfdb3746eef35947279a334d1817bd266c24b658ff022be3a975884f2100d
-Bob SS58:         5HMvDRy43or6yYMiedNR6kAc9xEmS7Wxn95deVSa6XrWPHLF
+Alicia SS58:       5HkhGLgYLmELcqtJ4nvQaTiv1JJfztArYPj9qa2qGGgQRkcU
+Alicia public key: fbacfdb3746eef35947279a334d1817bd266c24b658ff022be3a975884f2100d
+Bobby SS58:         5HMvDRy43or6yYMiedNR6kAc9xEmS7Wxn95deVSa6XrWPHLF
 
 === Basic roundtrip: encrypt and decrypt to self ===
 Original:        b'a secret message'
 Ciphertext (64 bytes): 6943cfd08a2139dceaf0613ece4e84a5e964b5e40057408fd6d07e8dd815c4437fb0eac04f43d33d576d61e502508c2bb056a1c9afaacd7cb4974bee1bd30fd8
 Decrypted:       b'a secret message'
 
-=== encrypt_for: Alice encrypts to Bob using only his SS58 address ===
+=== encrypt_for: Alicia encrypts to Bobby using only his SS58 address ===
 Ciphertext: 774ef5f701ca27efcd7095b72bda05924a5eed410b4aed88...
-Decrypted:  b'hey bob, this is alice'
+Decrypted:  b'hey bobby, this is alicia'
 
 === Each call to encrypt produces a unique ciphertext (randomized nonce) ===
 Different ciphertexts for the same plaintext — confirmed
