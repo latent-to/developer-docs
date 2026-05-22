@@ -197,3 +197,112 @@ wallet.create_hotkey_from_uri("//Bob", use_password=False, crypto_type=CRYPTO_ED
 :::warning
 URI-based keys like `//Alice` are deterministic and publicly known. Use them only on local devnets or testnets, never with real funds.
 :::
+
+## Error conditions
+
+| Situation | Exception |
+|---|---|
+| `Keyfile.decrypt` or `get_keypair` called with wrong password | `KeyFileError: Decryption error: Wrong password for decryption.` |
+| Accessing `wallet.coldkey` when key file does not exist on disk | `KeyFileError` |
+| `set_coldkey` / `set_hotkey` with `overwrite=False` when key already exists | `KeyFileError` |
+| `regenerate_coldkey` with `overwrite=False` when key already exists | `KeyFileError` |
+
+## Full runnable example
+
+```python
+import tempfile
+import shutil
+from bittensor_wallet import Wallet, Keypair
+from bittensor_wallet.keyfile import (
+    serialized_keypair_to_keyfile_data,
+    deserialize_keypair_from_keyfile_data,
+    encrypt_keyfile_data,
+    decrypt_keyfile_data,
+    keyfile_data_is_encrypted,
+    keyfile_data_encryption_method,
+)
+
+WALLET_PATH = tempfile.mkdtemp(prefix="btwallet-test-")
+
+# --- Wallet init ---
+w = Wallet(name="alice", hotkey="default", path=WALLET_PATH)
+w.create_if_non_existent(coldkey_use_password=False, hotkey_use_password=False, suppress=True)
+
+print(w)
+print(f"coldkey SS58:  {w.coldkey.ss58_address}")
+print(f"coldkey type:  {'SR25519' if w.coldkey.crypto_type == 1 else 'ED25519'}")
+print(f"hotkey SS58:   {w.hotkey.ss58_address}")
+
+# --- Keyfile state ---
+print(f"is_encrypted (no password): {w.coldkey_file.is_encrypted()}")
+
+# --- Keyfile encrypt / decrypt ---
+w.coldkey_file.encrypt(password="hunter2")
+print(f"is_encrypted after encrypt: {w.coldkey_file.is_encrypted()}")
+print(f"encryption_method:          {keyfile_data_encryption_method(w.coldkey_file.data)}")
+w.coldkey_file.decrypt(password="hunter2")
+print(f"is_encrypted after decrypt: {w.coldkey_file.is_encrypted()}")
+
+# --- Serialization roundtrip ---
+raw = serialized_keypair_to_keyfile_data(w.coldkey)
+restored = deserialize_keypair_from_keyfile_data(raw)
+assert restored.ss58_address == w.coldkey.ss58_address
+
+# --- encrypt_keyfile_data / decrypt_keyfile_data ---
+enc = encrypt_keyfile_data(raw, password="s3cr3t")
+dec = decrypt_keyfile_data(enc, password="s3cr3t")
+assert deserialize_keypair_from_keyfile_data(dec).ss58_address == w.coldkey.ss58_address
+print(f"keyfile_data_is_encrypted: {keyfile_data_is_encrypted(enc)}")
+
+# --- regenerate_coldkey: deterministic ---
+mnemonic = Keypair.generate_mnemonic()
+w2 = Wallet(name="bob", hotkey="default", path=WALLET_PATH)
+w3 = Wallet(name="bob-copy", hotkey="default", path=WALLET_PATH)
+w2.regenerate_coldkey(mnemonic=mnemonic, use_password=False, overwrite=True, suppress=True)
+w3.regenerate_coldkey(mnemonic=mnemonic, use_password=False, overwrite=True, suppress=True)
+assert w2.coldkey.ss58_address == w3.coldkey.ss58_address
+print(f"Same mnemonic → same coldkey: {w2.coldkey.ss58_address}")
+
+# --- regenerate_coldkeypub from ss58 ---
+w.regenerate_coldkeypub(ss58_address=w.coldkey.ss58_address, overwrite=True)
+print(f"coldkeypub SS58: {w.coldkeypub.ss58_address}")
+
+# --- set_coldkey / set_hotkey ---
+new_kp = Keypair.create_from_mnemonic(Keypair.generate_mnemonic())
+w.set_coldkey(new_kp, encrypt=False, overwrite=True)
+print(f"set_coldkey → new SS58: {w.coldkey.ss58_address}")
+
+# --- Dev key (//Alice) ---
+w_dev = Wallet(name="dev", hotkey="default", path=WALLET_PATH)
+w_dev.create_coldkey_from_uri("//Alice", use_password=False, overwrite=True, suppress=True)
+print(f"//Alice SS58: {w_dev.coldkey.ss58_address}")
+
+# --- Error: wrong password ---
+w.coldkey_file.encrypt(password="correct")
+try:
+    w.coldkey_file.get_keypair(password="wrong")
+except Exception as e:
+    print(f"{type(e).__name__}: {e}")
+w.coldkey_file.decrypt(password="correct")
+
+shutil.rmtree(WALLET_PATH)
+print("All assertions passed.")
+```
+
+```
+Wallet (Name: 'alice', Hotkey: 'default', Path: '/tmp/btwallet-test-...')
+coldkey SS58:  5CXy6RkRGWYFadcdf39stZgi69J1EpgTztMYGV2Qh9nEju4A
+coldkey type:  SR25519
+hotkey SS58:   5CM46xcEGhag8UQwH65PcvsZxkj2JitGtWnmMoG22iVAFLxh
+is_encrypted (no password): False
+is_encrypted after encrypt: True
+encryption_method:          NaCl
+is_encrypted after decrypt: False
+keyfile_data_is_encrypted: True
+Same mnemonic → same coldkey: 5CSp9wwYt5mwnjzLhq1ctJ6jgDLB8LXiCpsRgUatV2PTkZtt
+coldkeypub SS58: 5CXy6RkRGWYFadcdf39stZgi69J1EpgTztMYGV2Qh9nEju4A
+set_coldkey → new SS58: 5FFBEQCciyibS3DcsA8NtQ4qXYbGshpPj4QLJG64dbN4QJRR
+//Alice SS58: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+KeyFileError: Decryption error: Wrong password for decryption.
+All assertions passed.
+```

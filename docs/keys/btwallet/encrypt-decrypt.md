@@ -143,6 +143,33 @@ try:
     alice_pubonly.decrypt(ciphertext)
 except ValueError as e:
     print(f"ValueError: {e}")
+```
 
-print("\nAll assertions passed.")
+```
+=== Keypairs ===
+Alice SS58:       5HkhGLgYLmELcqtJ4nvQaTiv1JJfztArYPj9qa2qGGgQRkcU
+Alice public key: fbacfdb3746eef35947279a334d1817bd266c24b658ff022be3a975884f2100d
+Bob SS58:         5HMvDRy43or6yYMiedNR6kAc9xEmS7Wxn95deVSa6XrWPHLF
+
+=== Basic roundtrip: encrypt and decrypt to self ===
+Original:        b'a secret message'
+Ciphertext (64 bytes): 6943cfd08a2139dceaf0613ece4e84a5e964b5e40057408fd6d07e8dd815c4437fb0eac04f43d33d576d61e502508c2bb056a1c9afaacd7cb4974bee1bd30fd8
+Decrypted:       b'a secret message'
+
+=== encrypt_for: Alice encrypts to Bob using only his SS58 address ===
+Ciphertext: 774ef5f701ca27efcd7095b72bda05924a5eed410b4aed88...
+Decrypted:  b'hey bob, this is alice'
+
+=== Each call to encrypt produces a unique ciphertext (randomized nonce) ===
+Different ciphertexts for the same plaintext — confirmed
+
+=== Error: SR25519 keypair cannot encrypt ===
+ValueError: Encrypt/decrypt is only supported for ED25519 keypairs.
+
+=== Error: wrong key cannot decrypt ===
+ValueError: Decryption failed: invalid ciphertext or wrong key.
+
+=== Error: public-key-only keypair cannot decrypt ===
+ValueError: Decryption requires a keypair with a private key.
+
 ```
