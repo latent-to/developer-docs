@@ -228,7 +228,6 @@ const sidebars = {
         "sdk/bt-api-ref",
         "sdk/subtensor-api",
         "sdk/mev-protection",
-        "getting-started/install-wallet-sdk",
         "sdk/call",
         "sdk/migration-guide",
         "subnets/asyncio",
