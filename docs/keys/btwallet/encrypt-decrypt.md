@@ -105,7 +105,7 @@ bobby = Keypair.create_from_mnemonic(Keypair.generate_mnemonic(), crypto_type=0)
 print("=== Keypairs ===")
 print(f"Alicia SS58:       {alicia.ss58_address}")
 print(f"Alicia public key: {alicia.public_key.hex()}")
-print(f"Bobby SS58:         {bob.ss58_address}")
+print(f"Bobby SS58:         {bobby.ss58_address}")
 
 print("\n=== Basic roundtrip: encrypt and decrypt to self ===")
 ciphertext = alicia.encrypt(b"a secret message")
