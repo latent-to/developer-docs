@@ -30,9 +30,9 @@
   <link href="../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/bittensor-custom.css?v=c1dfe055" />
   
   <!-- So that users can add custom icons -->
@@ -42,9 +42,9 @@
 <link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/chain_data/proxy/index';</script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" />
@@ -353,7 +353,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -377,7 +377,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -472,7 +472,7 @@
 <span id="bittensor-core-chain-data-proxy"></span><h1>bittensor.core.chain_data.proxy<a class="headerlink" href="#module-bittensor.core.chain_data.proxy" title="Link to this heading">#</a></h1>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo" title="bittensor.core.chain_data.proxy.ProxyAnnouncementInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProxyAnnouncementInfo</span></code></a></p></td>
 <td><p>Dataclass representing proxy announcement information.</p></td>
@@ -494,7 +494,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyAnnouncementInfo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.proxy.</span></span><span class="sig-name descname"><span class="pre">ProxyAnnouncementInfo</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.proxy.</span></span><span class="sig-name descname"><span class="pre">ProxyAnnouncementInfo</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo" title="Link to this definition">#</a></dt>
 <dd><p>Dataclass representing proxy announcement information.</p>
 <p>This class contains information about a pending proxy announcement. Announcements are used when a proxy account
 with a non-zero delay period (time-lock) wants to declare its intention to execute a call on behalf of the real
@@ -521,17 +521,17 @@ layer for time-locked operations.</p></li>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.call_hash">
-<span class="sig-name descname"><span class="pre">call_hash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.call_hash" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">call_hash</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.call_hash" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.from_dict">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.from_dict" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.from_dict" title="Link to this definition">#</a></dt>
 <dd><p>Creates a list of ProxyAnnouncementInfo objects from chain announcement data.</p>
 <p>This method decodes the raw announcement data returned from the Proxy.Announcements storage function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a>) – Tuple of announcements data from the <cite>Proxy.Announcements</cite> storage function.</p>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em>) – Tuple of announcements data from the <cite>Proxy.Announcements</cite> storage function.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of ProxyAnnouncementInfo objects representing all pending announcements.</p>
@@ -548,11 +548,11 @@ layer for time-locked operations.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.from_query_map_record">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_query_map_record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.from_query_map_record" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_query_map_record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.from_query_map_record" title="Link to this definition">#</a></dt>
 <dd><p>Returns a list of ProxyAnnouncementInfo objects from a tuple of announcements data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>record</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a>) – Data item from query_map records call to Announcements storage function. Structure is [key, value]
+<dd class="field-odd"><p><strong>record</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>]</em>) – Data item from query_map records call to Announcements storage function. Structure is [key, value]
 where key is the delegate account and value contains announcements data.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -570,19 +570,19 @@ where key is the delegate account and value contains announcements data.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.height">
-<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.height" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">height</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.height" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.real">
-<span class="sig-name descname"><span class="pre">real</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.real" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">real</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyAnnouncementInfo.real" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyConstants">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.proxy.</span></span><span class="sig-name descname"><span class="pre">ProxyConstants</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.proxy.</span></span><span class="sig-name descname"><span class="pre">ProxyConstants</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants" title="Link to this definition">#</a></dt>
 <dd><p>Fetches all runtime constants defined in the Proxy pallet.</p>
 <p>Displays current values for on-chain configuration constants for the Proxy pallet. They define
 deposit requirements, account limits, and announcement constraints that govern the behavior of proxies.</p>
@@ -616,37 +616,37 @@ calculated as: <cite>ProxyDepositBase + (number_of_proxy_types * ProxyDepositFac
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyConstants.AnnouncementDepositBase">
-<span class="sig-name descname"><span class="pre">AnnouncementDepositBase</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.AnnouncementDepositBase" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">AnnouncementDepositBase</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.AnnouncementDepositBase" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyConstants.AnnouncementDepositFactor">
-<span class="sig-name descname"><span class="pre">AnnouncementDepositFactor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.AnnouncementDepositFactor" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">AnnouncementDepositFactor</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.AnnouncementDepositFactor" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyConstants.MaxPending">
-<span class="sig-name descname"><span class="pre">MaxPending</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.MaxPending" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">MaxPending</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.MaxPending" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyConstants.MaxProxies">
-<span class="sig-name descname"><span class="pre">MaxProxies</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.MaxProxies" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">MaxProxies</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.MaxProxies" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyConstants.ProxyDepositBase">
-<span class="sig-name descname"><span class="pre">ProxyDepositBase</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.ProxyDepositBase" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ProxyDepositBase</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.ProxyDepositBase" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyConstants.ProxyDepositFactor">
-<span class="sig-name descname"><span class="pre">ProxyDepositFactor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.ProxyDepositFactor" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ProxyDepositFactor</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.ProxyDepositFactor" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyConstants.constants_names">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">constants_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.constants_names" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">constants_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.constants_names" title="Link to this definition">#</a></dt>
 <dd><p>Returns the all constant field names defined in this dataclass.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -660,7 +660,7 @@ calculated as: <cite>ProxyDepositBase + (number_of_proxy_types * ProxyDepositFac
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyConstants.from_dict">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.from_dict" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyConstants.from_dict" title="Link to this definition">#</a></dt>
 <dd><p>Creates a ProxyConstants instance from a dictionary of decoded chain constants.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -693,7 +693,7 @@ calculated as: <cite>ProxyDepositBase + (number_of_proxy_types * ProxyDepositFac
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyInfo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.proxy.</span></span><span class="sig-name descname"><span class="pre">ProxyInfo</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.proxy.</span></span><span class="sig-name descname"><span class="pre">ProxyInfo</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo" title="Link to this definition">#</a></dt>
 <dd><p>Dataclass representing proxy relationship information.</p>
 <p>This class contains information about a proxy relationship between a real account and a delegate account. A proxy
 relationship allows the delegate to perform certain operations on behalf of the real account, with restrictions
@@ -721,23 +721,23 @@ announce the call first via <cite>announce_proxy</cite>, wait for the delay peri
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyInfo.delay">
-<span class="sig-name descname"><span class="pre">delay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo.delay" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">delay</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo.delay" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyInfo.delegate">
-<span class="sig-name descname"><span class="pre">delegate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo.delegate" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">delegate</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo.delegate" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyInfo.from_query">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo.from_query" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo.from_query" title="Link to this definition">#</a></dt>
 <dd><p>Creates a list of ProxyInfo objects and deposit balance from a Substrate query result.</p>
 <p>This method decodes the query result from the Proxy.Proxies storage function, extracting both the proxy
 relationships and the deposit amount reserved for maintaining these proxies.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>query</strong> (<em>Any</em>) – Query result from Substrate <cite>query()</cite> call to <cite>Proxy.Proxies</cite> storage function.</p>
+<dd class="field-odd"><p><strong>query</strong> (<a class="reference internal" href="#bittensor.core.chain_data.proxy.ProxyType.Any" title="bittensor.core.chain_data.proxy.ProxyType.Any"><em>Any</em></a>) – Query result from Substrate <cite>query()</cite> call to <cite>Proxy.Proxies</cite> storage function.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
@@ -759,13 +759,13 @@ relationships and the deposit amount reserved for maintaining these proxies.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyInfo.from_query_map_record">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_query_map_record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo.from_query_map_record" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_query_map_record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo.from_query_map_record" title="Link to this definition">#</a></dt>
 <dd><p>Creates a dictionary mapping delegate addresses to their ProxyInfo lists from a query_map record.</p>
 <p>Processes a single record from a query_map call to the Proxy.Proxies storage function. Each record represents
 one real account and its associated proxy/ies relationships.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>record</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Data item from query_map records call to Proxies storage function. Structure is [key, value] where
+<dd class="field-odd"><p><strong>record</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>]</em>) – Data item from query_map records call to Proxies storage function. Structure is [key, value] where
 key is the real account and value contains proxies data.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -783,13 +783,13 @@ key is the real account and value contains proxies data.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyInfo.from_tuple">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_tuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo.from_tuple" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_tuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo.from_tuple" title="Link to this definition">#</a></dt>
 <dd><p>Creates a list of ProxyInfo objects from chain proxy data.</p>
 <p>This method decodes the raw proxy data returned from the Proxy.Proxies storage function and creates
 structured ProxyInfo objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a>) – Tuple of chain proxy data from the <cite>Proxy.Proxies</cite> storage function.</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>]</em><em>]</em>) – Tuple of chain proxy data from the <cite>Proxy.Proxies</cite> storage function.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of ProxyInfo objects representing all proxy relationships for a real account.</p>
@@ -806,14 +806,14 @@ structured ProxyInfo objects.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyInfo.proxy_type">
-<span class="sig-name descname"><span class="pre">proxy_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo.proxy_type" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">proxy_type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyInfo.proxy_type" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.proxy.</span></span><span class="sig-name descname"><span class="pre">ProxyType</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.proxy.</span></span><span class="sig-name descname"><span class="pre">ProxyType</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
 <p>Enumeration of all supported proxy types in the Bittensor network.</p>
 <p>These types define the permissions that a proxy account has when acting on behalf of the real account. Each type
@@ -839,15 +839,13 @@ restricts what operations the proxy can perform.</p>
 <dt>NonTransfer: Allows all operations except those involving token transfers. Prohibited operations:</dt><dd><ul class="simple">
 <li><p>All Balances module calls</p></li>
 <li><p>transfer_stake</p></li>
-<li><p>schedule_swap_coldkey</p></li>
-<li><p>swap_coldkey</p></li>
 </ul>
 </dd>
 <dt>NonFungible: Allows all operations except token-related operations and registrations. Prohibited operations:</dt><dd><ul class="simple">
 <li><p>All Balances module calls</p></li>
 <li><p>All staking operations (add_stake, remove_stake, unstake_all, swap_stake, move_stake, transfer_stake)</p></li>
 <li><p>Registration operations (burned_register, root_register)</p></li>
-<li><p>Key swap operations (schedule_swap_coldkey, swap_coldkey, swap_hotkey)</p></li>
+<li><p>Key swap operations (announce_coldkey_swap, swap_coldkey_announced, swap_hotkey)</p></li>
 </ul>
 </dd>
 <dt>Staking: Allows only staking-related operations. Permitted operations:</dt><dd><ul class="simple">
@@ -919,97 +917,97 @@ runtime enum must be reflected here.</p></li>
 <p>Initialize self.  See help(type(self)) for accurate signature.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.Any">
-<span class="sig-name descname"><span class="pre">Any</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Any'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Any" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">Any</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Any'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Any" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.ChildKeys">
-<span class="sig-name descname"><span class="pre">ChildKeys</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ChildKeys'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.ChildKeys" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ChildKeys</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ChildKeys'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.ChildKeys" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.Governance">
-<span class="sig-name descname"><span class="pre">Governance</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Governance'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Governance" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">Governance</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Governance'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Governance" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.NonCritical">
-<span class="sig-name descname"><span class="pre">NonCritical</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NonCritical'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.NonCritical" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">NonCritical</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NonCritical'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.NonCritical" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.NonFungible">
-<span class="sig-name descname"><span class="pre">NonFungible</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NonFungible'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.NonFungible" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">NonFungible</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NonFungible'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.NonFungible" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.NonTransfer">
-<span class="sig-name descname"><span class="pre">NonTransfer</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NonTransfer'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.NonTransfer" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">NonTransfer</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NonTransfer'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.NonTransfer" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.Owner">
-<span class="sig-name descname"><span class="pre">Owner</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Owner'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Owner" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">Owner</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Owner'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Owner" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.Registration">
-<span class="sig-name descname"><span class="pre">Registration</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Registration'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Registration" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">Registration</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Registration'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Registration" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.RootClaim">
-<span class="sig-name descname"><span class="pre">RootClaim</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RootClaim'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.RootClaim" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">RootClaim</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RootClaim'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.RootClaim" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.RootWeights">
-<span class="sig-name descname"><span class="pre">RootWeights</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RootWeights'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.RootWeights" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">RootWeights</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RootWeights'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.RootWeights" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.Senate">
-<span class="sig-name descname"><span class="pre">Senate</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Senate'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Senate" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">Senate</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Senate'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Senate" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.SmallTransfer">
-<span class="sig-name descname"><span class="pre">SmallTransfer</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SmallTransfer'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.SmallTransfer" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">SmallTransfer</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SmallTransfer'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.SmallTransfer" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.Staking">
-<span class="sig-name descname"><span class="pre">Staking</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Staking'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Staking" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">Staking</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Staking'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Staking" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.SubnetLeaseBeneficiary">
-<span class="sig-name descname"><span class="pre">SubnetLeaseBeneficiary</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SubnetLeaseBeneficiary'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.SubnetLeaseBeneficiary" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">SubnetLeaseBeneficiary</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SubnetLeaseBeneficiary'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.SubnetLeaseBeneficiary" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.SudoUncheckedSetCode">
-<span class="sig-name descname"><span class="pre">SudoUncheckedSetCode</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SudoUncheckedSetCode'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.SudoUncheckedSetCode" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">SudoUncheckedSetCode</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SudoUncheckedSetCode'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.SudoUncheckedSetCode" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.SwapHotkey">
-<span class="sig-name descname"><span class="pre">SwapHotkey</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SwapHotkey'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.SwapHotkey" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">SwapHotkey</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SwapHotkey'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.SwapHotkey" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.Transfer">
-<span class="sig-name descname"><span class="pre">Transfer</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Transfer'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Transfer" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">Transfer</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Transfer'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Transfer" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.Triumvirate">
-<span class="sig-name descname"><span class="pre">Triumvirate</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Triumvirate'</span></em><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Triumvirate" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">Triumvirate</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Triumvirate'</span></span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.Triumvirate" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.all_types">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.all_types" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">all_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.all_types" title="Link to this definition">#</a></dt>
 <dd><p>Returns a list of all proxy type values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1023,7 +1021,7 @@ runtime enum must be reflected here.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.is_valid">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.is_valid" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.is_valid" title="Link to this definition">#</a></dt>
 <dd><p>Checks if a string value is a valid proxy type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1040,7 +1038,7 @@ runtime enum must be reflected here.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.proxy.ProxyType.normalize">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proxy_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.normalize" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proxy_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.chain_data.proxy.ProxyType.normalize" title="Link to this definition">#</a></dt>
 <dd><p>Normalizes a proxy type to a string value.</p>
 <p>This method handles both string and ProxyType enum values, validates the input, and returns the string
 representation suitable for Substrate calls.</p>
@@ -1105,11 +1103,12 @@ representation suitable for Substrate calls.</p>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
@@ -1192,7 +1191,7 @@ By Opentensor Foundation
 
   <p class="copyright">
     
-      © Copyright 2024, Opentensor Foundation.
+      © Copyright 2025, Opentensor Foundation.
       <br/>
     
   </p>
