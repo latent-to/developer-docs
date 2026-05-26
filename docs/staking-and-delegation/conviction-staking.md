@@ -139,6 +139,85 @@ The term `(dt/τ) × exp(-dt/τ)` is maximized at `dt = τ` (value = `1/e ≈ 0.
 
 </details>
 
+
+## Subnet owner auto-locking
+
+When a subnet owner receives their distribution cut each epoch, it is **automatically locked** to the subnet owner's hotkey by default. If the owner already has a lock, the auto-lock tops it up using the existing lock's hotkey. If no lock exists, the auto-lock targets the subnet owner's hotkey.
+
+Auto-locking is enabled per-subnet by default and can be disabled via the `OwnerCutAutoLockEnabled` governance parameter (root-only).
+
+Subnet owners receive an additional benefit: locking alpha to themselves **instantly matures their conviction** to the locked amount, rather than building up over time. This applies only when the owner is locking to their own hotkey.
+
+## Key swap behavior
+
+**Hotkey swap (system-level):** When a hotkey is swapped via `btcli wallet swap-hotkey`, all locks targeting the old hotkey are transferred to the new hotkey. Conviction is **not** reset, because the same coldkey owns both hotkeys.
+
+**Coldkey swap:** A coldkey swap fails if the destination coldkey already has **active locked mass** on any subnet. The swap succeeds if the destination coldkey only has expired or zero-mass locks.
+
+## Transferring locked stake
+
+When stake is moved to another coldkey **within the same subnet**, lock obligations follow the alpha proportionally. The runtime resolves how much of the transfer carries lock state:
+
+1. **Freely available alpha transfers first**: alpha above the locked amount moves with no lock implications.
+2. **Locked alpha is drawn next**: if the transfer exceeds freely available alpha, the remainder comes from locked mass. Conviction transfers proportionally with the locked amount. This step **fails with `LockHotkeyMismatch`** if the destination coldkey already has a lock pointing at a different hotkey.
+
+**Cross-subnet moves are different**: moving stake between subnets goes through unstake → TAO transfer → restake, which must satisfy the lock constraint. You cannot move locked alpha across subnets directly.
+
+## Querying conviction
+
+In [Polkadot.js](https://polkadot.js.org/apps/), go to **Developer → RPC calls** and select the `stakeInfo` module to call `getColdkeyLock`. For the other two methods, go to **Developer → Runtime calls** and select the `stakeInfoRuntimeApi` module.
+
+| Polkadot.js module | Method | Returns |
+|---|---|---|
+| RPC calls → `stakeInfo` | `getColdkeyLock(coldkey, netuid)` | The current `LockState` for this coldkey on `netuid`, rolled forward to the current block, or `None` if no lock exists |
+| Runtime calls → `stakeInfoRuntimeApi` | `getHotkeyConviction(hotkey, netuid)` | Current total conviction for `hotkey` on `netuid`, summed over all coldkeys that have locked to it |
+| Runtime calls → `stakeInfoRuntimeApi` | `getMostConvictedHotkeyOnSubnet(netuid)` | The hotkey with the highest conviction on `netuid`, or `None` if no locks exist |
+
+Conviction is a rolling value: querying at different blocks yields different results as time passes and the exponential evolves.
+
+## Storage
+
+All six storage items live under **Developer → Chain state → `subtensorModule`** in Polkadot.js.
+
+| Storage item | Keys | Contents |
+|---|---|---|
+| `lock(coldkey, netuid, hotkey)` | coldkey, netuid, hotkey | Individual per-coldkey lock record (`LockState`) |
+| `hotkeyLock(netuid, hotkey)` | netuid, hotkey | Aggregate perpetual lock totals for non-owner hotkeys |
+| `decayingHotkeyLock(netuid, hotkey)` | netuid, hotkey | Aggregate decaying lock totals for non-owner hotkeys |
+| `ownerLock(netuid)` | netuid | Aggregate perpetual lock total for the subnet owner hotkey |
+| `decayingOwnerLock(netuid)` | netuid | Aggregate decaying lock total for the subnet owner hotkey |
+| `decayingLock(coldkey, netuid)` | coldkey, netuid | `false` = perpetual mode; absent = decaying (default) |
+
+Two governance-settable parameters control the time constants:
+
+- **`MaturityRate`**: time constant τ (in blocks) for conviction growth in perpetual mode. Query on-chain for the current value.
+- **`UnlockRate`**: time constant τ (in blocks) for locked mass decay in decaying mode. Query on-chain for the current value.
+
+Both are adjustable by governance. Query `api.query.subtensorModule.maturityRate()` and `api.query.subtensorModule.unlockRate()` for current values before computing time estimates.
+
+## Subnet ownership changes
+
+:::note Not yet active
+The ownership transfer function (`change_subnet_owner_if_needed`) is implemented in the runtime but its call site in the block-coinbase loop is currently commented out. It is not active on mainnet. No governance flag controls it — re-enabling requires a runtime upgrade.
+:::
+
+When activated, ownership transfers automatically at the end of each block's coinbase run if two conditions hold simultaneously:
+
+1. The subnet is at least **one year old** (≥ 7,200 × 365 + 1,800 blocks from `networkRegisteredAt`)
+2. Total aggregate conviction across all locks on the subnet ≥ **10% of `SubnetAlphaOut`**
+
+The hotkey with the highest aggregate conviction (`subnet_king`) then becomes the subnet owner hotkey, and that hotkey's owning coldkey becomes the subnet owner.
+
+**To monitor readiness via Polkadot.js (Developer → Chain state → `subtensorModule`):**
+
+| Query | What it tells you |
+|---|---|
+| `networkRegisteredAt(netuid)` | Block the subnet was created; add 2,629,800 to get the one-year threshold |
+| `subnetAlphaOut(netuid)` | Total outstanding alpha; 10% of this is the conviction threshold |
+| Developer → Runtime calls → `stakeInfoRuntimeApi` → `getMostConvictedHotkeyOnSubnet(netuid)` | The hotkey that would currently win ownership |
+| Developer → Runtime calls → `stakeInfoRuntimeApi` → `getHotkeyConviction(hotkey, netuid)` | Any hotkey's current aggregate conviction score |
+
+
 ## Extrinsics
 
 ### `lock_stake`
@@ -204,74 +283,6 @@ When moving to a different-coldkey hotkey, conviction resets to zero, giving the
 
 :::note Locking does not affect emissions
 Locking stake does not change the amount of emissions you receive. Emissions are determined by stake weight and consensus participation. Conviction is a governance/signaling mechanism only.
-:::
-
-## Subnet owner auto-locking
-
-When a subnet owner receives their distribution cut each epoch, it is **automatically locked** to the subnet owner's hotkey by default. If the owner already has a lock, the auto-lock tops it up using the existing lock's hotkey. If no lock exists, the auto-lock targets the subnet owner's hotkey.
-
-Auto-locking is enabled per-subnet by default and can be disabled via the `OwnerCutAutoLockEnabled` governance parameter (root-only).
-
-Subnet owners receive an additional benefit: locking alpha to themselves **instantly matures their conviction** to the locked amount, rather than building up over time. This applies only when the owner is locking to their own hotkey.
-
-## Key swap behavior
-
-**Hotkey swap (system-level):** When a hotkey is swapped via `btcli wallet swap-hotkey`, all locks targeting the old hotkey are transferred to the new hotkey. Conviction is **not** reset, because the same coldkey owns both hotkeys.
-
-**Coldkey swap:** A coldkey swap fails if the destination coldkey already has **active locked mass** on any subnet. The swap succeeds if the destination coldkey only has expired or zero-mass locks.
-
-## Transferring locked stake
-
-When stake is moved to another coldkey **within the same subnet**, lock obligations follow the alpha proportionally. The runtime resolves how much of the transfer carries lock state:
-
-1. **Freely available alpha transfers first**: alpha above the locked amount moves with no lock implications.
-2. **Locked alpha is drawn next**: if the transfer exceeds freely available alpha, the remainder comes from locked mass. Conviction transfers proportionally with the locked amount. This step **fails with `LockHotkeyMismatch`** if the destination coldkey already has a lock pointing at a different hotkey.
-
-**Cross-subnet moves are different**: moving stake between subnets goes through unstake → TAO transfer → restake, which must satisfy the lock constraint. You cannot move locked alpha across subnets directly.
-
-## Querying conviction
-
-Three runtime API calls expose lock and conviction state on-chain:
-
-| Method | Returns |
-|---|---|
-| `get_coldkey_lock(coldkey, netuid)` | The current `LockState` for this coldkey on `netuid`, rolled forward to the current block, or `None` if no lock exists |
-| `get_hotkey_conviction(hotkey, netuid)` | Current total conviction for `hotkey` on `netuid`, summed over all coldkeys that have locked to it |
-| `get_most_convicted_hotkey_on_subnet(netuid)` | The hotkey with the highest conviction on `netuid`, or `None` if no locks exist. Internally calls `subnet_king`. |
-
-Conviction is a rolling value: querying at different blocks yields different results as time passes and the exponential evolves.
-
-## Storage
-
-Lock state is stored across six structures:
-
-| Storage | Key | Contents |
-|---|---|---|
-| `Lock` | `(coldkey, netuid, hotkey)` | Individual per-coldkey lock record |
-| `HotkeyLock` | `(netuid, hotkey)` | Aggregate perpetual lock totals for non-owner hotkeys |
-| `DecayingHotkeyLock` | `(netuid, hotkey)` | Aggregate decaying lock totals for non-owner hotkeys |
-| `OwnerLock` | `netuid` | Aggregate perpetual lock total for the subnet owner hotkey |
-| `DecayingOwnerLock` | `netuid` | Aggregate decaying lock total for the subnet owner hotkey |
-| `DecayingLock` | `(coldkey, netuid)` | When present and `false`, this coldkey's lock is in perpetual mode. Absent = decaying (default). |
-
-Two governance-settable parameters control the time constants:
-
-- **`MaturityRate`**: time constant τ (in blocks) for conviction growth in perpetual mode. Query on-chain for the current value.
-- **`UnlockRate`**: time constant τ (in blocks) for locked mass decay in decaying mode. Query on-chain for the current value.
-
-Both are adjustable by governance. Query `api.query.subtensorModule.maturityRate()` and `api.query.subtensorModule.unlockRate()` for current values before computing time estimates.
-
-## Subnet ownership changes
-
-The conviction mechanism underpins an eventual path to conviction-based subnet ownership transfer. Two conditions must both hold before ownership can change:
-
-1. The subnet is at least **one year old**
-2. Total rolled aggregate conviction on the subnet is at least **10% of `SubnetAlphaOut`**
-
-When both conditions are met, the hotkey with the highest aggregate conviction (`subnet_king`) becomes the subnet owner hotkey, and that hotkey's owning coldkey becomes the subnet owner. The RPC method `get_most_convicted_hotkey_on_subnet(netuid)` shows who would currently win.
-
-:::note Ownership changes not yet active
-The conviction-based ownership transfer mechanism is implemented and can be queried, but is not yet enabled on mainnet. It will be activated via a separate governance transaction. Subnet owners can begin building conviction immediately.
 :::
 
 ## Appendix: implementation
