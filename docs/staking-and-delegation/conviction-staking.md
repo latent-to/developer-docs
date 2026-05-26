@@ -146,7 +146,7 @@ When a subnet owner receives their distribution cut each epoch, it is **automati
 
 Auto-locking is enabled per-subnet by default and can be disabled by the subnet owner or root via `sudo_set_owner_cut_auto_lock_enabled` (admin-utils pallet).
 
-Any lock targeting the subnet owner's hotkey **instantly matures conviction** to the locked amount. This applies to any coldkey locking to the subnet owner's hotkey — not just the owner locking to themselves. The trigger is the target hotkey, not the locking coldkey.
+Any lock targeting the subnet owner's hotkey **instantly matures conviction** to the locked amount. This applies to any coldkey locking to the subnet owner's hotkey, not just the owner locking to themselves. The trigger is the target hotkey, not the locking coldkey.
 
 ## Key swap behavior
 
@@ -198,7 +198,7 @@ Both are adjustable by governance. Query `api.query.subtensorModule.maturityRate
 ## Subnet ownership changes
 
 :::note Not yet active
-The ownership transfer function (`change_subnet_owner_if_needed`) is implemented in the runtime but its call site in the block-coinbase loop is currently commented out. It is not active on mainnet. No governance flag controls it — re-enabling requires a runtime upgrade.
+The ownership transfer function (`change_subnet_owner_if_needed`) is implemented in Subtensor codebase, but is currently commented out, so it is not active and enabling it will require a runtime upgrade.
 :::
 
 When activated, ownership transfers automatically at the end of each block's coinbase run if two conditions hold simultaneously:
