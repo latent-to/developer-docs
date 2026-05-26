@@ -8,26 +8,19 @@ The locked stake feature lets coldkey holders lock alpha stake to a specific hot
 
 Conviction provides information about subnet owners and other large investors in a subnet. A subnet owner whose alpha is locked has made a cryptographic commitment: unwinding a large position requires switching the lock to decaying mode and then waiting through an exponential decay period before the stake is gone. This gives other stakers advance warning before any large exit completes.
 
-## The stake lock mechanism
+Locking stake binds a specific amount of a coldkey's staked alpha on a subnet to a specific delegate (stake recipient) hotkey.
 
-Locking stake binds a specific amount of a coldkey's staked alpha on a subnet to a specific delegate (stake recipient) hotkey. The lock enforces one invariant:
+The lock code ensures that total alpha staked by the coldkey on that subnet cannot decrease below the locked amount. Everything above the locked amount is freely unstakable.
 
-> **Total alpha staked by the coldkey on that subnet ≥ locked amount**
-
-Everything above the locked amount is freely unstakable. The coldkey can also continue to stake additional alpha at any time: the lock only blocks the staked balance from dropping below the locked amount.
-
-
-## Conviction
-
+The coldkey can also continue to stake additional alpha at any time: the lock only blocks the staked balance from dropping below the locked amount.
 
 Conviction increases over time toward the amount of locked stake, following an exponential curve so  it slows as it approaches the limit value of the locked amount.
 
-
 ### Decaying and perpetual modes
 
-By default, the locked amount decreases over time along an exponential curve, freeing up more of the originally locked amount to potentially be unstaked.
+By default, the locked amount decreases or '**decays**' over time along an exponential curve, freeing up more of the originally locked amount to potentially be unstaked.
 
-Because conviciton will rise toward the locked amount, while the locked amount itself falls, over time, conviction will peak somewhere in the middle and then start to fall again.
+Because conviction will rise toward the locked amount, while the locked amount itself falls, over time, conviction will peak somewhere in the middle and then start to fall again.
 
 The locked amount reaches zero (freeing all stake) with no explicit action needed.
 
@@ -37,7 +30,7 @@ The mode, **decaying** or **perpetual**, is per-coldkey per-subnet and can be ch
 
 One lock per coldkey per subnet is enforced. If a lock already exists for a coldkey on a subnet, additional `lock_stake` calls top up the locked amount (provided the hotkey matches the existing lock).
 
-## Conviction
+## The conviction score
 
 The conviction score grows over time, from zero toward the locked amount. In perpetual mode it follows an exponential curve:
 
@@ -78,26 +71,10 @@ Switching to perpetual mode stops the mass decay and allows conviction to grow t
 
 Conviction closes in on the locked mass; maximum conviction equals the locked mass.
 
-![Perpetual mode conviction diagram](/img/docs/conviction/perpetual-mode.svg)
-
-**Decaying mode** (fresh lock of 100 alpha, $c_0 = 0$, `UnlockRate` = `MaturityRate` = τ):
-
-| Elapsed | Locked mass | Conviction |
-|---|---|---|
-| 0 | 100 | 0 |
-| 0.5τ | 60.7 | 30.3 |
-| 1τ | 36.8 | **36.8 (peak)** |
-| 2τ | 13.5 | 27.1 |
-| 3τ | 5.0 | 14.9 |
-
-Conviction peaks at ~36.8% of the original locked mass at elapsed time = τ. After that both values fall toward zero. Note that once elapsed time exceeds τ, conviction exceeds the remaining locked mass; it reflects accumulated commitment, not just current holdings. Topping up an existing lock adds to locked mass immediately, conviction continuing from its current value.
-
-![Decaying mode conviction diagram](/img/docs/conviction/decaying-mode.svg)
-
 <details>
   <summary><strong>See how it's calculated</strong></summary>
 
-**Perpetual mode**; closing a gap between current conviction and the target (locked mass):
+Closing a gap between current conviction and the target (locked mass):
 
 ```
 gap  = m - c0
@@ -121,7 +98,28 @@ at 3τ:  c1 = 100 - 100 × 0.050 = 95.0
 
 Conviction is always closing in on `m`, getting closer every block, never quite arriving.
 
-**Decaying mode** (when `UnlockRate` = `MaturityRate` = τ); conviction is the accumulated area under the decaying lock curve:
+</details>
+
+![Perpetual mode conviction diagram](/img/docs/conviction/perpetual-mode.svg)
+
+**Decaying mode** (fresh lock of 100 alpha, $c_0 = 0$, `UnlockRate` = `MaturityRate` = τ):
+
+| Elapsed | Locked mass | Conviction |
+|---|---|---|
+| 0 | 100 | 0 |
+| 0.5τ | 60.7 | 30.3 |
+| 1τ | 36.8 | **36.8 (peak)** |
+| 2τ | 13.5 | 27.1 |
+| 3τ | 5.0 | 14.9 |
+
+Conviction peaks at ~36.8% of the original locked mass at elapsed time = τ. After that both values fall toward zero. Note that once elapsed time exceeds τ, conviction exceeds the remaining locked mass; it reflects accumulated commitment, not just current holdings. Topping up an existing lock adds to locked mass immediately, conviction continuing from its current value.
+
+![Decaying mode conviction diagram](/img/docs/conviction/decaying-mode.svg)
+
+<details>
+  <summary><strong>See how it's calculated</strong></summary>
+
+When `UnlockRate` = `MaturityRate` = τ, conviction is the accumulated area under the decaying lock curve:
 
 ```
 c1 = exp(-dt/τ) × (c0 + m × dt/τ)
