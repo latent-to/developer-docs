@@ -52,6 +52,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **interface**: `api.events.adminUtils.PrecompileUpdated`
 - **summary**: Event emitted when a precompile operation is updated.
 
+### `SubnetEmissionEnabledSet(netuid: NetUid, enabled: bool)`
+
+- **interface**: `api.events.adminUtils.SubnetEmissionEnabledSet`
+- **summary**: Pool-side emission injection has been enabled or disabled for a subnet by root. Emitted by `sudoSetSubnetEmissionEnabled`.
+
 ### `Yuma3EnableToggled(NetUid, bool)`
 
 - **interface**: `api.events.adminUtils.Yuma3EnableToggled`
@@ -1077,6 +1082,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **interface**: `api.events.subtensorModule.OwnerHyperparamRateLimitSet`
 - **summary**: setting the owner hyperparameter rate limit in epochs
 
+### `PerpetualLockUpdated(coldkey: AccountId, netuid: NetUid, enabled: bool)`
+
+- **interface**: `api.events.subtensorModule.PerpetualLockUpdated`
+- **summary**: Perpetual lock mode has been set or cleared for a coldkey's lock on a subnet. Emitted by `set_perpetual_lock`. When `enabled = false`, the locked mass begins decaying — a public signal that the holder may be reducing their position.
+
 ### `PowRegistrationAllowed(NetUid, bool)`
 
 - **interface**: `api.events.subtensorModule.PowRegistrationAllowed`
@@ -1188,15 +1198,15 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
     (origin_coldkey, destination_coldkey, hotkey, origin_netuid, destination_netuid, amount)
 
-### `StakeUnlocked(coldkey: AccountId, hotkey: AccountId, netuid: NetUid, amount: AlphaBalance)`
-
-- **interface**: `api.events.subtensorModule.StakeUnlocked`
-- **summary**: Alpha stake has been moved from the locked state into the unlock decay period. Emitted by `unlock_stake`. The stake is not immediately available — it becomes gradually withdrawable over ≈30 days.
-
 ### `StartCallDelaySet(u64)`
 
 - **interface**: `api.events.subtensorModule.StartCallDelaySet`
 - **summary**: the start call delay is set.
+
+### `SubnetEmissionEnabledSet(NetUid, bool)`
+
+- **interface**: `api.events.subtensorModule.SubnetEmissionEnabledSet`
+- **summary**: Pool-side emission injection has been enabled or disabled for a subnet. Emitted by `adminUtils.sudoSetSubnetEmissionEnabled`. When disabled, the subnet receives no alpha-in, tao-in, or chain-buy injections.
 
 ### `SubnetIdentityRemoved(NetUid)`
 
@@ -1227,6 +1237,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
 - **interface**: `api.events.subtensorModule.SubnetLimitSet`
 - **summary**: the maximum number of subnets is set
+
+### `SubnetOwnerChanged(netuid: NetUid, old_coldkey: AccountId, new_coldkey: AccountId)`
+
+- **interface**: `api.events.subtensorModule.SubnetOwnerChanged`
+- **summary**: Subnet ownership has transferred via the conviction mechanism. Emitted when the hotkey with the highest aggregate conviction (`subnet_king`) assumes ownership of a subnet.
 
 ### `SubnetOwnerCutSet(u16)`
 

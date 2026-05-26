@@ -496,6 +496,26 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
     Weight is handled by the `#[pallet::weight]` attribute.
 
+### `sudoSetSubnetEmissionEnabled(netuid: NetUid, enabled: bool)`
+
+- **interface**: `api.tx.adminUtils.sudoSetSubnetEmissionEnabled`
+- **summary**: Enables or disables pool-side emission injection for a subnet. Only callable by root (sudo). When disabled, the subnet receives no alpha-in, tao-in, or chain-buy injections each epoch; its emission share is redistributed to enabled subnets. Alpha-out, owner cut, root proportion, and validator/server emissions continue regardless of this flag.
+
+    **Arguments:**
+
+    - `origin` — Must be the root (sudo) account. Not callable by subnet owners.
+    - `netuid` — The subnet to update. Cannot be the root subnet.
+    - `enabled` — `true` to enable emission injection (default); `false` to disable.
+
+    **Errors:**
+
+    - `SubnetDoesNotExist` — The specified subnet does not exist.
+    - `NotPermittedOnRootSubnet` — Cannot be applied to netuid 0.
+
+    **Events:**
+
+    Emits `SubnetEmissionEnabledSet { netuid, enabled }` on success.
+
 ### `sudoSetSubtokenEnabled(netuid: NetUid, subtoken_enabled: bool)`
 
 - **interface**: `api.tx.adminUtils.sudoSetSubtokenEnabled`
@@ -2980,14 +3000,61 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
     Will charge based on the weight even if the hotkey is already associated with a coldkey.
 
-### `unlockStake(netuid: NetUid, amount: AlphaBalance)`
+### `lockStake(hotkey: AccountId, netuid: NetUid, amount: AlphaBalance)`
 
-- **interface**: `api.tx.subtensorModule.unlockStake`
-- **summary**: Begins unlocking `amount` alpha from the signing coldkey's existing lock on `netuid`. The locked mass is reduced by `amount` immediately and the same amount enters an exponential unlock period (~90% withdrawable after ~365 days). Stake in the unlock period cannot be unstaked or re-locked until it has decayed sufficiently. See [Conviction Staking](../staking-and-delegation/conviction-staking.md) for the decay formula.
+- **interface**: `api.tx.subtensorModule.lockStake`
+- **summary**: Locks `amount` alpha from the signing coldkey's stake on `netuid` to `hotkey`. Creates a conviction lock or tops up an existing one. See [Conviction and locked stake](../staking-and-delegation/conviction-staking.md).
+
+    **Arguments:**
+
+    - `origin` — Must be signed by the coldkey.
+    - `hotkey` — The delegate hotkey the lock is bound to.
+    - `netuid` — The subnet to lock on.
+    - `amount` — Amount of alpha to lock. Must not exceed total alpha staked on the subnet.
 
     **Errors:**
 
-    - `UnlockAmountTooHigh` — Amount exceeds the current locked mass.
+    - `InsufficientStakeForLock` — Available alpha is less than `amount`.
+    - `LockHotkeyMismatch` — A lock already exists for a different hotkey on this subnet.
+    - `AmountTooLow` — Amount is zero.
+
+    **Events:**
+
+    Emits `StakeLocked { coldkey, hotkey, netuid, amount }` on success.
+
+### `moveLock(destination_hotkey: AccountId, netuid: NetUid)`
+
+- **interface**: `api.tx.subtensorModule.moveLock`
+- **summary**: Reassigns the signing coldkey's existing lock on `netuid` to `destination_hotkey`. Conviction resets to zero when the old and new hotkeys are owned by different coldkeys; conviction is preserved when both hotkeys belong to the same coldkey.
+
+    **Arguments:**
+
+    - `origin` — Must be signed by the coldkey.
+    - `destination_hotkey` — The hotkey to transfer the lock to.
+    - `netuid` — The subnet the lock is on.
+
+    **Errors:**
+
+    - `NoExistingLock` — No lock exists for this coldkey on the subnet.
+
+    **Events:**
+
+    Emits `LockMoved { coldkey, origin_hotkey, destination_hotkey, netuid }` on success.
+
+### `setPerpetualLock(netuid: NetUid, enabled: bool)`
+
+- **interface**: `api.tx.subtensorModule.setPerpetualLock`
+- **summary**: Sets or clears perpetual lock mode for the signing coldkey's lock on `netuid`. When `enabled = true`, the locked mass no longer decays and conviction can grow toward the full locked amount. When `enabled = false`, the locked mass begins decaying exponentially — this is how a lock is unwound. See [Conviction and locked stake](../staking-and-delegation/conviction-staking.md).
+
+    **Arguments:**
+
+    - `origin` — Must be signed by the coldkey.
+    - `netuid` — The subnet the lock is on.
+    - `enabled` — `true` for perpetual mode; `false` to resume decay (default).
+
+    **Events:**
+
+    Emits `PerpetualLockUpdated { coldkey, netuid, enabled }` on success.
 
 ### `unstakeAll(hotkey: AccountId)`
 
