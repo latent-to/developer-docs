@@ -171,19 +171,6 @@ When stake is moved to another coldkey **within the same subnet**, lock obligati
 ## Querying conviction
 
 <Tabs groupId="conviction-query">
-<TabItem value="polkadotjs" label="Polkadot.js">
-
-In [Polkadot.js](https://polkadot.js.org/apps/), go to **Developer → RPC calls** and select the `stakeInfo` module to call `getColdkeyLock`. For the other two methods, go to **Developer → Runtime calls** and select the `stakeInfoRuntimeApi` module.
-
-| Polkadot.js module | Method | Returns |
-|---|---|---|
-| RPC calls → `stakeInfo` | `getColdkeyLock(coldkey, netuid)` | The current `LockState` for this coldkey on `netuid`, rolled forward to the current block, or `None` if no lock exists |
-| Runtime calls → `stakeInfoRuntimeApi` | `getHotkeyConviction(hotkey, netuid)` | Current total conviction for `hotkey` on `netuid`, summed over all coldkeys that have locked to it |
-| Runtime calls → `stakeInfoRuntimeApi` | `getMostConvictedHotkeyOnSubnet(netuid)` | The hotkey with the highest conviction on `netuid`, or `None` if no locks exist |
-
-Conviction is a rolling value: querying at different blocks yields different results as time passes and the exponential evolves.
-
-</TabItem>
 <TabItem value="sdk" label="Python SDK">
 
 The following methods on `bittensor.subtensor` read chain state and do not submit any transaction. All accept optional `block`, `block_hash`, and `reuse_block` parameters to query at a specific block.
@@ -227,7 +214,169 @@ king = st.get_most_convicted_hotkey_on_subnet(netuid=1)
 ```
 
 </TabItem>
+<TabItem value="polkadotjs" label="Polkadot.js">
+
+In [Polkadot.js](https://polkadot.js.org/apps/), go to **Developer → RPC calls** and select the `stakeInfo` module to call `getColdkeyLock`. For the other two methods, go to **Developer → Runtime calls** and select the `stakeInfoRuntimeApi` module.
+
+| Polkadot.js module | Method | Returns |
+|---|---|---|
+| RPC calls → `stakeInfo` | `getColdkeyLock(coldkey, netuid)` | The current `LockState` for this coldkey on `netuid`, rolled forward to the current block, or `None` if no lock exists |
+| Runtime calls → `stakeInfoRuntimeApi` | `getHotkeyConviction(hotkey, netuid)` | Current total conviction for `hotkey` on `netuid`, summed over all coldkeys that have locked to it |
+| Runtime calls → `stakeInfoRuntimeApi` | `getMostConvictedHotkeyOnSubnet(netuid)` | The hotkey with the highest conviction on `netuid`, or `None` if no locks exist |
+
+Conviction is a rolling value: querying at different blocks yields different results as time passes and the exponential evolves.
+
+</TabItem>
 </Tabs>
+
+
+## Extrinsics
+
+Extrinsics are signed transactions submitted to the Subtensor blockchain. The `api.tx.subtensorModule.*` form below is the raw Polkadot.js encoding used for direct chain interaction. The Python SDK (`bittensor.subtensor`) provides a wrapper method for each extrinsic that handles wallet signing, submission, and optional MEV Shield encryption.
+
+### Locking stake
+
+<Tabs groupId="conviction-extrinsic">
+<TabItem value="sdk" label="Python SDK">
+
+```python
+response = subtensor.lock_stake(
+    wallet=wallet,
+    hotkey_ss58="5G...",
+    netuid=1,
+    amount=amount,  # Balance in subnet alpha units
+)
+```
+
+MEV Shield protection is enabled by default. Pass `mev_protection=False` to submit without it. The `period`, `wait_for_inclusion`, and `wait_for_finalization` keyword arguments control submission behavior.
+
+</TabItem>
+<TabItem value="chain" label="Chain extrinsic">
+
+```
+api.tx.subtensorModule.lockStake(hotkey, netuid, amount)
+```
+
+</TabItem>
+</Tabs>
+
+Locks `amount` alpha from the coldkey's stake on `netuid` to `hotkey`.
+
+- If no lock exists for this coldkey on `netuid`, a new lock is created with conviction 0.
+- If a lock already exists, `amount` is added to the locked mass. The hotkey must match the existing lock. Use `move_lock` first if switching hotkeys.
+- `amount` must not exceed the coldkey's total alpha staked on the subnet.
+- Locked alpha continues to earn staking rewards normally.
+- New locks are decaying by default. Call `set_perpetual_lock(true)` after locking to opt into perpetual mode.
+
+**Errors:**
+
+- `InsufficientStakeForLock`: available alpha is less than `amount`
+- `LockHotkeyMismatch`: a lock exists for a different hotkey on this subnet
+- `AmountTooLow`: amount is zero
+
+**Event emitted:** `StakeLocked { coldkey, hotkey, netuid, amount }`
+
+### Setting lock mode to perpetual
+
+<Tabs groupId="conviction-extrinsic">
+<TabItem value="sdk" label="Python SDK">
+
+```python
+response = subtensor.set_perpetual_lock(
+    wallet=wallet,
+    netuid=1,
+    enabled=True,   # False to resume decaying
+)
+```
+
+</TabItem>
+<TabItem value="chain" label="Chain extrinsic">
+
+```
+api.tx.subtensorModule.setPerpetualLock(netuid, enabled)
+```
+
+</TabItem>
+</Tabs>
+
+Sets or clears perpetual lock mode for the coldkey's lock on `netuid`.
+
+- `enabled = true`: the coldkey's locked mass no longer decays. Conviction can grow toward the full locked amount.
+- `enabled = false`: the coldkey's locked mass resumes decaying. This is how you initiate an exit from a lock; the mass decays exponentially over time according to `UnlockRate`.
+
+Switching modes rolls the lock forward to the current block first, so no mass or conviction is lost in the transition.
+
+:::note Switching to decaying mode is public
+Calling `set_perpetual_lock(false)` emits the `PerpetualLockUpdated` event on-chain immediately. This is by design: the decay period exists specifically so that other stakers can observe the signal and act accordingly. A switch to decaying mode by a subnet owner should be interpreted as a potential intent to reduce their position.
+:::
+
+**Event emitted:** `PerpetualLockUpdated { coldkey, netuid, enabled }`
+
+### Moving a lock
+
+<Tabs groupId="conviction-extrinsic">
+<TabItem value="sdk" label="Python SDK">
+
+```python
+response = subtensor.move_lock(
+    wallet=wallet,
+    destination_hotkey_ss58="5G...",
+    netuid=1,
+)
+```
+
+MEV Shield protection is enabled by default. Pass `mev_protection=False` to submit without it.
+
+</TabItem>
+<TabItem value="chain" label="Chain extrinsic">
+
+```
+api.tx.subtensorModule.moveLock(destination_hotkey, netuid)
+```
+
+</TabItem>
+</Tabs>
+
+Reassigns the coldkey's existing lock on `netuid` from its current hotkey to `destination_hotkey`.
+
+- **Conviction resets to zero** when the old and new hotkeys are owned by different coldkeys.
+- Conviction is **preserved** when both hotkeys are owned by the same coldkey (moving between your own hotkeys).
+- The locked mass is preserved in both cases.
+
+When moving to a different-coldkey hotkey, conviction resets to zero, giving the previous hotkey's stakers a window to react before conviction rebuilds.
+
+**Errors:**
+
+- `NoExistingLock`: no lock exists for this coldkey on the subnet
+
+**Event emitted:** `LockMoved { coldkey, origin_hotkey, destination_hotkey, netuid }`
+
+:::note Locking does not affect emissions
+Locking stake does not change the amount of emissions you receive. Emissions are determined by stake weight and consensus participation.
+:::
+
+## Subnet ownership changes
+
+:::note Not yet active
+As a possible future feature, the ownership transfer function (`change_subnet_owner_if_needed`) is implemented in Subtensor codebase, but is currently commented out, so it is not active and enabling it will require a runtime upgrade like any other code change.
+:::
+
+When activated, ownership transfers automatically at the end of each block's coinbase run if two conditions hold simultaneously:
+
+1. The subnet is at least **one year old** (≥ 7,200 × 365 + 1,800 blocks from `networkRegisteredAt`)
+2. Total aggregate conviction across all locks on the subnet ≥ **10% of `SubnetAlphaOut`**
+
+The hotkey with the highest aggregate conviction (`subnet_king`) then becomes the subnet owner hotkey, and that hotkey's owning coldkey becomes the subnet owner.
+
+**To monitor readiness via Polkadot.js (Developer → Chain state → `subtensorModule`):**
+
+| Query | What it tells you |
+|---|---|
+| `networkRegisteredAt(netuid)` | Block the subnet was created; add 2,629,800 to get the one-year threshold |
+| `subnetAlphaOut(netuid)` | Total outstanding alpha; 10% of this is the conviction threshold |
+| Developer → Runtime calls → `stakeInfoRuntimeApi` → `getMostConvictedHotkeyOnSubnet(netuid)` | The hotkey that would currently win ownership |
+| Developer → Runtime calls → `stakeInfoRuntimeApi` → `getHotkeyConviction(hotkey, netuid)` | Any hotkey's current aggregate conviction score |
+
 
 ## Storage
 
@@ -249,153 +398,6 @@ Two governance-settable parameters control the time constants:
 
 Both are adjustable by governance. Query `api.query.subtensorModule.maturityRate()` and `api.query.subtensorModule.unlockRate()` for current values before computing time estimates.
 
-## Subnet ownership changes
-
-:::note Not yet active
-The ownership transfer function (`change_subnet_owner_if_needed`) is implemented in Subtensor codebase, but is currently commented out, so it is not active and enabling it will require a runtime upgrade.
-:::
-
-When activated, ownership transfers automatically at the end of each block's coinbase run if two conditions hold simultaneously:
-
-1. The subnet is at least **one year old** (≥ 7,200 × 365 + 1,800 blocks from `networkRegisteredAt`)
-2. Total aggregate conviction across all locks on the subnet ≥ **10% of `SubnetAlphaOut`**
-
-The hotkey with the highest aggregate conviction (`subnet_king`) then becomes the subnet owner hotkey, and that hotkey's owning coldkey becomes the subnet owner.
-
-**To monitor readiness via Polkadot.js (Developer → Chain state → `subtensorModule`):**
-
-| Query | What it tells you |
-|---|---|
-| `networkRegisteredAt(netuid)` | Block the subnet was created; add 2,629,800 to get the one-year threshold |
-| `subnetAlphaOut(netuid)` | Total outstanding alpha; 10% of this is the conviction threshold |
-| Developer → Runtime calls → `stakeInfoRuntimeApi` → `getMostConvictedHotkeyOnSubnet(netuid)` | The hotkey that would currently win ownership |
-| Developer → Runtime calls → `stakeInfoRuntimeApi` → `getHotkeyConviction(hotkey, netuid)` | Any hotkey's current aggregate conviction score |
-
-
-## Extrinsics
-
-Extrinsics are signed transactions submitted to the Subtensor blockchain. The `api.tx.subtensorModule.*` form below is the raw Polkadot.js encoding used for direct chain interaction. The Python SDK (`bittensor.subtensor`) provides a wrapper method for each extrinsic that handles wallet signing, submission, and optional MEV Shield encryption.
-
-### `lock_stake`
-
-<Tabs groupId="conviction-extrinsic">
-<TabItem value="chain" label="Chain extrinsic">
-
-```
-api.tx.subtensorModule.lockStake(hotkey, netuid, amount)
-```
-
-</TabItem>
-<TabItem value="sdk" label="Python SDK">
-
-```python
-response = subtensor.lock_stake(
-    wallet=wallet,
-    hotkey_ss58="5G...",
-    netuid=1,
-    amount=amount,  # Balance in subnet alpha units
-)
-```
-
-MEV Shield protection is enabled by default. Pass `mev_protection=False` to submit without it. The `period`, `wait_for_inclusion`, and `wait_for_finalization` keyword arguments control submission behavior.
-
-</TabItem>
-</Tabs>
-
-Locks `amount` alpha from the coldkey's stake on `netuid` to `hotkey`.
-
-- If no lock exists for this coldkey on `netuid`, a new lock is created with conviction 0.
-- If a lock already exists, `amount` is added to the locked mass. The hotkey must match the existing lock. Use `move_lock` first if switching hotkeys.
-- `amount` must not exceed the coldkey's total alpha staked on the subnet.
-- Locked alpha continues to earn staking rewards normally.
-- New locks are decaying by default. Call `set_perpetual_lock(true)` after locking to opt into perpetual mode.
-
-**Errors:**
-
-- `InsufficientStakeForLock`: available alpha is less than `amount`
-- `LockHotkeyMismatch`: a lock exists for a different hotkey on this subnet
-- `AmountTooLow`: amount is zero
-
-**Event emitted:** `StakeLocked { coldkey, hotkey, netuid, amount }`
-
-### `set_perpetual_lock`
-
-<Tabs groupId="conviction-extrinsic">
-<TabItem value="chain" label="Chain extrinsic">
-
-```
-api.tx.subtensorModule.setPerpetualLock(netuid, enabled)
-```
-
-</TabItem>
-<TabItem value="sdk" label="Python SDK">
-
-```python
-response = subtensor.set_perpetual_lock(
-    wallet=wallet,
-    netuid=1,
-    enabled=True,   # False to resume decaying
-)
-```
-
-</TabItem>
-</Tabs>
-
-Sets or clears perpetual lock mode for the coldkey's lock on `netuid`.
-
-- `enabled = true`: the coldkey's locked mass no longer decays. Conviction can grow toward the full locked amount.
-- `enabled = false`: the coldkey's locked mass resumes decaying. This is how you initiate an exit from a lock; the mass decays exponentially over time according to `UnlockRate`.
-
-Switching modes rolls the lock forward to the current block first, so no mass or conviction is lost in the transition.
-
-:::note Switching to decaying mode is public
-Calling `set_perpetual_lock(false)` emits the `PerpetualLockUpdated` event on-chain immediately. This is by design: the decay period exists specifically so that other stakers can observe the signal and act accordingly. A switch to decaying mode by a subnet owner should be interpreted as a potential intent to reduce their position.
-:::
-
-**Event emitted:** `PerpetualLockUpdated { coldkey, netuid, enabled }`
-
-### `move_lock`
-
-<Tabs groupId="conviction-extrinsic">
-<TabItem value="chain" label="Chain extrinsic">
-
-```
-api.tx.subtensorModule.moveLock(destination_hotkey, netuid)
-```
-
-</TabItem>
-<TabItem value="sdk" label="Python SDK">
-
-```python
-response = subtensor.move_lock(
-    wallet=wallet,
-    destination_hotkey_ss58="5G...",
-    netuid=1,
-)
-```
-
-MEV Shield protection is enabled by default. Pass `mev_protection=False` to submit without it.
-
-</TabItem>
-</Tabs>
-
-Reassigns the coldkey's existing lock on `netuid` from its current hotkey to `destination_hotkey`.
-
-- **Conviction resets to zero** when the old and new hotkeys are owned by different coldkeys.
-- Conviction is **preserved** when both hotkeys are owned by the same coldkey (moving between your own hotkeys).
-- The locked mass is preserved in both cases.
-
-When moving to a different-coldkey hotkey, conviction resets to zero, giving the previous hotkey's stakers a window to react before conviction rebuilds.
-
-**Errors:**
-
-- `NoExistingLock`: no lock exists for this coldkey on the subnet
-
-**Event emitted:** `LockMoved { coldkey, origin_hotkey, destination_hotkey, netuid }`
-
-:::note Locking does not affect emissions
-Locking stake does not change the amount of emissions you receive. Emissions are determined by stake weight and consensus participation. Conviction is a governance/signaling mechanism only.
-:::
 
 ## Appendix: implementation
 
