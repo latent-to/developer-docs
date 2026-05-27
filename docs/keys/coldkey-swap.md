@@ -532,4 +532,4 @@ If the coldkey being swapped has [conviction locks](../staking-and-delegation/co
 - **Destination coldkey has active locked mass on any subnet**: the swap is **rejected**. The destination coldkey must have no active locks before the swap can proceed.
 - **Destination coldkey has only expired or zero-mass locks**: the swap proceeds. The source coldkey's locks are transferred to the destination coldkey and consolidated with any existing (zero-mass) lock records there.
 
-Locked mass and conviction are preserved through the swap — the lock follows the coldkey identity to the new key pair.
+Locked mass and conviction are preserved through the swap; the lock follows the coldkey identity to the new key pair.

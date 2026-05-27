@@ -39,9 +39,9 @@ The first stage of emissions is _injection of liquidity_ into the subnet pools. 
 
 Each block:
 
-- **TAO is injected** into the subnet's **TAO reserve** — the amount for each subnet is determined by the emission distribution formula (see below)
-- **Alpha is injected** into the subnet's **alpha reserve** — proportional to TAO injection to maintain price stability
-- **Alpha is allocated** to _alpha outstanding_ — set aside to be distributed by participants (miners, validators, stakers, subnet owner)
+- **TAO is injected** into the subnet's **TAO reserve**: the amount for each subnet is determined by the emission distribution formula (see below)
+- **Alpha is injected** into the subnet's **alpha reserve**: proportional to TAO injection to maintain price stability
+- **Alpha is allocated** to _alpha outstanding_: set aside to be distributed by participants (miners, validators, stakers, subnet owner)
 
 #### Distribution across Subnets
 
@@ -75,9 +75,9 @@ The flow-based model uses an Exponential Moving Average (EMA) of net TAO flows (
 2. **Calculate user flow EMA**: Update the 86.8-day EMA of net user flows (smoothing factor $\alpha \approx 0.000003209$):
    $$S_i = (1 - \alpha) \cdot S_{i-1} + \alpha \cdot \text{net\_flow}_i$$
 
-   The EMA smooths out short-term fluctuations. With a very small α (~0.000003209), the EMA changes slowly — 99.9999968% comes from the previous EMA value and only 0.0000032% from the current block's flow. This creates a 30-day half-life, meaning it takes about 30 days for the EMA to move halfway toward a new sustained flow level. This results in an EMA window of approximately ~86.8 days.
+   The EMA smooths out short-term fluctuations. With a very small α (~0.000003209), the EMA changes slowly: 99.9999968% comes from the previous EMA value and only 0.0000032% from the current block's flow. This creates a 30-day half-life, meaning it takes about 30 days for the EMA to move halfway toward a new sustained flow level. This results in an EMA window of approximately ~86.8 days.
 
-3. **Subtract normalized protocol cost**: Each block, the protocol also generates its own TAO flows into and out of subnet pools — independently of user staking. The protocol cost for subnet $i$ is:
+3. **Subtract normalized protocol cost**: Each block, the protocol also generates its own TAO flows into and out of subnet pools independently of user staking. The protocol cost for subnet $i$ is:
    $$\text{protocol\_cost}_i = \text{TAO injected} + \text{chain buys} - \text{root staker claims}$$
 
    - **TAO injected**: emission TAO deposited directly into the subnet's TAO reserve each block
@@ -91,7 +91,7 @@ The flow-based model uses an Exponential Moving Average (EMA) of net TAO flows (
    where $f$ is a normalization factor capped at 1:
    $$f = \min\!\left(1,\ \frac{\sum_j \max(S_j, 0)}{\sum_j \max(P_j, 0)}\right)$$
 
-   The normalization ensures the total protocol cost subtracted across all subnets never exceeds the total positive user demand — so there is always net flow to distribute. When a subnet's protocol EMA is negative (root claims exceed emissions), that term adds to its net flow rather than subtracting.
+   The normalization ensures the total protocol cost subtracted across all subnets never exceeds the total positive user demand so there is always net flow to distribute. When a subnet's protocol EMA is negative (root claims exceed emissions), that term adds to its net flow rather than subtracting.
 
    The practical effect: subnets whose TAO inflow is driven primarily by protocol mechanics rather than genuine user staking receive a lower emission share. Subnets with strong real user demand are boosted relative to protocol-subsidized subnets.
 
@@ -128,7 +128,7 @@ With the default $p = 1$ ([source](https://github.com/opentensor/subtensor/blob/
 - Share calculation: `get_shares()` → `get_shares_flow()`
 
 :::info Exceptions to user flow tracking
-UID registration (`burned_register`) is excluded from user inflows — only stake/unstake operations count. Root staker claims are not excluded; they appear as protocol outflows in the protocol cost EMA, which subtracts from (rather than ignores) a subnet's net flow.
+UID registration (`burned_register`) is excluded from user inflows; only stake/unstake operations count. Root staker claims are not excluded; they appear as protocol outflows in the protocol cost EMA, which subtracts from (rather than ignores) a subnet's net flow.
 
 See [Calculating root proportion](../navigating-subtensor/emissions-coinbase#6-calculating-root-proportion).
 :::

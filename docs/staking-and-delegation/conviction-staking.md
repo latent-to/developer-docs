@@ -2,19 +2,22 @@
 title: "Conviction and locked stake"
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Conviction and locked stake
 
 The locked stake feature lets coldkey holders lock alpha stake to a specific hotkey on a subnet. Locked stake builds **conviction**, a score that grows over time toward the locked amount. Conviction provides a public, on-chain signal of long-term commitment that cannot be silently reversed.
 
-Conviction provides information about subnet owners and other large investors in a subnet. A subnet owner whose alpha is locked has made a cryptographic commitment: unwinding a large position requires switching the lock to decaying mode and then waiting through an exponential decay period before the stake is gone. This gives other stakers advance warning before any large exit completes.
+Conviction provides information about subnet owners and other large investors in a subnet. A subnet owner whose alpha is locked has made a cryptographic commitment: unwinding a large position requires switching the lock to decaying mode and then waiting through an exponential decay period before the lock is gone. This gives other stakers advance warning before any large exit completes.
 
-Locking stake binds a specific amount of a coldkey's staked alpha on a subnet to a specific delegate (stake recipient) hotkey.
+Locking stake binds a specific amount of a coldkey's staked alpha on a subnet to a specific conviction hotkey (lock recipient). The conviction hotkey does not need to be the same hotkey the alpha is staked to: a coldkey can stake to one hotkey and lock to a different one.
 
 The lock code ensures that total alpha staked by the coldkey on that subnet cannot decrease below the locked amount. Everything above the locked amount is freely unstakable.
 
 The coldkey can also continue to stake additional alpha at any time: the lock only blocks the staked balance from dropping below the locked amount.
 
-Conviction increases over time toward the amount of locked stake, following an exponential curve so  it slows as it approaches the limit value of the locked amount.
+In perpetual mode, conviction grows over time toward the locked amount, following an exponential curve that slows as it approaches the limit. In decaying mode, conviction is a time-smoothed score: it rises as locked stake matures, then falls as the lock itself decays. The behavior differs significantly between modes and is covered in detail below.
 
 ### Decaying and perpetual modes
 
@@ -44,7 +47,9 @@ where:
 - $\Delta t$: blocks elapsed since last update
 - $\tau$: maturity time constant (`MaturityRate`, a governance-settable on-chain value; query the chain for the current value)
 
-In decaying mode, both the locked mass and conviction decay toward zero, but they follow different curves. Starting from a fresh lock ($c_0 = 0$), conviction first rises as the lock accumulates maturation time, then falls as the mass erodes. The formula (when `UnlockRate` = `MaturityRate` = τ, the default) is:
+In decaying mode, both the locked mass and conviction decay toward zero, but they follow different curves. Starting from a fresh lock ($c_0 = 0$), conviction first rises as the lock accumulates maturation time, then falls as the mass erodes. The formula (when `UnlockRate` = `MaturityRate` = τ) is:
+
+{/* TODO: confirm UnlockRate and MaturityRate are equal on-chain before publishing; if not, replace with general gamma-based formula */}
 
 $$c_1 = e^{-\Delta t / \tau} \left( c_0 + m \cdot \frac{\Delta t}{\tau} \right)$$
 
@@ -165,6 +170,9 @@ When stake is moved to another coldkey **within the same subnet**, lock obligati
 
 ## Querying conviction
 
+<Tabs groupId="conviction-query">
+<TabItem value="polkadotjs" label="Polkadot.js">
+
 In [Polkadot.js](https://polkadot.js.org/apps/), go to **Developer → RPC calls** and select the `stakeInfo` module to call `getColdkeyLock`. For the other two methods, go to **Developer → Runtime calls** and select the `stakeInfoRuntimeApi` module.
 
 | Polkadot.js module | Method | Returns |
@@ -174,6 +182,52 @@ In [Polkadot.js](https://polkadot.js.org/apps/), go to **Developer → RPC calls
 | Runtime calls → `stakeInfoRuntimeApi` | `getMostConvictedHotkeyOnSubnet(netuid)` | The hotkey with the highest conviction on `netuid`, or `None` if no locks exist |
 
 Conviction is a rolling value: querying at different blocks yields different results as time passes and the exponential evolves.
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+
+The following methods on `bittensor.subtensor` read chain state and do not submit any transaction. All accept optional `block`, `block_hash`, and `reuse_block` parameters to query at a specific block.
+
+`get_coldkey_lock` applies decay to return values accurate at the queried block. `get_stake_lock` returns the raw stored checkpoint without applying decay; `conviction` and `locked_mass` reflect the state at `last_update`, not the current block.
+
+**`LockState`** is a TypedDict returned by the lock query methods:
+
+| Field | Type | Description |
+|---|---|---|
+| `locked_mass` | `Balance` | Locked amount in subnet alpha units |
+| `conviction` | `float` | Matured conviction score |
+| `last_update` | `int` | Block number of the last stored checkpoint |
+
+| Method | Returns | Description |
+|---|---|---|
+| `get_coldkey_lock(coldkey_ss58, netuid)` | `Optional[LockState]` | Current lock state with decay applied, or `None` if no lock exists |
+| `get_stake_lock(coldkey_ss58, netuid, hotkey_ss58)` | `Optional[LockState]` | Raw stored lock checkpoint without decay applied |
+| `get_stake_locks(coldkey_ss58, netuid)` | `list[tuple[str, LockState]]` | All locks for a coldkey on a subnet as (hotkey_ss58, LockState) pairs |
+| `is_perpetual_lock(coldkey_ss58, netuid)` | `bool` | `True` if the lock does not decay; `False` if it is in decaying mode |
+| `get_hotkey_conviction(hotkey_ss58, netuid)` | `float` | Total conviction for a hotkey, summed over all coldkeys that have locked to it |
+| `get_most_convicted_hotkey_on_subnet(netuid)` | `Optional[str]` | SS58 address of the hotkey with the highest conviction, or `None` if no locks exist |
+
+```python
+import bittensor as bt
+
+st = bt.subtensor()
+
+# Current lock state with decay applied
+lock = st.get_coldkey_lock(coldkey_ss58="5Grw...", netuid=1)
+if lock:
+    print(lock["locked_mass"])   # Balance in alpha
+    print(lock["conviction"])    # float
+    print(lock["last_update"])   # block number of last checkpoint
+
+# Total conviction aggregated across all coldkeys locking to this hotkey
+conviction = st.get_hotkey_conviction(hotkey_ss58="5FLS...", netuid=1)
+
+# Hotkey with the highest conviction on the subnet
+king = st.get_most_convicted_hotkey_on_subnet(netuid=1)
+```
+
+</TabItem>
+</Tabs>
 
 ## Storage
 
@@ -220,11 +274,33 @@ The hotkey with the highest aggregate conviction (`subnet_king`) then becomes th
 
 ## Extrinsics
 
+Extrinsics are signed transactions submitted to the Subtensor blockchain. The `api.tx.subtensorModule.*` form below is the raw Polkadot.js encoding used for direct chain interaction. The Python SDK (`bittensor.subtensor`) provides a wrapper method for each extrinsic that handles wallet signing, submission, and optional MEV Shield encryption.
+
 ### `lock_stake`
+
+<Tabs groupId="conviction-extrinsic">
+<TabItem value="chain" label="Chain extrinsic">
 
 ```
 api.tx.subtensorModule.lockStake(hotkey, netuid, amount)
 ```
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+
+```python
+response = subtensor.lock_stake(
+    wallet=wallet,
+    hotkey_ss58="5G...",
+    netuid=1,
+    amount=amount,  # Balance in subnet alpha units
+)
+```
+
+MEV Shield protection is enabled by default. Pass `mev_protection=False` to submit without it. The `period`, `wait_for_inclusion`, and `wait_for_finalization` keyword arguments control submission behavior.
+
+</TabItem>
+</Tabs>
 
 Locks `amount` alpha from the coldkey's stake on `netuid` to `hotkey`.
 
@@ -244,9 +320,26 @@ Locks `amount` alpha from the coldkey's stake on `netuid` to `hotkey`.
 
 ### `set_perpetual_lock`
 
+<Tabs groupId="conviction-extrinsic">
+<TabItem value="chain" label="Chain extrinsic">
+
 ```
 api.tx.subtensorModule.setPerpetualLock(netuid, enabled)
 ```
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+
+```python
+response = subtensor.set_perpetual_lock(
+    wallet=wallet,
+    netuid=1,
+    enabled=True,   # False to resume decaying
+)
+```
+
+</TabItem>
+</Tabs>
 
 Sets or clears perpetual lock mode for the coldkey's lock on `netuid`.
 
@@ -263,9 +356,28 @@ Calling `set_perpetual_lock(false)` emits the `PerpetualLockUpdated` event on-ch
 
 ### `move_lock`
 
+<Tabs groupId="conviction-extrinsic">
+<TabItem value="chain" label="Chain extrinsic">
+
 ```
 api.tx.subtensorModule.moveLock(destination_hotkey, netuid)
 ```
+
+</TabItem>
+<TabItem value="sdk" label="Python SDK">
+
+```python
+response = subtensor.move_lock(
+    wallet=wallet,
+    destination_hotkey_ss58="5G...",
+    netuid=1,
+)
+```
+
+MEV Shield protection is enabled by default. Pass `mev_protection=False` to submit without it.
+
+</TabItem>
+</Tabs>
 
 Reassigns the coldkey's existing lock on `netuid` from its current hotkey to `destination_hotkey`.
 
@@ -317,7 +429,8 @@ let new_conviction =
 // = m - (m - c0) × exp(-dt/τ)
 ```
 
-In decaying mode (`perpetual_lock = false`), when `unlock_rate == maturity_rate` (the default, both are the same on-chain value):
+{/* TODO: confirm UnlockRate == MaturityRate on-chain before publishing; if not equal, note the general case applies */}
+In decaying mode (`perpetual_lock = false`), when `unlock_rate == maturity_rate`:
 ```rust
 let unlock_decay = Self::exp_decay(dt, unlock_rate);    // exp(-dt/τ)
 let maturity_decay = Self::exp_decay(dt, maturity_rate); // exp(-dt/τ)  [same τ]

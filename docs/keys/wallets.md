@@ -155,7 +155,7 @@ Hotkeys are used to register on a subnet as a miner or validator.
 
 **Relationship to coldkey**: You can create multiple hotkeys paired to your single coldkey.
 However, when you are validating or mining in a subnet, you are identified by a hotkey in that subnet, so that your coldkey is not exposed.
-You can’t use the same hotkey for multiple UIDs within a single subnet — each UID in a subnet requires its own hotkey. However, you can reuse the same hotkey for UIDs that belong to different subnets.
+You can’t use the same hotkey for multiple UIDs within a single subnet; each UID in a subnet requires its own hotkey. However, you can reuse the same hotkey for UIDs that belong to different subnets.
 
 **Purpose**: Hotkeys are used for regular operational tasks in the Bittensor network, such as those described below:
 

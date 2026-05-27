@@ -4,7 +4,7 @@ title: "Batch Transactions"
 
 # Batch Transactions
 
-The Bittensor runtime's utility pallet exposes three extrinsics — `batch`, `batch_all`, and `force_batch` — that let you submit multiple calls as a single on-chain transaction. This is useful when you want to stake to multiple hotkeys, perform multiple operations atomically, or reduce the number of round-trips to the chain.
+The Bittensor runtime's utility pallet exposes three extrinsics: `batch`, `batch_all`, and `force_batch`, which enable multiple calls to be submitted as a single on-chain transaction. This is useful when you want to stake to multiple hotkeys, perform multiple operations atomically, or reduce the number of round-trips to the chain.
 
 For how fees are calculated across a batch. See [Batch Transaction Fees](./fees#batch-transaction-fees).
 
@@ -64,7 +64,7 @@ call_2 = sub.compose_call(
     },
 )
 
-# Wrap in a Utility.batch_all — reverts all calls atomically on any failure
+# Wrap in a Utility.batch_all to revert all calls atomically on any failure
 batch_call = sub.compose_call(
     call_module="Utility",
     call_function="batch_all",
@@ -82,6 +82,6 @@ print(f"Success: {success}" if success else f"Failed: {error_message}")
 ```
 
 :::note `add_stake_multiple` is not a batch extrinsic
-`subtensor.add_stake_multiple()` and `subtensor.unstake_multiple()` loop over their inputs and submit one extrinsic per hotkey. Each transaction is settled independently — they are not atomic. Use the `Utility.batch_all` pattern above when you need all-or-nothing semantics or want to pay a single transaction fee for the group.
+`subtensor.add_stake_multiple()` and `subtensor.unstake_multiple()` loop over their inputs and submit one extrinsic per hotkey. Each transaction is settled independently, i.e., they are not atomic. Use the `Utility.batch_all` pattern above when you need all-or-nothing semantics or want to pay a single transaction fee for the group.
 :::
 

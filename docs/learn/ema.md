@@ -67,7 +67,7 @@ When `NetTaoFlowEnabled = true` (the default), the final flow used for emission 
 
 $$\text{net}_i = S_i - f \cdot \max(P_i, 0)$$
 
-The normalization factor $f = \min(1,\ \Sigma_j \max(S_j,0)\ /\ \Sigma_j \max(P_j,0))$ scales the protocol EMA so that the total protocol cost subtracted across all subnets never exceeds total positive user demand. When $P_i < 0$ (root claims exceed protocol injections for a subnet), the term adds to net flow rather than subtracting — a benefit to that subnet.
+The normalization factor $f = \min(1,\ \Sigma_j \max(S_j,0)\ /\ \Sigma_j \max(P_j,0))$ scales the protocol EMA so that the total protocol cost subtracted across all subnets never exceeds total positive user demand. When $P_i < 0$ (root claims exceed protocol injections for a subnet), the term adds to net flow rather than subtracting, which is a benefit to that subnet.
 
 Both EMAs are updated every block regardless of whether `NetTaoFlowEnabled` is on, so toggling the flag does not cause an EMA shock.
 
