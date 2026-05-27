@@ -173,7 +173,7 @@ When stake is moved to another coldkey **within the same subnet**, lock obligati
 <Tabs groupId="conviction-query">
 <TabItem value="sdk" label="Python SDK">
 
-The following methods on `bittensor.subtensor` read chain state and do not submit any transaction. All accept optional `block`, `block_hash`, and `reuse_block` parameters to query at a specific block.
+The following methods on `bittensor.Subtensor` read chain state and do not submit any transaction. All accept an optional `block` parameter to query at a specific block number.
 
 `get_coldkey_lock` applies decay to return values accurate at the queried block. `get_stake_lock` returns the raw stored checkpoint without applying decay; `conviction` and `locked_mass` reflect the state at `last_update`, not the current block.
 
@@ -197,7 +197,7 @@ The following methods on `bittensor.subtensor` read chain state and do not submi
 ```python
 import bittensor as bt
 
-st = bt.subtensor()
+st = bt.Subtensor()
 
 # Current lock state with decay applied
 lock = st.get_coldkey_lock(coldkey_ss58="5Grw...", netuid=1)
@@ -232,7 +232,7 @@ Conviction is a rolling value: querying at different blocks yields different res
 
 ## Extrinsics
 
-Extrinsics are signed transactions submitted to the Subtensor blockchain. The `api.tx.subtensorModule.*` form below is the raw Polkadot.js encoding used for direct chain interaction. The Python SDK (`bittensor.subtensor`) provides a wrapper method for each extrinsic that handles wallet signing, submission, and optional MEV Shield encryption.
+Extrinsics are signed transactions submitted to the Subtensor blockchain. The `api.tx.subtensorModule.*` form below is the raw Polkadot.js encoding used for direct chain interaction. The Python SDK (`bittensor.Subtensor`) provides a wrapper method for each extrinsic that handles wallet signing, submission, and optional MEV Shield encryption.
 
 ### Locking stake
 
