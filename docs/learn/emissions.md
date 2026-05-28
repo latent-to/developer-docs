@@ -39,9 +39,9 @@ The first stage of emissions is _injection of liquidity_ into the subnet pools. 
 
 Each block:
 
-- **TAO is injected** into the subnet's **TAO reserve** — the amount for each subnet is determined by the emission distribution formula (see below)
-- **Alpha is injected** into the subnet's **alpha reserve** — proportional to TAO injection to maintain price stability
-- **Alpha is allocated** to _alpha outstanding_ — set aside to be distributed by participants (miners, validators, stakers, subnet owner)
+- **TAO is injected** into the subnet's **TAO reserve**: the amount for each subnet is determined by the emission distribution formula (see below)
+- **Alpha is injected** into the subnet's **alpha reserve**: proportional to TAO injection to maintain price stability
+- **Alpha is allocated** to _alpha outstanding_: set aside to be distributed by participants (miners, validators, stakers, subnet owner)
 
 #### Distribution across Subnets
 
@@ -72,23 +72,41 @@ The flow-based model uses an Exponential Moving Average (EMA) of net TAO flows (
 1. **Track net flows**: Each block, record TAO inflows from staking and outflows from unstaking:
    $$\text{net\_flow}_i = \sum \text{TAO staked} - \sum \text{TAO unstaked}$$
 
-2. **Calculate EMA**: Update the 86.8-day EMA of net flows (smoothing factor $\alpha \approx 0.000003209$):
+2. **Calculate user flow EMA**: Update the 86.8-day EMA of net user flows (smoothing factor $\alpha \approx 0.000003209$):
    $$S_i = (1 - \alpha) \cdot S_{i-1} + \alpha \cdot \text{net\_flow}_i$$
 
-   The EMA smooths out short-term fluctuations. With a very small α (~0.000003209), the EMA changes slowly 99.9999968% comes from the previous EMA value and only 0.0000032% from the current block's flow. This creates a 30-day half-life, meaning it takes about 30 days for the EMA to move halfway toward a new sustained flow level. This results in an EMA window of approximately ~86.8 days.
+   The EMA smooths out short-term fluctuations. With a very small α (~0.000003209), the EMA changes slowly: 99.9999968% comes from the previous EMA value and only 0.0000032% from the current block's flow. This creates a 30-day half-life, meaning it takes about 30 days for the EMA to move halfway toward a new sustained flow level. This results in an EMA window of approximately ~86.8 days.
 
-3. **Apply offset and clipping**: Calculate offset flows by subtracting the lower limit $L$:
-   $$z_i = \max(S_i - L, 0)$$
-   where $L = \max(\text{FlowCutoff}, \min_{j} \min(S_j, 0))$
+3. **Subtract normalized protocol cost**: Each block, the protocol also generates its own TAO flows into and out of subnet pools independently of user staking. The protocol cost for subnet $i$ is:
+   $$\text{protocol\_cost}_i = \text{TAO injected} + \text{chain buys} - \text{root staker claims}$$
 
-   This step ensures subnets with negative net flows get zero emissions. The lower limit $L$ is set to the most negative EMA across all subnets (or FlowCutoff if higher). By subtracting this from each subnet's EMA, we "lift" all values so the worst-performing subnet gets 0.
+   - **TAO injected**: emission TAO deposited directly into the subnet's TAO reserve each block
+   - **Chain buys**: excess TAO swapped into the pool by the chain (increases pool-side liquidity)
+   - **Root staker claims**: TAO removed from the pool when root stakers claim their alpha-denominated dividends
 
-4. **Power normalization**: Apply power $p$ to adjust distribution characteristics:
+   This protocol cost is smoothed with a separate EMA ($P_i$) using the same smoothing factor as the user flow EMA. When `NetTaoFlowEnabled = true` (the default), emission shares use **net flow** rather than gross user flow:
+
+   $$\text{net}_i = S_i - f \cdot \max(P_i, 0)$$
+
+   where $f$ is a normalization factor capped at 1:
+   $$f = \min\!\left(1,\ \frac{\sum_j \max(S_j, 0)}{\sum_j \max(P_j, 0)}\right)$$
+
+   The normalization ensures the total protocol cost subtracted across all subnets never exceeds the total positive user demand so there is always net flow to distribute. When a subnet's protocol EMA is negative (root claims exceed emissions), that term adds to its net flow rather than subtracting.
+
+   The practical effect: subnets whose TAO inflow is driven primarily by protocol mechanics rather than genuine user staking receive a lower emission share. Subnets with strong real user demand are boosted relative to protocol-subsidized subnets.
+
+4. **Apply offset and clipping**: Calculate offset flows by subtracting the lower limit $L$:
+   $$z_i = \max(\text{net}_i - L, 0)$$
+   where $L = \max(\text{FlowCutoff}, \min_{j} \min(\text{net}_j, 0))$
+
+   This step ensures subnets with negative net flows get zero emissions. The lower limit $L$ is set to the most negative net flow across all subnets (or FlowCutoff if higher). By subtracting this from each subnet's net flow, we "lift" all values so the worst-performing subnet gets 0.
+
+5. **Power normalization**: Apply power $p$ to adjust distribution characteristics:
    $$\text{share}_{\text{flow}}(i) = \frac{z_i^p}{\sum_{j \in \mathbb{S}} z_j^p}$$
 
    This converts the offset flows into proportions that sum to 1 (100%). With $p = 1$ (default), this is just dividing each subnet's offset flow by the total across all subnets, creating a linear relationship. Higher $p$ values favor subnets with stronger flows.
 
-5. **Final TAO injection**: Multiply the share by total block emission to get actual TAO amount:
+6. **Final TAO injection**: Multiply the share by total block emission to get actual TAO amount:
    $$\Delta\tau_i = \Delta\bar{\tau} \times \text{share}(i)$$
 
    This converts the proportions into actual TAO amounts. Currently, the total block emission $\Delta\bar{\tau}$ is 0.5 TAO per block.
@@ -100,16 +118,17 @@ With the default $p = 1$ ([source](https://github.com/opentensor/subtensor/blob/
 - **EMA smoothing factor**: 30-day half-life (results in ~86.8 day EMA window) ([source](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1302-L1308))
 - **Power exponent**: $p = 1$ (linear/proportional) ([source](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1293-L1295))
 - **Flow cutoff**: 0 (only negative flows clipped) ([source](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1285-L1288))
+- **Net flow mode**: enabled by default (`NetTaoFlowEnabled = true`); set to false to use gross user flow only
 - **EMA Initialization**: New subnets start with EMA = min(moving_price, current_price) ([code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L77-L84))
 
 **Implementation**:
 
-- Flow tracking: [`record_tao_inflow()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L36-L40) and [`record_tao_outflow()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L42-L46), called during stake/unstake
-- Share calculation: [`get_shares()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L214-L216) → [`get_shares_flow()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L181-L211)
+- User flow tracking: [`record_tao_inflow()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L36-L40) and [`record_tao_outflow()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L42-L46), called during stake/unstake
+- Protocol cost tracking: `record_protocol_inflow()` (TAO injected, chain buys) and `record_protocol_outflow()` (root staker claims)
+- Share calculation: `get_shares()` → `get_shares_flow()`
 
-:::info Exceptions to Inflows/Outflows
-Flow tracking does not include root proportion.
-While stake/unstake operations are recorded as inflows or outflows, swaps like the `burned_register` (UID registration) and the root claim are excluded.
+:::info Exceptions to user flow tracking
+UID registration (`burned_register`) is excluded from user inflows; only stake/unstake operations count. Root staker claims are not excluded; they appear as protocol outflows in the protocol cost EMA, which subtracts from (rather than ignores) a subnet's net flow.
 
 See [Calculating root proportion](../navigating-subtensor/emissions-coinbase#6-calculating-root-proportion).
 :::

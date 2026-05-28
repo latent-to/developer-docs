@@ -992,6 +992,26 @@ Rate limit of how frequently can a delegate take be increased
 
 Rate limit for `swap_hotkey` extrinsic.
 
+### SubnetEmissionEnabled
+
+**Type**: bool (per subnet)
+
+**Default**: `true`
+
+**`btcli` setter**: none
+
+**Setter extrinsic**: `adminUtils.sudoSetSubnetEmissionEnabled(netuid, enabled)`
+
+**Permissions required to set**: Root (sudo only — not settable by subnet owners)
+
+**Description**:
+
+Controls whether a subnet receives pool-side emission injection each epoch. When `false`, the subnet receives no alpha-in, tao-in, or chain-buy injections. The subnet's emission share is redistributed to enabled subnets. Alpha-out, owner cut, root proportion, and validator/server emissions continue regardless of this flag.
+
+This toggle is intended for emergency governance use — for example, temporarily halting emissions to a subnet that is exhibiting problematic behavior, without fully dissolving it.
+
+See [`adminUtils.SubnetEmissionEnabledSet`](../subtensor-api/events.md) for the on-chain event emitted when this is changed.
+
 ### SubnetOwnerCut
 
 **`btcli` setter**: none

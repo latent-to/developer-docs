@@ -53,6 +53,24 @@ This extremely slow EMA prevents:
 
 Subnets with negative net flows (more unstaking than staking) receive zero emissions after the EMA reflects sustained negative flow.
 
+### Protocol Cost EMA
+
+A second EMA runs alongside the user flow EMA, tracking per-block **protocol cost** for each subnet:
+
+$$P_i^{(t)} = (1 - \alpha) \cdot P_i^{(t-1)} + \alpha \cdot \text{protocol\_cost}_i$$
+
+using the same smoothing factor $\alpha$ as the user flow EMA. The protocol cost each block is:
+
+$$\text{protocol\_cost}_i = \text{TAO injected into pool} + \text{chain buys} - \text{root staker claims}$$
+
+When `NetTaoFlowEnabled = true` (the default), the final flow used for emission shares is **net flow** rather than gross user flow:
+
+$$\text{net}_i = S_i - f \cdot \max(P_i, 0)$$
+
+The normalization factor $f = \min(1,\ \Sigma_j \max(S_j,0)\ /\ \Sigma_j \max(P_j,0))$ scales the protocol EMA so that the total protocol cost subtracted across all subnets never exceeds total positive user demand. When $P_i < 0$ (root claims exceed protocol injections for a subnet), the term adds to net flow rather than subtracting, which is a benefit to that subnet.
+
+Both EMAs are updated every block regardless of whether `NetTaoFlowEnabled` is on, so toggling the flag does not cause an EMA shock.
+
 :::tip Flow-Based Model Active
 As of November 2025, emissions are based on EMA of TAO flows rather than token prices. See [Emissions](./emissions.md) for complete details.
 :::

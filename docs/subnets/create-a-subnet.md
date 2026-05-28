@@ -115,6 +115,13 @@ Output:
 Newly created subnets are inactive by default and do not begin emitting until they have been started by the subnet owner. This allows subnet owners to configure the subnet, register and activate validators, and onboard miners before activation.
 :::
 
+:::note Subnet owner alpha is automatically locked
+
+The subnet owner's share of each epoch's emissions is **automatically locked** via [conviction staking](../staking-and-delegation/conviction-staking.md). Locked alpha accrues conviction over time and cannot be unstaked immediately — unlocking requires an explicit `unlock_stake` transaction followed by an unlock period (~90% available after ~365 days).
+
+This is intentional: it gives investors a public, cryptographic signal of the owner's commitment. Tools like [tao.app](https://www.tao.app) and community dashboards are expected to surface per-subnet lock and conviction data.
+:::
+
 ### Start the subnet
 
 Use the following command to start the subnet:

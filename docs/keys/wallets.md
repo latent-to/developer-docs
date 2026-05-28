@@ -119,6 +119,8 @@ The Bittensor Command Line Interface (BTCLI) and Bittensor Python SDK offer more
 - Creating and configuring subnets
 - Participating in governance
 
+For working with keys programmatically, the SDK exposes the `Keypair` and `Wallet` classes from [Bittensor Wallet](./btwallet/index.md), which handles key generation, signing, and asymmetric message encryption.
+
 ## Coldkey details
 
 In `btcli`, the coldkey is equivalent to the wallet name. For example, the `--wallet.name` option in a `btcli` command always accepts only `<coldkey>` as its value and the `--wallet.hotkey` option only accepts `<hotkey>` as its value.
@@ -155,7 +157,7 @@ Hotkeys are used to register on a subnet as a miner or validator.
 
 **Relationship to coldkey**: You can create multiple hotkeys paired to your single coldkey.
 However, when you are validating or mining in a subnet, you are identified by a hotkey in that subnet, so that your coldkey is not exposed.
-You can’t use the same hotkey for multiple UIDs within a single subnet — each UID in a subnet requires its own hotkey. However, you can reuse the same hotkey for UIDs that belong to different subnets.
+You can’t use the same hotkey for multiple UIDs within a single subnet; each UID in a subnet requires its own hotkey. However, you can reuse the same hotkey for UIDs that belong to different subnets.
 
 **Purpose**: Hotkeys are used for regular operational tasks in the Bittensor network, such as those described below:
 
