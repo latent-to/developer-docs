@@ -137,3 +137,12 @@ The total amount returned to a subnet owner upon deregistration depends on when 
 
 - [`destroy_alpha_in_out_stakes()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L444-623)
 - [`prune_network()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L377)
+
+## Conviction locks and deregistration
+
+[Conviction locks](../staking-and-delegation/conviction-staking.md) on a deregistered subnet are handled as follows:
+
+- **Locks do not affect the pruning score.** The EMA price is the only factor in subnet selection. A subnet with large locked conviction is no more protected from deregistration than one with none.
+- **Lock records are deleted before liquidation runs.** The conviction lock storage entries for the subnet are wiped as part of the dissolution sequence, before `destroy_alpha_in_out_stakes` executes.
+- **Underlying stake is liquidated normally.** Once the lock records are removed, the alpha that was locked is treated like any other staked alpha: converted to TAO pro-rata and returned to coldkey free balances as described above.
+- **Accumulated conviction is not compensated.** The conviction score itself has no monetary value that is refunded — it is simply gone when the subnet is removed.
