@@ -73,6 +73,7 @@ export async function generateRpc(
       "This page shows JSON-RPC methods available on the Subtensor node. " +
         "Accessible via `api.rpc.<namespace>.<method_name>`.",
       (api as any)._options?.provider?.endpoint ?? "subtensor node",
+      api.runtimeVersion.specVersion.toString(),
     ),
   );
 

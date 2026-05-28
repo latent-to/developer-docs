@@ -68,18 +68,18 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No changes in $DOCS_DIR — nothing to PR."
           else
-            # Check whether changes go beyond the generation-date stamp.
-            # Extract added/removed content lines, then strip out lines
-            # that only update the "Generated from a live snapshot … on **DATE**" header.
-            SUBSTANTIVE=$(git diff HEAD -- "$DOCS_DIR" \
+            # The header now records the runtime spec version rather than the
+            # generation date, so a spec-version line in the diff is a reliable
+            # signal that the runtime was upgraded. Skip the PR if no spec
+            # version change is detected.
+            SPEC_CHANGED=$(git diff HEAD -- "$DOCS_DIR" \
               | grep -E '^[+-]' \
               | grep -vE '^(\+\+\+|---) ' \
-              | grep -vE 'Generated from a live snapshot of the Subtensor runtime on' \
-              | wc -l)
+              | grep -c 'spec version \*\*' || true)
 
-            if [ "$SUBSTANTIVE" -eq 0 ]; then
+            if [ "$SPEC_CHANGED" -eq 0 ]; then
               echo "changed=false" >> "$GITHUB_OUTPUT"
-              echo "Only generation-date changes detected — skipping PR."
+              echo "No spec version change detected — skipping PR."
               git checkout -- "$DOCS_DIR"
             else
               echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -104,34 +104,78 @@ jobs:
       - name: Build PR body
         if: steps.diff.outputs.changed == 'true'
         run: |
-          STAT=$(git diff origin/main..HEAD -- "$DOCS_DIR" --stat | tail -6)
-          ADDED=$(git diff origin/main..HEAD -- "$DOCS_DIR" | grep -c '^+### ' || true)
-          REMOVED=$(git diff origin/main..HEAD -- "$DOCS_DIR" | grep -c '^-### ' || true)
-          CHANGED_FILES=$(git diff origin/main..HEAD -- "$DOCS_DIR" --name-only | sed 's/^/- /')
+          THRESHOLD=5
+          DOCS_FILES=$(git diff origin/main..HEAD -- "$DOCS_DIR" --name-only)
+
+          # Extract old and new spec version from the diff
+          OLD_SPEC=$(git diff origin/main..HEAD -- "$DOCS_DIR" \
+            | grep '^-Generated from Subtensor runtime spec version' \
+            | sed 's/.*\*\*\([0-9]*\)\*\*.*/\1/' | head -1)
+          NEW_SPEC=$(git diff origin/main..HEAD -- "$DOCS_DIR" \
+            | grep '^+Generated from Subtensor runtime spec version' \
+            | sed 's/.*\*\*\([0-9]*\)\*\*.*/\1/' | head -1)
 
           {
             echo "## 🤖 Automated API reference update"
             echo ""
-            echo "Generated from the live Subtensor runtime on **$(date -u '+%Y-%m-%d %H:%M UTC')**."
+            if [ -n "$OLD_SPEC" ] && [ -n "$NEW_SPEC" ]; then
+              echo "Runtime spec version upgraded: **${OLD_SPEC} → ${NEW_SPEC}**"
+            fi
             echo ""
             echo "**Endpoint:** \`${SUBTENSOR_WS}\`"
             echo ""
-            echo "### Changed files"
-            echo "${CHANGED_FILES}"
+            echo "### Changes"
             echo ""
-            echo "### Diff summary"
-            echo "\`\`\`"
-            echo "${STAT}"
-            echo "\`\`\`"
-            echo ""
-            echo "| | Count |"
-            echo "|---|---|"
-            echo "| Headings added | ${ADDED} |"
-            echo "| Headings removed | ${REMOVED} |"
-            echo ""
+
+            while IFS= read -r filepath; do
+              [ -z "$filepath" ] && continue
+              filename=$(basename "$filepath")
+
+              ADDED=$(git diff origin/main..HEAD -- "$filepath" \
+                | grep '^+### ' | sed 's/^+### //' | sed 's/`//g')
+              REMOVED=$(git diff origin/main..HEAD -- "$filepath" \
+                | grep '^-### ' | sed 's/^-### //' | sed 's/`//g')
+
+              ADDED_COUNT=0
+              REMOVED_COUNT=0
+              [ -n "$ADDED" ] && ADDED_COUNT=$(echo "$ADDED" | grep -c .)
+              [ -n "$REMOVED" ] && REMOVED_COUNT=$(echo "$REMOVED" | grep -c .)
+              TOTAL=$((ADDED_COUNT + REMOVED_COUNT))
+
+              [ "$TOTAL" -eq 0 ] && continue
+
+              echo "**${filename}**"
+              echo ""
+
+              if [ "$TOTAL" -gt "$THRESHOLD" ]; then
+                echo "<details><summary>Show ${ADDED_COUNT} added, ${REMOVED_COUNT} removed</summary>"
+                echo ""
+              fi
+
+              echo "| Status | Item |"
+              echo "|---|---|"
+
+              while IFS= read -r line; do
+                [ -z "$line" ] && continue
+                echo "| ✅ Added | ${line} |"
+              done <<< "$ADDED"
+
+              while IFS= read -r line; do
+                [ -z "$line" ] && continue
+                echo "| ❌ Removed | ${line} |"
+              done <<< "$REMOVED"
+
+              if [ "$TOTAL" -gt "$THRESHOLD" ]; then
+                echo ""
+                echo "</details>"
+              fi
+
+              echo ""
+            done <<< "$DOCS_FILES"
+
             echo "### Review checklist"
-            echo "- [ ] New \`###\` headings look correct (new extrinsics / storage items)"
-            echo "- [ ] Removed \`###\` headings are expected (renames / deprecations)"
+            echo "- [ ] New entries look correct (new extrinsics / storage items)"
+            echo "- [ ] Removed entries are expected (renames / deprecations)"
             echo "- [ ] Parameter types match the Rust source"
             echo "- [ ] Summary text changes make sense"
             echo ""

@@ -17,6 +17,7 @@ export function generateErrors(api: ApiPromise, outputDir: string): void {
       "This page contains error variants returned by the Subtensor runtime. " +
         "Accessible via `api.errors.<Pallet>.<ErrorName>`.",
       (api as any)._options?.provider?.endpoint ?? "subtensor node",
+      api.runtimeVersion.specVersion.toString(),
     ),
   );
 

@@ -22,6 +22,7 @@ export function generateExtrinsics(api: ApiPromise, outputDir: string): void {
       "The following sections contain Extrinsic methods that are part of the Subtensor " +
         "runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.",
       (api as any)._options?.provider?.endpoint ?? "subtensor node",
+      api.runtimeVersion.specVersion.toString(),
     ),
   );
 

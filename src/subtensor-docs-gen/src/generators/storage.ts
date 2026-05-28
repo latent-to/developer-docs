@@ -210,6 +210,7 @@ export function generateStorage(api: ApiPromise, outputDir: string): void {
       "This page contains storage query definitions for the Subtensor runtime. " +
         "Accessible via `api.query.<Pallet>.<storage_item>`.",
       (api as any)._options?.provider?.endpoint ?? "subtensor node",
+      api.runtimeVersion.specVersion.toString(),
     ),
   );
 

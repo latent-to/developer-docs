@@ -23,6 +23,7 @@ export function generateRuntimeCalls(api: ApiPromise, outputDir: string): void {
       "This page includes runtime API calls exposed by the Subtensor runtime. " +
         "Accessible via `api.call.<RuntimeApi>.<method_name>`.",
       (api as any)._options?.provider?.endpoint ?? "subtensor node",
+      api.runtimeVersion.specVersion.toString(),
     ),
   );
 

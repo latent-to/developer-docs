@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.abspath("../.."))
 # This below path insert is needed for the source link to work for all
 sys.path.insert(0, os.path.abspath("../bittensor"))
 # sys.path.insert(0, os.path.abspath('../../btwallet'))
-sys.path.append("/Users/chidera/Library/Python/3.9/lib/python/site-packages/")
+sys.path.append("/Users/michaeltrestman/Library/Python/3.9/lib/python/site-packages/")
 
 html_theme = "sphinx_book_theme"
 html_theme_options = {
@@ -69,7 +69,7 @@ intersphinx_mapping = {
 }
 
 # Source directory and ignore patterns for Bittensor SDK
-autoapi_dirs = ["/Users/chidera/desktop/work/bittensor/bittensor-sdk"]
+autoapi_dirs = ["/Users/michaeltrestman/bittensor_workspace/latents/bittensor"]
 autoapi_ignore = [
     "*e2e*",
     "*setup*",
