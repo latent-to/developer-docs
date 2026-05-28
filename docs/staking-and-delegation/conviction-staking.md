@@ -148,8 +148,6 @@ The term `(dt/τ) × exp(-dt/τ)` is maximized at `dt = τ` (value = `1/e ≈ 0.
 
 When a subnet owner receives their distribution cut each epoch, it is **not automatically locked** by default. The owner can opt in to auto-locking, which locks the distribution cut to the subnet owner's hotkey each epoch. If the owner already has a lock, the auto-lock tops it up using the existing lock's hotkey. If no lock exists, the auto-lock targets the subnet owner's hotkey.
 
-Auto-locking is disabled per-subnet by default and can be enabled or disabled by the subnet owner or root via `sudo_set_owner_cut_auto_lock_enabled` (admin-utils pallet).
-
 Any lock targeting the subnet owner's hotkey **instantly matures conviction** to the locked amount. This applies to any coldkey locking to the subnet owner's hotkey, not just the owner locking to themselves. The trigger is the target hotkey, not the locking coldkey.
 
 ## Key swap behavior
