@@ -49,7 +49,6 @@ where:
 
 In decaying mode, both the locked mass and conviction decay toward zero, but they follow different curves. Starting from a fresh lock ($c_0 = 0$), conviction first rises as the lock accumulates maturation time, then falls as the mass erodes. The formula (when `UnlockRate` = `MaturityRate` = τ) is:
 
-{/* TODO: confirm UnlockRate and MaturityRate are equal on-chain before publishing; if not, replace with general gamma-based formula */}
 
 $$c_1 = e^{-\Delta t / \tau} \left( c_0 + m \cdot \frac{\Delta t}{\tau} \right)$$
 
@@ -59,8 +58,8 @@ Switching to perpetual mode stops the mass decay and allows conviction to grow t
 
 **90% conviction** (perpetual mode) is reached at approximately $2.3\tau$ blocks. At one time constant $\tau$, conviction is at 63.2% of locked mass.
 
-:::note Query for current time constants
-`MaturityRate` and `UnlockRate` are governance-settable on-chain storage values. The specific block counts and day estimates depend on the current on-chain values. Query `api.query.subtensorModule.maturityRate()` and `api.query.subtensorModule.unlockRate()` on the live chain before relying on any specific number.
+:::note Current time constants
+`MaturityRate` and `UnlockRate` are both set to a **90-day half-life** (confirmed on-chain at spec version 411). Since these are governance-settable values, query `api.query.subtensorModule.maturityRate()` and `api.query.subtensorModule.unlockRate()` before relying on any specific number in production code.
 :::
 
 **Perpetual mode** (fresh lock of 100 alpha, $c_0 = 0$):
@@ -147,9 +146,9 @@ The term `(dt/τ) × exp(-dt/τ)` is maximized at `dt = τ` (value = `1/e ≈ 0.
 
 ## Subnet owner auto-locking
 
-When a subnet owner receives their distribution cut each epoch, it is **automatically locked** to the subnet owner's hotkey by default. If the owner already has a lock, the auto-lock tops it up using the existing lock's hotkey. If no lock exists, the auto-lock targets the subnet owner's hotkey.
+When a subnet owner receives their distribution cut each epoch, it is **not automatically locked** by default. The owner can opt in to auto-locking, which locks the distribution cut to the subnet owner's hotkey each epoch. If the owner already has a lock, the auto-lock tops it up using the existing lock's hotkey. If no lock exists, the auto-lock targets the subnet owner's hotkey.
 
-Auto-locking is enabled per-subnet by default and can be disabled by the subnet owner or root via `sudo_set_owner_cut_auto_lock_enabled` (admin-utils pallet).
+Auto-locking is disabled per-subnet by default and can be enabled or disabled by the subnet owner or root via `sudo_set_owner_cut_auto_lock_enabled` (admin-utils pallet).
 
 Any lock targeting the subnet owner's hotkey **instantly matures conviction** to the locked amount. This applies to any coldkey locking to the subnet owner's hotkey, not just the owner locking to themselves. The trigger is the target hotkey, not the locking coldkey.
 
@@ -393,8 +392,8 @@ All six storage items live under **Developer → Chain state → `subtensorModul
 
 Two governance-settable parameters control the time constants:
 
-- **`MaturityRate`**: time constant τ (in blocks) for conviction growth in perpetual mode. Query on-chain for the current value.
-- **`UnlockRate`**: time constant τ (in blocks) for locked mass decay in decaying mode. Query on-chain for the current value.
+- **`MaturityRate`**: time constant τ (in blocks) for conviction growth in perpetual mode. Currently set to a 90-day half-life (spec version 411).
+- **`UnlockRate`**: time constant τ (in blocks) for locked mass decay in decaying mode. Currently set to a 90-day half-life (spec version 411), equal to `MaturityRate`.
 
 Both are adjustable by governance. Query `api.query.subtensorModule.maturityRate()` and `api.query.subtensorModule.unlockRate()` for current values before computing time estimates.
 
@@ -431,7 +430,6 @@ let new_conviction =
 // = m - (m - c0) × exp(-dt/τ)
 ```
 
-{/* TODO: confirm UnlockRate == MaturityRate on-chain before publishing; if not equal, note the general case applies */}
 In decaying mode (`perpetual_lock = false`), when `unlock_rate == maturity_rate`:
 ```rust
 let unlock_decay = Self::exp_decay(dt, unlock_rate);    // exp(-dt/τ)
