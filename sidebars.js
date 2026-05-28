@@ -54,7 +54,7 @@ const sidebars = {
         "learn/emissions",
         "learn/ema",
         "learn/yuma-consensus",
-        "learn/yc3-blog",
+        "learn/yc3-blog",        
         "concepts/weight-copying-in-bittensor",
         "learn/yuma3-migration-guide",
         "learn/fees",
@@ -126,6 +126,7 @@ const sidebars = {
         "staking-and-delegation/stakers-btcli-guide",
         "staking-and-delegation/managing-stake-btcli",
         "staking-and-delegation/managing-stake-sdk",
+        "staking-and-delegation/conviction-staking",
         "keys/proxies/staking-with-proxy",
         {
           type: "category",
