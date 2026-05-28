@@ -165,6 +165,13 @@ When stake is moved to another coldkey **within the same subnet**, lock obligati
 
 **Cross-subnet moves are different**: moving stake between subnets goes through unstake → TAO transfer → restake, which must satisfy the lock constraint. You cannot move locked alpha across subnets directly.
 
+## Subnet deregistration
+
+Conviction locks provide no protection against deregistration. The deregistration pruning selector scores subnets by moving alpha price only; locked state is not a factor.
+
+If a subnet is deregistered, conviction lock records for that subnet are deleted before the standard subnet dissolution process runs. The underlying staked alpha is then handled the same way as any other stake on a deregistered subnet: it is converted to TAO pro-rata via the subnet's AMM pool and returned to each coldkey's free balance. Accumulated conviction is gone.
+
+
 ## Querying conviction
 
 <Tabs groupId="conviction-query">
