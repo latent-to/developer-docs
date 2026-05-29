@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -105,6 +105,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.adminUtils.ValueNotInBounds`
 - **summary**: Value not in allowed bounds.
 
+
 ## `balances`
 
 ### `DeadAccount`
@@ -167,6 +168,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.balances.VestingBalance`
 - **summary**: Vesting balance too high to send value.
 
+
 ## `commitments`
 
 ### `AccountNotAllowedCommit`
@@ -188,6 +190,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 
 - **interface**: `api.errors.commitments.UnexpectedUnreserveLeftover`
 - **summary**: Indicates that unreserve returned a leftover, which is unexpected.
+
 
 ## `contracts`
 
@@ -216,9 +219,9 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.contracts.CodeRejected`
 - **summary**: The contract's code was found to be invalid during validation.
 
-  The most likely cause of this is that an API was used which is not supported by the node. This happens if an older node is used with a new version of ink!. Try updating your node to the newest available version.
+    The most likely cause of this is that an API was used which is not supported by the node. This happens if an older node is used with a new version of ink!. Try updating your node to the newest available version.
 
-  A more detailed error can be found on the node console if debug messages are enabled by supplying `-lruntime::contracts=debug`.
+    A more detailed error can be found on the node console if debug messages are enabled by supplying `-lruntime::contracts=debug`.
 
 ### `CodeTooLarge`
 
@@ -298,7 +301,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 ### `NoChainExtension`
 
 - **interface**: `api.errors.contracts.NoChainExtension`
-- **summary**: The chain does not provide a chain extension. Calling the chain extension results in this error. Note that this usually shouldn't happen as deploying such contracts is rejected.
+- **summary**: The chain does not provide a chain extension. Calling the chain extension results in this error. Note that this usually  shouldn't happen as deploying such contracts is rejected.
 
 ### `NoMigrationPerformed`
 
@@ -355,7 +358,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.contracts.TerminatedInConstructor`
 - **summary**: A contract self destructed in its constructor.
 
-  This can be triggered by a call to `seal_terminate`.
+    This can be triggered by a call to `seal_terminate`.
 
 ### `TerminatedWhileReentrant`
 
@@ -381,6 +384,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 
 - **interface**: `api.errors.contracts.XCMDecodeFailed`
 - **summary**: Failed to decode the XCM program.
+
 
 ## `crowdloan`
 
@@ -494,6 +498,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.crowdloan.Underflow`
 - **summary**: An underflow occurred.
 
+
 ## `drand`
 
 ### `DrandConnectionFailure`
@@ -526,6 +531,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.drand.UnverifiedPulse`
 - **summary**: the pulse is invalid
 
+
 ## `ethereum`
 
 ### `InvalidSignature`
@@ -537,6 +543,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 
 - **interface**: `api.errors.ethereum.PreLogExists`
 - **summary**: Pre-log is present, therefore transact is not allowed.
+
 
 ## `evm`
 
@@ -615,6 +622,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.evm.WithdrawFailed`
 - **summary**: Withdraw fee failed
 
+
 ## `grandpa`
 
 ### `ChangePending`
@@ -652,6 +660,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.grandpa.TooSoon`
 - **summary**: Cannot signal forced change so soon after last.
 
+
 ## `mevShield`
 
 ### `BadEncKeyLen`
@@ -673,6 +682,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 
 - **interface**: `api.errors.mevShield.WeightExceedsAbsoluteMax`
 - **summary**: Weight exceeds the absolute maximum (half of total block weight).
+
 
 ## `multisig`
 
@@ -746,6 +756,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.multisig.WrongTimepoint`
 - **summary**: A different timepoint was given to the multisig operation that is underway.
 
+
 ## `preimage`
 
 ### `AlreadyNoted`
@@ -787,6 +798,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 
 - **interface**: `api.errors.preimage.TooMany`
 - **summary**: More than `MAX_HASH_UPGRADE_BULK_COUNT` hashes were requested to be upgraded at once.
+
 
 ## `proxy`
 
@@ -840,6 +852,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.proxy.Unproxyable`
 - **summary**: A call which is incompatible with the proxy type's filter was attempted.
 
+
 ## `registry`
 
 ### `CannotRegister`
@@ -856,6 +869,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 
 - **interface**: `api.errors.registry.TooManyFieldsInIdentityInfo`
 - **summary**: Account passed too many additional fields to their identity
+
 
 ## `safeMode`
 
@@ -894,6 +908,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.safeMode.NotConfigured`
 - **summary**: This functionality of the pallet is disabled by the configuration.
 
+
 ## `scheduler`
 
 ### `FailedToSchedule`
@@ -920,6 +935,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 
 - **interface**: `api.errors.scheduler.TargetBlockNumberInPast`
 - **summary**: Given target block number is in the past.
+
 
 ## `subtensorModule`
 
@@ -1633,12 +1649,14 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.subtensorModule.ZeroMaxStakeAmount`
 - **summary**: Zero max stake amount
 
+
 ## `sudo`
 
 ### `RequireSudo`
 
 - **interface**: `api.errors.sudo.RequireSudo`
 - **summary**: Sender must be the Sudo account.
+
 
 ## `swap`
 
@@ -1712,6 +1730,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.swap.UserLiquidityDisabled`
 - **summary**: User liquidity operations are disabled for this subnet
 
+
 ## `system`
 
 ### `CallFiltered`
@@ -1724,7 +1743,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.errors.system.FailedToExtractRuntimeVersion`
 - **summary**: Failed to extract the runtime version from the new runtime.
 
-  Either calling `Core_version` or decoding `RuntimeVersion` failed.
+    Either calling `Core_version` or decoding `RuntimeVersion` failed.
 
 ### `InvalidSpecName`
 
@@ -1760,6 +1779,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 
 - **interface**: `api.errors.system.Unauthorized`
 - **summary**: The submitted code is not authorized.
+
 
 ## `utility`
 

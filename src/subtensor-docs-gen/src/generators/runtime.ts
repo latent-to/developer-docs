@@ -41,45 +41,52 @@ export function generateRuntimeCalls(api: ApiPromise, outputDir: string): void {
 
   const apiEntries: ApiEntry[] = [];
 
-  try {
-    const runtimeApis = (api as any).runtimeMetadata?.asLatest?.apis;
-    if (runtimeApis) {
-      for (const runtimeApi of runtimeApis) {
-        const traitNameParts: string[] =
-          runtimeApi.name?.toJSON?.() ??
-          runtimeApi.name?.toString?.()?.split("::") ??
-          [];
-        const apiName =
-          traitNameParts.length > 0
-            ? traitNameParts[traitNameParts.length - 1]
-            : (runtimeApi.name?.toString?.() ?? "Unknown");
+  // ── Primary: api.runtimeMetadata.asLatest.apis ───────────────────────────
+  //
+  // Confirmed via diagnostic: asLatest.apis returns all 23 runtime APIs.
+  // Each api.name.toString() gives the correct PascalCase name.
+  // Each method.output is a polkadot.js codec object — .toNumber() extracts
+  // the plain numeric type ID needed by resolveTypeById.
+  //
+  // Error handling is per-method, not per-batch: a single method that fails
+  // type resolution no longer silently discards every other API.
 
+  try {
+    const runtimeApis = (api.runtimeMetadata as any).asLatest?.apis;
+    if (runtimeApis && runtimeApis.length > 0) {
+      for (const runtimeApi of runtimeApis) {
+        const apiName = runtimeApi.name?.toString?.() ?? "Unknown";
         const methods: ApiEntry["methods"] = [];
 
         for (const method of runtimeApi.methods ?? []) {
-          const methodName = method.name?.toString?.() ?? "unknown";
+          try {
+            const methodName = method.name?.toString?.() ?? "unknown";
 
-          const params = (method.inputs ?? [])
-            .map((input: any) => {
-              const name = input.name?.toString?.() ?? "_";
-              const typeStr = readableType(
-                input.type ?? input.ty,
-                api.registry,
-              );
-              return `${name}: ${typeStr}`;
-            })
-            .join(", ");
+            const params = (method.inputs ?? [])
+              .map((input: any) => {
+                const name = input.name?.toString?.() ?? "_";
+                // .toNumber() extracts the plain type ID from the codec object
+                const typeId =
+                  input.type?.toNumber?.() ??
+                  input.ty?.toNumber?.() ??
+                  input.type ??
+                  input.ty;
+                return `${name}: ${readableType(typeId, api.registry)}`;
+              })
+              .join(", ");
 
-          const returnType = readableType(
-            method.output ?? method.outputTy,
-            api.registry,
-          );
+            const rawOutput = method.output ?? method.outputTy;
+            const outputId = rawOutput?.toNumber?.() ?? rawOutput;
+            const returnType = readableType(outputId, api.registry);
 
-          const docs = extractDocs(
-            method.docs?.toJSON?.() ?? method.docs ?? [],
-          );
+            const docs = extractDocs(
+              method.docs?.toJSON?.() ?? method.docs ?? [],
+            );
 
-          methods.push({ methodName, params, returnType, docs });
+            methods.push({ methodName, params, returnType, docs });
+          } catch {
+            /* skip individual methods that fail type resolution */
+          }
         }
 
         if (methods.length > 0) {
@@ -92,57 +99,70 @@ export function generateRuntimeCalls(api: ApiPromise, outputDir: string): void {
     console.warn("  ⚠  Could not read runtime API metadata:", err);
   }
 
-  // ── Fallback: introspect api.call namespace ───────────────────────────────
+  // ── Supplement: api.call namespace ───────────────────────────────────────
+  //
+  // api.call holds APIs registered via polkadot.js type augmentation (camelCase
+  // names). Always run this pass and add any entry not already found in the
+  // metadata results. Case-insensitive comparison handles the PascalCase vs
+  // camelCase difference between the two sources.
 
-  if (apiEntries.length === 0) {
-    try {
-      const callNs = api.call as any;
-      if (callNs && typeof callNs === "object") {
-        for (const [apiName, apiMethods] of Object.entries(callNs).sort(
-          ([a], [b]) => a.localeCompare(b),
-        )) {
-          if (
-            !apiMethods ||
-            typeof apiMethods !== "object" ||
-            apiName.startsWith("_")
-          )
-            continue;
+  const foundLower = new Set(apiEntries.map((e) => e.apiName.toLowerCase()));
 
-          const methods: ApiEntry["methods"] = [];
+  try {
+    const callNs = api.call as any;
+    if (callNs && typeof callNs === "object") {
+      for (const [apiName, apiMethods] of Object.entries(callNs).sort(
+        ([a], [b]) => a.localeCompare(b),
+      )) {
+        if (
+          !apiMethods ||
+          typeof apiMethods !== "object" ||
+          apiName.startsWith("_") ||
+          foundLower.has(apiName.toLowerCase())
+        )
+          continue;
 
-          for (const [methodName, methodFn] of Object.entries(
-            apiMethods as Record<string, any>,
-          ).sort(([a], [b]) => a.localeCompare(b))) {
-            if (typeof methodFn !== "function") continue;
+        const methods: ApiEntry["methods"] = [];
 
+        for (const [methodName, methodFn] of Object.entries(
+          apiMethods as Record<string, any>,
+        ).sort(([a], [b]) => a.localeCompare(b))) {
+          if (typeof methodFn !== "function") continue;
+
+          try {
             const meta = (methodFn as any)?.meta;
             const params = (meta?.fields ?? meta?.params ?? [])
               .map((f: any) => {
                 const name = f.name?.toString?.() ?? "_";
-                const typeStr = readableType(
-                  f.type ?? f.typeName,
-                  api.registry,
-                );
-                return `${name}: ${typeStr}`;
+                const typeId =
+                  f.type?.toNumber?.() ??
+                  f.typeName?.toNumber?.() ??
+                  f.type ??
+                  f.typeName;
+                return `${name}: ${readableType(typeId, api.registry)}`;
               })
               .join(", ");
 
-            const returnType = meta?.type
-              ? readableType(meta.type, api.registry)
+            const rawOutput = meta?.type;
+            const outputId = rawOutput?.toNumber?.() ?? rawOutput;
+            const returnType = outputId
+              ? readableType(outputId, api.registry)
               : "unknown";
 
             const docs = extractDocs(meta?.docs ?? []);
             methods.push({ methodName, params, returnType, docs });
-          }
-
-          if (methods.length > 0) {
-            apiEntries.push({ apiName, methods });
+          } catch {
+            /* skip individual methods that fail type resolution */
           }
         }
+
+        if (methods.length > 0) {
+          apiEntries.push({ apiName, methods });
+        }
       }
-    } catch (err) {
-      console.warn("  ⚠  Could not introspect api.call namespace:", err);
     }
+  } catch (err) {
+    console.warn("  ⚠  Could not supplement from api.call namespace:", err);
   }
 
   apiEntries.sort((a, b) => a.apiName.localeCompare(b.apiName));

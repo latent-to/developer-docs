@@ -8,7 +8,7 @@ description: "This page shows JSON-RPC methods available on the Subtensor node."
 This page shows JSON-RPC methods available on the Subtensor node. Accessible via `api.rpc.<namespace>.<method_name>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[author](#author)**
@@ -71,6 +71,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.rpc.author.submitExtrinsic`
 - **summary**: Submit a fully formatted extrinsic for block inclusion
 
+
 ## `chain`
 
 ### `getBlock(hash?: BlockHash)`: `SignedBlock`
@@ -111,6 +112,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **jsonrpc**: subscription
 - **summary**: Retrieves the best header via subscription
 
+
 ## `childstate`
 
 ### `getKeys(childKey: PrefixedStorageKey, prefix: StorageKey, at?: Hash)`: `Vec<StorageKey>`
@@ -142,6 +144,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 
 - **interface**: `api.rpc.childstate.getStorageSize`
 - **summary**: Returns the size of a child storage entry at a block state
+
 
 ## `eth`
 
@@ -356,6 +359,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.rpc.eth.uninstallFilter`
 - **summary**: Uninstalls filter.
 
+
 ## `net`
 
 ### `listening()`: `bool`
@@ -373,7 +377,14 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.rpc.net.version`
 - **summary**: Returns protocol version.
 
+
 ## `offchain`
+
+### `localStorageClear(kind: StorageKind, key: Bytes)`: `Null`
+
+- **interface**: `api.rpc.offchain.localStorageClear`
+- **unsafe**: this method is flagged as unsafe
+- **summary**: Clear offchain local storage under given key and prefix
 
 ### `localStorageGet(kind: StorageKind, key: Bytes)`: `Option<Bytes>`
 
@@ -387,6 +398,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **unsafe**: this method is flagged as unsafe
 - **summary**: Set offchain local storage under given key and prefix
 
+
 ## `payment`
 
 ### `queryFeeDetails(extrinsic: Bytes, at?: BlockHash)`: `FeeDetails`
@@ -399,12 +411,14 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.rpc.payment.queryInfo`
 - **summary**: Retrieves the fee information for an encoded extrinsic
 
+
 ## `rpc`
 
 ### `methods()`: `RpcMethods`
 
 - **interface**: `api.rpc.rpc.methods`
 - **summary**: Retrieves the list of RPC methods that are exposed by the node
+
 
 ## `state`
 
@@ -492,6 +506,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.rpc.state.traceBlock`
 - **unsafe**: this method is flagged as unsafe
 - **summary**: Provides a way to trace the re-execution of a single block
+
 
 ## `system`
 
@@ -596,6 +611,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 
 - **interface**: `api.rpc.system.version`
 - **summary**: Retrieves the version of the node
+
 
 ## `web3`
 
