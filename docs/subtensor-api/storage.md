@@ -3,10 +3,11 @@
 This page contains storage query definitions for the Bittensor (Subtensor) runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
+- **[alphaAssets](#alphaassets)**
 - **[aura](#aura)**
 - **[balances](#balances)**
 - **[baseFee](#basefee)**
@@ -46,6 +47,30 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
 - **interface**: `api.query.adminUtils.precompileEnable`
 - **summary**: Map PrecompileEnum --> enabled
+
+
+## `alphaAssets`
+
+### `alphaBurned(u16)`: `u64`
+
+- **interface**: `api.query.alphaAssets.alphaBurned`
+- **summary**: Total alpha burned per subnet through this pallet.
+
+### `alphaRecycled(u16)`: `u64`
+
+- **interface**: `api.query.alphaAssets.alphaRecycled`
+- **summary**: Total alpha recycled per subnet through this pallet.
+
+### `palletVersion`: `u16`
+
+- **interface**: `api.query.alphaAssets.palletVersion`
+- **modifier**: `Required`
+- **summary**: Returns the current pallet version from storage
+
+### `totalAlphaIssuance(u16)`: `u64`
+
+- **interface**: `api.query.alphaAssets.totalAlphaIssuance`
+- **summary**: Total alpha issuance tracked by the pallet.
 
 
 ## `aura`
@@ -977,19 +1002,19 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
 - **interface**: `api.query.subtensorModule.decayingHotkeyLock`
 - **modifier**: `Optional`
-- **summary**: DMAP ( netuid, hotkey ) --> LockState | Aggregate decaying lock totals across all coldkeys that have locked to this hotkey in decaying mode.
+- **summary**: DMAP ( netuid, hotkey ) --> LockState | Total decaying non-owner lock per hotkey per subnet.
 
 ### `decayingLock(AccountId32, u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.decayingLock`
 - **modifier**: `Optional`
-- **summary**: DMAP ( coldkey, netuid ) --> bool | Lock mode flag. Present and `false` means perpetual mode; absent means decaying (default). Use `api.query.subtensorModule.decayingLock(coldkey, netuid)` to read.
+- **summary**: DMAP ( coldkey, netuid ) --> false | When present and false, this coldkey's lock is perpetual. Missing entries mean the lock decays by default.
 
 ### `decayingOwnerLock(u16)`: `LockState`
 
 - **interface**: `api.query.subtensorModule.decayingOwnerLock`
 - **modifier**: `Optional`
-- **summary**: MAP ( netuid ) --> LockState | Aggregate decaying lock total for the subnet owner hotkey.
+- **summary**: MAP ( netuid ) --> LockState | Total decaying lock to the owner hotkey for a subnet.
 
 ### `delegates(AccountId32)`: `u16`
 
@@ -1046,7 +1071,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
 - **interface**: `api.query.subtensorModule.hotkeyLock`
 - **modifier**: `Optional`
-- **summary**: DMAP ( netuid, hotkey ) --> LockState | Aggregate perpetual lock totals across all coldkeys that have locked to this hotkey in perpetual mode.
+- **summary**: DMAP ( netuid, hotkey ) --> LockState | Total lock per hotkey per subnet.
 
 ### `identitiesV2(AccountId32)`: `ChainIdentityV2`
 
@@ -1155,12 +1180,12 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
 - **interface**: `api.query.subtensorModule.lock`
 - **modifier**: `Optional`
-- **summary**: NMAP ( coldkey, netuid, hotkey ) --> LockState | Individual per-coldkey conviction lock record. Contains locked_mass, conviction, and last_update block.
+- **summary**: DMAP ( coldkey, netuid, hotkey ) --> LockState | Exponential lock per coldkey per subnet.
 
 ### `maturityRate`: `u64`
 
 - **interface**: `api.query.subtensorModule.maturityRate`
-- **summary**: ITEM → time constant τ (in blocks) for conviction growth in perpetual lock mode. Governance-settable. Query the live chain for the current value before computing time estimates.
+- **summary**: ITEM( maturity_rate ) | Decay timescale in blocks for lock conviction.
 
 ### `maxAllowedUids(u16)`: `u16`
 
@@ -1242,6 +1267,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **interface**: `api.query.subtensorModule.minChildkeyTake`
 - **summary**: ITEM ( min_childkey_take )
 
+### `minChildkeyTakePerSubnet(u16)`: `u16`
+
+- **interface**: `api.query.subtensorModule.minChildkeyTakePerSubnet`
+- **summary**: MAP ( netuid ) --> take | Returns the subnet-specific minimum childkey take.
+
 ### `minDelegateTake`: `u16`
 
 - **interface**: `api.query.subtensorModule.minDelegateTake`
@@ -1260,7 +1290,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `netTaoFlowEnabled`: `bool`
 
 - **interface**: `api.query.subtensorModule.netTaoFlowEnabled`
-- **summary**: ITEM --> bool | When true (default), subnet emission shares are determined by net TAO flow (user flow EMA minus protocol cost EMA). When false, gross user flow is used.
 
 ### `networkImmunityPeriod`: `u64`
 
@@ -1354,7 +1383,12 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `ownerCutAutoLockEnabled(u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.ownerCutAutoLockEnabled`
-- **summary**: MAP ( netuid ) --> bool | When true (default), each epoch's owner cut distribution is automatically locked to the subnet owner's hotkey. Can be disabled per subnet by governance.
+- **summary**: MAP ( netuid ) --> bool | Whether subnet owner cut should be auto-locked. Missing entries default to true, so auto-locking is enabled unless explicitly disabled.
+
+### `ownerCutEnabled(u16)`: `bool`
+
+- **interface**: `api.query.subtensorModule.ownerCutEnabled`
+- **summary**: MAP ( netuid ) --> owner_cut_enabled
 
 ### `ownerHyperparamRateLimit`: `u16`
 
@@ -1365,7 +1399,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
 - **interface**: `api.query.subtensorModule.ownerLock`
 - **modifier**: `Optional`
-- **summary**: MAP ( netuid ) --> LockState | Aggregate perpetual lock total for the subnet owner hotkey.
+- **summary**: MAP ( netuid ) --> LockState | Total perpetual lock to the owner hotkey for a subnet.
 
 ### `palletVersion`: `u16`
 
@@ -1556,7 +1590,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
 - **interface**: `api.query.subtensorModule.subnetEmaProtocolFlow`
 - **modifier**: `Optional`
-- **summary**: MAP ( netuid ) --> subnet_ema_protocol_flow | EMA of protocol cost flow, smoothed with the same factor as subnetEmaTaoFlow.
+- **summary**: MAP ( netuid ) --> subnet_ema_protocol_flow | EMA of protocol cost flow, same smoothing as SubnetEmaTaoFlow.
 
 ### `subnetEmaTaoFlow(u16)`: `(u64,SubstrateFixedFixedI128)`
 
@@ -1567,7 +1601,16 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `subnetEmissionEnabled(u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.subnetEmissionEnabled`
-- **summary**: MAP ( netuid ) --> bool | When false, this subnet receives no pool-side emission injection (alpha-in, tao-in, chain buys) each epoch. Alpha-out, owner cut, root proportion, and validator/server emissions are unaffected. Default is true.
+- **summary**: MAP ( netuid ) --> subnet_emission_enabled
+
+    When false, subnet pool-side emission is disabled for this subnet: `alpha_in`, `tao_in`, and `excess_tao` chain buys are all treated as zero. `alpha_out`, owner cut, root proportion, pending server emission, and pending validator emission are intentionally left unchanged.
+
+    Defaults to true so existing subnets keep current behavior.
+
+### `subnetExcessTao(u16)`: `u64`
+
+- **interface**: `api.query.subtensorModule.subnetExcessTao`
+- **summary**: MAP ( netuid ) --> excess_tao | Returns the excess TAO swapped (chain buys) into this subnet on the last block.
 
 ### `subnetIdentitiesV3(u16)`: `SubnetIdentityV3`
 
@@ -1633,7 +1676,12 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `subnetProtocolFlow(u16)`: `i64`
 
 - **interface**: `api.query.subtensorModule.subnetProtocolFlow`
-- **summary**: MAP ( netuid ) --> subnet_protocol_flow | Per-block accumulator for protocol cost: emission injected + chain buys − root sells. Used with the net TAO flow mechanism.
+- **summary**: MAP ( netuid ) --> subnet_protocol_flow | Per-block accumulator for protocol cost (emission + chain buys - root sells).
+
+### `subnetRootSellTao(u16)`: `u64`
+
+- **interface**: `api.query.subtensorModule.subnetRootSellTao`
+- **summary**: MAP ( netuid ) --> root_sell_tao | Returns the TAO received from root dividend sells on this subnet on the last block.
 
 ### `subnetTAO(u16)`: `u64`
 
@@ -1779,7 +1827,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `unlockRate`: `u64`
 
 - **interface**: `api.query.subtensorModule.unlockRate`
-- **summary**: ITEM → time constant τ (in blocks) for locked mass decay in decaying mode. Governance-settable. Query the live chain for the current value before computing time estimates.
+- **summary**: ITEM( unlock_rate ) | Decay timescale in blocks for locked mass.
 
 ### `usedWork(Bytes)`: `u64`
 

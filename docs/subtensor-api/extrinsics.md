@@ -3,7 +3,7 @@
 The following sections contain Extrinsic methods that are part of the Bittensor (Subtensor) runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -322,6 +322,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **interface**: `api.tx.adminUtils.sudoSetMinBurn`
 - **summary**: The extrinsic sets the minimum burn for a subnet. It is only callable by root and subnet owner. The extrinsic will call the Subtensor pallet to set the minimum burn.
 
+### `sudoSetMinChildkeyTakePerSubnet(netuid: NetUid, take: u16)`
+
+- **interface**: `api.tx.adminUtils.sudoSetMinChildkeyTakePerSubnet`
+- **summary**: The extrinsic sets the minimum childkey take for a subnet. It is callable by root or the subnet owner. The subnet minimum can only make the global minimum stricter.
+
 ### `sudoSetMinDelegateTake(take: u16)`
 
 - **interface**: `api.tx.adminUtils.sudoSetMinDelegateTake`
@@ -336,6 +341,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
 - **interface**: `api.tx.adminUtils.sudoSetMinNonImmuneUids`
 - **summary**: Sets the minimum number of non-immortal & non-immune UIDs that must remain in a subnet
+
+### `sudoSetNetTaoFlowEnabled(enabled: bool)`
+
+- **interface**: `api.tx.adminUtils.sudoSetNetTaoFlowEnabled`
+- **summary**: Enables or disables net TAO flow (protocol cost deduction from emission shares). When enabled, emission shares use net flow = user flow - protocol cost. When disabled, emission shares use gross user flow only (current behavior).
 
 ### `sudoSetNetworkImmunityPeriod(immunity_period: u64)`
 
@@ -366,6 +376,16 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
 - **interface**: `api.tx.adminUtils.sudoSetNominatorMinRequiredStake`
 - **summary**: The extrinsic sets the minimum stake required for nominators. It is only callable by the root account. The extrinsic will call the Subtensor pallet to set the minimum stake required for nominators.
+
+### `sudoSetOwnerCutAutoLockEnabled(netuid: NetUid, enabled: bool)`
+
+- **interface**: `api.tx.adminUtils.sudoSetOwnerCutAutoLockEnabled`
+- **summary**: Set whether subnet owner cut is auto-locked for a subnet. It is only callable by root and subnet owner.
+
+### `sudoSetOwnerCutEnabled(netuid: NetUid, enabled: bool)`
+
+- **interface**: `api.tx.adminUtils.sudoSetOwnerCutEnabled`
+- **summary**: Set whether the subnet owner cut is enabled for a subnet. It is only callable by root and subnet owner.
 
 ### `sudoSetOwnerHparamRateLimit(epochs: u16)`
 
@@ -451,6 +471,13 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **interface**: `api.tx.adminUtils.sudoSetStartCallDelay`
 - **summary**: Sets the delay before a subnet can call start
 
+### `sudoSetSubnetEmissionEnabled(netuid: NetUid, enabled: bool)`
+
+- **interface**: `api.tx.adminUtils.sudoSetSubnetEmissionEnabled`
+- **summary**: Enables or disables subnet pool-side emission for a subnet.
+
+    This does not remove the subnet from emission share calculation and does not change `alpha_out`, owner cut, root proportion, pending server emission, or pending validator emission. It only zeros the pool-side `alpha_in`, `tao_in`, and `excess_tao` chain-buy paths.
+
 ### `sudoSetSubnetLimit(max_subnets: u16)`
 
 - **interface**: `api.tx.adminUtils.sudoSetSubnetLimit`
@@ -495,26 +522,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
     **Weight:**
 
     Weight is handled by the `#[pallet::weight]` attribute.
-
-### `sudoSetSubnetEmissionEnabled(netuid: NetUid, enabled: bool)`
-
-- **interface**: `api.tx.adminUtils.sudoSetSubnetEmissionEnabled`
-- **summary**: Enables or disables pool-side emission injection for a subnet. Only callable by root (sudo). When disabled, the subnet receives no alpha-in, tao-in, or chain-buy injections each epoch; its emission share is redistributed to enabled subnets. Alpha-out, owner cut, root proportion, and validator/server emissions continue regardless of this flag.
-
-    **Arguments:**
-
-    - `origin` — Must be the root (sudo) account. Not callable by subnet owners.
-    - `netuid` — The subnet to update. Cannot be the root subnet.
-    - `enabled` — `true` to enable emission injection (default); `false` to disable.
-
-    **Errors:**
-
-    - `SubnetDoesNotExist` — The specified subnet does not exist.
-    - `NotPermittedOnRootSubnet` — Cannot be applied to netuid 0.
-
-    **Events:**
-
-    Emits `SubnetEmissionEnabledSet { netuid, enabled }` on success.
 
 ### `sudoSetSubtokenEnabled(netuid: NetUid, subtoken_enabled: bool)`
 
@@ -578,7 +585,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `sudoSetTotalIssuance(total_issuance: TaoBalance)`
 
 - **interface**: `api.tx.adminUtils.sudoSetTotalIssuance`
-- **summary**: The extrinsic sets the total issuance for the network. It is only callable by the root account. The extrinsic will call the Subtensor pallet to set the issuance for the network.
+- **summary**: DEPRECATED
 
 ### `sudoSetTxDelegateTakeRateLimit(tx_rate_limit: u64)`
 
@@ -2141,22 +2148,33 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `lockStake(hotkey: AccountId, netuid: NetUid, amount: AlphaBalance)`
 
 - **interface**: `api.tx.subtensorModule.lockStake`
-- **summary**: Locks `amount` alpha from the signing coldkey's stake on `netuid` to `hotkey`, building conviction over time. If no lock exists for this coldkey on `netuid`, a new lock is created with conviction 0. If a lock already exists, `amount` is added to the locked mass (the hotkey must match). The lock is indefinite — it persists until `unlock_stake` is called. See [Conviction Staking](../staking-and-delegation/conviction-staking.md) for full mechanics.
+- **summary**: Locks stake on a subnet to a specific hotkey, building conviction over time.
 
-    **Errors:**
+    If no lock exists for (coldkey, subnet), a new one is created. If a lock exists, the destination hotkey must match the existing lock's hotkey. Top-up adds to the locked amount after rolling the lock state forward.
 
-    - `InsufficientStakeForLock` — Available (unlocked) alpha is less than `amount`.
-    - `LockHotkeyMismatch` — A lock already exists for a different hotkey on this subnet.
-    - `AmountTooLow` — Amount is zero.
+    **Arguments:**
+
+    - `origin` — Must be signed by the coldkey.
+    - `hotkey` — The hotkey to lock stake to.
+    - `netuid` — The subnet on which to lock.
+    - `amount` — The alpha amount to lock.
 
 ### `moveLock(destination_hotkey: AccountId, netuid: NetUid)`
 
 - **interface**: `api.tx.subtensorModule.moveLock`
-- **summary**: Moves the signing coldkey's existing lock on `netuid` from its current hotkey to `destination_hotkey`. The locked and unlocking mass are preserved. Conviction is reset to zero if the old and destination hotkeys are owned by different coldkeys; conviction is preserved if both are owned by the same coldkey. See [Conviction Staking](../staking-and-delegation/conviction-staking.md) for full mechanics.
+- **summary**: Moves an existing lock for a coldkey on a subnet from one hotkey to another.
+
+    The lock is rolled forward to the current block before switching the associated hotkey, preserving the decayed locked mass. The conviction is reset to zero.
+
+    **Arguments:**
+
+    - `origin` — Must be signed by the coldkey that owns the lock.
+    - `destination_hotkey` — The hotkey the lock should target after the move.
+    - `netuid` — The subnet on which the lock exists.
 
     **Errors:**
 
-    - `NoExistingLock` — No lock exists for this coldkey on the subnet.
+    - `Error::<T>::NoExistingLock` — If no lock exists for the given coldkey and subnet.
 
 ### `moveStake(origin_hotkey: AccountId, destination_hotkey: AccountId, origin_netuid: NetUid, destination_netuid: NetUid, alpha_amount: AlphaBalance)`
 
@@ -2673,6 +2691,13 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **interface**: `api.tx.subtensorModule.setPendingChildkeyCooldown`
 - **summary**: Sets the pending childkey cooldown (in blocks). Root only.
 
+### `setPerpetualLock(netuid: NetUid, enabled: bool)`
+
+- **interface**: `api.tx.subtensorModule.setPerpetualLock`
+- **summary**: Sets or clears the caller's perpetual lock flag for a subnet.
+
+    Locks decay by default. When enabled, the caller's individual lock does not unlock through locked-mass decay. Passing `false` returns the caller's lock to normal decay.
+
 ### `setRootClaimType(new_root_claim_type: RootClaimTypeEnum)`
 
 - **interface**: `api.tx.subtensorModule.setRootClaimType`
@@ -2999,62 +3024,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
     **Note:**
 
     Will charge based on the weight even if the hotkey is already associated with a coldkey.
-
-### `lockStake(hotkey: AccountId, netuid: NetUid, amount: AlphaBalance)`
-
-- **interface**: `api.tx.subtensorModule.lockStake`
-- **summary**: Locks `amount` alpha from the signing coldkey's stake on `netuid` to `hotkey`. Creates a conviction lock or tops up an existing one. See [Conviction and locked stake](../staking-and-delegation/conviction-staking.md).
-
-    **Arguments:**
-
-    - `origin` — Must be signed by the coldkey.
-    - `hotkey` — The delegate hotkey the lock is bound to.
-    - `netuid` — The subnet to lock on.
-    - `amount` — Amount of alpha to lock. Must not exceed total alpha staked on the subnet.
-
-    **Errors:**
-
-    - `InsufficientStakeForLock` — Available alpha is less than `amount`.
-    - `LockHotkeyMismatch` — A lock already exists for a different hotkey on this subnet.
-    - `AmountTooLow` — Amount is zero.
-
-    **Events:**
-
-    Emits `StakeLocked { coldkey, hotkey, netuid, amount }` on success.
-
-### `moveLock(destination_hotkey: AccountId, netuid: NetUid)`
-
-- **interface**: `api.tx.subtensorModule.moveLock`
-- **summary**: Reassigns the signing coldkey's existing lock on `netuid` to `destination_hotkey`. Conviction resets to zero when the old and new hotkeys are owned by different coldkeys; conviction is preserved when both hotkeys belong to the same coldkey.
-
-    **Arguments:**
-
-    - `origin` — Must be signed by the coldkey.
-    - `destination_hotkey` — The hotkey to transfer the lock to.
-    - `netuid` — The subnet the lock is on.
-
-    **Errors:**
-
-    - `NoExistingLock` — No lock exists for this coldkey on the subnet.
-
-    **Events:**
-
-    Emits `LockMoved { coldkey, origin_hotkey, destination_hotkey, netuid }` on success.
-
-### `setPerpetualLock(netuid: NetUid, enabled: bool)`
-
-- **interface**: `api.tx.subtensorModule.setPerpetualLock`
-- **summary**: Sets or clears perpetual lock mode for the signing coldkey's lock on `netuid`. When `enabled = true`, the locked mass no longer decays and conviction can grow toward the full locked amount. When `enabled = false`, the locked mass begins decaying exponentially — this is how a lock is unwound. See [Conviction and locked stake](../staking-and-delegation/conviction-staking.md).
-
-    **Arguments:**
-
-    - `origin` — Must be signed by the coldkey.
-    - `netuid` — The subnet the lock is on.
-    - `enabled` — `true` for perpetual mode; `false` to resume decay (default).
-
-    **Events:**
-
-    Emits `PerpetualLockUpdated { coldkey, netuid, enabled }` on success.
 
 ### `unstakeAll(hotkey: AccountId)`
 
