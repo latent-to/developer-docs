@@ -3,7 +3,7 @@
 This page contains error variants returned by the Bittensor (Subtensor) runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -34,6 +34,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
 - **interface**: `api.errors.adminUtils.BondsMovingAverageMaxReached`
 - **summary**: The maximum value for bonds moving average is reached
+
+### `Deprecated`
+
+- **interface**: `api.errors.adminUtils.Deprecated`
+- **summary**: Call is deprecated
 
 ### `InvalidValue`
 
@@ -932,7 +937,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `ActiveLockExists`
 
 - **interface**: `api.errors.subtensorModule.ActiveLockExists`
-- **summary**: A coldkey swap cannot proceed because the destination coldkey already has active locked mass on one or more subnets.
+- **summary**: There is already an active lock for the given coldkey.
 
 ### `ActivityCutoffTooLow`
 
@@ -1003,6 +1008,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
 - **interface**: `api.errors.subtensorModule.CanNotSetRootNetworkWeights`
 - **summary**: Can not set weights for the root network.
+
+### `CannotUseSystemAccount`
+
+- **interface**: `api.errors.subtensorModule.CannotUseSystemAccount`
+- **summary**: A system account cannot be used in this operation
 
 ### `ChildParentInconsistency`
 
@@ -1187,7 +1197,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `InsufficientStakeForLock`
 
 - **interface**: `api.errors.subtensorModule.InsufficientStakeForLock`
-- **summary**: The coldkey's available (unlocked) alpha stake is less than the requested lock amount.
+- **summary**: Insufficient stake on subnet to cover the lock amount.
 
 ### `InvalidChild`
 
@@ -1307,7 +1317,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `LockHotkeyMismatch`
 
 - **interface**: `api.errors.subtensorModule.LockHotkeyMismatch`
-- **summary**: A lock already exists for this coldkey on the subnet pointing to a different hotkey. Use `move_lock` first to reassign it.
+- **summary**: Lock hotkey mismatch: existing lock is for a different hotkey.
 
 ### `MaxWeightExceeded`
 
@@ -1352,7 +1362,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `NoExistingLock`
 
 - **interface**: `api.errors.subtensorModule.NoExistingLock`
-- **summary**: An operation requires an existing lock (e.g., `move_lock`) but no lock exists for this coldkey on the subnet.
+- **summary**: No existing lock found for the given coldkey and subnet.
 
 ### `NonAssociatedColdKey`
 
@@ -1492,7 +1502,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `StakeUnavailable`
 
 - **interface**: `api.errors.subtensorModule.StakeUnavailable`
-- **summary**: The requested stake amount is unavailable (e.g., it is locked and cannot be moved).
+- **summary**: Trying to unstake or re-lock the locked amount.
 
 ### `StakingOperationRateLimitExceeded`
 
@@ -1607,7 +1617,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 ### `UnlockAmountTooHigh`
 
 - **interface**: `api.errors.subtensorModule.UnlockAmountTooHigh`
-- **summary**: The amount passed to unlock exceeds the current locked mass.
+- **summary**: Trying to unlock more than locked
 
 ### `VotingPowerTrackingNotEnabled`
 
