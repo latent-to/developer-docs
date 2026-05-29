@@ -1,9 +1,14 @@
+---
+title: RPC
+description: "This page shows JSON-RPC methods available on the Subtensor node."
+---
+
 # RPC
 
-This page shows JSON-RPC methods available on a Bittensor (Subtensor) node. Accessible via `api.rpc.<namespace>.<method_name>`.
+This page shows JSON-RPC methods available on the Subtensor node. Accessible via `api.rpc.<namespace>.<method_name>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[author](#author)**
@@ -374,6 +379,12 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 
 
 ## `offchain`
+
+### `localStorageClear(kind: StorageKind, key: Bytes)`: `Null`
+
+- **interface**: `api.rpc.offchain.localStorageClear`
+- **unsafe**: this method is flagged as unsafe
+- **summary**: Clear offchain local storage under given key and prefix
 
 ### `localStorageGet(kind: StorageKind, key: Bytes)`: `Option<Bytes>`
 

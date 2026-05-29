@@ -275,8 +275,17 @@ const sidebars = {
       collapsed: true,
       items: [
         "subtensor-nodes/subtensor-node-requirements",
-        "subtensor-nodes/using-source",
-        "subtensor-nodes/using-docker",
+        {
+          type: "category",
+          label: "Running a subtensor node",
+          link: { type: "doc", id: "subtensor-nodes/run/index" },
+          collapsible: true,
+          collapsed: true,
+          items: [
+            "subtensor-nodes/run/using-source",
+            "subtensor-nodes/run/using-docker",
+          ],
+        },
         "subtensor-nodes/subtensor-storage-query-examples",
       ],
     },

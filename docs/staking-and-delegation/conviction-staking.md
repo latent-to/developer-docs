@@ -27,7 +27,7 @@ Because conviction will rise toward the locked amount, while the locked amount i
 
 The locked amount reaches zero (freeing all stake) with no explicit action needed.
 
-A locked amount can also be set to **perpetual** so that it will never decreas.
+A locked amount can also be set to **perpetual** so that it never decreases.
 
 The mode, **decaying** or **perpetual**, is per-coldkey per-subnet and can be changed at any time. Switching from perpetual to decaying initiates the decay process immediately from the current locked mass.
 

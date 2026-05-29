@@ -426,17 +426,27 @@ export function escapeMdx(text: string): string {
 
 // ── Misc helpers ──────────────────────────────────────────────────────────────
 
-export function today(): string {
-  return new Date().toISOString().split('T')[0];
-}
+export function fileHeader(
+  title: string,
+  description: string,
+  endpoint: string,
+  specVersion?: string,
+): string {
+  // Use only the first sentence, stripped of Markdown backticks, for frontmatter
+  const fmDescription = description.split(/\.\s/)[0].replace(/`/g, '') + '.';
+  const versionStr = specVersion ? `spec version **${specVersion}**` : 'an unknown spec version';
 
-export function fileHeader(title: string, description: string, endpoint: string): string {
-  return `# ${title}
+  return `---
+title: ${title}
+description: "${fmDescription}"
+---
+
+# ${title}
 
 ${description}
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **${today()}**. Connected to: \`${endpoint}\`
+Generated from Subtensor runtime ${versionStr}. Connected to: \`${endpoint}\`
 :::
 `;
 }

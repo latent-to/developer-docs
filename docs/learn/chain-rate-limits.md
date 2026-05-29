@@ -36,15 +36,14 @@ This rate limit prevents frequent changes to delegate take percentages.
 - Chain State Variable: `TxDelegateTakeRateLimit`
 - Error message: [`DelegateTxRateLimitExceeded`](../errors/subtensor.md#delegatetxratelimitexceeded)
 
-
 ### Hotkey swap rate limit
 
 This rate limit prevents a user from swapping a hotkey too frequently. Hotkey swaps are subject to **two separate rate limits** that must both be satisfied:
 
-- Rate Limit: 
+- Rate Limit:
   - General transaction: 1 block (12 seconds)
   - Per-subnet: 36,000 blocks (~5 days)
-- Chain State Variables: 
+- Chain State Variables:
   - `TxRateLimit` (general transaction rate limit)
   - `HotkeySwapOnSubnetInterval` (global interval constant, not queryable from chain state)
 - Source Code: [swap_hotkey.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/swap/swap_hotkey.rs#L52-56)
@@ -62,7 +61,7 @@ This rate limit controls how frequently subnet owners can trim UIDs on their sub
 
 This rate limit prevents frequent creation of new subnets.
 
-- Rate Limit: 28,800 blocks (4 days)
+- Rate Limit: 14,400 blocks (2 days)
 - Chain State Variable: `NetworkRateLimit`
 - Error message: [`NetworkTxRateLimitExceeded`](../errors/subtensor.md#networktxratelimitexceeded)
 
@@ -73,7 +72,6 @@ This rate limit controls how frequently subnet owners can modify hyperparameters
 - Rate Limit: 2 tempos
 - Chain State Variable: `OwnerHyperparamRateLimit`
 - Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
-
 
 ### Weights version key rate limit
 
@@ -117,7 +115,6 @@ This rate limit controls how frequently a user can perform staking operations (a
 - Chain State Variable: `StakingOperationRateLimiter` (Bool, since limit is 1 operation)
 - Error message: [`StakingOperationRateLimitExceeded`](../errors/subtensor.md#stakingoperationratelimitexceeded)
 
-
 ### Child hotkey operations rate limit
 
 This rate limit controls how frequently a parent hotkey can set or revoke child hotkeys on a specific subnet. Note that revoking children is implemented by calling `set_children` with an empty list, so both operations share the same rate limit.
@@ -146,7 +143,6 @@ This rate limit controls how frequently neurons can update their serving informa
 - Chain State Variable: `ServingRateLimit`
 - Error message: [`ServingRateLimitExceeded`](../errors/subtensor.md#servingratelimitexceeded)
 
-
 ### Weights setting rate limit
 
 This rate limit controls how frequently a subnet validator can set weights to the network. Appears as `weights_rate_limit` in the subnet's hyperparameters. For more information, see [subnet hyperparameters](../subnets/subnet-hyperparameters.md#weightsratelimit--commitmentratelimit).
@@ -170,5 +166,4 @@ When querying OTF-provided lite nodes, the following rate limits apply. We stron
 - Any OTF-provided lite node will rate limit the requests to one request per second, per IP address. Note that this rate limit may change dynamically based on the network or application requirements.
 - A request can be either WS/WSS or HTTP/HTTPS.
 - If you exceed the rate limit, you will receive the error code 429. You will then have to wait until the rate limit window has expired.
-- You can avoid OTF-lite node rate limits by running your own local lite node. You can run a lite node either [Using Docker](../subtensor-nodes/using-docker.md#using-lite-nodes) or [Using Source](../subtensor-nodes/using-source#lite-node-on-mainchain).
-
+- You can avoid OTF-lite node rate limits by running your own local lite node. You can run a lite node either [Using Docker](../subtensor-nodes/run/using-docker.md#using-lite-nodes) or [Using Source](../subtensor-nodes/run/using-docker#lite-node-on-mainchain).

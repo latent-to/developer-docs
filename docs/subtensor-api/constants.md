@@ -1,9 +1,14 @@
+---
+title: Constants
+description: "This page contains compile-time runtime constants for the Subtensor runtime and their respective values."
+---
+
 # Constants
 
-This page contains compile-time runtime constants for the Bittensor (Subtensor) runtime. Accessible via `api.consts.<Pallet>.<constant_name>`. Values read live from node.
+This page contains compile-time runtime constants for the Subtensor runtime and their respective values. Accessible via `api.consts.<Pallet>.<constant_name>`. Values read live from node.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[aura](#aura)**

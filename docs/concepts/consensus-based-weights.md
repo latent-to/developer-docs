@@ -2,7 +2,7 @@
 title: "Consensus-based Weights/Liquid alpha"
 ---
 
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 # Consensus-based Weights/Liquid Alpha
 
@@ -87,7 +87,6 @@ Hence, for example:
 - If you want `alpha_low` to be `0.1`, then you would pass `6554`, which is the rounded up value of `0.1 * 65535`.
 - If you want `alpha_high` to be `0.8`, then you would pass `52428`, which is the value of `0.8 * 65535`.
 
-
 ## Using `btcli`
 
 ### Set the subnet hyperparameters
@@ -166,7 +165,6 @@ Use the current value of `alpha_low` from the above display and the new desired 
 btcli sudo set --netuid 1 --param alpha_values --value 6554,55706
 ```
 
-
 ## Using Bittensor Python SDK
 
 <SdkVersion />
@@ -209,5 +207,3 @@ You must set the values for both `alpha_low` and `alpha_high` together. Current 
 
 For example, if you want to set a new value to `alpha_low` but do not want to change the `alpha_high` value, you must pass the new value of `alpha_low`, and also the current, unchanging value of `alpha_high`, while setting the `alpha_values`.
 :::
-
-

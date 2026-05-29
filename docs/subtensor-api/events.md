@@ -1,9 +1,14 @@
+---
+title: Events
+description: "The following page contains runtime events emitted by the Subtensor runtime."
+---
+
 # Events
 
-The following page contains runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api.events.<Pallet>.<EventName>`.
+The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**

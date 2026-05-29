@@ -1,9 +1,14 @@
+---
+title: Storage
+description: "This page contains storage query definitions for the Subtensor runtime."
+---
+
 # Storage
 
-This page contains storage query definitions for the Bittensor (Subtensor) runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
+This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -765,6 +770,12 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **modifier**: `Required`
 - **summary**: Wasm code of the runtime.
 
+### `defaultChildStorageKeyPrefix`: `u32`
+
+- **interface**: `api.query.substrate.defaultChildStorageKeyPrefix`
+- **modifier**: `Required`
+- **summary**: Prefix of the default child storage keys in the top trie.
+
 ### `extrinsicIndex`: `u32`
 
 - **interface**: `api.query.substrate.extrinsicIndex`
@@ -782,6 +793,18 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-29**. Conne
 - **interface**: `api.query.substrate.intrablockEntropy`
 - **modifier**: `Required`
 - **summary**: Current intra-block entropy (a universally unique `[u8; 32]` value) is stored here.
+
+### `storageVersionStorageKeyPostfix`: `u16`
+
+- **interface**: `api.query.substrate.storageVersionStorageKeyPostfix`
+- **modifier**: `Required`
+- **summary**: The storage key postfix that is used to store the [`StorageVersion`] per pallet.
+
+### `transactionLevelKey`: `u32`
+
+- **interface**: `api.query.substrate.transactionLevelKey`
+- **modifier**: `Required`
+- **summary**: The key that holds the current number of active layers.
 
 
 ## `subtensorModule`

@@ -101,8 +101,8 @@ The primary command-line tool for Bittensor operations.
 ### Subtensor Nodes
 - **Node Basics**: https://docs.bittensor.com/subtensor-nodes/
 - **Node Requirements**: https://docs.bittensor.com/subtensor-nodes/subtensor-node-requirements
-- **Source Installation**: https://docs.bittensor.com/subtensor-nodes/using-source
-- **Docker Installation**: https://docs.bittensor.com/subtensor-nodes/using-docker
+- **Source Installation**: https://docs.bittensor.com/subtensor-nodes/run/using-docker
+- **Docker Installation**: https://docs.bittensor.com/subtensor-nodes/run/using-docker
 - **Rate Limits**: https://docs.bittensor.com/subtensor-nodes/subtensor-rate-limits
 - **Storage Queries**: https://docs.bittensor.com/subtensor-nodes/subtensor-storage-query-examples
 - **Error Messages**: https://docs.bittensor.com/subtensor-nodes/subtensor-error-messages
