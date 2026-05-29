@@ -657,6 +657,38 @@ Rate limit for network registrations expressed in blocks
 
 `NetworkRegistrationAllowed` determines whether neuron registration is enabled on the subnet. If disabled, the subnet will not receive new neurons.
 
+### OwnerCutAutoLockEnabled
+
+**Type**: Bool
+
+**Default**: `true`
+
+**`btcli` setter**: none
+
+**Setter extrinsic**: `sudo_set_owner_cut_auto_lock_enabled`
+
+**Permissions required to set**: Subnet owner
+
+**Description**:
+
+Enables automatic locking of the subnet owner’s distribution cut. When enabled, existing locks are topped up automatically; otherwise, a new lock is created for the subnet owner’s hotkey.
+
+### OwnerCutEnabled
+
+**Type**: Bool
+
+**Default**: `true`
+
+**`btcli` setter**: none
+
+**Setter extrinsic**: `sudo_set_owner_cut_enabled`
+
+**Permissions required to set**: Subnet owner
+
+**Description**:
+
+Enables or disables the subnet owner cut for a subnet. Callable only by the root account or the subnet owner.
+
 ### OwnerHyperparamRateLimit
 
 **Type**: u16
