@@ -12,7 +12,7 @@
   <line x1="65" y1="117.5" x2="695" y2="117.5" stroke="#E5E7EB" stroke-width="1"/>
   <line x1="65" y1="40" x2="695" y2="40" stroke="#E5E7EB" stroke-width="1"/>
 
-  <!-- Grid lines (vertical: days 0,30,60,90,120,150,180) -->
+  <!-- Grid lines (vertical: days 0,90,180,270,360,450,540) -->
   <line x1="65" y1="40" x2="65" y2="350" stroke="#E5E7EB" stroke-width="1"/>
   <line x1="170" y1="40" x2="170" y2="350" stroke="#E5E7EB" stroke-width="1"/>
   <line x1="275" y1="40" x2="275" y2="350" stroke="#E5E7EB" stroke-width="1"/>
@@ -21,31 +21,32 @@
   <line x1="590" y1="40" x2="590" y2="350" stroke="#E5E7EB" stroke-width="1"/>
   <line x1="695" y1="40" x2="695" y2="350" stroke="#E5E7EB" stroke-width="1"/>
 
-  <!-- τ reference line (day 43.3 ≈ x=215.5) -->
-  <line x1="215.5" y1="40" x2="215.5" y2="350" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="5,3"/>
+  <!-- τ reference line (day 130, x=217) -->
+  <line x1="217" y1="40" x2="217" y2="350" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="5,3"/>
 
-  <!-- Locked Mass curve (blue) -->
+  <!-- Locked Mass curve (blue)
+       x = 65 + t * (630/540); y = 350 - 3.1 * mass
+       mass = 100 * exp(-t/130) -->
   <polyline
-    points="65.0,40.0 75.5,60.7 86.0,80.1 96.5,98.2 107.0,115.1 117.5,130.8 128.0,145.4 138.5,159.0 149.0,171.9 159.5,183.8 170.0,195.0 180.5,205.3 191.0,214.9 201.5,224.1 212.0,232.4 222.5,240.2 240.0,252.3 257.5,262.9 275.0,272.5 310.0,288.4 345.0,301.1 380.0,311.2 432.5,322.6 485.0,330.6 590.0,340.3 695.0,345.1"
+    points="65.0,40.0 82.5,73.8 100.0,103.9 117.5,130.8 135.0,154.7 152.5,176.1 170.0,195.0 187.5,212.0 205.0,226.9 217.0,235.9 240.0,252.1 275.0,272.5 310.0,288.3 345.0,301.0 380.0,311.2 485.0,330.5 590.0,340.4 695.0,345.0"
     fill="none" stroke="#3B82F6" stroke-width="2.5"/>
 
-  <!-- Conviction curve (red) -->
+  <!-- Conviction curve (red)
+       conviction = 100 * (t/130) * exp(-t/130) -->
   <polyline
-    points="65.0,350.0 75.5,330.0 86.0,312.6 96.5,297.7 107.0,284.9 117.5,274.1 128.0,264.9 138.5,257.4 149.0,251.3 159.5,246.4 170.0,242.6 180.5,239.7 191.0,237.7 201.5,236.6 212.0,235.9 222.5,235.9 240.0,237.2 257.5,239.4 275.0,242.6 310.0,250.5 345.0,259.7 380.0,269.4 432.5,283.5 485.0,296.3 590.0,316.4 695.0,329.8"
+    points="65.0,350.0 82.5,318.1 100.0,293.3 117.5,274.1 135.0,259.8 152.5,249.6 170.0,242.7 187.5,238.4 205.0,236.2 217.0,235.9 240.0,236.8 275.0,242.7 310.0,250.5 345.0,259.5 380.0,269.4 485.0,296.1 590.0,316.8 695.0,329.5"
     fill="none" stroke="#EF4444" stroke-width="2.5"/>
 
-  <!-- Peak annotation dot (conviction peak at τ ≈ day 43) -->
-  <circle cx="215.5" cy="235.9" r="4" fill="#EF4444"/>
-  <!-- Crossover annotation dot (mass = conviction at τ) -->
-  <circle cx="215.5" cy="235.9" r="4" fill="#EF4444"/>
+  <!-- Peak annotation dot (conviction peak at τ = day 130) -->
+  <circle cx="217" cy="235.9" r="4" fill="#EF4444"/>
 
   <!-- τ annotation -->
-  <text x="218" y="38" font-size="11" fill="#6B7280">τ = 43 days</text>
+  <text x="220" y="38" font-size="11" fill="#6B7280">τ ≈ 130 days</text>
 
   <!-- Conviction peak label -->
   <rect x="228" y="222" width="138" height="28" rx="3" fill="white" fill-opacity="0.9" stroke="#E5E7EB"/>
   <text x="297" y="234" text-anchor="middle" font-size="10" fill="#EF4444">Conviction peak ≈ 36.8%</text>
-  <text x="297" y="246" text-anchor="middle" font-size="10" fill="#6B7280">= remaining locked mass</text>
+  <text x="297" y="246" text-anchor="middle" font-size="10" fill="#6B7280">= remaining locked mass at τ</text>
 
   <!-- Axes -->
   <line x1="65" y1="350" x2="695" y2="350" stroke="#374151" stroke-width="1.5"/>
@@ -53,16 +54,15 @@
 
   <!-- X-axis tick labels (days) -->
   <text x="65" y="368" text-anchor="middle" font-size="11" fill="#6B7280">0</text>
-  <text x="170" y="368" text-anchor="middle" font-size="11" fill="#6B7280">30</text>
-  <text x="275" y="368" text-anchor="middle" font-size="11" fill="#6B7280">60</text>
-  <text x="380" y="368" text-anchor="middle" font-size="11" fill="#6B7280">90</text>
-  <text x="485" y="368" text-anchor="middle" font-size="11" fill="#6B7280">120</text>
-  <text x="590" y="368" text-anchor="middle" font-size="11" fill="#6B7280">150</text>
-  <text x="695" y="368" text-anchor="middle" font-size="11" fill="#6B7280">180</text>
+  <text x="170" y="368" text-anchor="middle" font-size="11" fill="#6B7280">90</text>
+  <text x="275" y="368" text-anchor="middle" font-size="11" fill="#6B7280">180</text>
+  <text x="380" y="368" text-anchor="middle" font-size="11" fill="#6B7280">270</text>
+  <text x="485" y="368" text-anchor="middle" font-size="11" fill="#6B7280">360</text>
+  <text x="590" y="368" text-anchor="middle" font-size="11" fill="#6B7280">450</text>
+  <text x="695" y="368" text-anchor="middle" font-size="11" fill="#6B7280">540</text>
 
   <!-- X-axis label -->
-  <!-- TODO: replace MATURITY_DAYS and UNLOCK_DAYS with confirmed on-chain values before publishing -->
-  <text x="380" y="385" text-anchor="middle" font-size="12" fill="#374151">Days (MaturityRate ≈ MATURITY_DAYS days, UnlockRate ≈ UNLOCK_DAYS days — query on-chain before publishing)</text>
+  <text x="380" y="385" text-anchor="middle" font-size="12" fill="#374151">Days (MaturityRate = UnlockRate = τ ≈ 130 days; half-life = 90 days)</text>
 
   <!-- Y-axis tick labels -->
   <text x="58" y="354" text-anchor="end" font-size="11" fill="#6B7280">0%</text>

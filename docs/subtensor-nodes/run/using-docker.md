@@ -1,5 +1,5 @@
 ---
-title: "Using Docker"
+title: "Run with Docker"
 ---
 
 import ThemedImage from '@theme/ThemedImage';
@@ -7,7 +7,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Using Docker
+# Run with Docker
 
 To run a subtensor node with Docker, follow the below steps.
 
@@ -61,6 +61,10 @@ Adding a user to the `docker` group is only necessary on Linux, where `sudo` pri
 ## Step 3: Run the subtensor node
 
 Now you can run the subtensor nodes for either mainchain or testchain using any of available options.
+
+:::info Start your docker engine
+Before running the command to run the Subtensor node on Docker, ensure that you have a Docker engine running on your device.
+:::
 
 ### Using lite nodes
 

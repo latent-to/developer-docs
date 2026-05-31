@@ -1,9 +1,14 @@
+---
+title: RPC
+description: "This page shows JSON-RPC methods available on the Subtensor node."
+---
+
 # RPC
 
-This page shows JSON-RPC methods available on a Bittensor (Subtensor) node. Accessible via `api.rpc.<namespace>.<method_name>`.
+This page shows JSON-RPC methods available on the Subtensor node. Accessible via `api.rpc.<namespace>.<method_name>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[author](#author)**
@@ -15,23 +20,8 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **[payment](#payment)**
 - **[rpc](#rpc)**
 - **[state](#state)**
-- **[subtensorModule (Runtime API)](#subtensormodule-runtime-api)**
 - **[system](#system)**
 - **[web3](#web3)**
-
-## `subtensorModule` (Runtime API)
-
-These methods are exposed via the Subtensor **Runtime API** (`StakeInfoRuntimeApi`) and are accessed through `api.call.stakeInfoRuntimeApi.*` rather than `api.rpc.*`.
-
-### `getHotkeyConviction(hotkey: AccountId32, netuid: NetUid)`: `U64F64`
-
-- **interface**: `api.call.stakeInfoRuntimeApi.getHotkeyConviction`
-- **summary**: Returns the current total conviction for `hotkey` on `netuid`, aggregated over all coldkeys that have locked to this hotkey. Conviction grows exponentially toward the total locked mass with a time constant of ≈30 days (90% reached in ~70 days). See [Conviction Staking](../staking-and-delegation/conviction-staking.md).
-
-### `getMostConvictedHotkeyOnSubnet(netuid: NetUid)`: `Option<AccountId32>`
-
-- **interface**: `api.call.stakeInfoRuntimeApi.getMostConvictedHotkeyOnSubnet`
-- **summary**: Returns the hotkey with the highest total conviction on `netuid`, or `None` if no locks exist on the subnet. Conviction is evaluated at the current block (rolled forward lazily). See [Conviction Staking](../staking-and-delegation/conviction-staking.md).
 
 ## `author`
 
@@ -389,6 +379,12 @@ These methods are exposed via the Subtensor **Runtime API** (`StakeInfoRuntimeAp
 
 
 ## `offchain`
+
+### `localStorageClear(kind: StorageKind, key: Bytes)`: `Null`
+
+- **interface**: `api.rpc.offchain.localStorageClear`
+- **unsafe**: this method is flagged as unsafe
+- **summary**: Clear offchain local storage under given key and prefix
 
 ### `localStorageGet(kind: StorageKind, key: Bytes)`: `Option<Bytes>`
 

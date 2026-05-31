@@ -27,7 +27,7 @@ Because conviction will rise toward the locked amount, while the locked amount i
 
 The locked amount reaches zero (freeing all stake) with no explicit action needed.
 
-A locked amount can also be set to **perpetual** so that it will never decreas.
+A locked amount can also be set to **perpetual** so that it never decreases.
 
 The mode, **decaying** or **perpetual**, is per-coldkey per-subnet and can be changed at any time. Switching from perpetual to decaying initiates the decay process immediately from the current locked mass.
 
@@ -164,6 +164,13 @@ When stake is moved to another coldkey **within the same subnet**, lock obligati
 2. **Locked alpha is drawn next**: if the transfer exceeds freely available alpha, the remainder comes from locked mass. Conviction transfers proportionally with the locked amount. This step **fails with `LockHotkeyMismatch`** if the destination coldkey already has a lock pointing at a different hotkey.
 
 **Cross-subnet moves are different**: moving stake between subnets goes through unstake → TAO transfer → restake, which must satisfy the lock constraint. You cannot move locked alpha across subnets directly.
+
+## Subnet deregistration
+
+Conviction locks provide no protection against deregistration. The deregistration pruning selector scores subnets by moving alpha price only; locked state is not a factor.
+
+If a subnet is deregistered, conviction lock records for that subnet are deleted before the standard subnet dissolution process runs. The underlying staked alpha is then handled the same way as any other stake on a deregistered subnet: it is converted to TAO pro-rata via the subnet's AMM pool and returned to each coldkey's free balance. Accumulated conviction is gone.
+
 
 ## Querying conviction
 

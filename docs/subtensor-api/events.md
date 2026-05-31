@@ -1,9 +1,14 @@
+---
+title: Events
+description: "The following page contains runtime events emitted by the Subtensor runtime."
+---
+
 # Events
 
-The following page contains runtime events emitted by the Bittensor (Subtensor) runtime. Accessible via `api.events.<Pallet>.<EventName>`.
+The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -52,10 +57,10 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **interface**: `api.events.adminUtils.PrecompileUpdated`
 - **summary**: Event emitted when a precompile operation is updated.
 
-### `SubnetEmissionEnabledSet(netuid: NetUid, enabled: bool)`
+### `SubnetEmissionEnabledSet(NetUid, bool)`
 
 - **interface**: `api.events.adminUtils.SubnetEmissionEnabledSet`
-- **summary**: Pool-side emission injection has been enabled or disabled for a subnet by root. Emitted by `sudoSetSubnetEmissionEnabled`.
+- **summary**: Pool-side subnet emission injections and chain buys were enabled or disabled.
 
 ### `Yuma3EnableToggled(NetUid, bool)`
 
@@ -753,11 +758,12 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **interface**: `api.events.subtensorModule.BatchCompletedWithErrors`
 - **summary**: A batch extrinsic completed but with some errors.
 
-### `BatchWeightItemFailed(sp_runtime::DispatchError)`
+### `BatchWeightItemFailed(NetUid, sp_runtime::DispatchError)`
 
 - **interface**: `api.events.subtensorModule.BatchWeightItemFailed`
 - **summary**: A weight set among a batch of weights failed.
 
+    - **netuid**: The netuid of the batch item that failed.
     - **error**: The dispatch error emitted by the failed item.
 
 ### `BatchWeightsCompleted(Vec<Compact<NetUid>>, AccountId)`
@@ -798,7 +804,7 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **interface**: `api.events.subtensorModule.BurnHalfLifeSet`
 - **summary**: Burn half-life set for neuron registration.
 
-### `BurnIncreaseMultSet(NetUid, u64)`
+### `BurnIncreaseMultSet(NetUid, U64F64)`
 
 - **interface**: `api.events.subtensorModule.BurnIncreaseMultSet`
 - **summary**: Burn increase multiplier set for neuron registration.
@@ -962,10 +968,10 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **interface**: `api.events.subtensorModule.KappaSet`
 - **summary**: Kappa is set for a subnet.
 
-### `LockMoved(coldkey: AccountId, origin_hotkey: AccountId, destination_hotkey: AccountId, netuid: NetUid)`
+### `LockMoved(AccountId, AccountId, AccountId, NetUid)`
 
 - **interface**: `api.events.subtensorModule.LockMoved`
-- **summary**: A conviction lock has been moved from one hotkey to another. Emitted by `move_lock`. Conviction is reset to zero when the hotkeys have different owners; preserved when the same coldkey owns both.
+- **summary**: Stake has been unlocked from a hotkey on a subnet.
 
 ### `MaxAllowedUidsSet(NetUid, u16)`
 
@@ -1021,6 +1027,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
 - **interface**: `api.events.subtensorModule.MinBurnSet`
 - **summary**: setting min burn on a network.
+
+### `MinChildKeyTakePerSubnetSet(NetUid, u16)`
+
+- **interface**: `api.events.subtensorModule.MinChildKeyTakePerSubnetSet`
+- **summary**: subnet-specific minimum childkey take set
 
 ### `MinChildKeyTakeSet(u16)`
 
@@ -1082,10 +1093,10 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **interface**: `api.events.subtensorModule.OwnerHyperparamRateLimitSet`
 - **summary**: setting the owner hyperparameter rate limit in epochs
 
-### `PerpetualLockUpdated(coldkey: AccountId, netuid: NetUid, enabled: bool)`
+### `PerpetualLockUpdated(AccountId, NetUid, bool)`
 
 - **interface**: `api.events.subtensorModule.PerpetualLockUpdated`
-- **summary**: Perpetual lock mode has been set or cleared for a coldkey's lock on a subnet. Emitted by `set_perpetual_lock`. When `enabled = false`, the locked mass begins decaying — a public signal that the holder may be reducing their position.
+- **summary**: A coldkey's perpetual lock flag was updated.
 
 ### `PowRegistrationAllowed(NetUid, bool)`
 
@@ -1160,10 +1171,10 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **interface**: `api.events.subtensorModule.StakeAdded`
 - **summary**: stake has been transferred from the a coldkey account onto the hotkey staking account.
 
-### `StakeLocked(coldkey: AccountId, hotkey: AccountId, netuid: NetUid, amount: AlphaBalance)`
+### `StakeLocked(AccountId, AccountId, NetUid, AlphaBalance)`
 
 - **interface**: `api.events.subtensorModule.StakeLocked`
-- **summary**: Alpha stake has been locked to a hotkey on a subnet. Emitted by `lock_stake` and by the automatic owner lock on each epoch's distribution.
+- **summary**: Stake has been locked to a hotkey on a subnet.
 
 ### `StakeMoved(AccountId, AccountId, NetUid, AccountId, NetUid, TaoBalance)`
 
@@ -1198,15 +1209,15 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 
     (origin_coldkey, destination_coldkey, hotkey, origin_netuid, destination_netuid, amount)
 
+### `StakeUnlocked(AccountId, AccountId, NetUid, AlphaBalance)`
+
+- **interface**: `api.events.subtensorModule.StakeUnlocked`
+- **summary**: Stake has been unlocked from a hotkey on a subnet.
+
 ### `StartCallDelaySet(u64)`
 
 - **interface**: `api.events.subtensorModule.StartCallDelaySet`
 - **summary**: the start call delay is set.
-
-### `SubnetEmissionEnabledSet(NetUid, bool)`
-
-- **interface**: `api.events.subtensorModule.SubnetEmissionEnabledSet`
-- **summary**: Pool-side emission injection has been enabled or disabled for a subnet. Emitted by `adminUtils.sudoSetSubnetEmissionEnabled`. When disabled, the subnet receives no alpha-in, tao-in, or chain-buy injections.
 
 ### `SubnetIdentityRemoved(NetUid)`
 
@@ -1238,10 +1249,10 @@ Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Conne
 - **interface**: `api.events.subtensorModule.SubnetLimitSet`
 - **summary**: the maximum number of subnets is set
 
-### `SubnetOwnerChanged(netuid: NetUid, old_coldkey: AccountId, new_coldkey: AccountId)`
+### `SubnetOwnerChanged(NetUid, AccountId, AccountId)`
 
 - **interface**: `api.events.subtensorModule.SubnetOwnerChanged`
-- **summary**: Subnet ownership has transferred via the conviction mechanism. Emitted when the hotkey with the highest aggregate conviction (`subnet_king`) assumes ownership of a subnet.
+- **summary**: Subnet ownership was reassigned by lock conviction.
 
 ### `SubnetOwnerCutSet(u16)`
 
