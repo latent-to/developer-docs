@@ -30,9 +30,9 @@
   <link href="../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/bittensor-custom.css?v=c1dfe055" />
   
   <!-- So that users can add custom icons -->
@@ -42,9 +42,9 @@
 <link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/chain_data/subnet_state/index';</script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" />
@@ -353,7 +353,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -377,7 +377,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -442,10 +442,10 @@
 the Bittensor network.</p>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.chain_data.subnet_state.SubnetState" title="bittensor.core.chain_data.subnet_state.SubnetState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubnetState</span></code></a></p></td>
-<td><p>Base dataclass for info objects.</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -455,97 +455,96 @@ the Bittensor network.</p>
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.subnet_state.</span></span><span class="sig-name descname"><span class="pre">SubnetState</span></span><a class="reference internal" href="../../../../../_modules/bittensor/core/chain_data/subnet_state.html#SubnetState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.core.chain_data.subnet_state.</span></span><span class="sig-name descname"><span class="pre">SubnetState</span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../info_base/index.html#bittensor.core.chain_data.info_base.InfoBase" title="bittensor.core.chain_data.info_base.InfoBase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bittensor.core.chain_data.info_base.InfoBase</span></code></a></p>
-<p>Base dataclass for info objects.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.active">
-<span class="sig-name descname"><span class="pre">active</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.active" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">active</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.active" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.alpha_stake">
-<span class="sig-name descname"><span class="pre">alpha_stake</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.alpha_stake" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">alpha_stake</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.alpha_stake" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.block_at_registration">
-<span class="sig-name descname"><span class="pre">block_at_registration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.block_at_registration" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">block_at_registration</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.block_at_registration" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.coldkeys">
-<span class="sig-name descname"><span class="pre">coldkeys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.coldkeys" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">coldkeys</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.coldkeys" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.consensus">
-<span class="sig-name descname"><span class="pre">consensus</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.consensus" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">consensus</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.consensus" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.dividends">
-<span class="sig-name descname"><span class="pre">dividends</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.dividends" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dividends</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.dividends" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.emission">
-<span class="sig-name descname"><span class="pre">emission</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.emission" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">emission</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.emission" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.emission_history">
-<span class="sig-name descname"><span class="pre">emission_history</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.emission_history" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">emission_history</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.emission_history" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.hotkeys">
-<span class="sig-name descname"><span class="pre">hotkeys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.hotkeys" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">hotkeys</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.hotkeys" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.incentives">
-<span class="sig-name descname"><span class="pre">incentives</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.incentives" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">incentives</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.incentives" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.last_update">
-<span class="sig-name descname"><span class="pre">last_update</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.last_update" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">last_update</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.last_update" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.netuid">
-<span class="sig-name descname"><span class="pre">netuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.netuid" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">netuid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.netuid" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.pruning_score">
-<span class="sig-name descname"><span class="pre">pruning_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.pruning_score" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pruning_score</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.pruning_score" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.rank">
-<span class="sig-name descname"><span class="pre">rank</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.rank" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rank</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.rank" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.tao_stake">
-<span class="sig-name descname"><span class="pre">tao_stake</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.tao_stake" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tao_stake</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.tao_stake" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.total_stake">
-<span class="sig-name descname"><span class="pre">total_stake</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.total_stake" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">total_stake</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../../utils/balance/index.html#bittensor.utils.balance.Balance" title="bittensor.utils.balance.Balance"><span class="pre">bittensor.utils.balance.Balance</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.total_stake" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.trust">
-<span class="sig-name descname"><span class="pre">trust</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.trust" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">trust</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.trust" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="bittensor.core.chain_data.subnet_state.SubnetState.validator_permit">
-<span class="sig-name descname"><span class="pre">validator_permit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.validator_permit" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">validator_permit</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#bittensor.core.chain_data.subnet_state.SubnetState.validator_permit" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -593,11 +592,12 @@ the Bittensor network.</p>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
@@ -648,7 +648,7 @@ By Opentensor Foundation
 
   <p class="copyright">
     
-      © Copyright 2024, Opentensor Foundation.
+      © Copyright 2025, Opentensor Foundation.
       <br/>
     
   </p>

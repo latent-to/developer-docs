@@ -30,9 +30,9 @@
   <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../../../../../_static/bittensor-custom.css?v=c1dfe055" />
   
   <!-- So that users can add custom icons -->
@@ -42,9 +42,9 @@
 <link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/extras/dev_framework/calls/pallets/index';</script>
     <link rel="index" title="Index" href="../../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../../search.html" />
@@ -353,7 +353,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -377,7 +377,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -406,11 +406,13 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Balances"><code class="docutils literal notranslate"><span class="pre">Balances</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.BaseFee"><code class="docutils literal notranslate"><span class="pre">BaseFee</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Commitments"><code class="docutils literal notranslate"><span class="pre">Commitments</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Contracts"><code class="docutils literal notranslate"><span class="pre">Contracts</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Crowdloan"><code class="docutils literal notranslate"><span class="pre">Crowdloan</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Drand"><code class="docutils literal notranslate"><span class="pre">Drand</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.EVM"><code class="docutils literal notranslate"><span class="pre">EVM</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Ethereum"><code class="docutils literal notranslate"><span class="pre">Ethereum</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Grandpa"><code class="docutils literal notranslate"><span class="pre">Grandpa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.MevShield"><code class="docutils literal notranslate"><span class="pre">MevShield</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Multisig"><code class="docutils literal notranslate"><span class="pre">Multisig</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Preimage"><code class="docutils literal notranslate"><span class="pre">Preimage</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Proxy"><code class="docutils literal notranslate"><span class="pre">Proxy</span></code></a></li>
@@ -439,10 +441,10 @@
   <section id="module-bittensor.extras.dev_framework.calls.pallets">
 <span id="bittensor-extras-dev-framework-calls-pallets"></span><h1>bittensor.extras.dev_framework.calls.pallets<a class="headerlink" href="#module-bittensor.extras.dev_framework.calls.pallets" title="Link to this heading">#</a></h1>
 <p>”
-Subtensor spec version: 331</p>
+Subtensor spec version: 397</p>
 <section id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.AdminUtils" title="bittensor.extras.dev_framework.calls.pallets.AdminUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AdminUtils</span></code></a></p></td>
 <td><p></p></td>
@@ -456,19 +458,25 @@ Subtensor spec version: 331</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Commitments" title="bittensor.extras.dev_framework.calls.pallets.Commitments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Commitments</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Crowdloan" title="bittensor.extras.dev_framework.calls.pallets.Crowdloan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Crowdloan</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Contracts" title="bittensor.extras.dev_framework.calls.pallets.Contracts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Contracts</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Drand" title="bittensor.extras.dev_framework.calls.pallets.Drand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Drand</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Crowdloan" title="bittensor.extras.dev_framework.calls.pallets.Crowdloan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Crowdloan</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.EVM" title="bittensor.extras.dev_framework.calls.pallets.EVM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EVM</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Drand" title="bittensor.extras.dev_framework.calls.pallets.Drand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Drand</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Ethereum" title="bittensor.extras.dev_framework.calls.pallets.Ethereum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ethereum</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.EVM" title="bittensor.extras.dev_framework.calls.pallets.EVM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EVM</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Grandpa" title="bittensor.extras.dev_framework.calls.pallets.Grandpa"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grandpa</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Ethereum" title="bittensor.extras.dev_framework.calls.pallets.Ethereum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ethereum</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Grandpa" title="bittensor.extras.dev_framework.calls.pallets.Grandpa"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grandpa</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.MevShield" title="bittensor.extras.dev_framework.calls.pallets.MevShield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MevShield</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#bittensor.extras.dev_framework.calls.pallets.Multisig" title="bittensor.extras.dev_framework.calls.pallets.Multisig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Multisig</span></code></a></p></td>
@@ -515,107 +523,117 @@ Subtensor spec version: 331</p>
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.AdminUtils">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">AdminUtils</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AdminUtils'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.AdminUtils" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">AdminUtils</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AdminUtils'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.AdminUtils" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Balances">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Balances</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Balances'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Balances" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Balances</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Balances'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Balances" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.BaseFee">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">BaseFee</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BaseFee'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.BaseFee" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">BaseFee</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BaseFee'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.BaseFee" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Commitments">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Commitments</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Commitments'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Commitments" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Commitments</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Commitments'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Commitments" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Contracts">
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Contracts</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Contracts'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Contracts" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Crowdloan">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Crowdloan</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Crowdloan'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Crowdloan" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Crowdloan</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Crowdloan'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Crowdloan" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Drand">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Drand</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Drand'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Drand" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Drand</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Drand'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Drand" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.EVM">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">EVM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'EVM'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.EVM" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">EVM</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'EVM'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.EVM" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Ethereum">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Ethereum</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Ethereum'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Ethereum" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Ethereum</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Ethereum'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Ethereum" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Grandpa">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Grandpa</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Grandpa'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Grandpa" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Grandpa</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Grandpa'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Grandpa" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.MevShield">
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">MevShield</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MevShield'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.MevShield" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Multisig">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Multisig</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Multisig'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Multisig" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Multisig</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Multisig'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Multisig" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Preimage">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Preimage</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Preimage'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Preimage" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Preimage</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Preimage'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Preimage" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Proxy">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Proxy'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Proxy" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Proxy'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Proxy" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Registry">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Registry</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Registry'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Registry" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Registry</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Registry'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Registry" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.SafeMode">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">SafeMode</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SafeMode'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.SafeMode" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">SafeMode</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SafeMode'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.SafeMode" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Scheduler">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Scheduler</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Scheduler'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Scheduler" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Scheduler</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Scheduler'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Scheduler" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.SubtensorModule">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">SubtensorModule</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SubtensorModule'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.SubtensorModule" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">SubtensorModule</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SubtensorModule'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.SubtensorModule" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Sudo">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Sudo</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Sudo'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Sudo" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Sudo</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Sudo'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Sudo" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Swap">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Swap</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Swap'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Swap" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Swap</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Swap'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Swap" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.System">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">System</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'System'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.System" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">System</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'System'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.System" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Timestamp">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Timestamp</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Timestamp'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Timestamp" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Timestamp</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Timestamp'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Timestamp" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="bittensor.extras.dev_framework.calls.pallets.Utility">
-<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Utility</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Utility'</span></em><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Utility" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.extras.dev_framework.calls.pallets.</span></span><span class="sig-name descname"><span class="pre">Utility</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Utility'</span></span><a class="headerlink" href="#bittensor.extras.dev_framework.calls.pallets.Utility" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -661,11 +679,12 @@ Subtensor spec version: 331</p>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
@@ -673,11 +692,13 @@ Subtensor spec version: 331</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Balances"><code class="docutils literal notranslate"><span class="pre">Balances</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.BaseFee"><code class="docutils literal notranslate"><span class="pre">BaseFee</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Commitments"><code class="docutils literal notranslate"><span class="pre">Commitments</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Contracts"><code class="docutils literal notranslate"><span class="pre">Contracts</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Crowdloan"><code class="docutils literal notranslate"><span class="pre">Crowdloan</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Drand"><code class="docutils literal notranslate"><span class="pre">Drand</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.EVM"><code class="docutils literal notranslate"><span class="pre">EVM</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Ethereum"><code class="docutils literal notranslate"><span class="pre">Ethereum</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Grandpa"><code class="docutils literal notranslate"><span class="pre">Grandpa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.MevShield"><code class="docutils literal notranslate"><span class="pre">MevShield</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Multisig"><code class="docutils literal notranslate"><span class="pre">Multisig</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Preimage"><code class="docutils literal notranslate"><span class="pre">Preimage</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bittensor.extras.dev_framework.calls.pallets.Proxy"><code class="docutils literal notranslate"><span class="pre">Proxy</span></code></a></li>
@@ -716,7 +737,7 @@ By Opentensor Foundation
 
   <p class="copyright">
     
-      © Copyright 2024, Opentensor Foundation.
+      © Copyright 2025, Opentensor Foundation.
       <br/>
     
   </p>

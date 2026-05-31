@@ -54,7 +54,7 @@ const sidebars = {
         "learn/emissions",
         "learn/ema",
         "learn/yuma-consensus",
-        "learn/yc3-blog",
+        "learn/yc3-blog",        
         "concepts/weight-copying-in-bittensor",
         "learn/yuma3-migration-guide",
         "learn/fees",
@@ -83,6 +83,18 @@ const sidebars = {
       collapsed: true,
       items: [
         "keys/wallets",
+         {
+          type: "category",
+          label: "Bittensor Wallet",
+          collapsible: true,
+          collapsed: true,
+          items: [
+            "keys/btwallet/index",
+            "keys/btwallet/keypair",
+            "keys/btwallet/encrypt-decrypt",
+            "keys/btwallet/wallet-class",
+          ],
+        },
         "keys/working-with-keys",
         "keys/handle-seed-phrase",
         "keys/coldkey-hotkey-security",
@@ -101,6 +113,7 @@ const sidebars = {
         },
         "keys/multisig",
         "keys/coldkey-swap",
+        
       ],
     },
 
@@ -116,6 +129,7 @@ const sidebars = {
           id: "staking-and-delegation/managing-stake-sdk",
           label: "Managing Your Stakes",
         },
+        "staking-and-delegation/conviction-staking",
         {
           type: "category",
           label: "Root claims",
@@ -211,13 +225,12 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "sdk/index",
+        "sdk/index",       
         "getting-started/installation",
         "sdk/env-vars",
         "sdk/bt-api-ref",
         "sdk/subtensor-api",
         "sdk/mev-protection",
-        "getting-started/install-wallet-sdk",
         "sdk/call",
         "sdk/migration-guide",
         "subnets/asyncio",

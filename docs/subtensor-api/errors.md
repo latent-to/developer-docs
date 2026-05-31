@@ -3,7 +3,7 @@
 This page contains error variants returned by the Bittensor (Subtensor) runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from a live snapshot of the Subtensor runtime on **2026-05-15**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -929,6 +929,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Conne
 
 ## `subtensorModule`
 
+### `ActiveLockExists`
+
+- **interface**: `api.errors.subtensorModule.ActiveLockExists`
+- **summary**: A coldkey swap cannot proceed because the destination coldkey already has active locked mass on one or more subnets.
+
 ### `ActivityCutoffTooLow`
 
 - **interface**: `api.errors.subtensorModule.ActivityCutoffTooLow`
@@ -998,11 +1003,6 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Conne
 
 - **interface**: `api.errors.subtensorModule.CanNotSetRootNetworkWeights`
 - **summary**: Can not set weights for the root network.
-
-### `CannotUnstakeLock`
-
-- **interface**: `api.errors.subtensorModule.CannotUnstakeLock`
-- **summary**: Trying to unstake your lock amount.
 
 ### `ChildParentInconsistency`
 
@@ -1184,6 +1184,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Conne
 - **interface**: `api.errors.subtensorModule.InsufficientLiquidity`
 - **summary**: Not enough liquidity.
 
+### `InsufficientStakeForLock`
+
+- **interface**: `api.errors.subtensorModule.InsufficientStakeForLock`
+- **summary**: The coldkey's available (unlocked) alpha stake is less than the requested lock amount.
+
 ### `InvalidChild`
 
 - **interface**: `api.errors.subtensorModule.InvalidChild`
@@ -1299,6 +1304,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Conne
 - **interface**: `api.errors.subtensorModule.LiquidAlphaDisabled`
 - **summary**: Attempting to set alpha high/low while disabled
 
+### `LockHotkeyMismatch`
+
+- **interface**: `api.errors.subtensorModule.LockHotkeyMismatch`
+- **summary**: A lock already exists for this coldkey on the subnet pointing to a different hotkey. Use `move_lock` first to reassign it.
+
 ### `MaxWeightExceeded`
 
 - **interface**: `api.errors.subtensorModule.MaxWeightExceeded`
@@ -1338,6 +1348,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Conne
 
 - **interface**: `api.errors.subtensorModule.NewHotKeyNotCleanForRootSwap`
 - **summary**: The new hotkey has outstanding root claimable or non-zero root stake, so the root rate-book cannot be merged without misallocating dividends.
+
+### `NoExistingLock`
+
+- **interface**: `api.errors.subtensorModule.NoExistingLock`
+- **summary**: An operation requires an existing lock (e.g., `move_lock`) but no lock exists for this coldkey on the subnet.
 
 ### `NonAssociatedColdKey`
 
@@ -1474,6 +1489,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Conne
 - **interface**: `api.errors.subtensorModule.StakeTooLowForRoot`
 - **summary**: A hotkey with too little stake is attempting to join the root subnet.
 
+### `StakeUnavailable`
+
+- **interface**: `api.errors.subtensorModule.StakeUnavailable`
+- **summary**: The requested stake amount is unavailable (e.g., it is locked and cannot be moved).
+
 ### `StakingOperationRateLimitExceeded`
 
 - **interface**: `api.errors.subtensorModule.StakingOperationRateLimitExceeded`
@@ -1583,6 +1603,11 @@ Generated from a live snapshot of the Subtensor runtime on **2026-04-24**. Conne
 
 - **interface**: `api.errors.subtensorModule.UnableToRecoverPublicKey`
 - **summary**: Public key cannot be recovered.
+
+### `UnlockAmountTooHigh`
+
+- **interface**: `api.errors.subtensorModule.UnlockAmountTooHigh`
+- **summary**: The amount passed to unlock exceeds the current locked mass.
 
 ### `VotingPowerTrackingNotEnabled`
 

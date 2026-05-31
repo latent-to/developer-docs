@@ -30,9 +30,9 @@
   <link href="../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/bittensor-custom.css?v=c1dfe055" />
   
   <!-- So that users can add custom icons -->
@@ -42,9 +42,9 @@
 <link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/core/extrinsics/mev_shield/index';</script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" />
@@ -353,7 +353,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -377,7 +377,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -422,7 +422,7 @@
 <p>Module provides sync MEV Shield extrinsics.</p>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.core.extrinsics.mev_shield.submit_encrypted_extrinsic" title="bittensor.core.extrinsics.mev_shield.submit_encrypted_extrinsic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">submit_encrypted_extrinsic</span></code></a>(subtensor, wallet, call[, ...])</p></td>
 <td><p>Submits an encrypted extrinsic to the MEV Shield pallet.</p></td>
@@ -438,7 +438,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.core.extrinsics.mev_shield.submit_encrypted_extrinsic">
-<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.mev_shield.</span></span><span class="sig-name descname"><span class="pre">submit_encrypted_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sign_with</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coldkey'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.mev_shield.submit_encrypted_extrinsic" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.mev_shield.</span></span><span class="sig-name descname"><span class="pre">submit_encrypted_extrinsic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sign_with</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coldkey'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_inclusion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_finalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks_for_revealed_execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.mev_shield.submit_encrypted_extrinsic" title="Link to this definition">#</a></dt>
 <dd><p>Submits an encrypted extrinsic to the MEV Shield pallet.</p>
 <p>This function encrypts a call using ML-KEM-768 + XChaCha20Poly1305 and submits it to the MevShield pallet. The
 extrinsic remains encrypted in the transaction pool until it is included in a block and decrypted by validators.</p>
@@ -457,9 +457,9 @@ think of it as an expiration date for the transaction.</p></li>
 <li><p><strong>wait_for_finalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the finalization of the transaction.</p></li>
 <li><p><strong>wait_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether to wait for the executed event, indicating that validators have
 successfully decrypted and executed the inner call. If True, the function will poll subsequent blocks for
-the event matching this submission’s commitment.</p></li>
+the extrinsic matching this submission.</p></li>
 <li><p><strong>blocks_for_revealed_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Maximum number of blocks to poll for the executed event after inclusion.
-The function checks blocks from start_block + 1 to start_block + blocks_for_revealed_execution. Returns
+The function checks blocks from start_block to start_block + blocks_for_revealed_execution. Returns
 immediately if the event is found before the block limit is reached.</p></li>
 </ul>
 </dd>
@@ -478,32 +478,24 @@ immediately if the event is found before the block limit is reached.</p></li>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The encryption uses the public key from NextKey storage, which rotates every block. The payload structure is:
-payload_core = signer_bytes (32B) + key_hash (32B Blake2-256 hash of NextKey) + SCALE(call)
-plaintext = payload_core + b”x01” + signature (64B for sr25519)
-commitment = blake2_256(payload_core)</p>
-<p>The key_hash binds the transaction to the key epoch at submission time and replaces nonce-based replay
-protection.</p>
+<p>The encryption uses the public key from NextKey storage, which rotates every block. The ciphertext wire format
+is: [key_hash(16)][u16 kem_len LE][kem_ct][nonce24][aead_ct], where key_hash = twox_128(NextKey).</p>
 </div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.core.extrinsics.mev_shield.wait_for_extrinsic_by_hash">
-<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.mev_shield.</span></span><span class="sig-name descname"><span class="pre">wait_for_extrinsic_by_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extrinsic_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shield_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submit_block_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_blocks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.mev_shield.wait_for_extrinsic_by_hash" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.core.extrinsics.mev_shield.</span></span><span class="sig-name descname"><span class="pre">wait_for_extrinsic_by_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extrinsic_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submit_block_hash</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_blocks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.core.extrinsics.mev_shield.wait_for_extrinsic_by_hash" title="Link to this definition">#</a></dt>
 <dd><p>Wait for the result of a MeV Shield encrypted extrinsic.</p>
 <p>After submit_encrypted succeeds, the block author will decrypt and submit the inner extrinsic directly. This
-function polls subsequent blocks looking for either:
-- an extrinsic matching the provided hash (success)
-OR
-- a markDecryptionFailed extrinsic with matching shield ID (failure)</p>
+function polls subsequent blocks looking for an extrinsic matching the provided hash.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>subtensor</strong> (<a class="reference internal" href="../../subtensor/index.html#bittensor.core.subtensor.Subtensor" title="bittensor.core.subtensor.Subtensor"><em>bittensor.core.subtensor.Subtensor</em></a>) – SubtensorInterface instance.</p></li>
 <li><p><strong>extrinsic_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The hash of the inner extrinsic to find.</p></li>
-<li><p><strong>shield_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The wrapper ID from EncryptedSubmitted event (for detecting decryption failures).</p></li>
 <li><p><strong>submit_block_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Block hash where submit_encrypted was included.</p></li>
-<li><p><strong>timeout_blocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Max blocks to wait (default 3).</p></li>
+<li><p><strong>timeout_blocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Max blocks to wait.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -558,11 +550,12 @@ OR
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
@@ -594,7 +587,7 @@ By Opentensor Foundation
 
   <p class="copyright">
     
-      © Copyright 2024, Opentensor Foundation.
+      © Copyright 2025, Opentensor Foundation.
       <br/>
     
   </p>
