@@ -17,11 +17,11 @@ However, an attacker that gains your staking proxy can still drain your token ba
 ## How the attack works
 
 1. The attacker stakes some of their own TAO into a subnet (first leg).
-2. Using the stolen `Staking` proxy, they stake a large amount of the victim's TAO into the same subnet and hotkey (second leg), moving the pool further.
+2. Using the stolen `Staking` proxy, they stake a large amount of the victim's TAO into the same subnet and hotkey (second leg), amplifying slippage against the victim's position.
 3. The attacker unstakes their alpha (third leg).
 4. Using the proxy again, they unstake the victim's alpha (fourth leg).
 
-The attack may be obscure to the victim, in that no transaction links their account directly to a the attackers. The loss shows up only as unexpected transactions that lose value to high slippage.
+The attack may be obscure to the victim, in that no transaction links their account directly to the attackers. The loss shows up only as unexpected transactions that lose value to high slippage.
 
 See [Slippage](./slippage.md).
 

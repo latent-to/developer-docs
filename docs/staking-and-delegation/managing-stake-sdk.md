@@ -15,6 +15,7 @@ TAO holders can **stake** any amount of the liquidity they hold to a validator. 
 
 Subsequently, TAO holders **unstake** from a subnet by converting subnet-specific alpha tokens back to TAO through the subnet's automated market maker (AMM).
 
+<ProxyColdkeyWarning />
 
 See also:
 
@@ -112,6 +113,10 @@ Everything above, plus:
 - **Sufficient TAO** in the proxy wallet to cover transaction fees (fees are dynamic and weight-based; see [Transaction Fees](../learn/fees) and [Estimating Fees](../learn/fees#estimating-fees)).
 
 See [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security) for the full security model.
+
+:::tip
+Minimum transaction amount for stake/unstake/move/transfer: 500,000 RAO (0.0005 TAO). To verify, query `subtensorModule.minStake()` on the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate).
+:::
 
 <SdkVersion />
 

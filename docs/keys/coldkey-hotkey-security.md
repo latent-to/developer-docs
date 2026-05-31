@@ -162,6 +162,8 @@ A delayed proxy must broadcast its intent on-chain before executing, which allow
 
 See [Monitor and Reject Announcements](./proxies/working-with-proxies#monitor-and-reject-proxy-announcements) for how to query pending announcements, run a monitoring script, and reject.
 
+See also: [Avoid Staking Proxy Attacks](../learn/avoid-staking-proxy-attacks) for a description of the specific multi-transaction sandwich attack that delayed proxies defend against.
+
 :::warning Do not mine with primary coldkeys
 Miners need coldkeys for currency management and hotkeys for serving requests. No coldkey should be present in an environment running mining code.
 :::

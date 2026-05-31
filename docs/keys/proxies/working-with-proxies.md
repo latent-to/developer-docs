@@ -20,7 +20,7 @@ This page covers each step in the use of proxy wallets as a security feature for
 See:
 
 - [Proxies: Overview](./index.md)
-- [Staking with a Proxy](./staking-with-proxy.md)
+- [Managing Your Stakes](../../staking-and-delegation/managing-stake-sdk)
 
 ## Introduction
 
