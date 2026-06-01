@@ -16,7 +16,7 @@ See also:
 
 ## Security model
 
-Bittensor operations fall into three security tiers based on which key is required:
+Bittensor operations fall into several tiers of security risk based on which key is required:
 
 | Tier | Key required | Recommended environment |
 |---|---|---|
