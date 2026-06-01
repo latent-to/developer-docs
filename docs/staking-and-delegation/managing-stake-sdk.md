@@ -396,6 +396,13 @@ async def monitor():
                     f"  status:       {status}\n"
                 )
 
+        missing = expected_hashes - on_chain_hashes
+        if missing:
+            print("MISSING announcements (expected but not on-chain):")
+            for h in missing:
+                print(f"  {h}")
+            print("These may not have been finalized yet. Re-check shortly.")
+
         unexpected = on_chain_hashes - expected_hashes
         if unexpected:
             print("UNAUTHORIZED announcements detected! Reject immediately and rotate keys.")
@@ -491,7 +498,7 @@ async def main():
 
         result = await subtensor.proxy_announced(
             wallet=proxy_wallet,
-            delegate_ss58=proxy_wallet.coldkey.ss58_address,
+            delegate_ss58=proxy_wallet.coldkeypub.ss58_address,
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.Staking,
             call=add_stake_call,
@@ -965,7 +972,7 @@ async def main():
             print(f"  Executing: subnet {netuid} → {hotkey[:16]}... (hash: {expected_hash[:18]}...)")
             result = await subtensor.proxy_announced(
                 wallet=proxy_wallet,
-                delegate_ss58=proxy_wallet.coldkey.ss58_address,
+                delegate_ss58=proxy_wallet.coldkeypub.ss58_address,
                 real_account_ss58=real_account_ss58,
                 force_proxy_type=ProxyType.Staking,
                 call=add_stake_call,
@@ -1187,7 +1194,7 @@ async def main():
 
         result = await subtensor.proxy_announced(
             wallet=proxy_wallet,
-            delegate_ss58=proxy_wallet.coldkey.ss58_address,
+            delegate_ss58=proxy_wallet.coldkeypub.ss58_address,
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.Staking,
             call=remove_stake_call,
@@ -1202,6 +1209,10 @@ asyncio.run(main())
 </Tabs>
 
 ## Unstake from low-emissions validators
+
+:::danger Not safe for mainnet
+This script calls `subtensor.proxy()` directly with immediate execution and no announcement step. There is no veto window. Do not use this on mainnet. For mainnet, use the announce, monitor, and execute pattern shown in [Unstake with a time-delay proxy](#unstake-with-a-time-delay-proxy) above.
+:::
 
 The script below unstakes from the delegations to validators on particular subnets that have yielded the least emissions in the last tempo.
 
@@ -1252,18 +1263,20 @@ unstake_minimum = 0.0005  # TAO
 RATE_TOLERANCE = 0.02  # 2%
 ALLOW_PARTIAL = False  # Strict mode
 
-async def perform_unstake(subtensor, stake, amount):
+async def perform_unstake(subtensor, stake, amount_tao):
     try:
-        print(f"⏳ Attempting to unstake {amount} from {stake.hotkey_ss58} on subnet {stake.netuid}")
-
         # Compute limit price for this subnet (price floor)
         pool = await subtensor.subnet(netuid=stake.netuid)
         limit_price = bt.Balance.from_tao(pool.price.tao * (1 - RATE_TOLERANCE)).rao
 
+        # Convert the TAO amount to alpha using the pool, then cap by actual stake held
+        amount_alpha_rao = min(pool.tao_to_alpha(amount_tao).rao, stake.stake.rao)
+        print(f"⏳ Attempting to unstake {bt.Balance.from_rao(amount_alpha_rao).set_unit(stake.netuid)} from {stake.hotkey_ss58} on subnet {stake.netuid}")
+
         remove_stake_call = await SubtensorModule(subtensor).remove_stake_limit(
             netuid=stake.netuid,
             hotkey=stake.hotkey_ss58,
-            amount_unstaked=amount.rao,
+            amount_unstaked=amount_alpha_rao,
             limit_price=limit_price,
             allow_partial=ALLOW_PARTIAL,
         )
@@ -1302,8 +1315,7 @@ async def main():
         # Unstake sequentially to avoid nonce collisions
         success_count = 0
         for stake in stakes:
-            amount = bt.Balance.from_tao(min(amount_per_stake, stake.stake.tao)).set_unit(stake.netuid)
-            success = await perform_unstake(subtensor, stake, amount)
+            success = await perform_unstake(subtensor, stake, amount_per_stake)
             if success:
                 success_count += 1
         print(f"\n  Unstake complete. Success: {success_count}/{len(stakes)}")
@@ -1500,7 +1512,7 @@ async def main():
 
         result = await subtensor.proxy_announced(
             wallet=proxy_wallet,
-            delegate_ss58=proxy_wallet.coldkey.ss58_address,
+            delegate_ss58=proxy_wallet.coldkeypub.ss58_address,
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.Staking,
             call=move_stake_call,
@@ -1704,7 +1716,7 @@ async def main():
 
         result = await subtensor.proxy_announced(
             wallet=proxy_wallet,
-            delegate_ss58=proxy_wallet.coldkey.ss58_address,
+            delegate_ss58=proxy_wallet.coldkeypub.ss58_address,
             real_account_ss58=real_account_ss58,
             force_proxy_type=ProxyType.Transfer,
             call=transfer_stake_call,
