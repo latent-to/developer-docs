@@ -118,13 +118,13 @@ When using the SDK with proxies (the recommended approach for mainnet), price pr
 To calculate `limit_price` from a tolerance percentage:
 
 ```python
-pool = await subtensor.subnet(netuid=netuid)
+subnet = await subtensor.subnet(netuid=netuid)
 
 # For staking (price goes up as you buy alpha, so set a ceiling):
-limit_price = bt.Balance.from_tao(pool.price.tao * (1 + rate_tolerance)).rao
+limit_price = bt.Balance.from_tao(subnet.price.tao * (1 + rate_tolerance)).rao
 
 # For unstaking (price goes down as you sell alpha, so set a floor):
-limit_price = bt.Balance.from_tao(pool.price.tao * (1 - rate_tolerance)).rao
+limit_price = bt.Balance.from_tao(subnet.price.tao * (1 - rate_tolerance)).rao
 ```
 
 ### SDK Examples
@@ -140,8 +140,8 @@ from bittensor.core.extrinsics.pallets import SubtensorModule
 
 async def main():
     async with bt.AsyncSubtensor(network="test") as subtensor:
-        pool = await subtensor.subnet(netuid=1)
-        limit_price = bt.Balance.from_tao(pool.price.tao * 1.02).rao  # 2% tolerance
+        subnet = await subtensor.subnet(netuid=1)
+        limit_price = bt.Balance.from_tao(subnet.price.tao * 1.02).rao  # 2% tolerance
 
         call = await SubtensorModule(subtensor).add_stake_limit(
             netuid=1,
