@@ -22,6 +22,7 @@ See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey
 
 ## What are wallets and keys?
 
+The core of your wallet is one or more cryptographic key-pairs, referred to as **coldkey** and **hotkey**. Your wallet consists of the records associated with your key-pairs on the blockchain, including your balances of TAO and alpha currencies, and your history of transactions and interactions with subnets and other wallets (such as mining or validating).
 
 Each coldkey or hotkey is actually a cryptographic [key-pair](https://en.wikipedia.org/wiki/Public-key_cryptography)with a private and a public key.
 The public key is mathematically derived from the private key.
