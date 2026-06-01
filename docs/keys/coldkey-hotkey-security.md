@@ -126,9 +126,7 @@ Configure proxies with:
 
 :::danger Zero-delay proxies provide no veto window
 
-A proxy with `delay: 0` executes immediately — there is no announcement period and no window to reject unauthorized transactions. Always set a non-zero delay for proxies that control financial operations.
-
-The `Transfer` proxy type at zero delay is particularly dangerous: it can drain your entire TAO balance in a single transaction with no opportunity to intervene. If transfer capability is needed at all, prefer `SmallTransfer`.
+A proxy with `delay: 0` executes immediately, with no announcement period and no window to reject unauthorized transactions. It is always recommended set a non-zero delay for proxies that control mainnet liquidity.
 :::
 
 
@@ -207,4 +205,4 @@ Bittensor nodes often run complex software stacks with many dependencies. Steps 
 - Pin exact package versions and verify SHA-256 hashes with `pip install --require-hashes`.
 - Consider sandboxing ML libraries using solutions like custom Docker seccomp profiles.
 
-For an additional layer of defense against supply chain attacks, configure network egress control — a host-level firewall that restricts outbound connections to an explicit allowlist. Even if a malicious package executes, it cannot exfiltrate key material if it cannot reach attacker-controlled infrastructure.
+For an additional layer of defense against supply chain attacks, configure network egress control to create a host-level firewall that restricts outbound connections to an explicit allowlist. Even if a malicious package executes, it cannot exfiltrate key material if it cannot reach attacker-controlled infrastructure.
