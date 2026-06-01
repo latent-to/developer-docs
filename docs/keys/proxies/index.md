@@ -4,7 +4,7 @@ title: "Proxies: Overview"
 
 # Proxies: Overview
 
-This page introduces proxy wallets, a critical security feature in Bittensor.
+This page introduces the theory and use of proxy wallets for enhanced security in Bittensor.
 
 Operational details are covered in [Working with Proxies](../../keys/proxies/working-with-proxies)
 
