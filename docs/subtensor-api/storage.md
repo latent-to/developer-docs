@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **413**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -1695,6 +1695,12 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.subnetOwnerHotkey`
 - **summary**: MAP ( netuid ) --> subnet_owner_hotkey
+
+### `subnetProtocolAlpha(u16)`: `u64`
+
+- **interface**: `api.query.subtensorModule.subnetProtocolAlpha`
+- **modifier**: `Optional`
+- **summary**: MAP ( netuid ) --> protocol_alpha | Cached protocol-owned alpha for a subnet. Accumulates alpha bought by the protocol during TAO reserve injection (instead of being immediately recycled). Included in pro-rata TAO settlement when a subnet is dissolved; cleared on dissolution.
 
 ### `subnetProtocolFlow(u16)`: `i64`
 

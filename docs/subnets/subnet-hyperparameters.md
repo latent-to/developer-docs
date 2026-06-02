@@ -121,6 +121,36 @@ For example, the following command sets the number of owner-immune neurons to `f
 
 :::
 
+## Runtime API: `get_subnet_hyperparams_v3`
+
+The canonical runtime API for fetching subnet hyperparameters is `get_subnet_hyperparams_v3`. V1 and V2 are deprecated.
+
+V3 returns `Option<Vec<HyperparamEntry>>` (None if the subnet does not exist). Each entry is:
+
+```rust
+struct HyperparamEntry {
+    name: Vec<u8>,     // ASCII identifier, e.g. b"kappa"
+    value: HyperparamValue,
+}
+
+enum HyperparamValue {
+    Bool(bool),
+    U16(u16),
+    U32(u32),
+    U64(u64),
+    U128(u128),
+    TaoBalance(u64),
+    I32F32(i32f32),
+    U64F64(u64f64),
+}
+```
+
+Clients look up params by name. Unknown names are forward-compatible additions and should be ignored rather than treated as errors.
+
+**Params removed from V3** (no longer returned): `adjustment_alpha`, `adjustment_interval`, `difficulty`, `min_difficulty`, `max_difficulty`, `rho`.
+
+**Params added in V3**: `burn_half_life`, `burn_increase_mult`, `owner_cut_enabled`, `owner_cut_auto_lock_enabled`.
+
 ## Subnet Hyperparameters
 
 This section details all subnet hyperparameters, including their default values, descriptions, and the setter extrinsics required to modify them.
@@ -155,7 +185,7 @@ The number of blocks for the stake to become inactive for the purpose of epoch i
 
 **Description**:
 
-Not used for neuron registration. Non-root neuron registration pricing is governed by [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult).
+Not used for neuron registration. Non-root neuron registration pricing is governed by [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult). Deprecated/removed from `get_subnet_hyperparams_v3` response.
 
 ### AdjustmentInterval
 
@@ -171,7 +201,7 @@ Not used for neuron registration. Non-root neuron registration pricing is govern
 
 **Description**:
 
-Not used for neuron registration. Non-root neuron registration pricing is continuous and governed by [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult).
+Not used for neuron registration. Non-root neuron registration pricing is continuous and governed by [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult). Deprecated/removed from `get_subnet_hyperparams_v3` response.
 
 ### AlphaSigmoidSteepness
 
@@ -336,7 +366,7 @@ Enables [Commit Reveal](../concepts/commit-reveal)
 
 **Description**:
 
-Not used for neuron registration. Neuron registration uses TAO burn pricing; see [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult).
+Not used for neuron registration. Neuron registration uses TAO burn pricing; see [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult). Deprecated/removed from `get_subnet_hyperparams_v3` response.
 
 ### EMAPriceHalvingPeriod
 
@@ -482,7 +512,7 @@ Upper bound for the **dynamic TAO burn** required for **neuron (UID) registratio
 
 **Description**:
 
-Not used for neuron registration. Neuron registration uses TAO burn pricing; see [MaxBurn](#maxburn).
+Not used for neuron registration. Neuron registration uses TAO burn pricing; see [MaxBurn](#maxburn). Deprecated/removed from `get_subnet_hyperparams_v3` response.
 
 ### MaxRegistrationsPerBlock
 
@@ -590,7 +620,7 @@ Lower bound for the **dynamic TAO burn** required for **neuron (UID) registratio
 
 **Description**:
 
-Not used for neuron registration. Neuron registration uses TAO burn pricing; see [MinBurn](#minburn).
+Not used for neuron registration. Neuron registration uses TAO burn pricing; see [MinBurn](#minburn). Deprecated/removed from `get_subnet_hyperparams_v3` response.
 
 ### MinNonImmuneUids
 
@@ -705,6 +735,38 @@ Enables or disables the subnet owner cut for a subnet. Callable only by the root
 
 Global multiplier that rate-limits how frequently a subnet owner can update subnet hyperparameters. The cooldown window equals `Tempo(netuid) × OwnerHyperparamRateLimit` blocks. The rate limit is tracked independently per hyperparameter; changing `kappa` does not block an immediate change to `rho`, for example.
 
+### OwnerCutAutoLockEnabled
+
+**Type**: bool
+
+**Default**: true
+
+**`btcli` setter**: n/a
+
+**Setter extrinsic**: `sudo_set_owner_cut_auto_lock_enabled`
+
+**Permissions required to set**: Subnet owner or Root
+
+**Description**:
+
+Controls whether the subnet owner's cut of emissions is automatically locked (converted to locked stake) rather than distributed as liquid TAO. Defaults to `true`. Exposed in `get_subnet_hyperparams_v3`.
+
+### OwnerCutEnabled
+
+**Type**: bool
+
+**Default**: true
+
+**`btcli` setter**: n/a
+
+**Setter extrinsic**: `sudo_set_owner_cut_enabled`
+
+**Permissions required to set**: Subnet owner or Root
+
+**Description**:
+
+Controls whether the subnet owner receives their cut of emissions at all. When set to `false`, the owner cut is not distributed. Defaults to `true`. Exposed in `get_subnet_hyperparams_v3`.
+
 ### RecycleOrBurn
 
 **Type**: `RecycleOrBurnEnum`
@@ -733,7 +795,7 @@ Global multiplier that rate-limits how frequently a subnet owner can update subn
 
 **Description**:
 
-Deprecated.
+Deprecated/removed from `get_subnet_hyperparams_v3` response.
 
 <!-- will this be chopped from btcli? -->
 

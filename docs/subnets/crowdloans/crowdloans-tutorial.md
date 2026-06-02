@@ -184,8 +184,8 @@ extrinsic event
 :::info
 
 - Even if the `cap` has been raised, the crowdloan cannot be finalized before the `end` block. Finalizing before the contribution period ends fails with a `ContributionPeriodNotEnded` event.
-- If `target_address` was provided, the raised amount is transferred there.
-- The stored `subtensor.register_leased_network` call executes with creator origin, and the subnet lease is created.
+- At finalization, exactly one action runs: either the raised amount is transferred to `target_address`, or the stored call dispatches with creator origin (whichever was specified at creation; they are mutually exclusive).
+- In this tutorial, `target_address` is `None` and the stored `subtensor.register_leased_network` call executes with creator origin, creating the subnet lease.
 - The created subnet lease includes the coldkey and hotkey of the proxy wallet that manages the subnet. See [Get the lease coldkey](#get-the-lease-coldkey).
   :::
 

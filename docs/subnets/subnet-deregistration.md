@@ -129,9 +129,16 @@ The total amount returned to a subnet owner upon deregistration depends on when 
 
 5. **Extract TAO Pool**: The subnet's TAO pool (`SubnetTAO`) is extracted for distribution
 
-6. **Distribution**: TAO is distributed proportionally to alpha holders:
+6. **Distribution**: TAO is distributed proportionally to alpha holders, accounting for any protocol-owned alpha:
    - Each holder receives: `(holder_alpha_value / total_alpha_value) * pool_tao`
+   - `total_alpha_value` includes any alpha cached in `SubnetProtocolAlpha` (accumulated from chain-side TAO buys). This reduces the per-staker payout proportionally. The protocol's corresponding TAO share is not distributed to users; it is returned to the chain.
    - TAO is credited directly to each holder's coldkey free balance
+
+### Protocol Alpha and Settlement
+
+The protocol tracks its own alpha position per subnet. During TAO reserve injection (coinbase), the protocol buys alpha as part of the emission mechanism. Previously this alpha was immediately recycled (burned). Now it is cached in `SubnetProtocolAlpha` storage, giving the protocol an explicit ownership stake in each subnet's alpha supply.
+
+When a subnet is dissolved, `SubnetProtocolAlpha` is included in the total alpha pool used to compute pro-rata TAO shares. Stakers receive a smaller TAO payout than they would on a subnet with zero protocol alpha: the larger the protocol's accumulated position relative to total alpha, the greater the reduction. The protocol's corresponding TAO is returned to the chain, not distributed to any address. `SubnetProtocolAlpha` is cleared as part of subnet dissolution.
 
 **Source Code**:
 
