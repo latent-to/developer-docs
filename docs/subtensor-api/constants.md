@@ -643,6 +643,12 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 - **value**: `0`
 - **summary**: Initial minimum delegation take.
 
+### `initialMinStake`: `u64`
+
+- **interface**: `api.consts.subtensorModule.initialMinStake`
+- **value**: `2000000`
+- **summary**: Initial minimum stake (RAO). Equals 0.002 TAO.
+
 ### `initialMinDifficulty`: `u64`
 
 - **interface**: `api.consts.subtensorModule.initialMinDifficulty`

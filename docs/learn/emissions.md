@@ -81,10 +81,10 @@ The flow-based model uses an Exponential Moving Average (EMA) of net TAO flows (
    $$\text{protocol\_cost}_i = \text{TAO injected} + \text{chain buys} - \text{root staker claims}$$
 
    - **TAO injected**: emission TAO deposited directly into the subnet's TAO reserve each block
-   - **Chain buys**: excess TAO swapped into the pool by the chain (increases pool-side liquidity)
+   - **Chain buys**: excess TAO swapped into the pool by the chain (increases pool-side liquidity). The alpha acquired through these buys is cached in `SubnetProtocolAlpha` per subnet rather than being immediately recycled. This gives the protocol an explicit ownership stake that participates in pro-rata settlement if the subnet is dissolved.
    - **Root staker claims**: TAO removed from the pool when root stakers claim their alpha-denominated dividends
 
-   This protocol cost is smoothed with a separate EMA ($P_i$) using the same smoothing factor as the user flow EMA. When `NetTaoFlowEnabled = true` (the default), emission shares use **net flow** rather than gross user flow:
+   This protocol cost is smoothed with a separate EMA ($P_i$) using the same smoothing factor as the user flow EMA. The protocol EMA is updated unconditionally every block for all subnets. `NetTaoFlowEnabled` controls only whether the normalized deduction is applied: when `true` (the default), emission shares use **net flow** rather than gross user flow:
 
    $$\text{net}_i = S_i - f \cdot \max(P_i, 0)$$
 
