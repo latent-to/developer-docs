@@ -260,8 +260,49 @@ Extrinsics are signed transactions submitted to the Subtensor blockchain. The `a
 ```bash
 btcli lock add --wallet.name my_wallet --netuid 1 --hotkey-ss58 5G... --amount 50
 ```
+```console
+btcli lock add --wallet.name SuperPractice --netuid 444 --hotkey-ss58 5GYLDZPadaNcSAkcbPVVA6UYcNWpKwibDS8VAhjGMzKhQhrv --amount 1000
 
-Omit flags for guided interactive prompts: `btcli lock add`
+Using the specified network test from config
+
+                                                       Lock Preview
+
+        ┃          ┃    Current ┃            ┃            ┃  Available ┃            ┃            ┃     +365d ┃
+ Netuid ┃   Mode   ┃     Locked ┃     Adding ┃ New Locked ┃      After ┃  +30d Free ┃  +90d Free ┃      Free ┃ Hotkey
+━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━
+  444   │ decaying │ 2,252.1588 │ 1,000.0000 │ 3,252.1588 │ 160,610.2… │   670.9189 │ 1,626.0798 │ 3,056.57… │ 5GYLDZPad…
+        │          │         αε │         αε │         αε │         αε │         αε │         αε │        αε │
+
+Owner hotkey target: conviction is pinned to locked alpha by chain rules.
+Decaying locks free locked alpha over time. Perpetual locks keep alpha locked until you switch them to decaying.
+
+
+Lock projection (use --no-graph to hide)
+(Alpha (αε)) ^
+      3.4k |
+      3.0k | ⠢⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      2.7k | ⠀⠀⠉⠢⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      2.3k | ⠀⠀⠀⠀⠀⠉⠒⠤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      1.9k | ⠀⠀⠀⠀⠀⠀⠀⠀⠈⠒⠤⢄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      1.5k | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠑⠒⠤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      1.1k | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠑⠒⠢⢄⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+       759 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠒⠒⠢⠤⠤⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+       379 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠑⠒⠒⠒⠤⠤⠤⠤⢄⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      0.00 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠉⠉⠉⠒⠒⠒⠒
+-----------|-|---------|---------|---------|---------|---------|---------|-> (Days)
+           | 0         61        122       182       243       304       365
+
+Legend:
+-------
+⠤⠤ Locked = Conviction
+Owner hotkey target: one line represents both locked alpha and conviction.
+
+Submit lock top-up? [y/n] (n): y
+Enter your password:
+Decrypting...
+✅ Your extrinsic has been included as 7264727-6
+✅ Lock add succeeded.
+```
 
 </TabItem>
 <TabItem value="sdk" label="Python SDK">
@@ -391,9 +432,8 @@ Reassigns the coldkey's existing lock on `netuid` from its current hotkey to `de
 
 - **Conviction resets to zero** when the old and new hotkeys are owned by different coldkeys.
 - Conviction is **preserved** when both hotkeys are owned by the same coldkey (moving between your own hotkeys).
-- The locked mass is preserved in both cases.
+- The locked mass of alpha within the subnet is conserved across the move from one hotkey to another.
 
-When moving to a different-coldkey hotkey, conviction resets to zero, giving the previous hotkey's stakers a window to react before conviction rebuilds.
 
 **Errors:**
 
