@@ -175,6 +175,20 @@ If a subnet is deregistered, conviction lock records for that subnet are deleted
 ## Querying conviction
 
 <Tabs groupId="conviction-query">
+<TabItem value="btcli" label="btcli">
+
+```bash
+# All active locks for your coldkey
+btcli lock list --wallet.name my_wallet
+
+# Filter to a specific subnet
+btcli lock list --wallet.name my_wallet --netuid 1
+
+# View one lock with a conviction projection graph
+btcli lock show --wallet.name my_wallet --netuid 1
+```
+
+</TabItem>
 <TabItem value="sdk" label="Python SDK">
 
 The following methods on `bittensor.Subtensor` read chain state and do not submit any transaction. All accept an optional `block` parameter to query at a specific block number.
@@ -241,6 +255,15 @@ Extrinsics are signed transactions submitted to the Subtensor blockchain. The `a
 ### Locking stake
 
 <Tabs groupId="conviction-extrinsic">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli lock add --wallet.name my_wallet --netuid 1 --hotkey-ss58 5G... --amount 50
+```
+
+Omit flags for guided interactive prompts: `btcli lock add`
+
+</TabItem>
 <TabItem value="sdk" label="Python SDK">
 
 ```python
@@ -283,6 +306,20 @@ Locks `amount` alpha from the coldkey's stake on `netuid` to `hotkey`.
 ### Setting lock mode to perpetual
 
 <Tabs groupId="conviction-extrinsic">
+<TabItem value="btcli" label="btcli">
+
+```bash
+# View current mode
+btcli lock mode --wallet.name my_wallet --netuid 1
+
+# Switch to perpetual
+btcli lock mode --wallet.name my_wallet --netuid 1 --mode perpetual
+
+# Resume decaying
+btcli lock mode --wallet.name my_wallet --netuid 1 --mode decaying
+```
+
+</TabItem>
 <TabItem value="sdk" label="Python SDK">
 
 ```python
@@ -319,6 +356,15 @@ Calling `set_perpetual_lock(false)` emits the `PerpetualLockUpdated` event on-ch
 ### Moving a lock
 
 <Tabs groupId="conviction-extrinsic">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli lock move --wallet.name my_wallet --netuid 1 --dest 5G...
+```
+
+Omit `--dest` for interactive hotkey selection.
+
+</TabItem>
 <TabItem value="sdk" label="Python SDK">
 
 ```python
