@@ -717,7 +717,7 @@ Controls whether the subnet owner's cut of emissions is automatically locked eac
 
 **Description**:
 
-Enables or disables the subnet owner cut for a subnet. Callable only by the root account or the subnet owner.
+Controls whether the subnet owner receives their cut of emissions at all. When set to `false`, the owner cut is not distributed. Defaults to `true`. Exposed in `get_subnet_hyperparams_v3`.
 
 ### OwnerHyperparamRateLimit
 
@@ -734,38 +734,6 @@ Enables or disables the subnet owner cut for a subnet. Callable only by the root
 **Description**:
 
 Global multiplier that rate-limits how frequently a subnet owner can update subnet hyperparameters. The cooldown window equals `Tempo(netuid) × OwnerHyperparamRateLimit` blocks. The rate limit is tracked independently per hyperparameter; changing `kappa` does not block an immediate change to `rho`, for example.
-
-### OwnerCutAutoLockEnabled
-
-**Type**: bool
-
-**Default**: true
-
-**`btcli` setter**: n/a
-
-**Setter extrinsic**: `sudo_set_owner_cut_auto_lock_enabled`
-
-**Permissions required to set**: Subnet owner or Root
-
-**Description**:
-
-Controls whether the subnet owner's cut of emissions is automatically locked (converted to locked stake) rather than distributed as liquid TAO. Defaults to `true`. Exposed in `get_subnet_hyperparams_v3`.
-
-### OwnerCutEnabled
-
-**Type**: bool
-
-**Default**: true
-
-**`btcli` setter**: n/a
-
-**Setter extrinsic**: `sudo_set_owner_cut_enabled`
-
-**Permissions required to set**: Subnet owner or Root
-
-**Description**:
-
-Controls whether the subnet owner receives their cut of emissions at all. When set to `false`, the owner cut is not distributed. Defaults to `true`. Exposed in `get_subnet_hyperparams_v3`.
 
 ### RecycleOrBurn
 
