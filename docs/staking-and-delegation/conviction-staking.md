@@ -260,6 +260,10 @@ Extrinsics are signed transactions submitted to the Subtensor blockchain. The `a
 ```bash
 btcli lock add --wallet.name my_wallet --netuid 1 --hotkey-ss58 5G... --amount 50
 ```
+
+<details>
+  <summary><strong>Show sample output</strong></summary>
+
 ```console
 btcli lock add --wallet.name SuperPractice --netuid 444 --hotkey-ss58 5GYLDZPadaNcSAkcbPVVA6UYcNWpKwibDS8VAhjGMzKhQhrv --amount 1000
 
@@ -303,6 +307,8 @@ Decrypting...
 ✅ Your extrinsic has been included as 7264727-6
 ✅ Lock add succeeded.
 ```
+
+</details>
 
 </TabItem>
 <TabItem value="sdk" label="Python SDK">
