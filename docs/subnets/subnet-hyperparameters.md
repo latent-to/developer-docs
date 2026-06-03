@@ -661,7 +661,7 @@ Rate limit for network registrations expressed in blocks
 
 **Type**: Bool
 
-**Default**: `true`
+**Default**: `false`
 
 **`btcli` setter**: none
 
