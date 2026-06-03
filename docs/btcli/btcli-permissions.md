@@ -158,6 +158,8 @@ See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
 - **`new-hotkey`** creates a new hotkey owned by the coldkey.
 - **`transfer`** transfers TAO to another coldkey.
 - **`set-identity`** sets the coldkey's public identity information.
+- **`encrypt`** encrypts a message to a recipient ED25519 SS58 address.
+- **`decrypt`** decrypts a hex-encoded ciphertext using an ED25519 wallet key.
 - **`sign`(with coldkey)** signs a message with the coldkey.
 
 #### Operations requiring hotkey private key:
@@ -190,6 +192,8 @@ See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
 #### `btcli wallet get-identity`
 #### `btcli wallet sign`
 #### `btcli wallet verify`
+#### `btcli wallet encrypt`
+#### `btcli wallet decrypt`
 
 </details>
 
@@ -219,6 +223,31 @@ See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
 ##### `btcli stake child take`
 #### `btcli stake set-claim`
 #### `btcli stake process-claim`
+
+</details>
+
+### `lock`
+
+The `btcli lock` command group are commands that used to create and manage stake locks and convictions.
+
+#### Read commands (permissionless)
+
+- **`list`** lists all active stake locks and conviction on a given wallet's coldkey
+- **`view`** allows you to view a coldkey's active stake lock on a specific subnet and its lock projection on the subnet.
+
+#### Write commands
+
+- **`add`** locks subnet alpha to a hotkey on a given subnet
+- **`mode`** allows you view or change a subnet's lock mode between **decaying** and **perpetual**.
+- **`move`** allows you move your lock on a subnet to a different conviction hotkey.
+
+<details>
+  <summary>`btcli lock`</summary>
+#### `btcli lock list`
+#### `btcli lock view`
+#### `btcli lock add`
+#### `btcli lock mode`
+#### `btcli lock move`
 
 </details>
 
@@ -266,6 +295,7 @@ See: [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
 - **`get-identity`** retrieves on-chain identity for a given subnet.
 - **`mechanisms count`** shows how many mechanisms are registered under a subnet.
 - **`mechanisms emissions`** display the current emission split across mechanisms for a subnet.
+- **`conviction`** shows the conviction landscape of a single subnet.
 
 #### Write commands (require coldkey)
 
@@ -298,6 +328,7 @@ Creating subnets requires a coldkey with sufficient balance to cover burn costs.
 #### `btcli subnets get-identity`
 #### `btcli subnets set-identity`
 #### `btcli subnets set-symbol`
+#### `btcli subnets conviction`
 
 </details>
 
