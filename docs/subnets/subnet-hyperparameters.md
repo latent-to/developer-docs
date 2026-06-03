@@ -671,7 +671,7 @@ Rate limit for network registrations expressed in blocks
 
 **Description**:
 
-Enables automatic locking of the subnet owner’s distribution cut. When enabled, existing locks are topped up automatically; otherwise, a new lock is created for the subnet owner’s hotkey.
+Controls whether the subnet owner's cut of emissions is automatically locked each epoch. When `true`, the distribution cut is added to the owner's conviction lock (topping up an existing lock or creating a new one targeting the owner hotkey). When `false`, the cut is received as free stake with no auto-locking. Exposed in `get_subnet_hyperparams_v3`.
 
 ### OwnerCutEnabled
 
