@@ -175,6 +175,20 @@ If a subnet is deregistered, conviction lock records for that subnet are deleted
 ## Querying conviction
 
 <Tabs groupId="conviction-query">
+<TabItem value="btcli" label="btcli">
+
+```bash
+# All active locks for your coldkey
+btcli lock list --wallet.name my_wallet
+
+# Filter to a specific subnet
+btcli lock list --wallet.name my_wallet --netuid 1
+
+# View one lock with a conviction projection graph
+btcli lock show --wallet.name my_wallet --netuid 1
+```
+
+</TabItem>
 <TabItem value="sdk" label="Python SDK">
 
 The following methods on `bittensor.Subtensor` read chain state and do not submit any transaction. All accept an optional `block` parameter to query at a specific block number.
@@ -241,6 +255,62 @@ Extrinsics are signed transactions submitted to the Subtensor blockchain. The `a
 ### Locking stake
 
 <Tabs groupId="conviction-extrinsic">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli lock add --wallet.name my_wallet --netuid 1 --hotkey-ss58 5G... --amount 50
+```
+
+<details>
+  <summary><strong>Show sample output</strong></summary>
+
+```console
+btcli lock add --wallet.name SuperPractice --netuid 444 --hotkey-ss58 5GYLDZPadaNcSAkcbPVVA6UYcNWpKwibDS8VAhjGMzKhQhrv --amount 1000
+
+Using the specified network test from config
+
+                                                       Lock Preview
+
+        ┃          ┃    Current ┃            ┃            ┃  Available ┃            ┃            ┃     +365d ┃
+ Netuid ┃   Mode   ┃     Locked ┃     Adding ┃ New Locked ┃      After ┃  +30d Free ┃  +90d Free ┃      Free ┃ Hotkey
+━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━
+  444   │ decaying │ 2,252.1588 │ 1,000.0000 │ 3,252.1588 │ 160,610.2… │   670.9189 │ 1,626.0798 │ 3,056.57… │ 5GYLDZPad…
+        │          │         αε │         αε │         αε │         αε │         αε │         αε │        αε │
+
+Owner hotkey target: conviction is pinned to locked alpha by chain rules.
+Decaying locks free locked alpha over time. Perpetual locks keep alpha locked until you switch them to decaying.
+
+
+Lock projection (use --no-graph to hide)
+(Alpha (αε)) ^
+      3.4k |
+      3.0k | ⠢⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      2.7k | ⠀⠀⠉⠢⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      2.3k | ⠀⠀⠀⠀⠀⠉⠒⠤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      1.9k | ⠀⠀⠀⠀⠀⠀⠀⠀⠈⠒⠤⢄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      1.5k | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠑⠒⠤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      1.1k | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠑⠒⠢⢄⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+       759 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠒⠒⠢⠤⠤⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+       379 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠑⠒⠒⠒⠤⠤⠤⠤⢄⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      0.00 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠉⠉⠉⠒⠒⠒⠒
+-----------|-|---------|---------|---------|---------|---------|---------|-> (Days)
+           | 0         61        122       182       243       304       365
+
+Legend:
+-------
+⠤⠤ Locked = Conviction
+Owner hotkey target: one line represents both locked alpha and conviction.
+
+Submit lock top-up? [y/n] (n): y
+Enter your password:
+Decrypting...
+✅ Your extrinsic has been included as 7264727-6
+✅ Lock add succeeded.
+```
+
+</details>
+
+</TabItem>
 <TabItem value="sdk" label="Python SDK">
 
 ```python
@@ -283,6 +353,20 @@ Locks `amount` alpha from the coldkey's stake on `netuid` to `hotkey`.
 ### Setting lock mode to perpetual
 
 <Tabs groupId="conviction-extrinsic">
+<TabItem value="btcli" label="btcli">
+
+```bash
+# View current mode
+btcli lock mode --wallet.name my_wallet --netuid 1
+
+# Switch to perpetual
+btcli lock mode --wallet.name my_wallet --netuid 1 --mode perpetual
+
+# Resume decaying
+btcli lock mode --wallet.name my_wallet --netuid 1 --mode decaying
+```
+
+</TabItem>
 <TabItem value="sdk" label="Python SDK">
 
 ```python
@@ -319,6 +403,15 @@ Calling `set_perpetual_lock(false)` emits the `PerpetualLockUpdated` event on-ch
 ### Moving a lock
 
 <Tabs groupId="conviction-extrinsic">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli lock move --wallet.name my_wallet --netuid 1 --dest 5G...
+```
+
+Omit `--dest` for interactive hotkey selection.
+
+</TabItem>
 <TabItem value="sdk" label="Python SDK">
 
 ```python
@@ -345,9 +438,8 @@ Reassigns the coldkey's existing lock on `netuid` from its current hotkey to `de
 
 - **Conviction resets to zero** when the old and new hotkeys are owned by different coldkeys.
 - Conviction is **preserved** when both hotkeys are owned by the same coldkey (moving between your own hotkeys).
-- The locked mass is preserved in both cases.
+- The locked mass of alpha within the subnet is conserved across the move from one hotkey to another.
 
-When moving to a different-coldkey hotkey, conviction resets to zero, giving the previous hotkey's stakers a window to react before conviction rebuilds.
 
 **Errors:**
 
