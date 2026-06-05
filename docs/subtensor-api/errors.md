@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **415**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -463,15 +463,35 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 - **interface**: `api.errors.crowdloan.InvalidCrowdloanId`
 - **summary**: The crowdloan id is invalid.
 
+### `InvalidFinalizationConfig`
+
+- **interface**: `api.errors.crowdloan.InvalidFinalizationConfig`
+- **summary**: Exactly one of call or target address must be provided.
+
 ### `InvalidOrigin`
 
 - **interface**: `api.errors.crowdloan.InvalidOrigin`
 - **summary**: The origin of this call is invalid.
 
+### `MaxContributionReached`
+
+- **interface**: `api.errors.crowdloan.MaxContributionReached`
+- **summary**: The contributor has already reached the maximum contribution.
+
 ### `MaxContributorsReached`
 
 - **interface**: `api.errors.crowdloan.MaxContributorsReached`
 - **summary**: The maximum number of contributors has been reached.
+
+### `MaximumContributionTooLow`
+
+- **interface**: `api.errors.crowdloan.MaximumContributionTooLow`
+- **summary**: The maximum contribution is too low.
+
+### `MinimumContributionTooHigh`
+
+- **interface**: `api.errors.crowdloan.MinimumContributionTooHigh`
+- **summary**: The minimum contribution is too high.
 
 ### `MinimumContributionTooLow`
 
