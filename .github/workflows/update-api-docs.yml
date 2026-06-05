@@ -68,14 +68,13 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No changes in $DOCS_DIR — nothing to PR."
           else
-            # The header now records the runtime spec version rather than the
-            # generation date, so a spec-version line in the diff is a reliable
-            # signal that the runtime was upgraded. Skip the PR if no spec
-            # version change is detected.
+            # The header records the runtime spec version, so a change in the
+            # "Spec version **N**" line is the reliable signal that the runtime
+            # was upgraded. Skip the PR if no spec version change is detected.
             SPEC_CHANGED=$(git diff HEAD -- "$DOCS_DIR" \
               | grep -E '^[+-]' \
               | grep -vE '^(\+\+\+|---) ' \
-              | grep -c 'spec version \*\*' || true)
+              | grep -ic 'spec version \*\*' || true)
 
             if [ "$SPEC_CHANGED" -eq 0 ]; then
               echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -105,14 +104,16 @@ jobs:
         if: steps.diff.outputs.changed == 'true'
         run: |
           THRESHOLD=5
-          DOCS_FILES=$(git diff origin/main..HEAD -- "$DOCS_DIR" --name-only)
+          # --name-only and --stat MUST come before -- to be treated as options
+          DOCS_FILES=$(git diff --name-only origin/main..HEAD -- "$DOCS_DIR")
+          STAT=$(git diff --stat origin/main..HEAD -- "$DOCS_DIR" | tail -6)
 
-          # Extract old and new spec version from the diff
+          # Extract old and new spec version from the diff header lines
           OLD_SPEC=$(git diff origin/main..HEAD -- "$DOCS_DIR" \
-            | grep '^-Generated from Subtensor runtime spec version' \
+            | grep '^-Spec version' \
             | sed 's/.*\*\*\([0-9]*\)\*\*.*/\1/' | head -1)
           NEW_SPEC=$(git diff origin/main..HEAD -- "$DOCS_DIR" \
-            | grep '^+Generated from Subtensor runtime spec version' \
+            | grep '^+Spec version' \
             | sed 's/.*\*\*\([0-9]*\)\*\*.*/\1/' | head -1)
 
           {
@@ -129,7 +130,8 @@ jobs:
 
             while IFS= read -r filepath; do
               [ -z "$filepath" ] && continue
-              filename=$(basename "$filepath")
+              # basename -- guards against filenames that start with -
+              filename=$(basename -- "$filepath")
 
               ADDED=$(git diff origin/main..HEAD -- "$filepath" \
                 | grep '^+### ' | sed 's/^+### //' | sed 's/`//g')
