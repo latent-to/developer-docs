@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **415**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -881,7 +881,7 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 - **interface**: `api.tx.crowdloan.contribute`
 - **summary**: Contribute to an active crowdloan.
 
-    The contribution will be transfered to the crowdloan account and will be refunded if the crowdloan fails to raise the cap. If the contribution would raise the amount above the cap, the contribution will be set to the amount that is left to be raised.
+    The contribution will be transferred to the crowdloan account and will be refunded if the crowdloan fails to raise the cap. If the contribution would raise the amount above the cap, the contribution will be set to the amount that is left to be raised.
 
     The dispatch origin for this call must be _Signed_.
 
@@ -893,9 +893,9 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 ### `create(deposit: u128, min_contribution: u128, cap: u128, end: u32, call: Option<Box<RuntimeCall>>, target_address: Option<T::AccountId>)`
 
 - **interface**: `api.tx.crowdloan.create`
-- **summary**: Create a crowdloan that will raise funds up to a maximum cap and if successful, will either dispatch a stored call (using creator origin) or transfer funds to a target address.
+- **summary**: Create a crowdloan that will raise funds up to a maximum cap and if successful, will either transfer funds to the target address or dispatch the call (using creator origin). Exactly one of call or target address must be provided. Providing both, or providing neither, is rejected.
 
-    The initial deposit will be transfered to the crowdloan account and will be refunded in case the crowdloan fails to raise the cap. Additionally, the creator will pay for the execution of the call.
+    The initial deposit will be transferred to the crowdloan account and will be refunded in case the crowdloan fails to raise the cap. Additionally, the creator will pay for the execution of the call.
 
     The dispatch origin for this call must be _Signed_.
 
@@ -905,8 +905,8 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
     - `min_contribution`: The minimum contribution required to contribute to the crowdloan.
     - `cap`: The maximum amount of funds that can be raised.
     - `end`: The block number at which the crowdloan will end.
-    - `call`: The call to dispatch when the crowdloan is finalized. Mutually exclusive with `target_address`; exactly one must be provided.
-    - `target_address`: The address to transfer the raised funds to at finalization. Mutually exclusive with `call`; exactly one must be provided.
+    - `call`: The call to dispatch when the crowdloan is finalized.
+    - `target_address`: The address to transfer the raised funds to.
 
 ### `dissolve(crowdloan_id: CrowdloanId)`
 
@@ -926,7 +926,9 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 - **interface**: `api.tx.crowdloan.finalize`
 - **summary**: Finalize crowdloan that has reached the cap.
 
-    Executes whichever finalization action was specified at creation: either dispatches the stored call using the creator origin, or transfers the raised amount to the target address. Exactly one of these was required at creation time. The `CurrentCrowdloanId` is set to the crowdloan id being finalized so the dispatched call can access it temporarily by accessing the `CurrentCrowdloanId` storage item.
+    The call will either transfer the raised amount to the configured target address or dispatch the configured call using the creator origin. The stored crowdloan must contain exactly one of target address or call; if both or neither are set, finalization fails before transfer or dispatch.
+
+    When dispatching a call, the CurrentCrowdloanId will be set to the crowdloan id being finalized so the dispatched call can access it temporarily by accessing the `CurrentCrowdloanId` storage item.
 
     The dispatch origin for this call must be _Signed_ and must be the creator of the crowdloan.
 
@@ -947,21 +949,17 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 
     - `crowdloan_id`: The id of the crowdloan to refund.
 
-### `setMaximumContribution(crowdloan_id: CrowdloanId, max_contribution: Option<u128>)`
+### `setMaxContribution(crowdloan_id: CrowdloanId, new_max_contribution: Option<BalanceOf<T>>)`
 
-- **interface**: `api.tx.crowdloan.setMaximumContribution`
-- **summary**: Set or clear an optional per-contributor maximum cumulative contribution for a non-finalized crowdloan.
-
-    When set, a contributor's total cumulative contributions cannot exceed this value. Contributions that would exceed the cap are automatically clipped to the remaining allowable amount. Passing `None` removes the limit.
-
-    The configured maximum must be at or above `min_contribution`; setting it below returns `MaximumContributionTooLow`.
+- **interface**: `api.tx.crowdloan.setMaxContribution`
+- **summary**: Set or clear the maximum cumulative contribution allowed per contributor for a non-finalized crowdloan.
 
     The dispatch origin for this call must be _Signed_ and must be the creator of the crowdloan.
 
     **Parameters:**
 
-    - `crowdloan_id`: The id of the crowdloan to configure.
-    - `max_contribution`: The maximum cumulative contribution per contributor, or `None` to remove the limit.
+    - `crowdloan_id`: The id of the crowdloan to update the maximum contribution of.
+    - `new_max_contribution`: The new optional maximum contribution.
 
 ### `updateCap(crowdloan_id: CrowdloanId, new_cap: u128)`
 
@@ -991,6 +989,8 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 
 - **interface**: `api.tx.crowdloan.updateMinContribution`
 - **summary**: Update the minimum contribution of a non-finalized crowdloan.
+
+    If a maximum contribution is configured, the new minimum contribution must not exceed it.
 
     The dispatch origin for this call must be _Signed_ and must be the creator of the crowdloan.
 

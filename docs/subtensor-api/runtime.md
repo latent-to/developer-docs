@@ -8,7 +8,7 @@ description: "This page includes runtime API calls exposed by the Subtensor runt
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **415**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[AccountNonceApi](#accountnonceapi)**
@@ -25,6 +25,7 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 - **[Metadata](#metadata)**
 - **[NeuronInfoRuntimeApi](#neuroninforuntimeapi)**
 - **[OffchainWorkerApi](#offchainworkerapi)**
+- **[ProxyFilterRuntimeApi](#proxyfilterruntimeapi)**
 - **[SessionKeys](#sessionkeys)**
 - **[ShieldApi](#shieldapi)**
 - **[StakeInfoRuntimeApi](#stakeinforuntimeapi)**
@@ -374,6 +375,17 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 - **summary**: Starts the off-chain task for given block header.
 
 
+## `ProxyFilterRuntimeApi`
+
+### `getProxyFilter(proxy_type: Option<u8>)`: `Vec<ProxyFilterInfo>`
+
+- **interface**: `api.call.proxyFilterRuntimeApi.getProxyFilter`
+
+### `getProxyTypes()`: `Vec<ProxyTypeInfo>`
+
+- **interface**: `api.call.proxyFilterRuntimeApi.getProxyTypes`
+
+
 ## `SessionKeys`
 
 ### `decodeSessionKeys(encoded: Vec<u8>)`: `Option<Vec<(Vec<u8>, KeyTypeId)>>`
@@ -491,6 +503,10 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 ### `getSubnetHyperparamsV2(netuid: u16)`: `Option<SubnetHyperparamsV2>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetHyperparamsV2`
+
+### `getSubnetHyperparamsV3(netuid: u16)`: `Option<Vec<HyperparamEntry>>`
+
+- **interface**: `api.call.subnetInfoRuntimeApi.getSubnetHyperparamsV3`
 
 ### `getSubnetInfo(netuid: u16)`: `Option<SubnetInfo>`
 

@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **415**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -315,6 +315,11 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 
 - **interface**: `api.events.crowdloan.Finalized`
 - **summary**: A crowdloan was finalized, funds were transferred and the call was dispatched.
+
+### `MaxContributionUpdated(CrowdloanId, Option<BalanceOf<T>>)`
+
+- **interface**: `api.events.crowdloan.MaxContributionUpdated`
+- **summary**: The maximum contribution was updated.
 
 ### `MinContributionUpdated(CrowdloanId, u128)`
 
