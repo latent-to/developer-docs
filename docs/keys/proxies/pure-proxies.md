@@ -348,7 +348,7 @@ You can transfer funds to the pure proxy account using the `btcli wallet transfe
 
 ## Kill a pure proxy
 
-Killing a pure proxy requires the following parameters proxy account address, a spawner account, and the proxy's complete creation details—the block height, extrinsic index, and the disambiguation index used during creation. Once executed, the pure proxy is permanently removed, and any funds remaining in the proxy account are lost.
+Killing a pure proxy requires the proxy account address, the spawner account, and the proxy's complete creation metadata—the block height, extrinsic index, and the disambiguation index used during creation. Once executed, the pure proxy is permanently removed, and any funds remaining in the proxy account are lost.
 
 Pure proxies are killed using the [`killPure` extrinsic](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L380-L406):
 
