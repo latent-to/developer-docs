@@ -348,14 +348,14 @@ You can transfer funds to the pure proxy account using the `btcli wallet transfe
 
 ## Kill a pure proxy
 
-Killing a pure proxy requires the proxy account address, the spawner account, and the proxy's complete creation details—the block height, extrinsic index, and the disambiguation index used during creation. Once executed, the pure proxy is permanently removed, and any funds remaining in the proxy account are lost.
+Killing a pure proxy requires the proxy account address, the spawner account, and the proxy's complete creation metadata—the block height, extrinsic index, and the disambiguation index used during creation. Once executed, the pure proxy is permanently removed, and any funds remaining in the proxy account are lost.
 
-Pure proxies are killed using the `killPure` extrinsic as shown. See [source code: `killPure` implementation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L380-L406):
+Pure proxies are killed using the [`killPure` extrinsic](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L380-L406):
 
-:::danger Permanent deletion
-Killing a pure proxy permanently deletes the pure proxy account. **Any funds remaining in the account will be permanently lost.** Make sure to transfer all funds out before killing the proxy.
+:::info signing a pure proxy
+The account that signs the `killPure` extrinsic does not have to be the spawner account. It can be signed by either the spawner or a delegate with an `Any` proxy relationship to the pure proxy.
 
-BTCLI will prompt you for confirmation with the text "KILL" to proceed.
+The `spawner` parameter must always be the account that originally created the pure proxy.
 :::
 
 <Tabs groupId="proxy">
@@ -364,7 +364,7 @@ BTCLI will prompt you for confirmation with the text "KILL" to proceed.
 
 ```bash
 btcli proxy kill \
-  --wallet.name SPAWNER_WALLET \
+  --wallet.name WALLET_NAME \
   --height BLOCK_NUMBER \
   --ext-index EXTRINSIC_INDEX \
   --proxy-type Any \
@@ -374,14 +374,15 @@ btcli proxy kill \
 
 **Required Parameters:**
 
-- `--wallet.name`: The spawner wallet that created the proxy
+- `--wallet.name`: The signing wallet for the extrinsic
 - `--height`: The block number where the pure proxy was created
 - `--ext-index`: The extrinsic index of the creation transaction
 - `--proxy-type`: Must match the type used when creating (e.g., `Any`)
 - `--index`: Must match the index used when creating (usually `0`)
 - `--spawner`: The SS58 address of the spawner account
 
-**Example:**
+<details>
+  <summary><strong>Show full example</strong></summary>
 
 Suppose we created a pure proxy and received output as follows:
 
@@ -416,6 +417,8 @@ Enter your password:
 Decrypting...
 ✅Success!
 ```
+
+</details>
 
 </TabItem>
 
@@ -472,6 +475,12 @@ print(response)
 Ensure that all parameters are correct before making this call. The call will fail with a `Proxy.NoPermission` error if any parameter is invalid or if the origin account lacks permission to perform the action.
 </TabItem>
 </Tabs>
+
+:::danger Permanent deletion
+Killing a pure proxy permanently deletes the pure proxy account. **Any funds remaining in the account will be permanently lost.** Make sure to transfer all funds out before killing the proxy.
+
+BTCLI will prompt you for confirmation with the text "KILL" to proceed.
+:::
 
 ## Troubleshooting
 
