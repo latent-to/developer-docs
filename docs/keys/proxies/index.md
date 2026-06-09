@@ -32,7 +32,7 @@ Proxies are useful in many situations where the permissions of one coldkey shoul
 - **Operational delegation**: run subnet operations tasks like setting hyperparameters from a designated operations wallet, allowing the owner wallet to remain in maximum-security deep storage.
 - **Least-privilege permissions**: allow an employee or other designated operator to perform a constrained set of calls on a project-owned wallet.
 
-- **Nearly *all* operations:** you can even manage proxies with a proxy, so other than making the first proxy, you should ideally not perform any operations with your primary coldkey.
+- **Nearly *all* operations:** you can even manage proxies with a proxy, so other than creating the first proxy, you should ideally not perform any operations with your primary coldkey.
 
 ### Scope and Delays
 
