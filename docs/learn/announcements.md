@@ -6,6 +6,24 @@ title: "Announcements and Developments"
 
 This page tracks recent and upcoming changes to the Bittensor protocol and other major events in the Bittensor ecosystem.
 
+**June, 2026**
+
+## Spec 413 upgrade (v3.4.1-413)
+
+**Status**: Deployed to mainnet.
+
+Release notes: [v3.4.1-413](https://github.com/opentensor/subtensor/releases/tag/v3.4.1-413)
+
+- **Protocol alpha accounting (hotfix)**: Alpha bought by the protocol during TAO reserve injection is no longer immediately recycled. It is now cached per-subnet in a new storage item (`SubnetProtocolAlpha`) and included in pro-rata TAO settlement when a subnet is dissolved. This reduces individual staker payouts during dissolution proportionally to the protocol's accumulated position, and the corresponding TAO returns to the chain rather than being distributed. The cache is cleared when a subnet dissolves. See [Subnet Deregistration](../subnets/subnet-deregistration.md).
+
+- **Crowdloan: exclusive call or target address**: A crowdloan creation now requires exactly one of `call` or `target_address`. Specifying both or neither is an error (`InvalidFinalizationConfig`). Previously both could be provided and would execute sequentially at finalization. See [Crowdloans](../subnets/crowdloans/index.md).
+
+- **Crowdloan: optional per-contributor maximum**: A new `set_maximum_contribution` extrinsic allows crowdloan creators to set or clear a per-contributor cap after creation. Contributions are automatically clipped to the available room under the cap. See [Crowdloans](../subnets/crowdloans/index.md).
+
+- **Min stake constant**: Formalizes the minimum stake threshold as a named constant in the runtime.
+
+- **Get Hyperparams v3**: Adds a third version of the subnet hyperparameters RPC query with additional fields.
+
 **April, 2026**
 
 ## Neuron registration rework

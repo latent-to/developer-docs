@@ -4,7 +4,7 @@ title: "The Subnet Metagraph"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 # Subnet Metagraph
 
@@ -286,18 +286,15 @@ See also:
 | `burn`                          | Burn amount                                                                                    |
 | `commit_reveal_period`          | Commit reveal period                                                                           |
 | `commit_reveal_weights_enabled` | Commit reveal weights enabled                                                                  |
-| `difficulty`                    | Network difficulty                                                                             |
 | `immunity_period`               | Immunity period                                                                                |
 | `kappa`                         | Kappa parameter                                                                                |
 | `liquid_alpha_enabled`          | Liquid alpha enabled                                                                           |
 | `max_burn`                      | Maximum burn                                                                                   |
-| `max_difficulty`                | Maximum difficulty                                                                             |
 | `max_regs_per_block`            | Max registrations per block                                                                    |
 | `max_validators`                | Maximum validators                                                                             |
 | `max_weights_limit`             | Maximum weights limit                                                                          |
 | `min_allowed_weights`           | Minimum allowed weights                                                                        |
 | `min_burn`                      | Minimum burn                                                                                   |
-| `min_difficulty`                | Minimum difficulty                                                                             |
 | `pow_registration_allowed`      | POW registration allowed                                                                       |
 | `registration_allowed`          | Registration allowed                                                                           |
 | `rho`                           | Rho parameter                                                                                  |
@@ -762,9 +759,6 @@ def main():
     print(f"  Burn rate: {hparams.burn}")
     print(f"  Max burn: {hparams.max_burn}")
     print(f"  Min burn: {hparams.min_burn}")
-    print(f"  Difficulty: {hparams.difficulty}")
-    print(f"  Max difficulty: {hparams.max_difficulty}")
-    print(f"  Min difficulty: {hparams.min_difficulty}")
     print(f"  Max validators: {hparams.max_validators}")
     print(f"  Tempo: {hparams.tempo}")
     print(f"  Weights version: {hparams.weights_version}")

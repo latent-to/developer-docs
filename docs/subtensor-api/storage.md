@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **411**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **415**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -310,6 +310,12 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 
 - **interface**: `api.query.crowdloan.hasMigrationRun`
 - **summary**: Storage for the migration run status.
+
+### `maxContributions(u32)`: `u64`
+
+- **interface**: `api.query.crowdloan.maxContributions`
+- **modifier**: `Optional`
+- **summary**: A map of crowdloan ids to their optional maximum cumulative contribution per contributor.
 
 ### `nextCrowdloanId`: `u32`
 
@@ -1696,6 +1702,11 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.subnetOwnerHotkey`
 - **summary**: MAP ( netuid ) --> subnet_owner_hotkey
 
+### `subnetProtocolAlpha(u16)`: `u64`
+
+- **interface**: `api.query.subtensorModule.subnetProtocolAlpha`
+- **summary**: MAP ( netuid ) --> protocol_alpha | Returns the protocol-owned alpha cached for the subnet.
+
 ### `subnetProtocolFlow(u16)`: `i64`
 
 - **interface**: `api.query.subtensorModule.subnetProtocolFlow`
@@ -1751,6 +1762,11 @@ Generated from Subtensor runtime spec version **411**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.taoFlowCutoff`
 - **summary**: ITEM --> TAO Flow Cutoff
+
+### `taoInRefundDeploymentBlock`: `u64`
+
+- **interface**: `api.query.subtensorModule.taoInRefundDeploymentBlock`
+- **summary**: ITEM( TaoInRefundDeploymentBlock )
 
 ### `taoWeight`: `u64`
 

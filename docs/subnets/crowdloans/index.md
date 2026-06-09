@@ -8,7 +8,7 @@ The crowdloan feature lets a group of people collectively fund an extrinsic exec
 
 At finalization, the system executes an on‑chain call—typically `subtensor::register_leased_network`—using the crowdloan's funds. This registers the subnet and creates a dedicated proxy, `SubnetLeaseBeneficiary`, for the designated beneficiary (the crowdloan creator). That proxy is authorized to operate the subnet (for example, configuring subnet parameters and other allowed controls) without having custody of contributor funds or emissions splits.
 
-If the crowdloan is finalized and a lease is created, emissions flow to contributors pro‑rata based on their contributed share. If the crowdloan is not finalized after the end block, anyone can call refunds; once all contributors are refunded, the creator can dissolve the crowdloan. The call and target address specified at creation are immutable, ensuring that the purpose of the crowdloan cannot be changed mid‑campaign. This model makes subnet bootstrapping collaborative, transparent, and permissioned through a narrowly scoped proxy for safe, ongoing operations.
+If the crowdloan is finalized and a lease is created, emissions flow to contributors pro‑rata based on their contributed share. If the crowdloan is not finalized after the end block, anyone can call refunds; once all contributors are refunded, the creator can dissolve the crowdloan. At creation, exactly one of `call` or `target_address` must be specified. This choice is immutable and determines the finalization action, preventing mid‑campaign repurposing. This model makes subnet bootstrapping collaborative, transparent, and permissioned through a narrowly scoped proxy for safe, ongoing operations.
 
 Design features:
 - Strong defaults: immutable target and call, capped funding, clear end block
@@ -27,13 +27,13 @@ See also [Create a Subnet with a Crowdloan](./crowdloans-tutorial.md)
 
 ## Crowdloan Lifecycle
 
-- **Create** a campaign with deposit, cap, end, min contribution, optional `call` and `target_address`. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L318-L326)
+- **Create** a campaign with deposit, cap, end, min contribution, and **exactly one** of `call` or `target_address` (mutually exclusive; specifying both or neither is an error). [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L318-L326)
 
-- **Contribute** funds; amounts are clipped to remaining cap; contributors are counted. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L413-L420)
+- **Contribute** funds; amounts are clipped to remaining cap and to any per-contributor maximum; contributors are counted. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L413-L420)
 
 - **Withdraw** before finalization; creator cannot withdraw below their deposit. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L505-L525)
 
-- **Finalize** after end when cap is fully raised. Optionally transfers to `target_address` and dispatches the stored `call`. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L566-L581)
+- **Finalize** after end when cap is fully raised. Executes either the stored `call` (with creator origin) or a balance transfer to `target_address`, whichever was specified at creation. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L566-L581)
 
 - **Refund** loop refunds up to `RefundContributorsLimit` per call; may need multiple calls. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L637-L646)
 
@@ -43,6 +43,7 @@ See also [Create a Subnet with a Crowdloan](./crowdloans-tutorial.md)
   - `update_min_contribution` - adjust minimum contribution amount
   - `update_end` - extend the end block
   - `update_cap` - adjust the funding cap
+  - `set_maximum_contribution` - set or clear an optional per-contributor maximum cumulative contribution cap
 
 ## Emissions distribution during a lease
 
@@ -76,11 +77,11 @@ Leasing is defined as split profit ownership of a subnet. This is tightly couple
 
 ### How does the end‑to‑end flow work?
 
-Creator calls `create` with deposit, cap, end, and a `call` of `subtensor::register_leased_network`. Contributors fund until the cap is hit. After the end block, creator calls `finalize`; funds transfer and the stored call executes with creator origin. A subnet and a `SubnetLeaseBeneficiary` proxy are set up; contributor shares are recorded, leftover cap is refunded.
+Creator calls `create` with deposit, cap, end, and **exactly one** of `call` or `target_address`. For a subnet lease: pass a `call` of `subtensor::register_leased_network`. Contributors fund until the cap is hit. After the end block, creator calls `finalize`; the stored call executes with creator origin (or funds transfer to `target_address`). For a lease: a subnet and a `SubnetLeaseBeneficiary` proxy are set up; contributor shares are recorded, leftover cap is refunded.
 
 ### Can the purpose of a crowdloan be changed after it starts?
 
-No. The `call` and optional `target_address` are bound at creation and used at `finalize`. The pallet exposes `CurrentCrowdloanId` only during dispatch to the called extrinsic, preventing mid‑campaign repurposing.
+No. Exactly one of `call` or `target_address` must be specified at creation, and that choice is immutable. The pallet exposes `CurrentCrowdloanId` only during dispatch to the called extrinsic, preventing mid‑campaign repurposing.
 
 ### Who can finalize a crowdloan and when?
 
@@ -101,7 +102,7 @@ They can invoke a curated set of calls (e.g., start subnet calls and selected ad
 
 ### Can the campaign parameters be updated mid‑flight?
 
-The creator can update `min_contribution`, `end`, and `cap` on a non‑finalized crowdloan, subject to checks (duration bounds, cap >= raised, etc.). The `call` and `target_address` are immutable.
+The creator can update `min_contribution`, `end`, `cap`, and `max_contribution` on a non‑finalized crowdloan, subject to checks (duration bounds, cap >= raised, max >= min, etc.). The `call` and `target_address` are immutable.
 
 ### Is there a maximum number of contributors?
 

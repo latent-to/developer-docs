@@ -46,43 +46,48 @@ btcli sudo set --netuid 14
 ```
 Available hyperparameters:
 
-#       HYPERPARAMETER                  OWNER SETTABLE       DESCRIPTION
-─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-1       activity_cutoff                 Yes                  Minimum activity level required for neurons to remain active.
-2       adjustment_alpha                Yes                  Alpha parameter for difficulty adjustment algorithm.
-3       adjustment_interval             No (Root Only)       Number of blocks between automatic difficulty adjustments.
-4       alpha_high                      Yes                  High bound of the alpha range for stake calculations.
-5       alpha_low                       Yes                  Low bound of the alpha range for stake calculations.
-6       alpha_sigmoid_steepness         No (Root Only)       Steepness parameter for alpha sigmoid function.
-7       bonds_moving_avg                Yes                  Moving average window size for bond calculations.
-8       bonds_reset_enabled             Yes                  Enable or disable periodic bond resets.
-9       commit_reveal_period            Yes                  Duration (in blocks) for commit-reveal weight submission scheme.
-10      commit_reveal_weights_enabled   Yes                  Enable or disable commit-reveal scheme for weight submissions.
-11      difficulty                      No (Root Only)       Current proof-of-work difficulty for registration.
-12      immunity_period                 Yes                  Duration (in blocks) during which newly registered neurons are protected from certain penalties.
-13      kappa                           No (Root Only)       Kappa determines the scaling factor for consensus calculations.
-14      liquid_alpha_enabled            Yes                  Enable or disable liquid alpha staking mechanism.
-15      max_burn                        No (Root Only)       Maximum TAO burn amount cap for subnet registration.
-16      max_difficulty                  Yes                  Maximum proof-of-work difficulty cap.
-17      max_regs_per_block              No (Root Only)       Maximum number of registrations allowed per block.
-18      max_validators                  No (Root Only)       Maximum number of validators allowed in the subnet.
-19      max_weight_limit                Yes                  No description available.
-20      min_allowed_weights             Yes                  Minimum number of weight connections a neuron must maintain to stay active.
-21      min_burn                        Yes                  Minimum TAO burn amount required for subnet registration.
-22      min_difficulty                  No (Root Only)       Minimum proof-of-work difficulty required for registration
-23      registration_allowed            No (Root Only)       Enable or disable new registrations to the subnet.
-24      rho                             Yes                  Rho controls the rate at which weights decay over time.
-25      serving_rate_limit              Yes                  Rate limit for serving requests.
-26      subnet_is_active                Yes                  Whether the subnet is currently active and operational.
-27      target_regs_per_interval        No (Root Only)       Target number of new registrations per adjustment interval.
-28      tempo                           No (Root Only)       Number of blocks between epoch transitions
-29      transfers_enabled               Yes                  Enable or disable TAO transfers within the subnet.
-30      user_liquidity_enabled          COMPLICATED          Enable or disable user liquidity features.
-31      weights_rate_limit              No (Root Only)       Maximum number of weight updates allowed per epoch.
-32      weights_version                 Yes                  Version key for weight sets.
-33      yuma_version                    Yes                  Version of the Yuma consensus mechanism.
+#      HYPERPARAMETER                     OWNER SETTABLE       DESCRIPTION
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+1      activity_cutoff                    Yes                  Minimum activity level required for neurons to remain active.
+2      alpha_high                         Yes                  High bound of the alpha range for stake calculations.
+3      alpha_low                          Yes                  Low bound of the alpha range for stake calculations.
+4      alpha_sigmoid_steepness            No (Root Only)       Steepness parameter for alpha sigmoid function.
+5      alpha_values                       Yes                  Alpha range  for stake calculations.
+6      bonds_moving_avg                   Yes                  Moving average window size for bond calculations.
+7      bonds_reset_enabled                Yes                  Enable or disable periodic bond resets.
+8      burn_half_life                     Yes                  Half-life (in blocks) controlling how quickly the registration burn price decays back toward min_burn.
+9      burn_increase_mult                 Yes                  Multiplier applied to the registration burn price after each successful registration.
+10     commit_reveal_period               Yes                  Duration (in blocks) for commit-reveal weight submission scheme.
+11     commit_reveal_weights_enabled      Yes                  Enable or disable commit-reveal scheme for weight submissions.
+12     immunity_period                    Yes                  Duration (in blocks) during which newly registered neurons are protected from certain penalties.
+13     kappa                              No (Root Only)       Kappa determines the scaling factor for consensus calculations.
+14     liquid_alpha_enabled               Yes                  Enable or disable liquid alpha staking mechanism.
+15     max_allowed_uids                   Yes                  Maximum number of UIDs (neurons) on the subnet, essentially 'untrimming'.
+16     max_burn                           COMPLICATED          Maximum TAO burn amount cap for subnet registration.
+17     max_regs_per_block                 No (Root Only)       Maximum number of registrations allowed per block.
+18     max_validators                     No (Root Only)       Maximum number of validators allowed in the subnet.
+19     min_allowed_uids                   No (Root Only)       Minimum number of UIDs (neurons) required for the subnet to remain active.
+20     min_allowed_weights                Yes                  Minimum number of weight connections a neuron must maintain to stay active.
+21     min_burn                           Yes                  Minimum TAO burn amount required for subnet registration.
+22     network_pow_registration_allowed   Yes                  Enable or disable proof-of-work based registration.
+23     owner_cut_auto_lock_enabled        Yes                  Whether the subnet owner cut is automatically locked when collected.
+24     owner_cut_enabled                  Yes                  Whether the subnet owner cut is taken from the subnet's emissions.
+25     recycle_or_burn                    Yes                  Set whether subnet TAO is recycled or burned.
+26     registration_allowed               No (Root Only)       Enable or disable new registrations to the subnet.
+27     serving_rate_limit                 Yes                  Rate limit for serving requests.
+28     sn_owner_hotkey                    Yes                  Set the subnet owner hotkey.
+29     subnet_is_active                   Yes                  Whether the subnet is currently active and operational.
+30     subnet_owner_hotkey                Yes                  Alias for sn_owner_hotkey; sets the subnet owner hotkey.
+31     target_regs_per_interval           No (Root Only)       Target number of new registrations per adjustment interval.
+32     tempo                              No (Root Only)       Number of blocks between epoch transitions
+33     transfers_enabled                  Yes                  Enable or disable TAO transfers within the subnet.
+34     user_liquidity_enabled             COMPLICATED          Enable or disable user liquidity features.
+35     weights_rate_limit                 No (Root Only)       Maximum number of weight updates allowed per epoch.
+36     weights_version                    Yes                  Version key for weight sets.
+37     yuma3_enabled                      Yes                  Enable or disable Yuma3 consensus mechanism.
+38     yuma_version                       Yes                  Version of the Yuma consensus mechanism.
 
-Enter the number of the hyperparameter: 7
+Enter the number of the hyperparameter: 6
 
 Selected: bonds_moving_avg
 Moving average window size for bond calculations. link
@@ -121,6 +126,36 @@ For example, the following command sets the number of owner-immune neurons to `f
 
 :::
 
+## Runtime API: `get_subnet_hyperparams_v3`
+
+The canonical runtime API for fetching subnet hyperparameters is `get_subnet_hyperparams_v3`. V1 and V2 are deprecated.
+
+V3 returns `Option<Vec<HyperparamEntry>>` (None if the subnet does not exist). Each entry is:
+
+```rust
+struct HyperparamEntry {
+    name: Vec<u8>,     // ASCII identifier, e.g. b"kappa"
+    value: HyperparamValue,
+}
+
+enum HyperparamValue {
+    Bool(bool),
+    U16(u16),
+    U32(u32),
+    U64(u64),
+    U128(u128),
+    TaoBalance(u64),
+    I32F32(i32f32),
+    U64F64(u64f64),
+}
+```
+
+Clients look up params by name. Unknown names are forward-compatible additions and should be ignored rather than treated as errors.
+
+**Params removed from V3** (no longer returned): `adjustment_alpha`, `adjustment_interval`, `difficulty`, `min_difficulty`, `max_difficulty`, `rho`.
+
+**Params added in V3**: `burn_half_life`, `burn_increase_mult`, `owner_cut_enabled`, `owner_cut_auto_lock_enabled`.
+
 ## Subnet Hyperparameters
 
 This section details all subnet hyperparameters, including their default values, descriptions, and the setter extrinsics required to modify them.
@@ -140,38 +175,6 @@ This section details all subnet hyperparameters, including their default values,
 **Description**:
 
 The number of blocks for the stake to become inactive for the purpose of epoch in Yuma Consensus. If a validator doesn't submit weights within the first `ActivityCutoff` blocks of the epoch, it will not be able to participate until the start of the next epoch.
-
-### AdjustmentAlpha
-
-**Type**: u64
-
-**Default**: 0
-
-**`btcli` setter**: `btcli sudo set --param adjustment_alpha`
-
-**Setter extrinsic**: `sudo_set_adjustment_alpha`
-
-**Permissions required to set**: Subnet owner
-
-**Description**:
-
-Not used for neuron registration. Non-root neuron registration pricing is governed by [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult).
-
-### AdjustmentInterval
-
-**Type**: u16
-
-**Default**: 360
-
-**`btcli` setter**: `btcli sudo set --param adjustment_interval`
-
-**Setter extrinsic**: `sudo_set_adjustment_interval`
-
-**Permissions required to set**: Root
-
-**Description**:
-
-Not used for neuron registration. Non-root neuron registration pricing is continuous and governed by [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult).
 
 ### AlphaSigmoidSteepness
 
@@ -322,22 +325,6 @@ See [Commit Reveal](../concepts/commit-reveal) for details on how commit reveal 
 
 Enables [Commit Reveal](../concepts/commit-reveal)
 
-### Difficulty
-
-**Type**: u64
-
-**Default**: 10000000
-
-**`btcli` setter**: `btcli sudo set --param difficulty`
-
-**Setter extrinsic**: `sudo_set_difficulty`
-
-**Permissions required to set**: Root
-
-**Description**:
-
-Not used for neuron registration. Neuron registration uses TAO burn pricing; see [BurnHalfLife](#burnhalflife) and [BurnIncreaseMult](#burnincreasemult).
-
 ### EMAPriceHalvingPeriod
 
 **Type**: u64
@@ -468,22 +455,6 @@ Maximum validators on a subnet.
 
 Upper bound for the **dynamic TAO burn** required for **neuron (UID) registration** on the subnet. This clamps the price together with [MinBurn](#minburn); **`BurnHalfLife`** and **`BurnIncreaseMult`** shape how the price moves over time and on each registration.
 
-### MaxDifficulty
-
-**Type**: u64
-
-**Default**: 18446744073709551615 normalized to 1
-
-**`btcli` setter**: `btcli sudo set --param max_difficulty`
-
-**Setter extrinsic**: `sudo_set_max_difficulty`
-
-**Permissions required to set**: Subnet owner
-
-**Description**:
-
-Not used for neuron registration. Neuron registration uses TAO burn pricing; see [MaxBurn](#maxburn).
-
 ### MaxRegistrationsPerBlock
 
 **Type**: u16
@@ -576,22 +547,6 @@ Minimum number of weights for a validator to set when setting weights.
 
 Lower bound for the **dynamic TAO burn** required for **neuron (UID) registration** on the subnet. This clamps the price together with [MaxBurn](#maxburn).
 
-### MinDifficulty
-
-**Type**: u64
-
-**Default**: 10000000 normalized to 5.421010862e-13
-
-**`btcli` setter**: `btcli sudo set --param min_difficulty`
-
-**Setter extrinsic**: `sudo_set_min_difficulty`
-
-**Permissions required to set**: Subnet owner
-
-**Description**:
-
-Not used for neuron registration. Neuron registration uses TAO burn pricing; see [MinBurn](#minburn).
-
 ### MinNonImmuneUids
 
 **Type**: u16
@@ -657,6 +612,38 @@ Rate limit for network registrations expressed in blocks
 
 `NetworkRegistrationAllowed` determines whether neuron registration is enabled on the subnet. If disabled, the subnet will not receive new neurons.
 
+### OwnerCutAutoLockEnabled
+
+**Type**: Bool
+
+**Default**: `false`
+
+**`btcli` setter**: none
+
+**Setter extrinsic**: `sudo_set_owner_cut_auto_lock_enabled`
+
+**Permissions required to set**: Subnet owner
+
+**Description**:
+
+Controls whether the subnet owner's cut of emissions is automatically locked each epoch. When `true`, the distribution cut is added to the owner's conviction lock (topping up an existing lock or creating a new one targeting the owner hotkey). When `false`, the cut is received as free stake with no auto-locking. Exposed in `get_subnet_hyperparams_v3`.
+
+### OwnerCutEnabled
+
+**Type**: Bool
+
+**Default**: `true`
+
+**`btcli` setter**: none
+
+**Setter extrinsic**: `sudo_set_owner_cut_enabled`
+
+**Permissions required to set**: Subnet owner
+
+**Description**:
+
+Controls whether the subnet owner receives their cut of emissions at all. When set to `false`, the owner cut is not distributed. Defaults to `true`. Exposed in `get_subnet_hyperparams_v3`.
+
 ### OwnerHyperparamRateLimit
 
 **Type**: u16
@@ -673,6 +660,38 @@ Rate limit for network registrations expressed in blocks
 
 Global multiplier that rate-limits how frequently a subnet owner can update subnet hyperparameters. The cooldown window equals `Tempo(netuid) × OwnerHyperparamRateLimit` blocks. The rate limit is tracked independently per hyperparameter; changing `kappa` does not block an immediate change to `rho`, for example.
 
+### OwnerCutAutoLockEnabled
+
+**Type**: bool
+
+**Default**: true
+
+**`btcli` setter**: n/a
+
+**Setter extrinsic**: `sudo_set_owner_cut_auto_lock_enabled`
+
+**Permissions required to set**: Subnet owner or Root
+
+**Description**:
+
+Controls whether the subnet owner's cut of emissions is automatically locked (converted to locked stake) rather than distributed as liquid TAO. Defaults to `true`. Exposed in `get_subnet_hyperparams_v3`.
+
+### OwnerCutEnabled
+
+**Type**: bool
+
+**Default**: true
+
+**`btcli` setter**: n/a
+
+**Setter extrinsic**: `sudo_set_owner_cut_enabled`
+
+**Permissions required to set**: Subnet owner or Root
+
+**Description**:
+
+Controls whether the subnet owner receives their cut of emissions at all. When set to `false`, the owner cut is not distributed. Defaults to `true`. Exposed in `get_subnet_hyperparams_v3`.
+
 ### RecycleOrBurn
 
 **Type**: `RecycleOrBurnEnum`
@@ -686,24 +705,6 @@ Global multiplier that rate-limits how frequently a subnet owner can update subn
 **Permissions required to set**: Subnet owner
 
 **Description**: The `RecycleOrBurnEnum` hyperparameter sets the behaviour of the burn UIDs for a given subnet. If set to `Burn`, the miner emission sent to the burn UID(s) will be burned. If set to `Recycle`, the miner emission sent to the burn UID(s) will be recycled.
-
-### Rho
-
-**Type**: u16
-
-**Default**: 10
-
-**`btcli` setter**: `btcli sudo set --param rho`
-
-**Setter extrinsic**: `sudo_set_rho`
-
-**Permissions required to set**: Subnet owner
-
-**Description**:
-
-Deprecated.
-
-<!-- will this be chopped from btcli? -->
 
 ### ServingRateLimit
 

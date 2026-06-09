@@ -52,7 +52,6 @@ where:
 
 In decaying mode, both the locked mass and conviction decay toward zero, but they follow different curves. Starting from a fresh lock ($c_0 = 0$), conviction first rises as the lock accumulates maturation time, then falls as the mass erodes. The formula (when `UnlockRate` = `MaturityRate` = τ) is:
 
-
 $$c_1 = e^{-\Delta t / \tau} \left( c_0 + m \cdot \frac{\Delta t}{\tau} \right)$$
 
 $$m_1 = m \cdot e^{-\Delta t / \tau}$$
@@ -68,13 +67,13 @@ Switching to perpetual mode stops the mass decay and allows conviction to grow t
 **Perpetual mode** (fresh lock of 100 alpha, $c_0 = 0$):
 
 | Elapsed | Locked mass | Conviction |
-|---|---|---|
-| 0 | 100 | 0 |
-| 0.5τ | 100 | 39.3 |
-| 1τ | 100 | 63.2 |
-| 2τ | 100 | 86.5 |
-| 2.3τ | 100 | ~90 |
-| 3τ | 100 | 95.0 |
+| ------- | ----------- | ---------- |
+| 0       | 100         | 0          |
+| 0.5τ    | 100         | 39.3       |
+| 1τ      | 100         | 63.2       |
+| 2τ      | 100         | 86.5       |
+| 2.3τ    | 100         | ~90        |
+| 3τ      | 100         | 95.0       |
 
 Conviction closes in on the locked mass; maximum conviction equals the locked mass.
 
@@ -111,13 +110,13 @@ Conviction is always closing in on `m`, getting closer every block, never quite 
 
 **Decaying mode** (fresh lock of 100 alpha, $c_0 = 0$, `UnlockRate` = `MaturityRate` = τ):
 
-| Elapsed | Locked mass | Conviction |
-|---|---|---|
-| 0 | 100 | 0 |
-| 0.5τ | 60.7 | 30.3 |
-| 1τ | 36.8 | **36.8 (peak)** |
-| 2τ | 13.5 | 27.1 |
-| 3τ | 5.0 | 14.9 |
+| Elapsed | Locked mass | Conviction      |
+| ------- | ----------- | --------------- |
+| 0       | 100         | 0               |
+| 0.5τ    | 60.7        | 30.3            |
+| 1τ      | 36.8        | **36.8 (peak)** |
+| 2τ      | 13.5        | 27.1            |
+| 3τ      | 5.0         | 14.9            |
 
 Conviction peaks at ~36.8% of the original locked mass at elapsed time = τ. After that both values fall toward zero. Note that once elapsed time exceeds τ, conviction exceeds the remaining locked mass; it reflects accumulated commitment, not just current holdings. Topping up an existing lock adds to locked mass immediately, conviction continuing from its current value.
 
@@ -146,12 +145,19 @@ The term `(dt/τ) × exp(-dt/τ)` is maximized at `dt = τ` (value = `1/e ≈ 0.
 
 </details>
 
-
 ## Subnet owner auto-locking
 
-When a subnet owner receives their distribution cut each epoch, it is **not automatically locked** by default. The owner can opt in to auto-locking, which locks the distribution cut to the subnet owner's hotkey each epoch. If the owner already has a lock, the auto-lock tops it up using the existing lock's hotkey. If no lock exists, the auto-lock targets the subnet owner's hotkey.
+When a subnet owner receives their distribution cut each epoch, it is **not automatically locked** by default. The owner can opt in to auto-locking by modifying the `owner_cut_auto_lock_enabled` hyperparameter on the subnet. To do this, run the following command in your terminal:
 
-Any lock targeting the subnet owner's hotkey **instantly matures conviction** to the locked amount. This applies to any coldkey locking to the subnet owner's hotkey, not just the owner locking to themselves. The trigger is the target hotkey, not the locking coldkey.
+```sh
+btcli sudo set --param owner_cut_auto_lock_enabled --value true --netuid NETUID
+```
+
+If the owner already has a lock, the auto-lock tops it up using the existing lock's hotkey. If no lock exists, the auto-lock targets the subnet owner's hotkey.
+
+:::info
+Once enabled, any lock targeting the subnet owner's hotkey **instantly matures conviction** to the locked amount. This applies to any coldkey locking to the subnet owner's hotkey, not just the owner locking to themselves.
+:::
 
 ## Key swap behavior
 
@@ -174,10 +180,23 @@ Conviction locks provide no protection against deregistration. The deregistratio
 
 If a subnet is deregistered, conviction lock records for that subnet are deleted before the standard subnet dissolution process runs. The underlying staked alpha is then handled the same way as any other stake on a deregistered subnet: it is converted to TAO pro-rata via the subnet's AMM pool and returned to each coldkey's free balance. Accumulated conviction is gone.
 
-
 ## Querying conviction
 
 <Tabs groupId="conviction-query">
+<TabItem value="btcli" label="btcli">
+
+```bash
+# All active locks for your coldkey
+btcli lock list --wallet.name my_wallet
+
+# Filter to a specific subnet
+btcli lock list --wallet.name my_wallet --netuid 1
+
+# View one lock with a conviction projection graph
+btcli lock show --wallet.name my_wallet --netuid 1
+```
+
+</TabItem>
 <TabItem value="sdk" label="Python SDK">
 
 The following methods on `bittensor.Subtensor` read chain state and do not submit any transaction. All accept an optional `block` parameter to query at a specific block number.
@@ -186,20 +205,20 @@ The following methods on `bittensor.Subtensor` read chain state and do not submi
 
 **`LockState`** is a TypedDict returned by the lock query methods:
 
-| Field | Type | Description |
-|---|---|---|
-| `locked_mass` | `Balance` | Locked amount in subnet alpha units |
-| `conviction` | `float` | Matured conviction score |
-| `last_update` | `int` | Block number of the last stored checkpoint |
+| Field         | Type      | Description                                |
+| ------------- | --------- | ------------------------------------------ |
+| `locked_mass` | `Balance` | Locked amount in subnet alpha units        |
+| `conviction`  | `float`   | Matured conviction score                   |
+| `last_update` | `int`     | Block number of the last stored checkpoint |
 
-| Method | Returns | Description |
-|---|---|---|
-| `get_coldkey_lock(coldkey_ss58, netuid)` | `Optional[LockState]` | Current lock state with decay applied, or `None` if no lock exists |
-| `get_stake_lock(coldkey_ss58, netuid, hotkey_ss58)` | `Optional[LockState]` | Raw stored lock checkpoint without decay applied |
-| `get_stake_locks(coldkey_ss58, netuid)` | `list[tuple[str, LockState]]` | All locks for a coldkey on a subnet as (hotkey_ss58, LockState) pairs |
-| `is_perpetual_lock(coldkey_ss58, netuid)` | `bool` | `True` if the lock does not decay; `False` if it is in decaying mode |
-| `get_hotkey_conviction(hotkey_ss58, netuid)` | `float` | Total conviction for a hotkey, summed over all coldkeys that have locked to it |
-| `get_most_convicted_hotkey_on_subnet(netuid)` | `Optional[str]` | SS58 address of the hotkey with the highest conviction, or `None` if no locks exist |
+| Method                                              | Returns                       | Description                                                                         |
+| --------------------------------------------------- | ----------------------------- | ----------------------------------------------------------------------------------- |
+| `get_coldkey_lock(coldkey_ss58, netuid)`            | `Optional[LockState]`         | Current lock state with decay applied, or `None` if no lock exists                  |
+| `get_stake_lock(coldkey_ss58, netuid, hotkey_ss58)` | `Optional[LockState]`         | Raw stored lock checkpoint without decay applied                                    |
+| `get_stake_locks(coldkey_ss58, netuid)`             | `list[tuple[str, LockState]]` | All locks for a coldkey on a subnet as (hotkey_ss58, LockState) pairs               |
+| `is_perpetual_lock(coldkey_ss58, netuid)`           | `bool`                        | `True` if the lock does not decay; `False` if it is in decaying mode                |
+| `get_hotkey_conviction(hotkey_ss58, netuid)`        | `float`                       | Total conviction for a hotkey, summed over all coldkeys that have locked to it      |
+| `get_most_convicted_hotkey_on_subnet(netuid)`       | `Optional[str]`               | SS58 address of the hotkey with the highest conviction, or `None` if no locks exist |
 
 ```python
 import bittensor as bt
@@ -225,17 +244,16 @@ king = st.get_most_convicted_hotkey_on_subnet(netuid=1)
 
 In [Polkadot.js](https://polkadot.js.org/apps/), go to **Developer → RPC calls** and select the `stakeInfo` module to call `getColdkeyLock`. For the other two methods, go to **Developer → Runtime calls** and select the `stakeInfoRuntimeApi` module.
 
-| Polkadot.js module | Method | Returns |
-|---|---|---|
-| RPC calls → `stakeInfo` | `getColdkeyLock(coldkey, netuid)` | The current `LockState` for this coldkey on `netuid`, rolled forward to the current block, or `None` if no lock exists |
-| Runtime calls → `stakeInfoRuntimeApi` | `getHotkeyConviction(hotkey, netuid)` | Current total conviction for `hotkey` on `netuid`, summed over all coldkeys that have locked to it |
-| Runtime calls → `stakeInfoRuntimeApi` | `getMostConvictedHotkeyOnSubnet(netuid)` | The hotkey with the highest conviction on `netuid`, or `None` if no locks exist |
+| Polkadot.js module                    | Method                                   | Returns                                                                                                                |
+| ------------------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| RPC calls → `stakeInfo`               | `getColdkeyLock(coldkey, netuid)`        | The current `LockState` for this coldkey on `netuid`, rolled forward to the current block, or `None` if no lock exists |
+| Runtime calls → `stakeInfoRuntimeApi` | `getHotkeyConviction(hotkey, netuid)`    | Current total conviction for `hotkey` on `netuid`, summed over all coldkeys that have locked to it                     |
+| Runtime calls → `stakeInfoRuntimeApi` | `getMostConvictedHotkeyOnSubnet(netuid)` | The hotkey with the highest conviction on `netuid`, or `None` if no locks exist                                        |
 
 Conviction is a rolling value: querying at different blocks yields different results as time passes and the exponential evolves.
 
 </TabItem>
 </Tabs>
-
 
 ## Extrinsics
 
@@ -244,6 +262,62 @@ Extrinsics are signed transactions submitted to the Subtensor blockchain. The `a
 ### Locking stake
 
 <Tabs groupId="conviction-extrinsic">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli lock add --wallet.name my_wallet --netuid 1 --hotkey-ss58 5G... --amount 50
+```
+
+<details>
+  <summary><strong>Show sample output</strong></summary>
+
+```console
+btcli lock add --wallet.name SuperPractice --netuid 444 --hotkey-ss58 5GYLDZPadaNcSAkcbPVVA6UYcNWpKwibDS8VAhjGMzKhQhrv --amount 1000
+
+Using the specified network test from config
+
+                                                       Lock Preview
+
+        ┃          ┃    Current ┃            ┃            ┃  Available ┃            ┃            ┃     +365d ┃
+ Netuid ┃   Mode   ┃     Locked ┃     Adding ┃ New Locked ┃      After ┃  +30d Free ┃  +90d Free ┃      Free ┃ Hotkey
+━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━
+  444   │ decaying │ 2,252.1588 │ 1,000.0000 │ 3,252.1588 │ 160,610.2… │   670.9189 │ 1,626.0798 │ 3,056.57… │ 5GYLDZPad…
+        │          │         αε │         αε │         αε │         αε │         αε │         αε │        αε │
+
+Owner hotkey target: conviction is pinned to locked alpha by chain rules.
+Decaying locks free locked alpha over time. Perpetual locks keep alpha locked until you switch them to decaying.
+
+
+Lock projection (use --no-graph to hide)
+(Alpha (αε)) ^
+      3.4k |
+      3.0k | ⠢⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      2.7k | ⠀⠀⠉⠢⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      2.3k | ⠀⠀⠀⠀⠀⠉⠒⠤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      1.9k | ⠀⠀⠀⠀⠀⠀⠀⠀⠈⠒⠤⢄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      1.5k | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠑⠒⠤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      1.1k | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠑⠒⠢⢄⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+       759 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠒⠒⠢⠤⠤⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+       379 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠑⠒⠒⠒⠤⠤⠤⠤⢄⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      0.00 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠉⠉⠉⠒⠒⠒⠒
+-----------|-|---------|---------|---------|---------|---------|---------|-> (Days)
+           | 0         61        122       182       243       304       365
+
+Legend:
+-------
+⠤⠤ Locked = Conviction
+Owner hotkey target: one line represents both locked alpha and conviction.
+
+Submit lock top-up? [y/n] (n): y
+Enter your password:
+Decrypting...
+✅ Your extrinsic has been included as 7264727-6
+✅ Lock add succeeded.
+```
+
+</details>
+
+</TabItem>
 <TabItem value="sdk" label="Python SDK">
 
 ```python
@@ -286,6 +360,20 @@ Locks `amount` alpha from the coldkey's stake on `netuid` to `hotkey`.
 ### Setting lock mode to perpetual
 
 <Tabs groupId="conviction-extrinsic">
+<TabItem value="btcli" label="btcli">
+
+```bash
+# View current mode
+btcli lock mode --wallet.name my_wallet --netuid 1
+
+# Switch to perpetual
+btcli lock mode --wallet.name my_wallet --netuid 1 --mode perpetual
+
+# Resume decaying
+btcli lock mode --wallet.name my_wallet --netuid 1 --mode decaying
+```
+
+</TabItem>
 <TabItem value="sdk" label="Python SDK">
 
 ```python
@@ -322,6 +410,15 @@ Calling `set_perpetual_lock(false)` emits the `PerpetualLockUpdated` event on-ch
 ### Moving a lock
 
 <Tabs groupId="conviction-extrinsic">
+<TabItem value="btcli" label="btcli">
+
+```bash
+btcli lock move --wallet.name my_wallet --netuid 1 --dest 5G...
+```
+
+Omit `--dest` for interactive hotkey selection.
+
+</TabItem>
 <TabItem value="sdk" label="Python SDK">
 
 ```python
@@ -348,9 +445,7 @@ Reassigns the coldkey's existing lock on `netuid` from its current hotkey to `de
 
 - **Conviction resets to zero** when the old and new hotkeys are owned by different coldkeys.
 - Conviction is **preserved** when both hotkeys are owned by the same coldkey (moving between your own hotkeys).
-- The locked mass is preserved in both cases.
-
-When moving to a different-coldkey hotkey, conviction resets to zero, giving the previous hotkey's stakers a window to react before conviction rebuilds.
+- The locked mass of alpha within the subnet is conserved across the move from one hotkey to another.
 
 **Errors:**
 
@@ -377,26 +472,25 @@ The hotkey with the highest aggregate conviction (`subnet_king`) then becomes th
 
 **To monitor readiness via Polkadot.js (Developer → Chain state → `subtensorModule`):**
 
-| Query | What it tells you |
-|---|---|
-| `networkRegisteredAt(netuid)` | Block the subnet was created; add 2,629,800 to get the one-year threshold |
-| `subnetAlphaOut(netuid)` | Total outstanding alpha; 10% of this is the conviction threshold |
-| Developer → Runtime calls → `stakeInfoRuntimeApi` → `getMostConvictedHotkeyOnSubnet(netuid)` | The hotkey that would currently win ownership |
-| Developer → Runtime calls → `stakeInfoRuntimeApi` → `getHotkeyConviction(hotkey, netuid)` | Any hotkey's current aggregate conviction score |
-
+| Query                                                                                        | What it tells you                                                         |
+| -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `networkRegisteredAt(netuid)`                                                                | Block the subnet was created; add 2,629,800 to get the one-year threshold |
+| `subnetAlphaOut(netuid)`                                                                     | Total outstanding alpha; 10% of this is the conviction threshold          |
+| Developer → Runtime calls → `stakeInfoRuntimeApi` → `getMostConvictedHotkeyOnSubnet(netuid)` | The hotkey that would currently win ownership                             |
+| Developer → Runtime calls → `stakeInfoRuntimeApi` → `getHotkeyConviction(hotkey, netuid)`    | Any hotkey's current aggregate conviction score                           |
 
 ## Storage
 
 All six storage items live under **Developer → Chain state → `subtensorModule`** in Polkadot.js.
 
-| Storage item | Keys | Contents |
-|---|---|---|
-| `lock(coldkey, netuid, hotkey)` | coldkey, netuid, hotkey | Individual per-coldkey lock record (`LockState`) |
-| `hotkeyLock(netuid, hotkey)` | netuid, hotkey | Aggregate perpetual lock totals for non-owner hotkeys |
-| `decayingHotkeyLock(netuid, hotkey)` | netuid, hotkey | Aggregate decaying lock totals for non-owner hotkeys |
-| `ownerLock(netuid)` | netuid | Aggregate perpetual lock total for the subnet owner hotkey |
-| `decayingOwnerLock(netuid)` | netuid | Aggregate decaying lock total for the subnet owner hotkey |
-| `decayingLock(coldkey, netuid)` | coldkey, netuid | `false` = perpetual mode; absent = decaying (default) |
+| Storage item                         | Keys                    | Contents                                                   |
+| ------------------------------------ | ----------------------- | ---------------------------------------------------------- |
+| `lock(coldkey, netuid, hotkey)`      | coldkey, netuid, hotkey | Individual per-coldkey lock record (`LockState`)           |
+| `hotkeyLock(netuid, hotkey)`         | netuid, hotkey          | Aggregate perpetual lock totals for non-owner hotkeys      |
+| `decayingHotkeyLock(netuid, hotkey)` | netuid, hotkey          | Aggregate decaying lock totals for non-owner hotkeys       |
+| `ownerLock(netuid)`                  | netuid                  | Aggregate perpetual lock total for the subnet owner hotkey |
+| `decayingOwnerLock(netuid)`          | netuid                  | Aggregate decaying lock total for the subnet owner hotkey  |
+| `decayingLock(coldkey, netuid)`      | coldkey, netuid         | `false` = perpetual mode; absent = decaying (default)      |
 
 Two governance-settable parameters control the time constants:
 
@@ -404,7 +498,6 @@ Two governance-settable parameters control the time constants:
 - **`UnlockRate`**: time constant τ (in blocks) for locked mass decay in decaying mode. Currently set to a 90-day half-life (spec version 411), equal to `MaturityRate`.
 
 Both are adjustable by governance. Query `api.query.subtensorModule.maturityRate()` and `api.query.subtensorModule.unlockRate()` for current values before computing time estimates.
-
 
 ## Appendix: implementation
 
@@ -425,6 +518,7 @@ No history. Just a snapshot at a single block. The three fields are sufficient t
 **The formula** (`calculate_decayed_mass_and_conviction`, `lock.rs`):
 
 In perpetual mode (`perpetual_lock = true`):
+
 ```rust
 let maturity_decay = Self::exp_decay(dt, maturity_rate);  // exp(-dt/τ)
 let new_locked_mass = locked_mass;  // unchanged
@@ -439,6 +533,7 @@ let new_conviction =
 ```
 
 In decaying mode (`perpetual_lock = false`), when `unlock_rate == maturity_rate`:
+
 ```rust
 let unlock_decay = Self::exp_decay(dt, unlock_rate);    // exp(-dt/τ)
 let maturity_decay = Self::exp_decay(dt, maturity_rate); // exp(-dt/τ)  [same τ]
@@ -454,11 +549,13 @@ let new_conviction = conviction_from_existing + conviction_from_mass;
 ```
 
 When the two rates differ, the conviction from mass uses the closed-form integral:
+
 ```rust
 // γ = τ_unlock × (exp(-dt/τ_unlock) - exp(-dt/τ_maturity)) / (τ_unlock - τ_maturity)
 let gamma = tau_x.saturating_mul(decay_delta).checked_div(tau_delta);
 let conviction_from_mass = mass_fixed.saturating_mul(gamma.max(0));
 ```
+
 This is the analytic solution to the convolution of the decaying mass with the maturity kernel `exp(-t/τ_maturity)/τ_maturity`.
 
 **Owner lock special case** (`roll_forward_lock`, `lock.rs`):

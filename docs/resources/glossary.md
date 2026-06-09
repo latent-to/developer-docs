@@ -488,6 +488,12 @@ In the context of machine learning and subnet operations, this refers to the goa
 
 ## P
 
+### Protocol Alpha
+
+Alpha tokens accumulated by the Bittensor protocol itself, rather than any individual staker, as a result of chain-side TAO buys during reserve injection (coinbase). This alpha is cached per subnet in the `SubnetProtocolAlpha` storage item instead of being immediately recycled. When a subnet is dissolved, the protocol's alpha participates in the pro-rata TAO settlement calculation, reducing staker payouts proportionally. The protocol's corresponding TAO share is returned to the chain. `SubnetProtocolAlpha` is cleared when a subnet dissolves.
+
+**See also:** [Subnet Deregistration](../subnets/subnet-deregistration.md), [Emission](../learn/emissions.md)
+
 ### Private Key
 
 A private component of the cryptographic key pair, crucial for securing and authorizing transactions and operations within the Bittensor network.
