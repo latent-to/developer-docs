@@ -46,7 +46,7 @@ btcli view dashboard
 
 Websites that offer permissionless browsing of Bittensor data:
 
-- [bittensor.com/scan](https://bittensor.com/scan)
+- [taostats.io](https://taostats.io)
 - [TAO.app (without loading a private key)](https://tao.app)
 
 ## Cold custody: hardware wallets
