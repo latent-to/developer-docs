@@ -140,7 +140,7 @@ Gets the weights set rate limit for a subnet.
 
 - `uint64`: The weights set rate limit value
 
-#### `setWeightsSetRateLimit` ⚠️ **DEPRECATED**
+#### `setWeightsSetRateLimit` ⚠️ **ROOT-ONLY**
 
 Sets the weights set rate limit for a subnet. **This function is deprecated. Subnet owners cannot set weight setting rate limits.**
 
@@ -208,31 +208,6 @@ Sets the minimum allowed weights for a subnet.
 
 ### Consensus Parameters
 
-#### `getAdjustmentAlpha`
-
-Gets the adjustment alpha parameter for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-
-**Returns:**
-
-- `uint64`: The adjustment alpha value
-
-#### `setAdjustmentAlpha`
-
-Sets the adjustment alpha parameter for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-- `adjustmentAlpha` (uint64): The new adjustment alpha value
-
-**Returns:**
-
-- None (payable function)
-
 #### `getKappa`
 
 Gets the kappa parameter for a subnet.
@@ -253,31 +228,6 @@ Sets the kappa parameter for a subnet.
 
 - `netuid` (uint16): The subnetwork ID
 - `kappa` (uint16): The new kappa value
-
-**Returns:**
-
-- None (payable function)
-
-#### `getRho`
-
-Gets the rho parameter for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-
-**Returns:**
-
-- `uint16`: The rho value
-
-#### `setRho`
-
-Sets the rho parameter for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-- `rho` (uint16): The new rho value
 
 **Returns:**
 
@@ -453,9 +403,9 @@ Gets the minimum burn amount for a subnet.
 
 - `uint64`: The minimum burn amount
 
-#### `setMinBurn` ⚠️ **DEPRECATED**
+#### `setMinBurn`
 
-Sets the minimum burn amount for a subnet. **This function is deprecated. Subnet owners cannot set the minimum burn anymore.**
+Sets the minimum burn amount for a subnet.
 
 **Parameters:**
 
@@ -481,9 +431,9 @@ Gets the maximum burn amount for a subnet.
 
 - `uint64`: The maximum burn amount
 
-#### `setMaxBurn` ⚠️ **DEPRECATED**
+#### `setMaxBurn`
 
-Sets the maximum burn amount for a subnet. **This function is deprecated. Subnet owners cannot set the maximum burn anymore.**
+Sets the maximum burn amount for a subnet.
 
 **Parameters:**
 
@@ -910,7 +860,7 @@ async function createSubnetGetSetParameter() {
     console.log("networkOwner is ", networkOwner);
 
     // Note: This example uses setHyperParameter which calls setServingRateLimit
-    // Some other functions like setMinBurn, setMaxBurn, setWeightsSetRateLimit are deprecated
+    // Some other functions like setWeightsSetRateLimit are root-only and cannot be set by the subnet owner
     tx = await subnet_contract.setHyperParameter(netuid, 255);
     await tx.wait();
 

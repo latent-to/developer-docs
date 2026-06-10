@@ -32,16 +32,9 @@ btcli subnet register --network ws://127.0.0.1:9944
 
 3. Save the delegate hotkey address. You will use this in the staking pool use case below.
 
-4. Disable staking rate limits by setting `targetStakesPerInterval` to 1000. Follow these below steps:
-   - Open the Polkadot JS app using [this link with encoded transaction](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/extrinsics/decode/0x0c00132fe803000000000000).
-   - Click on **Submission** tab.
-   - From the **using the selected account** field, select **ALICE**.
-   - Click on **Submit Transaction** at the bottom right. This will open the **authorize transaction** window.
-   - On this **authorize transaction** window, make sure the **sign and submit** toggle is ON and click on the **Sign and Submit** on the bottom right.
-
 ## Staking V1 and V2
 
-There are two versions of staking precompile implemenation, V1 and V2. The contract address for V1 is `0x0000000000000000000000000000000000000801`. The address for V2 is `0x0000000000000000000000000000000000000805`.  V1 is deprecated, but is kept for backwards-compatibility. The major difference between V1 and V2 is that the staking amount is fetched from the `msg.value` in V1. Then precompile transfers the token back to the caller. It is misleading and confuses solidity developers. In the V2 implementation, all amount parameters are defined as parameter of transaction.
+There are two versions of staking precompile implemenation, V1 and V2. The contract address for V1 is `0x0000000000000000000000000000000000000801`. The address for V2 is `0x0000000000000000000000000000000000000805`. V1 is deprecated, but is kept for backwards-compatibility. The major difference between V1 and V2 is that the staking amount is fetched from the `msg.value` in V1. Then precompile transfers the token back to the caller. It is misleading and confuses solidity developers. In the V2 implementation, all amount parameters are defined as parameter of transaction.
 
 ## Call the staking precompile from another smart contract (staking pool use case)
 
@@ -74,7 +67,6 @@ In this tutorial, you will interact directly with the staking precompile by usin
 3. Remix IDE will find the precompile at the precompile address on the subtensor EVM and show it in the list of deployed contracts. Expand the contract, then expand the `addStake` method, and paste the public key of your delegate hotkey into the `hotkey` field. Then click **transact** and wait for the transaction to be completed.
 
 4. Follow these steps to see that the stake record is updated in [Polkadot JS app](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/chainstate):
-
    1. Select **subtensorModule** + **stake** in the drop-down list.
    2. Paste the delegate hotkey account ID in the first parameter.
    3. Toggle **include option** OFF for the second parameter.
@@ -82,9 +74,9 @@ In this tutorial, you will interact directly with the staking precompile by usin
 
 ## Notes: Calling the staking precompile from another smart contract
 
-   - The precompile takes the contract's address as the **coldkey**, since the precompile can't get the original caller.
-   - The **contract** (not the caller's coldkey) must have sufficient liquidity or the transaction will fail.
-   - The transaction must be *privileged* because the liquidity for `addStake` is subtracted from contract.
-   <!--   example in link will be available after a PR merged in subtensor side --> 
-   - As the function parameter indicates, `amount` in `addStake` and `removeStake` are specified in TAO $\tau$.
-   - That when transferring liquidity to the contract, `msg.value` is in denominations of 1/1e18 TAO $\tau$ . The staking precompile, however, expects RAO, 1/1e9 TAO $\tau$. You must convert before calling it: **uint256 amount = msg.value / 1e9**.
+- The precompile takes the contract's address as the **coldkey**, since the precompile can't get the original caller.
+- The **contract** (not the caller's coldkey) must have sufficient liquidity or the transaction will fail.
+- The transaction must be _privileged_ because the liquidity for `addStake` is subtracted from contract.
+<!--   example in link will be available after a PR merged in subtensor side -->
+- As the function parameter indicates, `amount` in `addStake` and `removeStake` are specified in TAO $\tau$.
+- That when transferring liquidity to the contract, `msg.value` is in denominations of 1/1e18 TAO $\tau$ . The staking precompile, however, expects RAO, 1/1e9 TAO $\tau$. You must convert before calling it: **uint256 amount = msg.value / 1e9**.
