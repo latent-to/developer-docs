@@ -54,7 +54,7 @@ const sidebars = {
         "learn/emissions",
         "learn/ema",
         "learn/yuma-consensus",
-        "learn/yc3-blog",        
+        "learn/yc3-blog",
         "concepts/weight-copying-in-bittensor",
         "learn/yuma3-migration-guide",
         "learn/fees",
@@ -83,7 +83,7 @@ const sidebars = {
       collapsed: true,
       items: [
         "keys/wallets",
-         {
+        {
           type: "category",
           label: "Bittensor Wallet",
           collapsible: true,
@@ -112,7 +112,6 @@ const sidebars = {
         },
         "keys/multisig",
         "keys/coldkey-swap",
-        
       ],
     },
 
@@ -223,7 +222,7 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "sdk/index",       
+        "sdk/index",
         "getting-started/installation",
         "sdk/env-vars",
         "sdk/bt-api-ref",
@@ -321,6 +320,7 @@ const sidebars = {
         "evm-tutorials/subnet-precompile",
         "evm-tutorials/metagraph-precompile",
         "evm-tutorials/neuron-precompile",
+        "evm-tutorials/alpha-precompile",
       ],
     },
     // {
