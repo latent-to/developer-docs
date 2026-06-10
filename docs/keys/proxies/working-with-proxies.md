@@ -985,9 +985,65 @@ This returns all pending announcements for that delegate, each with the real acc
 </Tabs>
 
 
-### Reject an announcement
+### Remove an announcement you made by proxy
 
-If you find an unexpected announcement, reject it immediately. Rejection cancels the announcement on-chain and prevents execution. You can reject through a `NonTransfer` proxy (the proxy pallet sets the origin to the real account, satisfying the on-chain check), so your primary coldkey can stay in cold storage.
+If you made an announcement using a proxy and want to cancel it, for example if you made an error, use `remove_proxy_announcement`. This operation must be signed by wallet that made the announcement, i.e. the proxy.
+
+```python
+import asyncio
+import bittensor as bt
+
+async def main():
+    async with bt.AsyncSubtensor(network="test") as subtensor:
+        proxy_wallet = bt.Wallet(name="YOUR_PROXY_WALLET")  # wallet that made the announcement
+        real_account_ss58 = "REAL_COLDKEY_SS58"  # replace
+        call_hash = "0xCALL_HASH_HERE"  # replace with the hash to remove
+
+        result = await subtensor.remove_proxy_announcement(
+            wallet=proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            call_hash=call_hash,
+        )
+        print(result)
+
+asyncio.run(main())
+```
+
+To remove all your own pending announcements at once:
+
+```python
+import asyncio
+import bittensor as bt
+
+async def main():
+    async with bt.AsyncSubtensor(network="test") as subtensor:
+        proxy_wallet = bt.Wallet(name="YOUR_PROXY_WALLET")  # replace
+        real_account_ss58 = "REAL_COLDKEY_SS58"  # replace
+
+        announcements = await subtensor.get_proxy_announcement(
+            proxy_wallet.coldkeypub.ss58_address
+        )
+        mine = [a for a in announcements if a.real == real_account_ss58]
+
+        if not mine:
+            print("No announcements to remove.")
+            return
+
+        for ann in mine:
+            print(f"Removing: {ann.call_hash}")
+            result = await subtensor.remove_proxy_announcement(
+                wallet=proxy_wallet,
+                real_account_ss58=real_account_ss58,
+                call_hash=ann.call_hash,
+            )
+            print(result)
+
+asyncio.run(main())
+```
+
+### Reject an announcement made by proxy
+
+If you find an unexpected announcement made by someone else using a proxy of your wallet, reject it immediately. Rejection cancels the announcement on-chain and prevents execution. You can reject proxy announcements on behalf of your real account using a `NonTransfer` proxy, so your primary coldkey can stay in cold storage.
 
 <Tabs groupId="proxy">
 <TabItem value="btcli" label="BTCLI">
@@ -1066,7 +1122,7 @@ A `NonTransfer` proxy can reject announcements on behalf of the real account, so
 
 ### Reject all pending announcements
 
-If you need to clear all pending announcements from a delegate at once — for example, after aborting a staking run or if you suspect your proxy key is compromised — use this script to fetch and reject every pending announcement as a single atomic [batch transaction](../../learn/batch-transactions).
+If you need to clear all pending announcements from a delegate at once, for example, if you suspect your proxy key is compromised, use this script to fetch and reject every pending announcement as a single atomic [batch transaction](../../learn/batch-transactions).
 
 ```python
 import asyncio
@@ -1117,6 +1173,21 @@ async def main():
 
 asyncio.run(main())
 ```
+```console
+ExtrinsicResponse:
+  success: True
+  message: Success
+  extrinsic_function: proxy_extrinsic
+  extrinsic: {'account_id': '0xb0fec20486c9cf366c90bf1c93ad1bbc6b50596653f8832ee6c40483aa73d851', 'signature': {'Sr25519': '0xba66acaa0abe99ffe88b93be3e3734aa749f081a2e519b07a29f4cc143b2c263e903b95f230d09fac5cda813a2202171da0bb0de87256a0b6cb44ce5b855b782'}, 'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'NonTransfer', 'call': <GenericCall(value={'call_module': 'Utility', 'call_function': 'batch_all', 'call_args': {'calls': [<GenericCall(value={'call_module': 'Proxy', 'call_function': 'reject_announcement', 'call_args': {'delegate': '5F1TCdVcRWLYyKiS2kF2nBZ21EwQDDFr8hEqrDhRL6YvdtgQ', 'call_hash': '0xd8d742d8e104191114db0e135190f275fd16a9f586ccdd305f50bcd7965564ac'}})>, <GenericCall(value={'call_module': 'Proxy', 'call_function': 'reject_announcement', 'call_args': {'delegate': '5F1TCdVcRWLYyKiS2kF2nBZ21EwQDDFr8hEqrDhRL6YvdtgQ', 'call_hash': '0xad4b9a996a6be1ecb710a277f0677ebf77ddbb6f285c558b7682d56ce6a8d2ad'}})>]}})>}, 'nonce': 693, 'era': {'period': 128, 'current': 7316405}, 'tip': 0, 'asset_id': {'tip': 0, 'asset_id': None}, 'mode': 'Disabled', 'signature_version': 1, 'address': '0xb0fec20486c9cf366c90bf1c93ad1bbc6b50596653f8832ee6c40483aa73d851', 'call': {'call_function': 'proxy', 'call_module': 'Proxy', 'call_args': {'real': '5ECaCSR1tEzcF6yDiribP1JVsw2ZTepZ1ZPy7xgk7yoUv69b', 'force_proxy_type': 'NonTransfer', 'call': <GenericCall(value={'call_module': 'Utility', 'call_function': 'batch_all', 'call_args': {'calls': [<GenericCall(value={'call_module': 'Proxy', 'call_function': 'reject_announcement', 'call_args': {'delegate': '5F1TCdVcRWLYyKiS2kF2nBZ21EwQDDFr8hEqrDhRL6YvdtgQ', 'call_hash': '0xd8d742d8e104191114db0e135190f275fd16a9f586ccdd305f50bcd7965564ac'}})>, <GenericCall(value={'call_module': 'Proxy', 'call_function': 'reject_announcement', 'call_args': {'delegate': '5F1TCdVcRWLYyKiS2kF2nBZ21EwQDDFr8hEqrDhRL6YvdtgQ', 'call_hash': '0xad4b9a996a6be1ecb710a277f0677ebf77ddbb6f285c558b7682d56ce6a8d2ad'}})>]}})>}}}
+  extrinsic_fee: τ0.000646001
+  extrinsic_receipt: ExtrinsicReceipt<hash:0x7d4376ac14605875acad7bf4cb79abe41d389acebf59d37a07b6b5cb72ddbb44>
+
+  mev_extrinsic: None
+  transaction_tao_fee: None
+  transaction_alpha_fee: None
+  error: None
+  data: None
+  ```
 ## Register on a subnet with a proxy
 
 Use a `Registration` proxy to register a hotkey on a subnet. The proxy coldkey signs the transaction; your primary coldkey never needs to be present on the machine.

@@ -15,27 +15,17 @@ TAO holders can **stake** any amount of the liquidity they hold to a validator. 
 
 Subsequently, TAO holders **unstake** from a subnet by converting subnet-specific alpha tokens back to TAO through the subnet's automated market maker (AMM).
 
-<ProxyColdkeyWarning />
+See also: [Staking/delegation overview](./delegation)
 
-See also:
+## Best practices for staking securely
 
-- [Staking/delegation overview](./delegation)
-- [Working with Proxies](../keys/proxies/working-with-proxies)
-- [Understanding pricing and anticipating slippage](../learn/slippage)
-- [Price protection when staking](../learn/price-protection)
-- [MEV Shield Protection](../sdk/mev-protection.md)
-- [Batch Transactions](../learn/batch-transactions)
-
-
-## Best practices for staking security
-
-When staking real-value liquidity (especially on mainnet), three tools can significantly reduce your exposure to loss, if properly used: proxies, price protection, and MEV shield.
+When staking real-value liquidity (especially on mainnet), three tools can significantly reduce your exposure to loss, if properly used: **proxies**, **price protection**, and **MEV shield**.
 
 ### Proxies
 
 A proxy allows a separate key to sign staking transactions on behalf of your primary coldkey, which stays in cold storage. For mainnet staking, always use a proxy with a non-zero delay so that transactions must be announced on-chain before execution, giving you a window to detect and reject unauthorized activity.
 
-See [Prerequisites: For mainnet](#for-mainnet) for the recommended proxy setup, and [Proxies: Overview](../keys/proxies/) and [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security) for the full security model.
+See [Proxies: Overview](../keys/proxies/) and review [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security) to make sure you understand the full Bittensor security model.
 
 ### Price protection (safe staking)
 
@@ -332,6 +322,7 @@ btcli cannot query on-chain announcements, so use the SDK or [Polkadot.js](../co
 An attacker could announce after your first check. Run this at least twice: once shortly after announcing, and again immediately before executing Step 3.
 :::
 
+
 ```python
 import asyncio, json, sys
 import bittensor as bt
@@ -413,6 +404,27 @@ async def monitor():
 
 asyncio.run(monitor())
 ```
+
+example output:
+```console
+
+[ProxyInfo(delegate='5F1TCdVcRWLYyKiS2kF2nBZ21EwQDDFr8hEqrDhRL6YvdtgQ', proxy_type='NonTransfer', delay=99)]
+PENDING ANNOUNCEMENT
+  delegate:     5F1TCdVcRWLYyKiS2kF2nBZ21EwQDDFr8hEqrDhRL6YvdtgQ
+  proxy_type:   NonTransfer
+  call_hash:    0xd8d742d8e104191114db0e135190f275fd16a9f586ccdd305f50bcd7965564ac
+  announced:    block 6814130 (502149 blocks ago)
+  veto window:  0 blocks remaining (0 s)
+
+PENDING ANNOUNCEMENT
+  delegate:     5F1TCdVcRWLYyKiS2kF2nBZ21EwQDDFr8hEqrDhRL6YvdtgQ
+  proxy_type:   NonTransfer
+  call_hash:    0xad4b9a996a6be1ecb710a277f0677ebf77ddbb6f285c558b7682d56ce6a8d2ad
+  announced:    block 7316250 (29 blocks ago)
+  veto window:  70 blocks remaining (840 s)
+
+```
+
 
 If you see an unexpected hash, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately. To batch-reject all pending announcements, see [Reject all pending announcements](../keys/proxies/working-with-proxies#reject-all-pending-announcements). To reject a single announcement:
 
@@ -777,6 +789,8 @@ During the delay window, run this script to cross-reference on-chain announcemen
 :::warning Run this more than once
 A single check is not sufficient. An attacker could announce *after* your first check. Run this script at least twice: once shortly after announcing, and again immediately before executing Step 3.
 :::
+
+
 
 ```python
 import asyncio, json, sys
