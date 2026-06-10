@@ -9,7 +9,8 @@ import TabItem from '@theme/TabItem';
 
 The Alpha precompile exposes the state of every subnet's AMM pool to EVM smart contracts. It is a read-only interface for token prices, pool reserves, swap simulation, and emission rates. Any contract that needs to react to subnet token economics uses this precompile as its data source.
 
-**Address**: `0x0000000000000000000000000000000000000808`
+- **Address**: `0x0000000000000000000000000000000000000808`
+- **Source code**: [AlphaPrecompile reference](https://github.com/opentensor/subtensor/blob/main/precompiles/src/alpha.rs)
 
 ## Concepts
 

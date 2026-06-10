@@ -36,6 +36,8 @@ btcli subnet register --network ws://127.0.0.1:9944
 
 There are two versions of staking precompile implemenation, V1 and V2. The contract address for V1 is `0x0000000000000000000000000000000000000801`. The address for V2 is `0x0000000000000000000000000000000000000805`. V1 is deprecated, but is kept for backwards-compatibility. The major difference between V1 and V2 is that the staking amount is fetched from the `msg.value` in V1. Then precompile transfers the token back to the caller. It is misleading and confuses solidity developers. In the V2 implementation, all amount parameters are defined as parameter of transaction.
 
+- **Source code**: [StakingPrecompileV2 reference](https://github.com/opentensor/subtensor/blob/main/precompiles/src/staking.rs)
+
 ## Call the staking precompile from another smart contract (staking pool use case)
 
 In this interaction you will compile [`stakeV2.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stakeV2.sol), a Solidity smart contract code, and execute it on the Subtensor EVM. This `stakeV2.sol` will, in turn, call the staking precompile that is already deployed on the Subtensor EVM.

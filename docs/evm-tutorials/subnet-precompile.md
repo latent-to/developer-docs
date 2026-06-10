@@ -9,14 +9,10 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 This precompile allows you to interact with Bittensor subnets through EVM smart contracts, affording functionality for registering networks, viewing and setting network parameters, and querying network state.
 
-This page:
+This page describes the precompile's [available functions](#available-functions) on the precompile and demonstrates the precompile's usage with [example scripts](#example-scripts).
 
-- described the precompile's [available functions](#available-functions) on the precompile
-- demonstrates the precompile's usage with [example scripts](#example-scripts).
-
-The subnet precompile is available at address `0x803` (2051 in decimal).
-
-View the [source on GitHub](https://github.com/opentensor/subtensor/blob/main/precompiles/src/subnet.rs)
+- **Address**: The subnet precompile is available at address `0x803` (2051 in decimal).
+- **Source code**: [SubnetPrecompile reference](https://github.com/opentensor/subtensor/blob/main/precompiles/src/subnet.rs)
 
 :::info permissions
 Subnet operations have distinct requirements!
