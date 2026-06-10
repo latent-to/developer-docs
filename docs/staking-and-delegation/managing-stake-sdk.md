@@ -153,18 +153,18 @@ The following script displays exchange rates for a subnet alpha token, with and 
 import bittensor as bt
 
 sub = bt.Subtensor(network="test")
-subnet = sub.subnet(netuid=1)
+subnet = sub.subnet(netuid=62)
 
 alpha_amount = bt.Balance.from_tao(100).set_unit(1)
 
-print("alpha_to_tao_with_slippage", subnet.alpha_to_tao_with_slippage(alpha_amount))
-print("alpha_to_tao_with_slippage percentage", subnet.alpha_to_tao_with_slippage(alpha_amount, percentage=True))
+print("alpha to tao with slippage", subnet.alpha_to_tao_with_slippage(alpha_amount))
+print("alpha to tao with slippage percentage", subnet.alpha_to_tao_with_slippage(alpha_amount, percentage=True))
 
-print("tao_to_alpha_with_slippage", subnet.tao_to_alpha_with_slippage(100))
-print("tao_to_alpha_with_slippage percentage", subnet.tao_to_alpha_with_slippage(100, percentage=True))
+print("tao to alpha with slippage", subnet.tao_to_alpha_with_slippage(100))
+print("tao to alpha with slippage percentage", subnet.tao_to_alpha_with_slippage(100, percentage=True))
 
-print("tao_to_alpha", subnet.tao_to_alpha(100))
-print("alpha_to_tao", subnet.alpha_to_tao(alpha_amount))
+print("tao to alpha", subnet.tao_to_alpha(100))
+print("alpha to tao", subnet.alpha_to_tao(alpha_amount))
 ```
 
 ## View top validators in a subnet
@@ -344,8 +344,8 @@ async def monitor():
     async with bt.AsyncSubtensor(network="test") as subtensor:
         with open(ANNOUNCED_FILE) as f:
             data = json.load(f)
-        # Single-stake file is a dict, not a list
-        expected_hashes = {data["call_hash"]} if isinstance(data, dict) else {a["call_hash"] for a in data}
+        # Single-stake file is a dict, not a list. Normalize to lowercase to guard against encoding differences.
+        expected_hashes = {data["call_hash"].lower()} if isinstance(data, dict) else {a["call_hash"].lower() for a in data}
 
         proxies, _ = await subtensor.get_proxies_for_real_account(REAL_ACCOUNT_SS58)
         if not proxies:
@@ -373,10 +373,10 @@ async def monitor():
             for ann in announcements:
                 if ann.real != REAL_ACCOUNT_SS58:
                     continue
-                on_chain_hashes.add(ann.call_hash)
+                on_chain_hashes.add(ann.call_hash.lower())
                 blocks_elapsed = current_block - ann.height
                 blocks_remaining = max(0, proxy_info.delay - blocks_elapsed)
-                is_ours = ann.call_hash in expected_hashes
+                is_ours = ann.call_hash.lower() in expected_hashes
                 executable_now = blocks_remaining == 0
 
                 if is_ours:
@@ -791,7 +791,8 @@ async def monitor():
         # Load the hashes we expect from Step 1
         with open(ANNOUNCED_FILE) as f:
             expected = json.load(f)
-        expected_hashes = {a["call_hash"] for a in expected}
+        # Normalize to lowercase to guard against encoding differences.
+        expected_hashes = {a["call_hash"].lower() for a in expected}
 
         # Get ALL proxy relationships for this real account
         proxies, _ = await subtensor.get_proxies_for_real_account(REAL_ACCOUNT_SS58)
@@ -828,10 +829,10 @@ async def monitor():
                 if ann.real != REAL_ACCOUNT_SS58:
                     continue
                 found_any = True
-                on_chain_hashes.add(ann.call_hash)
+                on_chain_hashes.add(ann.call_hash.lower())
                 blocks_elapsed = current_block - ann.height
                 blocks_remaining = max(0, proxy_info.delay - blocks_elapsed)
-                is_ours = ann.call_hash in expected_hashes
+                is_ours = ann.call_hash.lower() in expected_hashes
                 executable_now = blocks_remaining == 0
 
                 if is_ours:
