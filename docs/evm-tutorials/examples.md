@@ -9,7 +9,7 @@ import { InstallPartial } from "./\_install.mdx";
 ## Available Precompiles
 
 The following precompiled smart contracts are available on the Bittensor EVM.
-The source code can be found [on GitHub](https://github.com/opentensor/subtensor/blob/main/precompiles).
+The source code can be found [on GitHub](https://github.com/opentensor/subtensor/blob/main/precompiles/src).
 
 Code examples used throughout this section are provided by the _Opentensor Foundation_ (_OTF_), and come from [this repository](https://github.com/opentensor/evm-bittensor/tree/main/examples).
 
@@ -31,8 +31,15 @@ Code examples used throughout this section are provided by the _Opentensor Found
 
 The following list consists of Bittensor-specific precompiles with links to their respective documentation:
 
-- [`Ed25519Verify`](./ed25519-verify-precompile.md): Verify Ed25519 signatures
+- `AddressMappingPrecompile`: Manage EVM and Substrate address conversions
+- `AlphaPrecompile`: Manage alpha operations
 - [`BalanceTransfer`](./transfer-between-two-h160-accounts.md): Transfer TAO between accounts
+- `CrowdloanPrecompile`: Manage crowdloan operations
+- [`Ed25519Verify`](./ed25519-verify-precompile.md): Verify Ed25519 signatures
+- `LeasingPrecompile`: Manage subnet leasing operations
+- [`MetagraphPrecompile`](./metagraph-precompile.md): Interact with the metagraph
+- [`NeuronPrecompile`](./neuron-precompile.md): Manage neuron operations
+- `ProxyPrecompile`: Manage proxy operations
 - [`StakingPrecompile`](./staking-precompile.md): Manage staking operations
 - [`StakingPrecompileV2`](./staking-precompile.md) (0x805): Main staking operations including:
   - `addStake`: Add stake to a hotkey
@@ -44,6 +51,8 @@ The following list consists of Bittensor-specific precompiles with links to thei
   - `getStake`: Get stake between specific hotkey and coldkey
   - `addProxy`: Add a proxy delegate
   - `removeProxy`: Remove a proxy delegate
+- [`Sr25519Verify`](./ed25519-verify-precompile.md): Verify Sr25519 signatures
+- `StorageQueryPrecompile`: Manages EVM contracts read access to Substrate chain storage.
 - [`SubnetPrecompile`](./subnet-precompile.md): Manage subnet operations
-- [`MetagraphPrecompile`](./metagraph-precompile.md): Interact with the metagraph
-- [`NeuronPrecompile`](./neuron-precompile.md): Manage neuron operations
+- `UidLookupPrecompile`: Looks up registered neuron UIDs associated with a given EVM address on a subnet.
+- `VotingPowerPrecompile`: Manages per-validator EMA voting power scores for on-chain governance logic.

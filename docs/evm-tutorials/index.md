@@ -68,26 +68,22 @@ On the Ethereum network, nodes such as full nodes, validator nodes and archive n
 Note that all operations performed by Bittensor EVM are executed solely on the Bittensor blockchain, not on the Ethereum blockchain.
 :::
 
-<left>
 <ThemedImage
 alt="Local blockchain vs public subtensor"
 sources={{
     light: useBaseUrl('/img/docs/2-EVM-block-diagram.svg'),
     dark: useBaseUrl('/img/docs/dark-2-EVM-block-diagram.svg'),
   }}
-style={{width: 400}}
+style={{width: 400, display: "flex", justifySelf: "center"}}
 />
-</left>
-<right>
 <ThemedImage
 alt="Local blockchain vs public subtensor"
 sources={{
     light: useBaseUrl('/img/docs/EVM-subtensor-block-diagram.svg'),
     dark: useBaseUrl('/img/docs/dark-EVM-subtensor-block-diagram.svg'),
   }}
-style={{width: 400}}
+style={{width: 400, display: "flex", justifySelf: "center"}}
 />
-</right>
 
 <ResponsiveCards>    
     <ResponsiveCard 

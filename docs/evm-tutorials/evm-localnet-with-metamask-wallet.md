@@ -13,24 +13,25 @@ Consider first trying [EVM with Bittensor testnet](./evm-testnet-with-metamask-w
 
 Key values:
 
-- **EVM Subtensor Mainnet Chain ID:**: `964` (UTF-8 encoded TAO symbol)
-- **EVM Subtensor Testnet Chain ID:**: `945` (UTF-8 encoded alpha character)
+- **EVM Subtensor Mainnet Chain ID:** `964` (UTF-8 encoded TAO symbol)
+- **EVM Subtensor Testnet Chain ID:** `945` (UTF-8 encoded alpha character)
 - **Opentensor EVM-Bittensor GitHub repo with code examples:** https://github.com/opentensor/evm-bittensor/tree/main
 
 ## Step 1. Run EVM-enabled localnet
 
-```bash
-git clone https://github.com/opentensor/subtensor
-./scripts/localnet.sh
-```
+Before setting up EVM on a local chain, ensure that you have a local Subtensor instance running.
+
+To do this, follow the steps to start a local Subtensor instance. You can run it [using Docker](../local-build/deploy?local-chain=docker) or a [local source build](../local-build/deploy?local-chain=local).
 
 ## Step 2. Set Chain ID
 
-The bare local network doesn't have the Chain ID setup and it needs to be configured with an admin extrinsic. Use [sudo section of Polkadot AppsUI](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/sudo) to call this extrinsic to set the ChainID to 945 (to simulate Testnet) or 964 (to simulate Mainnet):
+A local Subtensor network does not have a Chain ID configured by default. You must set it using an admin extrinsic. Use the [sudo section of Polkadot Apps UI](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944&utm_source=chatgpt.com#/sudo) to call the appropriate extrinsic and set the Chain ID:
 
-```
-adminUtils >> sudoSetEvmChainId
-```
+On the **call: Call(RuntimeCall)** input:
+
+- Select the `adminUtils` pallet
+- Then select the `sudoSetEvmChainId` extrinsic from list of pallet extrinsics
+- Finally, set the chain ID to either `964` for mainnet or `945` for testnet
 
 ## Step 3. Create a Metamask wallet
 

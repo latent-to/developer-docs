@@ -101,83 +101,6 @@ Sets the serving rate limit for a subnet.
 
 - None (payable function)
 
-### Difficulty Management
-
-#### `getMinDifficulty`
-
-Gets the minimum difficulty for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-
-**Returns:**
-
-- `uint64`: The minimum difficulty value
-
-#### `setMinDifficulty`
-
-Sets the minimum difficulty for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-- `minDifficulty` (uint64): The new minimum difficulty value
-
-**Returns:**
-
-- None (payable function)
-
-#### `getMaxDifficulty`
-
-Gets the maximum difficulty for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-
-**Returns:**
-
-- `uint64`: The maximum difficulty value
-
-#### `setMaxDifficulty`
-
-Sets the maximum difficulty for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-- `maxDifficulty` (uint64): The new maximum difficulty value
-
-**Returns:**
-
-- None (payable function)
-
-#### `getDifficulty`
-
-Gets the current difficulty for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-
-**Returns:**
-
-- `uint64`: The current difficulty value
-
-#### `setDifficulty`
-
-Sets the current difficulty for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-- `difficulty` (uint64): The new difficulty value
-
-**Returns:**
-
-- None (payable function)
-
 ### Weight Management
 
 #### `getWeightsVersionKey`
@@ -924,19 +847,19 @@ async function createSubnetGetSetParameter() {
     // Get the substrate address public key
     const pubk = decodeAddress(destinationAddress);
     const hex = Array.from(pubk, (byte) =>
-      byte.toString(16).padStart(2, "0")
+      byte.toString(16).padStart(2, "0"),
     ).join("");
 
     const signer = new ethers.Wallet(ethPrivateKey, provider);
 
     const ss58mirror = convertH160ToSS58(signer.address);
     let txSudoSetBalance = api.tx.sudo.sudo(
-      api.tx.balances.forceSetBalance(ss58mirror, BigInt(1e18).toString())
+      api.tx.balances.forceSetBalance(ss58mirror, BigInt(1e18).toString()),
     );
     await sendTransaction(api, txSudoSetBalance, account);
 
     const txSudoSetWhitelist = api.tx.sudo.sudo(
-      api.tx.evm.setWhitelist([signer.address])
+      api.tx.evm.setWhitelist([signer.address]),
     );
 
     await sendTransaction(api, txSudoSetWhitelist, account);
@@ -944,7 +867,7 @@ async function createSubnetGetSetParameter() {
     const contractFactory = new ethers.ContractFactory(
       subnet_contract_abi,
       subnet_contract_bytecode,
-      signer
+      signer,
     );
 
     const subnet_contract = await contractFactory.deploy(signer.address);
@@ -955,8 +878,8 @@ async function createSubnetGetSetParameter() {
     txSudoSetBalance = api.tx.sudo.sudo(
       api.tx.balances.forceSetBalance(
         convertH160ToSS58(subnet_contract.target),
-        BigInt(1e16).toString()
-      )
+        BigInt(1e16).toString(),
+      ),
     );
     await sendTransaction(api, txSudoSetBalance, account);
 
@@ -976,7 +899,7 @@ async function createSubnetGetSetParameter() {
     let tx = await subnet_contract.registerNetwork(
       encoder.encode("name"),
       encoder.encode("repo"),
-      encoder.encode("contact")
+      encoder.encode("contact"),
     );
     await tx.wait();
 
@@ -993,7 +916,7 @@ async function createSubnetGetSetParameter() {
 
     // get parameter from chain
     let parameter = Number(
-      await api.query.subtensorModule.servingRateLimit(netuid)
+      await api.query.subtensorModule.servingRateLimit(netuid),
     );
 
     assert(parameter == 255);
@@ -1004,7 +927,7 @@ async function createSubnetGetSetParameter() {
     // check total networks after registration
     console.log(
       "total networks is ",
-      (await api.query.subtensorModule.totalNetworks()).toHuman()
+      (await api.query.subtensorModule.totalNetworks()).toHuman(),
     );
 
     process.exit(0);
