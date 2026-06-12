@@ -4,8 +4,11 @@ title: "Conviction and locked stake"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { ProxyColdkeyWarning } from "../keys/_proxy-warning.mdx";
 
 # Conviction and locked stake
+
+<ProxyColdkeyWarning />
 
 The locked stake feature lets coldkey holders lock alpha stake to a specific hotkey on a subnet. Locked stake builds **conviction**, a score that grows over time toward the locked amount. Conviction provides a public, on-chain signal of long-term commitment that cannot be silently reversed.
 

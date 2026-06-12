@@ -44,11 +44,11 @@ Use proxies to delegate account permissions securely while keeping your coldkey 
 
 - [Create and Manage Proxies](../keys/proxies/working-with-proxies.md): Set up standard proxy relationships
 - [Pure Proxies](../keys/proxies/pure-proxies.md): Create and use keyless pure proxy accounts
-- [Staking with a Proxy](../keys/proxies/staking-with-proxy.md): Perform staking operations through a proxy
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md): Staking operations through a proxy
 
 **By proxy type:**
 
-- **Proxy staking**: See [Staking with a Proxy](../keys/proxies/staking-with-proxy.md)
+- **Proxy staking**: See [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 - **Other proxy operations**: Execute any permitted call through a proxy (see [Working with Proxies](../keys/proxies/working-with-proxies.md))
 
 ## Advanced: Working with Blockchain Calls

@@ -109,7 +109,14 @@ The flow-based model uses an Exponential Moving Average (EMA) of net TAO flows (
 6. **Final TAO injection**: Multiply the share by total block emission to get actual TAO amount:
    $$\Delta\tau_i = \Delta\bar{\tau} \times \text{share}(i)$$
 
-   This converts the proportions into actual TAO amounts. Currently, the total block emission $\Delta\bar{\tau}$ is 0.5 TAO per block.
+   This converts the proportions into actual TAO amounts. Currently, the total block emission $\Delta\bar{\tau}$ is 0.5 TAO per block (this will decrease with future [halvings](../concepts/halving)).
+
+   <details>
+   <summary><strong>Check current value on-chain</strong></summary>
+
+   To verify the current block emission, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Storage**, query `subtensorModule.blockEmission()`. See [Inspecting the Chain](../concepts/inspecting-the-chain).
+
+   </details>
 
 With the default $p = 1$ ([source](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1293-L1295)), this creates **linear/proportional distribution**: a subnet with 2× the flow receives exactly 2× the emissions. The parameter can be adjusted to create winner-takes-more dynamics if desired (e.g., with $p = 1.5$, a subnet with 2× flow would get 2.83× emissions).
 
