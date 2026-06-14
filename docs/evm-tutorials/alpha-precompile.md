@@ -2,9 +2,6 @@
 title: "Alpha Precompile"
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Alpha Precompile
 
 The Alpha precompile exposes the state of every subnet's AMM pool to EVM smart contracts. It is a read-only interface for token prices, pool reserves, swap simulation, and emission rates. Any contract that needs to react to subnet token economics uses this precompile as its data source.
@@ -74,3 +71,43 @@ The ratio `AlphaInPool / (AlphaInPool + AlphaOutPool)` tells you what fraction o
 | `getRootNetuid()`                         | —          | `uint16`                       | Root subnet ID (always 0) |
 | `getEMAPriceHalvingBlocks(uint16 netuid)` | netuid     | `uint64`                       | Blocks for EMA half-life  |
 | `getSubnetVolume(uint16 netuid)`          | netuid     | `uint256`                      | Recent trading volume     |
+
+## Usage examples
+
+### ABI
+
+The canonical ABI is exported from [`contract-tests/src/contracts/alpha.ts`](https://github.com/opentensor/subtensor/blob/main/contract-tests/src/contracts/alpha.ts). You can import the ABI and contract address from a local copy of the source file as shown:
+
+```javascript
+import { IAlphaABI, IALPHA_ADDRESS } from "./contracts/alpha";
+```
+
+### Reading pool state
+
+```javascript
+import { ethers } from "ethers";
+import { IAlphaABI, IALPHA_ADDRESS } from "./contracts/alpha";
+
+// PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
+const { ethPrivateKey, subSeed, rpcUrl, wsUrl } = require("./config.js");
+
+const provider = new ethers.JsonRpcProvider(rpcUrl);
+const alphaContract = new ethers.Contract(IALPHA_ADDRESS, IAlphaABI, provider);
+
+const netuid = 14;
+
+const spotPrice = await alphaContract.getAlphaPrice(netuid);
+const movingPrice = await alphaContract.getMovingAlphaPrice(netuid);
+const taoReserve = await alphaContract.getTaoInPool(netuid);
+const alphaReserve = await alphaContract.getAlphaInPool(netuid);
+
+// Simulate a 1 TAO (1e9 RAO) stake
+const ONE_TAO_RAO = 1_000_000_000n;
+const expectedAlpha = await alphaContract.simSwapTaoForAlpha(
+  netuid,
+  ONE_TAO_RAO,
+);
+
+console.log(`Spot price: ${spotPrice}`);
+console.log(`Expected alpha for 1 TAO stake: ${expectedAlpha}`);
+```

@@ -55,10 +55,34 @@ Similarly, creating an Ethereum wallet gives you control of the h160 private key
 You can easily [convert an h160 address to an ss58 address](./convert-h160-to-ss58.md), or vice versa, but this does _not_ yield the corresponding private key. This means that if you create a wallet in Bittensor, you will not be able to sign Ethereum contracts with it, nor versa.
 :::
 
-Hence, in the context of Bittensor EVM we can distinguish between:
+### The HashedAddressMapping
 
-- 'Bittensor wallets': created using the Bittensor tool chain and therefore able to sign transactions using Bittensor transaction clients (BTCLI and the Bittensor SDK), but not EVM smart contracts, on the Bittensor blockchain.
-- 'EVM wallets': created using an EVM client such as MetaMask and therefore able to sign EVM smart contracts, but not Subtensor extrinsics, on the Bittensor blockchain.
+Every EVM call that touches Substrate state (staking, registering, setting weights) requires a Substrate Account—`AccountId32`. The runtime derives this from the H160 address using a one-way hash:
+
+```
+AccountId32 = Blake2b_256("evm:" ++ h160_bytes)
+```
+
+This is called **HashedAddressMapping**. It is deterministic — the same H160 always produces the same AccountId32 — but irreversible. You cannot reconstruct an H160 private key from the AccountId32.
+
+#### How it works
+
+When a smart contract calls a precompile function—for example, `addStake` on StakingV2, the contract's own H160 address is hashed to produce the coldkey for the stake position. The stake is held by the **contract** on-chain, not by the user who called the contract.
+
+Use the AddressMapping precompile (`0x80C`) to compute the Substrate coldkey for any EVM address.
+
+### Types of EVM wallets
+
+In the context of Bittensor EVM we can distinguish between the types of wallets available:
+
+| Type             | Created with                           | Can sign                           | Used for                                              |
+| ---------------- | -------------------------------------- | ---------------------------------- | ----------------------------------------------------- |
+| EVM wallet       | MetaMask or any Ethereum key generator | EVM transactions, precompile calls | Interacting with smart contracts, calling precompiles |
+| Bittensor wallet | `btcli wallet`, Bittensor SDK          | Substrate extrinsics               | Staking via btcli/SDK, key operations, governance     |
+
+:::info Gas fees on Bittensor EVM
+The Bittensor EVM uses the standard Ethereum gas model. Gas fees are paid in TAO (not a separate fee token). Always ensure that you have enough TAO in required the EVM wallet to cover the gas fees for each transaction.
+:::
 
 ## Ethereum vs Bittensor EVM smart contract runtime
 

@@ -321,6 +321,7 @@ const sidebars = {
         "evm-tutorials/metagraph-precompile",
         "evm-tutorials/neuron-precompile",
         "evm-tutorials/alpha-precompile",
+        "evm-tutorials/proxy-precompile",
       ],
     },
     // {
