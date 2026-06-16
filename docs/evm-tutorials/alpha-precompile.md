@@ -88,8 +88,7 @@ import { IAlphaABI, IALPHA_ADDRESS } from "./contracts/alpha";
 import { ethers } from "ethers";
 import { IAlphaABI, IALPHA_ADDRESS } from "./contracts/alpha";
 
-// PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, subSeed, rpcUrl, wsUrl } = require("./config.js");
+const { rpcUrl } = require("./config.js");
 
 const provider = new ethers.JsonRpcProvider(rpcUrl);
 const alphaContract = new ethers.Contract(IALPHA_ADDRESS, IAlphaABI, provider);

@@ -107,7 +107,7 @@ import { hexToU8a } from "@polkadot/util";
 import { IProxyABI, IPROXY_ADDRESS } from "./contracts/proxy";
 
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, subSeed, rpcUrl, wsUrl } = require("./config.js");
+const { ethPrivateKey, rpcUrl } = require("./config.js");
 
 function h160ToPublicKey(evmAddress) {
   const combined = new Uint8Array(24);

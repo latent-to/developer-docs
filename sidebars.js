@@ -322,6 +322,7 @@ const sidebars = {
         "evm-tutorials/neuron-precompile",
         "evm-tutorials/alpha-precompile",
         "evm-tutorials/proxy-precompile",
+        "evm-tutorials/voting-power-precompile",
       ],
     },
     // {
