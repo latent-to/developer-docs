@@ -39,6 +39,10 @@ import { ICrowdloanABI, ICROWDLOAN_ADDRESS } from "./contracts/crowdloan";
 
 ### Creating a campaign
 
+Use `create` to launch a crowdloan campaign on-chain. The function takes the initial deposit amount, minimum contribution per contributor, funding cap, end block, and a target EVM address to receive the raised funds upon finalization.
+
+The target address is a H160 address type, not `bytes32`. You must pass it as a plain EVM address:
+
 ```javascript
 import { ethers } from "ethers";
 import { ICrowdloanABI, ICROWDLOAN_ADDRESS } from "./contracts/crowdloan";
@@ -50,29 +54,114 @@ const provider = new ethers.JsonRpcProvider(rpcUrl);
 const signer = new ethers.Wallet(ethPrivateKey, provider);
 const contract = new ethers.Contract(ICROWDLOAN_ADDRESS, ICrowdloanABI, signer);
 
-const depositRao = 1_000_000_000n; // 1 TAO
+const DEPOSIT = 10_000_000_000n; // 10 TAO in RAO
+const MIN_CONTRIBUTION = 1_000_000_000n; // 1 TAO in RAO
+const CAP = 50_000_000_000n; // 50 TAO in RAO
+const END_BLOCK = 8540500;
 
 const tx = await contract.create(
-  depositRao, // deposit
-  100_000_000n, // minContribution: 0.1 TAO
-  100_000_000_000n, // cap: 100 TAO
-  57000, // end block
+  DEPOSIT,
+  MIN_CONTRIBUTION,
+  CAP,
+  END_BLOCK,
   "0xYourTargetAddress",
-  { value: depositRao, gasLimit: 500_000n },
+  { gasLimit: 100_000n },
 );
 await tx.wait();
+
+console.log(`Crowdloan created`);
 ```
 
 ### Checking campaign progress
 
+Use `getCrowdloan` to crowdloan by ID.
+
 ```javascript
+import { ethers } from "ethers";
+import { ICrowdloanABI, ICROWDLOAN_ADDRESS } from "./contracts/crowdloan";
+const { rpcUrl } = require("./config.js");
+
+const provider = new ethers.JsonRpcProvider(rpcUrl);
+const contract = new ethers.Contract(
+  ICROWDLOAN_ADDRESS,
+  ICrowdloanABI,
+  provider,
+);
+
 const info = await contract.getCrowdloan(0);
 console.log(`Raised: ${info.raised} RAO of ${info.cap} RAO cap`);
 console.log(`Finalized: ${info.finalized}`);
+console.log(`Cap: ${info.cap}`);
+console.log(`End: ${info.end}`);
 ```
 
-## Notes
+### Contribute to a crowdloan campaign
 
-- All TAO amounts are in **RAO** (1 TAO = 1,000,000,000 RAO).
-- `refund` processes a batch of contributors per call. For large campaigns, call it repeatedly before calling `dissolve`.
-- The caller's EVM address maps to a Substrate coldkey via HashedAddressMapping. Use the same address for all operations on a given contribution.
+Use `contribute` to add TAO to an active crowdloan campaign. The function takes the `crowdloanId` and the `amount` in RAO. The `amount` must be at least the campaign's `min_contribution`.
+
+```javascript
+import { ethers } from "ethers";
+import { ICrowdloanABI, ICROWDLOAN_ADDRESS } from "./contracts/crowdloan";
+
+// PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
+const { ethPrivateKey, rpcUrl } = require("./config.js");
+
+const provider = new ethers.JsonRpcProvider(rpcUrl);
+const signer = new ethers.Wallet(ethPrivateKey, provider);
+const contract = new ethers.Contract(ICROWDLOAN_ADDRESS, ICrowdloanABI, signer);
+
+const CROWDLOAN_ID = 0;
+const AMOUNT = 1_000_000_000n; // 1 TAO in RAO
+
+const tx = await contract.contribute(CROWDLOAN_ID, AMOUNT, {
+  gasLimit: 2_000_000n,
+});
+
+console.log(`Contributed ${AMOUNT} RAO to crowdloan ${CROWDLOAN_ID}`);
+```
+
+### Finalize a crowdloan campaign
+
+Use `finalize` to close a successfully funded campaign and transfer the raised TAO to the target address set at creation. The campaign must have reached its cap before the `finalize` function can be called.
+
+```javascript
+import { ethers } from "ethers";
+import { ICrowdloanABI, ICROWDLOAN_ADDRESS } from "./contracts/crowdloan";
+
+// PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
+const { ethPrivateKey, rpcUrl } = require("./config.js");
+
+const provider = new ethers.JsonRpcProvider(rpcUrl);
+const signer = new ethers.Wallet(ethPrivateKey, provider);
+const contract = new ethers.Contract(ICROWDLOAN_ADDRESS, ICrowdloanABI, signer);
+
+const CROWDLOAN_ID = 0;
+
+const tx = await contract.finalize(CROWDLOAN_ID, { gasLimit: 2_000_000n });
+const receipt = await tx.wait();
+console.log(`Crowdloan ${CROWDLOAN_ID} finalized`);
+```
+
+### Dissolve a crowdloan campaign
+
+Use `dissolve` to permanently remove a crowdloan from storage.
+
+```javascript
+import { ethers } from "ethers";
+import { ICrowdloanABI, ICROWDLOAN_ADDRESS } from "./contracts/crowdloan";
+
+// PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
+const { ethPrivateKey, rpcUrl } = require("./config.js");
+
+const provider = new ethers.JsonRpcProvider(rpcUrl);
+const signer = new ethers.Wallet(ethPrivateKey, provider);
+const contract = new ethers.Contract(ICROWDLOAN_ADDRESS, ICrowdloanABI, signer);
+
+const CROWDLOAN_ID = 0;
+
+const tx = await contract.dissolve(CROWDLOAN_ID, { gasLimit: 2_000_000n });
+const receipt = await tx.wait();
+console.log(`Crowdloan ${CROWDLOAN_ID} dissolved`);
+console.log(`  Block:   ${receipt.blockNumber}`);
+console.log(`  Tx hash: ${receipt.hash}`);
+```
