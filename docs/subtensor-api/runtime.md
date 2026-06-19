@@ -8,7 +8,7 @@ description: "This page includes runtime API calls exposed by the Subtensor runt
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **417**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **419**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[AccountNonceApi](#accountnonceapi)**
