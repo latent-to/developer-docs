@@ -233,6 +233,14 @@ const config = {
             from: "/subtensor-nodes/using-source",
             to: "/subtensor-nodes/run/using-source",
           },
+          {
+            from: "/liquidity-positions/liquidity-positions",
+            to: "/learn/balancer-amm",
+          },
+          {
+            from: "/liquidity-positions/managing-liquidity-positions",
+            to: "/learn/balancer-amm",
+          },
         ],
       },
     ],
