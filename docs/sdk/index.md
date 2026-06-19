@@ -15,7 +15,7 @@ The Bittensor Python SDK provides a programmable interface to the Bittensor bloc
 
 Learn how to create wallets, manage keys, and handle credentials programmatically.
 
-- [Install Wallet SDK](../getting-started/install-wallet-sdk.md): Set up wallet functionality
+- [Bittensor Wallet](../keys/btwallet/index.md): install, `Keypair`, `Wallet`, and encryption API
 - [Working with Keys](../keys/working-with-keys.md): Create and manage keys with the SDK
 - [Handle Seed Phrase](../keys/handle-seed-phrase.md): Save and restore wallets securely
 
@@ -44,11 +44,11 @@ Use proxies to delegate account permissions securely while keeping your coldkey 
 
 - [Create and Manage Proxies](../keys/proxies/working-with-proxies.md): Set up standard proxy relationships
 - [Pure Proxies](../keys/proxies/pure-proxies.md): Create and use keyless pure proxy accounts
-- [Staking with a Proxy](../keys/proxies/staking-with-proxy.md): Perform staking operations through a proxy
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md): Staking operations through a proxy
 
 **By proxy type:**
 
-- **Proxy staking**: See [Staking with a Proxy](../keys/proxies/staking-with-proxy.md)
+- **Proxy staking**: See [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 - **Other proxy operations**: Execute any permitted call through a proxy (see [Working with Proxies](../keys/proxies/working-with-proxies.md))
 
 ## Advanced: Working with Blockchain Calls

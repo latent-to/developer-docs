@@ -4,8 +4,11 @@ title: "Staking/Delegation Overview"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { ProxyColdkeyWarning } from "../keys/_proxy-warning.mdx";
 
 # Staking/delegation overview
+
+<ProxyColdkeyWarning />
 
 TAO holders can **stake** any amount of the liquidity they hold to a validator. Also known as **delegation**, staking supports validators, because their total stake in the subnet, including stake delegated to them by others, determines their consensus power and their share of emissions. After the validator/delegate extracts their **take** the remaining emissions are credited back to the stakers/delegators in proportion to their stake with that validator.
 
@@ -16,9 +19,7 @@ Staking and unstaking operations incur transaction fees. See [Transaction Fees i
 See also:
 
 - [Browse validators on TAO.app](https://www.tao.app/validators), with on-chain identities, stake distributions, validator take percentages, etc.
-- [Managing Stake with 'btcli'](./managing-stake-btcli.md)
-- [Managing Stake with the Python SDK](./managing-stake-sdk.md)
-- [Staking with a Proxy](../keys/proxies/staking-with-proxy): Keep your coldkey secure while managing staking operations
+- [Managing Your Stakes](./managing-stake-sdk.md): Complete guide to staking operations with btcli and the Python SDK
 
 :::tip tips
 Validators/delegates can configure their take. The default value is 18%. See [`btcli sudo set-take`](../btcli#btcli-sudo-set-take).
@@ -56,6 +57,8 @@ As a TAO holder, you will stake to a validator’s hotkey on a specific subnet. 
 **Price protection**: Bittensor provides built-in price protection mechanisms to prevent unfavorable unstaking transactions. You can set tolerance limits and enable partial execution. See [Price Protection When Staking](../learn/price-protection.md) for more information.
 
 **Transaction fees**: Unstaking operations incur blockchain transaction fees. These fees are recycled back into the TAO emission pool. See [Transaction Fees in Bittensor](../learn/fees.md).
+
+**Conviction locks**: If you or the previous owner of your stake has called `lock_stake` on a subnet, a portion of your alpha may be locked and cannot be unstaked immediately. Locked stake must first be unlocked via `unlock_stake`, after which an exponential decay period applies — ~90% of the unlocked amount becomes withdrawable after ~365 days. See [Conviction Staking](./conviction-staking.md) for details.
 :::
 
 ### Unstaking methods

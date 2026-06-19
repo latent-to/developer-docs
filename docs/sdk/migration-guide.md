@@ -1024,24 +1024,28 @@ BT_SUBTENSOR_NETWORK=local
 - `BT_CHAIN_ENDPOINT` → `BT_SUBTENSOR_CHAIN_ENDPOINT`
 - `BT_NETWORK` → `BT_SUBTENSOR_NETWORK`
 
-### Disabling CLI Argument Parsing
+### Enabling CLI Argument Parsing
 
-If your script uses the SDK and receives unwanted `--config` or other CLI parameters:
+CLI argument passing is disabled by default. Therefore, if your script uses the SDK and receives unwanted `--config` or other CLI parameters, you must explicitly enable this by using the `BT_NO_PARSE_CLI_ARGS`.
 
-```python
-# Set environment variable to disable config processing:
-BT_NO_PARSE_CLI_ARGS=1  # or: true, yes, on
+Set environment variable to `0`, `false`, `no`, or `off` to enable parsing as shown:
 
-# In code:
+```bash
+BT_NO_PARSE_CLI_ARGS=0 python your_script.py --logging.debug
+```
+
+Or in code:
+
+```py
 import os
-os.environ['BT_NO_PARSE_CLI_ARGS'] = '1'
+os.environ['BT_NO_PARSE_CLI_ARGS'] = '0'
 
 from bittensor import Subtensor
-# CLI args will no longer be processed
+# CLI arguments will now be processed by the SDK
 ```
 
 :::tip
-When `BT_NO_PARSE_CLI_ARGS` is set, the SDK skips CLI parsing entirely and falls back to default configuration values defined in `bittensor.core.settings.DEFAULTS` for all configuration options across the SDK. This is useful when embedding the SDK in applications that manage their own configuration.
+CLI parsing is disabled by default (`BT_NO_PARSE_CLI_ARGS=1`). This means that the SDK skips CLI parsing entirely and falls back to default configuration values defined in `bittensor.core.settings.DEFAULTS` for all configuration options across the SDK. This is useful when embedding the SDK in applications that manage their own configuration.
 :::
 
 ## Metagraph Changes

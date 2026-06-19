@@ -35,7 +35,7 @@ Note that hotkeys are not encrypted by default, but can be password [optionally 
 - Create and register a hotkey on a secure coldkey workstation then transfer the hotkey file or mnemonic to the validator workstation: `btcli wallet new-hotkey` , `btcli wallet regen-hotkey`
 - Transfer/rotate TAO and alpha stake in case of key compromise
 - Rotate hotkeys in case of compromise
-- Register a hotkey on a subnet with `btcli subnets register`, `btcli subnets pow-register`
+- Register a hotkey on a subnet with [`btcli subnets register`](../btcli/btcli.md#btcli-subnets-register); non-root registration requires paying the **current TAO burn**. By default the command runs in safe mode and prompts for a price tolerance—pass `--unsafe` to skip. Check the current burn first with `btcli subnets show --netuid <netuid>`.
 - Set validator take with `btcli sudo set-take`
 
 ### Validator node (hotkey workstation)
@@ -54,4 +54,4 @@ To set weights, a validator must meet several requirements. See [Requirements fo
 
 If you suspect your coldkey may have been leaked, you can request to swap it out of your wallet, using an extrinsic blockchain transaction. This operation has a 5 day waiting period, during which your coldkey will be locked. The cost of this coldkey swap transaction is 0.1 TAO.
 
-See [Rotate/Swap your Coldkey](../keys/schedule-coldkey-swap)
+See [Rotate/Swap your Coldkey](../keys/coldkey-swap)

@@ -4,7 +4,7 @@ title: "The Subnet Metagraph"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 # Subnet Metagraph
 
@@ -68,10 +68,10 @@ The Bittensor Python SDK [Metagraph module](pathname:///python-api/html/autoapi/
 from bittensor.core.metagraph import Metagraph
 
 # Initialize metagraph for subnet 14 (lite mode - excludes weights/bonds)
-m = Metagraph(netuid=14, network="finney", sync=True)
+m = Metagraph(netuid=14, network="test", sync=True)
 
 # Initialize metagraph with full data including weights and bonds
-m = Metagraph(netuid=14, network="finney", lite=False, sync=True)
+m = Metagraph(netuid=14, network="test", lite=False, sync=True)
 ```
 
 ### Mechanism-aware metagraphs (multiple incentive mechanisms)
@@ -85,13 +85,13 @@ Subnets can run multiple incentive mechanisms. The SDK supports selecting a mech
 from bittensor.core.metagraph import Metagraph
 
 # Default mechanism (0)
-meta = Metagraph(netuid=14, network="finney", sync=True)
+meta = Metagraph(netuid=14, network="test", sync=True)
 print(meta.mechid)  # 0
 print(meta.mechanism_count)  # e.g., 2
 print(meta.emissions_split)  # e.g., [60, 40]
 
 # Specific mechanism (1)
-mech_meta = Metagraph(netuid=14, network="finney", sync=True, lite=False)
+mech_meta = Metagraph(netuid=14, network="test", sync=True, lite=False)
 mech_meta.mechid = 1
 mech_meta.sync()  # or re-init with mechid in helper constructors
 ```
@@ -286,18 +286,15 @@ See also:
 | `burn`                          | Burn amount                                                                                    |
 | `commit_reveal_period`          | Commit reveal period                                                                           |
 | `commit_reveal_weights_enabled` | Commit reveal weights enabled                                                                  |
-| `difficulty`                    | Network difficulty                                                                             |
 | `immunity_period`               | Immunity period                                                                                |
 | `kappa`                         | Kappa parameter                                                                                |
 | `liquid_alpha_enabled`          | Liquid alpha enabled                                                                           |
 | `max_burn`                      | Maximum burn                                                                                   |
-| `max_difficulty`                | Maximum difficulty                                                                             |
 | `max_regs_per_block`            | Max registrations per block                                                                    |
 | `max_validators`                | Maximum validators                                                                             |
 | `max_weights_limit`             | Maximum weights limit                                                                          |
 | `min_allowed_weights`           | Minimum allowed weights                                                                        |
 | `min_burn`                      | Minimum burn                                                                                   |
-| `min_difficulty`                | Minimum difficulty                                                                             |
 | `pow_registration_allowed`      | POW registration allowed                                                                       |
 | `registration_allowed`          | Registration allowed                                                                           |
 | `rho`                           | Rho parameter                                                                                  |
@@ -372,7 +369,7 @@ from bittensor.core.metagraph import Metagraph
 def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
-    metagraph = Metagraph(netuid=1, network="finney", sync=True)
+    metagraph = Metagraph(netuid=1, network="test", sync=True)
 
     # Get basic metagraph metadata
     print("\n=== Basic Metagraph Metadata ===")
@@ -406,7 +403,7 @@ from bittensor.core.metagraph import Metagraph
 def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
-    metagraph = Metagraph(netuid=1, network="finney", sync=True)
+    metagraph = Metagraph(netuid=1, network="test", sync=True)
 
     # Get all neuron UIDs
     uids = metagraph.uids
@@ -447,7 +444,7 @@ from bittensor.core.metagraph import Metagraph
 def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
-    metagraph = Metagraph(netuid=1, network="finney", sync=True)
+    metagraph = Metagraph(netuid=1, network="test", sync=True)
 
     # Get performance metrics
     ranks = metagraph.R  # Performance ranks
@@ -502,7 +499,7 @@ from bittensor.core.metagraph import Metagraph
 def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
-    metagraph = Metagraph(netuid=1, network="finney", sync=True)
+    metagraph = Metagraph(netuid=1, network="test", sync=True)
 
     # Get economic metrics
     incentives = metagraph.I  # Incentive scores
@@ -548,7 +545,7 @@ from bittensor.core.metagraph import Metagraph
 def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
-    metagraph = Metagraph(netuid=1, network="finney", sync=True)
+    metagraph = Metagraph(netuid=1, network="test", sync=True)
 
     # Get network information
     axons = metagraph.axons
@@ -601,7 +598,7 @@ from bittensor.core.metagraph import Metagraph
 def main():
     # Initialize metagraph for subnet 1 with full sync (not lite)
     print("Initializing metagraph for subnet 1 (full sync)...")
-    metagraph = Metagraph(netuid=1, network="finney", lite=False, sync=True)
+    metagraph = Metagraph(netuid=1, network="test", lite=False, sync=True)
 
     uids = metagraph.uids
 
@@ -659,7 +656,7 @@ from bittensor.core.metagraph import Metagraph
 def main():
     # Initialize metagraph for subnet 1 with full sync (not lite)
     print("Initializing metagraph for subnet 1 (full sync)...")
-    metagraph = Metagraph(netuid=1, network="finney", lite=False, sync=True)
+    metagraph = Metagraph(netuid=1, network="test", lite=False, sync=True)
 
     uids = metagraph.uids
 
@@ -699,7 +696,7 @@ from bittensor.core.metagraph import Metagraph
 def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
-    metagraph = Metagraph(netuid=1, network="finney", sync=True)
+    metagraph = Metagraph(netuid=1, network="test", sync=True)
 
     # Get activity information
     active = metagraph.active  # Activity status
@@ -749,7 +746,7 @@ from bittensor.core.metagraph import Metagraph
 def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
-    metagraph = Metagraph(netuid=1, network="finney", sync=True)
+    metagraph = Metagraph(netuid=1, network="test", sync=True)
 
     # Get subnet hyperparameters
     hparams = metagraph.hparams
@@ -762,9 +759,6 @@ def main():
     print(f"  Burn rate: {hparams.burn}")
     print(f"  Max burn: {hparams.max_burn}")
     print(f"  Min burn: {hparams.min_burn}")
-    print(f"  Difficulty: {hparams.difficulty}")
-    print(f"  Max difficulty: {hparams.max_difficulty}")
-    print(f"  Min difficulty: {hparams.min_difficulty}")
     print(f"  Max validators: {hparams.max_validators}")
     print(f"  Tempo: {hparams.tempo}")
     print(f"  Weights version: {hparams.weights_version}")
@@ -805,7 +799,7 @@ from bittensor.core.metagraph import Metagraph
 def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
-    metagraph = Metagraph(netuid=1, network="finney", sync=True)
+    metagraph = Metagraph(netuid=1, network="test", sync=True)
 
     # Get basic metrics
     stakes = metagraph.S
@@ -880,12 +874,12 @@ from bittensor.core.metagraph import async_metagraph
 
 async def analyze_metagraph():
     # Create async subtensor first
-    async with AsyncSubtensor(network="finney") as subtensor:
+    async with AsyncSubtensor(network="test") as subtensor:
         # Create async metagraph with subtensor
         print("Creating async metagraph...")
         metagraph = await async_metagraph(
             netuid=1,
-            network="finney",
+            network="test",
             lite=False,
             subtensor=subtensor  # Pass the subtensor
         )
@@ -919,7 +913,7 @@ from bittensor.core.metagraph import Metagraph
 def main():
     # Initialize metagraph for subnet 1
     print("Initializing metagraph for subnet 1...")
-    metagraph = Metagraph(netuid=1, network="finney", sync=True, lite=False)
+    metagraph = Metagraph(netuid=1, network="test", sync=True, lite=False)
 
     # Get complete neuron information for first 5 neurons
     print("=== Complete Neuron Information (First 5 Neurons) ===")

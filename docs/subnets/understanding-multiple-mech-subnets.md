@@ -5,21 +5,22 @@ title: "Multiple Incentive Mechanisms Within Subnets"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-#  Multiple Incentive Mechanisms Within Subnets
+# Multiple Incentive Mechanisms Within Subnets
 
 This page explores how subnets can implement multiple incentive mechanisms to distribute emissions across different evaluation criteria.
-
-:::tip Hot new feature
-Multiple incentive mechanisms per subnet is a new feature that is still in development. It's initial release on mainnet is expected the week of September 22. In the meantime, it can be experimented with using a locally run chain.
-
-See [Announcements](../learn/announcements) for updates.
-:::
 
 For an introduction to incentive mechanisms in general, see [Understanding Incentive Mechanisms](../learn/anatomy-of-incentive-mechanism). For the basics of subnets, miners, validators, and the blockchain, see [Components of the Bittensor platform](../learn/neurons).
 
 For coverage of the procedures involved, see:
+
 - [Managing Mechanisms with SDK](./managing-mechanisms-with-sdk)
 - [Managing Mechanisms with BTCLI](./managing-mechanisms-btcli)
+
+:::info Mechanism Count Constraint
+Before attempting to modify the mechanism count on a subnet, ensure that the product of multiplying the new mechanism count by the maximum number of UIDs in the subnet remains less than 256. If it exceeds this threshold, you must first adjust the subnet’s `MaxAllowedUids` hyperparameter to accommodate the change.
+
+To learn more about UID limit, see [UID trimming](./uid-trimming.md).
+:::
 
 Historically, each subnet operates with a single **incentive mechanism**, a function that validators run to assign weights to miners based on the value of their work. Subnets can now support **multiple incentive mechanisms**, allowing a subnet creator to apportion the subnet's emissions across different evaluation criteria, each running Yuma Consensus _independently_ with separate bond pools to evaluate miners' performance on distinct tasks.
 
@@ -99,6 +100,7 @@ As of the current Subtensor runtime, a subnet can have a maximum of 2 mechanisms
 
 ### Core Changes
 
+- **Subnet trim**: Subnet owners must ensure that the mechanism count multiplied by the maximum number of UIDs in a subnet must be less than 256. To accommodate this threshold, they must adjust the subnet’s maximum UID hyperparameter before modifying the number of mechanisms. To learn more about subnet trimming, see [UID trimming](./uid-trimming.md).
 - **Emission distribution**: You can control what percentage of total emissions goes to each incentive mechanism using the `sudo_set_mechanism_emission_split` extrinsic. When the number of mechanisms is set, the emission distribution is reset to an even split, but you can set it again with custom proportions.
 
   :::info
@@ -123,9 +125,9 @@ For each subnet, the subnet creator keeps 18% of emissions, 41% is allocated to 
 Note that currently, only 2 mechanisms are allowed per subnet; it is planned that this cap will be raised in the future.
 :::
 
-- Mechanism 0 (60%): 100 $\tau$  X .41 X .6 = 24.6
-- Mechanism 1 (30%): 100 $\tau$ X  .41 X  .3 = 12.3
-- Mechanism 2 (10%): 100 $\tau$ X .41 X  .1 = 4.1
+- Mechanism 0 (60%): 100 $\tau$ X .41 X .6 = 24.6
+- Mechanism 1 (30%): 100 $\tau$ X .41 X .3 = 12.3
+- Mechanism 2 (10%): 100 $\tau$ X .41 X .1 = 4.1
 
 :::info Setting Custom Proportions
 To achieve the above distribution, the subnet owner would submit the `sudo_set_mechanism_emission_split` extrinsic with the vector `[39321, 19660, 6554]` (calculated as 60% × 65535, 30% × 65535, 10% × 65535).
@@ -138,7 +140,7 @@ Note that a miner who excels in mechanism 0 but performs poorly in others might 
 Multiple incentive mechanisms extend the existing metagraph with additional columns:
 
 ```
-UID | Hotkey | Stake | Mechanism 0 Weights | Mechanism 1 Weights | Mechanism 0 Incentive | Mechanism 1 Incentive
+UID  | Hotkey | Stake | Mechanism 0 Weights | Mechanism 1 Weights | Mechanism 0 Incentive | Mechanism 1 Incentive
 -----|--------|-------|---------------------|---------------------|----------------------|----------------------
 123  | 5ABC...| 1000  | [0.3, 0.2, 0.1...] | [0.1, 0.4, 0.2...] | 0.05 τ               | 0.02 τ
 456  | 7DEF...| 800   | [0.2, 0.3, 0.2...] | [0.2, 0.3, 0.1...] | 0.03 τ               | 0.04 τ

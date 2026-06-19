@@ -30,9 +30,9 @@
   <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/bittensor-custom.css?v=c1dfe055" />
   
   <!-- So that users can add custom icons -->
@@ -42,9 +42,9 @@
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/bittensor/utils/networking/index';</script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -353,7 +353,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -377,7 +377,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -428,7 +428,7 @@
 <p>Utils for handling local network with ip and ports.</p>
 <section id="exceptions">
 <h2>Exceptions<a class="headerlink" href="#exceptions" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.networking.ExternalIPNotFound" title="bittensor.utils.networking.ExternalIPNotFound"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExternalIPNotFound</span></code></a></p></td>
 <td><p>Raised if we cannot attain your external ip from CURL/URLLIB/IPIFY/AWS</p></td>
@@ -439,7 +439,7 @@
 </section>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#bittensor.utils.networking.get_external_ip" title="bittensor.utils.networking.get_external_ip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_external_ip</span></code></a>()</p></td>
 <td><p>Checks CURL/URLLIB/IPIFY/AWS for your external ip.</p></td>
@@ -467,7 +467,7 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py exception">
 <dt class="sig sig-object py" id="bittensor.utils.networking.ExternalIPNotFound">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">ExternalIPNotFound</span></span><a class="reference internal" href="../../../../_modules/bittensor/utils/networking.html#ExternalIPNotFound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.networking.ExternalIPNotFound" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">ExternalIPNotFound</span></span><a class="headerlink" href="#bittensor.utils.networking.ExternalIPNotFound" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
 <p>Raised if we cannot attain your external ip from CURL/URLLIB/IPIFY/AWS</p>
 <p>Initialize self.  See help(type(self)) for accurate signature.</p>
@@ -475,14 +475,14 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.networking.get_external_ip">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">get_external_ip</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/networking.html#get_external_ip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.networking.get_external_ip" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">get_external_ip</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.networking.get_external_ip" title="Link to this definition">#</a></dt>
 <dd><p>Checks CURL/URLLIB/IPIFY/AWS for your external ip.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Your routers external facing ip as a string.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>external_ip (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>)</p>
+<dd class="field-even"><p><a class="reference internal" href="../../core/axon/index.html#bittensor.core.axon.Axon.external_ip" title="bittensor.core.axon.Axon.external_ip">external_ip</a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>)</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#bittensor.utils.networking.ExternalIPNotFound" title="bittensor.utils.networking.ExternalIPNotFound"><strong>ExternalIPNotFound</strong></a><strong>(</strong><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.14)"><strong>Exception</strong></a><strong>)</strong> – Raised if all external ip attempts fail.</p>
@@ -492,7 +492,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.networking.get_formatted_ws_endpoint_url">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">get_formatted_ws_endpoint_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint_url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/networking.html#get_formatted_ws_endpoint_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.networking.get_formatted_ws_endpoint_url" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">get_formatted_ws_endpoint_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint_url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.networking.get_formatted_ws_endpoint_url" title="Link to this definition">#</a></dt>
 <dd><p>Returns a formatted websocket endpoint url.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -510,7 +510,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.networking.int_to_ip">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">int_to_ip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/networking.html#int_to_ip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.networking.int_to_ip" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">int_to_ip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int_val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.networking.int_to_ip" title="Link to this definition">#</a></dt>
 <dd><p>Maps an integer to a unique ip-string</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -527,7 +527,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.networking.ip__str__">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">ip__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/networking.html#ip__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.networking.ip__str__" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">ip__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.networking.ip__str__" title="Link to this definition">#</a></dt>
 <dd><p>Return a formatted ip string</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -542,7 +542,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.networking.ip_to_int">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">ip_to_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/networking.html#ip_to_int"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.networking.ip_to_int" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">ip_to_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str_val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.networking.ip_to_int" title="Link to this definition">#</a></dt>
 <dd><p>Maps an ip-string to a unique integer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -559,7 +559,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="bittensor.utils.networking.ip_version">
-<span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">ip_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bittensor/utils/networking.html#ip_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bittensor.utils.networking.ip_version" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bittensor.utils.networking.</span></span><span class="sig-name descname"><span class="pre">ip_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str_val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bittensor.utils.networking.ip_version" title="Link to this definition">#</a></dt>
 <dd><p>Returns the ip version (IPV4 or IPV6).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -617,11 +617,12 @@
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exceptions">Exceptions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
@@ -659,7 +660,7 @@ By Opentensor Foundation
 
   <p class="copyright">
     
-      © Copyright 2024, Opentensor Foundation.
+      © Copyright 2025, Opentensor Foundation.
       <br/>
     
   </p>

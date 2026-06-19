@@ -45,4 +45,4 @@ During an Alpha halving, the amount of Alpha distributed to miners, validators, 
 - Timing depends on total issuance, not block numbers
 - Recycling can delay halving events
 - TAO emissions and Alpha pool injections halve while Alpha participant rewards remain constant during a TAO halving
-- Current daily emission: ~7,200 TAO → ~3,600 TAO after first halving
+- Current daily emission: ~3,600 TAO

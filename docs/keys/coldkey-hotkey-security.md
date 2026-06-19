@@ -2,11 +2,11 @@
 title: "Coldkey and Hotkey Workstation Security"
 ---
 
-import { SecurityWarning } from "./_security-warning.mdx";
+import { SecurityWarning } from "./\_security-warning.mdx";
 
 # Coldkey and Hotkey Workstation Security
 
-This page goes into detail of security concerns for working with coldkeys and hotkeys in Bittensor.
+<SecurityWarning />
 
 See also:
 
@@ -14,175 +14,195 @@ See also:
 - [Bittensor CLI: Permissions Guide](../btcli/btcli-permissions)
 - [Handle your Seed Phrase/Mnemonic Securely](./handle-seed-phrase)
 
-Interacting with Bittensor generally falls into one of three levels of security, depending on whether you need to use your coldkey private key, hotkey private key, or neither.
+## Security model
 
-The workstations you use to do this work can be referred to as a permissionless workstation (requiring neither private key), a coldkey workstation or a hotkey workstation, depending on which private key is provisioned.
+Bittensor operations fall into several tiers of security risk based on which key is required:
 
-- [Permisionless workstation](#permissionless-workstation)
-- [Coldkey workstation](#permissionless-workstation)
-- [Hotkey workstation](#permissionless-workstation)
+| Tier | Key required | Recommended environment |
+|---|---|---|
+| **Permissionless** | Public key only | Any device |
+| **Hotkey operational** | Hotkey | Mining/validation server |
+| **Coldkey operational** | Scoped proxy coldkey | Internet-connected workstation |
+| **Custody** | Primary coldkey | Hardware wallet only |
 
-<SecurityWarning />
 
 ## Permissionless workstation
 
-You can check public information about Bittensor wallets (including your TAO and alpha stake balances), subnets, validators, and more _without_ using a (coldkey or hotkey) private key. This is because transaction information is public on the Bittensor blockchain, with parties being identified by their wallet's coldkey public key.
+You can check public information about Bittensor wallets (including your TAO and alpha stake balances), subnets, validators, and more _without_ using a private key. Transaction information is public on the Bittensor blockchain, with parties identified by their coldkey public key.
 
-When you use a website and apps with _only your public key_, this is considered "permissionless" work. Whenever possible, you should do permissionless work on a **permissionless workstation**, meaning a device (laptop or desktop computer, mobile phone, tablet, etc.) that does _not_ have your coldkey private key loaded into it.
+Whenever possible, do read-only work on a device that does _not_ have any private key loaded.
 
-In other words, don't use your coldkey private key when you don't have to, and avoiding loading it into devices unnecessarily. Every device that _does_ have your coldkey private key loaded into it is a **coldkey workstation**, and should be used with security precautions.
+To use `btcli` as a permissionless workstation, import only your coldkey **public key**:
 
-When you just want to read/check the state of the blockchain (balances, emissions, token prices, etc.) and you don't need to use your coldkey to _change_ anything (for exmaple, to transfer TAO or move stake), it is preferable to use a permissionless workstation.
+```shell
+btcli w regen-coldkeypub --ss58 <YOUR COLDKEY PUBLIC KEY>
+```
 
-To use the Bittensor CLI `btcli` as a permissionless workstation:
+Then view balances, stakes, and blockchain state:
 
-1. Importing your coldkey **_public key_** (not private key) with:
+```shell
+btcli view dashboard
+```
 
-   ```shell
-   btcli w regen-coldkeypub --ss58 <YOUR COLDKEY PUBLIC KEY>
-   ```
+Websites that offer permissionless browsing of Bittensor data:
 
-1. View your balances and stakes, as well as information about the Bittensor blockchain, subnets, miners, validators, etc., simply by running:
-   ```shell
-   btcli view dashboard
-   ```
+- [taostats.io](https://taostats.io)
+- [TAO.app (without loading a private key)](https://tao.app)
 
-Websites that offer permissionless browsing of Bittensor data include:
+## Cold custody: hardware wallets
 
-- [bittensor.com/scan](https://bittensor.com/scan)
-- [TAO.app (without using the browser extention to load private key)](https://tao.app)
+Your primary coldkey is the ultimate authority over your Bittensor wallet. It controls all TAO and alpha balances. **This key should live in a hardware wallet and never be exported to any machine.**
 
-## Coldkey workstation
-
-Your coldkey private key, accessible with your recovery [seed phrase](./wallets#the-seed-phrase-aka-mnemonic), is the complete representation of your identity to Bittensor. In otherwords, holding the coldkey or seed phrase is the ultimate authority over your Bittensor wallet. If your coldkey key is leaked or stolen, it allows an attacker holder to transfer (steal) your TAO, redelegate your stakes, or take other actions that can’t be reversed. Conversely, without your coldkey private key or the seed phrase, there is no possible way to recover access to your wallet.
-
-Because of these high stakes, best practices should be diligently followed. Always prioritize confidentiality and integrity over convenience when handling coldkeys.
-
-### Isolation of coldkey operations
-
-The first principle is to isolate coldkey operations from day-to-day or internet-exposed systems. This means using a dedicated machine that is minimally connected to the internet, protected with full disk encryption, and has only highly trusted software installed to minimize the risk of malware or keyloggers intercepting your coldkey.
-
-In short, you should approach all operations involving your coldkey management as high-value, mission-critical, and laden with inherent risk.
-
-Ensure a clear boundary between coldkey operations and the working environment you use to carry them out, and everything else.
-
-:::warning Do not mine with coldkeys
-
-Miners will need coldkeys to manage their TAO and alpha currency, as well as hotkeys to serve requests. Miners must ensure that there is a clear boundary—the coldkey should **never** be on an environment with untrusted ML code from containers, frameworks, or libraries that might exfiltrate secrets.
-:::
-
-### Coldkey mobile device
-
-You can use the Bittensor mobile wallet app: [bittensor.com/wallet](https://bittensor.com/wallet). If so, it is recommended to use a dedicated mobile phone for the purpose that you do not install other software on, to minimize the risk of the coldkey or seed phrase being leaked.
-
-This option is suitable for alpha staking and TAO balance management.
-
-### Coldkey laptop
-
-This is required for using `btcli` or the Bittensor Python SDK for advanced use cases such as hotkey management and scripting.
-
-<!-- What is a minimal (?) recommended operating system for a bittensor coldkey workstation ??? -->
-
-### Operational Hygiene
-
-Even on a minimal or air-gapped machine, follow standard security hygiene:
-
-- Always [Handle your Seed Phrase/Mnemonic Securely](./handle-seed-phrase).
-- Use strong passwords for your encryption passphrases.
-- Do not reuse credentials across different environments.
-- Keep your workstation’s operating system and critical software updated with the latest security patches.
-- Disable all network services (SSH, RDP, or anything else) that are not strictly needed.
-- Maintain logs of important oprations.
-
-### Rotating your coldkey
-
-If you suspect your coldkey may have been leaked, you can request to swap it out of your wallet, using an extrinsic blockchain transaction. This operation has a 5 day waiting period, during which your coldkey will be locked. The cost of this coldkey swap transaction is 0.1 TAO.
-
-See [Rotate/Swap your Coldkey](./schedule-coldkey-swap)
-
-Effectively, this transfers all of your TAO and alpha stake balances, as well as your `sudo` control over any subnets you have created:
-
-- For each hotkey owned by the old coldkey, its stake and block transfer to the new coldkey.
-- For each subnet, if the old coldkey is the owner, ownership transfers to the new coldkey.
-- For each hotkey staking for the old coldkey, transfer its stake to the new coldkey.
-- Total stake transfers from the old coldkey to the new coldkey.
-- The list of staking hotkeys transfers from the old coldkey to the new coldkey.
-- For each hotkey owned by the old coldkey, ownership transfers to the new coldkey. The list of owned hotkeys for both old and new coldkeys updates.
-- Any remaining balances transfer from the old coldkey to the new coldkey.
-
-### Proxy wallets for coldkey protection
-
-**Proxies are one of the most effective tools for protecting your coldkey** while maintaining operational flexibility. By setting up proxy relationships, you can perform routine operations like staking without exposing your coldkey to any online environment.
-
-Key benefits:
-- **Least-privilege permissions**: Configure proxies with only the specific permissions needed (e.g., `Staking` type for stake management only)
-- **Time-delayed operations**: Set a non-zero delay so you have time to reject unauthorized transactions if a proxy is compromised
-- **Coldkey stays in cold storage**: Your high-value coldkey never needs to leave secure offline storage for day-to-day operations
+Hardware wallets keep the private key inside the device. Signing happens on the device itself; the key is never exposed to the host machine's operating system.
 
 
-:::warning Zero-delay proxies
-A proxy with `delay: 0` and `ProxyType: Any` offers **no additional security** over direct coldkey access. Always use the narrowest `ProxyType` possible and consider adding delays for high-value operations.
-:::
 
-See:
-- [Proxies: Overview](./proxies/index.md)
-- [Working with Proxies](./proxies/working-with-proxies.md)
-- [Staking with a Proxy](./proxies/staking-with-proxy.md)
 
-### Hardware Wallets and Hardware Security Modules (HSMs)
 
-Ledger can be integrated with the Bittensor Chrome Extension. This may be a good option for managing stake and TAO balances, but does not allow for advanced functions such as hotkey management, subnet configuration, and governance.
+
+### Operations requiring the primary coldkey
+
+Only two operations strictly require the primary coldkey:
+
+1. **Initial proxy setup**: creating the very first proxy relationship on a new coldkey, since no proxy exists yet to act on its behalf.
+2. **Coldkey rotation**: swapping to a new coldkey.
+
+All other operations, including rejecting proxy announcements, can be done through a `NonTransfer` proxy.
+
+For these, use your hardware wallet (Ledger or Polkadot Vault). Both support proxy creation and coldkey rotation.
+
+**After the initial proxy is in place, use it to manage all subsequent proxy relationships.** A `NonTransfer` proxy can create and remove other proxies, and perform batch operations so the primary coldkey never needs to leave cold storage again. The recommended pattern:
+
+1. From your hardware wallet, create a single `NonTransfer` proxy with a non-zero delay.
+2. Use that proxy to create narrower, scoped proxies (`Staking`, `Registration`, etc.) as needed.
+3. Use those scoped proxies for day-to-day operations.
+4. Use the `NonTransfer` proxy to revoke scoped proxies when they're no longer needed.
+
+If you find yourself needing to load your primary coldkey onto a machine to perform an operation, that is a signal to reconsider the approach.
+
+
+### Hardware Solution: Ledger
+
+Ledger hardware wallets, used with a compatible wallet app, support TAO transfers, staking, unstaking, and proxy creation. Compatible wallet apps include the Bittensor mobile wallet app ([bittensor.com/wallet](https://bittensor.com/wallet)), [Crucible](https://crucible.bittensor.com/), [Talisman](https://www.talisman.xyz/), [Nova Wallet](https://novawallet.io/), and [SubWallet](https://www.subwallet.app/).
 
 See [Using Ledger Hardware Wallet](../staking-and-delegation/using-ledger-hw-wallet).
 
-<!-- Enterprise-level hardware security modules? Are there services where you store private keys for signing without every exposing them and the company is insured for your value with them, does that exist? Do people use it?
+### Hardware Solution: Polkadot Vault
 
-What about Hashicorp Vault? Can you use that with HSM? AWS CloudHSM or Azure Key Vault with HSM-backed keys? How would the integration with `btcli` go
+[Polkadot Vault](https://vault.novasama.io/) (formerly Parity Signer) turns a dedicated offline smartphone into a cold-signing device. The private key is generated on the device, which is then kept in airplane mode permanently. Transactions pass between the hot and cold device exclusively via QR code — the key never leaves the air-gapped phone.
 
-See:
+Unlike Ledger wallet apps, which expose a limited set of supported operations, Polkadot Vault can decode and sign **any Subtensor extrinsic**.
 
-- [AWS CloudHSM documentation](https://aws.amazon.com/cloudhsm/)
-- Oblique reference to [HashiCorp Vault with HSM integration](https://developer.hashicorp.com/vault/docs/configuration/seal)
- -->
 
-### Signing Policy and Governance
+### Rotating your coldkey
 
-If you work within a team or DAO environment that collectively manages a coldkey, consider implementing measures such as a multisig to avoid a compromise of a single individuals's keys from compromising the protected key.
+If you suspect the primary coldkey has been compromised, you can swap it out using an on-chain extrinsic. This operation has a 5-day waiting period during which the coldkey is locked. The cost is 0.1 TAO.
 
-<!-- How to do this, Polkadot, EVM??? -->
+See [Rotate/Swap your Coldkey](./coldkey-swap).
 
-### Periodic Security Assessments
+If a proxy coldkey is compromised it may be easier, and is certainly quicker, to revoke its proxy status and purge any references to it from your system.
 
-Maintain a secure software environment:
 
-- Keep an eye on newly discovered OS or hardware vulnerabilities.
-- Run vulnerability scans on any machine that touches your coldkey.
-- Conduct red team exercises and penetration testing to identify weaknesses in your setup.
+## Using BTCLI and the SDK with proxy coldkeys
+
+`btcli` and the Bittensor SDK run on internet-connected machines. Any coldkey loaded onto such a machine is exposed to network risk regardless of how the machine is configured.
+
+
+Proxies can be set to act with a required delay, allowing a window to reject unauthorized transactions. A properly maintained, adequately monitored system of scoped, delayed proxies is the safest way to perform `btcli` and SDK operations that require a coldkey, such as managing subnets or hotkeys.
+
+### Recommended proxy configuration
+
+Configure proxies with:
+
+- **Least-privileged proxy type**: use only the permission level the operation requires:
+  - `Staking`: stake and unstake only, no transfers
+  - `SmallTransfer`: TAO and alpha transfers below 0.5 TAO/alpha per transaction only
+  - `Transfer`: unlimited transfers, including all of your TAO to someone else in one quick step.
+  - `Registration`: hotkey registration only
+  - `Owner`: subnet owner operations only
+
+- **Non-zero delay**: a delayed proxy must announce its intent on-chain and wait a specified number of blocks before the call executes. During this window, you can reject and veto the transaction using a `NonTransfer` proxy.
+
+
+:::danger Zero-delay proxies provide no veto window
+
+A proxy with `delay: 0` executes immediately, with no announcement period and no window to reject unauthorized transactions. It is always recommended set a non-zero delay for proxies that control mainnet liquidity.
+:::
+
+
+Set up proxies from your hardware wallet so the primary coldkey is never involved in day-to-day operations. See:
+
+- [Proxies: Overview](./proxies/index.md)
+- [Working with Proxies](./proxies/working-with-proxies.md)
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
+
+### Proxy lifecycle
+
+The safest pattern for any `btcli` or SDK operation requiring a coldkey:
+
+1. **Create** a proxy with the narrowest type and a delay sufficient to let you detect and cancel misuse.
+2. **Use** it for the specific operation.
+3. **Revoke** it after you are no longer monitoring it for announcements.
+
+Keeping long-lived proxies with broad permissions around indefinitely defeats the purpose. The goal is to minimize the window during which a leaked key can cause damage.
+
+### Monitor proxy announcements
+
+A delayed proxy must broadcast its intent on-chain before executing, which allows users to check pending announcements and ensure that no unauthorized transactions are made.
+
+**However, if you are not actively monitoring those announcements, the delay provides no protection.** An attacker who steals a proxy key can announce a call and wait out the delay undetected if no one is watching.
+
+**Requirements:**
+
+- Check for pending announcements on a schedule **shorter than your configured delay period**. A 100-block delay (~20 minutes) requires checks more frequent than that.
+- Revoke any proxy relationship you are not actively monitoring. A dormant delayed proxy with no observer is no safer than a zero-delay proxy.
+- Be ready to reject unexpected announcements using your `NonTransfer` proxy immediately.
+
+See [Monitor and Reject Announcements](./proxies/working-with-proxies#monitor-and-reject-proxy-announcements) for how to query pending announcements, run a monitoring script, and reject.
+
+See also: [Avoid Staking Proxy Attacks](../learn/avoid-staking-proxy-attacks) for a description of the specific multi-transaction sandwich attack that delayed proxies defend against.
+
+:::warning Do not mine with primary coldkeys
+Miners need coldkeys for currency management and hotkeys for serving requests. No coldkey should be present in an environment running mining code.
+:::
+
+### Team and multi-signature setups
+
+If a team collectively manages a coldkey, you can use a multisig to prevent a single compromised team member from acting unilaterally.
+
+See [Multi-signature wallets](./multisig).
 
 ## Hotkey workstation
 
-Hotkeys in Bittensor serve as the operational keys for mining, validation, and weight commits, which require moderately high availability. Because these keys do not control direct movement of TAO balances, they pose a lower risk if compromised. Nonetheless, a malicious actor who gains control of your hotkey can damage your reputation, submit invalid weights (if you are a validator) or serve malicious responses to requests as a miner.
+Hotkeys in Bittensor serve as the operational keys for mining, validation, and weight commits, requiring moderately high availability. Because hotkeys do not control direct movement of TAO balances, they pose a lower risk if compromised. Nonetheless, a malicious actor who gains control of a hotkey can damage your reputation, submit invalid weights (if you are a validator), or serve malicious responses to requests as a miner.
 
-Overall, a hotkey workstation can be considered an “operational” environment. Losing a hotkey is less of a direct financial loss than losing a coldkey, but the reputational and operational risks can be serious. Use general best practices for managing secrets when handling your hotkeys. Include continuous monitoring of activity associated with your hotkey and have a rapid mitigation strategy in place in case your hotkey is compromised.
+A hotkey workstation is an operational environment. Losing a hotkey is less of a direct financial loss than losing a coldkey, but the reputational and operational risks are serious. Use general best practices for managing secrets, monitor hotkey activity continuously, and have a rapid mitigation strategy ready if a hotkey is compromised.
 
-### Secrets managements
+### Secrets management
 
-Bittensor miners must handle hotkeys in MLOps workflows. Hotkeys must be created in coldkey workstation environments and then provisioned to the mining/hotkey workstation environment, i.e. a server that will handle requests from validators, for example by querying an AI model to generate a response (a generated image or text response) to a text prompt from a user.
+Hotkeys must be created in coldkey workstation environments and then provisioned to the mining or validation server. Options:
 
-- Secure secrets management solution (like [HashiCorp Vault](https://www.vaultproject.io/), [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/), or [GCP Secret Manager](https://cloud.google.com/secret-manager)) to provision the hotkey private key or seedphrase to the mining server.
-- Use ephemeral secret injection (CI/CD pipelines like GitLab or GitHub Actions allow storing secrets and injecting them at runtime).
-- Never put keys in code repositories
+- A secrets management solution such as [HashiCorp Vault](https://www.vaultproject.io/), [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/), or [GCP Secret Manager](https://cloud.google.com/secret-manager) to provision the hotkey to the server at runtime.
+- Ephemeral secret injection via CI/CD pipelines (GitLab, GitHub Actions) to inject secrets at runtime without storing them on the server.
+- Never put keys in code repositories.
 
 ### Hotkey rotation
 
-If you suspect that a hotkey (but not a coldkey) has been leaked, rotate it as soon as possible using `btcli wallet swap-hotkey`. This moves the registration to a newly created hotkey owned by the same coldkey, including all of the stake delegated by other users.
+If you suspect a hotkey has been leaked, rotate it as soon as possible:
 
-Note that this operation incurs a $1 \tau$ recycling fee.
+```shell
+btcli wallet swap-hotkey
+```
+
+This moves the subnet registration to a newly created hotkey owned by the same coldkey, including all stake delegated by other users. The operation incurs a 1 TAO recycling fee.
 
 ### Minimize dependency risk
 
-Bittensor nodes often run complex software stacks with many dependencies. Take steps to reduce risk:
+Bittensor nodes often run complex software stacks with many dependencies. Steps to reduce risk:
 
 - Keep your Python environment or Docker images updated with the latest patches.
-- Avoid installing unnecessary packages that might contain vulnerabilities.
-- Consider sandboxing the ML library if possible, using solutions like [PyPy sandboxing](https://doc.pypy.org/en/latest/sandbox.html) or custom Docker seccomp profiles.
+- Avoid installing unnecessary packages.
+- Pin exact package versions and verify SHA-256 hashes with `pip install --require-hashes`.
+- Consider sandboxing ML libraries using solutions like custom Docker seccomp profiles.
+
+For an additional layer of defense against supply chain attacks, configure network egress control to create a host-level firewall that restricts outbound connections to an explicit allowlist. Even if a malicious package executes, it cannot exfiltrate key material if it cannot reach attacker-controlled infrastructure.

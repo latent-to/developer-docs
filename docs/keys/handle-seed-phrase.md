@@ -6,7 +6,7 @@ import { SecurityWarning } from "./_security-warning.mdx";
 
 # Handle your Seed Phrase/Mnemonic Securely
 
-The seed phrase (a.k.a. 'menemonic' or 'recovery phrase') is a series of (at least 12) words that is generated together with your wallet's cryptographic key pair, and which can be used to recover the coldkey private key. This seed phrase is therefore a human-usable way to save access to the cryptographic wallet offline, and to import the cryptographic wallet into a wallet application.
+The seed phrase (a.k.a. 'menemonic' or 'recovery phrase') is a series of (at least 12) words that is generated together with your wallet's cryptographic key pair, and which can be used to recover the coldkey private key. This seed phrase is therefore a human-usable way to save access to the cryptographic wallet offline, and to import the cryptographic wallet into a wallet application. To regenerate a keypair from a mnemonic programmatically, see [Wallet and Keyfile](./btwallet/wallet-class.md#regenerate-from-a-mnemonic).
 
 Whoever holds the seed phrase has full control over the wallet, so you should treat it like the keys to your digital safe. If someone else gains access to it, they can steal your assets. If you lose it, your assets are lost forever.
 
@@ -98,7 +98,6 @@ Cons:
 Only to be used in addition to backups of the seed phrase.
 :::
 
-Here’s a concise, on-brand section you can drop into your doc, matching the tone and structure of the others:
 
 ### Mobile phone vault (e.g. Polkadot Vault)
 
@@ -120,27 +119,3 @@ Cons:
 :::tip
 Use only a repurposed device kept permanently offline.
 :::
-
-### Shamir's Secret Sharing
-
-[Shamir’s Secret Sharing (SSS)](https://en.wikipedia.org/wiki/Shamir%27s_secret_sharing) is a cryptographic method for securely splitting a secret—like your seed phrase—into multiple pieces or “shares.” A minimum number of these shares must be recombined to reconstruct the original secret. This offers strong protection against both loss and leak.
-
-For example, you might split a seed phrase into 5 shares, requiring any 3 to restore the secret. These can be stored separately or given to different custodians.
-
-Pros:
-
-- Extremely resistant to both single-point loss and leakage:
-  - The leak of any share does not compromise your wallet.
-  - The loss of any share does not result in loss of the wallet.
-- Shares can be safely distributed across multiple locations or people.
-
-Cons:
-
-- Imposes additional operational complexity.
-- Stored secret is no longer human readable. Can be remedied with [slip39](https://github.com/satoshilabs/slips/blob/master/slip-0039.md).
-
-Tools:
-
-- [`sssa-golang`](https://github.com/SSSaaS/sssa-golang): An implementation of Shamir's Secret Sharing Algorithm in Go.
-- [Banana Split](https://github.com/paritytech/banana_split): Open source tool that uses a variation of SSS to split a seed phrase into QR codes.
-- [PyCryptodome SSS](https://pycryptodome.readthedocs.io/en/latest/src/protocol/ss.html): A Python-based implementation of the Shamir scheme.

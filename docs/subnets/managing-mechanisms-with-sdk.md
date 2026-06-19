@@ -2,7 +2,7 @@
 title: "Managing Multiple Incentive Mechanisms with SDK"
 ---
 
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 # Managing Multiple Incentive Mechanisms with SDK
 
@@ -11,12 +11,6 @@ This tutorial shows how to configure and manage multiple incentive mechanisms in
 For background on the concepts, see [Understanding Multiple Incentive Mechanisms](./understanding-multiple-mech-subnets).
 
 See also [Managing Mechanisms with BTCLI](./managing-mechanisms-btcli).
-
-:::tip Hot new feature
-Multiple incentive mechanisms per subnet is a new feature that is still in development. It's initial release on mainnet is expected the week of September 22. In the meantime, it can be experimented with using a locally run chain.
-
-See [Announcements](../learn/announcements) for updates.
-:::
 
 **Prerequisites**
 
@@ -30,7 +24,7 @@ Substitute your subnet's netuid, which you can find with `btcli subnet list`.
 :::
 
 :::warning Runtime limit
-As of the current Subtensor runtime, a subnet can have a maximum of 2 mechanisms. Attempts to set a higher count will be rejected by the chain (runtime enforces `MaxMechanismCount = 2`).
+As of the current Subtensor runtime, a subnet can have a maximum of 2 mechanisms. Attempts to set a higher count will be rejected by the chain (runtime enforces `DefaultMaxMechanismCount = 2`).
 :::
 
 ## Initialize SDK and wallet
@@ -115,6 +109,12 @@ split_after = subtensor.get_mechanism_emission_split(netuid=netuid)
 print("split:")
 print(split_after)
 ```
+
+:::info Mechanism Count Constraint
+Before attempting to modify the mechanism count on a subnet, ensure that the product of multiplying the new mechanism count by the maximum number of UIDs in the subnet remains less than 256. If it exceeds this threshold, you must first adjust the subnet’s `MaxAllowedUids` hyperparameter to accommodate the change.
+
+To learn more about UID limit, see [UID trimming](./uid-trimming.md).
+:::
 
 ```text
 Set mech count success: True

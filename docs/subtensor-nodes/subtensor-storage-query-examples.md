@@ -6,9 +6,12 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 # Subtensor Storage Query Examples
 
+:::info
+The following outline of subtensor storage query examples is provided for high-level reference and is not exhaustive. For a complete specification of all available queries, see the [Subtensor API reference](../subtensor-api/storage.md).
+:::
+
 ## 1. AccumulatedLeaseDividends
 
-<SdkVersion />
 
 - **Description**: Storage for a lease ID's accumulated dividends.
 - **Query Type**: `u16 -> unknown`
@@ -58,7 +61,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 4. AdjustmentAlpha
 
-- **Description**: Alpha adjustment value for the network.
+- **Description**: Alpha adjustment value for the network. Not used for neuron registration.
 - **Query Type**: `u16 -> u64`
 - **Parameters**:
   - `netuid`: `u16`
@@ -74,7 +77,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 5. AdjustmentInterval
 
-- **Description**: Adjustment interval for networks.
+- **Description**: Adjustment interval for networks. Not used for neuron registration.
 - **Query Type**: `u16 -> u16`
 - **Parameters**:
   - `netuid`: `u16`
@@ -461,23 +464,10 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     result = substrate.query('SubtensorModule', 'CKBurn')
     print(result.value)
     ```
-## 28. ColdkeySwapRescheduleDuration
 
-- **Description**: Storage for ColdkeySwapRescheduleDuration.
-- **Query Type**: `u32`
-- **Parameters**: None
-- **Default Value**: `0`
-- **Python Example**:
-    ```python
-    from async_substrate_interface import SubstrateInterface
-    substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
+## 29. ColdkeySwapAnnouncements
 
-    result = substrate.query('SubtensorModule', 'ColdkeySwapRescheduleDuration')
-    print(result.value)
-    ```
-## 29. ColdkeySwapScheduled
-
-- **Description**: Storage for ColdkeySwapScheduled.
+- **Description**: Storage for ColdkeySwapAnnouncements.
 - **Query Type**: `u16 -> AccountId`
 - **Parameters**:
   - `coldkey`: `AccountId`
@@ -489,12 +479,12 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
     from bittensor_wallet import Keypair
     coldkey = Keypair.create_from_uri('//Bob').ss58_address
-    result = substrate.query('SubtensorModule', 'ColdkeySwapScheduled', [coldkey])
+    result = substrate.query('SubtensorModule', 'ColdkeySwapAnnouncements', [coldkey])
     print(result.value)
     ```
-## 30. ColdkeySwapScheduleDuration
+## 30. ColdkeySwapAnnouncementDelay
 
-- **Description**: The block duration for which a coldkey swap schedule must wait before execution.
+- **Description**: The number of blocks that must pass after a coldkey swap is announced before it can be executed.
 - **Query Type**: `u32`
 - **Parameters**: None
 - **Default Value**: `36000`
@@ -503,7 +493,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     from async_substrate_interface import SubstrateInterface
     substrate = SubstrateInterface(url="wss://test.finney.opentensor.ai:443")
 
-    result = substrate.query('SubtensorModule', 'ColdkeySwapScheduleDuration')
+    result = substrate.query('SubtensorModule', 'ColdkeySwapAnnouncementDelay')
     print(result.value)
     ```
 ## 31. CommitRevealWeightsEnabled
@@ -1207,7 +1197,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 74. MaxRegistrationsPerBlock
 
-- **Description**: Maximum registrations allowed per block.
+- **Description**: Maximum registrations allowed per block. Neuron registration rate limits are removed for non-root subnets; this item is unused for non-root neuron registration.
 - **Query Type**: `u16 -> u16`
 - **Parameters**:
   - `block`: `u16`
@@ -1432,7 +1422,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 89. NetworkPowRegistrationAllowed
 
-- **Description**: Whether PoW registration is allowed in the network.
+- **Description**: Whether PoW registration is allowed in the network. Non-root neuron registration is burn-based; this flag is unused for that path.
 - **Query Type**: `u16 -> bool`
 - **Parameters**:
   - `netuid`: `u16`
@@ -1451,7 +1441,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
 - **Description**: Network rate limit.
 - **Query Type**: `u64`
 - **Parameters**: None
-- **Default Value**: `7200`
+- **Default Value**: `14400`
 - **Python Example**:
     ```python
     from async_substrate_interface import SubstrateInterface
@@ -1761,7 +1751,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 110. POWRegistrationsThisInterval
 
-- **Description**: Number of PoW registrations in this interval.
+- **Description**: Number of PoW registrations in this interval. Removed for non-root neuron registration; verify in metadata before use.
 - **Query Type**: `u16 -> u16`
 - **Parameters**:
   - `netuid`: `u16`
@@ -2585,7 +2575,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 161. TargetRegistrationsPerInterval
 
-- **Description**: Target registrations per interval for the network.
+- **Description**: Target registrations per interval for the network. Per-interval neuron registration caps are removed for non-root subnets; this item is unused for non-root neuron admission.
 - **Query Type**: `u16 -> u16`
 - **Parameters**:
   - `netuid`: `u16`
@@ -2771,7 +2761,7 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     ```
 ## 172. TransferToggle
 
-- **Description**: Storage for TransferToggle. When enabled, a holder of alpha stake can transfer its ownership to another coldkey/wallet using [`btcli stake transfer`](../staking-and-delegation/managing-stake-btcli#transferring-stake) or [`transfer_stake`](pathname:///python-api/html/autoapi/bittensor/core/async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor.transfer_stake).
+- **Description**: Storage for TransferToggle. When enabled, a holder of alpha stake can transfer its ownership to another coldkey/wallet using [`btcli stake transfer`](../staking-and-delegation/managing-stake-sdk#transfer-stake-ownership) or [`transfer_stake`](pathname:///python-api/html/autoapi/bittensor/core/async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor.transfer_stake).
 - **Query Type**: `u16 -> unknown`
 - **Parameters**:
   - `netuid`: `u16`
@@ -3025,4 +3015,3 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
     result = substrate.query('SubtensorModule', 'Yuma3On', [netuid])
     print(result.value)
     ```
-

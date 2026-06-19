@@ -73,15 +73,27 @@ const config = {
       "@docusaurus/plugin-client-redirects",
       {
         redirects: [
-        {
-            "to": "/keys/proxies/working-with-proxies",
-            "from": "/keys/proxies/create-proxy"
+          {
+            to: "/keys/proxies/working-with-proxies",
+            from: "/keys/proxies/create-proxy",
           },
-        {
-            "to": "/subnets/understanding-multiple-mech-subnets",
-            "from": "/subnets/understanding-sub-subnets"
+          {
+            from: "/keys/proxies/staking-with-proxy",
+            to: "/staking-and-delegation/managing-stake-sdk",
           },
-            {
+          {
+            from: "/staking-and-delegation/managing-stake-btcli",
+            to: "/staking-and-delegation/managing-stake-sdk",
+          },
+          {
+            from: "/staking-and-delegation/stakers-btcli-guide",
+            to: "/staking-and-delegation/managing-stake-sdk",
+          },
+          {
+            to: "/subnets/understanding-multiple-mech-subnets",
+            from: "/subnets/understanding-sub-subnets",
+          },
+          {
             to: "/liquidity-positions/",
             from: "/liquidity-provider",
           },
@@ -102,10 +114,6 @@ const config = {
             to: "/validators",
           },
           {
-            to: "/keys/schedule-coldkey-swap",
-            from: "/subnets/schedule-coldkey-swap",
-          },
-          {
             to: "/sdk/bt-api-ref",
             from: "/reference/bittensor-api-ref",
           },
@@ -124,6 +132,10 @@ const config = {
           {
             from: "/questions-and-answers",
             to: "/resources/questions-and-answers",
+          },
+          {
+            to: "/keys/coldkey-swap",
+            from: "/keys/schedule-coldkey-swap",
           },
           {
             from: "/emissions",
@@ -206,10 +218,6 @@ const config = {
             to: "/resources/utilities",
           },
           {
-            from: "/governance",
-            to: "/governance",
-          },
-          {
             from: "/senate",
             to: "/governance/senate",
           },
@@ -220,6 +228,14 @@ const config = {
           {
             from: "/media-assets",
             to: "/resources/media-assets",
+          },
+          {
+            from: "/subtensor-nodes/using-docker",
+            to: "/subtensor-nodes/run/using-docker",
+          },
+          {
+            from: "/subtensor-nodes/using-source",
+            to: "/subtensor-nodes/run/using-source",
           },
         ],
       },
@@ -269,15 +285,6 @@ const config = {
         },
       },
 
-      // announcementBar: {
-      //   id: 'support_us',
-      //   content:
-      //     'The dynamic TAO docs are preliminary. Check <a target="_blank" rel="noopener noreferrer" href="#">this page for more.</a>',
-      //   backgroundColor: '#171717',
-      //   textColor: '#f43228',
-      //   isCloseable: false,
-      // },
-
       navbar: {
         logo: {
           alt: "Bittensor",
@@ -291,30 +298,67 @@ const config = {
         },
         items: [
           {
+            type: "dropdown",
+            label: "Get started",
             position: "left",
-            label: "Announcements",
-            to: "learn/announcements",
+            className: "docs-dropdown",
+            items: [
+              {
+                label: "Introduction",
+                to: "learn/introduction",
+              },
+              {
+                label: "Wallets and Keys",
+                to: "keys/wallets",
+              },
+              {
+                label: "Mining",
+                to: "miners",
+              },
+              {
+                label: "Validating",
+                to: "validators",
+              },
+              {
+                label: "Manage subnets",
+                to: "subnets/create-a-subnet",
+              },
+            ],
           },
           {
+            type: "dropdown",
+            label: "References",
             position: "left",
-            label: "Bittensor SDKv10 Migration Guide",
-            to: "sdk/migration-guide",
+            items: [
+              {
+                label: "SDK Reference",
+                to: "sdk/bt-api-ref",
+              },
+              {
+                label: "BTCLI Reference",
+                to: "btcli",
+              },
+            ],
           },
           {
+            type: "dropdown",
+            label: "Bittensor EVM",
             position: "left",
-            label: "What is Bittensor?",
-            to: "learn/introduction",
-          },
-          {
-            position: "left",
-            label: "Bittensor SDK Reference",
-            to: "sdk/bt-api-ref",
-          },
-
-          {
-            position: "left",
-            label: "EVM on Bittensor",
-            to: "evm-tutorials",
+            items: [
+              {
+                label: "EVM smart contracts",
+                to: "evm-tutorials",
+                activeBaseRegex: "^/evm-tutorials/?$",
+              },
+              {
+                label: "Token Bridging",
+                to: "evm-tutorials/bridge-vtao",
+              },
+              {
+                label: "Convert h160 to SS58",
+                to: "evm-tutorials/convert-h160-to-ss58",
+              },
+            ],
           },
           {
             type: "search",
@@ -322,14 +366,28 @@ const config = {
             className: "custom_algolia",
           },
           {
+            position: "left",
+            label: "Announcements",
+            to: "learn/announcements",
+          },
+          {
             to: "resources/bittensor-rel-notes",
             label: "Releases",
             position: "left",
           },
           {
-            href: "https://github.com/latent-to/developer-docs",
-            label: "Docs GitHub",
             position: "right",
+            label: "Subtensor API",
+            to: "subtensor-api/extrinsics",
+            sidebarId: "apiSidebar",
+            className: "subtensor-api",
+            activeBasePath: "/subtensor-api",
+          },
+          {
+            href: "https://github.com/latent-to/developer-docs",
+            position: "right",
+            className: "header-github-link",
+            "aria-label": "GitHub repository",
           },
         ],
       },

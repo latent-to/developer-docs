@@ -31,7 +31,13 @@ It is critical to understand that pure proxies do not offer the security advanta
 
 ### Transaction flow in pure proxies
 
-All transactions involving a pure proxy must be signed by the spawner account. Once signed, the transaction is executed on-chain as if it originated directly from the pure proxy. Unlike standard proxies, a pure proxy must hold its own funds to cover fees or transfers. The spawner then acts as an _Any proxy_, handling the signing and authorization of calls, but the balance used comes from the pure proxy's account.
+All transactions involving a pure proxy must be signed by the spawner account. Once signed, the transaction is executed on-chain as if it originated directly from the pure proxy. Unlike standard proxies, a pure proxy must hold its own funds to cover the transaction value. The spawner then acts as an _Any proxy_, signing and authorizing calls and paying transaction fees, while the balance used for the call comes from the pure proxy’s account.
+
+:::info Transaction fees
+By default, the spawner account covers the transaction fee when a proxy is executed. However, if the value of the proxy relationship's `realPaysFee` parameter has been set to `True`, the transaction fees will be covered by the pure proxy account when a proxy is executed.
+
+For more information, see [Transaction fee payment](./index.md#transaction-fee-payment)
+:::
 
 ### Multisigs and Pure Proxies
 
@@ -149,19 +155,7 @@ response = subtensor.create_pure_proxy(
     index=0,  # the disambiguation index, leave as zero
 )
 
-if response.success:
-    pure_account = response.data.get("pure_account")
-    spawner_address = response.data.get("spawner")
-    height = response.data.get("height")
-    ext_index = response.data.get("ext_index")
-
-    print(f"✓ Pure proxy created!")
-    print(f"  Pure proxy address: {pure_account}")
-    print(f"  Spawner: {spawner_address}")
-    print(f"  Block: {height}")
-    print(f"  Extrinsic index: {ext_index}")
-else:
-    print(f"✗ Failed: {response.message}")
+print(response)
 ```
 
 :::tip
@@ -244,8 +238,11 @@ btcli wallet transfer \
   --amount 1.0
 ```
 
-:::warning Pure proxy must be funded
-Ensure the pure proxy account has enough funds to cover both the transfer amount and transaction fees. Transfer funds to the pure proxy first using a regular transfer.
+:::warning Pure proxy account must be funded
+Ensure the pure proxy account holds enough funds to cover the transaction value. Attempting to perform a proxy operation without funding the pure proxy account with return a `FundsUnavailable` error.
+
+You can transfer funds to the pure proxy account using the `btcli wallet transfer` command in your terminal.
+
 :::
 
 **Other operations through pure proxies:**
@@ -296,11 +293,7 @@ response = subtensor.proxy(
    call=transfer_call,
 )
 
-if response.success:
-   print(f"✓ Transfer executed through proxy!")
-   print(f"  Transferred {transfer_amount} from {proxy_account[:10]}...")
-else:
-   print(f"✗ Failed: {response.message}")
+print(response)
 ```
 
 :::info Building a call
@@ -322,8 +315,10 @@ Balances(subtensor).transfer_keep_alive(...)
 
 :::
 
-:::warning
-Ensure the pure proxy account holds enough funds to cover both the transfer and transaction fees.
+:::warning Pure proxy account must be funded
+Ensure the pure proxy account holds enough funds to cover the transaction value. Attempting to perform a proxy operation without funding the pure proxy account with return a `FundsUnavailable` error.
+
+You can transfer funds to the pure proxy account using the `btcli wallet transfer` command in your terminal.
 
 :::
 
@@ -345,7 +340,7 @@ Ensure the pure proxy account holds enough funds to cover both the transfer and 
 :::info
 
 - After submitting the transaction, check the Polkadot.JS web app's **Explorer** page for a `balances.Transfer` event. Notice the sender is the pure proxy account.
-- Ensure the pure proxy account holds enough funds to cover both the transfer and transaction fees.
+- Ensure the pure proxy account holds enough funds to cover the transaction value.
   :::
 
 </TabItem>
@@ -353,14 +348,14 @@ Ensure the pure proxy account holds enough funds to cover both the transfer and 
 
 ## Kill a pure proxy
 
-Killing a pure proxy requires the proxy account address, the spawner account, and the proxy's complete creation details—the block height, extrinsic index, and the disambiguation index used during creation. Once executed, the pure proxy is permanently removed, and any funds remaining in the proxy account are lost.
+Killing a pure proxy requires the proxy account address, the spawner account, and the proxy's complete creation metadata—the block height, extrinsic index, and the disambiguation index used during creation. Once executed, the pure proxy is permanently removed, and any funds remaining in the proxy account are lost.
 
-Pure proxies are killed using the `killPure` extrinsic as shown. See [source code: `killPure` implementation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L380-L406):
+Pure proxies are killed using the [`killPure` extrinsic](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L380-L406):
 
-:::danger Permanent deletion
-Killing a pure proxy permanently deletes the pure proxy account. **Any funds remaining in the account will be permanently lost.** Make sure to transfer all funds out before killing the proxy.
+:::info signing a pure proxy
+The account that signs the `killPure` extrinsic does not have to be the spawner account. It can be signed by either the spawner or a delegate with an `Any` proxy relationship to the pure proxy.
 
-BTCLI will prompt you for confirmation with the text "KILL" to proceed.
+The `spawner` parameter must always be the account that originally created the pure proxy.
 :::
 
 <Tabs groupId="proxy">
@@ -369,7 +364,7 @@ BTCLI will prompt you for confirmation with the text "KILL" to proceed.
 
 ```bash
 btcli proxy kill \
-  --wallet.name SPAWNER_WALLET \
+  --wallet.name WALLET_NAME \
   --height BLOCK_NUMBER \
   --ext-index EXTRINSIC_INDEX \
   --proxy-type Any \
@@ -379,14 +374,15 @@ btcli proxy kill \
 
 **Required Parameters:**
 
-- `--wallet.name`: The spawner wallet that created the proxy
+- `--wallet.name`: The signing wallet for the extrinsic
 - `--height`: The block number where the pure proxy was created
 - `--ext-index`: The extrinsic index of the creation transaction
 - `--proxy-type`: Must match the type used when creating (e.g., `Any`)
 - `--index`: Must match the index used when creating (usually `0`)
 - `--spawner`: The SS58 address of the spawner account
 
-**Example:**
+<details>
+  <summary><strong>Show full example</strong></summary>
 
 Suppose we created a pure proxy and received output as follows:
 
@@ -422,6 +418,8 @@ Decrypting...
 ✅Success!
 ```
 
+</details>
+
 </TabItem>
 
 <TabItem value="sdk" label="Bittensor SDK">
@@ -451,10 +449,7 @@ response = subtensor.kill_pure_proxy(
     ext_index=ext_index,  # the extrinsic index of the `Proxy.PureCreated` transaction
 )
 
-if response.success:
-    print("✓ Pure proxy killed successfully!")
-else:
-    print(f"✗ Failed: {response.message}")
+print(response)
 ```
 
 :::info Parameter requirements
@@ -480,6 +475,12 @@ else:
 Ensure that all parameters are correct before making this call. The call will fail with a `Proxy.NoPermission` error if any parameter is invalid or if the origin account lacks permission to perform the action.
 </TabItem>
 </Tabs>
+
+:::danger Permanent deletion
+Killing a pure proxy permanently deletes the pure proxy account. **Any funds remaining in the account will be permanently lost.** Make sure to transfer all funds out before killing the proxy.
+
+BTCLI will prompt you for confirmation with the text "KILL" to proceed.
+:::
 
 ## Troubleshooting
 

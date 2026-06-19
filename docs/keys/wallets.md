@@ -22,7 +22,7 @@ See [Proxies: Overview](./proxies/index.md) to learn how to protect your coldkey
 
 ## What are wallets and keys?
 
-The core of your wallet is one or more cryptographic key-pairs, referred to as **coldkey** and **hotkey**. Your wallet essentially consists of the records associated with your key-pairs on the blockchain, including your balances of TAO and alpha currencies, and your history of transactions and interactions with subnets and other wallets (such as mining or validating).
+The core of your wallet is one or more cryptographic key-pairs, referred to as **coldkey** and **hotkey**. Your wallet consists of the records associated with your key-pairs on the blockchain, including your balances of TAO and alpha currencies, and your history of transactions and interactions with subnets and other wallets (such as mining or validating).
 
 Each coldkey or hotkey is actually a cryptographic [key-pair](https://en.wikipedia.org/wiki/Public-key_cryptography)with a private and a public key.
 The public key is mathematically derived from the private key.
@@ -41,17 +41,47 @@ An existential deposit is the minumum required TAO in a wallet (i.e., in a coldk
 If a wallet balance goes below the existential deposit, then this wallet account is deactivated and the remaining TAO in it is destroyed.
 **This is set to 500 RAO for any Bittensor wallet**.
 
+<details>
+<summary><strong>Check current value on-chain</strong></summary>
+
+To verify, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Constants**, select `balances.existentialDeposit`. See [Inspecting the Chain](../concepts/inspecting-the-chain).
+
+</details>
+
 See also [What is the Existential Deposit?](https://support.polkadot.network/support/solutions/articles/65000168651-what-is-the-existential-deposit-).
 :::
 
-## Wallets and wallet applications
+## Cryptographic, hardware, and software wallets
 
-We must be careful to distinguish two senses of the term 'wallet' that can otherwise be confusing:
+We must be careful to distinguish two senses of the term 'wallet' that can otherwise be confusing, the **cryptographic wallet (the cryptographic key needed to sign transactions)**, a **hardware wallet (secure device designed to hold cryptographic keys)**, and **wallet applications/software wallets**, the software designed to perform blockchain operations (using the cryptographic wallet).
 
-- The **cryptographic wallet** is one or more cryptographic key pairs that comprise an identity, and allow a person to sign transactions or be referred to in transactions signed by others. In this sense, the wallet is more or less synonymous with the unique **coldkey** that controls access to your assets and serves as your public identity.
+- The **cryptographic wallet** defines a person or organization's identity in Bittensor. It consists of one or more cryptographic key pairs that allow a person to sign transactions or be referred to in transactions signed by others. In this sense, the wallet is more or less synonymous with the unique **coldkey** that controls access to your assets and serves as your public identity, and connects you to any hotkeys you control. Your on-chain identity consists of the records associated with your key-pairs, including your balances of TAO and alpha currencies, and your history of transactions and interactions with subnets and other wallets.
+  
+  Every Bittensor user has one or more cryptographic wallets, i.e. one or more coldkey. Any cryptographic wallet can be loaded into any number of wallet applications. Even every wallet application that has been initialized with your cryptographic wallet (i.e. signed into with your coldkey private key) is closed, logged out, etc., and the device incinerated, your cryptographic wallet exists on the blockchain, and can be recovered with your _seed phrase_. 
 
-- The **wallet application** is software that runs on your device and allows you to interact with the blockchain by entering your keys. There are several officially supported Bittensor wallet applications:
+  The **_seed phrase_** (a.k.a. 'menemonic' or 'recovery phrase') is a series of (at least 12) words that is generated together with your wallet's cryptographic key pair, and which can be used to recover the coldkey private key. This seed phrase is therefore a human-usable way to save access to the cryptographic wallet offline, and to import the cryptographic wallet into a hardware or software wallet.
 
+  The most important operational goal when handling Bittensor wallets is to avoid losing or leaking your seed phrase. Make sure you [Handle your Seed Phrase/Mnemonic Securely](./handle-seed-phrase).
+
+- A **hardware wallet** is a device designed to hold the private key for a cryptographic wallet and use it to sign transactions across a secure device connection that protects the private key.
+  - The Ledger wallet is a supported, special purpose signing wallet device compatible with several Bittensor-compatible wallet applications you can run on your laptop. It connects via a secure usb connection using a protocol that does not expose the private key
+  - Using [Polkadot Vault](https://vault.novasama.io/), you can turn a dedicated mobile phone into an offline secure hardware wallet.
+  - A laptop acts effectively acts as a hardware wallet when you use a coldkey with either the Bittensor command line interface, `BTCLI`, or the Bittensor Python SDK. This is necessary to perform certain operations, such as managing hotkeys (necessary for mining and validating), or managing a subnet
+
+- The **wallet application** is software that runs on your device and allows you to interact with the blockchain by entering your keys, as described below.
+  :::tip
+  Different wallet applications have different levels of functionality, and represent different levels of operational risk. Some minimize risk by allowing you to compose transactions and then sign them securely across a device boundary that protects the key from the possibility of being leaked (an 'airgap').
+
+  The fullest-featured clients (BTCLI and the SDK) do not support hardware wallet signing, and therefore should be used with proxy keys to bolster security.
+  :::
+
+
+## Wallet applications
+
+There are many different applications that can interact with your public and/or private keys in some way.
+
+
+There are several officially supported Bittensor wallet applications:
   - The Bittensor wallet app for mobile: [bittensor.com/wallet](https://bittensor.com/wallet)
   - [The Crucible wallet](https://cruciblelabs.com) a Tao wallet featuring an auto-allocator for dynamic TAO staking across subnets, with full Ledger integration.
   - [The Polkadot browser extension](https://polkadot.js.org/extension/) which can be used with Polkadot Vault.
@@ -63,9 +93,6 @@ We must be careful to distinguish two senses of the term 'wallet' that can other
   - The Bittensor Python SDK, which includes the secure [Bittensor Wallet module](https://docs.bittensor.com/btwallet-api/html/autoapi/btwallet/wallet/index.html).
   - The Bittensor CLI, `btcli`, which uses the Bittensor Wallet module under the hood.
 
-Every Bittensor user has one or more cryptographic wallets, i.e. one or more coldkey. Any cryptographic wallet can be loaded into any number of wallet applications. If every wallet application that has been initialized with your cryptographic wallet (i.e. signed into with your coldkey private key) is closed, logged out, etc., and the device incinerated, your cryptographic wallet exists on the blockchain, and can be recovered with your _seed phrase_.
-
-Different wallet applications have different levels of functionality:
 
 - The mobile app and Chrome extension allow for staking and transfer of TAO balalnces, but do not include any hotkey management or advanced functionality.
 
@@ -74,23 +101,12 @@ Different wallet applications have different levels of functionality:
   - The mobile app depends on using a secure phone as a [coldkey workstation](./coldkey-hotkey-security).
 
 - `btcli` and the SDK allow for hotkey management and other advanced functionality. These require a laptop as a [coldkey workstation](./coldkey-hotkey-security).
+  :::tip
+  Note that you can also check balances on an unsecure device without entering your coldkey private key. For example, using [https://bittensor.com/scan](https://bittensor.com/scan). These website can be considered permissionless wallet applications.
 
-:::tip
-Note that you can also check balances on an unsecure device without entering your coldkey private key. For example, using [https://bittensor.com/scan](https://bittensor.com/scan). These website can be considered permissionless wallet applications.
-
-See [Coldkey and Hotkey Workstation Security: Permissionless workstation](./coldkey-hotkey-security#permissionless-workstation)
-:::
-
-## The seed phrase a.k.a. mnemonic
-
-The **_seed phrase_** (a.k.a. 'menemonic' or 'recovery phrase') is a series of (at least 12) words that is generated together with your wallet's cryptographic key pair, and which can be used to recover the coldkey private key. This seed phrase is therefore a human-usable way to save access to the cryptographic wallet offline, and to import the cryptographic wallet into a wallet application.
-
-Arguably the most important operational goal when handling Bittensor wallets is to avoid losing or leaking your seed phrase. Make sure you [Handle your Seed Phrase/Mnemonic Securely](./handle-seed-phrase).
-
-## Wallet applications
-
-There are many different applications that can interact with your public and/or private keys in some way.
-
+  See [Coldkey and Hotkey Workstation Security: Permissionless workstation](./coldkey-hotkey-security#permissionless-workstation)
+  :::
+ 
 ### Permissionless wallet apps
 
 You can visit [bittensor.com/scan](https://bittensor.com/scan) and enter a coldkey public key to view public information about any wallet.
@@ -118,6 +134,8 @@ The Bittensor Command Line Interface (BTCLI) and Bittensor Python SDK offer more
 - Managing hotkeys for mining and validating
 - Creating and configuring subnets
 - Participating in governance
+
+For working with keys programmatically, the SDK exposes the `Keypair` and `Wallet` classes from [Bittensor Wallet](./btwallet/index.md), which handles key generation, signing, and asymmetric message encryption.
 
 ## Coldkey details
 
@@ -155,7 +173,7 @@ Hotkeys are used to register on a subnet as a miner or validator.
 
 **Relationship to coldkey**: You can create multiple hotkeys paired to your single coldkey.
 However, when you are validating or mining in a subnet, you are identified by a hotkey in that subnet, so that your coldkey is not exposed.
-You can’t use the same hotkey for multiple UIDs within a single subnet — each UID in a subnet requires its own hotkey. However, you can reuse the same hotkey for UIDs that belong to different subnets.
+You can’t use the same hotkey for multiple UIDs within a single subnet; each UID in a subnet requires its own hotkey. However, you can reuse the same hotkey for UIDs that belong to different subnets.
 
 **Purpose**: Hotkeys are used for regular operational tasks in the Bittensor network, such as those described below:
 

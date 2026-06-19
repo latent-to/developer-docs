@@ -9,5 +9,5 @@ The Bittensor command line interface (CLI), `btcli`, provides the simplest way t
 See:
 
 - [Install `btcli`](../getting-started/install-btcli)
-- [Managing Stake with BTCLI](../staking-and-delegation/managing-stake-btcli.md)
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 - [`btcli reference document`](./btcli.md)

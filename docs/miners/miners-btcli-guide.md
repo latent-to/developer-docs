@@ -24,7 +24,7 @@ Miners must also manage their own TAO and alpha stake (to exit the emissions tha
 See:
 
 - [Staking/Delegation Overview](../staking-and-delegation/delegation)
-- [Staker's Guide to `BTCLI`](../staking-and-delegation/stakers-btcli-guide)
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk)
 
 Creating hotkeys requires a coldkey private key, and should be done on a secure [coldkey workstation](../keys/coldkey-hotkey-security#coldkey-workstation). However, using hotkeys for signing requests when mining does not require a coldkey, which should never be present on a mining server, i.e. a hotkey workstation. The coldkey should not be placed on a machine used for mining because the software dependencies for mining should not be considered safe/trusted code to the standards of a coldkey workstation.
 
@@ -63,10 +63,10 @@ Miners will need coldkeys to manage their TAO and alpha currency, as well as hot
 
 `btcli wallet new-hotkey` , `btcli wallet regen-hotkey`, : Create and register a hotkey on a secure coldkey workstation then transfer the hotkey file or mnemonic to the mining workstation.
 
-`btcli subnets register`, `btcli subnets pow-register`: register a UID
+[`btcli subnets register`](../btcli/btcli.md#btcli-subnets-register): register a UID; neuron registration requires paying the **current TAO burn**. By default the command runs in safe mode and prompts for a price tolerance—pass `--unsafe` to skip. Check the current burn first with `btcli subnets show --netuid <netuid>`.
 
 ## Key rotation
 
 If you suspect your coldkey may have been leaked, you can request to swap it out of your wallet, using an extrinsic blockchain transaction. This operation has a 5 day waiting period, during which your coldkey will be locked. The cost of this coldkey swap transaction is 0.1 TAO.
 
-See [Rotate/Swap your Coldkey](../keys/schedule-coldkey-swap)
+See [Rotate/Swap your Coldkey](../keys/coldkey-swap)

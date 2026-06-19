@@ -25,7 +25,7 @@ The most critical operational goal when handling Bittensor wallets is to avoid l
 :::
 
 :::tip Use proxies for regular operations
-Once you've created your wallet, consider setting up **proxy wallets** for any operations you'll perform regularly. Proxies let you keep your coldkey in secure cold storage while still managing stake, making transfers, or performing other operations through a less-privileged proxy account.
+Once you've created your wallet, set up **proxy wallets** for any operations you'll perform regularly. Proxies let you keep your coldkey in secure cold storage while still managing stake, making transfers, or performing other operations through a less-privileged proxy account.
 
 See [Proxies: Overview](./proxies/index.md) to learn more.
 :::
@@ -157,6 +157,8 @@ btcli wallet new_hotkey --use-password --wallet.name test-coldkey --wallet.hotke
 ```
 
 ## Creating a wallet using Python
+
+For full coverage of the `Wallet` and `Keypair` classes — including key types, regeneration from mnemonics, and at-rest encryption — see the [Bittensor Wallet docs](./btwallet/wallet-class.md).
 
 <SdkVersion />
 

@@ -18,7 +18,7 @@ These errors are returned in the format:
 
 Related:
 
-- [Source code in GitHub](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1840-L1855)
+- [Source code in GitHub](https://github.com/opentensor/subtensor/blob/devnet-ready/common/src/transaction_error.rs#:~:text=impl%20From%3CCustomTransactionError%3E%20for%20u8)
 - [Subtensor Standard Errors](./subtensor.md) - Bittensor's custom error codes
 - [Substrate Errors](https://polkadot.js.org/docs/substrate/errors/) - Errors from the underlying Substrate framework
 
@@ -33,7 +33,14 @@ Related:
 
 **Error**: `StakeAmountTooLow`  
 **Description**: The amount you are staking/unstaking/moving is below the minimum TAO equivalent.  
-**Minimum**: 500,000 RAO (0.0005 TAO)
+**Minimum**: 2,000,000 RAO (0.002 TAO)
+
+<details>
+<summary><strong>Check current value on-chain</strong></summary>
+
+To verify the current minimum, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Constants**, query `subtensorModule.initialMinStake()`. See [Inspecting the Chain](../concepts/inspecting-the-chain).
+
+</details>
 
 ### Error Code 2
 
@@ -119,6 +126,36 @@ Related:
 
 **Error**: `InputLengthsUnequal`  
 **Description**: Attempted to batch reveal weights with mismatched vector input lenghts.
+
+### Error code 19
+
+**Error**: `UidNotFound`  
+**Description**: The specified netuid does not exist or the provided hotkey does not own this subnet.
+
+### Error code 20
+
+**Error**: `EvmKeyAssociateRateLimitExceeded`  
+**Description**: Rate limit exceeded for associate EVM key extrinsic.
+
+### Error code 21
+
+**Error**: `ColdkeySwapDisputed`  
+**Description**: The coldkey has an associated dispute. No operations are possible.
+
+### Error code 22
+
+**Error**: `InvalidRealAccount`  
+**Description**: Invalid real account for proxy operation.
+
+### Error code 23
+
+**Error**: `FailedShieldedTxParsing`  
+**Description**: The shielded transaction could not be parsed. The ciphertext is malformed or does not match the expected shielded-transaction format.
+
+### Error code 24
+
+**Error**: `InvalidShieldedTxPubKeyHash`  
+**Description**: The public key hash provided for the shielded transaction is invalid.
 
 ### Error Code 255
 

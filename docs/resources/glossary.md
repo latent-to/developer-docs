@@ -160,19 +160,19 @@ Network Security Properties:
 
 A subnet validator that receives staked TAO tokens from delegators and performs validation tasks in one or more subnets.
 
-**See also:** [Delegation](../staking-and-delegation/delegation.md), [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md)
+**See also:** [Delegation](../staking-and-delegation/delegation.md), [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 
 ### Delegate Stake
 
 The amount of TAO staked by the delegate themselves.
 
-**See also:** [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
+**See also:** [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
 
 ### Delegation
 
 Also known as staking, delegating TAO to a validator (who is thereby the delegate), increases the validator's stake and secure a validator permit.
 
-**See also:** [Delegation](../staking-and-delegation/delegation.md), [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md)
+**See also:** [Delegation](../staking-and-delegation/delegation.md), [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 
 ### Dendrite
 
@@ -217,7 +217,7 @@ A cryptographic algorithm used to generate public and private key pairs for cold
 
 The total staked TAO amount of a delegate, including their own TAO tokens and those delegated by nominators.
 
-**See also:** [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
+**See also:** [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
 
 ### Emission
 
@@ -256,7 +256,7 @@ from bittensor.core.async_subtensor import AsyncSubtensor
 from bittensor.utils.balance import Balance
 
 async def main():
-	async with AsyncSubtensor(network="finney") as subtensor:
+	async with AsyncSubtensor(network="test") as subtensor:
 		deposit = await subtensor.get_existential_deposit()
 	print(f"Existential deposit: {deposit.tao} TAO")
 asyncio.run(main())
@@ -354,13 +354,13 @@ A system that drives the behavior of subnet miners and governs consensus among s
 
 ### Issuance
 
-The total amount of TAO circulating in the Bittensor network. Includes TAO that is held in wallets and subnet liquidity pools, as well as TAO that is locked as subnet registration fees.
+The total amount of TAO circulating in the Bittensor network. Includes TAO that is held in wallets and subnet liquidity pools.
 
 This can be viewed on Bittensor explorers such as [TAO.app's Tokenomics Dashboard](https://www.tao.app/tokenomics), or [TAOstats](https://taostats.io).
 
 To query it directly from the chain, see: [Subtensor Storage Query Example: Total Issuance](../subtensor-nodes/subtensor-storage-query-examples.md#168-totalissuance)
 
-See also: [Recycling, burning, and locking](#recycling-and-burning)
+See also: [Recycling and burning](#recycling-and-burning)
 
 ## L
 
@@ -488,6 +488,12 @@ In the context of machine learning and subnet operations, this refers to the goa
 
 ## P
 
+### Protocol Alpha
+
+Alpha tokens accumulated by the Bittensor protocol itself, rather than any individual staker, as a result of chain-side TAO buys during reserve injection (coinbase). This alpha is cached per subnet in the `SubnetProtocolAlpha` storage item instead of being immediately recycled. When a subnet is dissolved, the protocol's alpha participates in the pro-rata TAO settlement calculation, reducing staker payouts proportionally. The protocol's corresponding TAO share is returned to the chain. `SubnetProtocolAlpha` is cleared when a subnet dissolves.
+
+**See also:** [Subnet Deregistration](../subnets/subnet-deregistration.md), [Emission](../learn/emissions.md)
+
 ### Private Key
 
 A private component of the cryptographic key pair, crucial for securing and authorizing transactions and operations within the Bittensor network.
@@ -610,9 +616,19 @@ The process of recreating a lost or deleted coldkey or hotkey using the associat
 
 ### Register
 
-The process of registering keys with a subnet and purchasing a UID slot.
+The process of registering keys with a subnet and purchasing a UID slot by paying the **dynamic neuron registration burn** (TAO). The burn price is bounded by **`MinBurn`** and **`MaxBurn`**, decays over time (governed by `BurnHalfLife`), and increases on each registration (scaled by `BurnIncreaseMult`). The extrinsics `register` and `burned_register` share the same non-root burn path. **Root** registration is separate.
 
-**See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/), [Working with Subnets](../subnets/working-with-subnets.md)
+**See also:** [Subnet Miners](../miners/), [Subnet Validators](../validators/), [Working with Subnets](../subnets/working-with-subnets.md), [Understanding Neurons](../learn/neurons.md)
+
+### Relative stake weight
+
+A validator's relative stake weight in a subnet is the validator's individual stake expressed as a proportion of the total stake held by all active validators within the subnet. It measures a single validator's "share" of the total pool and directly determines how much influence their votes have on miner scoring and the distribution of network emissions.
+
+A validator's relative influence in a subnet is calculated as:
+
+$$
+\text{Relative Stake Weight} = \frac{\text{Stake Weight}_i}{\sum_{v \in \text{validators}} \text{Stake Weight}_v}
+$$
 
 ### Root Proportion
 
@@ -648,6 +664,16 @@ Subnet Zero a.k.a. the root subnet is a special subnet. No miners can register o
 
 ## S
 
+### Seed phrase
+
+The **_seed phrase_** (a.k.a. 'menemonic' or 'recovery phrase') is a series of (at least 12) words that is generated together with your wallet's cryptographic key pair, and which can be used to recover the coldkey private key. This seed phrase is therefore a human-usable way to save access to the cryptographic wallet offline, and to import the cryptographic wallet into a hardware or software wallet.
+
+The most important operational goal when handling Bittensor wallets is to avoid losing or leaking your seed phrase.
+
+See:
+- [Handle your Seed Phrase/Mnemonic Securely](../keys/handle-seed-phrase)
+- [Wallets, Coldkeys and Hotkeys in Bittensor](../keys/wallets)
+
 ### SS58 Encoded
 
 A compact representation of public keys corresponding to the wallet's coldkey and hotkey, used as wallet addresses for secure TAO transfers.
@@ -676,7 +702,7 @@ The amount of currency tokens delegated to a validator UID in a subnet. Includes
 
 Stake determines a validator's weight in consensus as well as their emissions.
 
-**See also:** [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md), [Delegation](../staking-and-delegation/delegation.md)
+**See also:** [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md), [Delegation](../staking-and-delegation/delegation.md)
 
 ### Stake Weight
 
@@ -699,6 +725,8 @@ $$
 \text{Relative Stake Weight} = \frac{\text{Stake Weight}_i}{\sum_{v \in \text{validators}} \text{Stake Weight}_v}
 $$
 
+See [Relative stake weight](#relative-stake-weight).
+
 **Consensus Power:**
 
 - **Weight Setting**: Higher stake weight means more influence when setting weights
@@ -720,7 +748,7 @@ The process of attaching TAO to a validator hotkey, i.e., locking TAO to a subne
 
 **See also:**
 
-- [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md)
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 - [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
 - [Delegation](../staking-and-delegation/delegation.md)
 - [Browse validators on TAO.app](https://www.tao.app/validators)
@@ -900,8 +928,7 @@ Unstaking incurs blockchain transaction fees, which are recycled back into the T
 **See also:**
 
 - [Staking/Delegation overview](../staking-and-delegation/delegation.md#unstaking)
-- [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md#unstaking-with-btcli)
-- [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md#unstaking-from-a-validator)
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md#unstake-from-a-validator)
 - [Understanding Pricing and Anticipating Slippage](../learn/slippage.md)
 - [Price Protection When Staking](../learn/price-protection.md)
 - [Transaction Fees](../learn/fees.md)

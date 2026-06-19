@@ -121,7 +121,7 @@ When a subnet is deregistered, all alpha tokens in that subnet are swapped back 
 The total amount returned to a subnet owner upon deregistration depends on when the subnet was registered. The refund is categorized as follows:
 
 - Legacy subnets registered before DTAO receive no refund as the owners were already compensated during the initial DTAO upgrade.
-- Subnets registered after DTAO but before the implementation of subnet deregistration (**Oct 1, 2025**) receive a full refund. The total subnet owner payout equals the original Locked TAO (`Lock Refund + Emissions Received`).
+- Subnets registered after DTAO but before the implementation of subnet deregistration (**Oct 1, 2025**) receive a full refund. The total subnet owner payout equals the original Locked TAO (`Lock Refund - Owner Emissions Received`).
 - Subnets registered after DTAO and after the implementation of subnet deregistration (**Oct 1, 2025**) receive subnet owner emissions only. There are no lock cost refunds since the registration costs are burned.
   :::
 
@@ -129,11 +129,27 @@ The total amount returned to a subnet owner upon deregistration depends on when 
 
 5. **Extract TAO Pool**: The subnet's TAO pool (`SubnetTAO`) is extracted for distribution
 
-6. **Distribution**: TAO is distributed proportionally to alpha holders:
+6. **Distribution**: TAO is distributed proportionally to alpha holders, accounting for any protocol-owned alpha:
    - Each holder receives: `(holder_alpha_value / total_alpha_value) * pool_tao`
+   - `total_alpha_value` includes any alpha cached in `SubnetProtocolAlpha` (accumulated from chain-side TAO buys). This reduces the per-staker payout proportionally. The protocol's corresponding TAO share is not distributed to users; it is returned to the chain.
    - TAO is credited directly to each holder's coldkey free balance
+
+### Protocol Alpha and Settlement
+
+The protocol tracks its own alpha position per subnet. During TAO reserve injection (coinbase), the protocol buys alpha as part of the emission mechanism. Previously this alpha was immediately recycled (burned). Now it is cached in `SubnetProtocolAlpha` storage, giving the protocol an explicit ownership stake in each subnet's alpha supply.
+
+When a subnet is dissolved, `SubnetProtocolAlpha` is included in the total alpha pool used to compute pro-rata TAO shares. Stakers receive a smaller TAO payout than they would on a subnet with zero protocol alpha: the larger the protocol's accumulated position relative to total alpha, the greater the reduction. The protocol's corresponding TAO is returned to the chain, not distributed to any address. `SubnetProtocolAlpha` is cleared as part of subnet dissolution.
 
 **Source Code**:
 
 - [`destroy_alpha_in_out_stakes()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L444-623)
 - [`prune_network()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L377)
+
+## Conviction locks and deregistration
+
+[Conviction locks](../staking-and-delegation/conviction-staking.md) on a deregistered subnet are handled as follows:
+
+- **Locks do not affect the pruning score.** The EMA price is the only factor in subnet selection. A subnet with large locked conviction is no more protected from deregistration than one with none.
+- **Lock records are deleted before liquidation runs.** The conviction lock storage entries for the subnet are wiped as part of the dissolution sequence, before `destroy_alpha_in_out_stakes` executes.
+- **Underlying stake is liquidated normally.** Once the lock records are removed, the alpha that was locked is treated like any other staked alpha: converted to TAO pro-rata and returned to coldkey free balances as described above.
+- **Accumulated conviction is not compensated.** The conviction score itself has no monetary value that is refunded — it is simply gone when the subnet is removed.

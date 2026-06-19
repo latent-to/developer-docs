@@ -4,7 +4,9 @@ title: "Mining in Bittensor"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Mining in Bittensor
 
@@ -30,7 +32,9 @@ To participate as a miner, you must first register a hotkey with the subnet in o
 You **do not** have to create a subnet to mine on the Bittensor network. Most miners work on already established subnets.
 :::
 
-Registration has a cost in TAO, which fluctuates dynamically based on the time since the last registration. When you secure a UID slot in a subnet on the main chain, this TAO is sunk cost and cannot be recovered.
+Registration has a cost in TAO that fluctuates dynamically: the price **decays** over time and **increases** each time a registration succeeds. The subnet owner controls the decay rate (`BurnHalfLife`) and the increase factor (`BurnIncreaseMult`), with the floor and ceiling set by the `MinBurn` and `MaxBurn` hyperparameters, respectively. When you secure a UID slot in a subnet on the main chain, this TAO is sunk cost and cannot be recovered.
+
+By default, [`btcli subnets register`](../btcli/btcli.md#btcli-subnets-register) runs in **safe mode**: it prompts for a price tolerance and aborts if the burn exceeds it. Pass `--unsafe` to skip the guard.
 
 A subnet can have a maximum of 64 subnet validator UIDs and 192 subnet miner UIDs (256 total) in subnets other than Subnet 1.
 
@@ -42,38 +46,57 @@ When you delegate your TAO to a subnet validator, you attach your delegated TAO 
 A hotkey can hold multiple UIDs across **separate** subnets. However, within one subnet, each UID must have a unique hotkey.
 :::
 
-To register your keys with a subnet, run the following command on your terminal, replacing `<your_preferred_netuid>`, `<my_coldkey>`, `<my_hotkey>`.
-`<your_preferred_netuid>` is the `netuid` of your preferred subnet.
+:::tip Check the current registration cost
+Run `btcli subnets show --netuid <netuid>` to see the current **Registration cost (recycled)** before registering. The burn price rises with each registration and decays over time.
+:::
+
+<Tabs groupId="registration">
+<TabItem value="btcli" label="BTCLI">
+
+Run the following command, replacing `<your_preferred_netuid>`, `<my_coldkey>`, `<my_hotkey>` with your values. `<your_preferred_netuid>` is the `netuid` of your preferred subnet.
 
 ```bash
 btcli subnet register --netuid <your_preferred_netuid>  --wallet.name  <my_coldkey> --wallet.hotkey <my_hotkey>
 ```
 
-For example, to register your keys with subnet 1—netuid of 1:
+For example, to register with subnet 1:
 
 ```bash
 btcli subnet register --netuid 1 --wallet.name test-coldkey --wallet.hotkey test-hotkey
 ```
 
+</TabItem>
+<TabItem value="sdk" label="Bittensor SDK">
+
+<SdkVersion />
+
+```python
+import bittensor as bt
+
+sub = bt.Subtensor(network="finney")
+wallet = bt.Wallet(name="<my_coldkey>", hotkey="<my_hotkey>")
+wallet.unlock_coldkey()
+
+response = sub.register(wallet=wallet, netuid=<your_preferred_netuid>)
+print(response)
+```
+
+`register` auto-sets a 0.5% price tolerance against the current burn. To set an explicit maximum burn price, use `sub.register_limit(wallet=wallet, netuid=<netuid>, limit_price=<max_price>)` instead.
+
+</TabItem>
+</Tabs>
+
 ## Miner deregistration
 
-A miner can be deregistered if it earns low emissions due to receiving low weights (ratings) from validators. Typical subnets have 256 UID slots per subnet, of which a maximum of 64 subnet can be occupied by validators. Each tempo, the lowest ranked slot is deregistered from the hotkey that holds it and assigned to a new registrant.
+A miner can be deregistered if it earns low emissions due to receiving low weights (ratings) from validators. Typical subnets have 256 UID slots per subnet, of which a maximum of 64 can be occupied by validators. This leaves 192 UIDs for miners, though if there are fewer than 64 eligible validators on a subnet, miners can occupy available slots.
 
-- Every subnet has an `immunity_period` hyperparameter expressed in a number of blocks.
-  :::tip See
-  See [`immunity_period`](../subnets/subnet-hyperparameters.md#immunityperiod).
-  :::
-- A subnet miner or validator at a UID (in that subnet) has a defined number of blocks to improve its performance. This is known as `immunity_period`. When the `immunity_period` expires, that miner or validator can be deregistered if it has the lowest performance in the subnet and a new registration arrives.
-- A neuron's `immunity_period` starts when the miner or validator is registered into the subnet.
-  Validators as well as miners can be deregistered if their emissions are low; either role requires a UID.
+If all UID slots are occupied, a new registration will cause the lowest ranked slot deregistered from the hotkey that holds it and assigned to a new registrant.
 
-Typically, subnets have 256 UID slots, with a maximum of 64 slots capable of serving as validators by default. This leaves 192 UIDs for miners, though if there are fewer than 64 eligible validators on a subnet, miners can occupy available slots.
+Every subnet has an immunity period, during which newly registered miners cannot be deregistered.  See [`immunity_period`](../subnets/subnet-hyperparameters.md#immunityperiod). When the immunity period expires, that miner or validator can be deregistered if it has the lowest performance in the subnet and a new registration arrives.
 
-:::info
-Deregistration only occurs on subnets where all 256 UID slots are occupied. If a new registration occurs in a subnet with available UID slots, the registered neuron occupies one of the available UID slots.
-:::
+If a new registration occurs in a subnet with available UID slots, the registered neuron occupies one of the available UID slots.
 
-Each tempo, the '[neuron](../learn/neurons)' (miner _or_ validator node) with the lowest 'pruning score' (based solely on emissions), and that is no longer within its [immunity period](../subnets/subnet-hyperparameters.md#immunityperiod), risks being replaced by a newly registered neuron, who takes over that UID.
+that UID.
 
 :::info Deregistration is based on emissions
 The subnet does not distinguish between miners and validators for the purpose of deregistration. The chain only looks at emissions (represented as 'pruning score'). Whenever a new registration occurs in the subnet, the neuron with the lowest emissions will get deregistered.
@@ -81,11 +104,6 @@ The subnet does not distinguish between miners and validators for the purpose of
 
 ### Immunity period
 
-Every subnet has an `immunity_period` hyperparameter expressed in a number of blocks. A neuron's `immunity_period` starts when the miner or validator registers into the subnet. For more information, see [`immunity_period`](../subnets/subnet-hyperparameters.md#immunityperiod).
-
-A subnet neuron (miner or validator) at a UID (in that subnet) has `immunity_period` blocks to improve its performance. When `immunity_period` expires, that miner or validator can be deregistered if it has the lowest performance in the subnet and a new registration arrives.
-
-**Implementation Details:**
 
 Immunity status is calculated dynamically using the formula `is_immune = (current_block - registered_at) < immunity_period`, where:
 
@@ -93,6 +111,13 @@ Immunity status is calculated dynamically using the formula `is_immune = (curren
 - `registered_at` is the block number when the neuron was registered
 - `immunity_period` is the configured protection period for the subnet (default: 4096 blocks ≈ 13.7 hours)
 
+<details>
+<summary><strong>Check current value on-chain</strong></summary>
+
+Immunity period is per-subnet. To check, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Storage**, query `subtensorModule.immunityPeriod(netuid)`. See [Inspecting the Chain](../concepts/inspecting-the-chain).
+
+</details>
+  
 **Code References:**
 
 - [`subtensor/pallets/subtensor/src/utils/misc.rs:442-448`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/misc.rs#L442-448) - Immunity status calculation
@@ -105,7 +130,7 @@ Immunity status is calculated dynamically using the formula `is_immune = (curren
 - In cases where two or more nodes have the lowest "pruning score", the older node gets deregistered first.
 
 - The subnet owner's hotkey has permanent immunity from deregistration.
-  :::
+:::
 
 ### Registration flow diagram
 
