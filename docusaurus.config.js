@@ -94,10 +94,6 @@ const config = {
             from: "/subnets/understanding-sub-subnets",
           },
           {
-            to: "/liquidity-positions/",
-            from: "/liquidity-provider",
-          },
-          {
             to: "/staking-and-delegation/staking-polkadot-js",
             from: "/staking/staking-polkadot-js",
           },

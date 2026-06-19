@@ -8,6 +8,8 @@ This page provides a detailed examination of how staking is implemented in the S
 
 Each subnet maintains its own AMM pool with TAO and Alpha reserves. When you stake, your TAO enters the subnet's TAO reserve and you receive Alpha tokens that represent your stake in that specific subnet. Alpha stake determines consensus weight and emission share for validators within a given subnet.
 
+The pool uses a **Balancer weighted pool AMM** (`pallets/swap/src/pallet/balancer.rs`). Swap output is computed via the weighted exponentiation formula rather than a simple constant product. See [Subnet AMM: Balancer Weighted Pool](../learn/balancer-amm.md) for the math.
+
 See [Staking/Delegation Overview](../staking-and-delegation/delegation)
 
 :::tip Key Concept

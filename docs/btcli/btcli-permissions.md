@@ -2,10 +2,6 @@
 title: "Bittensor CLI: Permissions Guide"
 ---
 
-import { GovernanceTransitionalState } from "../governance/_governance-transitional-state.mdx";
-
-<GovernanceTransitionalState />
-
 The Bittensor CLI, `btcli` provides a wide range of functionality, and has a range of different requirements for various commands: some require a coldkey private key to authenticate, some require a hotkey private key, and some require neither. Additionally, different functions require different levels of permissions. Some require the user to have special status like being registered with a node, have a validator permit, or be an active member of the senate.
 
 This page details the requirements for all of the `btcli` commands.
@@ -442,7 +438,7 @@ The `btcli crowd` commands are used to create and manage crowdloans on the netwo
 
 ### `liquidity`
 
-The `btcli liquidity` commands are used to provide and manage trading liquidity for specific subnets. For more information, see [Liquidity positions](../liquidity-positions/liquidity-positions.md).
+The `btcli liquidity` commands were used to manage user liquidity positions. User LP positions are currently disabled on-chain. Subnet pools now use protocol-owned liquidity managed by the [Balancer weighted pool AMM](../learn/balancer-amm.md).
 
 - **`liquidity add`**: Add liquidity to the swap (as a combination of TAO + Alpha).
 - **`liquidity list`**: Shows a wallet's liquidity positions in given subnet.

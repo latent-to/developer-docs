@@ -2,11 +2,7 @@
 title: "Senator's Guide to `BTCLI`"
 ---
 
-import { GovernanceTransitionalState } from "./_governance-transitional-state.mdx";
-
 # Senator's Guide to `BTCLI`
-
-<GovernanceTransitionalState />
 
 Governance participants (senate members, sudo-level accounts) can propose changes, cast votes, or execute privileged commands that affect the entire network. They must have a **coldkey** with the relevant governance role (senate membership or sudo privileges).
 
