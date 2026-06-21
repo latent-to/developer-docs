@@ -4,7 +4,7 @@ title: "Governance"
 
 # Governance
 
-Bittensor on-chain governance, live as of June 24th, 2026, replaces sudo-based operational control with a two-stage referendum system. All root calls — protocol changes, runtime upgrades, and other privileged operations — reach the chain only after passing through both stages.
+Operational control of Bittensor is governed by the following decentralized protocol. All root calls, including protocol changes, runtime upgrades, and other privileged operations, reach the chain only after passing through both stages.
 
 ## Collectives
 
@@ -12,22 +12,21 @@ Governance is organized around five named on-chain collectives managed by `palle
 
 | Collective | Size | Selection | Role |
 |---|---|---|---|
-| **Proposers** | 1–20 | Curated (root-assigned) | Submit proposals |
 | **Triumvirate** | 3 (fixed) | Curated (root-assigned) | First-stage approval |
-| **Economic** | 16 (fixed) | Rotating every 60 days | Review-stage voting |
+| **Proposers** | 1–20 | Curated (root-assigned) | Submit proposals |
 | **Building** | 16 (fixed) | Rotating every 60 days | Review-stage voting |
+| **Economic** | 16 (fixed) | Rotating every 60 days | Review-stage voting |
 | **EconomicEligible** | ≤64 | Auto-synced from root registrations | Candidate pool for Economic |
 
 ## Proposal Flow
 
 ### Stage 1: Triumvirate track
 
-A member of the **Proposers** collective submits a root call. The proposal enters the Triumvirate track. Submission is subject to two quotas: at most **20 active referenda** across all proposers at any time, and at most **5 active referenda per proposer**. Submissions that would exceed either limit are rejected at the extrinsic level.
+A member of the **Proposers** collective submits a root call. The proposal enters the Triumvirate track:
 
 - The three Triumvirate members have **7 days** to vote.
-- **2-of-3 aye votes**: proposal advances to the review track (`Delegated` state).
-- **2-of-3 nay votes**: proposal is rejected (`Rejected` state) and cleaned up.
-- Timeout with no threshold reached: proposal expires (`Expired` state) and is cleaned up.
+- **2-of-3 aye votes**: proposal advances to the review track.
+- **2-of-3 nay votes** or timeout: proposal is rejected and cleaned up.
 
 ### Stage 2: Review track
 
@@ -138,7 +137,7 @@ Both are curated: members are added, removed, or swapped by root governance. The
 
 ### Economic collective
 
-The Economic collective is selected from the **EconomicEligible** pool every 60 days. The top 16 EconomicEligible coldkeys by stake EMA value take the seats. If fewer than 16 eligible coldkeys are available, the rotation fails safely and the previous membership remains in place.
+The Economic collective, likely to represent highly staked validators, is selected from the **EconomicEligible** pool every 60 days. The top 16 EconomicEligible coldkeys by stake EMA value take the seats. If fewer than 16 eligible coldkeys are available, the rotation fails safely and the previous membership remains in place.
 
 **EconomicEligible** membership is auto-synced with root registration state. When a coldkey's root-registered hotkey count goes from 0 to 1, the coldkey is added to EconomicEligible. The EMA tracks a combined stake value per coldkey: liquid TAO plus the TAO value of alpha across all owned hotkeys, sampled incrementally each block (8 subnets and ≤256 hotkeys per tick, decay factor alpha=0.02). A 210-sample warmup of approximately 30 days is required before a coldkey becomes eligible for selection.
 
