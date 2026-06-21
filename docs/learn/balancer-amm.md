@@ -6,7 +6,7 @@ title: "Balancer Weighted Pools for Subnet AMMs"
 
 Each Bittensor subnet maintains an automated market maker (AMM) with [reserve pools](../subnets/understanding-subnets#liquidity-pools) of TAO and the subnet's alpha token.
 
-A constant prodcut AMM can be seen as a similar to a scale that sets the price of a swap by weighing the two pools against each other. When the TAO and alpha pools are balanced, the price is even. Staking in, adding TAO and taking alpha from the respective pools, tilts the scale toward TAO (the pool is now heavier). The angle of the scale determines the price: the more people stake TAO and take alpha, the price of alpha (alpha's position in vertical space) goes up.
+A constant product AMM can be seen as similar to a scale that sets the price of a swap by weighing the two pools against each other. When the TAO and alpha pools are balanced, the price is even. Staking in, adding TAO and taking alpha from the respective pools, tilts the scale toward TAO (the pool is now heavier). The angle of the scale determines the price: the more people stake TAO and take alpha, the price of alpha (alpha's position in vertical space) goes up.
 
 In any AMM, the price tends to 'slide' back down toward even, since a higher price exerts sell pressure. In a constant product AMM, the price is determined by the ratio of TAO and alpha, so the balance point is where they are even, i.e. in a 50/50 ratio, by their *value* (i.e. token quantities adjusted by price, so for example 100 TAO and 1000 alpha at a price of 0.1 TAO per alpha are in a 50/50 ratio).
 
@@ -30,7 +30,7 @@ Each subnet pool is defined by three values:
 | `tao_reserve` (y) | TAO held in the pool |
 | `w_base`, `w_quote` | Pool weights where `w_base + w_quote = 1` |
 
-The weights are stored as a single `w_quote` value (18-decimal precision); `w_base = 1 - w_quote`. Both weights are bounded to **[0.01, 0.99]**. The default at pool initialization is 0.5/0.5 (equal weight).
+The weights are stored as a single `w_quote` value (18-decimal precision); `w_base = 1 - w_quote`. Both weights are bounded to **[0.01, 0.99]** (the upper bound is implied: `1 - w_quote ≥ 0.01`; there is no separate `MAX_WEIGHT` constant). The default at pool initialization is 0.5/0.5 (equal weight).
 
 ## Price
 
@@ -132,7 +132,7 @@ The injection pair `(tao_in, alpha_in)` is always computed at the current price 
 
 ### Calling adjust_protocol_liquidity
 
-`inject_and_maybe_swap()` (`run_coinbase.rs:91`) calls:
+`inject_and_maybe_swap()` (`run_coinbase.rs:70`) makes the following call at line 91:
 
 ```rust
 T::SwapInterface::adjust_protocol_liquidity(*netuid_i, tao_in_i, alpha_in_i)
@@ -169,4 +169,4 @@ This is stored in `SwapBalancer` and all subsequent price and swap calculations 
 
 ### Storage key
 
-The balancer state for each subnet is stored in `SwapBalancer<T>` (a `StorageMap<NetUid, Balancer>` in `pallets/swap/src/pallet/mod.rs`). The `Balancer` struct holds only a single `Perquintill` value for `w_quote`; `w_base` is always derived as `1 - w_quote`.
+The balancer state for each subnet is stored in `SwapBalancer<T>` (a `StorageMap<NetUid, Balancer>` in `pallets/swap/src/pallet/mod.rs`). The `Balancer` struct holds only a single `Perquintill` field named `quote`; `w_base` is always derived as `1 - quote`.
