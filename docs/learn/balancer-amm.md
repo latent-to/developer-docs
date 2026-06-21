@@ -1,26 +1,18 @@
 ---
-title: "Subnet AMM: Balancer Weighted Pool"
+title: "Balancer Weighted Pools for Subnet AMMs"
 ---
 
-# Subnet AMM: Balancer Weighted Pool
+# Balancer Weighted Pools for Subnet AMMs
 
-Each Bittensor subnet maintains an automated market maker (AMM) pool with TAO and Alpha reserves. This pool executes every stake and unstake operation — when you stake TAO, the pool converts it to Alpha; when you unstake, it converts Alpha back to TAO.
+Each Bittensor subnet maintains an automated market maker (AMM) with [reserve pools](../subnets/understanding-subnets#liquidity-pools) of TAO and the subnet's alpha token.
 
-## The Intuition: A Scale with a Movable Fulcrum
+A constant prodcut AMM can be seen as a similar to a scale. When the TAO and alpha pools are balanced, the price is even. Staking in, adding TAO and taking alpha from the respective pools, tilts the scale toward TAO (the pool is now heavier). The angle of the scale determines the price: the more people stake TAO and take alpha, the price of alpha (alpha's position in vertical space) goes up.
 
-In a constant product AMM, the scale is always trying to get back to level. As trades happen the scale tips temporarily, but the price movement in proportion to the tip gives the scale a resistance to tipping further — the pool always wants to hold equal dollar value of both tokens.
+In any AMM, the price tends to 'slide' back down toward even, since a higher price exerts sell pressure. In a constant product AMM, the price is determined by the ratio of TAO and alpha, so the balance point is where they are even, i.e. in a 50/50 ratio, by their *value* (i.e. token quantities adjusted by price, so for example 100 TAO and 1000 alpha at a price of 0.1 TAO per alpha are in a 50/50 ratio).
 
-With a Balancer AMM, the fulcrum itself — the point at which the scale is "level" — can shift. If weights are 70/30, the pool's neutral position is 70% alpha value and 30% TAO value, which is just like shifting the fulcrum of the scale. Trades still tip the scale, but the scale's resting position is itself tilted.
-
-Instead of moving the scale to balance at a fixed point, you move the fulcrum so the pool can treat any reserve ratio as its natural resting state.
-
-**Who moves the fulcrum?** Traders don't. Normal staking and unstaking just tips the scale — the fulcrum stays put. The fulcrum shifts when the **protocol injects liquidity** at the end of each tempo. Subnet emissions add new TAO and Alpha into the pool reserves, and that injection almost never arrives in exactly the right price ratio. Rather than forcing a pre-swap to match the ratio (which would itself move the price), the Balancer absorbs whatever ratio arrives by recalculating the weights to match the new reserve split. Price is preserved; the fulcrum moves.
-
-In short: **traders tip the scale; the emissions system moves the fulcrum.**
+Balancer AMM allows the balance point of the scale to shift away from even 50/50 to reflect the value of the subnet on the marketplace of alpha tokens within Bittensor.
 
 For a full mathematical treatment, see the [Balancer AMMs whitepaper](https://learnbittensor.org/papers/balancer_amms.pdf).
-
----
 
 ## Pool State
 
@@ -36,13 +28,13 @@ The weights are stored as a single `w_quote` value (18-decimal precision); `w_ba
 
 ## Price
 
-The spot price of Alpha in TAO is:
+The current price of Alpha in TAO (the ideal price for an infinitesimally small trade, before any slippage) is:
 
 $$
 p = \frac{w_{\text{base}}}{w_{\text{quote}}} \cdot \frac{\tau}{\alpha}
 $$
 
-With equal weights (0.5/0.5), this simplifies to `p = TAO / alpha` — the same as a constant-product pool.
+With equal weights (0.5/0.5), this simplifies to `p = TAO / alpha`,  the same as a constant-product pool.
 
 ## Swap Formulas
 
@@ -64,7 +56,7 @@ $$
 
 With default equal weights (0.5/0.5), the exponent is 1 in both formulas, which reduces to the constant-product result `∆y = y * ∆x / (x + ∆x)`. The weights only diverge from 0.5/0.5 when the protocol has injected liquidity in a proportion that does not match the current price.
 
-## Weight Updates (Moving the Fulcrum)
+## Weight Updates (moving the balance point)
 
 When the emissions system injects liquidity into a pool at the end of a tempo, the injection rarely arrives in exactly the current price ratio. The protocol calls `update_weights_for_added_liquidity()` to shift the weights and absorb the injection without moving the price. The new weights are computed from the updated reserves:
 
