@@ -22,11 +22,12 @@ Governance is organized around five named on-chain collectives managed by `palle
 
 ### Stage 1: Triumvirate track
 
-A member of the **Proposers** collective submits a root call. The proposal enters the Triumvirate track:
+A member of the **Proposers** collective submits a root call. The proposal enters the Triumvirate track. Submission is subject to two quotas: at most **20 active referenda** across all proposers at any time, and at most **5 active referenda per proposer**. Submissions that would exceed either limit are rejected at the extrinsic level.
 
 - The three Triumvirate members have **7 days** to vote.
-- **2-of-3 aye votes**: proposal advances to the review track.
-- **2-of-3 nay votes** or timeout: proposal is rejected and cleaned up.
+- **2-of-3 aye votes**: proposal advances to the review track (`Delegated` state).
+- **2-of-3 nay votes**: proposal is rejected (`Rejected` state) and cleaned up.
+- Timeout with no threshold reached: proposal expires (`Expired` state) and is cleaned up.
 
 ### Stage 2: Review track
 
