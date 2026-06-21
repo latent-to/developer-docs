@@ -6,11 +6,17 @@ title: "Balancer Weighted Pools for Subnet AMMs"
 
 Each Bittensor subnet maintains an automated market maker (AMM) with [reserve pools](../subnets/understanding-subnets#liquidity-pools) of TAO and the subnet's alpha token.
 
-A constant prodcut AMM can be seen as a similar to a scale. When the TAO and alpha pools are balanced, the price is even. Staking in, adding TAO and taking alpha from the respective pools, tilts the scale toward TAO (the pool is now heavier). The angle of the scale determines the price: the more people stake TAO and take alpha, the price of alpha (alpha's position in vertical space) goes up.
+A constant prodcut AMM can be seen as a similar to a scale that sets the price of a swap by weighing the two pools against each other. When the TAO and alpha pools are balanced, the price is even. Staking in, adding TAO and taking alpha from the respective pools, tilts the scale toward TAO (the pool is now heavier). The angle of the scale determines the price: the more people stake TAO and take alpha, the price of alpha (alpha's position in vertical space) goes up.
 
 In any AMM, the price tends to 'slide' back down toward even, since a higher price exerts sell pressure. In a constant product AMM, the price is determined by the ratio of TAO and alpha, so the balance point is where they are even, i.e. in a 50/50 ratio, by their *value* (i.e. token quantities adjusted by price, so for example 100 TAO and 1000 alpha at a price of 0.1 TAO per alpha are in a 50/50 ratio).
 
 Balancer AMM allows the balance point of the scale to shift away from even 50/50 to reflect the value of the subnet on the marketplace of alpha tokens within Bittensor.
+
+::note Mathematical limits of the analogy
+The analogy between an AMM and a scale is helpful but limited, since the scale's behavior is a bit simpler.
+A physical balance scale is linear: the angle of tilt is proportional to the mass difference between the two sides.
+Price on a constant-product AMM follows a hyperbola (x·y = k), so the same-size trade moves the price much more when reserves are thin than when they are deep. The analogy captures the directional intuition: adding to one side raises that side's price. But it breaks down for slippage, which is a consequence of the hyperbolic curve.
+::
 
 For a full mathematical treatment, see the [Balancer AMMs whitepaper](https://learnbittensor.org/papers/balancer_amms.pdf).
 
@@ -58,7 +64,7 @@ With default equal weights (0.5/0.5), the exponent is 1 in both formulas, which 
 
 ## Weight Updates (moving the balance point)
 
-When the emissions system injects liquidity into a pool at the end of a tempo, the injection rarely arrives in exactly the current price ratio. The protocol calls `update_weights_for_added_liquidity()` to shift the weights and absorb the injection without moving the price. The new weights are computed from the updated reserves:
+When the emissions system injects liquidity into a pool each block, the injection rarely arrives in exactly the current price ratio. The protocol calls `update_weights_for_added_liquidity()` to shift the weights and absorb the injection without moving the price. The new weights are computed from the updated reserves:
 
 $$
 w_{\text{quote}}^{\text{new}} = \frac{\tau^{\text{new}}}{p \cdot \alpha^{\text{new}} + \tau^{\text{new}}}
