@@ -6,6 +6,10 @@ title: "Governance"
 
 Operational control of Bittensor is governed by the following decentralized protocol. All root calls, including protocol changes, runtime upgrades, and other privileged operations, reach the chain only after passing through both stages.
 
+:::note
+It is critical to note that the governance design depends on the collectives being populated. At initial deploy and until the reviewing collectives are populated, the review stage is a no-op that offers no additional check on the triumvirate.
+:::
+
 ## Collectives
 
 Governance is organized around five named on-chain collectives managed by `pallet-multi-collective`:

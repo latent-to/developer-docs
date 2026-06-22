@@ -12,11 +12,11 @@ In any AMM, the price tends to 'slide' back down toward even, since a higher pri
 
 Balancer AMM allows the balance point of the scale to shift away from even 50/50 to reflect the value of the subnet on the marketplace of alpha tokens within Bittensor.
 
-::note Mathematical limits of the analogy
+:::note Mathematical limits of the analogy
 The analogy between an AMM and a scale is helpful but limited, since the scale's behavior is a bit simpler.
 A physical balance scale is linear: the angle of tilt is proportional to the mass difference between the two sides.
 Price on a constant-product AMM follows a hyperbola (x·y = k), so the same-size trade moves the price much more when reserves are thin than when they are deep. The analogy captures the directional intuition: adding to one side raises that side's price. But it breaks down for slippage, which is a consequence of the hyperbolic curve.
-::
+:::
 
 For a full mathematical treatment, see the [Balancer AMMs whitepaper](https://learnbittensor.org/papers/balancer_amms.pdf).
 
