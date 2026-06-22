@@ -323,6 +323,7 @@ const sidebars = {
         "evm-tutorials/alpha-precompile",
         "evm-tutorials/proxy-precompile",
         "evm-tutorials/crowdloan-precompile",
+        "evm-tutorials/leasing-precompile",
         "evm-tutorials/voting-power-precompile",
       ],
     },

@@ -58,13 +58,14 @@ const DEPOSIT = 10_000_000_000n; // 10 TAO in RAO
 const MIN_CONTRIBUTION = 1_000_000_000n; // 1 TAO in RAO
 const CAP = 50_000_000_000n; // 50 TAO in RAO
 const END_BLOCK = 8540500;
+const TARGET_ADDRESS =  "0xTargetEVMAddress",
 
 const tx = await contract.create(
   DEPOSIT,
   MIN_CONTRIBUTION,
   CAP,
   END_BLOCK,
-  "0xYourTargetAddress",
+  TARGET_ADDRESS
   { gasLimit: 100_000n },
 );
 await tx.wait();
@@ -74,7 +75,7 @@ console.log(`Crowdloan created`);
 
 ### Checking campaign progress
 
-Use `getCrowdloan` to crowdloan by ID.
+Use the `getCrowdloan` function to retrieve the current state of a campaign by its ID.
 
 ```javascript
 import { ethers } from "ethers";
@@ -162,6 +163,4 @@ const CROWDLOAN_ID = 0;
 const tx = await contract.dissolve(CROWDLOAN_ID, { gasLimit: 2_000_000n });
 const receipt = await tx.wait();
 console.log(`Crowdloan ${CROWDLOAN_ID} dissolved`);
-console.log(`  Block:   ${receipt.blockNumber}`);
-console.log(`  Tx hash: ${receipt.hash}`);
 ```

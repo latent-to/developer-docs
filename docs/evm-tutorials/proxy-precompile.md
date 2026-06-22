@@ -26,7 +26,9 @@ See also: [Proxy Types and Permissions](../keys/proxies/index.md) for the full l
 
 ### Proxy type values
 
-Source: [`common/src/lib.rs`](https://github.com/opentensor/subtensor/blob/main/common/src/lib.rs) — `TryFrom<u8> for ProxyType`.
+The following table contains available Subtensor proxy types and their indexes.
+
+Source: [`common/src/lib.rs`](https://github.com/opentensor/subtensor/blob/main/common/src/lib.rs#:~:text=match%20value%20%7B):
 
 | Value | Type                     | Notes                        |
 | ----- | ------------------------ | ---------------------------- |
