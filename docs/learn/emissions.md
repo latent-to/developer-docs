@@ -58,23 +58,27 @@ A subnet's TAO reserve injection is determined by its **emission share**, calcul
 <details>
 <summary><strong>How it's calculated</strong></summary>
 
-The price-based model uses the subnet's Exponential Moving Average price (`SubnetMovingPrice`), not the live spot price:
-
-Given set $\mathbb{S}$ of all emission-enabled subnets, and a total per-block TAO emission $\Delta\bar{\tau}$ (which begins at 1 TAO and follows a halving schedule), the emission share for subnet $i$ with EMA price $p_i$ is:
+Each subnet's share of the fixed block emission is weighted by three factors, then normalized over all emission-enabled subnets:
 
 $$
-\text{share}(i) = \frac{p_i}{\sum_{j \in \mathbb{S}} p_j}
+\text{share}_i = \frac{r_i \cdot p_i \cdot (1 - b_i)}{\sum_{j \in \mathbb{S}} r_j \cdot p_j \cdot (1 - b_j)}
 $$
 
-And the TAO injected into subnet $i$ per block is:
+where:
+
+- $p_i$ = `SubnetMovingPrice` — the subnet's EMA price (not the live spot price)
+- $r_i$ = `root_proportion` = $\frac{\text{tao\_weight}}{\text{tao\_weight} + \text{alpha\_issuance}_i}$ — shrinks as a subnet ages, reallocating emission toward newer subnets
+- $b_i$ = `MinerBurned` — the proportion (0–1) of the most recent tempo's miner incentive that was withheld because the recipient hotkey is owned by the subnet owner. Penalizes subnets that withhold miner emission, regardless of whether that emission is recycled or burned
+
+TAO injected into subnet $i$ per block is then:
 
 $$
-\Delta\tau_i = \Delta\bar{\tau} \times \frac{p_i}{\sum_{j \in \mathbb{S}} p_j}
+\Delta\tau_i = \Delta\bar{\tau} \times \text{share}_i
 $$
 
-**Implementation**:
+**Fallback**: if the combined weight is zero across all subnets (e.g. no root stake, or every subnet withholding all miner emission), `get_shares` falls back to unweighted price shares — $p_i / \sum p_j$ — so block emission is never stranded.
 
-- Share calculation: [`get_shares()`](<https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#:~:text=pub(crate)%20fn%20get_shares>) → `get_shares_price_ema()`
+**Implementation**: Share calculation: [`get_shares()`](<https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#:~:text=pub(crate)%20fn%20get_shares>) → `get_shares_price_ema()` in `subnet_emission.rs`
 
 </details>
 

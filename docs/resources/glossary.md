@@ -271,9 +271,8 @@ A weighted moving average that prioritizes recent observations while exponential
    - **Basic Mode**: Single α ≈ 0.1 (~7-22 blocks for significant changes)
    - **Liquid Alpha Mode**: Dynamic α range 0.7-0.9 based on consensus alignment (~1-13 blocks depending on consensus)
 
-2. **Subnet Flow Emission Smoothing**: Protects emissions from manipulation by extremely slowly incorporating TAO flow changes (net staking minus unstaking) into emission calculations (α ≈ 0.000003209, ~30 day half-life, ~86.8 day effective window)
-
-**Formula**: `EMA(t) = α × Current_Value + (1 - α) × EMA(t-1)`
+2. **Subnet Price EMA Smoothing**: Protects emissions from manipulation by extremely slowly incorporating a three-factor weighted share of the fixed block emission
+   - **Formula**: $EMA(t) = α × Current\_Value + (1 - α) × EMA^{(t-1)}$
 
 **Key Properties**:
 
@@ -671,6 +670,7 @@ The **_seed phrase_** (a.k.a. 'menemonic' or 'recovery phrase') is a series of (
 The most important operational goal when handling Bittensor wallets is to avoid losing or leaking your seed phrase.
 
 See:
+
 - [Handle your Seed Phrase/Mnemonic Securely](../keys/handle-seed-phrase)
 - [Wallets, Coldkeys and Hotkeys in Bittensor](../keys/wallets)
 
@@ -791,7 +791,7 @@ A key component of any incentive mechanism that defines the work the subnet mine
 
 ### Subnet Weights
 
-The importance assigned to each subnet determined by net TAO flows (staking minus unstaking activity) and used to determine the percentage emissions to subnets. As of November 2025, this is based on EMA-smoothed TAO flows rather than token prices.
+The importance assigned to each subnet determined by net TAO flows (staking minus unstaking activity) and used to determine the percentage emissions to subnets.
 
 **See also:** [Emissions](../learn/emissions.md), [Consensus-Based Weights](../concepts/consensus-based-weights.md)
 

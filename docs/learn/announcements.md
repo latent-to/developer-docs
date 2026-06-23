@@ -8,17 +8,26 @@ This page tracks recent and upcoming changes to the Bittensor protocol and other
 
 **June, 2026**
 
-## Spec 421
+## Spec 421 upgrade
 
 **Status**: Deployed to mainnet.
 
-- **Price-based subnet emissions**: Subnet emission shares have reverted from the flow-based model (active since November 2025) back to a **price-based model**. Each subnet's share of the fixed block emission is now proportional to its EMA price (`SubnetMovingPrice`), normalized over all emission-enabled subnets. The alpha injection cap is also updated: it is now `root_proportion × alpha_emission`, where `root_proportion` shrinks as a subnet ages. This causes older subnets to transition naturally from liquidity injection toward chain buys over time. See [Emission](../learn/emissions.md).
+**Release notes:** [Subtensor PR #2781](https://github.com/opentensor/subtensor/pull/2781)
+
+- **Price-based subnet emissions with miner-burn scaling**: Subnet emission shares have reverted from the flow-based model (active since November 2025) to a **price-based model**, extended with two additional weighting factors. Each subnet's share of the fixed block emission is now proportional to `root_proportion × EMA_price × (1 - miner_burned)`, normalized over all emission-enabled subnets, where:
+  - **EMA price** (`SubnetMovingPrice`) replaces the flow-based share method. The flow-based share logic (`get_shares_flow()`) is deprecated.
+  - **root_proportion** (`tao_weight / (tao_weight + alpha_issuance)`) shrinks as a subnet ages, reallocating emission toward newer subnets over time.
+  - **(1 - miner_burned)** penalizes subnets that withhold miner (incentive) emission by routing the withheld proportion away to non-withholding subnets. The penalty applies whether withheld emission is recycled or burned, and is independent of a subnet's `RecycleOrBurn` config.
+  - If all subnets have zero combined weight, emission falls back to unweighted price shares so block emission is never stranded
+  - **Alpha injection cap updated**: The alpha injection cap is now `root_proportion × alpha_emission` (previously `min(alpha_emission, tao_block_emission)`). As a subnet ages and its alpha issuance grows, the cap shrinks, transitioning older subnets from liquidity injection toward chain buys.
+
+See [Emission](../learn/emissions.md).
 
 ## Spec 420 upgrade
 
 **Status**: On Testnet
 
-Release notes: [Subtensor PR #2769](https://github.com/opentensor/subtensor/pull/2769)
+**Release notes:** [Subtensor PR #2769](https://github.com/opentensor/subtensor/pull/2769)
 
 - **Balancer AMM replaces Uniswap V3**: Subnet liquidity pools now use a weighted balancer-style AMM (`PalSwap`) instead of Uniswap V3.
 

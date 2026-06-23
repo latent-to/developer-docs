@@ -66,15 +66,25 @@ Each subnet's share of the block's TAO emission is proportional to its EMA price
 The moving price for each subnet is calculated using a custom [EMA](../learn/ema#subnet-flow-emission-smoothing) that adapts its responsiveness based on subnet maturity. This creates a **double-smoothing effect**: new subnets have extremely slow price adaptation (preventing launch manipulation), while mature subnets respond more quickly to legitimate market signals.
 
 **Price-Based Distribution:**
-The system uses an EMA of each subnet's token price (`SubnetMovingPrice`) to determine emission shares, rather than the live spot price. Each subnet's share of the fixed block emission is proportional to its EMA price normalized over all emission-enabled subnets:
-
-Each subnet receives TAO emissions proportional to its EMA price share:
+The system uses an EMA of each subnet's token price (`SubnetMovingPrice`) to determine emission shares, rather than the live spot price. Each subnet's share of the fixed block emission is weighted by EMA price, root proportion, and a miner-burn penalty, then normalized over all emission-enabled subnets:
 
 $$
-\text{tao\_allocation}_i = \text{block\_emission} \times \frac{\text{moving\_price}_i}{\sum_{j} \text{moving\_price}_j}
+\text{share}_i = \frac{r_i \cdot p_i \cdot (1 - b_i)}{\sum_{j \in \mathbb{S}} r_j \cdot p_j \cdot (1 - b_j)}
 $$
 
-where the sum is over all emission-enabled subnets. Emission-disabled subnets are zeroed and their share redistributed to enabled subnets.
+where:
+
+- $p_i$ = `SubnetMovingPrice`
+- $r_i$ = `root_proportion` = $\frac{\text{tao\_weight}}{\text{tao\_weight} + \text{alpha\_issuance}_i}$
+- $b_i$ = `MinerBurned` — proportion of miner (incentive) emission withheld this tempo due to an owner/immune hotkey (0 = none withheld, 1 = all withheld)
+
+TAO allocated to subnet $i$ per block:
+
+$$
+\text{tao\_allocation}_i = \text{block\_emission} \times \text{share}_i
+$$
+
+**Fallback**: if every subnet's combined weight is zero, `get_shares` falls back to unweighted price shares ($p_i / \sum p_j$) so block emission is never stranded.
 
 **Implementation:**
 
@@ -87,6 +97,7 @@ where the sum is over all emission-enabled subnets. Emission-disabled subnets ar
 - Subnets with higher sustained EMA prices attract a greater share of block emissions
 - Emission-disabled subnets receive zero emissions; all other subnets receive a non-zero share proportional to their EMA price
 - De-registration remains price-based and is intentionally decoupled from emission share
+- `MinerBurned` is cleared on subnet removal — no stale values after deregistration
 
 ### 3. Token Pool Injections and Emissions
 
