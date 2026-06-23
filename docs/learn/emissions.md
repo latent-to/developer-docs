@@ -9,21 +9,13 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 Emission is the economic heartbeat of Bittensor—the process that continuously distributes newly created [TAO](../resources/glossary.md#tao-tau) and subnet-specific alpha tokens to network participants who contribute value through [mining](../resources/glossary.md#subnet-miner), [validation](../resources/glossary.md#subnet-validator), [staking](../resources/glossary.md#staking), and [subnet creation](../resources/glossary.md#subnet-creator).
 
-:::tip Flow-Based Emissions ("Taoflow") Now Active
-**As of November 2025**: Bittensor has transitioned to a **flow-based model** ("Taoflow") for determining how TAO emissions are distributed across subnets. Emissions are now based on net TAO inflows due to staking activity, rather than token prices as previously.
+:::tip Price-Based Emissions Now Active
+**As of June 2026**: Bittensor has reverted to a **price-based model** for determining how TAO emissions are distributed across subnets. Each subnet's share of block emissions is proportional to its EMA (Exponential Moving Average) token price, normalized over all subnets with emissions enabled.
 
 See:
 
-- [How flow-based injection works](#tao-reserve-injection)
-- [Rationale for the flow-based model](#rationale-for-flow-based-emissions)
+- [How price-based injection works](#tao-reserve-injection)
   :::
-
-See also:
-
-- [Implementation in the Subtensor codebase](../navigating-subtensor/emissions-coinbase.md)
-- [Yuma Consensus](./yuma-consensus.md)
-- [TAO.app Tokenomics Dashboard](https://www.tao.app/tokenomics)
-- [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view)
 
 ## Injection and Distribution: Two-Stages of the Emissions Process
 
@@ -33,9 +25,15 @@ Bittensor's emission system operates through two stages, reflecting the system's
 
 - **Distribution**: At the end of each [tempo](../resources/glossary.md#tempo) (waiting period of ~360 blocks, ~72 minutes), accumulated rewards within each subnet are distributed to the subnet's participants through [Yuma Consensus](../resources/glossary.md#yuma-consensus), which evaluates individual performance and determines who deserves what share.
 
+See also:
+
+- [Coinbase Implementation](../navigating-subtensor/emissions-coinbase.md) in the Subtensor codebase
+- [Yuma Consensus](./yuma-consensus.md)
+- [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view)
+
 ### Injection
 
-The first stage of emissions is _injection of liquidity_ into the subnet pools. Liquidity is injected to each subnet based on either price (legacy model) or net TAO flows (new model), or a weighted combination during the transition period.
+The first stage of emissions is _injection of liquidity_ into the subnet pools. Each subnet receives liquidity in proportion to its EMA token price relative to all other emission-enabled subnets.
 
 Each block:
 
@@ -45,106 +43,48 @@ Each block:
 
 #### Distribution across Subnets
 
-TAO emissions across subnets are now determined by a **flow-based model**:
+TAO emissions across subnets are determined by a price-based model. Each subnet's emission share is proportional to its EMA price (`SubnetMovingPrice`), normalized over all emission-enabled subnets — so subnets with higher EMA prices attract a greater share of block emissions. Emission-disabled subnets receive zero and their share is redistributed proportionally to enabled subnets.
 
-**Flow-Based Model (Active as of November 2025)**
+:::info Deprecated: Flow-Based Emissions
 
-- Emissions based on net TAO inflows, i.e. TAO that has flowed into the subnet minus TAO that has flowed out, from staking/unstaking activity
-- Rewards subnets that attract genuine user engagement
-- Subnets with negative net flows (more unstaking than staking) receive zero emissions
-- More dynamic and responsive than the previous price-based approach
+From November 2025 to June 2026, emission shares were determined by a flow-based model that used an EMA of net TAO flows (staking minus unstaking activity) rather than price. That model's share logic `(get_shares_flow()`) is now deprecated.
 
-**Previous Price-Based Model (No Longer Active)**
-
-- Emissions were proportional to smoothed subnet token prices
-- Created "price inertia" effects where established subnets maintained high emissions even during mass unstaking
-- Was vulnerable to "TAO treasury" gaming strategies
+:::
 
 #### TAO reserve injection
 
-A subnet's TAO reserve injection is determined by its **emission share**, calculated based on net flow of TAO in and out of the subnet's TAO liquidity pool due to staking/unstaking.
+A subnet's TAO reserve injection is determined by its **emission share**, calculated from its EMA price (`SubnetMovingPrice`) relative to the sum of EMA prices across all emission-enabled subnets.
 
 <details>
-  <summary><strong>How it's calculated</strong></summary>
+<summary><strong>How it's calculated</strong></summary>
 
-The flow-based model uses an Exponential Moving Average (EMA) of net TAO flows (staking minus unstaking):
+The price-based model uses the subnet's Exponential Moving Average price (`SubnetMovingPrice`), not the live spot price:
 
-1. **Track net flows**: Each block, record TAO inflows from staking and outflows from unstaking:
-   $$\text{net\_flow}_i = \sum \text{TAO staked} - \sum \text{TAO unstaked}$$
+Given set $\mathbb{S}$ of all emission-enabled subnets, and a total per-block TAO emission $\Delta\bar{\tau}$ (which begins at 1 TAO and follows a halving schedule), the emission share for subnet $i$ with EMA price $p_i$ is:
 
-2. **Calculate user flow EMA**: Update the 86.8-day EMA of net user flows (smoothing factor $\alpha \approx 0.000003209$):
-   $$S_i = (1 - \alpha) \cdot S_{i-1} + \alpha \cdot \text{net\_flow}_i$$
+$$
+\text{share}(i) = \frac{p_i}{\sum_{j \in \mathbb{S}} p_j}
+$$
 
-   The EMA smooths out short-term fluctuations. With a very small α (~0.000003209), the EMA changes slowly: 99.9999968% comes from the previous EMA value and only 0.0000032% from the current block's flow. This creates a 30-day half-life, meaning it takes about 30 days for the EMA to move halfway toward a new sustained flow level. This results in an EMA window of approximately ~86.8 days.
+And the TAO injected into subnet $i$ per block is:
 
-3. **Subtract normalized protocol cost**: Each block, the protocol also generates its own TAO flows into and out of subnet pools independently of user staking. The protocol cost for subnet $i$ is:
-   $$\text{protocol\_cost}_i = \text{TAO injected} + \text{chain buys} - \text{root staker claims}$$
-
-   - **TAO injected**: emission TAO deposited directly into the subnet's TAO reserve each block
-   - **Chain buys**: excess TAO swapped into the pool by the chain (increases pool-side liquidity). The alpha acquired through these buys is cached in `SubnetProtocolAlpha` per subnet rather than being immediately recycled. This gives the protocol an explicit ownership stake that participates in pro-rata settlement if the subnet is dissolved.
-   - **Root staker claims**: TAO removed from the pool when root stakers claim their alpha-denominated dividends
-
-   This protocol cost is smoothed with a separate EMA ($P_i$) using the same smoothing factor as the user flow EMA. The protocol EMA is updated unconditionally every block for all subnets. `NetTaoFlowEnabled` controls only whether the normalized deduction is applied: when `true` (the default), emission shares use **net flow** rather than gross user flow:
-
-   $$\text{net}_i = S_i - f \cdot \max(P_i, 0)$$
-
-   where $f$ is a normalization factor capped at 1:
-   $$f = \min\!\left(1,\ \frac{\sum_j \max(S_j, 0)}{\sum_j \max(P_j, 0)}\right)$$
-
-   The normalization ensures the total protocol cost subtracted across all subnets never exceeds the total positive user demand so there is always net flow to distribute. When a subnet's protocol EMA is negative (root claims exceed emissions), that term adds to its net flow rather than subtracting.
-
-   The practical effect: subnets whose TAO inflow is driven primarily by protocol mechanics rather than genuine user staking receive a lower emission share. Subnets with strong real user demand are boosted relative to protocol-subsidized subnets.
-
-4. **Apply offset and clipping**: Calculate offset flows by subtracting the lower limit $L$:
-   $$z_i = \max(\text{net}_i - L, 0)$$
-   where $L = \max(\text{FlowCutoff}, \min_{j} \min(\text{net}_j, 0))$
-
-   This step ensures subnets with negative net flows get zero emissions. The lower limit $L$ is set to the most negative net flow across all subnets (or FlowCutoff if higher). By subtracting this from each subnet's net flow, we "lift" all values so the worst-performing subnet gets 0.
-
-5. **Power normalization**: Apply power $p$ to adjust distribution characteristics:
-   $$\text{share}_{\text{flow}}(i) = \frac{z_i^p}{\sum_{j \in \mathbb{S}} z_j^p}$$
-
-   This converts the offset flows into proportions that sum to 1 (100%). With $p = 1$ (default), this is just dividing each subnet's offset flow by the total across all subnets, creating a linear relationship. Higher $p$ values favor subnets with stronger flows.
-
-6. **Final TAO injection**: Multiply the share by total block emission to get actual TAO amount:
-   $$\Delta\tau_i = \Delta\bar{\tau} \times \text{share}(i)$$
-
-   This converts the proportions into actual TAO amounts. Currently, the total block emission $\Delta\bar{\tau}$ is 0.5 TAO per block (this will decrease with future [halvings](../concepts/halving)).
-
-   <details>
-   <summary><strong>Check current value on-chain</strong></summary>
-
-   To verify the current block emission, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Storage**, query `subtensorModule.blockEmission()`. See [Inspecting the Chain](../concepts/inspecting-the-chain).
-
-   </details>
-
-With the default $p = 1$ ([source](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1293-L1295)), this creates **linear/proportional distribution**: a subnet with 2× the flow receives exactly 2× the emissions. The parameter can be adjusted to create winner-takes-more dynamics if desired (e.g., with $p = 1.5$, a subnet with 2× flow would get 2.83× emissions).
-
-**Key Parameters**:
-
-- **EMA smoothing factor**: 30-day half-life (results in ~86.8 day EMA window) ([source](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1302-L1308))
-- **Power exponent**: $p = 1$ (linear/proportional) ([source](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1293-L1295))
-- **Flow cutoff**: 0 (only negative flows clipped) ([source](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1285-L1288))
-- **Net flow mode**: enabled by default (`NetTaoFlowEnabled = true`); set to false to use gross user flow only
-- **EMA Initialization**: New subnets start with EMA = min(moving_price, current_price) ([code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L77-L84))
+$$
+\Delta\tau_i = \Delta\bar{\tau} \times \frac{p_i}{\sum_{j \in \mathbb{S}} p_j}
+$$
 
 **Implementation**:
 
-- User flow tracking: [`record_tao_inflow()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L36-L40) and [`record_tao_outflow()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#L42-L46), called during stake/unstake
-- Protocol cost tracking: `record_protocol_inflow()` (TAO injected, chain buys) and `record_protocol_outflow()` (root staker claims)
-- Share calculation: `get_shares()` → `get_shares_flow()`
-
-:::info Exceptions to user flow tracking
-UID registration (`burned_register`) is excluded from user inflows; only stake/unstake operations count. Root staker claims are not excluded; they appear as protocol outflows in the protocol cost EMA, which subtracts from (rather than ignores) a subnet's net flow.
-
-See [Calculating root proportion](../navigating-subtensor/emissions-coinbase#6-calculating-root-proportion).
-:::
+- Share calculation: [`get_shares()`](<https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#:~:text=pub(crate)%20fn%20get_shares>) → `get_shares_price_ema()`
 
 </details>
 
+:::info Emission-Disabled Subnets
+Subnets with emission disabled receive zero share, and their portion of the block emission is redistributed proportionally to all emission-enabled subnets.
+:::
+
 #### Alpha reserve injection
 
-Alpha is then injected in proportion to the price of the token, so that growth of a subnet's liquidity pools does not change the price of the alpha token.
+Alpha is injected in proportion to the price of the token, so that growth of a subnet's liquidity pools does not change the price of the alpha token.
 
 <details>
   <summary><strong>See how it's calculated!</strong></summary>
@@ -165,7 +105,7 @@ $$
                   {p_i}
 $$
 
-When we fill in this equation with the previous formula for $\Delta\tau_i$, the price $p_i$ is cancelled out of the equation, yielding:
+When we fill in this equation with the previous formula for $\Delta\tau_i$, the price $p_i$ cancels out, yielding:
 
 $$
 \Delta\alpha_i =
@@ -175,18 +115,26 @@ $$
   \bigl(p_j)}
 $$
 
-However, alpha injection is also capped at 1 by the algorithm, to prevent runaway inflation. Therefore, with cap or _alpha emission rate_ $\Delta\bar{\alpha_i}$, emission $\Delta\alpha_i$ to subnet $i$ is:
+However, alpha injection is also capped to prevent runaway inflation. The cap is now computed as:
 
 $$
-\Delta\alpha_i = \min\left\{
-  \frac
-    {\Delta\bar{\tau}}
-    {\sum_{j \in \mathbb{S}}
-  \bigl(p_j)},
-  \Delta\bar{\alpha_i} \right\}
+\text{alpha injection cap}_i = \text{root\_proportion}_i \times \Delta\bar{\alpha_i}
 $$
 
-The cap or _alpha emission rate_ $\Delta\bar{\alpha_i}$ for subnet $i$, starts at 1 and follows a halving schedule identical to that of TAO, beginning when subnet $i$ is created.
+where $\text{root\_proportion}_i = \frac{\text{tao\_weight}}{\text{tao\_weight} + \text{alpha\_issuance}_i}$.
+
+Therefore, with this root-proportion-based cap:
+
+$$
+\Delta\alpha^{\text{in}}_i = \min\left\{
+\frac{\Delta\tau_i}{p_i},\;
+\text{root\_proportion}_i \times \Delta\bar{\alpha_i}
+\right\}
+$$
+
+**Effect of the cap**: As a subnet ages, its `alpha_issuance` grows, which causes `root_proportion` to shrink, which in turn lowers the injection cap. TAO emission that cannot be injected as liquidity due to the cap becomes **excess TAO**, which is routed into chain buys instead. This is the mechanism that transitions older subnets from liquidity injection toward chain buys over time.
+
+The cap or _alpha emission rate_ $\Delta\bar{\alpha_i}$ for subnet $i$ starts at 1 and follows a halving schedule identical to that of TAO, beginning when subnet $i$ is created.
 
 </details>
 
@@ -194,22 +142,9 @@ The cap or _alpha emission rate_ $\Delta\bar{\alpha_i}$ for subnet $i$, starts a
 
 Each block, liquidity is also set aside to be emitted to participants (validators, miners, stakers, and subnet creator). The quantity per block is equal to the _alpha emission rate_ $\Delta\bar{\alpha_i}$ for subnet $i$.
 
-:::warning Important for Subnet Owners
-Under the new flow-based model, subnets that have negative net TAO flows (more unstaking than staking) for sufficiently long will receive **zero TAO emissions** and consequently **zero alpha injection**. This means:
-
-- No liquidity growth for the subnet pool
-- Higher slippage for users trying to stake
-- Difficulty attracting new participants
-
-To maintain positive emissions, subnet owners should focus on:
-
-- Building genuine utility that attracts long-term stakers
-- Creating sustainable value that encourages TAO inflows
-  :::
-
 ### Distribution
 
-At the end of each tempo (~360 blocks), the quantity of alpha accumulated over each block of the tempo is distributed network participants in the following proportions:
+At the end of each tempo (~360 blocks), the quantity of alpha accumulated over each block of the tempo is distributed to network participants in the following proportions:
 
 1.  18% by subnet owner
 1.  41% of emissions go to miners. The allocation to particular miners is determined by [Yuma Consensus: Miner emissions#miner-emissions](./yuma-consensus).
@@ -242,43 +177,6 @@ At the end of each tempo (~360 blocks), the quantity of alpha accumulated over e
             </details>
 
     See [Core Dynamic TAO Concepts: Validator stake weight](../subnets/understanding-subnets#validator-stake-weight)
-
-## Rationale for Flow-Based Emissions
-
-The shift from price-based to flow-based emissions addressed several fundamental issues with the original model, as explained by Bittensor co-founder Jacob Steeves (a.k.a., Const) in the [October 30, 2025 episode of Novelty Search](https://www.youtube.com/live/40ug9nbYW9U?si=H6mTnO2pwqwtE25U):
-
-### Leveling the Playing Field
-
-The new model measures emissions contribution "per unit liquidity" to eliminate structural advantages:
-
-- **Old model problem**: Small subnets with low liquidity are devastated by minor sell pressure, while large subnets with high liquidity can absorb massive selling with minimal emission impact
-- **New model solution**: All subnets are evaluated by their net TAO flow. Because this is the difference between in-flow and out-flow of TAO, it is scale-invariant and does _not_ favor subnets with larger total liquidity pools, leveling the playing field.
-
-### Preventing "TAO Treasury" Gaming
-
-The price-based model enabled a specific exploit pattern:
-
-1. Projects artificially pump their token price by building "TAO treasuries"
-2. They pay for initial liquidity buildup using emissions from the inflated price
-3. They let the price "slow burn" downward while collecting emissions the entire time
-
-Under the new model, injection favors subnets that are actively being staked into, rather than just holding accumulated liquidity.
-
-### Anti-Manipulation by Design
-
-The flow-based system is designed to be manipulation-resistant:
-
-- Net flows reflect actual user behavior (staking/unstaking decisions)
-- ~86.8 day EMA prevents short-term gaming
-- Neuron registrations are excluded from inflows
-- Power normalization amplifies sustained positive flows over temporary spikes
-
-### Note: De-registration Remains Price-Based
-
-Emissions and de-registration are **intentionally decoupled**:
-
-- De-registration continues to be based on lowest token price
-- Subnets with zero emissions (due to negative net flows) are **not** automatically de-registered
 
 ## Note on evolution of Bittensor token economy
 

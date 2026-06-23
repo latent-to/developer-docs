@@ -32,52 +32,26 @@ Note that this alpha parameter is distinct from and unrelated to the usage of 'a
 
 ## Subnet Flow Emission Smoothing
 
-This use of EMA smoothing protects the network's economic model from manipulation by making emissions extremely slow to respond to changes in staking activity.
+This use of EMA smoothing protects the network's economic model from manipulation by making emission shares extremely slow to respond to short-term price fluctuations.
 
 **How It Works**:
-The flow-based model uses an EMA to track net TAO flows (staking minus unstaking) over time, with a 30-day half-life (~86.8 day effective window):
+The price-based model uses an EMA of each subnet's token price (`SubnetMovingPrice`) to determine emission shares, rather than the live spot price. This means a sudden price spike or crash has minimal immediate effect on a subnet's emission share:
+
+**How It Works**:
+The price EMA uses a dynamic alpha calculation to ensure that new subnets have even slower price adaptation than mature ones.
 
 $$
-S_i = (1 - \alpha) \cdot S_{i-1} + \alpha \cdot \text{net\_flow}_i
+\alpha = \frac{ \mathrm{base\_alpha} \times  \mathrm{blocks\_since\_start}}{\mathrm{blocks\_since\_start} + \mathrm{halving\_blocks}}
 $$
 
-**Key Parameters**:
-- **Smoothing factor ($\alpha$)**: ~0.000003209 (creates 30-day half-life)
-- **EMA window**: ~86.8 days (effective duration over which old values still affect the running EMA)
-- **Response characteristic**: Very slow - 99.9997% from previous EMA, only 0.0003% from current block
-
-This extremely slow EMA prevents:
-- Short-term gaming through temporary staking spikes
-- Price manipulation through wash trading
-- Flash attacks on emissions
-
-Subnets with negative net flows (more unstaking than staking) receive zero emissions after the EMA reflects sustained negative flow.
-
-### Protocol Cost EMA
-
-A second EMA runs alongside the user flow EMA, tracking per-block **protocol cost** for each subnet:
-
-$$P_i^{(t)} = (1 - \alpha) \cdot P_i^{(t-1)} + \alpha \cdot \text{protocol\_cost}_i$$
-
-using the same smoothing factor $\alpha$ as the user flow EMA. The protocol cost each block is:
-
-$$\text{protocol\_cost}_i = \text{TAO injected into pool} + \text{chain buys} - \text{root staker claims}$$
-
-When `NetTaoFlowEnabled = true` (the default), the final flow used for emission shares is **net flow** rather than gross user flow:
-
-$$\text{net}_i = S_i - f \cdot \max(P_i, 0)$$
-
-The normalization factor $f = \min(1,\ \Sigma_j \max(S_j,0)\ /\ \Sigma_j \max(P_j,0))$ scales the protocol EMA so that the total protocol cost subtracted across all subnets never exceeds total positive user demand. When $P_i < 0$ (root claims exceed protocol injections for a subnet), the term adds to net flow rather than subtracting, which is a benefit to that subnet.
-
-Both EMAs are updated every block regardless of whether `NetTaoFlowEnabled` is on, so toggling the flag does not cause an EMA shock.
-
-:::tip Flow-Based Model Active
-As of November 2025, emissions are based on EMA of TAO flows rather than token prices. See [Emissions](./emissions.md) for complete details.
+:::info
+The value for **base_alpha** in the above is currently ~0.0003 for Bittensor mainnet ("finney").
 :::
 
 See:
-- [Flow-based emission implementation](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs)
-- [EMA smoothing factor](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1302-L1308)
+
+- [Yuma Consensus/Coinbase emission source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L223)
+- [Default alpha value for subnet price smoothing](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L828)
 
 ## Validator-Miner Bond Smoothing
 
