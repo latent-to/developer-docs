@@ -67,7 +67,7 @@ $$
 where:
 
 - $p_i$ = `SubnetMovingPrice` — the subnet's EMA price (not the live spot price)
-- $r_i$ = `root_proportion` = $\frac{\text{tao\_weight}}{\text{tao\_weight} + \text{alpha\_issuance}_i}$ — shrinks as a subnet ages, reallocating emission toward newer subnets
+- $r_i$ = `root_proportion` = $\frac{\text{tao\_stake\_weight}}{\text{tao\_stake\_weight} + \text{alpha\_issuance}_i}$ — shrinks as a subnet ages, reallocating emission toward newer subnets
 - $b_i$ = `MinerBurned` — the proportion (0–1) of the most recent tempo's miner incentive that was withheld because the recipient hotkey is owned by the subnet owner. Penalizes subnets that withhold miner emission, regardless of whether that emission is recycled or burned
 
 TAO injected into subnet $i$ per block is then:

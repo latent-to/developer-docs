@@ -60,7 +60,7 @@ let subnets_to_emit_to: Vec<NetUid> = subnets
 
 ### 2. Emission Allocation to Subnets
 
-Each subnet's share of the block's TAO emission is proportional to its EMA price (`SubnetMovingPrice`), normalized over all emission-enabled subnets.
+Each subnet's share of the block's TAO emission is proportional to its EMA price (`SubnetMovingPrice`), weighted by its root proportion and miner-burn penalty, then normalized over all emission-enabled subnets.
 
 **EMA Price Smoothing Implementation:**
 The moving price for each subnet is calculated using a custom [EMA](../learn/ema#subnet-flow-emission-smoothing) that adapts its responsiveness based on subnet maturity. This creates a **double-smoothing effect**: new subnets have extremely slow price adaptation (preventing launch manipulation), while mature subnets respond more quickly to legitimate market signals.
@@ -75,7 +75,7 @@ $$
 where:
 
 - $p_i$ = `SubnetMovingPrice`
-- $r_i$ = `root_proportion` = $\frac{\text{tao\_weight}}{\text{tao\_weight} + \text{alpha\_issuance}_i}$
+- $r_i$ = `root_proportion` = $\frac{\text{tao\_stake\_weight}}{\text{tao\_stake\_weight} + \text{alpha\_issuance}_i}$
 - $b_i$ = `MinerBurned` — proportion of miner (incentive) emission withheld this tempo due to an owner/immune hotkey (0 = none withheld, 1 = all withheld)
 
 TAO allocated to subnet $i$ per block:
@@ -93,9 +93,8 @@ $$
 
 **Key Characteristics:**
 
-- Emission shares are slow to respond to price changes due to the ~86.8 day effective EMA window
-- Subnets with higher sustained EMA prices attract a greater share of block emissions
-- Emission-disabled subnets receive zero emissions; all other subnets receive a non-zero share proportional to their EMA price
+- Emission shares are slow to respond to price changes due to the ~92.6 day effective EMA window
+- Emission-enabled subnets receive a non-zero share determined by their EMA price, root proportion, and miner-burn penalty; emission-disabled subnets receive zero emissions
 - De-registration remains price-based and is intentionally decoupled from emission share
 - `MinerBurned` is cleared on subnet removal — no stale values after deregistration
 

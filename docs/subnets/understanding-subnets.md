@@ -111,7 +111,7 @@ See [Emissions](../learn/emissions.md).
 
 The relative value or _weight_ of subnets within Bittensor is critically important as it determines emissions to different subnets and their participant miners and validators.
 
-The relative weight is determined organically according to the emergent market value of the subnet, as represented by its stabilized token price. TAO-holders can stake TAO into subnets in exchange for the subnet-specific dynamic currency, referred to as the subnet's alpha (α) token. In this way, stakers 'vote with their TAO' for the value of the subnet, determining the emissions to the validators and miners working in it. In return, stakers extract a share of the subnet's emissions.
+The relative weight is determined organically according to the emergent market value of the subnet, as represented by its stabilized token price. TAO-holders can stake TAO into subnets in exchange for the subnet-specific dynamic currency, referred to as the subnet's alpha (α) token. In this way, stakers 'vote with their TAO' for the value of the subnet, determining the TAO emission share flowing into it and the alpha emissions to the validators and miners working in it. In return, stakers extract a share of the subnet's alpha emissions.
 
 ## Root subnet
 
