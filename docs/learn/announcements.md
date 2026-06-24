@@ -16,7 +16,7 @@ This page tracks recent and upcoming changes to the Bittensor protocol and other
 
 - **Price-based subnet emissions with miner-burn scaling**: Subnet emission shares have reverted from the flow-based model (active since November 2025) to a **price-based model**, extended with two additional weighting factors. Each subnet's share of the fixed block emission is now proportional to `root_proportion × EMA_price × (1 - miner_burned)`, normalized over all emission-enabled subnets, where:
   - **EMA price** (`SubnetMovingPrice`) replaces the flow-based share method. The flow-based share logic (`get_shares_flow()`) is deprecated.
-  - **root_proportion** (`tao_weight / (tao_weight + alpha_issuance)`) shrinks as a subnet ages, reallocating emission toward newer subnets over time.
+  - **root_proportion** (`tao_stake_weight / (tao_stake_weight + alpha_issuance)`) shrinks as a subnet ages, reallocating emission toward newer subnets over time.
   - **(1 - miner_burned)** penalizes subnets that withhold miner (incentive) emission by routing the withheld proportion away to non-withholding subnets. The penalty applies whether withheld emission is recycled or burned, and is independent of a subnet's `RecycleOrBurn` config.
   - If all subnets have zero combined weight, emission falls back to unweighted price shares so block emission is never stranded
   - **Alpha injection cap updated**: The alpha injection cap is now `root_proportion × alpha_emission` (previously `min(alpha_emission, tao_block_emission)`). As a subnet ages and its alpha issuance grows, the cap shrinks, transitioning older subnets from liquidity injection toward chain buys.
