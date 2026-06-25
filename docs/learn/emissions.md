@@ -23,7 +23,11 @@ Bittensor's emission system operates through two stages, reflecting the system's
 
 - **Injection**: Every [block](../resources/glossary.md#block), new liquidity flows into each subnet's liquidity pools, based on subnet performance.
 
-- **Distribution**: At the end of each [tempo](../resources/glossary.md#tempo) (waiting period of ~360 blocks, ~72 minutes), accumulated rewards within each subnet are distributed to the subnet's participants through [Yuma Consensus](../resources/glossary.md#yuma-consensus), which evaluates individual performance and determines who deserves what share.
+- **Distribution**: At the end of each [tempo](../resources/glossary.md#tempo) (default ~360 blocks; owner-configurable), accumulated rewards within each subnet are distributed to the subnet's participants through [Yuma Consensus](../resources/glossary.md#yuma-consensus), which evaluates individual performance and determines who deserves what share.
+
+:::info Manual epoch triggering
+Subnet owners can also manually trigger an epoch via the `trigger_epoch` extrinsic on the `SubtensorModule` pallet. This operates independently of the automatic epoch schedule and allows an epoch to be executed on demand.
+:::
 
 See also:
 
@@ -148,7 +152,7 @@ Each block, liquidity is also set aside to be emitted to participants (validator
 
 ### Distribution
 
-At the end of each tempo (~360 blocks), the quantity of alpha accumulated over each block of the tempo is distributed to network participants in the following proportions:
+At the end of each tempo (default ~360 blocks; owner-configurable), the quantity of alpha accumulated over each block of the tempo is distributed to network participants in the following proportions:
 
 1.  18% by subnet owner
 1.  41% of emissions go to miners. The allocation to particular miners is determined by [Yuma Consensus: Miner emissions#miner-emissions](./yuma-consensus).

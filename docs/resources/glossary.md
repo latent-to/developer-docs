@@ -221,7 +221,7 @@ The total staked TAO amount of a delegate, including their own TAO tokens and th
 
 ### Emission
 
-Every block, TAO is injected into each subnet in Bittensor, and every tempo (or 360 blocks), it is extracted by participants (miners, validators, stakers, and subnet creators).
+Every block, TAO is injected into each subnet in Bittensor, and every tempo, it is extracted by participants (miners, validators, stakers, and subnet creators).
 
 Emission is this process of generating and allocating currency to participants. The amount allocated to a given participant over some duration of time is also often referred to as 'their emissions' for the period.
 
@@ -238,6 +238,8 @@ An optional security measure for the hotkey.
 ### Epoch
 
 An epoch in Bittensor is the period during which a subnet executes its consensus mechanism. Its is determined number of blocks defined by the subnet's [tempo](#tempo) hyperparameter.
+
+Epochs fire automatically every `Tempo` blocks (owner-configurable, default 360), or can be triggered manually by the subnet owner via the `trigger_epoch` extrinsic. The network guarantees at least one epoch per `MaxTempo` blocks (50,400 blocks, ~7 days) regardless of owner behavior.
 
 **See also:** [Tempo](#tempo), [Yuma Consensus](../learn/yuma-consensus.md)
 
@@ -831,9 +833,9 @@ A global parameter (currently set to 0.18) that determines the relative influenc
 
 ### Tempo
 
-Tempo is a subnet-specific hyperparameter that determines how frequently epochs run. It is a 360-block period over which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo passes every 4320 seconds or ~72 minutes.
+Tempo is a subnet-specific hyperparameter that determines how frequently epochs run automatically. It is configurable by the subnet owner within the range of 360 blocks (~72 minutes) to 50,400 blocks (~7 days), with 360 blocks as the default.
 
-**See also:** [Yuma Consensus](../learn/yuma-consensus.md), [Emissions](../learn/emissions.md)
+**See also:** [Yuma Consensus](../learn/yuma-consensus.md), [Emissions](../learn/emissions.md), [Epoch](#epoch)
 
 ### Transfer
 

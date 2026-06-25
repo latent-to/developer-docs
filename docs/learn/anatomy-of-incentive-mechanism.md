@@ -12,12 +12,12 @@ Each subnet has one or more _incentive mechanisms_, scoring models that drive th
 
 When a subnet uses multiple incentive mechanisms, each mechanism operates independently with its own bond pool for [Yuma Consensus](./yuma-consensus) calculations, allowing subnet creators to distribute emissions across different types of work or evaluation criteria.
 
-Each validator on a subnet is responsible for periodically computing vectors of weights assigned to each miner for each incentive mechanism, representing aggregate rankings based on the miners' performance in each mechanism. Validators transmit these **weight vectors** to the blockchain. 
+Each validator on a subnet is responsible for periodically computing vectors of weights assigned to each miner for each incentive mechanism, representing aggregate rankings based on the miners' performance in each mechanism. Validators transmit these **weight vectors** to the blockchain.
 
-The Bittensor blockchain waits for the latest rankings/weight vectors from all the validators of a given subnet, then forms **weight matrices** from these rankings (one matrix per incentive mechanism), which are then provided as input to the Yuma Consensus module on-chain. Yuma Consensus (YC) uses these weight matrices, along with the amount of stake associated with each UID on the subnet, to calculate emissions to each participant within each mechanism. These emissions are finalized and debited to participants' hotkeys at the end of each _tempo_ or 360 blocks.
+The Bittensor blockchain waits for the latest rankings/weight vectors from all the validators of a given subnet, then forms **weight matrices** from these rankings (one matrix per incentive mechanism), which are then provided as input to the Yuma Consensus module on-chain. Yuma Consensus (YC) uses these weight matrices, along with the amount of stake associated with each UID on the subnet, to calculate emissions to each participant within each mechanism. These emissions are finalized and debited to participants' hotkeys at the end of each _tempo_.
 
 :::tip note
-The tempo duration (360 blocks) is the same for all the user-created subnets. However, the timing of tempos can differ among subnets, depending on when they were created.
+The tempo duration is configurable per subnet by the subnet owner (default 360 blocks, range 360–50,400 blocks). The timing of tempos can also differ among subnets depending on when they were created or last had their tempo changed.
 :::
 
 ## Multiple Incentive Mechanisms
@@ -28,7 +28,6 @@ Subnets can implement multiple incentive mechanisms to evaluate different aspect
 - **Maintain independent evaluation**: Each mechanism operates with separate bond pools, so miner performance in one mechanism doesn't affect their rating in another
 - **Enable specialized competition**: Miners can excel in specific mechanisms that match their capabilities
 - **Provide transparent control**: All emission distributions and mechanism configurations are visible on-chain
-
 
 For detailed information about implementing and managing multiple incentive mechanisms, see [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets).
 

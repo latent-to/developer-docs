@@ -47,47 +47,52 @@ btcli sudo set --netuid 14
 Available hyperparameters:
 
 #      HYPERPARAMETER                     OWNER SETTABLE       DESCRIPTION
-─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-1      activity_cutoff                    Yes                  Minimum activity level required for neurons to remain active.
-2      alpha_high                         Yes                  High bound of the alpha range for stake calculations.
-3      alpha_low                          Yes                  Low bound of the alpha range for stake calculations.
-4      alpha_sigmoid_steepness            No (Root Only)       Steepness parameter for alpha sigmoid function.
-5      alpha_values                       Yes                  Alpha range  for stake calculations.
-6      bonds_moving_avg                   Yes                  Moving average window size for bond calculations.
-7      bonds_reset_enabled                Yes                  Enable or disable periodic bond resets.
-8      burn_half_life                     Yes                  Half-life (in blocks) controlling how quickly the registration burn price decays back toward min_burn.
-9      burn_increase_mult                 Yes                  Multiplier applied to the registration burn price after each successful registration.
-10     commit_reveal_period               Yes                  Duration (in blocks) for commit-reveal weight submission scheme.
-11     commit_reveal_weights_enabled      Yes                  Enable or disable commit-reveal scheme for weight submissions.
-12     immunity_period                    Yes                  Duration (in blocks) during which newly registered neurons are protected from certain penalties.
-13     kappa                              No (Root Only)       Kappa determines the scaling factor for consensus calculations.
-14     liquid_alpha_enabled               Yes                  Enable or disable liquid alpha staking mechanism.
-15     max_allowed_uids                   Yes                  Maximum number of UIDs (neurons) on the subnet, essentially 'untrimming'.
-16     max_burn                           COMPLICATED          Maximum TAO burn amount cap for subnet registration.
-17     max_regs_per_block                 No (Root Only)       Maximum number of registrations allowed per block.
-18     max_validators                     No (Root Only)       Maximum number of validators allowed in the subnet.
-19     min_allowed_uids                   No (Root Only)       Minimum number of UIDs (neurons) required for the subnet to remain active.
-20     min_allowed_weights                Yes                  Minimum number of weight connections a neuron must maintain to stay active.
-21     min_burn                           Yes                  Minimum TAO burn amount required for subnet registration.
-22     network_pow_registration_allowed   Yes                  Enable or disable proof-of-work based registration.
-23     owner_cut_auto_lock_enabled        Yes                  Whether the subnet owner cut is automatically locked when collected.
-24     owner_cut_enabled                  Yes                  Whether the subnet owner cut is taken from the subnet's emissions.
-25     recycle_or_burn                    Yes                  Set whether subnet TAO is recycled or burned.
-26     registration_allowed               No (Root Only)       Enable or disable new registrations to the subnet.
-27     serving_rate_limit                 Yes                  Rate limit for serving requests.
-28     sn_owner_hotkey                    Yes                  Set the subnet owner hotkey.
-29     subnet_is_active                   Yes                  Whether the subnet is currently active and operational.
-30     subnet_owner_hotkey                Yes                  Alias for sn_owner_hotkey; sets the subnet owner hotkey.
-31     target_regs_per_interval           No (Root Only)       Target number of new registrations per adjustment interval.
-32     tempo                              No (Root Only)       Number of blocks between epoch transitions
-33     transfers_enabled                  Yes                  Enable or disable TAO transfers within the subnet.
-34     user_liquidity_enabled             COMPLICATED          Enable or disable user liquidity features.
-35     weights_rate_limit                 No (Root Only)       Maximum number of weight updates allowed per epoch.
-36     weights_version                    Yes                  Version key for weight sets.
-37     yuma3_enabled                      Yes                  Enable or disable Yuma3 consensus mechanism.
-38     yuma_version                       Yes                  Version of the Yuma consensus mechanism.
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+1      activity_cutoff                    Yes                  Effective validator inactivity cutoff in blocks, computed as activity_cutoff_factor × tempo ÷ 1000. Read-only; set activity_cutoff_factor instead.
+2      activity_cutoff_factor             COMPLICATED          Tolerated validator inactivity as per-mille of tempo (1000 = one full tempo). Effective cutoff in blocks = factor × tempo ÷ 1000. Allowed range: 1000
+                                                               to 50000.
+3      alpha_high                         Yes                  High bound of the alpha range for stake calculations.
+4      alpha_low                          Yes                  Low bound of the alpha range for stake calculations.
+5      alpha_sigmoid_steepness            No (Root Only)       Steepness parameter for alpha sigmoid function.
+6      alpha_values                       Yes                  Alpha range  for stake calculations.
+7      bonds_moving_avg                   Yes                  Moving average window size for bond calculations.
+8      bonds_reset_enabled                Yes                  Enable or disable periodic bond resets.
+9      burn_half_life                     Yes                  Half-life (in blocks) controlling how quickly the registration burn price decays back toward min_burn.
+10     burn_increase_mult                 Yes                  Multiplier applied to the registration burn price after each successful registration.
+11     commit_reveal_period               Yes                  Duration (in blocks) for commit-reveal weight submission scheme.
+12     commit_reveal_weights_enabled      Yes                  Enable or disable commit-reveal scheme for weight submissions.
+13     immunity_period                    Yes                  Duration (in blocks) during which newly registered neurons are protected from certain penalties.
+14     kappa                              No (Root Only)       Kappa determines the scaling factor for consensus calculations.
+15     liquid_alpha_enabled               Yes                  Enable or disable liquid alpha staking mechanism.
+16     max_allowed_uids                   Yes                  Maximum number of UIDs (neurons) on the subnet, essentially 'untrimming'.
+17     max_burn                           COMPLICATED          Maximum TAO burn amount cap for subnet registration.
+18     max_regs_per_block                 No (Root Only)       Maximum number of registrations allowed per block.
+19     max_validators                     No (Root Only)       Maximum number of validators allowed in the subnet.
+20     min_allowed_uids                   No (Root Only)       Minimum number of UIDs (neurons) required for the subnet to remain active.
+21     min_allowed_weights                Yes                  Minimum number of weight connections a neuron must maintain to stay active.
+22     min_burn                           Yes                  Minimum TAO burn amount required for subnet registration.
+23     min_childkey_take                  Yes                  Minimum childkey take (%) required on this subnet. Settable by the subnet owner. Cannot be set below the global protocol minimum.
+24     network_pow_registration_allowed   Yes                  Enable or disable proof-of-work based registration.
+25     owner_cut_auto_lock_enabled        Yes                  Whether the subnet owner cut is automatically locked when collected.
+26     owner_cut_enabled                  Yes                  Whether the subnet owner cut is taken from the subnet's emissions.
+27     recycle_or_burn                    Yes                  Set whether subnet TAO is recycled or burned.
+28     registration_allowed               No (Root Only)       Enable or disable new registrations to the subnet.
+29     serving_rate_limit                 Yes                  Rate limit for serving requests.
+30     sn_owner_hotkey                    Yes                  Set the subnet owner hotkey.
+31     subnet_is_active                   Yes                  Whether the subnet is currently active and operational.
+32     subnet_owner_hotkey                Yes                  Alias for sn_owner_hotkey; sets the subnet owner hotkey.
+33     target_regs_per_interval           No (Root Only)       Target number of new registrations per adjustment interval.
+34     tempo                              COMPLICATED          Number of blocks between automatic epoch transitions. Owner-settable between 360 and 50400 blocks (rate-limited to one change per 360 blocks); root
+                                                               can set any value via sudo.
+35     transfers_enabled                  Yes                  Enable or disable TAO transfers within the subnet.
+36     weights_rate_limit                 No (Root Only)       Maximum number of weight updates allowed per epoch.
+37     weights_version                    Yes                  Version key for weight sets.
+38     yuma3_enabled                      Yes                  Enable or disable Yuma3 consensus mechanism.
+39     yuma_version                       Yes                  Version of the Yuma consensus mechanism.
 
-Enter the number of the hyperparameter: 6
+
+
+Enter the number of the hyperparameter: 7
 
 Selected: bonds_moving_avg
 Moving average window size for bond calculations. link
@@ -162,6 +167,12 @@ This section details all subnet hyperparameters, including their default values,
 
 ### ActivityCutoff
 
+:::warning Deprecated
+With the introduction of dynamic tempos, the `ActivityCutoff` hyperparameter is no longer settable. Use the [`activity_cutoff_factor`](#activitycutofffactor) instead.
+
+The BTCLI display for `activity_cutoff` still shows the computed block value for readability.
+:::
+
 **Type**: u16
 
 **Default**: 5000
@@ -175,6 +186,35 @@ This section details all subnet hyperparameters, including their default values,
 **Description**:
 
 The number of blocks for the stake to become inactive for the purpose of epoch in Yuma Consensus. If a validator doesn't submit weights within the first `ActivityCutoff` blocks of the epoch, it will not be able to participate until the start of the next epoch.
+
+### ActivityCutoffFactor
+
+**Type**: u32
+
+**Default**: 13,889 (≈ 13.889 tempos—preserves the legacy 5,000-block cutoff at the default tempo of 360)
+
+**`btcli` setter**: `btcli sudo set --param activity_cutoff_factor`
+
+**Setter extrinsic**: `set_activity_cutoff_factor`
+
+**Permissions required to set**: Subnet owner
+
+**Description**:
+
+The validator inactivity tolerance expressed in **per-mille epochs** (1/1000 granularity). Bounded by `MinActivityCutoffFactorMilli`—`1000` and `MaxActivityCutoffFactorMilli`—`50,000`
+
+<details> 
+<summary><strong>See how its calculated</strong></summary>
+
+The effective cutoff in blocks is computed at runtime as:
+
+```
+cutoff_blocks = (ActivityCutoffFactorMilli × Tempo) / 1000
+```
+
+This means the activity cutoff scales automatically with tempo—a subnet with a longer tempo gets a proportionally longer inactivity window, which prevents validators from being excluded for not submitting weights at a rate that doesn't match their subnet's epoch schedule.
+
+</details>
 
 ### AlphaSigmoidSteepness
 
@@ -305,7 +345,7 @@ Determines whether or not bonds are reset-enabled.
 
 The number of **tempos** (epochs) that must elapse before validator weights are revealed from time-lock encryption. Prevents weight-copying.
 
-**Important**: This is measured in **tempos** (not blocks, as you might expect). A tempo equals the subnet's `tempo` hyperparameter (typically 360 blocks). For example, if you set `commit_reveal_period` to 3 and your `tempo` is 360, weights will be revealed after 3 tempos = 1080 blocks.
+**Important**: This is measured in **tempos**, not blocks. A tempo equals the subnet's configured `tempo` hyperparameter (default 360 blocks). For example, if you set `commit_reveal_period` to 3 and your subnet's configured `tempo` is 360, weights will be revealed after 3 tempos = 1080 blocks.
 
 See [Commit Reveal](../concepts/commit-reveal) for details on how commit reveal works.
 
@@ -791,14 +831,16 @@ Not used for neuron registration. Neuron admission is governed by continuous bur
 
 **`btcli` setter**: `btcli sudo set --param tempo`
 
-**Setter extrinsic**: `sudo_set_tempo`
+**Setter extrinsics**: The `tempo` hyperparameter can be updated through one of two setter extrinsics, depending on the applicable permissions:
 
-**Permissions required to set**: Root
+- `set_tempo` — requires subnet owner permissions; bounded to `[MinTempo, MaxTempo]` (360–50,400 blocks); rate-limited to one call per 360 blocks regardless of current tempo
+- `sudo_set_tempo` — requires root permissions; accepts any `u16`, no bounds enforced, no rate limit
+
+**Permissions required to set**: Subnet owner (bounded) or Root (unbounded)
 
 **Description**:
 
-Length of subnet tempo in blocks.
-See [Emission](../learn/emissions.md)
+The number of blocks between Yuma Consensus epoch transitions for the subnet. See [Emission](../learn/emissions.md).
 
 ### ToggleTransfer
 
@@ -806,7 +848,7 @@ See [Emission](../learn/emissions.md)
 
 **Default**: True
 
-**`btcli` setter**: btcli sudo set --param transfers_enabled`
+**`btcli` setter**: `btcli sudo set --param transfers_enabled`
 
 **Setter extrinsic**: `sudo_set_toggle_transfer`
 
@@ -1040,3 +1082,7 @@ The ratio of all subnet alpha emissions that is given to subnet owner as stake. 
 **Description**:
 
 The minimum stake required for validating. Currently 1000
+
+```
+
+```
