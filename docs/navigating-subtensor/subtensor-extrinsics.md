@@ -307,10 +307,6 @@ Proxy and delegate management.
 | `poke_deposit`        | —                                                       |
 | `set_real_pays_fee`   | `delegate`, `pays_fee`                                  |
 
-### `Registry`
-
-On-chain identity registry. As of spec version 423, the identity extrinsics (`set_identity`, `clear_identity`) have been removed; the pallet is retained for storage compatibility.
-
 ### `LimitOrders`
 
 Off-chain limit-order settlement for TAO/Alpha swaps. Orders are signed off-chain and submitted by a permissioned relayer hotkey; settlement occurs on-chain against the subnet AMM.
