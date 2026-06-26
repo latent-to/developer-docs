@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **419**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **423**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -20,11 +20,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **[ethereum](#ethereum)**
 - **[evm](#evm)**
 - **[grandpa](#grandpa)**
+- **[limitOrders](#limitorders)**
 - **[mevShield](#mevshield)**
 - **[multisig](#multisig)**
 - **[preimage](#preimage)**
 - **[proxy](#proxy)**
-- **[registry](#registry)**
 - **[safeMode](#safemode)**
 - **[scheduler](#scheduler)**
 - **[subtensorModule](#subtensormodule)**
@@ -681,6 +681,104 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **summary**: Cannot signal forced change so soon after last.
 
 
+## `limitOrders`
+
+### `ArithmeticOverflow`
+
+- **interface**: `api.errors.limitOrders.ArithmeticOverflow`
+- **summary**: A TAO -> alpha conversion overflowed the fixed-point range.
+
+### `ChainIdMismatch`
+
+- **interface**: `api.errors.limitOrders.ChainIdMismatch`
+- **summary**: The order's chain_id does not match the current chain.
+
+### `DuplicateOrderInBatch`
+
+- **interface**: `api.errors.limitOrders.DuplicateOrderInBatch`
+- **summary**: The same order appears more than once in a single batch.
+
+### `IncorrectPartialFillAmount`
+
+- **interface**: `api.errors.limitOrders.IncorrectPartialFillAmount`
+- **summary**: Incorrect partial fill amount provided
+
+### `InvalidSignature`
+
+- **interface**: `api.errors.limitOrders.InvalidSignature`
+- **summary**: The provided signature does not match the order payload and signer.
+
+### `LimitOrdersDisabled`
+
+- **interface**: `api.errors.limitOrders.LimitOrdersDisabled`
+- **summary**: Limit orders are disabled
+
+### `OrderAlreadyProcessed`
+
+- **interface**: `api.errors.limitOrders.OrderAlreadyProcessed`
+- **summary**: The order has already been Fulfilled or Cancelled.
+
+### `OrderCancelled`
+
+- **interface**: `api.errors.limitOrders.OrderCancelled`
+- **summary**: Order has been cancelled
+
+### `OrderExpired`
+
+- **interface**: `api.errors.limitOrders.OrderExpired`
+- **summary**: The order's expiry timestamp is in the past.
+
+### `OrderNetUidMismatch`
+
+- **interface**: `api.errors.limitOrders.OrderNetUidMismatch`
+- **summary**: An order in the batch targets a different netuid than the batch netuid parameter.
+
+### `PalletHotkeyNotRegistered`
+
+- **interface**: `api.errors.limitOrders.PalletHotkeyNotRegistered`
+- **summary**: The pallet hotkey has not been registered to the pallet account. Call on_runtime_upgrade or wait for genesis to complete registration before enabling the pallet.
+
+### `PartialFillsNotEnabled`
+
+- **interface**: `api.errors.limitOrders.PartialFillsNotEnabled`
+- **summary**: Partial fills not enabled for this order
+
+### `PriceConditionNotMet`
+
+- **interface**: `api.errors.limitOrders.PriceConditionNotMet`
+- **summary**: The current market price does not satisfy the order's limit price.
+
+### `RelayerMissMatch`
+
+- **interface**: `api.errors.limitOrders.RelayerMissMatch`
+- **summary**: Relayer not the same as specified in the order
+
+### `RelayerRequiredForPartialFill`
+
+- **interface**: `api.errors.limitOrders.RelayerRequiredForPartialFill`
+- **summary**: A relayer must be set on the order when using partial fills
+
+### `RootNetUidNotAllowed`
+
+- **interface**: `api.errors.limitOrders.RootNetUidNotAllowed`
+- **summary**: Root netuid (0) is not allowed for limit orders.
+
+### `SwapReturnedZero`
+
+- **interface**: `api.errors.limitOrders.SwapReturnedZero`
+- **summary**: The pool swap returned zero output for a non-zero input.
+
+### `Unauthorized`
+
+- **interface**: `api.errors.limitOrders.Unauthorized`
+- **summary**: Caller is not the order signer (required for cancellation).
+
+### `ZeroShareInBatch`
+
+- **interface**: `api.errors.limitOrders.ZeroShareInBatch`
+- **summary**: An order's pro-rata share in the batch rounded down to zero. The whole batch is rejected so the order's input is never consumed without delivering any output (conservation), and the order stays retryable in a differently-composed batch.
+
+
 ## `mevShield`
 
 ### `BadEncKeyLen`
@@ -873,24 +971,6 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **summary**: A call which is incompatible with the proxy type's filter was attempted.
 
 
-## `registry`
-
-### `CannotRegister`
-
-- **interface**: `api.errors.registry.CannotRegister`
-- **summary**: Account attempted to register an identity but does not meet the requirements.
-
-### `NotRegistered`
-
-- **interface**: `api.errors.registry.NotRegistered`
-- **summary**: Account doesn't have a registered identity
-
-### `TooManyFieldsInIdentityInfo`
-
-- **interface**: `api.errors.registry.TooManyFieldsInIdentityInfo`
-- **summary**: Account passed too many additional fields to their identity
-
-
 ## `safeMode`
 
 ### `AlreadyDeposited`
@@ -959,10 +1039,20 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 ## `subtensorModule`
 
+### `AccountRejectsLockedAlpha`
+
+- **interface**: `api.errors.subtensorModule.AccountRejectsLockedAlpha`
+- **summary**: The destination coldkey rejects incoming locked alpha.
+
 ### `ActiveLockExists`
 
 - **interface**: `api.errors.subtensorModule.ActiveLockExists`
 - **summary**: There is already an active lock for the given coldkey.
+
+### `ActivityCutoffFactorMilliOutOfBounds`
+
+- **interface**: `api.errors.subtensorModule.ActivityCutoffFactorMilliOutOfBounds`
+- **summary**: The supplied activity-cutoff factor is outside the allowed range.
 
 ### `ActivityCutoffTooLow`
 
@@ -1003,6 +1093,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.AnnouncedColdkeyHashDoesNotMatch`
 - **summary**: The announced coldkey hash does not match the new coldkey hash.
+
+### `AutoEpochAlreadyImminent`
+
+- **interface**: `api.errors.subtensorModule.AutoEpochAlreadyImminent`
+- **summary**: The next automatic epoch is already imminent; a manual trigger would have no effect.
 
 ### `BalanceWithdrawalError`
 
@@ -1133,6 +1228,16 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.DuplicateUids`
 - **summary**: The caller is attempting to set weights with duplicate UIDs in the weight matrix.
+
+### `DynamicTempoBlockedByCommitReveal`
+
+- **interface**: `api.errors.subtensorModule.DynamicTempoBlockedByCommitReveal`
+- **summary**: `trigger_epoch` is blocked because commit-reveal is enabled for this subnet: an out-of-band epoch would desync the CRv3 reveal window from the wall-clock Drand schedule and silently drop committed weights.
+
+### `EpochTriggerAlreadyPending`
+
+- **interface**: `api.errors.subtensorModule.EpochTriggerAlreadyPending`
+- **summary**: An epoch trigger is already pending for this subnet; wait for it to fire before triggering again.
 
 ### `EvmKeyAssociateRateLimitExceeded`
 
@@ -1278,6 +1383,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.InvalidRevealCommitHashNotMatch`
 - **summary**: Committed hash does not equal the hashed reveal data.
+
+### `InvalidRevealRound`
+
+- **interface**: `api.errors.subtensorModule.InvalidRevealRound`
+- **summary**: Reveal round is older than the most recently stored DRAND round.
 
 ### `InvalidRootClaimThreshold`
 
@@ -1529,11 +1639,6 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.StakeUnavailable`
 - **summary**: Trying to unstake or re-lock the locked amount.
 
-### `StakingOperationRateLimitExceeded`
-
-- **interface**: `api.errors.subtensorModule.StakingOperationRateLimitExceeded`
-- **summary**: Too frequent staking operations
-
 ### `StakingRateLimitExceeded`
 
 - **interface**: `api.errors.subtensorModule.StakingRateLimitExceeded`
@@ -1568,6 +1673,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.SymbolDoesNotExist`
 - **summary**: Symbol does not exist.
+
+### `TempoOutOfBounds`
+
+- **interface**: `api.errors.subtensorModule.TempoOutOfBounds`
+- **summary**: The supplied tempo is outside the allowed range.
 
 ### `TooManyChildren`
 
@@ -1664,11 +1774,6 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.ZeroBalanceAfterWithdrawn`
 - **summary**: Unsuccessfully withdraw, balance could be zero (can not make account exist) after withdrawal.
 
-### `ZeroMaxStakeAmount`
-
-- **interface**: `api.errors.subtensorModule.ZeroMaxStakeAmount`
-- **summary**: Zero max stake amount
-
 
 ## `sudo`
 
@@ -1679,6 +1784,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 
 ## `swap`
+
+### `Deprecated`
+
+- **interface**: `api.errors.swap.Deprecated`
+- **summary**: The extrinsic is deprecated
 
 ### `FeeRateTooHigh`
 
@@ -1710,16 +1820,6 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **interface**: `api.errors.swap.InvalidTickRange`
 - **summary**: The provided tick range is invalid.
 
-### `LiquidityNotFound`
-
-- **interface**: `api.errors.swap.LiquidityNotFound`
-- **summary**: Attempted to remove liquidity that does not exist.
-
-### `MaxPositionsExceeded`
-
-- **interface**: `api.errors.swap.MaxPositionsExceeded`
-- **summary**: Maximum user positions exceeded
-
 ### `MechanismDoesNotExist`
 
 - **interface**: `api.errors.swap.MechanismDoesNotExist`
@@ -1730,6 +1830,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **interface**: `api.errors.swap.PriceLimitExceeded`
 - **summary**: The operation would exceed the price limit.
 
+### `ReservesOutOfBalance`
+
+- **interface**: `api.errors.swap.ReservesOutOfBalance`
+- **summary**: Swap reserves are too imbalanced
+
 ### `ReservesTooLow`
 
 - **interface**: `api.errors.swap.ReservesTooLow`
@@ -1739,16 +1844,6 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 - **interface**: `api.errors.swap.SubtokenDisabled`
 - **summary**: The subnet does not have subtoken enabled
-
-### `TooManySwapSteps`
-
-- **interface**: `api.errors.swap.TooManySwapSteps`
-- **summary**: Too many swap steps
-
-### `UserLiquidityDisabled`
-
-- **interface**: `api.errors.swap.UserLiquidityDisabled`
-- **summary**: User liquidity operations are disabled for this subnet
 
 
 ## `system`
