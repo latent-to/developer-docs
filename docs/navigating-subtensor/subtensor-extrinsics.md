@@ -1,5 +1,6 @@
 ---
 title: "Subtensor Pallets and Extrinsics"
+description: "This document covers the dispatchable calls of all pallets included in the Subtensor runtime. For each pallet, it lists the call methods and their arguments."
 ---
 
 # Subtensor Pallets and Extrinsics
@@ -18,7 +19,7 @@ For example, the Subtensor pallet contains functions related to Bittensor networ
 
 The Subtensor runtime is composed of multiple pallets that collectively define the behavior of the Bittensor blockchain. Each pallet manages a specific domain of the protocol. This section provides a reference table of Subtensor pallets, including their pallet indices and corresponding Rust crates.
 
-The runtime includes these pallets:
+The following table lists the pallets on the Subtensor runtime and their index and crates:
 
 | Index | Pallet name                | Crate                                        |
 | ----- | -------------------------- | -------------------------------------------- |
@@ -36,7 +37,6 @@ The runtime includes these pallets:
 | 14    | `Preimage`                 | `pallet_preimage`                            |
 | 15    | `Scheduler`                | `pallet_scheduler`                           |
 | 16    | `Proxy`                    | `pallet_subtensor_proxy`                     |
-| 17    | `Registry`                 | `pallet_registry`                            |
 | 18    | `Commitments`              | `pallet_commitments`                         |
 | 19    | `AdminUtils`               | `pallet_admin_utils`                         |
 | 20    | `SafeMode`                 | `pallet_safe_mode`                           |
@@ -49,11 +49,15 @@ The runtime includes these pallets:
 | 28    | `Swap`                     | `pallet_subtensor_swap`                      |
 | 29    | `Contracts`                | `pallet_contracts`                           |
 | 30    | `MevShield`                | `pallet_shield`                              |
+| 31    | `AlphaAssets`              | `pallet_alpha_assets`                        |
+| 32    | `LimitOrders`              | `pallet_limit_orders`                        |
 
 Below are key extrinsics from pallets included in the Subtensor runtime:
 
 :::info
-The following outline of subtensor extrinsics is provided for high-level reference and is not exhaustive. For a complete specification of all available extrinsics and their associated parameters, see the [Subtensor API reference](../subtensor-api/extrinsics.md).
+
+The following outline of subtensor extrinsics is provided for high-level reference and is not exhaustive. For a complete specification of all available extrinsics and their associated parameters, see the [Subtensor API reference](../subtensor-api/extrinsics).
+
 :::
 
 ### `AdminUtils`
@@ -136,6 +140,14 @@ Root and subnet-owner configuration: subnet hyperparameters, issuance, EVM, auth
 | `sudo_set_coldkey_swap_announcement_delay`    | `duration`                                    |
 | `sudo_set_coldkey_swap_reannouncement_delay`  | `duration`                                    |
 | `sudo_set_max_mechanism_count`                | `max_mechanism_count`                         |
+| `sudo_set_max_epochs_per_block`               | `max_epochs_per_block`                        |
+| `sudo_set_burn_half_life`                     | `netuid`, `burn_half_life`                    |
+| `sudo_set_burn_increase_mult`                 | `netuid`, `burn_increase_mult`                |
+| `sudo_set_min_childkey_take_per_subnet`       | `netuid`, `take`                              |
+| `sudo_set_net_tao_flow_enabled`               | `enabled`                                     |
+| `sudo_set_owner_cut_auto_lock_enabled`        | `netuid`, `enabled`                           |
+| `sudo_set_owner_cut_enabled`                  | `netuid`, `enabled`                           |
+| `sudo_set_subnet_emission_enabled`            | `netuid`, `enabled`                           |
 
 ### `Balances`
 
@@ -242,10 +254,15 @@ Finality gadget; authority changes are triggered via `AdminUtils::schedule_grand
 
 MEV protection / encrypted transactions.
 
-| Method              | Arguments    |
-| ------------------- | ------------ |
-| `announce_next_key` | `enc_key`    |
-| `submit_encrypted`  | `ciphertext` |
+| Method                              | Arguments        |
+| ----------------------------------- | ---------------- |
+| `announce_next_key`                 | `enc_key`        |
+| `submit_encrypted`                  | `ciphertext`     |
+| `store_encrypted`                   | `encrypted_call` |
+| `set_max_extrinsic_weight`          | `value`          |
+| `set_max_pending_extrinsics_number` | `value`          |
+| `set_on_initialize_weight`          | `value`          |
+| `set_stored_extrinsic_lifetime`     | `value`          |
 
 ### `Multisig`
 
@@ -290,14 +307,16 @@ Proxy and delegate management.
 | `poke_deposit`        | —                                                       |
 | `set_real_pays_fee`   | `delegate`, `pays_fee`                                  |
 
-### `Registry`
+### `LimitOrders`
 
-On-chain identity (Registry identity, not Subtensor neuron identity).
+Off-chain limit-order settlement for TAO/Alpha swaps. Orders are signed off-chain and submitted by a permissioned relayer hotkey; settlement occurs on-chain against the subnet AMM.
 
-| Method           | Arguments            |
-| ---------------- | -------------------- |
-| `set_identity`   | `identified`, `info` |
-| `clear_identity` | `identified`         |
+| Method                   | Arguments               |
+| ------------------------ | ----------------------- |
+| `cancel_order`           | `order`                 |
+| `execute_batched_orders` | `netuid`, `orders`      |
+| `execute_orders`         | `orders`, `should_fail` |
+| `set_pallet_status`      | `enabled`               |
 
 ### `SafeMode`
 
@@ -361,6 +380,7 @@ Core Bittensor logic: subnets, registration, staking, weights, serving, Alpha/TA
 | `burned_register`                      | `netuid`, `hotkey`                                                                                                         |
 | `register_network`                     | `hotkey`                                                                                                                   |
 | `register_network_with_identity`       | `hotkey`, `identity`                                                                                                       |
+| `register_limit`                       | `netuid`, `hotkey`, `limit_price`                                                                                          |
 | `dissolve_network`                     | `_coldkey`, `netuid`                                                                                                       |
 | `root_dissolve_network`                | `netuid`                                                                                                                   |
 | `faucet`                               | `block_number`, `nonce`, `work`                                                                                            |
@@ -372,7 +392,7 @@ Core Bittensor logic: subnets, registration, staking, weights, serving, Alpha/TA
 | `swap_coldkey_announced`               | `new_coldkey`                                                                                                              |
 | `dispute_coldkey_swap`                 | —                                                                                                                          |
 | `reset_coldkey_swap`                   | `coldkey`                                                                                                                  |
-| `clear_coldkey_swap_announcement`      | -                                                                                                                          |
+| `clear_coldkey_swap_announcement`      | —                                                                                                                          |
 | `set_identity`                         | `name`, `url`, `github_repo`, `image`, `discord`, `description`, `additional`                                              |
 | `set_subnet_identity`                  | `netuid`, `subnet_name`, `github_repo`, `subnet_contact`, `subnet_url`, `discord`, `description`, `logo_url`, `additional` |
 | `set_children`                         | `hotkey`, `netuid`, `children`                                                                                             |
@@ -396,6 +416,11 @@ Core Bittensor logic: subnets, registration, staking, weights, serving, Alpha/TA
 | `sudo_set_voting_power_ema_alpha`      | `netuid`, `alpha`                                                                                                          |
 | `enable_voting_power_tracking`         | `netuid`                                                                                                                   |
 | `disable_voting_power_tracking`        | `netuid`                                                                                                                   |
+| `set_auto_parent_delegation_enabled`   | `hotkey`, `enabled`                                                                                                        |
+| `set_activity_cutoff_factor`           | `netuid`, `factor_milli`                                                                                                   |
+| `set_reject_locked_alpha`              | `enabled`                                                                                                                  |
+| `set_tempo`                            | `netuid`, `tempo`                                                                                                          |
+| `trigger_epoch`                        | `netuid`                                                                                                                   |
 
 ### `Sudo`
 
@@ -411,16 +436,11 @@ Root-only superuser dispatch.
 
 ### `Swap`
 
-TAO/Alpha AMM and liquidity.
+TAO/Alpha AMM (balancer model). The Uniswap v3 liquidity-provider extrinsics were removed in spec 423 when the pallet migrated to a balancer AMM.
 
-| Method                  | Arguments                                                     |
-| ----------------------- | ------------------------------------------------------------- |
-| `set_fee_rate`          | `netuid`, `rate`                                              |
-| `toggle_user_liquidity` | `netuid`, `enable`                                            |
-| `add_liquidity`         | `_hotkey`, `_netuid`, `_tick_low`, `_tick_high`, `_liquidity` |
-| `remove_liquidity`      | `hotkey`, `netuid`, `position_id`                             |
-| `modify_position`       | `hotkey`, `netuid`, `position_id`, `liquidity_delta`          |
-| `disable_lp`            | —                                                             |
+| Method         | Arguments        |
+| -------------- | ---------------- |
+| `set_fee_rate` | `netuid`, `rate` |
 
 ### `System`
 

@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **419**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **423**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -24,12 +24,12 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **[evm](#evm)**
 - **[evmChainId](#evmchainid)**
 - **[grandpa](#grandpa)**
+- **[limitOrders](#limitorders)**
 - **[mevShield](#mevshield)**
 - **[multisig](#multisig)**
 - **[preimage](#preimage)**
 - **[proxy](#proxy)**
 - **[randomnessCollectiveFlip](#randomnesscollectiveflip)**
-- **[registry](#registry)**
 - **[safeMode](#safemode)**
 - **[scheduler](#scheduler)**
 - **[substrate](#substrate)**
@@ -508,6 +508,31 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **summary**: State of the current authority set.
 
 
+## `limitOrders`
+
+### `hasMigrationRun(Bytes)`: `bool`
+
+- **interface**: `api.query.limitOrders.hasMigrationRun`
+- **summary**: Tracks which named migrations have already been applied. Keyed by a short migration name; value is always `true`.
+
+### `limitOrdersEnabled`: `bool`
+
+- **interface**: `api.query.limitOrders.limitOrdersEnabled`
+- **summary**: Switch to enable/disable the pallet. Defaults to `false` so bare node deployments are safe; genesis sets it to `true`.
+
+### `orders(H256)`: `OrderStatus`
+
+- **interface**: `api.query.limitOrders.orders`
+- **modifier**: `Optional`
+- **summary**: Tracks the on-chain status of a known `OrderId`. Absent ⇒ never seen (still executable if valid). Present ⇒ Fulfilled or Cancelled (both are terminal).
+
+### `palletVersion`: `u16`
+
+- **interface**: `api.query.limitOrders.palletVersion`
+- **modifier**: `Required`
+- **summary**: Returns the current pallet version from storage
+
+
 ## `mevShield`
 
 ### `authorKeys(Public)`: `Bytes`
@@ -680,21 +705,6 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **summary**: Series of block headers from the last 81 blocks that acts as random seed material. This is arranged as a ring buffer with `block_number % 81` being the index into the `Vec` of the oldest hash.
 
 
-## `registry`
-
-### `identityOf(AccountId32)`: `Registration`
-
-- **interface**: `api.query.registry.identityOf`
-- **modifier**: `Optional`
-- **summary**: Identity data by account
-
-### `palletVersion`: `u16`
-
-- **interface**: `api.query.registry.palletVersion`
-- **modifier**: `Required`
-- **summary**: Returns the current pallet version from storage
-
-
 ## `safeMode`
 
 ### `deposits(AccountId32, u32)`: `u64`
@@ -815,6 +825,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 ## `subtensorModule`
 
+### `accountFlags(AccountId32)`: `u128`
+
+- **interface**: `api.query.subtensorModule.accountFlags`
+- **summary**: MAP ( coldkey ) --> flags | Account-level flags. Defaults to zero.
+
 ### `accumulatedLeaseDividends(u32)`: `u64`
 
 - **interface**: `api.query.subtensorModule.accumulatedLeaseDividends`
@@ -829,6 +844,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.activityCutoff`
 - **summary**: MAP ( netuid ) --> activity_cutoff
+
+### `activityCutoffFactorMilli(u16)`: `u32`
+
+- **interface**: `api.query.subtensorModule.activityCutoffFactorMilli`
+- **summary**: MAP ( netuid ) --> activity-cutoff factor in per-mille epochs (1/1000 granularity). Effective cutoff in blocks = `(factor × tempo) / 1000`, clamped to ≥ 1.
 
 ### `adjustmentAlpha(u16)`: `u64`
 
@@ -1154,6 +1174,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **modifier**: `Optional`
 - **summary**: Map (coldkey, hotkey) --> u64 the last block at which stake was added/removed.
 
+### `lastEpochBlock(u16)`: `u64`
+
+- **interface**: `api.query.subtensorModule.lastEpochBlock`
+- **summary**: MAP ( netuid ) --> last epoch attempt block (consumed slot). Drives normal-cadence scheduling and the admin freeze window. Advances on every `should_run_epoch == true` slot — including consistency-skipped slots — and on a successful `set_tempo` (cycle reset).
+
 ### `lastHotkeyEmissionOnNetuid(AccountId32, u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastHotkeyEmissionOnNetuid`
@@ -1211,6 +1236,12 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **modifier**: `Optional`
 - **summary**: DMAP ( coldkey, netuid, hotkey ) --> LockState | Exponential lock per coldkey per subnet.
 
+### `lockingColdkeys(u16, AccountId32, AccountId32)`: `Null`
+
+- **interface**: `api.query.subtensorModule.lockingColdkeys`
+- **modifier**: `Optional`
+- **summary**: NMAP ( netuid, hotkey, coldkey ) --> () | Reverse index for non-zero locks targeting this hotkey on this subnet.
+
 ### `maturityRate`: `u64`
 
 - **interface**: `api.query.subtensorModule.maturityRate`
@@ -1245,6 +1276,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.maxDifficulty`
 - **summary**: MAP ( netuid ) --> MaxDifficulty
+
+### `maxEpochsPerBlock`: `u8`
+
+- **interface**: `api.query.subtensorModule.maxEpochsPerBlock`
+- **summary**: ITEM ( max_epochs_per_block )
 
 ### `maxMechanismCount`: `u8`
 
@@ -1310,6 +1346,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.minDifficulty`
 - **summary**: MAP ( netuid ) --> MinDifficulty
+
+### `minerBurned(u16)`: `FixedU128`
+
+- **interface**: `api.query.subtensorModule.minerBurned`
+- **summary**: MAP ( netuid ) --> miner_burned | Proportion (0..1) of this tempo's miner (incentive) emission that was withheld from miners during emission distribution because the recipient hotkey is owned by the subnet owner (immune key). Counts emission that is either recycled or burned, so the value is independent of the subnet's RecycleOrBurn configuration.
 
 ### `minNonImmuneUids(u16)`: `u16`
 
@@ -1451,6 +1492,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.pendingChildKeys`
 - **summary**: DMAP ( netuid, parent ) --> (Vec\<(proportion,child)>, cool_down_block)
 
+### `pendingEpochAt(u16)`: `u64`
+
+- **interface**: `api.query.subtensorModule.pendingEpochAt`
+- **summary**: MAP ( netuid ) --> block at which a manually triggered epoch should fire. `0` means no trigger pending. Cleared after the triggered epoch runs.
+
 ### `pendingOwnerCut(u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.pendingOwnerCut`
@@ -1580,11 +1626,6 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.stakingHotkeys`
 - **summary**: MAP ( cold ) --> Vec\<hot> | Maps coldkey to hotkeys that stake to it
 
-### `stakingOperationRateLimiter(AccountId32, AccountId32, u16)`: `bool`
-
-- **interface**: `api.query.subtensorModule.stakingOperationRateLimiter`
-- **summary**: DMAP ( hot, cold, netuid ) --> rate limits for staking operations Value contains just a marker: we use this map as a set.
-
 ### `startCallDelay`: `u64`
 
 - **interface**: `api.query.subtensorModule.startCallDelay`
@@ -1599,11 +1640,6 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.subnetAlphaInEmission`
 - **summary**: MAP ( netuid ) --> alpha_in_emission | Returns the amount of alph in  emission into the pool per block.
-
-### `subnetAlphaInProvided(u16)`: `u64`
-
-- **interface**: `api.query.subtensorModule.subnetAlphaInProvided`
-- **summary**: MAP ( netuid ) --> alpha_supply_user_in_pool | Returns the amount of alpha in the pool provided by users as liquidity.
 
 ### `subnetAlphaOut(u16)`: `u64`
 
@@ -1635,6 +1671,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
     When false, subnet pool-side emission is disabled for this subnet: `alpha_in`, `tao_in`, and `excess_tao` chain buys are all treated as zero. `alpha_out`, owner cut, root proportion, pending server emission, and pending validator emission are intentionally left unchanged.
 
     Defaults to true so existing subnets keep current behavior.
+
+### `subnetEpochIndex(u16)`: `u64`
+
+- **interface**: `api.query.subtensorModule.subnetEpochIndex`
+- **summary**: MAP ( netuid ) --> monotonic epoch counter. Incremented by exactly one each time the subnet's epoch slot is consumed in `run_coinbase`
 
 ### `subnetExcessTao(u16)`: `u64`
 
@@ -1731,11 +1772,6 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.subnetTaoInEmission`
 - **summary**: MAP ( netuid ) --> tao_in_emission | Returns the amount of tao emitted into this subent on the last block.
-
-### `subnetTaoProvided(u16)`: `u64`
-
-- **interface**: `api.query.subtensorModule.subnetTaoProvided`
-- **summary**: MAP ( netuid ) --> tao_in_user_subnet | Returns the amount of TAO in the subnet reserve provided by users as liquidity.
 
 ### `subnetUidToLeaseId(u16)`: `u32`
 
@@ -1912,7 +1948,7 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.weightCommits`
 - **modifier**: `Optional`
-- **summary**: MAP (netuid, who) --> VecDeque\<(hash, commit_block, first_reveal_block, last_reveal_block)> | Stores a queue of commits for an account on a given netuid.
+- **summary**: MAP (netuid, who) --> VecDeque\<(hash, commit_epoch, commit_block, _unused)> Stores a queue of commit-reveal-v2 commits for an account on a given netuid.
 
 ### `weights(u16, u16)`: `Vec<(u16,u16)>`
 
@@ -1957,43 +1993,15 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 ## `swap`
 
-### `alphaSqrtPrice(u16)`: `FixedU128`
-
-- **interface**: `api.query.swap.alphaSqrtPrice`
-- **summary**: Storage for the square root price of Alpha token for each subnet.
-
-### `currentLiquidity(u16)`: `u64`
-
-- **interface**: `api.query.swap.currentLiquidity`
-- **summary**: Storage for the current liquidity amount for each subnet.
-
-### `currentTick(u16)`: `TickIndex`
-
-- **interface**: `api.query.swap.currentTick`
-- **summary**: Storage for the current price tick.
-
-### `enabledUserLiquidity(u16)`: `bool`
-
-- **interface**: `api.query.swap.enabledUserLiquidity`
-- **summary**: Indicates whether a subnet has been switched to V3 swap from V2. If `true`, the subnet is permanently on V3 swap mode allowing add/remove liquidity operations. Once set to `true` for a subnet, it cannot be changed back to `false`.
-
-### `feeGlobalAlpha(u16)`: `FixedU128`
-
-- **interface**: `api.query.swap.feeGlobalAlpha`
-
-### `feeGlobalTao(u16)`: `FixedU128`
-
-- **interface**: `api.query.swap.feeGlobalTao`
-
 ### `feeRate(u16)`: `u16`
 
 - **interface**: `api.query.swap.feeRate`
 - **summary**: The fee rate applied to swaps per subnet, normalized value between 0 and u16::MAX
 
-### `lastPositionId`: `u128`
+### `hasMigrationRun(Bytes)`: `bool`
 
-- **interface**: `api.query.swap.lastPositionId`
-- **summary**: Position ID counter.
+- **interface**: `api.query.swap.hasMigrationRun`
+- **summary**: Storage for migration run status
 
 ### `palletVersion`: `u16`
 
@@ -2001,37 +2009,20 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `positions(u16, AccountId32, u128)`: `Position`
+### `palSwapInitialized(u16)`: `bool`
 
-- **interface**: `api.query.swap.positions`
-- **modifier**: `Optional`
-- **summary**: Storage for user positions, using subnet ID and account ID as keys The value is a bounded vector of Position structs with details about the liquidity positions
+- **interface**: `api.query.swap.palSwapInitialized`
+- **summary**: Storage to determine whether balancer swap was initialized for a specific subnet.
 
 ### `scrapReservoirAlpha(u16)`: `u64`
 
 - **interface**: `api.query.swap.scrapReservoirAlpha`
 - **summary**: Alpha reservoir for scraps of protocol claimed fees.
 
-### `scrapReservoirTao(u16)`: `u64`
+### `swapBalancer(u16)`: `Balancer`
 
-- **interface**: `api.query.swap.scrapReservoirTao`
-- **summary**: TAO reservoir for scraps of protocol claimed fees.
-
-### `swapV3Initialized(u16)`: `bool`
-
-- **interface**: `api.query.swap.swapV3Initialized`
-- **summary**: Storage to determine whether swap V3 was initialized for a specific subnet.
-
-### `tickIndexBitmapWords(u16, PalletSubtensorSwapTickLayerLevel, u32)`: `u128`
-
-- **interface**: `api.query.swap.tickIndexBitmapWords`
-- **summary**: Tick index bitmap words storage
-
-### `ticks(u16, i32)`: `Tick`
-
-- **interface**: `api.query.swap.ticks`
-- **modifier**: `Optional`
-- **summary**: Storage for all ticks, using subnet ID as the primary key and tick index as the secondary key
+- **interface**: `api.query.swap.swapBalancer`
+- **summary**: u64-normalized reserve weight
 
 
 ## `system`

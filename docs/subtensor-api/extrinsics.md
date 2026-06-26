@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **419**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **423**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -21,11 +21,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 - **[ethereum](#ethereum)**
 - **[evm](#evm)**
 - **[grandpa](#grandpa)**
+- **[limitOrders](#limitorders)**
 - **[mevShield](#mevshield)**
 - **[multisig](#multisig)**
 - **[preimage](#preimage)**
 - **[proxy](#proxy)**
-- **[registry](#registry)**
 - **[safeMode](#safemode)**
 - **[scheduler](#scheduler)**
 - **[subtensorModule](#subtensormodule)**
@@ -291,6 +291,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
 - **interface**: `api.tx.adminUtils.sudoSetMaxDifficulty`
 - **summary**: The extrinsic sets the maximum difficulty for a subnet. It is only callable by the root account or subnet owner. The extrinsic will call the Subtensor pallet to set the maximum difficulty.
+
+### `sudoSetMaxEpochsPerBlock(max_epochs_per_block: u8)`
+
+- **interface**: `api.tx.adminUtils.sudoSetMaxEpochsPerBlock`
+- **summary**: Sets the per-block cap on subnet epochs (dynamic tempo throttle).
 
 ### `sudoSetMaxMechanismCount(max_mechanism_count: MechId)`
 
@@ -1097,6 +1102,55 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
     This extrinsic must be called unsigned and it is expected that only block authors will call it (validated in `ValidateUnsigned`), as such if the block author is defined it will be defined as the equivocation reporter.
 
 
+## `limitOrders`
+
+### `cancelOrder(order: VersionedOrder<T::AccountId>)`
+
+- **interface**: `api.tx.limitOrders.cancelOrder`
+- **summary**: Register a cancellation intent for an order.
+
+    Must be called by the order's signer. The full `Order` payload is provided so the pallet can derive the `OrderId`. Once marked Cancelled, the order can never be executed.
+
+### `executeBatchedOrders(netuid: NetUid, orders: BoundedVec<SignedOrder<T::AccountId>, T::MaxOrdersPerBatch>)`
+
+- **interface**: `api.tx.limitOrders.executeBatchedOrders`
+- **summary**: Execute a batch of signed limit orders for a single subnet using aggregated (netted) pool interaction.
+
+    Unlike `execute_orders`, which hits the pool once per order, this extrinsic:
+
+    1. Validates all orders (bad signature / expired / already processed /
+    price-not-met orders are skipped and emit `OrderSkipped`).
+    2. Fetches the current price once.
+    3. Aggregates all valid buy inputs (TAO) and sell inputs (alpha).
+    4. Nets the two sides: only the residual amount touches the pool in
+    a single swap, minimising price impact.
+    5. Distributes outputs pro-rata:
+    Dominant-side orders split the pool output proportionally to their individual net amounts. Offset-side orders are filled internally at the current price (no pool interaction for them).
+    6. Collects protocol fees (TAO for buy orders, alpha → TAO for sell
+    orders) and routes them to `FeeCollector`.
+
+    All orders in the batch must target `netuid`. Orders for a different subnet are skipped.
+
+### `executeOrders(orders: BoundedVec<SignedOrder<T::AccountId>, T::MaxOrdersPerBatch>, should_fail: bool)`
+
+- **interface**: `api.tx.limitOrders.executeOrders`
+- **summary**: Execute a batch of signed limit orders. Admin-gated.
+
+    The `should_fail` flag controls how individual order failures are handled:
+
+    - When `false` (best-effort): orders whose price condition is not yet
+    met are silently skipped so that a single stale order cannot block the rest of the batch. Orders that fail for any other reason (expired, bad signature, etc.) are also skipped; the admin is expected to filter these off-chain.
+    - When `true` (all-or-nothing): the first order failure aborts the
+    whole batch by returning the underlying error, reverting any orders already executed in this call.
+
+### `setPalletStatus(enabled: bool)`
+
+- **interface**: `api.tx.limitOrders.setPalletStatus`
+- **summary**: Set a status for the limit orders pallet
+
+    Must be called by root It allows disabling or enabling the pallet true means enabling, false means disabling
+
+
 ## `mevShield`
 
 ### `announceNextKey(enc_key: Option<ShieldEncKey>)`
@@ -1495,19 +1549,6 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
     - `delegate`: The proxy account for which to set the fee payment preference.
     - `pays_fee`: If `true`, the real account will pay fees for proxy calls made by
     this delegate. If `false`, the delegate pays (default behavior).
-
-
-## `registry`
-
-### `clearIdentity(identified: AccountId)`
-
-- **interface**: `api.tx.registry.clearIdentity`
-- **summary**: Clear the identity of an account.
-
-### `setIdentity(identified: AccountId, info: Box<IdentityInfo<T::MaxAdditionalFields>>)`
-
-- **interface**: `api.tx.registry.setIdentity`
-- **summary**: Register an identity for an account. This will overwrite any existing identity.
 
 
 ## `safeMode`
@@ -2548,6 +2589,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
     - `port` (u16) — The prometheus port information as a u16 encoded integer.
     - `ip_type` (u8) — The ip type v4 or v6.
 
+### `setActivityCutoffFactor(netuid: NetUid, factor_milli: u32)`
+
+- **interface**: `api.tx.subtensorModule.setActivityCutoffFactor`
+- **summary**: `set_activity_cutoff_factor`. Per-mille (1/1000) units; `cutoff_blocks = (factor × tempo) / 1000`. Validates `[MinActivityCutoffFactorMilli, MaxActivityCutoffFactorMilli]`. Callable by the subnet owner (rate-limited via `OwnerHyperparamUpdate`, respects the admin freeze window) or by root (bypasses both).
+
 ### `setAutoParentDelegationEnabled(hotkey: AccountId, enabled: bool)`
 
 - **interface**: `api.tx.subtensorModule.setAutoParentDelegationEnabled`
@@ -2719,6 +2765,13 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
     Locks decay by default. When enabled, the caller's individual lock does not unlock through locked-mass decay. Passing `false` returns the caller's lock to normal decay.
 
+### `setRejectLockedAlpha(enabled: bool)`
+
+- **interface**: `api.tx.subtensorModule.setRejectLockedAlpha`
+- **summary**: Sets or clears whether the caller rejects incoming locked alpha.
+
+    Coldkeys reject locked alpha by default. Passing `false` opts the caller into receiving locked alpha from stake transfers or coldkey swaps.
+
 ### `setRootClaimType(new_root_claim_type: RootClaimTypeEnum)`
 
 - **interface**: `api.tx.subtensorModule.setRootClaimType`
@@ -2754,6 +2807,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
     - `subnet_contact` (Vec\<u8>):
     The contact information for the subnet.
+
+### `setTempo(netuid: NetUid, tempo: u16)`
+
+- **interface**: `api.tx.subtensorModule.setTempo`
+- **summary**: Owner-side `set_tempo`. Validates `[MinTempo, MaxTempo]`, applies a fixed `MinTempo`-block cooldown via `TransactionType::TempoUpdate`, respects the admin freeze window, and resets the cycle (`LastEpochBlock = current_block`) on success.
 
 ### `setWeights(netuid: NetUid, dests: Vec<u16>, weights: Vec<u16>, version_key: u64)`
 
@@ -3032,6 +3090,11 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 
     May emit a `StakeTransferred` event on success.
 
+### `triggerEpoch(netuid: NetUid)`
+
+- **interface**: `api.tx.subtensorModule.triggerEpoch`
+- **summary**: Owner-side `trigger_epoch`. Schedules an epoch to fire after `AdminFreezeWindow` blocks. Rate-limited via the existing `OwnerHyperparamUpdate` pattern.
+
 ### `tryAssociateHotkey(hotkey: AccountId)`
 
 - **interface**: `api.tx.subtensorModule.tryAssociateHotkey`
@@ -3172,51 +3235,22 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 ### `addLiquidity(hotkey: AccountId, netuid: NetUid, tick_low: TickIndex, tick_high: TickIndex, liquidity: u64)`
 
 - **interface**: `api.tx.swap.addLiquidity`
-- **summary**: Add liquidity to a specific price range for a subnet.
-
-    **Parameters:**
-
-    - origin: The origin of the transaction
-    - netuid: Subnet ID
-    - tick_low: Lower bound of the price range
-    - tick_high: Upper bound of the price range
-    - liquidity: Amount of liquidity to add
-
-    Emits `Event::LiquidityAdded` on success
+- **summary**: DEPRECATED
 
 ### `disableLp()`
 
 - **interface**: `api.tx.swap.disableLp`
-- **summary**: Disable user liquidity in all subnets.
-
-    Emits `Event::UserLiquidityToggled` on success
+- **summary**: DEPRECATED
 
 ### `modifyPosition(hotkey: AccountId, netuid: NetUid, position_id: PositionId, liquidity_delta: i64)`
 
 - **interface**: `api.tx.swap.modifyPosition`
-- **summary**: Modify a liquidity position.
-
-    **Parameters:**
-
-    - origin: The origin of the transaction
-    - netuid: Subnet ID
-    - position_id: ID of the position to remove
-    - liquidity_delta: Liquidity to add (if positive) or remove (if negative)
-
-    Emits `Event::LiquidityRemoved` on success
+- **summary**: DEPRECATED
 
 ### `removeLiquidity(hotkey: AccountId, netuid: NetUid, position_id: PositionId)`
 
 - **interface**: `api.tx.swap.removeLiquidity`
-- **summary**: Remove liquidity from a specific position.
-
-    **Parameters:**
-
-    - origin: The origin of the transaction
-    - netuid: Subnet ID
-    - position_id: ID of the position to remove
-
-    Emits `Event::LiquidityRemoved` on success
+- **summary**: DEPRECATED
 
 ### `setFeeRate(netuid: NetUid, rate: u16)`
 
@@ -3228,9 +3262,7 @@ Generated from Subtensor runtime spec version **419**. Connected to: `wss://entr
 ### `toggleUserLiquidity(netuid: NetUid, enable: bool)`
 
 - **interface**: `api.tx.swap.toggleUserLiquidity`
-- **summary**: Enable user liquidity operations for a specific subnet. This switches the subnet from V2 to V3 swap mode. Thereafter, adding new user liquidity can be disabled by toggling this flag to false, but the swap mode will remain V3 because of existing user liquidity until all users withdraw their liquidity.
-
-    Only sudo or subnet owner can enable user liquidity. Only sudo can disable user liquidity.
+- **summary**: DEPRECATED
 
 
 ## `system`
