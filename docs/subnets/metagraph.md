@@ -196,7 +196,7 @@ In the Bittensor Python SDK, the `Metagraph` class encapsulates the following in
 | `tao_dividends_per_hotkey` |  [TAO](../resources/glossary.md#tao-tau) dividends by hotkey |
 | `alpha_dividends_per_hotkey` |  Alpha dividends by hotkey |
 | `last_step` |  Last step block number |
-| `tempo` |  [Tempo](../resources/glossary.md#tempo) - block interval for updates (360 blocks = 72 minutes) |
+| `tempo` |  [Tempo](../resources/glossary.md#tempo) - block interval for updates (default ~360 blocks; owner-configurable) |
 | `blocks_since_last_step` |  Blocks since last step |
 | `owner_coldkey` |  Subnet owner [coldkey](../resources/glossary.md#coldkey) |
 | `owner_hotkey` |  Subnet owner [hotkey](../resources/glossary.md#hotkey) |
@@ -275,34 +275,34 @@ See also:
 <details>
   <summary>MetagraphInfoParams (Hyperparams) Properties</summary>
 
-| Name                            | Description                                                                                    |
-| ------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `activity_cutoff`               | Activity cutoff threshold                                                                      |
-| `adjustment_alpha`              | Adjustment alpha parameter                                                                     |
-| `adjustment_interval`           | Adjustment interval                                                                            |
-| `alpha_high`                    | Alpha high threshold                                                                           |
-| `alpha_low`                     | Alpha low threshold                                                                            |
-| `bonds_moving_avg`              | Bonds moving average                                                                           |
-| `burn`                          | Burn amount                                                                                    |
-| `commit_reveal_period`          | Commit reveal period                                                                           |
-| `commit_reveal_weights_enabled` | Commit reveal weights enabled                                                                  |
-| `immunity_period`               | Immunity period                                                                                |
-| `kappa`                         | Kappa parameter                                                                                |
-| `liquid_alpha_enabled`          | Liquid alpha enabled                                                                           |
-| `max_burn`                      | Maximum burn                                                                                   |
-| `max_regs_per_block`            | Max registrations per block                                                                    |
-| `max_validators`                | Maximum validators                                                                             |
-| `max_weights_limit`             | Maximum weights limit                                                                          |
-| `min_allowed_weights`           | Minimum allowed weights                                                                        |
-| `min_burn`                      | Minimum burn                                                                                   |
-| `pow_registration_allowed`      | POW registration allowed                                                                       |
-| `registration_allowed`          | Registration allowed                                                                           |
-| `rho`                           | Rho parameter                                                                                  |
-| `serving_rate_limit`            | Serving rate limit                                                                             |
-| `target_regs_per_interval`      | Target registrations per interval                                                              |
-| `tempo`                         | [Tempo](../resources/glossary.md#tempo) - block interval for updates (360 blocks = 72 minutes) |
-| `weights_rate_limit`            | [Weights](../resources/glossary.md#weight-vector) rate limit for submissions                   |
-| `weights_version`               | [Weights](../resources/glossary.md#weight-vector) version for protocol compatibility           |
+| Name                            | Description                                                                                                    |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `activity_cutoff`               | Activity cutoff threshold                                                                                      |
+| `adjustment_alpha`              | Adjustment alpha parameter                                                                                     |
+| `adjustment_interval`           | Adjustment interval                                                                                            |
+| `alpha_high`                    | Alpha high threshold                                                                                           |
+| `alpha_low`                     | Alpha low threshold                                                                                            |
+| `bonds_moving_avg`              | Bonds moving average                                                                                           |
+| `burn`                          | Burn amount                                                                                                    |
+| `commit_reveal_period`          | Commit reveal period                                                                                           |
+| `commit_reveal_weights_enabled` | Commit reveal weights enabled                                                                                  |
+| `immunity_period`               | Immunity period                                                                                                |
+| `kappa`                         | Kappa parameter                                                                                                |
+| `liquid_alpha_enabled`          | Liquid alpha enabled                                                                                           |
+| `max_burn`                      | Maximum burn                                                                                                   |
+| `max_regs_per_block`            | Max registrations per block                                                                                    |
+| `max_validators`                | Maximum validators                                                                                             |
+| `max_weights_limit`             | Maximum weights limit                                                                                          |
+| `min_allowed_weights`           | Minimum allowed weights                                                                                        |
+| `min_burn`                      | Minimum burn                                                                                                   |
+| `pow_registration_allowed`      | POW registration allowed                                                                                       |
+| `registration_allowed`          | Registration allowed                                                                                           |
+| `rho`                           | Rho parameter                                                                                                  |
+| `serving_rate_limit`            | Serving rate limit                                                                                             |
+| `target_regs_per_interval`      | Target registrations per interval                                                                              |
+| `tempo`                         | [Tempo](../resources/glossary.md#tempo) - block interval for updates (default ~360 blocks; owner-configurable) |
+| `weights_rate_limit`            | [Weights](../resources/glossary.md#weight-vector) rate limit for submissions                                   |
+| `weights_version`               | [Weights](../resources/glossary.md#weight-vector) version for protocol compatibility                           |
 
 </details>
 

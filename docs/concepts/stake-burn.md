@@ -20,7 +20,7 @@ The stake burn sequence begins when a subnet owner calls the `add_stake_burn` ex
 
 The acquired alpha is removed from the pool's alpha reserve, sent to the hotkey, and then immediately burned within the same transaction. As a result, the circulating alpha decreases, the AMM pool reserves adjust, and the alpha price updates according to the new reserve ratio—i.e., more TAO and less alpha in the reserve.
 
-The `add_stake_burn` extrinsic is rate-limited per subnet. The subnet owner can only call it once per _tempo_ (once every 360 blocks). Attempting a second call within the same tempo for that subnet will return an `AddStakeBurnRateLimitExceeded` error.
+The `add_stake_burn` extrinsic is rate-limited per subnet. The subnet owner can only call it once per _tempo_. Attempting a second call within the same tempo for that subnet will return an `AddStakeBurnRateLimitExceeded` error.
 
 <!--
 @startuml
