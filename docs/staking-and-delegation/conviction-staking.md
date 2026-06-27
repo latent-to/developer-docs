@@ -4,7 +4,7 @@ title: "Conviction and locked stake"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import { ProxyColdkeyWarning } from "../keys/_proxy-warning.mdx";
+import { ProxyColdkeyWarning } from "../keys/\_proxy-warning.mdx";
 
 # Conviction and locked stake
 
@@ -60,8 +60,12 @@ Switching to perpetual mode stops the mass decay and allows conviction to grow t
 
 **90% conviction** (perpetual mode) is reached at approximately $2.3\tau$ blocks. At one time constant $\tau$, conviction is at 63.2% of locked mass.
 
-:::note Current time constants
-`MaturityRate` and `UnlockRate` are both set to a **90-day half-life** (confirmed on-chain at spec version 411). Since these are governance-settable values, query `api.query.subtensorModule.maturityRate()` and `api.query.subtensorModule.unlockRate()` before relying on any specific number in production code.
+:::info Current time constants
+
+- `MaturityRate` is currently set to 311,622 blocks (**~43 days**), with a 30-day half-life—reduced from 934,866 blocks (~130 days) as of spec version 423.
+- `UnlockRate` remains 934,866 blocks (~130 days) with a 90-day half-life.
+
+Since both are governance-settable, always query `api.query.subtensorModule.maturityRate()` and `api.query.subtensorModule.unlockRate()` before relying on any specific number in production code.
 :::
 
 **Perpetual mode** (fresh lock of 100 alpha, $c_0 = 0$):
@@ -97,9 +101,10 @@ Starting from c0 = 0 (fresh lock of 100 alpha, perpetual mode):
 
 ```
 gap = 100
-at τ:   c1 = 100 - 100 × 0.368 = 63.2
-at 2τ:  c1 = 100 - 100 × 0.135 = 86.5
-at 3τ:  c1 = 100 - 100 × 0.050 = 95.0
+at ~0.693τ (~30d):  c1 = 100 - 100 × 0.500 = 50.0   ← half-life
+at τ       (~43d):  c1 = 100 - 100 × 0.368 = 63.2
+at 2τ      (~86d):  c1 = 100 - 100 × 0.135 = 86.5
+at 3τ     (~129d):  c1 = 100 - 100 × 0.050 = 95.0
 ```
 
 Conviction is always closing in on `m`, getting closer every block, never quite arriving.
@@ -494,8 +499,8 @@ All six storage items live under **Developer → Chain state → `subtensorModul
 
 Two governance-settable parameters control the time constants:
 
-- **`MaturityRate`**: time constant τ (in blocks) for conviction growth in perpetual mode. Currently set to a 90-day half-life (spec version 411).
-- **`UnlockRate`**: time constant τ (in blocks) for locked mass decay in decaying mode. Currently set to a 90-day half-life (spec version 411), equal to `MaturityRate`.
+- **`MaturityRate`**: time constant τ (in blocks) for conviction growth in perpetual mode. Currently set to ~43 days (~311,622 blocks) as of spec version 423.
+- **`UnlockRate`**: time constant τ (in blocks) for locked mass decay in decaying mode. Currently set to a 90-day half-life (spec version 423).
 
 Both are adjustable by governance. Query `api.query.subtensorModule.maturityRate()` and `api.query.subtensorModule.unlockRate()` for current values before computing time estimates.
 
