@@ -63,7 +63,7 @@ Switching to perpetual mode stops the mass decay and allows conviction to grow t
 :::info Current time constants
 
 - `MaturityRate` is currently set to 311,622 blocks (**~43 days**), with a 30-day half-life—reduced from 934,866 blocks (~130 days) as of spec version 423.
-- `UnlockRate` remains 934,866 blocks (~130 days) with a 90-day half-life.
+- `UnlockRate` remains 934,866 blocks (**~130 days**) with a 90-day half-life.
 
 Since both are governance-settable, always query `api.query.subtensorModule.maturityRate()` and `api.query.subtensorModule.unlockRate()` before relying on any specific number in production code.
 :::
