@@ -8,60 +8,44 @@ import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
 ## Introduction
 
-When staking and unstaking in Bittensor, _slippage_ refers to a difference between the quantity of tokens actually received, and the amount that would be expected based on a static price. This difference is due to the change in price due to the transaction itself.
+When staking and unstaking in Bittensor, _slippage_ refers to the difference between the quantity of tokens actually received and the amount that would be expected at the static spot price. This difference arises because the transaction itself changes the pool's reserves, and therefore the price.
 
-Each Bittensor subnet operates as a _constant product AMM_, meaning that it will accept trades that conserve the product of the quantities of the two tokens in reserve, TAO and alpha. To calculate the price in one token of batch of the other token that a buyer wishes to acquire—alpha if they are staking, or TAO if they are unstaking—the algorithm assumes that the transaction does not change this product, so the product of TAO and alpha is the same before and after.
+Each Bittensor subnet operates a **Balancer weighted pool AMM**. The spot price and swap output are determined by the pool's TAO reserves, Alpha reserves, and a pair of pool weights (`w_base`, `w_quote`). See [Subnet AMM: Balancer Weighted Pool](./balancer-amm.md) for the full model.
+
+For the default case where pool weights are equal (0.5/0.5), the swap formula reduces to a constant-product result, so slippage behaves identically to a `xy = k` AMM. The worked example below uses this default case.
 
 <details>
   <summary><strong>See how it's calculated!</strong></summary>
 
-    When staking, the product K of TAO in reserve and alpha in reserve is the same before and after the transaction, so the initial product must be equal to the product after the cost in TAO is added to the reserve, and the stake is removed from the reserve and placed in the staked hotkey.
+  The output of a swap is given by the Balancer formula. When staking `∆τ` TAO, the Alpha received is:
 
-    Before:
-    $$
-    \tau_{\mathrm{in}} \,\alpha_{\mathrm{in}} = k
-    $$
+  $$
+  \Delta\alpha = \alpha \cdot \left(1 - \left(\frac{\tau}{\tau + \Delta\tau}\right)^{w_{\text{quote}}/w_{\text{base}}}\right)
+  $$
 
-    After:
-    $$
-    (\tau_{\mathrm{in}} + \text{cost}) \bigl(\alpha_{\mathrm{in}} - \text{stake}\bigr) = k
-    $$
+  With equal weights (0.5/0.5), the exponent is 1 and this simplifies to:
 
-    Equal:
+  $$
+  \Delta\alpha = \alpha - \frac{\tau \cdot \alpha}{\tau + \Delta\tau}
+  $$
 
-    $$
-    (\tau_{\mathrm{in}} + \text{cost}) \bigl(\alpha_{\mathrm{in}} - \text{stake}\bigr)
-      = \tau_{\mathrm{in}} \,\alpha_{\mathrm{in}}
-    $$
+  For example, suppose a subnet has 100 Alpha in reserve and 10 TAO, and you want to stake 5 TAO.
 
+  The spot price is 10 TAO / 100 Alpha = 0.1 TAO per Alpha (or 10 Alpha per TAO), so at the static price you would expect 50 Alpha for 5 TAO.
 
-    This means that if we choose to stake in a certain amount of TAO (if we specify the cost), then the yielded stake (the quantity of alpha to be removed from reserve and granted to the staked hotkey) is:
+  With slippage, the actual Alpha received is:
 
-    $$
-    \text{Stake} = \alpha_{\text{in}} - \frac{\tau_{\text{in}} \alpha_{\text{in}}} {\tau_{\text{in}} + \text{cost}}
-    $$
+  $$
+  \Delta\alpha = 100 - \frac{10 \times 100}{10 + 5} = 100 - \frac{1000}{15} \approx 33.33
+  $$
 
-    For example, suppose that a subnet has 100 alpha in reserve and 10 TAO, and we want to stake in 5 TAO.
+  The slippage is the gap between the ideal and actual amounts:
 
-    The price at this moment is 10 TAO / 100 alpha, or 10 alpha per TAO, so if we stake 5 TAO, we would expect 50 alpha, without taking slippage into account.
+  $$
+  50 - 33.33 = 16.67 \text{ Alpha}
+  $$
 
-    With slippage, the actual alpha received will be less than 50 due to the price impact of the transaction.
-
-    $$
-    \text{Stake} = 100 - \frac{ 10 * 100} {10 + 5}
-    $$
-
-    or 33.333 alpha sent to the hotkey. So in this case, the slippage is the difference between the ideal expectation of 50 and the actual swap value of 33.33333:
-
-    $$
-    16.667 = 50 - 33.333
-    $$
-
-    This slippage is 50% of the actual swap value, which is extremely high,
-    because we chose small values for the available liquidity. In general,
-    slippage is high when available liquidity is limited compared to the
-    magnitude of the transaction, since the transaction itself is changing the
-    price significantly.
+  This is 50% of the actual swap value — extremely high because the trade is large relative to the pool's reserves. In general, slippage increases as trade size grows relative to available liquidity.
 
 </details>
 

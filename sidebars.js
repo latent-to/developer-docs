@@ -141,7 +141,8 @@ const sidebars = {
           ],
         },
         "learn/price-protection",
-        "learn/slippage",        
+        "learn/balancer-amm",
+        "learn/slippage",
         "staking-and-delegation/staking-polkadot-js",
         "staking-and-delegation/using-ledger-hw-wallet",
       ],
@@ -167,16 +168,6 @@ const sidebars = {
         "validators/index",
         "validators/child-hotkeys",
         "validators/validators-btcli-guide",
-      ],
-    },
-    {
-      type: "category",
-      label: "Liquidity Positions (Uniswap)",
-      collapsible: true,
-      collapsed: true,
-      items: [
-        "liquidity-positions/liquidity-positions",
-        "liquidity-positions/managing-liquidity-positions",
       ],
     },
     {
@@ -345,8 +336,8 @@ const sidebars = {
       collapsed: true,
       items: [
         "governance/governance",
-        "governance/senate",
-        "governance/senators-btcli-guide",
+        // "governance/senate",
+        // "governance/senators-btcli-guide",
       ],
     },
 

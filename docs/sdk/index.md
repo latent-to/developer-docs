@@ -36,8 +36,6 @@ Manage your TAO stake across validators and subnets.
   - How to move stake between validators
   - How to transfer stake
 - [Managing Root Claims](../staking-and-delegation/root-claims/managing-root-claims.md): Claim root network positions
-- [Managing Liquidity Positions](../liquidity-positions/managing-liquidity-positions.md): Add and remove liquidity on Uniswap
-
 ## Proxy Operations
 
 Use proxies to delegate account permissions securely while keeping your coldkey offline.
