@@ -15,7 +15,7 @@ Balancer AMM allows the balance point of the scale to shift away from even 50/50
 :::note Mathematical limits of the analogy
 The analogy between an AMM and a scale is helpful but limited, since the scale's behavior is a bit simpler.
 A physical balance scale is linear: the angle of tilt is proportional to the mass difference between the two sides.
-Price on a constant-product AMM follows a hyperbola (x·y = k), so the same-size trade moves the price much more when reserves are thin than when they are deep. The analogy captures the directional intuition: adding to one side raises that side's price. But it breaks down for slippage, which is a consequence of the hyperbolic curve.
+Price on a constant-product AMM follows a hyperbola (`x·y = k`), so the same-size trade moves the price much more when reserves are thin than when they are deep. The analogy captures the directional intuition: adding to one side raises that side's price. But it breaks down for slippage, which is a consequence of the hyperbolic curve.
 :::
 
 For a full mathematical treatment, see the [Balancer AMMs whitepaper](https://learnbittensor.org/papers/balancer_amms.pdf).
@@ -24,10 +24,10 @@ For a full mathematical treatment, see the [Balancer AMMs whitepaper](https://le
 
 Each subnet pool is defined by three values:
 
-| Parameter | Description |
-|-----------|-------------|
-| `alpha_reserve` (x) | Alpha tokens held in the pool |
-| `tao_reserve` (y) | TAO held in the pool |
+| Parameter           | Description                               |
+| ------------------- | ----------------------------------------- |
+| `alpha_reserve` (x) | Alpha tokens held in the pool             |
+| `tao_reserve` (y)   | TAO held in the pool                      |
 | `w_base`, `w_quote` | Pool weights where `w_base + w_quote = 1` |
 
 The weights are stored as a single `w_quote` value (18-decimal precision); `w_base = 1 - w_quote`. Both weights are bounded to **[0.01, 0.99]** (the upper bound is implied: `1 - w_quote ≥ 0.01`; there is no separate `MAX_WEIGHT` constant). The default at pool initialization is 0.5/0.5 (equal weight).

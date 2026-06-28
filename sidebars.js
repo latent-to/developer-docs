@@ -336,8 +336,8 @@ const sidebars = {
       collapsed: true,
       items: [
         "governance/governance",
-        "governance/senate",
-        "governance/senators-btcli-guide",
+        // "governance/senate",
+        // "governance/senators-btcli-guide",
       ],
     },
 
