@@ -2,7 +2,7 @@
 title: "Bittensor CLI: Permissions Guide"
 ---
 
-The Bittensor CLI, `btcli` provides a wide range of functionality, and has a range of different requirements for various commands: some require a coldkey private key to authenticate, some require a hotkey private key, and some require neither. Additionally, different functions require different levels of permissions. Some require the user to have special status like being registered with a node, have a validator permit, or be an active member of the senate.
+The Bittensor CLI, `btcli` provides a wide range of functionality, and has a range of different requirements for various commands: some require a coldkey private key to authenticate, some require a hotkey private key, and some require neither. Additionally, different functions require different levels of permissions. Some require the user to have special status like being registered with a node or having a validator permit.
 
 This page details the requirements for all of the `btcli` commands.
 
@@ -12,8 +12,6 @@ See also the `btcli` permissions guides for specific Bittensor personas:
 - [Miner's Guide to `BTCLI`](../miners/miners-btcli-guide)
 - [Validator's Guide to `BTCLI`](../validators/validators-btcli-guide)
 - [Subnet Creator's Guide to `BTCLI`](../subnets/subnet-creators-btcli-guide)
-- [Senator's Guide to `BTCLI`](../governance/senators-btcli-guide)
-
 Other resources:
 
 - [Introduction to Wallets, Coldkeys and Hotkeys in Bittensor](../keys/wallets)
@@ -58,11 +56,10 @@ Required for:
 - Creating hotkeys
 - Registering hotkeys in subnets
 - Creating and modifying subnets
-- Participating in governance of Bittensor as a senator
 
 ### Hotkey
 
-Hotkeys are used by **miners** and **validators** to sign transactions, and are required for governance.
+Hotkeys are used by **miners** and **validators** to sign transactions.
 
 Required for:
 
@@ -86,10 +83,6 @@ Some operations require a TAO balance or alpha stake balance to execute.
 ### Validator Permit
 
 To set weights, a validator must meet several requirements. See [Requirements for validation](../validators/#requirements-for-validation).
-
-### Senate requirements
-
-See [Senate: Requirements](../governance/senate#requirements)
 
 ## `btcli` commands
 

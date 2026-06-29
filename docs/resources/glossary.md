@@ -692,12 +692,6 @@ Larger transactions cause more slippage. Bittensor provides slippage protection 
 
 **See:** [Understanding Pricing and Anticipating Slippage](../learn/slippage.md)
 
-### Senate
-
-A group of elected delegates formed from the top K delegate hotkeys, responsible for approving or disapproving proposals made by the Triumvirate.
-
-**See also:** [Senate](../governance/senate.md), [Governance](../governance/governance.md)
-
 ### Stake
 
 The amount of currency tokens delegated to a validator UID in a subnet. Includes both self-stake (from the validator's own cold-key) and stake delegated from others.
@@ -811,7 +805,7 @@ A privileged role required for administrative actions, such as changing the valu
 
 On Bittensor mainnet ('finney'), sudo is controlled by the triumvirate.
 
-**See also:** [Governance](../governance/governance.md), [btcli Permissions](../btcli/btcli-permissions.md)
+**See also:** [Governance Plan](../governance/governance.md), [btcli Permissions](../btcli/btcli-permissions.md)
 
 ### Synapse
 
@@ -847,9 +841,9 @@ The process of sending TAO tokens from one wallet address to another in the Bitt
 
 ### Triumvirate
 
-A group of three Opentensor Foundation employees that controls the sudo key.
+A group of three trusted developers who controls the sudo key as a multisig. In the planned governance system, the triumvirate becomes the first stage of the referendum process rather than holding sudo directly, and will rotate.
 
-**See also:** [Governance](../governance/governance.md), [Senate](../governance/senate.md)
+**See also:** [Governance Plan](../governance/governance.md)
 
 ### Trust
 
