@@ -692,12 +692,6 @@ Larger transactions cause more slippage. Bittensor provides slippage protection 
 
 **See:** [Understanding Pricing and Anticipating Slippage](../learn/slippage.md)
 
-### Senate
-
-A group of elected delegates formed from the top K delegate hotkeys, responsible for approving or disapproving proposals made by the Triumvirate.
-
-**See also:** [Senate](../governance/senate.md), [Governance](../governance/governance.md)
-
 ### Stake
 
 The amount of currency tokens delegated to a validator UID in a subnet. Includes both self-stake (from the validator's own cold-key) and stake delegated from others.
@@ -809,9 +803,9 @@ The Bittensor SDK offers the [`bittensor.core.subtensor`](pathname:///python-api
 
 A privileged role required for administrative actions, such as changing the values of chain state variables, and subnet hyperparameters that are not accessible to subnet owners.
 
-On Bittensor mainnet ('finney'), sudo is controlled by the triumvirate.
+On Bittensor mainnet ('finney'), sudo is currently held by the Opentensor Foundation via `pallet_sudo`. A collective-based governance system that distributes this control is in development; see [Governance Plan](../governance/governance.md).
 
-**See also:** [Governance](../governance/governance.md), [btcli Permissions](../btcli/btcli-permissions.md)
+**See also:** [Governance Plan](../governance/governance.md), [btcli Permissions](../btcli/btcli-permissions.md)
 
 ### Synapse
 
@@ -847,9 +841,9 @@ The process of sending TAO tokens from one wallet address to another in the Bitt
 
 ### Triumvirate
 
-A group of three Opentensor Foundation employees that controls the sudo key.
+In the planned V2 governance system, the three-member first stage of the referendum process. Under the current mainnet runtime, the Opentensor Foundation holds the sudo key directly via `pallet_sudo` pending the deployment of the collective-based system.
 
-**See also:** [Governance](../governance/governance.md), [Senate](../governance/senate.md)
+**See also:** [Governance Plan](../governance/governance.md)
 
 ### Trust
 

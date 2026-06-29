@@ -19,7 +19,6 @@ import { GiArchiveRegister } from "react-icons/gi";
 import { BiMath } from "react-icons/bi";
 import { RiTeamLine } from "react-icons/ri";
 import { RiGovernmentLine } from "react-icons/ri";
-import { FaGalacticSenate } from "react-icons/fa";
 import { GiStarFormation } from "react-icons/gi";
 import { HiOutlineAcademicCap } from "react-icons/hi2";
 import { VscSymbolParameter } from "react-icons/vsc";
@@ -110,11 +109,6 @@ You can participate in an existing subnet as either a subnet validator or a subn
     title='Governance'
     link='governance'
     body='Learn how the Bittensor governance works as it transitions into full community-ownership over time.' />
-    <ResponsiveCard
-    icon={FaGalacticSenate}
-    title='Senate'
-    link='governance/senate'
-    body='Understand what Senate is, requirements to participate in a Senate and how voting works.' />
     
 </ResponsiveCards>
 
