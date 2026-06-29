@@ -62,7 +62,7 @@ Switching to perpetual mode stops the mass decay and allows conviction to grow t
 
 :::info Current time constants
 
-- `MaturityRate` is currently set to 311,622 blocks (**~43 days**), with a 30-day half-life—reduced from 934,866 blocks (~130 days) as of spec version 423.
+- `MaturityRate` is currently set to 311,622 blocks (**~43 days**), with a 30-day half-life as of spec version 423.
 - `UnlockRate` remains 934,866 blocks (**~130 days**) with a 90-day half-life.
 
 Since both are governance-settable, always query `api.query.subtensorModule.maturityRate()` and `api.query.subtensorModule.unlockRate()` before relying on any specific number in production code.
@@ -113,40 +113,40 @@ Conviction is always closing in on `m`, getting closer every block, never quite 
 
 ![Perpetual mode conviction diagram](/img/docs/conviction/perpetual-mode.svg)
 
-**Decaying mode** (fresh lock of 100 alpha, $c_0 = 0$, `UnlockRate` = `MaturityRate` = τ):
+**Decaying mode** (fresh lock of 100 alpha, $c_0 = 0$, `MaturityRate` τₘ = 43 days, `UnlockRate` τᵤ = 130 days):
 
-| Elapsed | Locked mass | Conviction      |
-| ------- | ----------- | --------------- |
-| 0       | 100         | 0               |
-| 0.5τ    | 60.7        | 30.3            |
-| 1τ      | 36.8        | **36.8 (peak)** |
-| 2τ      | 13.5        | 27.1            |
-| 3τ      | 5.0         | 14.9            |
+| Elapsed | Approx. days | Locked mass | Conviction      |
+| ------- | ------------ | ----------- | --------------- |
+| 0       | 0            | 100         | 0               |
+| t\*     | ~71 days     | 57.9        | **57.9 (peak)** |
+| 1τᵤ     | ~130 days    | 36.8        | 47.7            |
+| 2τᵤ     | ~260 days    | 13.5        | 19.9            |
+| 3τᵤ     | ~390 days    | 5.0         | 7.4             |
 
-Conviction peaks at ~36.8% of the original locked mass at elapsed time = τ. After that both values fall toward zero. Note that once elapsed time exceeds τ, conviction exceeds the remaining locked mass; it reflects accumulated commitment, not just current holdings. Topping up an existing lock adds to locked mass immediately, conviction continuing from its current value.
-
+Conviction peaks at ~57.9% of the original locked mass at day ~71. After the peak, both values fall toward zero. Note that once elapsed time exceeds t\*, conviction exceeds the remaining locked mass; it reflects accumulated commitment, not just current holdings. Topping up an existing lock adds to locked mass immediately, with conviction continuing from its current value.
 ![Decaying mode conviction diagram](/img/docs/conviction/decaying-mode.svg)
 
 <details>
   <summary><strong>See how it's calculated</strong></summary>
 
-When `UnlockRate` = `MaturityRate` = τ, conviction is the accumulated area under the decaying lock curve:
+Since `MaturityRate` τₘ ≠ `UnlockRate` τᵤ, the conviction formula uses the following formula:
 
 ```
-c1 = exp(-dt/τ) × (c0 + m × dt/τ)
-m1 = m × exp(-dt/τ)
+m1 = m × exp(-dt / τᵤ)
+c1 = m × γ(dt)
+γ  = τᵤ × (exp(-dt/τᵤ) − exp(-dt/τₘ)) / (τᵤ − τₘ)
 ```
 
-Starting from c0 = 0 (fresh lock of 100 alpha, decaying mode):
+Starting from c0 = 0 (fresh lock of 100 alpha, decaying mode, τₘ = 43 days, τᵤ = 130 days):
 
 ```
-at 0.5τ:  m1 = 60.7,  c1 = 100 × 0.5 × exp(-0.5) = 30.3
-at τ:     m1 = 36.8,  c1 = 100 × 1.0 × exp(-1)   = 36.8  ← peak
-at 2τ:    m1 = 13.5,  c1 = 100 × 2.0 × exp(-2)   = 27.1
-at 3τ:    m1 = 5.0,   c1 = 100 × 3.0 × exp(-3)   = 14.9
+at t*  (~71d):  m1 = 57.9,  c1 = 57.9  ← peak (conviction = remaining locked mass)
+at τᵤ  (130d):  m1 = 36.8,  c1 = 47.7
+at 2τᵤ (260d):  m1 = 13.5,  c1 = 19.9
+at 3τᵤ (390d):  m1 = 5.0,   c1 = 7.4
 ```
 
-The term `(dt/τ) × exp(-dt/τ)` is maximized at `dt = τ` (value = `1/e ≈ 0.368`). Conviction represents accumulated commitment, not current holdings; after τ has elapsed, conviction exceeds the remaining locked mass.
+At the peak, conviction exactly equals the remaining locked mass. After t\*, both fall toward zero. Conviction represents accumulated commitment, not current holdings; beyond t\*, conviction consistently exceeds the remaining locked mass.
 
 </details>
 
