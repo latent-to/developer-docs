@@ -43,20 +43,42 @@ const provider = new ethers.JsonRpcProvider(rpcUrl);
 const signer = new ethers.Wallet(ethPrivateKey, provider);
 const contract = new ethers.Contract(ILEASING_ADDRESS, ILeasingABI, signer);
 
-const depositRao = 1_000_000_000n; // 1 TAO
+const DEPOSIT = 100_000_000_000n; // 100 TAO in RAO
+const MIN_CONTRIBUTION = 50_000_000_000n; // 50 TAO in RAO
+const CAP = 3_000_000_000_000n; // 3000 TAO in RAO
+const END_BLOCK = 8540500;
+const LEASING_EMISSIONS_SHARE = 30;
+const HAS_LEASING_END_BLOCK = true;
+const LEASING_END_BLOCK = 9540500;
 
 const tx = await contract.createLeaseCrowdloan(
-  depositRao, // crowdloanDeposit
-  100_000_000n, // crowdloanMinContribution: 0.1 TAO
-  10_000_000_000_000n, // crowdloanCap: 10,000 TAO
-  500000, // crowdloanEnd block
-  30, // leasingEmissionsShare: 30%
-  true, // hasLeasingEndBlock
-  6000000, // leasingEndBlock (~2 years out)
-  { value: depositRao, gasLimit: 500_000n },
+  DEPOSIT,
+  MIN_CONTRIBUTION,
+  CAP,
+  END_BLOCK,
+  LEASING_EMISSIONS_SHARE,
+  HAS_LEASING_END_BLOCK,
+  LEASING_END_BLOCK,
+  { gasLimit: 500_000n },
 );
 await tx.wait();
 ```
+
+:::warning Crowdloan cap must cover the subnet registration cost
+The `crowdloanCap` set when creating a lease crowdloan must be equal to or greater than the current network registration cost — if the total raised is insufficient to cover registration, the finalize call will fail with `CannotAffordLockCost`.
+Query the current registration cost before creating a lease crowdloan:
+
+```js
+api.call.subnetRegistrationRuntimeApi.getNetworkRegistrationCost();
+```
+
+Registration costs fluctuate — they increase with each new subnet registered and decay over time. Set the cap with enough headroom above the current cost to account for movement between crowdloan creation and finalization.
+
+:::
+
+### Finalize a lease crowdloan
+
+same as normal crowdloan
 
 ### Terminating a lease
 
