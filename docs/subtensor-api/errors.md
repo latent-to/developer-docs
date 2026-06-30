@@ -1232,7 +1232,7 @@ Generated from Subtensor runtime spec version **423**. Connected to: `wss://entr
 ### `DynamicTempoBlockedByCommitReveal`
 
 - **interface**: `api.errors.subtensorModule.DynamicTempoBlockedByCommitReveal`
-- **summary**: `trigger_epoch` is blocked because commit-reveal is enabled for this subnet: an out-of-band epoch would desync the CRv3 reveal window from the wall-clock Drand schedule and silently drop committed weights.
+- **summary**: `trigger_epoch` is blocked because commit-reveal is enabled for this subnet: an off-schedule epoch would desync the CRv3 reveal window from the wall-clock Drand schedule and silently drop committed weights.
 
 ### `EpochTriggerAlreadyPending`
 

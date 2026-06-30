@@ -239,7 +239,7 @@ An optional security measure for the hotkey.
 
 An epoch in Bittensor is the period during which a subnet executes its consensus mechanism. Its duration is determined by the subnet's [tempo](#tempo) hyperparameter.
 
-Epochs fire automatically every `tempo` blocks. Subnet owners can also schedule an out-of-band epoch using the `trigger_epoch` extrinsic, subject to a short delay and other constraints described under [Tempo](#tempo).
+Epochs fire automatically every `tempo` blocks. Subnet owners can also schedule an off-schedule epoch using the `trigger_epoch` extrinsic, subject to a short delay and other constraints described under [Tempo](#tempo).
 
 **See also:** [Tempo](#tempo), [Yuma Consensus](../learn/yuma-consensus.md)
 
@@ -852,7 +852,7 @@ The last `AdminFreezeWindow` blocks of every tempo (default: **10 blocks**) are 
 
 #### Manual epoch trigger: `trigger_epoch`
 
-Subnet owners can schedule an out-of-band epoch via `trigger_epoch`. The extrinsic:
+Subnet owners can schedule an off-schedule epoch via `trigger_epoch`. The extrinsic:
 
 - Does **not** fire an epoch immediately. It schedules the epoch to run exactly `AdminFreezeWindow` blocks (default 10) after the call.
 - Is rejected if any of the following are true:
