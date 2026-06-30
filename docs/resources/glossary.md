@@ -160,19 +160,19 @@ Network Security Properties:
 
 A subnet validator that receives staked TAO tokens from delegators and performs validation tasks in one or more subnets.
 
-**See also:** [Delegation](../staking-and-delegation/delegation.md), [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md)
+**See also:** [Delegation](../staking-and-delegation/delegation.md), [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 
 ### Delegate Stake
 
 The amount of TAO staked by the delegate themselves.
 
-**See also:** [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
+**See also:** [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
 
 ### Delegation
 
 Also known as staking, delegating TAO to a validator (who is thereby the delegate), increases the validator's stake and secure a validator permit.
 
-**See also:** [Delegation](../staking-and-delegation/delegation.md), [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md)
+**See also:** [Delegation](../staking-and-delegation/delegation.md), [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 
 ### Dendrite
 
@@ -217,11 +217,11 @@ A cryptographic algorithm used to generate public and private key pairs for cold
 
 The total staked TAO amount of a delegate, including their own TAO tokens and those delegated by nominators.
 
-**See also:** [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
+**See also:** [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
 
 ### Emission
 
-Every block, TAO is injected into each subnet in Bittensor, and every tempo (or 360 blocks), it is extracted by participants (miners, validators, stakers, and subnet creators).
+Every block, TAO is injected into each subnet in Bittensor, and every tempo, it is extracted by participants (miners, validators, stakers, and subnet creators).
 
 Emission is this process of generating and allocating currency to participants. The amount allocated to a given participant over some duration of time is also often referred to as 'their emissions' for the period.
 
@@ -238,6 +238,8 @@ An optional security measure for the hotkey.
 ### Epoch
 
 An epoch in Bittensor is the period during which a subnet executes its consensus mechanism. Its is determined number of blocks defined by the subnet's [tempo](#tempo) hyperparameter.
+
+Epochs fire automatically every `Tempo` blocks (owner-configurable, default 360), or can be triggered manually by the subnet owner via the `trigger_epoch` extrinsic. The network guarantees at least one epoch per `MaxTempo` blocks (50,400 blocks, ~7 days) regardless of owner behavior.
 
 **See also:** [Tempo](#tempo), [Yuma Consensus](../learn/yuma-consensus.md)
 
@@ -256,7 +258,7 @@ from bittensor.core.async_subtensor import AsyncSubtensor
 from bittensor.utils.balance import Balance
 
 async def main():
-	async with AsyncSubtensor(network="finney") as subtensor:
+	async with AsyncSubtensor(network="test") as subtensor:
 		deposit = await subtensor.get_existential_deposit()
 	print(f"Existential deposit: {deposit.tao} TAO")
 asyncio.run(main())
@@ -271,9 +273,8 @@ A weighted moving average that prioritizes recent observations while exponential
    - **Basic Mode**: Single α ≈ 0.1 (~7-22 blocks for significant changes)
    - **Liquid Alpha Mode**: Dynamic α range 0.7-0.9 based on consensus alignment (~1-13 blocks depending on consensus)
 
-2. **Subnet Flow Emission Smoothing**: Protects emissions from manipulation by extremely slowly incorporating TAO flow changes (net staking minus unstaking) into emission calculations (α ≈ 0.000003209, ~30 day half-life, ~86.8 day effective window)
-
-**Formula**: `EMA(t) = α × Current_Value + (1 - α) × EMA(t-1)`
+2. **Subnet Price EMA Smoothing**: Protects emissions from manipulation by extremely slowly incorporating a three-factor weighted share of the fixed block emission
+   - **Formula**: $EMA(t) = α × Current\_Value + (1 - α) × EMA^{(t-1)}$
 
 **Key Properties**:
 
@@ -664,6 +665,17 @@ Subnet Zero a.k.a. the root subnet is a special subnet. No miners can register o
 
 ## S
 
+### Seed phrase
+
+The **_seed phrase_** (a.k.a. 'menemonic' or 'recovery phrase') is a series of (at least 12) words that is generated together with your wallet's cryptographic key pair, and which can be used to recover the coldkey private key. This seed phrase is therefore a human-usable way to save access to the cryptographic wallet offline, and to import the cryptographic wallet into a hardware or software wallet.
+
+The most important operational goal when handling Bittensor wallets is to avoid losing or leaking your seed phrase.
+
+See:
+
+- [Handle your Seed Phrase/Mnemonic Securely](../keys/handle-seed-phrase)
+- [Wallets, Coldkeys and Hotkeys in Bittensor](../keys/wallets)
+
 ### SS58 Encoded
 
 A compact representation of public keys corresponding to the wallet's coldkey and hotkey, used as wallet addresses for secure TAO transfers.
@@ -692,7 +704,7 @@ The amount of currency tokens delegated to a validator UID in a subnet. Includes
 
 Stake determines a validator's weight in consensus as well as their emissions.
 
-**See also:** [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md), [Delegation](../staking-and-delegation/delegation.md)
+**See also:** [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md), [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md), [Delegation](../staking-and-delegation/delegation.md)
 
 ### Stake Weight
 
@@ -738,7 +750,7 @@ The process of attaching TAO to a validator hotkey, i.e., locking TAO to a subne
 
 **See also:**
 
-- [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md)
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 - [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md)
 - [Delegation](../staking-and-delegation/delegation.md)
 - [Browse validators on TAO.app](https://www.tao.app/validators)
@@ -781,7 +793,7 @@ A key component of any incentive mechanism that defines the work the subnet mine
 
 ### Subnet Weights
 
-The importance assigned to each subnet determined by net TAO flows (staking minus unstaking activity) and used to determine the percentage emissions to subnets. As of November 2025, this is based on EMA-smoothed TAO flows rather than token prices.
+The importance assigned to each subnet determined by net TAO flows (staking minus unstaking activity) and used to determine the percentage emissions to subnets.
 
 **See also:** [Emissions](../learn/emissions.md), [Consensus-Based Weights](../concepts/consensus-based-weights.md)
 
@@ -795,7 +807,9 @@ The Bittensor SDK offers the [`bittensor.core.subtensor`](pathname:///python-api
 
 ### Sudo
 
-A privileged key for administrative actions, replaced by governance protocol for enhanced security.
+A privileged role required for administrative actions, such as changing the values of chain state variables, and subnet hyperparameters that are not accessible to subnet owners.
+
+On Bittensor mainnet ('finney'), sudo is controlled by the triumvirate.
 
 **See also:** [Governance](../governance/governance.md), [btcli Permissions](../btcli/btcli-permissions.md)
 
@@ -821,9 +835,9 @@ A global parameter (currently set to 0.18) that determines the relative influenc
 
 ### Tempo
 
-Tempo is a subnet-specific hyperparameter that determines how frequently epochs run. It is a 360-block period over which the Yuma Consensus calculates emissions to subnet participants based on the latest available ranking weight matrix. A single block is processed every 12 seconds, hence a 360-block tempo passes every 4320 seconds or ~72 minutes.
+Tempo is a subnet-specific hyperparameter that determines how frequently epochs run automatically. It is configurable by the subnet owner within the range of 360 blocks (~72 minutes) to 50,400 blocks (~7 days), with 360 blocks as the default.
 
-**See also:** [Yuma Consensus](../learn/yuma-consensus.md), [Emissions](../learn/emissions.md)
+**See also:** [Yuma Consensus](../learn/yuma-consensus.md), [Emissions](../learn/emissions.md), [Epoch](#epoch)
 
 ### Transfer
 
@@ -833,7 +847,7 @@ The process of sending TAO tokens from one wallet address to another in the Bitt
 
 ### Triumvirate
 
-A group of three Opentensor Foundation employees responsible for creating proposals.
+A group of three Opentensor Foundation employees that controls the sudo key.
 
 **See also:** [Governance](../governance/governance.md), [Senate](../governance/senate.md)
 
@@ -916,8 +930,7 @@ Unstaking incurs blockchain transaction fees, which are recycled back into the T
 **See also:**
 
 - [Staking/Delegation overview](../staking-and-delegation/delegation.md#unstaking)
-- [Managing Stake with btcli](../staking-and-delegation/managing-stake-btcli.md#unstaking-with-btcli)
-- [Managing Stake with SDK](../staking-and-delegation/managing-stake-sdk.md#unstaking-from-a-validator)
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md#unstake-from-a-validator)
 - [Understanding Pricing and Anticipating Slippage](../learn/slippage.md)
 - [Price Protection When Staking](../learn/price-protection.md)
 - [Transaction Fees](../learn/fees.md)

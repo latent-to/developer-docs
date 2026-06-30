@@ -52,9 +52,16 @@ You must meet the same [requirements for validation](../validators#requirements-
 
 One option for subnet owners is to ask one of the root network (subnet 0) validators to parent your validator hotkey as a childkey of theirs. This will lend their stake to your validator, and can help you ensure that your validator maintains a sufficient stake to effectively participate in consensus as well as resist deregistration. See the [Child Hotkeys](../validators/child-hotkeys) documentation for more detail.
 
-### Subnet creation rate limits
+### Subnet creation rate limit
 
-Subnet creations are limited to **one subnet creation per 14400 blocks** (approximately one every two days). The cost to register a new subnet is also dynamic. For these reason, picking the right time to create your subnet requires planning.
+Subnet creations are limited to **one subnet creation per 14400 blocks** (approximately one every two days), and the cost to register a new subnet is dynamic.
+
+<details>
+<summary><strong>Query rate limit on-chain</strong></summary>
+
+To check the current rate limit on the blockchain, navigate to the [Polkadot.js browser app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Storage**, and query `subtensorModule.networkRateLimit()`.
+
+</details>
 
 ## Prerequisites
 
@@ -64,6 +71,12 @@ Subnet creations are limited to **one subnet creation per 14400 blocks** (approx
 
 - To create a subnet on test chain, your wallet must have sufficient test net TAO. Inquire in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553) to obtain TAO on Bittensor test network.
 - To create a subnet on main network (finney) requires a substantial investment of TAO, depending on current registration cost for new subnets.
+
+:::warning Coldkey required
+Creating a subnet requires your primary coldkey. Losing the coldkey that has ownership rights of a subnet would be catastrophic for management of the subnet.
+
+See [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security).
+:::
 
 ## Creating a subnet on testchain
 

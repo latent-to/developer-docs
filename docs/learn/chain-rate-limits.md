@@ -61,9 +61,16 @@ This rate limit controls how frequently subnet owners can trim UIDs on their sub
 
 This rate limit prevents frequent creation of new subnets.
 
-- Rate Limit: 14,400 blocks (2 days)
+- Rate Limit: 14,400 blocks (~2 days)
 - Chain State Variable: `NetworkRateLimit`
 - Error message: [`NetworkTxRateLimitExceeded`](../errors/subtensor.md#networktxratelimitexceeded)
+
+<details>
+<summary><strong>Check current value on-chain</strong></summary>
+
+To verify, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Storage**, query `subtensorModule.networkRateLimit()`. See [Inspecting the Chain](../concepts/inspecting-the-chain) for more on using Polkadot.js.
+
+</details>
 
 ### Owner hyperparameter rate limit
 

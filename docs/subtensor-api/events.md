@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **415**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **423**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -21,11 +21,11 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 - **[ethereum](#ethereum)**
 - **[evm](#evm)**
 - **[grandpa](#grandpa)**
+- **[limitOrders](#limitorders)**
 - **[mevShield](#mevshield)**
 - **[multisig](#multisig)**
 - **[preimage](#preimage)**
 - **[proxy](#proxy)**
-- **[registry](#registry)**
 - **[safeMode](#safemode)**
 - **[scheduler](#scheduler)**
 - **[subtensorModule](#subtensormodule)**
@@ -409,6 +409,34 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 - **summary**: Current authority set has been resumed.
 
 
+## `limitOrders`
+
+### `GroupExecutionSummary(NetUid, OrderSide, u64, u64, u32)`
+
+- **interface**: `api.events.limitOrders.GroupExecutionSummary`
+- **summary**: Summary emitted once per `execute_batched_orders` call.
+
+### `LimitOrdersPalletStatusChanged(bool)`
+
+- **interface**: `api.events.limitOrders.LimitOrdersPalletStatusChanged`
+- **summary**: Root has either enabled(true) or disabled(false) the pallet
+
+### `OrderCancelled(H256, AccountId)`
+
+- **interface**: `api.events.limitOrders.OrderCancelled`
+- **summary**: A user registered a cancellation intent for their order.
+
+### `OrderExecuted(H256, AccountId, NetUid, OrderType, u64, u64)`
+
+- **interface**: `api.events.limitOrders.OrderExecuted`
+- **summary**: A limit order was successfully executed.
+
+### `OrderSkipped(H256, sp_runtime::DispatchError)`
+
+- **interface**: `api.events.limitOrders.OrderSkipped`
+- **summary**: An order was skipped during execution.
+
+
 ## `mevShield`
 
 ### `EncryptedSubmitted(H256, AccountId)`
@@ -561,19 +589,6 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 - **summary**: The real-pays-fee setting was updated for a proxy relationship.
 
 
-## `registry`
-
-### `IdentityDissolved(AccountId)`
-
-- **interface**: `api.events.registry.IdentityDissolved`
-- **summary**: Emitted when a user dissolves an identity
-
-### `IdentitySet(AccountId)`
-
-- **interface**: `api.events.registry.IdentitySet`
-- **summary**: Emitted when a user registers an identity
-
-
 ## `safeMode`
 
 ### `CannotDeposit()`
@@ -675,6 +690,11 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 
 
 ## `subtensorModule`
+
+### `ActivityCutoffFactorMilliSet(NetUid, u32)`
+
+- **interface**: `api.events.subtensorModule.ActivityCutoffFactorMilliSet`
+- **summary**: Activity-cutoff factor (per-mille) set on a subnet by its owner.
 
 ### `ActivityCutoffSet(NetUid, u16)`
 
@@ -929,6 +949,21 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.DissolveNetworkScheduleDurationSet`
 - **summary**: The duration of dissolve network has been set
 
+### `EpochDeferred(NetUid, u64, u64)`
+
+- **interface**: `api.events.subtensorModule.EpochDeferred`
+- **summary**: An epoch slot was deferred to the next block due to the per-block epoch cap.
+
+### `EpochSkipped(NetUid, u64)`
+
+- **interface**: `api.events.subtensorModule.EpochSkipped`
+- **summary**: Epoch execution skipped by `is_epoch_input_state_consistent` returned false or other errors.
+
+### `EpochTriggered(NetUid, AccountId, u64)`
+
+- **interface**: `api.events.subtensorModule.EpochTriggered`
+- **summary**: Owner manually triggered an epoch for their subnet.
+
 ### `EvmKeyAssociated(NetUid, AccountId, H160, u64)`
 
 - **interface**: `api.events.subtensorModule.EvmKeyAssociated`
@@ -1007,6 +1042,11 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.MaxDifficultySet`
 - **summary**: setting max difficulty on a network.
+
+### `MaxEpochsPerBlockSet(u8)`
+
+- **interface**: `api.events.subtensorModule.MaxEpochsPerBlockSet`
+- **summary**: setting the per-block epoch cap (dynamic tempo throttle).
 
 ### `MaxRegistrationsPerBlockSet(NetUid, u16)`
 
@@ -1127,6 +1167,11 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.RegistrationPerIntervalSet`
 - **summary**: registration per interval is set for a subnet.
+
+### `RejectLockedAlphaUpdated(AccountId, bool)`
+
+- **interface**: `api.events.subtensorModule.RejectLockedAlphaUpdated`
+- **summary**: A coldkey's reject locked alpha account flag was updated.
 
 ### `RhoSet(NetUid, u16)`
 
@@ -1444,26 +1489,6 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 
 - **interface**: `api.events.swap.FeeRateSet`
 - **summary**: Event emitted when the fee rate has been updated for a subnet
-
-### `LiquidityAdded(AccountId, AccountId, NetUid, PositionId, u64, TaoBalance, AlphaBalance, TickIndex, TickIndex)`
-
-- **interface**: `api.events.swap.LiquidityAdded`
-- **summary**: Event emitted when a liquidity position is added to a subnet's liquidity pool.
-
-### `LiquidityModified(AccountId, AccountId, NetUid, PositionId, i64, i64, i64, TaoBalance, AlphaBalance, TickIndex, TickIndex)`
-
-- **interface**: `api.events.swap.LiquidityModified`
-- **summary**: Event emitted when a liquidity position is modified in a subnet's liquidity pool. Modifying causes the fees to be claimed.
-
-### `LiquidityRemoved(AccountId, AccountId, NetUid, PositionId, u64, TaoBalance, AlphaBalance, TaoBalance, AlphaBalance, TickIndex, TickIndex)`
-
-- **interface**: `api.events.swap.LiquidityRemoved`
-- **summary**: Event emitted when a liquidity position is removed from a subnet's liquidity pool.
-
-### `UserLiquidityToggled(NetUid, bool)`
-
-- **interface**: `api.events.swap.UserLiquidityToggled`
-- **summary**: Event emitted when user liquidity operations are enabled for a subnet. First enable even indicates a switch from V2 to V3 swap.
 
 
 ## `system`

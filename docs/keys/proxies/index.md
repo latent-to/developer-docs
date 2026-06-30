@@ -6,13 +6,20 @@ title: "Proxies: Overview"
 
 This page introduces the theory and use of proxy wallets for enhanced security in Bittensor.
 
-See [Working with Proxies](./proxies/working-with-proxies)
+Operational details are covered in [Working with Proxies](../../keys/proxies/working-with-proxies)
 
 ## Introduction: What is a proxy?
 
-Proxies allow one wallet to perform Bittensor operations on behalf of another. Used correctly, this allows you to add a strong layer of additional protection for your most important wallets and the valuable assets they control, such as large TAO or alpha holdings, or subnet ownership. Proxy relationships are useful both for one person managing their own coldkey security, and also for allowing one person to on behalf of another person or an organization.
+Proxies allow one wallet to sign blockchain transactions on behalf of another. Used correctly, this allows you to add a strong layer of additional protection for your most important wallets and the valuable assets they control, such as large TAO or alpha holdings, or subnet ownership.
 
-The private key and seed phrase for a highly valuable wallet's coldkey should be kept offline as much as possible, and only used via a dedicated, highly secure [coldkey workstation](../coldkey-hotkey-security.md). By allowing one coldkey to serve as a _proxy_ or stand-in for another, the "real account" or "safe wallet", we add an additional layer of security for the safe wallet by leaving it in cold storage and using the proxy instead.
+The private key and seed phrase for a highly valuable wallet's coldkey should be kept offline in cold storage, and only used to sign transactions via a secure connection to a hardware wallet.
+
+See [Workstation Security](../../keys/coldkey-hotkey-security.md).
+
+By allowing one coldkey to serve as a _proxy_ or stand-in for another, the "real account" or "safe wallet", we add an additional layer of security for the safe wallet by leaving it in cold storage and using the proxy instead.
+
+Proxy relationships are useful both for one person managing their own coldkey security, and also for allowing one person to act on behalf of another person or an organization.
+
 
 ### Common use cases
 
@@ -20,17 +27,29 @@ Proxies are useful in many situations where the permissions of one coldkey shoul
 
 - **Staking operations**: Keep your coldkey secure in cold storage while using a proxy to manage staking operations.
 
-  See [Staking with a Proxy](../../keys/proxies/staking-with-proxy.md).
+  See [Managing Your Stakes](../../staking-and-delegation/managing-stake-sdk.md).
 
 - **Operational delegation**: run subnet operations tasks like setting hyperparameters from a designated operations wallet, allowing the owner wallet to remain in maximum-security deep storage.
 - **Least-privilege permissions**: allow an employee or other designated operator to perform a constrained set of calls on a project-owned wallet.
 
+- **Nearly *all* operations:** you can even manage proxies with a proxy, so other than creating the first proxy, you should ideally not perform any operations with your primary coldkey.
+
 ### Scope and Delays
 
-The power of proxies as a security tool comes from the two ways proxies can be limited: in the scope of their permissions, and by requiring a delay with announcement before they can perform operations. It's critical to note that without using these constraints properly, proxies don't necessarily give any security benefit.
+The power of proxies as a security tool comes from the two ways proxies can be limited: in the scope of their permissions, and by requiring a delay with announcement before they can perform operations. **Without using these constraints properly, proxies don't necessarily give any security benefit.**
 
 - The proxy can be constrained to specific operations. The permission scope is determined by the `ProxyType` call filter.
-- The proxy can be constrained by a **delay** with a public **announcement**, giving the safe wallet holder time to reject a call made by they proxy (for example, if a key has been compromised).
+- The proxy can be constrained by a **delay** with a public **announcement**, giving the safe wallet holder time to reject a call made by the proxy (for example, if a key has been compromised).
+
+:::danger Zero-delay proxies provide little protection
+
+A zero-delay proxy allows an attacker to act repeatedly and opportunistically.
+
+Without a delay, even a staking proxy can use `swap_stake` to repeatedly move a victim's stake through low-liquidity subnet AMMs, extracting value through slippage on each round trip.
+
+See: [Avoid Staking Proxy Attacks](../learn/avoid-staking-proxy-attacks)
+
+:::
 
 ### Terminology and parameters
 
@@ -89,10 +108,19 @@ The following table shows the available `ProxyType` options and their descriptio
 
 When setting up and using proxies, it's important to follow practices that reduce security risks and operational overhead. The following guidelines highlight how to map permissions correctly, manage delays, and keep accounts secure while making proxy usage efficient:
 
+- Always set a non-zero delay for proxies that control financial operations. The delay creates a veto window during which you can reject unauthorized announcements from your hardware wallet.
+
+- If you have a delayed proxy, monitor announcements on a schedule shorter than your delay period. See [Monitor and Reject Announcements](../../keys/proxies/working-with-proxies#monitor-and-reject-announcements).
+
+- Clear announcements you don't plan to execute.
+
+- If you are not monitoring a proxy, revoke it. Every proxy relationship is a potential attack vector.
+
 - Map your operational needs to a minimal `ProxyType`. If a type seems overly broad, consider whether a more restrictive variant exists.
-- Use non-zero delays for high-risk actions; monitor announcements.
-- Track deposits and limits; batch or clear announcements to avoid dangling deposits.
-- Favor maximum security over convenience when protecting your real account coldkey, using a more convenient but less protected mode of access to your proxy wallet for day for operations.
+
+- An `Any` proxy at zero delay is an equal risk to the primary coldkey it should be protecting, so by creating one you actually increase your risk (since either of two keys could leak), rather than reducing it.
+
+- Understand and practice [Coldkey and Hotkey Workstation Security](../../keys/coldkey-hotkey-security).
 
 ### Choosing the Right `ProxyType`
 
@@ -109,5 +137,12 @@ Only use the unrestricted `Any` type when no other option fits. If a proxy call 
 
 To ensure scalability and prevent abuse, proxy usage is subject to certain limits as shown:
 
-- **`MaxProxies`**: This refers to the maximum number of delegate accounts that can be linked to a single real account. Each account can register up to 20 proxies in total. See [source code: MaxProxies configuration](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L670).
-- **`MaxPending`**: This refers to the maximum number of pending announcements that a delegate account can have. This limit helps prevent excessive queuing. Each account can have up to 75 pending announcements at a time. See [source code: MaxPending configuration](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L671).
+- **`MaxProxies`**: The maximum number of delegate accounts that can be linked to a single real account. Each account can register up to 20 proxies in total. See [source code: MaxProxies configuration](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L670).
+- **`MaxPending`**: The maximum number of pending announcements that a delegate account can have. Each account can have up to 75 pending announcements at a time. See [source code: MaxPending configuration](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L671).
+
+<details>
+<summary><strong>Check current values on-chain</strong></summary>
+
+To verify these limits, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Constants**, select `proxy.maxProxies` and `proxy.maxPending`. See [Inspecting the Chain](../../concepts/inspecting-the-chain).
+
+</details>

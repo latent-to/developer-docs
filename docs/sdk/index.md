@@ -36,19 +36,17 @@ Manage your TAO stake across validators and subnets.
   - How to move stake between validators
   - How to transfer stake
 - [Managing Root Claims](../staking-and-delegation/root-claims/managing-root-claims.md): Claim root network positions
-- [Managing Liquidity Positions](../liquidity-positions/managing-liquidity-positions.md): Add and remove liquidity on Uniswap
-
 ## Proxy Operations
 
 Use proxies to delegate account permissions securely while keeping your coldkey offline.
 
 - [Create and Manage Proxies](../keys/proxies/working-with-proxies.md): Set up standard proxy relationships
 - [Pure Proxies](../keys/proxies/pure-proxies.md): Create and use keyless pure proxy accounts
-- [Staking with a Proxy](../keys/proxies/staking-with-proxy.md): Perform staking operations through a proxy
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md): Staking operations through a proxy
 
 **By proxy type:**
 
-- **Proxy staking**: See [Staking with a Proxy](../keys/proxies/staking-with-proxy.md)
+- **Proxy staking**: See [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
 - **Other proxy operations**: Execute any permitted call through a proxy (see [Working with Proxies](../keys/proxies/working-with-proxies.md))
 
 ## Advanced: Working with Blockchain Calls

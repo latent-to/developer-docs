@@ -8,7 +8,7 @@ description: "This page contains compile-time runtime constants for the Subtenso
 This page contains compile-time runtime constants for the Subtensor runtime and their respective values. Accessible via `api.consts.<Pallet>.<constant_name>`. Values read live from node.
 
 :::info
-Generated from Subtensor runtime spec version **415**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **423**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[aura](#aura)**
@@ -18,9 +18,9 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 - **[crowdloan](#crowdloan)**
 - **[drand](#drand)**
 - **[grandpa](#grandpa)**
+- **[limitOrders](#limitorders)**
 - **[multisig](#multisig)**
 - **[proxy](#proxy)**
-- **[registry](#registry)**
 - **[safeMode](#safemode)**
 - **[scheduler](#scheduler)**
 - **[subtensorModule](#subtensormodule)**
@@ -282,6 +282,31 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
     Since the `SetIdSession` map is only used for validating equivocations this value should relate to the bonding duration of whatever staking system is being used (if any). If equivocation handling is not enabled then this value can be zero.
 
 
+## `limitOrders`
+
+### `maxOrdersPerBatch`: `u32`
+
+- **interface**: `api.consts.limitOrders.maxOrdersPerBatch`
+- **value**: `100`
+- **summary**: Maximum number of orders in a single `execute_orders` call. Should equal `floor(max_block_weight / per_order_weight)`.
+
+### `palletHotkey`: `AccountId32`
+
+- **interface**: `api.consts.limitOrders.palletHotkey`
+- **value**: `5EYCAe5fvncY7XCnFeAMaW4jAaVtzayKdaNNRURB5Nwvtw74`
+- **summary**: Hotkey registered in each subnet that the pallet's intermediary account stakes to/from during batch execution.
+
+    This must be a hotkey registered on every subnet the pallet may operate on. Operators should register a dedicated hotkey and set this in the runtime configuration.
+
+### `palletId`: `[u8;8]`
+
+- **interface**: `api.consts.limitOrders.palletId`
+- **value**: `0x62742f6c696d6974`
+- **summary**: PalletId used to derive the intermediary account for batch execution.
+
+    The derived account temporarily holds pooled TAO and staked alpha during `execute_batched_orders` before distributing to order signers.
+
+
 ## `multisig`
 
 ### `depositBase`: `u64`
@@ -352,27 +377,6 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 - **summary**: The amount of currency needed per proxy added.
 
     This is held for adding 32 bytes plus an instance of `ProxyType` more into a pre-existing storage value. Thus, when configuring `ProxyDepositFactor` one should take into account `32 + proxy_type.encode().len()` bytes of data.
-
-
-## `registry`
-
-### `fieldDeposit`: `u64`
-
-- **interface**: `api.consts.registry.fieldDeposit`
-- **value**: `100000000`
-- **summary**: The amount held on deposit per additional field for a registered identity.
-
-### `initialDeposit`: `u64`
-
-- **interface**: `api.consts.registry.initialDeposit`
-- **value**: `100000000`
-- **summary**: The amount held on deposit for a registered identity
-
-### `maxAdditionalFields`: `u32`
-
-- **interface**: `api.consts.registry.maxAdditionalFields`
-- **value**: `1`
-- **summary**: Configuration fields Maximum user-configured additional fields
 
 
 ## `safeMode`
@@ -607,6 +611,12 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 - **value**: `4611686018427387903`
 - **summary**: Initial Max Difficulty.
 
+### `initialMaxEpochsPerBlock`: `u8`
+
+- **interface**: `api.consts.subtensorModule.initialMaxEpochsPerBlock`
+- **value**: `2`
+- **summary**: Initial default per-block cap on number of subnet epochs that may execute in a single `block_step`; the rest are deferred 1 block forward via `PendingEpochAt`.
+
 ### `initialMaxRegistrationsPerBlock`: `u16`
 
 - **interface**: `api.consts.subtensorModule.initialMaxRegistrationsPerBlock`
@@ -793,6 +803,12 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 - **value**: `false`
 - **summary**: A flag to indicate if Liquid Alpha is enabled.
 
+### `maxActivityCutoffFactorMilli`: `u32`
+
+- **interface**: `api.consts.subtensorModule.maxActivityCutoffFactorMilli`
+- **value**: `50000`
+- **summary**: Upper bound for the activity-cutoff factor (per-mille).
+
 ### `maxBurnLowerBound`: `u64`
 
 - **interface**: `api.consts.subtensorModule.maxBurnLowerBound`
@@ -805,11 +821,29 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 - **value**: `80`
 - **summary**: Maximum percentage of immune UIDs.
 
+### `maxTempo`: `u16`
+
+- **interface**: `api.consts.subtensorModule.maxTempo`
+- **value**: `50400`
+- **summary**: Upper bound for owner-set tempo.
+
+### `minActivityCutoffFactorMilli`: `u32`
+
+- **interface**: `api.consts.subtensorModule.minActivityCutoffFactorMilli`
+- **value**: `1000`
+- **summary**: Lower bound for the activity-cutoff factor (per-mille).
+
 ### `minBurnUpperBound`: `u64`
 
 - **interface**: `api.consts.subtensorModule.minBurnUpperBound`
 - **value**: `1000000000`
 - **summary**: Min  burn upper bound.
+
+### `minTempo`: `u16`
+
+- **interface**: `api.consts.subtensorModule.minTempo`
+- **value**: `360`
+- **summary**: Lower bound for owner-set tempo.
 
 ### `subtensorPalletId`: `[u8;8]`
 
@@ -831,12 +865,6 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 - **interface**: `api.consts.swap.maxFeeRate`
 - **value**: `10000`
 - **summary**: The maximum fee rate that can be set
-
-### `maxPositions`: `u32`
-
-- **interface**: `api.consts.swap.maxPositions`
-- **value**: `100`
-- **summary**: The maximum number of positions a user can have
 
 ### `minimumLiquidity`: `u64`
 
@@ -894,7 +922,7 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 ### `version`: `{"specName":"Text","implName":"Text","authoringVersion":"u32","specVersion":"u32","implVersion":"u32","apis":"Vec<([u8;8],u32)>","transactionVersion":"u32","systemVersion":"u8"}`
 
 - **interface**: `api.consts.system.version`
-- **value**: `{"specName":"node-subtensor","implName":"node-subtensor","authoringVersion":1,"specVersion":415,"implVersion":1,"apis":[["0xdf6acb689907609b",5],["0x37e397fc7c91f5e4",2],["0x40fe3ad401f8959a",6],["0xfbc577b9d747efd6",1],["0xd2bc9897eed08f15",3],["0xf78b278be53f454c",2],["0xdd718d5cc53262d4",1],["0xab3c0572291feb8b",1],["0xed99c5acb25eedf5",3],["0xbc9d89904f5b923f",1],["0x37c8bb1350a9a2a8",4],["0xf3ff14d5ab527059",3],["0x582211f65bb14b89",6],["0xe65b00e46cedd0aa",2],["0x68b66ba122c93fa7",2],["0x42e62be4a39e5b60",1],["0x806df4ccaa9ed485",1],["0x8375104b299b74c5",2],["0x5d1fbfbe852f2807",1],["0xc6886e2f8e598b0a",1],["0xc0de4984d112f3b4",1],["0xcbca25e39f142387",2],["0xa8b093e6508d9e9c",1],["0x1c4585bd5c707202",1]],"transactionVersion":1,"systemVersion":1}`
+- **value**: `{"specName":"node-subtensor","implName":"node-subtensor","authoringVersion":1,"specVersion":423,"implVersion":1,"apis":[["0xdf6acb689907609b",5],["0x37e397fc7c91f5e4",2],["0x40fe3ad401f8959a",6],["0xfbc577b9d747efd6",1],["0xd2bc9897eed08f15",3],["0xf78b278be53f454c",2],["0xdd718d5cc53262d4",1],["0xab3c0572291feb8b",1],["0xed99c5acb25eedf5",3],["0xbc9d89904f5b923f",1],["0x37c8bb1350a9a2a8",4],["0xf3ff14d5ab527059",3],["0x582211f65bb14b89",6],["0xe65b00e46cedd0aa",2],["0x68b66ba122c93fa7",2],["0x42e62be4a39e5b60",1],["0x806df4ccaa9ed485",1],["0x8375104b299b74c5",2],["0x5d1fbfbe852f2807",1],["0xc6886e2f8e598b0a",1],["0xc0de4984d112f3b4",1],["0xcbca25e39f142387",2],["0xa8b093e6508d9e9c",1],["0x1c4585bd5c707202",1]],"transactionVersion":1,"systemVersion":1}`
 - **summary**: Get the chain's in-code version.
 
 

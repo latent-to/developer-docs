@@ -267,7 +267,7 @@ These values are runtime constants (compiled into the WASM blob) and can only ch
 ```python
 import bittensor as bt
 
-sub = bt.Subtensor(network="finney")
+sub = bt.Subtensor(network="test")
 s = sub.substrate
 
 for name in [
@@ -389,7 +389,7 @@ This example estimates swap fee and output for add_stake (TAO → alpha for SN 1
 ```python
 import bittensor as bt
 
-sub = bt.Subtensor(network="finney")
+sub = bt.Subtensor(network="test")
 netuid = 14
 amount_stake = bt.Balance.from_tao(0.1)
 
@@ -409,7 +409,7 @@ This example estimates swap fee and output for remove_stake (alpha for SN 14 →
 ```python
 import bittensor as bt
 
-sub = bt.Subtensor(network="finney")
+sub = bt.Subtensor(network="test")
 netuid = 14
 amount_stake = bt.Balance.from_tao(0.1)
 
@@ -431,7 +431,7 @@ This example estimates swap for a cross-subnet move (subnet 14 → subnet 5):
 ```python
 import bittensor as bt
 
-sub = bt.Subtensor(network="finney")
+sub = bt.Subtensor(network="test")
 
 amount_alpha = bt.Balance.from_tao(1).set_unit(5)
 
@@ -506,7 +506,6 @@ import bittensor as bt
 
 sub = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="my_wallet", hotkey="my_hotkey")
-wallet.unlock_coldkey()
 
 netuid = 1
 hotkey_ss58 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
@@ -522,7 +521,7 @@ call = sub.compose_call(
         "amount_staked": amount.rao,
     },
 )
-# Keypair is the account that pays the fee (coldkey)
+# Fee estimation only needs the public key — no coldkey unlock required
 fee = sub.get_extrinsic_fee(call=call, keypair=wallet.coldkeypub)
 print(f"Estimated transaction fee: {fee}")
 ```
@@ -549,9 +548,8 @@ Using the SDK:
 ```python
 import bittensor as bt
 
-sub = bt.Subtensor(network="finney")
+sub = bt.Subtensor(network="test")
 wallet = bt.Wallet(name="my_wallet", hotkey="my_hotkey")
-wallet.unlock_coldkey()
 
 hotkey_1 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
 hotkey_2 = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
@@ -575,7 +573,7 @@ batch_call = sub.compose_call(
     call_params={"calls": [call_1, call_2]},
 )
 
-# Estimate the transaction fee before sending
+# Fee estimation only needs the public key — no coldkey unlock required
 fee = sub.get_extrinsic_fee(call=batch_call, keypair=wallet.coldkeypub)
 print(f"Estimated transaction fee: {fee}")
 ```

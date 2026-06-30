@@ -2761,7 +2761,7 @@ The following outline of subtensor storage query examples is provided for high-l
     ```
 ## 172. TransferToggle
 
-- **Description**: Storage for TransferToggle. When enabled, a holder of alpha stake can transfer its ownership to another coldkey/wallet using [`btcli stake transfer`](../staking-and-delegation/managing-stake-btcli#transferring-stake) or [`transfer_stake`](pathname:///python-api/html/autoapi/bittensor/core/async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor.transfer_stake).
+- **Description**: Storage for TransferToggle. When enabled, a holder of alpha stake can transfer its ownership to another coldkey/wallet using [`btcli stake transfer`](../staking-and-delegation/managing-stake-sdk#transfer-stake-ownership) or [`transfer_stake`](pathname:///python-api/html/autoapi/bittensor/core/async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor.transfer_stake).
 - **Query Type**: `u16 -> unknown`
 - **Parameters**:
   - `netuid`: `u16`

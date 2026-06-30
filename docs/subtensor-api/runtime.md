@@ -8,7 +8,7 @@ description: "This page includes runtime API calls exposed by the Subtensor runt
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **415**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **423**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[AccountNonceApi](#accountnonceapi)**
@@ -437,6 +437,10 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 
 - **interface**: `api.call.stakeInfoRuntimeApi.getMostConvictedHotkeyOnSubnet`
 
+### `getStakeAvailabilityForColdkeys(coldkey_accounts: Vec<AccountId32>, netuids: Option<Vec<u16>>)`: `BTreeMap`
+
+- **interface**: `api.call.stakeInfoRuntimeApi.getStakeAvailabilityForColdkeys`
+
 ### `getStakeFee(origin: Option<(AccountId32, u16)>, origin_coldkey_account: AccountId32, destination: Option<(AccountId32, u16)>, destination_coldkey_account: AccountId32, amount: u64)`: `u64`
 
 - **interface**: `api.call.stakeInfoRuntimeApi.getStakeFee`
@@ -483,6 +487,10 @@ Generated from Subtensor runtime spec version **415**. Connected to: `wss://entr
 ### `getMetagraph(netuid: u16)`: `Option<Metagraph>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getMetagraph`
+
+### `getNextEpochStartBlock(netuid: u16)`: `Option<u64>`
+
+- **interface**: `api.call.subnetInfoRuntimeApi.getNextEpochStartBlock`
 
 ### `getSelectiveMechagraph(netuid: u16, subid: u8, metagraph_indexes: Vec<u16>)`: `Option<SelectiveMetagraph>`
 

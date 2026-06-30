@@ -1,66 +1,155 @@
 ---
-title: "Governance Overview"
+title: "Governance"
 ---
 
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+# Governance
 
-# Governance Overview
+Operational control of Bittensor is governed by the following decentralized protocol. All root calls, including protocol changes, runtime upgrades, and other privileged operations, reach the chain only after passing through both stages.
 
-Bittensor's governance protocol transitions the management of the network from centralization within the foundation to community ownership over time.
-
-The first stage of this transition to decentralized management is the creation of a bicameral legislature. In this stage, the [Triumvirate](../resources/glossary.md#triumvirate) creates proposals for the [Senate](./senate.md) to approve.
-
-Triumvirate members are Opentensor Foundation employees, while the Senate is formed from the top K delegate hotkeys.
-
-## Proposals
-
-Proposals are encapsulations of other extrinsics and will be executed only after meeting both of the two conditions:
-
-1. The proposal has obtained (50% + 1) approvals from the Senate, and
-2. A member of the Triumvirate has closed the proposal.
-
-The above guarantees that the Senate must reach a majority consensus to execute a proposal.
-
-:::tip Execution of a proposal
-When a proposal is executed, the calldata passed to it during its creation are included in the same block as the close extrinsic.
+:::note
+It is critical to note that the governance design depends on the collectives being populated. At initial deploy and until the reviewing collectives are populated, the review stage is a no-op that offers no additional check on the triumvirate.
 :::
 
-## Security
+## Collectives
 
-Before the governance protocol existed, all administrative actions within the network (e.g., changing hyperparameters, creating new subnetworks, chain upgrades) required permission via a single privileged key, known as `sudo`. If the `sudo` private key were somehow compromised, a malicious actor could take over the network and execute any privileged extrinsics.
+Governance is organized around five named on-chain collectives managed by `pallet-multi-collective`:
 
-Under the governance protocol, a malicious actor would have to compromise a Triumvirate member and control a majority of Senate seats in order to approve a proposal.
+| Collective | Size | Selection | Role |
+|---|---|---|---|
+| **Triumvirate** | 3 (fixed) | Curated (root-assigned) | First-stage approval |
+| **Proposers** | 1–20 | Curated (root-assigned) | Submit proposals |
+| **Building** | 16 (fixed) | Rotating every 60 days | Review-stage voting |
+| **Economic** | 16 (fixed) | Rotating every 60 days | Review-stage voting |
+| **EconomicEligible** | ≤64 | Auto-synced from root registrations | Candidate pool for Economic |
 
-## Example
+## Proposal Flow
 
-Consider the following:
+### Stage 1: Triumvirate track
 
-- The Triumvirate contains three seats, with members `Alice`, `Bob`, and `Charlie`.
-- The Senate has three members elected to participate: `Dave`, `Eve`, and `Ferdie`.
+A member of the **Proposers** collective submits a root call. The proposal enters the Triumvirate track:
 
-**Triumvirate**
+- The three Triumvirate members have **7 days** to vote.
+- **2-of-3 aye votes**: proposal advances to the review track.
+- **2-of-3 nay votes** or timeout: proposal is rejected and cleaned up.
 
-`Bob` has a novel concept for a subnet and wishes to deploy it on the Bittensor network. `Bob` creates a proposal with the calldata:
+### Stage 2: Review track
 
-<SdkVersion />
+On Triumvirate approval, the proposal enters a delay period. The voter set is the **deduplicated union of the Economic and Building collectives** (at most 32 members). The voter set is snapshotted at the moment the review period opens — collective rotations during the delay do not change who may vote or shift the thresholds.
 
-```python
-SubtensorModule.SudoAddNetwork(netuid, tempo, modality)
-```
+The delay starts at **24 hours** and can extend to a **2-day maximum** as nay votes accumulate, following an ease-out adjustment curve. When the adjusted delay drops below the time already elapsed, execution begins.
 
-and sends the transaction to the network in order to broadcast the proposal.
+During the delay period, voters may:
 
-**Senate**
+- **Fast-track**: 75% or more aye votes → executes at the next block.
+- **Cancel**: 51% or more nay votes → proposal cancelled and cleaned up.
+- Otherwise the proposal executes when the delay period expires.
 
-- `Dave`, `Eve`, and `Ferdie` all own the nominated delegate hotkeys, and they individually control more than two percent of the network's total stakes.
-- Using `btcli`, they can view the proposal and the calldata, which it will execute upon approval.
-- `Dave` and `Ferdie` decided they wanted to approve this new subnet, and they both approved the proposal.
-- `Eve` disagrees with the concept and disapproves of the proposal.
+### Execution
 
-Even though the Senate may have twelve members at any time, it is not guaranteed that there will be twelve occupied seats. With a Senate size of three, the approval threshold will be two approvals. Since `Dave` and `Ferdie` both approved this proposal, a member of the Triumvirate can now execute it.
+The chain dispatches the call with root privilege through an atomic enact wrapper. If the call fails it is not retried and is cleaned up. A stale scheduler entry on a terminated referendum cannot dispatch its inner call.
 
-**Closing**
+![On-Chain Governance: Proposal Flow](/img/docs/proposal-flow.svg)
 
-`Alice` sees Senate has passed the proposal and executes the `close` extrinsic to execute the calldata within the proposal.
+<!-- @startuml
+title On-Chain Governance: Proposal Flow
 
-Bittensor now has a new subnet on which `Alice`, `Bob`, or `Charlie` can create further proposals to change hyperparameters, allow or disallow registration, and control any other configuration previously controlled by the `sudo` private key.
+skinparam shadowing false
+skinparam defaultFontName Monospace
+skinparam sequence {
+  LifeLineBorderColor #444444
+  ParticipantBorderColor #444444
+  ParticipantBackgroundColor white
+  ArrowColor #444444
+}
+
+actor "Proposers Collective\n(1–20 members)" as P
+actor "Triumvirate\n(3 members)" as T
+actor "Review Collective\n(Economic ∪ Building, ≤32)" as RC
+database "Chain" as C
+
+== Proposal Submission ==
+note over P
+A member of the Proposers collective submits a root call
+(protocol change, runtime upgrade, or other privileged operation).
+end note
+P -> C: submit_proposal(call)
+
+note over C
+Proposal enters Triumvirate track.
+end note
+
+== Triumvirate Track (7 days) ==
+group #LightSkyBlue 7-day decision window\n2-of-3 ayes advance · 2-of-3 nays reject
+  T -> C: vote(aye/nay)
+
+  opt 2-of-3 ayes reached
+    C -> C: advance to review track
+
+  else 2-of-3 nays reached OR 7-day timeout
+    C -> C: reject
+  end
+end group
+
+== Review Track ==
+
+group #LightGreen 24h initial delay / 2-day max\nVoter set: deduplicated union of Economic and Building
+  RC -> C: vote(aye/nay)
+
+  opt Fast-track
+    C -> C: 75% or more aye votes → execute at next block
+  end
+
+  opt Cancel
+    C -> C: 51% or more nay votes → proposal cancelled
+  end
+
+  opt Delay adjustment
+    C -> C: recompute delay (ease-out curve) as nay votes accumulate
+  end
+end group
+
+note right of C
+Voter eligibility is snapshotted at review-track open.
+Collective rotations during the period do not change
+who may vote or shift the thresholds.
+When the adjusted delay drops below elapsed time,
+execution begins.
+end note
+
+== Execution ==
+note over C
+After the delay period expires (and if not cancelled),
+the chain executes the call with root privilege.
+If execution fails, it is not retried and is cleaned up.
+end note
+
+C -> C: execute(call as Root)
+alt success
+  C -> C: cleanup
+else failure
+  C -> C: cleanup (no retry)
+end
+
+@enduml
+-->
+
+## Collective Membership
+
+### Proposers and Triumvirate
+
+Both are curated: members are added, removed, or swapped by root governance. The Triumvirate is fixed at 3 seats. Previously the Triumvirate held sudo access directly; under the new system it is the first stage of the referendum process with no direct sudo.
+
+### Economic collective
+
+The Economic collective, likely to represent highly staked validators, is selected from the **EconomicEligible** pool every 60 days. The top 16 EconomicEligible coldkeys by stake EMA value take the seats. If fewer than 16 eligible coldkeys are available, the rotation fails safely and the previous membership remains in place.
+
+**EconomicEligible** membership is auto-synced with root registration state. When a coldkey's root-registered hotkey count goes from 0 to 1, the coldkey is added to EconomicEligible. The EMA tracks a combined stake value per coldkey: liquid TAO plus the TAO value of alpha across all owned hotkeys, sampled incrementally each block (8 subnets and ≤256 hotkeys per tick, decay factor alpha=0.02). A 210-sample warmup of approximately 30 days is required before a coldkey becomes eligible for selection.
+
+### Building collective
+
+The Building collective is selected every 60 days. The top 16 subnet-owner coldkeys by their best subnet's moving price take the seats, subject to:
+
+- Subnets younger than 180 days are excluded.
+- At most one seat per coldkey regardless of how many qualifying subnets they own.
+
+If fewer than 16 eligible coldkeys are available, the rotation fails safely and the previous membership remains in place.

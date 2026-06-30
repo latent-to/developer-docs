@@ -24,7 +24,7 @@ Miners must also manage their own TAO and alpha stake (to exit the emissions tha
 See:
 
 - [Staking/Delegation Overview](../staking-and-delegation/delegation)
-- [Staker's Guide to `BTCLI`](../staking-and-delegation/stakers-btcli-guide)
+- [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk)
 
 Creating hotkeys requires a coldkey private key, and should be done on a secure [coldkey workstation](../keys/coldkey-hotkey-security#coldkey-workstation). However, using hotkeys for signing requests when mining does not require a coldkey, which should never be present on a mining server, i.e. a hotkey workstation. The coldkey should not be placed on a machine used for mining because the software dependencies for mining should not be considered safe/trusted code to the standards of a coldkey workstation.
 

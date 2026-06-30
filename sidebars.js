@@ -108,6 +108,7 @@ const sidebars = {
             "keys/proxies/index",
             "keys/proxies/working-with-proxies",
             "keys/proxies/pure-proxies",
+            "learn/avoid-staking-proxy-attacks",
           ],
         },
         "keys/multisig",
@@ -122,11 +123,12 @@ const sidebars = {
       collapsed: true,
       items: [
         "staking-and-delegation/delegation",
-        "staking-and-delegation/stakers-btcli-guide",
-        "staking-and-delegation/managing-stake-btcli",
-        "staking-and-delegation/managing-stake-sdk",
+        {
+          type: "doc",
+          id: "staking-and-delegation/managing-stake-sdk",
+          label: "Managing Your Stakes",
+        },
         "staking-and-delegation/conviction-staking",
-        "keys/proxies/staking-with-proxy",
         {
           type: "category",
           label: "Root claims",
@@ -138,6 +140,7 @@ const sidebars = {
           ],
         },
         "learn/price-protection",
+        "learn/balancer-amm",
         "learn/slippage",
         "staking-and-delegation/staking-polkadot-js",
         "staking-and-delegation/using-ledger-hw-wallet",
@@ -164,16 +167,6 @@ const sidebars = {
         "validators/index",
         "validators/child-hotkeys",
         "validators/validators-btcli-guide",
-      ],
-    },
-    {
-      type: "category",
-      label: "Liquidity Positions (Uniswap)",
-      collapsible: true,
-      collapsed: true,
-      items: [
-        "liquidity-positions/liquidity-positions",
-        "liquidity-positions/managing-liquidity-positions",
       ],
     },
     {
@@ -248,6 +241,7 @@ const sidebars = {
         "concepts/commit-reveal",
         "concepts/stake-burn",
         "concepts/consensus-based-weights",
+        "concepts/inspecting-the-chain",
         "concepts/bt-logging-levels",
         "resources/utilities",
       ],
@@ -346,8 +340,8 @@ const sidebars = {
       collapsed: true,
       items: [
         "governance/governance",
-        "governance/senate",
-        "governance/senators-btcli-guide",
+        // "governance/senate",
+        // "governance/senators-btcli-guide",
       ],
     },
 

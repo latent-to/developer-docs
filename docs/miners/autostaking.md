@@ -107,8 +107,14 @@ netuid 2: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
 
 Sets the destination hotkey for your coldkey on a specific subnet.
 
+:::warning Use a proxy coldkey for this operation on mainnet
+`set_coldkey_auto_stake_hotkey` has no scoped proxy type, but a `NonTransfer` proxy permits it. Your primary coldkey should remain in cold storage. See [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security) and [Working with Proxies](../keys/proxies/working-with-proxies).
+:::
+
 <Tabs groupId="autostaking-method">
 <TabItem value="btcli" label="BTCLI">
+
+On mainnet, run with `--wallet.name PROXY_WALLET --proxy REAL_COLDKEY_SS58` (using a `NonTransfer` proxy):
 
 ```bash
 btcli stake set-auto --wallet.name <wallet> --netuid <netuid>
@@ -154,25 +160,29 @@ Set this auto-stake destination? [y/n] (y): y
 <TabItem value="sdk" label="Python SDK">
 
 ```python
-import asyncio
+import asyncio, os
 import bittensor as bt
+from bittensor.core.chain_data.proxy import ProxyType
+from bittensor.core.extrinsics.pallets import SubtensorModule
 
 async def main():
-    async with bt.async_subtensor(network="local") as subtensor:
-        wallet = bt.Wallet(
-            name="Alice",
-        )
-        wallet.unlock_coldkey()
+    proxy_wallet = bt.Wallet(name=os.environ['BT_PROXY_WALLET_NAME'])
+    real_account_ss58 = os.environ['BT_REAL_ACCOUNT_SS58']
 
-        netuid = 2  # subnet to configure
-        hotkey_ss58 = "5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM"  # validator hotkey to auto-stake to
+    netuid = 2  # subnet to configure
+    hotkey_ss58 = "5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM"  # validator hotkey to auto-stake to
 
-        response = await subtensor.set_auto_stake(
-            wallet=wallet,
+    async with bt.AsyncSubtensor(network="test") as subtensor:
+        set_auto_call = SubtensorModule(subtensor).set_coldkey_auto_stake_hotkey(
             netuid=netuid,
-            hotkey_ss58=hotkey_ss58,
-            wait_for_inclusion=True,
-            wait_for_finalization=False,
+            hotkey=hotkey_ss58,
+        )
+        # NonTransfer is the narrowest proxy type that permits set_coldkey_auto_stake_hotkey
+        response = await subtensor.proxy(
+            wallet=proxy_wallet,
+            real_account_ss58=real_account_ss58,
+            force_proxy_type=ProxyType.NonTransfer,
+            call=set_auto_call,
         )
         print(response)
 

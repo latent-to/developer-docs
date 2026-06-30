@@ -78,12 +78,20 @@ const config = {
             from: "/keys/proxies/create-proxy",
           },
           {
-            to: "/subnets/understanding-multiple-mech-subnets",
-            from: "/subnets/understanding-sub-subnets",
+            from: "/keys/proxies/staking-with-proxy",
+            to: "/staking-and-delegation/managing-stake-sdk",
           },
           {
-            to: "/liquidity-positions/",
-            from: "/liquidity-provider",
+            from: "/staking-and-delegation/managing-stake-btcli",
+            to: "/staking-and-delegation/managing-stake-sdk",
+          },
+          {
+            from: "/staking-and-delegation/stakers-btcli-guide",
+            to: "/staking-and-delegation/managing-stake-sdk",
+          },
+          {
+            to: "/subnets/understanding-multiple-mech-subnets",
+            from: "/subnets/understanding-sub-subnets",
           },
           {
             to: "/staking-and-delegation/staking-polkadot-js",
@@ -224,6 +232,14 @@ const config = {
           {
             from: "/subtensor-nodes/using-source",
             to: "/subtensor-nodes/run/using-source",
+          },
+          {
+            from: "/liquidity-positions/liquidity-positions",
+            to: "/learn/balancer-amm",
+          },
+          {
+            from: "/liquidity-positions/managing-liquidity-positions",
+            to: "/learn/balancer-amm",
           },
         ],
       },
