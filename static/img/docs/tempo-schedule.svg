@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 200" width="760" height="200">
+  <defs>
+    <clipPath id="barClip">
+      <rect x="40" y="24" width="600" height="36" rx="4"/>
+    </clipPath>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#374151"/>
+    </marker>
+  </defs>
+
+  <!-- ── SECTION 1: Automatic epoch schedule ── -->
+
+  <text x="40" y="14" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#374151">Automatic epoch schedule</text>
+  <text x="640" y="14" text-anchor="end" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#16A34A">Epoch fires</text>
+
+  <!-- Active tempo fill (blue) -->
+  <rect x="40" y="24" width="519" height="36" fill="#DBEAFE" clip-path="url(#barClip)"/>
+  <!-- Admin freeze fill (amber) -->
+  <rect x="559" y="24" width="82" height="36" fill="#FDE68A" clip-path="url(#barClip)"/>
+  <!-- Outer border -->
+  <rect x="40" y="24" width="600" height="36" rx="4" fill="none" stroke="#3B82F6" stroke-width="1.5"/>
+  <!-- Dividing line (active → freeze) -->
+  <line x1="559" y1="25" x2="559" y2="59" stroke="#F59E0B" stroke-width="1.5"/>
+
+  <!-- Active zone label -->
+  <text x="280" y="45" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10.5" fill="#1E40AF">← tempo: 360–50,400 blocks; owner-configurable →</text>
+
+  <!-- Freeze zone labels -->
+  <text x="599" y="41" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9.5" font-weight="600" fill="#92400E">Admin</text>
+  <text x="599" y="54" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9.5" font-weight="600" fill="#92400E">Freeze</text>
+
+  <!-- Epoch marker line and triangle -->
+  <line x1="640" y1="17" x2="640" y2="66" stroke="#16A34A" stroke-width="2.5"/>
+  <polygon points="633,66 647,66 640,74" fill="#16A34A"/>
+
+  <!-- Next-tempo dashes -->
+  <line x1="642" y1="42" x2="726" y2="42" stroke="#93C5FD" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="733" y="46" font-family="system-ui, sans-serif" font-size="13" fill="#3B82F6">→</text>
+
+  <!-- Bottom labels -->
+  <text x="40" y="84" text-anchor="start" font-family="system-ui, sans-serif" font-size="9" fill="#6B7280">block N  (LastEpochBlock)</text>
+  <text x="752" y="84" text-anchor="end" font-family="system-ui, sans-serif" font-size="8.5" fill="#9CA3AF" font-style="italic">freeze zone not to scale</text>
+
+  <!-- ── DIVIDER ── -->
+  <line x1="40" y1="108" x2="700" y2="108" stroke="#E5E7EB" stroke-width="1"/>
+
+  <!-- ── SECTION 2: trigger_epoch ── -->
+
+  <text x="40" y="124" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#374151">Manual trigger: trigger_epoch()</text>
+
+  <!-- Timeline -->
+  <line x1="40" y1="146" x2="700" y2="146" stroke="#D1D5DB" stroke-width="1.5"/>
+
+  <!-- Call point (purple dot) -->
+  <circle cx="190" cy="146" r="5" fill="#7C3AED"/>
+  <text x="190" y="161" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#7C3AED">trigger_epoch()</text>
+  <text x="190" y="172" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#7C3AED">called</text>
+
+  <!-- Delay arrow -->
+  <line x1="197" y1="146" x2="345" y2="146" stroke="#374151" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="271" y="138" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#374151">AdminFreezeWindow (10 blocks)</text>
+
+  <!-- Triggered epoch marker -->
+  <line x1="350" y1="132" x2="350" y2="160" stroke="#16A34A" stroke-width="2.5"/>
+  <polygon points="343,160 357,160 350,168" fill="#16A34A"/>
+  <text x="350" y="180" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#15803D">epoch fires</text>
+  <text x="350" y="191" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#6B7280">(not immediate)</text>
+
+</svg>

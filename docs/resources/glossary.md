@@ -237,9 +237,9 @@ An optional security measure for the hotkey.
 
 ### Epoch
 
-An epoch in Bittensor is the period during which a subnet executes its consensus mechanism. Its is determined number of blocks defined by the subnet's [tempo](#tempo) hyperparameter.
+An epoch in Bittensor is the period during which a subnet executes its consensus mechanism. Its duration is determined by the subnet's [tempo](#tempo) hyperparameter.
 
-Epochs fire automatically every `Tempo` blocks (owner-configurable, default 360), or can be triggered manually by the subnet owner via the `trigger_epoch` extrinsic. The network guarantees at least one epoch per `MaxTempo` blocks (50,400 blocks, ~7 days) regardless of owner behavior.
+Epochs fire automatically every `tempo` blocks. Subnet owners can also schedule an out-of-band epoch using the `trigger_epoch` extrinsic, subject to a short delay and other constraints described under [Tempo](#tempo).
 
 **See also:** [Tempo](#tempo), [Yuma Consensus](../learn/yuma-consensus.md)
 
@@ -829,7 +829,43 @@ A global parameter (currently set to 0.18) that determines the relative influenc
 
 ### Tempo
 
-Tempo is a subnet-specific hyperparameter that determines how frequently epochs run automatically. It is configurable by the subnet owner within the range of 360 blocks (~72 minutes) to 50,400 blocks (~7 days), with 360 blocks as the default.
+Tempo is a subnet-specific hyperparameter that controls how frequently the subnet's [epoch](#epoch) fires automatically. It is measured in blocks and is configurable by the subnet owner in the range of 360 to 50,400 blocks (approximately 72 minutes to 7 days at 12 seconds per block). The default is 360 blocks.
+
+#### Epoch schedule
+
+The chain tracks each subnet's most recent epoch block in the `LastEpochBlock` storage item. An automatic epoch fires when `current_block >= LastEpochBlock + tempo`. After each epoch, `LastEpochBlock` is updated to the block at which the epoch ran, anchoring the next cycle.
+
+#### Setting tempo: `set_tempo`
+
+Subnet owners call `set_tempo` to change a subnet's tempo. The extrinsic:
+
+- Accepts values in the range \[360, 50,400\].
+- Is rate-limited to one call per 360 blocks (enforced by `OwnerHyperparamUpdate`), regardless of the current tempo value.
+- Is rejected during the admin freeze window (see below).
+- **Resets the epoch cycle**: on success, `LastEpochBlock` is set to the current block, so the next epoch fires exactly `new_tempo` blocks later, not sooner.
+
+Root can call `sudo_set_tempo` with any `u16` value, with no bounds check and no rate limit.
+
+#### Admin freeze window
+
+The last `AdminFreezeWindow` blocks of every tempo (default: **10 blocks**) are locked against admin operations. During this window, `set_tempo`, `trigger_epoch`, and all other hyperparameter changes are rejected with `AdminWindowNotOpen`. The window gives validators and miners a stable, predictable run-up before each epoch.
+
+#### Manual epoch trigger: `trigger_epoch`
+
+Subnet owners can schedule an out-of-band epoch via `trigger_epoch`. The extrinsic:
+
+- Does **not** fire an epoch immediately. It schedules the epoch to run exactly `AdminFreezeWindow` blocks (default 10) after the call.
+- Is rejected if any of the following are true:
+  - Commit-reveal weights (`commit_reveal_weights_enabled`) is active on the subnet.
+  - A triggered epoch is already pending (`PendingEpochAt ≠ 0`).
+  - The automatic epoch is already within `AdminFreezeWindow` blocks of firing (the standard freeze window is already open).
+- Is subject to the same `OwnerHyperparamUpdate` rate limit as `set_tempo`.
+
+#### Activity cutoff and tempo
+
+`ActivityCutoffFactorMilli` replaced the legacy absolute `ActivityCutoff` hyperparameter. It is expressed as a per-mille fraction of the subnet's current tempo (range: 1,000–50,000 per mille). The activity window therefore scales automatically when tempo changes. The default, 13,889 per mille, reproduces the legacy 5,000-block cutoff at the default 360-block tempo.
+
+![Tempo and epoch schedule diagram showing the tempo period, admin freeze window, and trigger_epoch delay](/img/docs/tempo-schedule.svg)
 
 **See also:** [Yuma Consensus](../learn/yuma-consensus.md), [Emissions](../learn/emissions.md), [Epoch](#epoch)
 
