@@ -168,14 +168,16 @@ Once enabled, any lock targeting the subnet owner's hotkey **instantly matures c
 
 **Hotkey swap:** When a hotkey is swapped via `btcli wallet swap-hotkey`, all locks targeting the old hotkey are transferred to the new hotkey. Conviction is **not** reset, because the same coldkey owns both hotkeys.
 
-**Coldkey swap:** A coldkey swap fails if the destination coldkey already has **active locked mass** on any subnet. The swap succeeds if the destination coldkey only has expired or zero-mass locks.
+**Coldkey swap:** A coldkey swap that carries locked alpha requires the destination coldkey to have opted in to receiving locked alpha (see [Accepting locked alpha transfers](#accepting-locked-alpha-transfers) below). If the destination has not opted in, the swap fails with `AccountRejectsLockedAlpha`. Additionally, the swap fails if the destination coldkey already has **active locked mass** on any subnet; it succeeds if the destination only has expired or zero-mass locks.
 
 ## Transferring locked stake
 
 When stake is moved to another coldkey **within the same subnet**, lock obligations follow the alpha proportionally. The runtime resolves how much of the transfer carries lock state:
 
 1. **Freely available alpha transfers first**: alpha above the locked amount moves with no lock implications.
-2. **Locked alpha is drawn next**: if the transfer exceeds freely available alpha, the remainder comes from locked mass. Conviction transfers proportionally with the locked amount. This step **fails with `LockHotkeyMismatch`** if the destination coldkey already has a lock pointing at a different hotkey.
+2. **Locked alpha is drawn next**: if the transfer exceeds freely available alpha, the remainder comes from locked mass. Conviction transfers proportionally with the locked amount. This step fails if:
+   - The destination coldkey has not opted in to receiving locked alpha (`AccountRejectsLockedAlpha`). See [Accepting locked alpha transfers](#accepting-locked-alpha-transfers).
+   - The destination coldkey already has a lock pointing at a different hotkey (`LockHotkeyMismatch`).
 
 **Cross-subnet moves are different**: moving stake between subnets goes through unstake → TAO transfer → restake, which must satisfy the lock constraint. You cannot move locked alpha across subnets directly.
 
@@ -434,8 +436,6 @@ response = subtensor.move_lock(
 )
 ```
 
-MEV Shield protection is enabled by default. Pass `mev_protection=False` to submit without it.
-
 </TabItem>
 <TabItem value="chain" label="Chain extrinsic">
 
@@ -461,6 +461,32 @@ Reassigns the coldkey's existing lock on `netuid` from its current hotkey to `de
 :::note Locking does not affect emissions
 Locking stake does not change the amount of emissions you receive. Emissions are determined by stake weight and consensus participation.
 :::
+
+### Accepting locked alpha transfers
+
+By default, coldkeys reject incoming locked alpha. A destination coldkey must explicitly opt in before it can receive locked alpha via a coldkey swap or stake transfer.
+
+This extrinsic is not yet available in btcli or the Python SDK. Use the chain extrinsic directly.
+
+<Tabs groupId="conviction-extrinsic">
+<TabItem value="chain" label="Chain extrinsic">
+
+```
+# Opt in to receiving locked alpha
+api.tx.subtensorModule.setRejectLockedAlpha(false)
+
+# Opt out (restore default behavior)
+api.tx.subtensorModule.setRejectLockedAlpha(true)
+```
+
+</TabItem>
+</Tabs>
+
+**Errors:**
+
+- `AccountRejectsLockedAlpha`: a transfer or coldkey swap attempted to deliver locked alpha to a coldkey that has not opted in
+
+**Event emitted:** `RejectLockedAlphaUpdated { coldkey, enabled }`
 
 ## Subnet ownership changes
 
