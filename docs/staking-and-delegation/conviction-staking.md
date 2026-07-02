@@ -464,11 +464,11 @@ Locking stake does not change the amount of emissions you receive. Emissions are
 
 ## Subnet ownership changes
 
-:::note Not yet active
-As a possible future feature, the ownership transfer function (`change_subnet_owner_if_needed`) is implemented in Subtensor codebase, but is currently commented out, so it is not active and enabling it will require a runtime upgrade like any other code change.
+:::info Active as of spec version 425
+Conviction-based ownership enforcement is now live. `change_subnet_owner_if_needed()` runs automatically after each subnet epoch.
 :::
 
-When activated, ownership transfers automatically at the end of each block's coinbase run if two conditions hold simultaneously:
+Ownership transfers automatically at the end of each block's coinbase run if two conditions hold simultaneously:
 
 1. The subnet is at least **one year old** (≥ 7,200 × 365 + 1,800 blocks from `networkRegisteredAt`)
 2. Total aggregate conviction across all locks on the subnet ≥ **10% of `SubnetAlphaOut`**
