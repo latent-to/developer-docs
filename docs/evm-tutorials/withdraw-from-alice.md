@@ -61,7 +61,7 @@ node withdraw.js
 
 **Source code**:
 
-- [EVM examples repo](https://github.com/opentensor/evm-bittensor)
+- [EVM examples repo](https://github.com/RaoFoundation/evm-bittensor)
 
 ```javascript
 const { ethers } = require("ethers");
@@ -129,7 +129,7 @@ async function main() {
 
   // Alice funds herself with 1M TAO
   const txSudoSetBalance = api.tx.sudo.sudo(
-    api.tx.balances.forceSetBalance(sender.address, "1000000000000000")
+    api.tx.balances.forceSetBalance(sender.address, "1000000000000000"),
   );
   await sendTransaction(api, txSudoSetBalance, sender);
   console.log("Balace force-set");
@@ -140,7 +140,7 @@ async function main() {
   // Sign and send the transaction
   await sendTransaction(api, transfer, sender);
   console.log(
-    `Transfer sent to ${recipientEthereumAddress} (its ss58 mirror address is: ${ss58Address})`
+    `Transfer sent to ${recipientEthereumAddress} (its ss58 mirror address is: ${ss58Address})`,
   );
   await api.disconnect();
 }

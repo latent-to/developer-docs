@@ -15,7 +15,7 @@ See:
 
 - [Wallets, Coldkeys and Hotkeys in Bittensor](./wallets)
 - [Coldkey and Hotkey Workstation Security](./coldkey-hotkey-security)
-- [Coldkey swap blockchain sourcecode](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/swap/swap_coldkey.rs).
+- [Coldkey swap blockchain sourcecode](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/swap/swap_coldkey.rs).
 
 :::info coldkey swap vs transfers
 Coldkey swaps are only necessary if you need to migrate a coldkey with subnet ownerships or registrations.
@@ -297,7 +297,7 @@ print(response)
 </Tabs >
 
 :::info reannouncing coldkey swaps
-A coldkey swap can be reannounced only after the [ColdkeySwapReannouncementDelay](https://github.com/opentensor/subtensor/blob/devnet-ready/runtime/src/lib.rs#:~:text=pub%20const%20InitialColdkeySwapReannouncementDelay) has passed. By default, this is 7,200 blocks (~1 day) after the initial announcement delay period expires. Reannouncing will overwrite the existing announcement and reset the mandatory waiting period before execution.
+A coldkey swap can be reannounced only after the [ColdkeySwapReannouncementDelay](https://github.com/RaoFoundation/subtensor/blob/devnet-ready/runtime/src/lib.rs#:~:text=pub%20const%20InitialColdkeySwapReannouncementDelay) has passed. By default, this is 7,200 blocks (~1 day) after the initial announcement delay period expires. Reannouncing will overwrite the existing announcement and reset the mandatory waiting period before execution.
 :::
 
 ## Execute/finalize a coldkey swap
@@ -452,14 +452,14 @@ print(response)
 </Tabs>
 
 :::info
-The [`dispute_coldkey_swap`](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/subtensor/src/macros/dispatches.rs#:~:text=pub%20fn%20dispute_coldkey_swap) extrinsic is only callable by a coldkey with an active swap announcement. If no swap has been initiated, the process returns a [`ColdkeySwapAnnouncementNotFound`](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/subtensor/src/macros/errors.rs#:~:text=ColdkeySwapAnnouncementNotFound) error.
+The [`dispute_coldkey_swap`](https://github.com/RaoFoundation/subtensor/blob/devnet-ready/pallets/subtensor/src/macros/dispatches.rs#:~:text=pub%20fn%20dispute_coldkey_swap) extrinsic is only callable by a coldkey with an active swap announcement. If no swap has been initiated, the process returns a [`ColdkeySwapAnnouncementNotFound`](https://github.com/RaoFoundation/subtensor/blob/devnet-ready/pallets/subtensor/src/macros/errors.rs#:~:text=ColdkeySwapAnnouncementNotFound) error.
 :::
 
-After a coldkey swap is disputed, the legitimate owner must contact the Triumvirate to prove ownership of the coldkey. The coldkey remains frozen until the Triumvirate resolves the dispute and [manually resets it](https://github.com/opentensor/subtensor/blob/822452f0bc205490c5ada2f2a04ad7b56ef7cc0a/pallets/subtensor/src/macros/dispatches.rs#L2470-L2490).
+After a coldkey swap is disputed, the legitimate owner must contact the Triumvirate to prove ownership of the coldkey. The coldkey remains frozen until the Triumvirate resolves the dispute and [manually resets it](https://github.com/RaoFoundation/subtensor/blob/822452f0bc205490c5ada2f2a04ad7b56ef7cc0a/pallets/subtensor/src/macros/dispatches.rs#L2470-L2490).
 
 ## Clear a coldkey swap announcement
 
-You can clear a coldkey swap announcement by submitting the [`clear_coldkey_swap_announcement`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#:~:text=pub%20fn%20clear_coldkey_swap_announcement) extrinsic to remove a pending or announced swap from the chain. This resets the swap state for the coldkey and allows normal operations to resume.
+You can clear a coldkey swap announcement by submitting the [`clear_coldkey_swap_announcement`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#:~:text=pub%20fn%20clear_coldkey_swap_announcement) extrinsic to remove a pending or announced swap from the chain. This resets the swap state for the coldkey and allows normal operations to resume.
 
 To clear a coldkey swap:
 
@@ -528,7 +528,7 @@ print(response)
 
 :::info
 
-A coldkey swap announcement can only be cleared after the [ColdkeySwapReannouncementDelay](https://github.com/opentensor/subtensor/blob/devnet-ready/runtime/src/lib.rs#:~:text=pub%20const%20InitialColdkeySwapReannouncementDelay) period has elapsed. By default, this is 7,200 blocks (~1 day) after the initial announcement delay expires. The announcement must also not be under dispute to be cleared.
+A coldkey swap announcement can only be cleared after the [ColdkeySwapReannouncementDelay](https://github.com/RaoFoundation/subtensor/blob/devnet-ready/runtime/src/lib.rs#:~:text=pub%20const%20InitialColdkeySwapReannouncementDelay) period has elapsed. By default, this is 7,200 blocks (~1 day) after the initial announcement delay expires. The announcement must also not be under dispute to be cleared.
 
 :::
 

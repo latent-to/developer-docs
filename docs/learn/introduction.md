@@ -13,18 +13,18 @@ This page will orient the reader with the major concepts and components of Bitte
 
 The Bittensor platform consists of the following components:
 
-1. A pool of ***subnets***. Each subnet is an incentive-based competition marketplace that produces a specific kind of digital commodity related to artificial intelligence. It consists of a community of ***miners*** who produce the commodity, and a community of ***validators*** who measure the miners' work to ensure its quality, according to subnet-specific standards.
-	
-	Each subnet is its own community, with its own goal, operating according to its own standards. For example, the [text prompting subnet](https://github.com/opentensor/prompting), developed by the Open Tensor foundation, incentivizes subnet miners that produce the best prompt completions in response to the prompts sent by the subnet validators in that subnet.
-	
-	To explore existing subnets, check out [the listings on TAO.app](https://tao.app), or engage with [Bittensor subnet communities on Discord](https://discord.com/channels/799672011265015819/830068283314929684).
+1. A pool of **_subnets_**. Each subnet is an incentive-based competition marketplace that produces a specific kind of digital commodity related to artificial intelligence. It consists of a community of **_miners_** who produce the commodity, and a community of **_validators_** who measure the miners' work to ensure its quality, according to subnet-specific standards.
 
-2. The ***Bittensor blockchain*** serves as a system of record, and its token TAO (τ) serves as incentive for participation in subnet activities. Miners and validators harvest TAO based on both their performance within subnets, and on the performance of those subnets within Bittensor. Hence, emission of TAO incentivizes miners and validators to do their best, creating the perfect conditions for continuous improvement. The Bittensor blockchain records balances and transactions for miners, validators and subnet creators, and allows arbitrary parties to stake currency into subnets in order to support their work.
+   Each subnet is its own community, with its own goal, operating according to its own standards. For example, the [text prompting subnet](https://github.com/RaoFoundation/prompting), developed by the Open Tensor foundation, incentivizes subnet miners that produce the best prompt completions in response to the prompts sent by the subnet validators in that subnet.
 
-3. The ***Bittensor SDK***, which supports interactions between miners and validators within subnets, and allows all parties to interact with the blockchain as necessary.
-	
-	Bittensor provides all the open source tools, codebase and the documentation, with step-by-step tutorials and guides, to enable you to participate in the Bittensor ecosystem.
-	
+   To explore existing subnets, check out [the listings on TAO.app](https://tao.app), or engage with [Bittensor subnet communities on Discord](https://discord.com/channels/799672011265015819/830068283314929684).
+
+2. The **_Bittensor blockchain_** serves as a system of record, and its token TAO (τ) serves as incentive for participation in subnet activities. Miners and validators harvest TAO based on both their performance within subnets, and on the performance of those subnets within Bittensor. Hence, emission of TAO incentivizes miners and validators to do their best, creating the perfect conditions for continuous improvement. The Bittensor blockchain records balances and transactions for miners, validators and subnet creators, and allows arbitrary parties to stake currency into subnets in order to support their work.
+
+3. The **_Bittensor SDK_**, which supports interactions between miners and validators within subnets, and allows all parties to interact with the blockchain as necessary.
+
+   Bittensor provides all the open source tools, codebase and the documentation, with step-by-step tutorials and guides, to enable you to participate in the Bittensor ecosystem.
+
 <ThemedImage
 alt="Simplified Bittensor Network"
 sources={{
@@ -32,7 +32,6 @@ sources={{
     dark: useBaseUrl('/img/docs/dark-bittensor-block-diagram.svg'),
   }}
 />
-
 
 ## Bittensor personas
 
@@ -43,10 +42,9 @@ The following roles define the ways to participate in Bittensor, and which are c
 - **Subnet creators**&mdash;Manage the incentive mechanisms that specify the work miners and validators must perform and evaluate, respectively. See [Create a Subnet](../subnets/create-a-subnet)
 - **Stakers**&mdash;TAO holders can support specific validators by staking TAO to them. See [Staking and Delegation](../staking-and-delegation/delegation).
 
-
 The documentation also describes the role of **Blockchain operator**. This applies during offline testing only, when the user runs a local instance of Subtensor as its own independent chain, not connected to either the Bittensor main or test network.
 
-See [Running a Subnet Locally](https://github.com/opentensor/bittensor-subnet-template/blob/main/docs/running_on_staging.md)
+See [Running a Subnet Locally](https://github.com/RaoFoundation/bittensor-subnet-template/blob/main/docs/running_on_staging.md)
 
 :::tip Browse the subnets
 Browse the subnets and explore links to their code repositories on [TAO.app's subnets listings](https://tao.app).
@@ -54,7 +52,7 @@ Browse the subnets and explore links to their code repositories on [TAO.app's su
 
 ## Subnet development
 
-Whether creating a new subnet or joining a pre-existing subnet, you should always start by first testing the subnet incentive mechanism **locally**, then on the Bittensor **testchain** and finally go live by connecting to the Bittensor **mainchain**. See the below conceptual deployment diagram showing the three stages. 
+Whether creating a new subnet or joining a pre-existing subnet, you should always start by first testing the subnet incentive mechanism **locally**, then on the Bittensor **testchain** and finally go live by connecting to the Bittensor **mainchain**. See the below conceptual deployment diagram showing the three stages.
 
 Testing the incentive mechanism means running one or more validators and miners to ensure that emissions are being harvested as understood and intended.
 
@@ -69,4 +67,3 @@ sources={{
     dark: useBaseUrl('/img/docs/dark-subnet-deploy-stages.svg'),
   }}
 />
- 

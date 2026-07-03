@@ -2,7 +2,7 @@
 title: "Dynamic TAO SDK Cheat Sheet"
 ---
 
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 This page provides a quick reference for the core functionalities for the Bittensor Python SDK that have changed for [Dynamic TAO](./index.md), and some example scripts to demonstrate functionality such as [viewing exchange rates](#display-current-exchange-rates) and [manage staking and unstaking](#managing-stake) into subnets.
 
@@ -22,7 +22,7 @@ pip install bittensor
 
 ### Option 2: Install from source
 
-1. Clone the Bittensor repository from GitHub: [`https://github.com/opentensor/bittensor`](https://github.com/opentensor/bittensor)
+1. Clone the Bittensor repository from GitHub: [`https://github.com/RaoFoundation/bittensor`](https://github.com/RaoFoundation/bittensor)
 1. Check out the `rao` branch.
 1. Run `pip install .`
 
@@ -337,14 +337,14 @@ Update: we have added proper nonce protection allowing you to run gather operati
 
 ```python
 # For async operations
-scatter_stake = await asyncio.gather(*[ 
+scatter_stake = await asyncio.gather(*[
     sub.add_stake(
         wallet=wallet,
         netuid=netuid,
         hotkey_ss58=hotkey_ss58,
         amount=bt.Balance.from_tao(amount)
-    ) 
-    for netuid in range(64) 
+    )
+    for netuid in range(64)
 ])
 ```
 

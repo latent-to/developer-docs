@@ -37,10 +37,10 @@ The Bittensor SDK and Bittensor CLI are required to interact with the local bloc
 
 ### 1. Pull the Docker image
 
-You can pull the official subtensor Docker image used to create the local blockchain instance from the [GitHub Container Repository](https://github.com/opentensor/subtensor/pkgs/container/subtensor-localnet). To do this, run the following command in your terminal:
+You can pull the official subtensor Docker image used to create the local blockchain instance from the [GitHub Container Repository](https://github.com/RaoFoundation/subtensor/pkgs/container/subtensor-localnet). To do this, run the following command in your terminal:
 
 ```bash
-docker pull ghcr.io/opentensor/subtensor-localnet:devnet-ready
+docker pull ghcr.io/RaoFoundation/subtensor-localnet:devnet-ready
 ```
 
 This command downloads the `subtensor-localnet` Docker image, making it available on your device.
@@ -58,13 +58,13 @@ Below are examples of how to run the container using each mode:
 - Fast blocks: Fast block mode reduces block processing time to _250ms per block_, enabling rapid chain progression. It allows faster feedback cycles for operations such as staking, subnet creation, and registration, making them ideal for local testing scenarios. To run the container in fast block mode, run the following command in your terminal:
 
   ```bash
-  docker run --rm --name local_chain -p 9944:9944 -p 9945:9945 ghcr.io/opentensor/subtensor-localnet:devnet-ready
+  docker run --rm --name local_chain -p 9944:9944 -p 9945:9945 ghcr.io/RaoFoundation/subtensor-localnet:devnet-ready
   ```
 
 - Non-fast blocks: Non-fast block mode uses the default _12-second block time_, aligning with subtensor block intervals. While this mode utilizes the default block processing time, it also incorporates some enhancements—for example, subnets become eligible to start one minute after creation. To run the container in non-fast block mode, run the following command in your terminal:
 
   ```bash
-  docker run --rm --name local_chain -p 9944:9944 -p 9945:9945 ghcr.io/opentensor/subtensor-localnet:devnet-ready False
+  docker run --rm --name local_chain -p 9944:9944 -p 9945:9945 ghcr.io/RaoFoundation/subtensor-localnet:devnet-ready False
   ```
 
 :::info
@@ -134,7 +134,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 Next, you must fetch the subtensor codebase to your local machine. Run the following commands to clone the Github repo and navigate into the `subtensor` directory:
 
 ```bash
-git clone https://github.com/opentensor/subtensor.git
+git clone https://github.com/RaoFoundation/subtensor.git
 cd subtensor
 ```
 

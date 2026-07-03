@@ -57,8 +57,8 @@ Unlike the previous flow-based model, there is no zero-emission floor tied to ne
 :::
 See:
 
-- [Subnet emissions source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs)
-- [Default alpha value for subnet price smoothing](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L828)
+- [Subnet emissions source code](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs)
+- [Default alpha value for subnet price smoothing](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/lib.rs#L828)
 
 ## Validator-Miner Bond Smoothing
 

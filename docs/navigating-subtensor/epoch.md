@@ -20,7 +20,7 @@ The basic flow of the epoch is:
 
 ## Core Function: `epoch()`
 
-Source code: [`run_epoch.rs`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs).
+Source code: [`run_epoch.rs`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs).
 
 ### Function Signature
 
@@ -211,9 +211,9 @@ new_validator_permits
 
 **Code References:**
 
-- Validator permit calculation: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:520-537`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L520-537)
-- Top-K selection algorithm: [`subtensor/pallets/subtensor/src/epoch/math.rs:250-263`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/math.rs#L250-263)
-- Bond cleanup logic: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:903-921`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L903-921)
+- Validator permit calculation: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:520-537`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L520-537)
+- Top-K selection algorithm: [`subtensor/pallets/subtensor/src/epoch/math.rs:250-263`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/math.rs#L250-263)
+- Bond cleanup logic: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:903-921`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L903-921)
 
 ### 4. Active Stake Calculation
 

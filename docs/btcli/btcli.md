@@ -2978,7 +2978,7 @@ aliases: subnet, s
 - `check-start`: Checks if a subnet's emission schedule can be started.
 - `set-identity`: Get the identity information for a subnet.
 - `get-identity`: Set or update the identity information for a subnet.
-- `set-symbol`: Allows the user to update their subnet symbol to a different available symbol. The full list of available symbols can be found here: https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/symbols.rs#L8
+- `set-symbol`: Allows the user to update their subnet symbol to a different available symbol. The full list of available symbols can be found here: https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/subnets/symbols.rs#L8
 
 ### `btcli subnet mechanisms`
 
@@ -3681,7 +3681,7 @@ btcli subnets start [OPTIONS]
 ### `btcli subnets set-symbol`
 
 Allows the user to update their subnet symbol to a different available symbol. The full list of available symbols can be found here:
-https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/symbols.rs#L8
+https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/subnets/symbols.rs#L8
 
 **EXAMPLE**
 
