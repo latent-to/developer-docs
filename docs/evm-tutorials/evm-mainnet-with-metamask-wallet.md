@@ -13,7 +13,7 @@ Key values:
 
 - The **Bittensor Mainnet URL:** `https://lite.chain.opentensor.ai`
 - **EVM Subtensor Chain ID:** `964` (UTF-8 encoded TAO symbol)
-- **Opentensor EVM-Bittensor GitHub repo:** `https://github.com/opentensor/evm-bittensor/tree/main`
+- **Opentensor EVM-Bittensor GitHub repo:** `https://github.com/RaoFoundation/evm-bittensor/tree/main`
 
 ## Step 1. Create a Metamask wallet
 

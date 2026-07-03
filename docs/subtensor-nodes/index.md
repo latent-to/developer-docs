@@ -12,7 +12,7 @@ You can run a public subtensor node and synchronize with the Bittensor network. 
 
 ## A public subtensor vs a local blockchain
 
-Note that running a public subtensor node is not the same as running a local blockchain. See the below diagram. When you run a local blockchain (section **A** of the below diagram), it is for the purposes of developing and testing your subnet incentive mechanism. This local blockchain is not public and hence it is isolated from any Bittensor network. For instructions on running a local blockchain see [Running on Staging](https://github.com/opentensor/bittensor-subnet-template/blob/main/docs/running_on_staging.md).
+Note that running a public subtensor node is not the same as running a local blockchain. See the below diagram. When you run a local blockchain (section **A** of the below diagram), it is for the purposes of developing and testing your subnet incentive mechanism. This local blockchain is not public and hence it is isolated from any Bittensor network. For instructions on running a local blockchain see [Running on Staging](https://github.com/RaoFoundation/bittensor-subnet-template/blob/main/docs/running_on_staging.md).
 
 :::tip Running a local blockchain is the same as running on staging
 :::

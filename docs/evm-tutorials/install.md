@@ -9,7 +9,7 @@ Before you can run any EVM tutorials, you must install the dependencies. Follow 
 1. Clone the Opentensor EVM-Bittensor GitHub repo:
 
    ```bash
-   git clone https://github.com/opentensor/evm-bittensor.git
+   git clone https://github.com/RaoFoundation/evm-bittensor.git
    ```
 
 2. Navigate to `evm-bittensor` directory:

@@ -6,7 +6,7 @@ title: "Subnet Configuration (Hyperparameters)"
 
 Bittensor subnets are configured with a set of state variables (known as hyperparameters) that are recorded on the blockchain. Many of these can be accessed (viewed and set) using the Bittensor CLI `btcli`, but some of them must be checked or set using Subtensor extrinsics, as noted.
 
-Note that the names of the variables may be slightly different in various representations, e.g. in `btcli` and in the [chain codebase](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1038).
+Note that the names of the variables may be slightly different in various representations, e.g. in `btcli` and in the [chain codebase](https://github.com/RaoFoundation/subtensor/blob/main/runtime/src/lib.rs#L1038).
 
 Non-root neuron (UID) registration pricing is driven by **`BurnHalfLife`** and **`BurnIncreaseMult`**, with **`MinBurn`** and **`MaxBurn`** as bounds. Confirm live names and values with `btcli subnet hyperparameters`.
 

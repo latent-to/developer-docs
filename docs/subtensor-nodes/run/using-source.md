@@ -56,7 +56,7 @@ Next, to compile the subtensor source code, follow the below steps:
 1. Clone the Subtensor repository:
 
 ```bash
-git clone https://github.com/opentensor/subtensor.git
+git clone https://github.com/RaoFoundation/subtensor.git
 ```
 
 2. Change to the Subtensor directory:

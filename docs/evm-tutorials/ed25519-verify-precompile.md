@@ -38,7 +38,7 @@ This example demonstrates how to:
 3. Fail the verification of the signature using a corrupted message hash with the precompile contract.
 4. Fail the verification of a corrupted signature with the precompile contract.
 
-[On GitHub](https://github.com/opentensor/evm-bittensor/blob/main/examples/ed25519-verify.js).
+[On GitHub](https://github.com/RaoFoundation/evm-bittensor/blob/main/examples/ed25519-verify.js).
 
 <details>
   <summary>Full code</summary>
