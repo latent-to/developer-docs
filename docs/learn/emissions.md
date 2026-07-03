@@ -125,13 +125,23 @@ $$
 However, alpha injection is also capped to prevent runaway inflation. The cap is now computed as:
 
 $$
+\text{alpha injection cap}_i = \text{root\_proportion}_i \times \Delta\bar{\alpha_i}
+$$
+
+where $\text{root\_proportion}_i = \frac{\text{tao\_weight}}{\text{tao\_weight} + \text{alpha\_issuance}_i}$.
+
+Therefore, with this root-proportion-based cap:
+
+$$
 \Delta\alpha^{\text{in}}_i = \min\left\{
 \frac{\Delta\tau_i}{p_i},\;
-\Delta\bar{\alpha_i}
+\text{root\_proportion}_i \times \Delta\bar{\alpha_i}
 \right\}
 $$
 
-The cap is the _alpha emission rate_ $\Delta\bar{\alpha_i}$ for subnet $i$. TAO emission that cannot be injected as liquidity due to the cap becomes **excess TAO**, which is routed into chain buys instead. The cap for a given subnet $i$ starts at 1 and follows a halving schedule identical to that of TAO, beginning when subnet $i$ is created.
+**Effect of the cap**: As a subnet ages and its `alpha_issuance` grows, `root_proportion` shrinks, which in turn lowers the injection cap. TAO emission that cannot be injected as liquidity due to the cap becomes **excess TAO**, which is routed into chain buys instead. This is the mechanism that transitions older subnets from liquidity injection toward chain buys over time.
+
+The cap or _alpha emission rate_ $\Delta\bar{\alpha_i}$ for subnet $i$ starts at 1 and follows a halving schedule identical to that of TAO, beginning when subnet $i$ is created.
 
 </details>
 
