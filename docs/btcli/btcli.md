@@ -41,7 +41,6 @@ btcli [OPTIONS] COMMAND [ARGS]...
 - [`weights`](#btcli-weights): Weights commands, aliases: `wt`, `weight`
 - [`proxy`](#btcli-proxy): Proxy commands
 - [`crowd`](#btcli-crowd): Crowdloan commands, aliases: `cr`, `crowdloan`
-- [`liquidity`](#btcli-liquidity): Liquidity commands, aliases: `l`
 - [`axon`](#btcli-axon): Axon serving commands
 - [`utils`](#btcli-utils)
 - [`view`](#btcli-view): HTML view commands
@@ -375,10 +374,12 @@ Displays all the wallets and their corresponding hotkeys that are located in the
 The output display shows each wallet and its associated `ss58` addresses for the coldkey public key and any hotkeys. The output is presented in a hierarchical tree format, with each wallet as a root node and any associated hotkeys as child nodes. The `ss58` address is displayed for each coldkey and hotkey that is not encrypted and exists on the device.
 
 Upon invocation, the command scans the wallet directory and prints a list of all the wallets, indicating whether the
-public keys are available (`?` denotes unavailable or encrypted keys).
+public keys are available (`?` denotes unavailable or encrypted keys). Coldkeys and hotkeys are listed in natural
+sort order (e.g. coldkey2 before coldkey10).
 
 ```
 btcli wallet list --path ~/.bittensor
+btcli wallet list --coldkeys-only
 ```
 
 Note: This command is read-only and does not modify the filesystem or the blockchain state. It is intended for use with the Bittensor CLI to provide a quick overview of the user's wallets.
@@ -395,6 +396,7 @@ btcli wallet list [OPTIONS]
 | ----------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------ |
 | `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name` | TEXT | Name of the wallet.                                                                  |
 | `-p`, `--wallet-path`, `--wallet_path`, `--wallet.path`     | TEXT | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
+| `--coldkeys-only`                                           |      | List coldkeys only; omit hotkeys from the output.                                    |
 | `--quiet`                                                   |      | Display only critical information on the console.                                    |
 | `--verbose`                                                 |      | Enable verbose output.                                                               |
 | `--help`                                                    |      | Show this message and exit.                                                          |
@@ -2364,7 +2366,7 @@ btcli lock list [OPTIONS]
 
 ### `btcli lock show`
 
-View one active stake lock and its local projection.
+View one active stake lock and its lock projection.
 
 If `--netuid` is omitted, btcli prompts from the coldkey's active lock
 netuids.
@@ -2835,6 +2837,46 @@ btcli sudo trim [OPTIONS]
 | `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
 | `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
 | `--max`, `--max-uids`                                                       | INTEGER | The maximum number of allowed uids to which to trim                                                                                   |
+| `--quiet`                                                                   |         | Display only critical information on the console.                                                                                     |
+| `--verbose`                                                                 |         | Enable verbose output.                                                                                                                |
+| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                                                                            |
+| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
+| `--no`                                                                      |         | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
+| `--period`, `--era`                                                         | INTEGER | Length (in blocks) for which the transaction should be valid.                                                                         |
+| `--help`                                                                    |         | Show this message and exit.                                                                                                           |
+
+### `btcli sudo trigger-epoch`
+
+Manually triggers an epoch for a subnet you own.
+
+The epoch fires after the chain's admin freeze window has elapsed, during which
+admin operations on the subnet are locked. This is rate-limited on-chain and
+fails if a trigger is already pending, the next automatic epoch is imminent, or
+commit-reveal is enabled on the subnet (disable it first via
+'btcli sudo set --param commit_reveal_weights_enabled --value false').
+
+**EXAMPLE**
+
+```bash
+btcli sudo trigger-epoch --netuid 95 --wallet-name my_wallet --wallet-hotkey my_hotkey
+```
+
+**Usage:**
+
+```bash
+btcli sudo trigger-epoch [OPTIONS]
+```
+
+**Parameters:**
+
+| Options                                                                     | Type    | Description                                                                                                                           |
+| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` |         | The subtensor network to connect to. Default: finney.                                                                                 |
+| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                                                                   |
+| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
+| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
+| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
+| `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
 | `--quiet`                                                                   |         | Display only critical information on the console.                                                                                     |
 | `--verbose`                                                                 |         | Enable verbose output.                                                                                                                |
 | `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                                                                            |
@@ -4548,139 +4590,6 @@ btcli crowd contributors [OPTIONS]
 | `--verbose`                                                                 |         | Enable verbose output.                                |
 | `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.            |
 | `--help`                                                                    |         | Show this message and exit.                           |
-
-## `btcli liquidity`
-
-**Usage:**
-
-```sh
-btcli liquidity [OPTIONS] COMMAND [ARGS]...
-
-alias: l
-```
-
-Options:
-
-`--help`: Show this message and exit.
-
-Commands:
-
-- `add`: Add liquidity to the swap (as a combination of TAO + Alpha).
-- `list`: Displays liquidity positions in given subnet.
-- `modify`: Modifies the liquidity position for the given subnet.
-- `remove`: Remove liquidity from the swap (as a combination of TAO + Alpha).
-
-### `btcli liquidity add`
-
-Add liquidity to the swap (as a combination of TAO + Alpha).
-
-**Usage:**
-
-```bash
-btcli liquidity add [OPTIONS]
-```
-
-**Parameters:**
-
-| Options                                                                            | Type    | Description                                                                                                                           |
-| ---------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint`        | TEXT    | The subtensor network to connect to. Default: finney.                                                                                 |
-| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                        | TEXT    | Name of the wallet.                                                                                                                   |
-| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                            | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
-| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`          | TEXT    | Hotkey of the wallet                                                                                                                  |
-| `--netuid`                                                                         | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
-| `--proxy`                                                                          | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--liquidity`                                                                      | FLOAT   | Amount of liquidity to add to the subnet.                                                                                             |
-| `--price-low`, `--price_low`, `--liquidity-price-low`, `--liquidity_price_low`     | FLOAT   | Low price for the adding liquidity position.                                                                                          |
-| `--price-high`, `--price_high`, `--liquidity-price-high`, `--liquidity_price_high` | FLOAT   | High price for the adding liquidity position.                                                                                         |
-| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                         |         | Enable or disable interactive prompts.                                                                                                |
-| `--no`                                                                             |         | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
-| `--quiet`                                                                          |         | Display only critical information on the console.                                                                                     |
-| `--verbose`                                                                        |         | Enable verbose output.                                                                                                                |
-| `--json-output`, `--json-out`                                                      |         | Outputs the result of the command as JSON.                                                                                            |
-| `--help`                                                                           |         | Show this message and exit.                                                                                                           |
-
-### `btcli liquidity list`
-
-Displays liquidity positions in given subnet.
-
-**Usage:**
-
-```bash
-btcli liquidity list [OPTIONS]
-```
-
-**Parameters:**
-
-| Options                                                                     | Type    | Description                                                                          |
-| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
-| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT    | The subtensor network to connect to. Default: finney.                                |
-| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                  |
-| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`. |
-| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                 |
-| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                   |
-| `--quiet`                                                                   |         | Display only critical information on the console.                                    |
-| `--verbose`                                                                 |         | Enable verbose output.                                                               |
-| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                           |
-| `--help`                                                                    |         | Show this message and exit.                                                          |
-
-### `btcli liquidity modify`
-
-Modifies the liquidity position for the given subnet.
-
-**Usage:**
-
-```bash
-btcli liquidity modify [OPTIONS]
-```
-
-**Parameters:**
-
-| Options                                                                     | Type    | Description                                                                                                                           |
-| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT    | The subtensor network to connect to. Default: finney.                                                                                 |
-| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                                                                   |
-| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
-| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
-| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
-| `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--position-id`, `--position_id`                                            | INTEGER | Position ID for modification or removing.                                                                                             |
-| `--liquidity-delta`, `--liquidity_delta`                                    | FLOAT   | Liquidity amount for modification.                                                                                                    |
-| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
-| `--no`                                                                      |         | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
-| `--quiet`                                                                   |         | Display only critical information on the console.                                                                                     |
-| `--verbose`                                                                 |         | Enable verbose output.                                                                                                                |
-| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                                                                            |
-| `--help`                                                                    |         | Show this message and exit.                                                                                                           |
-
-### `btcli liquidity remove`
-
-Remove liquidity from the swap (as a combination of TAO + Alpha).
-
-**Usage:**
-
-```bash
-btcli liquidity remove [OPTIONS]
-```
-
-**Parameters:**
-
-| Options                                                                     | Type    | Description                                                                                                                           |
-| --------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `--network`, `--subtensor.network`, `--chain`, `--subtensor.chain_endpoint` | TEXT    | The subtensor network to connect to. Default: finney.                                                                                 |
-| `--wallet-name`, `--name`, `--wallet_name`, `--wallet.name`                 | TEXT    | Name of the wallet.                                                                                                                   |
-| `--wallet-path`, `-p`, `--wallet_path`, `--wallet.path`                     | TEXT    | Path where the wallets are located. For example: `/Users/btuser/.bittensor/wallets`.                                                  |
-| `--hotkey`, `-H`, `--wallet_hotkey`, `--wallet-hotkey`, `--wallet.hotkey`   | TEXT    | Hotkey of the wallet                                                                                                                  |
-| `--netuid`                                                                  | INTEGER | The netuid of the subnet in the network, (e.g. 1).                                                                                    |
-| `--proxy`                                                                   | TEXT    | Optional proxy to use for the transaction: either the SS58 or the name of the proxy if you have added it with btcli config add-proxy. |
-| `--position-id`, `--position_id`                                            | INTEGER | Position ID for modification or removal.                                                                                              |
-| `--all`, `--a`                                                              |         | Whether to remove all liquidity positions for given subnet.                                                                           |
-| `--prompt/--no-prompt`, ` /--yes`, ` /--no_prompt`, ` /-y`                  |         | Enable or disable interactive prompts.                                                                                                |
-| `--no`                                                                      |         | Automatically decline any confirmation prompts. The prompt message is still displayed unless --quiet is specified.                    |
-| `--quiet`                                                                   |         | Display only critical information on the console.                                                                                     |
-| `--verbose`                                                                 |         | Enable verbose output.                                                                                                                |
-| `--json-output`, `--json-out`                                               |         | Outputs the result of the command as JSON.                                                                                            |
-| `--help`                                                                    |         | Show this message and exit.                                                                                                           |
 
 ## `btcli axon`
 
