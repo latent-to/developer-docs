@@ -15,7 +15,7 @@ The Bittensor platform consists of the following components:
 
 1. A pool of **_subnets_**. Each subnet is an incentive-based competition marketplace that produces a specific kind of digital commodity related to artificial intelligence. It consists of a community of **_miners_** who produce the commodity, and a community of **_validators_** who measure the miners' work to ensure its quality, according to subnet-specific standards.
 
-   Each subnet is its own community, with its own goal, operating according to its own standards. For example, the [text prompting subnet](https://github.com/RaoFoundation/prompting), developed by the Open Tensor foundation, incentivizes subnet miners that produce the best prompt completions in response to the prompts sent by the subnet validators in that subnet.
+   Each subnet is its own community, with its own goal, operating according to its own standards. For example, the [text prompting subnet](https://github.com/opentensor/prompting), developed by the Open Tensor foundation, incentivizes subnet miners that produce the best prompt completions in response to the prompts sent by the subnet validators in that subnet.
 
    To explore existing subnets, check out [the listings on TAO.app](https://tao.app), or engage with [Bittensor subnet communities on Discord](https://discord.com/channels/799672011265015819/830068283314929684).
 
@@ -44,7 +44,7 @@ The following roles define the ways to participate in Bittensor, and which are c
 
 The documentation also describes the role of **Blockchain operator**. This applies during offline testing only, when the user runs a local instance of Subtensor as its own independent chain, not connected to either the Bittensor main or test network.
 
-See [Running a Subnet Locally](https://github.com/RaoFoundation/bittensor-subnet-template/blob/main/docs/running_on_staging.md)
+See [Running a Subnet Locally](../local-build/create-subnet.md)
 
 :::tip Browse the subnets
 Browse the subnets and explore links to their code repositories on [TAO.app's subnets listings](https://tao.app).

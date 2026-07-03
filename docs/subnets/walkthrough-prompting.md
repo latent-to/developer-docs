@@ -7,7 +7,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Walkthrough of Example Subnet
 
-This page presents a high-level walkthrough of an example architecture for a subnet based on LLM inference. This architecture was originally based on [Subnet 1, Apex](https://github.com/RaoFoundation/prompting/tree/main), although subnets rapidly evolve and that subnet now has a more complicated architecture. This example subnet contains several incentive mechanisms which produce conversational intelligence capable of:
+This page presents a high-level walkthrough of an example architecture for a subnet based on LLM inference. This architecture was originally based on [Subnet 1, Apex](https://github.com/opentensor/prompting/tree/main), although subnets rapidly evolve and that subnet now has a more complicated architecture. This example subnet contains several incentive mechanisms which produce conversational intelligence capable of:
 
 - Answering questions.
 - Summarizing a given text.

@@ -18,7 +18,7 @@ All functions in this precompile are view-only operations that don't modify stat
 ## Source Code and Tests
 
 - **Source Code**: [metagraph.rs](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/metagraph.rs)
-- **Test Examples**: [metagraph precompile tests](https://github.com/RaoFoundation/developer-docs/blob/main/evm-tutorials/test/metagraph.test.ts)
+- **Test Examples**: [metagraph precompile tests](https://github.com/latent-to/developer-docs/blob/main/evm-tutorials/test/metagraph.test.ts)
 
 ## Function Reference
 
@@ -265,7 +265,7 @@ First, set up your client to interact with the metagraph precompile:
 
 Fill in the RPC URL for the desired network: [EVM Network Details](./subtensor-networks).
 
-Full source: https://github.com/RaoFoundation/evm-bittensor/blob/main/examples/metagraph.js
+Full source: https://github.com/opentensor/evm-bittensor/blob/main/examples/metagraph.js
 Cribbed from: https://github.com/RaoFoundation/subtensor/blob/main/evm-tests/src/contracts/metagraph.ts
 
 ```javascript

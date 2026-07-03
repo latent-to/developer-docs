@@ -15,7 +15,7 @@ Key values:
 
 - **EVM Subtensor Mainnet Chain ID:**: `964` (UTF-8 encoded TAO symbol)
 - **EVM Subtensor Testnet Chain ID:**: `945` (UTF-8 encoded alpha character)
-- **Opentensor EVM-Bittensor GitHub repo with code examples:** https://github.com/RaoFoundation/evm-bittensor/tree/main
+- **Opentensor EVM-Bittensor GitHub repo with code examples:** https://github.com/opentensor/evm-bittensor/tree/main
 
 ## Step 1. Run EVM-enabled localnet
 

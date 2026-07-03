@@ -6,7 +6,7 @@ This guide explains how to build and publish the Bittensor Python API reference 
 
 - Python 3.9 or higher
 - Access to the Bittensor repository
-- Write access to the [developer-docs repository](https://github.com/RaoFoundation/developer-docs) (for publishing)
+- Write access to the [developer-docs repository](https://github.com/latent-to/developer-docs) (for publishing)
 
 ## Quick Start
 
@@ -363,7 +363,7 @@ If imports fail during build:
 
 ### Docstring Style Guide
 
-Follow the [Bittensor Writing Style Guide](https://github.com/RaoFoundation/developer-docs/blob/main/WRITING-STYLE-GUIDE.md#python-docstrings).
+Follow the [Bittensor Writing Style Guide](https://github.com/latent-to/developer-docs/blob/main/WRITING-STYLE-GUIDE.md#python-docstrings).
 
 Key points:
 
@@ -389,7 +389,7 @@ Before publishing:
 - [Sphinx AutoAPI](https://sphinx-autoapi.readthedocs.io/en/latest/reference/config.html)
 - [Sphinx Book Theme](https://sphinx-book-theme.readthedocs.io/en/stable/tutorials/get-started.html)
 - [Google Style Python Docstrings](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html)
-- [Bittensor Writing Style Guide](https://github.com/RaoFoundation/developer-docs/blob/main/WRITING-STYLE-GUIDE.md)
+- [Bittensor Writing Style Guide](https://github.com/latent-to/developer-docs/blob/main/WRITING-STYLE-GUIDE.md)
 
 ## Quick Reference Commands
 

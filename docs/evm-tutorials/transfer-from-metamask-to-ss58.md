@@ -29,7 +29,7 @@ This option uses a precompiled contract to transfer TAO from your Metamask walle
 
 ### Configure the destination address
 
-Open [`withdraw.js`](https://github.com/RaoFoundation/evm-bittensor/blob/main/examples/withdraw.js) in the EVM-Bittensor repo. Find the following line:
+Open [`withdraw.js`](https://github.com/opentensor/evm-bittensor/blob/main/examples/withdraw.js) in the EVM-Bittensor repo. Find the following line:
 
 ```js
 // Destination address can be replaced with any ss58 address here:
@@ -105,7 +105,7 @@ For example: `5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty`. You will need t
 
 ### Edit the destination in the script
 
-Open [`withdraw-address.js`](https://github.com/RaoFoundation/evm-bittensor/blob/main/examples/withdraw-address.js) and set your SS58 address:
+Open [`withdraw-address.js`](https://github.com/opentensor/evm-bittensor/blob/main/examples/withdraw-address.js) and set your SS58 address:
 
 ```js
 const ss58Address = "<your SS58 address>";

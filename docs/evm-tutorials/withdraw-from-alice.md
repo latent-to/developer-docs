@@ -61,7 +61,7 @@ node withdraw.js
 
 **Source code**:
 
-- [EVM examples repo](https://github.com/RaoFoundation/evm-bittensor)
+- [EVM examples repo](https://github.com/opentensor/evm-bittensor)
 
 ```javascript
 const { ethers } = require("ethers");

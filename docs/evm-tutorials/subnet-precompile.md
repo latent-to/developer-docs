@@ -720,7 +720,7 @@ Toggles transfers on/off for a subnet.
 
 ## Example Scripts
 
-[Example source on GitHub](https://github.com/RaoFoundation/evm-bittensor/blob/main/examples/subnet.js)
+[Example source on GitHub](https://github.com/opentensor/evm-bittensor/blob/main/examples/subnet.js)
 
 ### Javascript
 
@@ -1023,7 +1023,7 @@ main().catch(console.error);
 
 ### Solidity
 
-[Example source on GitHub](https://github.com/RaoFoundation/evm-bittensor/blob/main/solidity/subnet.sol)
+[Example source on GitHub](https://github.com/opentensor/evm-bittensor/blob/main/solidity/subnet.sol)
 
 ```sol
 // SPDX-License-Identifier: GPL-3.0

@@ -7,7 +7,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Transfer Between Two H160 Accounts
 
-The complete code for this example is located in file [`examples/transfer-h160-to-h160.js`](https://github.com/RaoFoundation/evm-bittensor/blob/main/examples/transfer-h160-to-h160.js).
+The complete code for this example is located in file [`examples/transfer-h160-to-h160.js`](https://github.com/opentensor/evm-bittensor/blob/main/examples/transfer-h160-to-h160.js).
 
 ## Prerequisite
 
@@ -35,7 +35,7 @@ You must run either [EVM Localnet with Metamask Wallet](./evm-localnet-with-meta
 
    In Bittensor EVM, 1 TAO should be written as $1e18$
 
-   For [example](https://github.com/RaoFoundation/evm-bittensor/blob/main/examples/withdraw.js#L58): `const value = BigInt(0.5 * 1e18).toString();`
+   For [example](https://github.com/opentensor/evm-bittensor/blob/main/examples/withdraw.js#L58): `const value = BigInt(0.5 * 1e18).toString();`
 
    :::
 

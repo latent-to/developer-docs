@@ -78,9 +78,9 @@ source btsdk_venv/bin/activate
 
       <!-- Cubit installation can be removed when Bittensor SDK no longer supports 3.9 & 3.10-->
 
-    - **Install SDK with `cubit`**: Install Bittensor SDK with [`cubit`](https://github.com/RaoFoundation/cubit).
+    - **Install SDK with `cubit`**: Install Bittensor SDK with [`cubit`](https://github.com/opentensor/cubit).
 
-      1. Install `cubit` first. See the [Install](https://github.com/RaoFoundation/cubit?tab=readme-ov-file#install) section. **Only Python 3.9 and 3.10 versions are supported**.
+      1. Install `cubit` first. See the [Install](https://github.com/opentensor/cubit?tab=readme-ov-file#install) section. **Only Python 3.9 and 3.10 versions are supported**.
       2. Then install SDK with `pip install bittensor`.
 
   </TabItem>

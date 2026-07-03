@@ -45,11 +45,11 @@ There are two versions of staking precompile implemenation, V1 and V2. The contr
 
 ## Call the staking precompile from another smart contract (staking pool use case)
 
-In this interaction you will compile [`stakeV2.sol`](https://github.com/RaoFoundation/evm-bittensor/blob/main/solidity/stakeV2.sol), a Solidity smart contract code, and execute it on the Subtensor EVM. This `stakeV2.sol` will, in turn, call the staking precompile that is already deployed on the Subtensor EVM.
+In this interaction you will compile [`stakeV2.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stakeV2.sol), a Solidity smart contract code, and execute it on the Subtensor EVM. This `stakeV2.sol` will, in turn, call the staking precompile that is already deployed on the Subtensor EVM.
 
-Before you proceed, familiarize yourself with the Solidity code of the [`stakeV2.sol`](https://github.com/RaoFoundation/evm-bittensor/blob/main/solidity/stakeV2.sol) smart contract.
+Before you proceed, familiarize yourself with the Solidity code of the [`stakeV2.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stakeV2.sol) smart contract.
 
-1. Copy the text of [`stakeV2.sol`](https://github.com/RaoFoundation/evm-bittensor/blob/main/solidity/stakeV2.sol) contract to Remix IDE.
+1. Copy the text of [`stakeV2.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stakeV2.sol) contract to Remix IDE.
 
 2. You will now convert your delegate hotkey ss58 from the above [Setup EVM localnet, subnet and delegate](#setup-evm-localnet-subnet-and-delegate) step into its corresponding public key. Use the [ss58.org](https://ss58.org/) site to obtain the public key for your delegate hotkey ss58.
 
