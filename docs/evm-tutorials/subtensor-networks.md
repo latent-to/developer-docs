@@ -9,7 +9,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 | DESCRIPTION          | MAINNET                             | TESTNET                              | LOCALNET                 |
 |:---------------------|:------------------------------------|:-------------------------------------|:-------------------------|
-| **RPC URL**          | https://lite.chain.opentensor.ai https://rpc.blockmachine.io    | https://test.chain.opentensor.ai     | http://localhost:9944    |
+| **RPC URL**          | https://lite.chain.opentensor.ai <br/> https://rpc.blockmachine.io    | https://test.chain.opentensor.ai     | http://localhost:9944    |
 | **Chain ID**         | 964                                 | 945                                  | _see below_              |
 | **Test TAO**         | None                                | Available on request                 | Use Alice account        |
 
