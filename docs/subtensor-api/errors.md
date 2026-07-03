@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **423**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **424**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -1844,6 +1844,11 @@ Generated from Subtensor runtime spec version **423**. Connected to: `wss://entr
 
 - **interface**: `api.errors.swap.SubtokenDisabled`
 - **summary**: The subnet does not have subtoken enabled
+
+### `SwapInputTooLarge`
+
+- **interface**: `api.errors.swap.SwapInputTooLarge`
+- **summary**: Swap input is too large relative to input-side liquidity
 
 
 ## `system`
