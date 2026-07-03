@@ -65,13 +65,12 @@ A subnet's TAO reserve injection is determined by its **emission share**, calcul
 Each subnet's share of the fixed block emission is weighted by three factors, then normalized over all emission-enabled subnets:
 
 $$
-\text{share}_i = \frac{r_i \cdot p_i \cdot (1 - b_i)}{\sum_{j \in \mathbb{S}} r_j \cdot p_j \cdot (1 - b_j)}
+\text{share}_i = \frac{p_i \cdot (1 - b_i)}{\sum_{j \in \mathbb{S}} p_j \cdot (1 - b_j)}
 $$
 
 where:
 
 - $p_i$ = `SubnetMovingPrice` — the subnet's EMA price (not the live spot price)
-- $r_i$ = `root_proportion` = $\frac{\text{tao\_stake\_weight}}{\text{tao\_stake\_weight} + \text{alpha\_issuance}_i}$ — shrinks as a subnet ages, reallocating emission toward newer subnets
 - $b_i$ = `MinerBurned` — the proportion (0–1) of the most recent tempo's miner incentive that was withheld because the recipient hotkey is owned by the subnet owner. Penalizes subnets that withhold miner emission, regardless of whether that emission is recycled or burned
 
 TAO injected into subnet $i$ per block is then:
@@ -80,7 +79,7 @@ $$
 \Delta\tau_i = \Delta\bar{\tau} \times \text{share}_i
 $$
 
-**Fallback**: if the combined weight is zero across all subnets (e.g. no root stake, or every subnet withholding all miner emission), `get_shares` falls back to unweighted price shares — $p_i / \sum p_j$ — so block emission is never stranded.
+**Fallback**: if the combined weight is zero across all subnets (e.g. all subnets are withholding all miner emission), `get_shares` falls back to unweighted price shares — $p_i / \sum p_j$ — so block emission is never stranded.
 
 **Implementation**: Share calculation: [`get_shares()`](<https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#:~:text=pub(crate)%20fn%20get_shares>) → `get_shares_price_ema()` in `subnet_emission.rs`
 

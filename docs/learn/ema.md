@@ -8,7 +8,7 @@ The exponential moving average (EMA) is a [mathematical technique](https://en.wi
 
 Bittensor uses EMAs to smooth two critical dynamical values during the emission process:
 
-- TAO emissions to each subnet are determined by a three-factor weighted share of the fixed block emission: each subnet's EMA price (`SubnetMovingPrice`), scaled by its root proportion and reduced by any miner-burn penalty.
+- TAO emissions to each subnet are determined by a three-factor weighted share of the fixed block emission: each subnet's EMA price (`SubnetMovingPrice`), reduced by any miner-burn penalty.
 - Alpha emissions to participants of each subnet are determined by EMAs of instantaneous validator-miner bond-strengths. This plays an important role in ensuring that validators and miners are fairly rewarded for innovation, as measured by eventual consensus (rather than immediate consensus) about miner weights.
 
 ## Mathematical definition
@@ -53,7 +53,7 @@ This dynamic alpha prevents:
 - Flash attacks on emission shares
 
 :::info
-Unlike the previous flow-based model, there is no zero-emission floor tied to net flows. A subnet's emission share tracks its relative EMA price — a subnet with a very low or declining EMA price receives a correspondingly small but non-zero share of block emissions (subject to the miner-burn penalty and root proportion weighting).
+Unlike the previous flow-based model, there is no zero-emission floor tied to net flows. A subnet's emission share tracks its relative EMA price — a subnet with a very low or declining EMA price receives a correspondingly small but non-zero share of block emissions (subject to the miner-burn penalty).
 :::
 See:
 
