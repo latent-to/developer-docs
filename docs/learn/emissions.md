@@ -139,7 +139,7 @@ $$
 \right\}
 $$
 
-**Effect of the cap**: As a subnet ages and its `alpha_issuance` grows, `root_proportion` shrinks, which in turn lowers the injection cap. TAO emission that cannot be injected as liquidity due to the cap becomes **excess TAO**, which is routed into chain buys instead. This is the mechanism that transitions older subnets from liquidity injection toward chain buys over time.
+**Effect of the cap**: As a subnet ages, its `alpha_issuance` grows, which causes `root_proportion` to shrink, which in turn lowers the injection cap. TAO emission that cannot be injected as liquidity due to the cap becomes **excess TAO**, which is routed into chain buys instead. This is the mechanism that transitions older subnets from liquidity injection toward chain buys over time.
 
 The cap or _alpha emission rate_ $\Delta\bar{\alpha_i}$ for subnet $i$ starts at 1 and follows a halving schedule identical to that of TAO, beginning when subnet $i$ is created.
 
