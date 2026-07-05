@@ -12,7 +12,7 @@ See also the `btcli` permissions guides for specific Bittensor personas:
 - [Miner's Guide to `BTCLI`](../miners/miners-btcli-guide)
 - [Validator's Guide to `BTCLI`](../validators/validators-btcli-guide)
 - [Subnet Creator's Guide to `BTCLI`](../subnets/subnet-creators-btcli-guide)
-Other resources:
+  Other resources:
 
 - [Introduction to Wallets, Coldkeys and Hotkeys in Bittensor](../keys/wallets)
 - [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security)
@@ -426,28 +426,6 @@ The `btcli crowd` commands are used to create and manage crowdloans on the netwo
 #### `btcli crowd list`
 
 #### `btcli crowd info`
-
-</details>
-
-### `liquidity`
-
-The `btcli liquidity` commands were used to manage user liquidity positions. User LP positions are currently disabled on-chain. Subnet pools now use protocol-owned liquidity managed by the [Balancer weighted pool AMM](../learn/balancer-amm.md).
-
-- **`liquidity add`**: Add liquidity to the swap (as a combination of TAO + Alpha).
-- **`liquidity list`**: Shows a wallet's liquidity positions in given subnet.
-- **`liquidity modify`**: Modifies the liquidity position for the given subnet.
-- **`liquidity remove`**: Remove liquidity from the swap (as a combination of TAO + Alpha).
-
-<details>
-  <summary>`btcli liquidity`</summary>
-
-#### `liquidity add`
-
-#### `liquidity list`
-
-#### `liquidity modify`
-
-#### `liquidity remove`
 
 </details>
 
