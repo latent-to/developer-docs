@@ -20,7 +20,7 @@ For broader conceptual understanding of emission mechanisms, see [Emissions](../
 
 ## Core Function: `run_coinbase()`
 
-**Location**: [`run_coinbase.rs`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/run_coinbase.rs)
+**Location**: [`run_coinbase.rs`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/coinbase/run_coinbase.rs)
 
 ```rust
 pub fn run_coinbase(block_emission: U96F32)
@@ -87,7 +87,7 @@ $$
 
 **Implementation:**
 
-- **Share calculation:** [`get_shares()`](<https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#:~:text=pub(crate)%20fn%20get_shares>) calls the [`get_shares_price_ema()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#:~:text=fn%20get_shares_price_ema) function
+- **Share calculation:** [`get_shares()`](<https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#:~:text=pub(crate)%20fn%20get_shares>) calls the [`get_shares_price_ema()`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#:~:text=fn%20get_shares_price_ema) function
 - See [Emissions](../learn/emissions.md#tao-reserve-injection) for complete mathematical details
 
 **Key Characteristics:**

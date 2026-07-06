@@ -151,8 +151,8 @@ Network Security Properties:
 
 **Source**:
 
-- [`bittensor/bittensor/core/metagraph.py:360-372`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/metagraph.py#L360-372)
-- [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:595`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L595)
+- [`bittensor/bittensor/core/metagraph.py:360-372`](https://github.com/RaoFoundation/bittensor/blob/main/bittensor/core/metagraph.py#L360-372)
+- [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:595`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L595)
 
 ## D
 
@@ -581,8 +581,8 @@ Where:
 
 **Source**:
 
-- [`bittensor/bittensor/core/metagraph.py:325-331`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/metagraph.py#L325-331)
-- [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:605`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L605)
+- [`bittensor/bittensor/core/metagraph.py:325-331`](https://github.com/RaoFoundation/bittensor/blob/main/bittensor/core/metagraph.py#L325-331)
+- [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:605`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L605)
 
 ### Recycling and burning
 
@@ -735,8 +735,8 @@ See [Relative stake weight](#relative-stake-weight).
 
 **Code References:**
 
-- **Yuma Consensus**: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:530`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L530)
-- **Validator dividend distribution**: [`subtensor/pallets/subtensor/src/coinbase/run_coinbase.rs:165`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/run_coinbase.rs#L165)
+- **Yuma Consensus**: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:530`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L530)
+- **Validator dividend distribution**: [`subtensor/pallets/subtensor/src/coinbase/run_coinbase.rs:165`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/coinbase/run_coinbase.rs#L165)
 
 ### Staking
 
@@ -793,7 +793,7 @@ The importance assigned to each subnet determined by net TAO flows (staking minu
 
 ### Subtensor
 
-[Subtensor](https://github.com/opentensor/subtensor) is Bittensor's layer 1 blockchain based on substrate (now PolkadotSDK). This serves Bittensor as a system of record for transactions and rankings, operates Yuma Consensus, and emits liquidity to participants to incentivize their participation in network activities.
+[Subtensor](https://github.com/RaoFoundation/subtensor) is Bittensor's layer 1 blockchain based on substrate (now PolkadotSDK). This serves Bittensor as a system of record for transactions and rankings, operates Yuma Consensus, and emits liquidity to participants to incentivize their participation in network activities.
 
 The Bittensor SDK offers the [`bittensor.core.subtensor`](pathname:///python-api/html/autoapi/bittensor/core/subtensor/index.html) and [`bittensor.core.async_subtensor`](pathname:///python-api/html/autoapi/bittensor/core/async_subtensor/index.html) modules to handle Subtensor blockchain interactions.
 
@@ -896,8 +896,8 @@ Calculation Process:
 
 **Source**:
 
-- [`bittensor/bittensor/core/metagraph.py:380-393`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/metagraph.py#L380-393)
-- [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:608`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L608)
+- [`bittensor/bittensor/core/metagraph.py:380-393`](https://github.com/RaoFoundation/bittensor/blob/main/bittensor/core/metagraph.py#L380-393)
+- [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:608`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L608)
 
 The relationship between these metrics creates a feedback loop: consensus determines weight clipping, which affects ranks and trust, which influences validator trust, which feeds back into future consensus calculations. This system ensures that the network rewards neurons with strong validator agreement while penalizing those with controversial or outlier weight assignments, creating a robust mechanism for maintaining network quality and security.
 
@@ -994,8 +994,8 @@ Where:
 
 **Source**:
 
-- [`bittensor/bittensor/core/metagraph.py:397-409`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/metagraph.py#L397-409)
-- [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:600`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L600)
+- [`bittensor/bittensor/core/metagraph.py:397-409`](https://github.com/RaoFoundation/bittensor/blob/main/bittensor/core/metagraph.py#L397-409)
+- [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs:600`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L600)
 
 **Relationship to Other Metrics:**
 
@@ -1095,10 +1095,10 @@ Where $\alpha$ is the EMA smoothing factor (see [Exponential Moving Average](#ex
 
 **Code References:**
 
-- [Bond calculation in epoch execution]https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs:631)
-- [EMA bond computation]https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/math.rs:1475)
-- [Bonds API method]https://github.com/opentensor/subtensor/blob/main/bittensor/core/async_subtensor.py:931)
-- [Bonds storage definition]https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs:1560)
+- [Bond calculation in epoch execution]https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs:631)
+- [EMA bond computation]https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/math.rs:1475)
+- [Bonds API method]https://github.com/RaoFoundation/subtensor/blob/main/bittensor/core/async_subtensor.py:931)
+- [Bonds storage definition]https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/lib.rs:1560)
 
 **See also:** [Yuma Consensus](../learn/yuma-consensus), [Emissions](../learn/emissions)
 

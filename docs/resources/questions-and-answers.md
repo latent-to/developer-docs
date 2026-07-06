@@ -68,7 +68,7 @@ The blockchain records all the key activity of the subnets in its ledger. It als
 A new abstract base class, called `SubnetsAPI` is released in Bittensor `6.8.0` and your application can use this to enable cross subnet communication. Normally, however, if you are not using the `SubnetsAPI`, then the subtensor blockchain does not mix data from one subnet with another subnet data and a subnet does not communicate with another subnet.
 
 :::tip See also
-See [Bittensor Subnets API](https://github.com/opentensor/bittensor/blob/master/README.md#bittensor-subnets-api).
+See [Bittensor Subnets API](https://github.com/RaoFoundation/bittensor/blob/master/README.md#bittensor-subnets-api).
 :::
 
 ## Mining and validation

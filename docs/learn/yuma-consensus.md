@@ -18,7 +18,7 @@ See:
 - [Yuma Consensus 3 Migration Guide](./yuma3-migration-guide.md)
 - [Emissions](./emissions)
 - [Epoch Implementation](../navigating-subtensor/epoch.md) - Implementation details
-- [Subtensor Docs: Yuma Consensus](https://github.com/opentensor/subtensor/blob/main/docs/consensus.md)
+- [Subtensor Docs: Yuma Consensus](https://github.com/RaoFoundation/subtensor/blob/main/docs/consensus.md)
 
 ## Clipping
 

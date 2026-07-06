@@ -18,7 +18,7 @@ These errors are returned in the format:
 
 Related:
 
-- [Source code in GitHub](https://github.com/opentensor/subtensor/blob/devnet-ready/common/src/transaction_error.rs#:~:text=impl%20From%3CCustomTransactionError%3E%20for%20u8)
+- [Source code in GitHub](https://github.com/RaoFoundation/subtensor/blob/devnet-ready/common/src/transaction_error.rs#:~:text=impl%20From%3CCustomTransactionError%3E%20for%20u8)
 - [Subtensor Standard Errors](./subtensor.md) - Bittensor's custom error codes
 - [Substrate Errors](https://polkadot.js.org/docs/substrate/errors/) - Errors from the underlying Substrate framework
 

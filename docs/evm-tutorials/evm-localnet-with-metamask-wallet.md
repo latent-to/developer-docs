@@ -20,7 +20,7 @@ Key values:
 ## Step 1. Run EVM-enabled localnet
 
 ```bash
-git clone https://github.com/opentensor/subtensor
+git clone https://github.com/RaoFoundation/subtensor
 ./scripts/localnet.sh
 ```
 

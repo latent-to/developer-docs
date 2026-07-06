@@ -260,7 +260,7 @@ hex_string = ss58_to_hex(ss58_address)
 
 New developer testing utilities provide helpers and fixtures for rapid local testing of SDK integrations and extrinsic flows. Use cases: Simulate common workflows, stub chain interactions, and write predictable tests around `ExtrinsicResponse` without a full node.
 
-Learn more: [`bittensor/extras/dev_framework`](https://github.com/opentensor/bittensor/tree/SDKv10/bittensor/extras/dev_framework)
+Learn more: [`bittensor/extras/dev_framework`](https://github.com/RaoFoundation/bittensor/tree/SDKv10/bittensor/extras/dev_framework)
 
 ### Estimate Transaction Fees
 
@@ -640,7 +640,7 @@ All SDK functions that submit extrinsics to the blockchain now return an `Extrin
   - Stake operations: balance information
 - **`error`**: Python exception for programmatic error handling when `raise_error=False`
 
-See [source code](https://github.com/opentensor/bittensor/blob/main/bittensor/core/types.py#L290-L484).
+See [source code](https://github.com/RaoFoundation/bittensor/blob/main/bittensor/core/types.py#L290-L484).
 
 ### Parameter Renames
 

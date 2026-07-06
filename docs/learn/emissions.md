@@ -81,7 +81,7 @@ $$
 
 **Fallback**: if the combined weight is zero across all subnets (e.g. all subnets are withholding all miner emission), `get_shares` falls back to unweighted price shares — $p_i / \sum p_j$ — so block emission is never stranded.
 
-**Implementation**: Share calculation: [`get_shares()`](<https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#:~:text=pub(crate)%20fn%20get_shares>) → `get_shares_price_ema()` in `subnet_emission.rs`
+**Implementation**: Share calculation: [`get_shares()`](<https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#:~:text=pub(crate)%20fn%20get_shares>) → `get_shares_price_ema()` in `subnet_emission.rs`
 
 </details>
 

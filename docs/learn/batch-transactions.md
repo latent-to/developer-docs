@@ -2,7 +2,7 @@
 title: "Batch Transactions"
 ---
 
-import { ProxyColdkeyWarning } from "../keys/_proxy-warning.mdx";
+import { ProxyColdkeyWarning } from "../keys/\_proxy-warning.mdx";
 
 # Batch Transactions
 
@@ -14,17 +14,17 @@ For how fees are calculated across a batch. See [Batch Transaction Fees](./fees#
 
 The three variants differ only in how they handle errors. Choose based on whether partial success is acceptable:
 
-| Extrinsic | On error |
-|---|---|
-| `batch` | Stops at first failure; prior calls succeed. Emits `BatchInterrupted`. |
-| `batch_all` | Reverts all calls atomically on any failure. |
-| `force_batch` | Continues past failures; failed calls are skipped. |
+| Extrinsic     | On error                                                               |
+| ------------- | ---------------------------------------------------------------------- |
+| `batch`       | Stops at first failure; prior calls succeed. Emits `BatchInterrupted`. |
+| `batch_all`   | Reverts all calls atomically on any failure.                           |
+| `force_batch` | Continues past failures; failed calls are skipped.                     |
 
-:::info 
+:::info
 Use `batch_all` when all inner calls must succeed or none should. Use `batch` if partial success is acceptable, or `force_batch` to continue past failures.
 :::
 
-**Source code:** `batch` [`pallets/utility/src/lib.rs:197–201`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L197-L201), `batch_all` [`pallets/utility/src/lib.rs:309–313`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L309-L313), `force_batch` [`pallets/utility/src/lib.rs:408–412`](https://github.com/opentensor/subtensor/blob/main/pallets/utility/src/lib.rs#L408-L412).
+**Source code:** `batch` [`pallets/utility/src/lib.rs:197–201`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/utility/src/lib.rs#L197-L201), `batch_all` [`pallets/utility/src/lib.rs:309–313`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/utility/src/lib.rs#L309-L313), `force_batch` [`pallets/utility/src/lib.rs:408–412`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/utility/src/lib.rs#L408-L412).
 
 ## Using batch calls with the SDK
 
@@ -77,4 +77,3 @@ print(response)
 :::note `add_stake_multiple` is not a batch extrinsic
 `subtensor.add_stake_multiple()` and `subtensor.unstake_multiple()` loop over their inputs and submit one extrinsic per hotkey. Each transaction is settled independently, i.e., they are not atomic. Use the `Utility.batch_all` pattern above when you need all-or-nothing semantics or want to pay a single transaction fee for the group.
 :::
-

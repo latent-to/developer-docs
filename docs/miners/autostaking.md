@@ -4,7 +4,7 @@ title: "Auto Staking for Miners"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 # Auto Staking for Miners
 
@@ -22,7 +22,7 @@ On the Bittensor blockchain (Subtensor), the `AutoStakeDestination` chain state 
 
 Setting your wallet's auto stake destinations is mostly easily done with BTCLI or the Bittensor Python SDK, as described below, but can also be set through the `set_coldkey_auto_stake_hotkey` extrinsic (call index 114).
 
-See [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2206).
+See [Source code](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/macros/dispatches.rs#L2206).
 
 ### Prerequisites
 

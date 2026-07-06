@@ -19,7 +19,7 @@ Mining in Bittensor differs significantly from mining Bitcoin or other blockchai
 Browse the subnets and explore links to their code repositories on [TAO.app' subnets listings](https://tao.app).
 
 :::tip Typical compute requirements
-Each subnet may have distinct hardware requirements, but this [subnet minimum requirements template](https://github.com/opentensor/bittensor-subnet-template/blob/main/min_compute.yml#L14) may give an idea of the minimum memory, bandwidth and storage requirements for miners in a typical subnet node.
+Each subnet may have distinct hardware requirements, but this [subnet minimum requirements template](https://github.com/RaoFoundation/bittensor-subnet-template/blob/main/min_compute.yml#L14) may give an idea of the minimum memory, bandwidth and storage requirements for miners in a typical subnet node.
 
 Mining is not supported on Windows.
 :::
@@ -92,7 +92,7 @@ A miner can be deregistered if it earns low emissions due to receiving low weigh
 
 If all UID slots are occupied, a new registration will cause the lowest ranked slot deregistered from the hotkey that holds it and assigned to a new registrant.
 
-Every subnet has an immunity period, during which newly registered miners cannot be deregistered.  See [`immunity_period`](../subnets/subnet-hyperparameters.md#immunityperiod). When the immunity period expires, that miner or validator can be deregistered if it has the lowest performance in the subnet and a new registration arrives.
+Every subnet has an immunity period, during which newly registered miners cannot be deregistered. See [`immunity_period`](../subnets/subnet-hyperparameters.md#immunityperiod). When the immunity period expires, that miner or validator can be deregistered if it has the lowest performance in the subnet and a new registration arrives.
 
 If a new registration occurs in a subnet with available UID slots, the registered neuron occupies one of the available UID slots.
 
@@ -103,7 +103,6 @@ The subnet does not distinguish between miners and validators for the purpose of
 :::
 
 ### Immunity period
-
 
 Immunity status is calculated dynamically using the formula `is_immune = (current_block - registered_at) < immunity_period`, where:
 
@@ -120,8 +119,8 @@ Immunity period is per-subnet. To check, open the [Polkadot.js app](https://polk
   
 **Code References:**
 
-- [`subtensor/pallets/subtensor/src/utils/misc.rs:442-448`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/misc.rs#L442-448) - Immunity status calculation
-- [`subtensor/pallets/subtensor/src/subnets/registration.rs:409-485`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/registration.rs#L409-485) - Pruning algorithm with immunity priority
+- [`subtensor/pallets/subtensor/src/utils/misc.rs:442-448`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/utils/misc.rs#L442-448) - Immunity status calculation
+- [`subtensor/pallets/subtensor/src/subnets/registration.rs:409-485`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/subnets/registration.rs#L409-485) - Pruning algorithm with immunity priority
 
 :::tip Special cases
 
@@ -130,7 +129,7 @@ Immunity period is per-subnet. To check, open the [Polkadot.js app](https://polk
 - In cases where two or more nodes have the lowest "pruning score", the older node gets deregistered first.
 
 - The subnet owner's hotkey has permanent immunity from deregistration.
-:::
+  :::
 
 ### Registration flow diagram
 

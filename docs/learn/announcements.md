@@ -12,7 +12,7 @@ This page tracks recent and upcoming changes to the Bittensor protocol and other
 
 **Status**: Deployed to mainnet.
 
-**Release notes:** [Subtensor PR #2781](https://github.com/opentensor/subtensor/pull/2781)
+**Release notes:** [Subtensor PR #2781](https://github.com/RaoFoundation/subtensor/pull/2781)
 
 - **Price-based subnet emissions with miner-burn scaling**: Subnet emission shares have reverted from the flow-based model (active since November 2025) to a **price-based model**, extended with two additional weighting factors. Each subnet's share of the fixed block emission is now proportional to `root_proportion × EMA_price × (1 - miner_burned)`, normalized over all emission-enabled subnets, where:
   - **EMA price** (`SubnetMovingPrice`) replaces the flow-based share method. The flow-based share logic (`get_shares_flow()`) is deprecated.
@@ -27,7 +27,7 @@ See [Emission](../learn/emissions.md).
 
 **Status**: On Testnet
 
-**Release notes:** [Subtensor PR #2769](https://github.com/opentensor/subtensor/pull/2769)
+**Release notes:** [Subtensor PR #2769](https://github.com/RaoFoundation/subtensor/pull/2769)
 
 - **Balancer AMM replaces Uniswap V3**: Subnet liquidity pools now use a weighted balancer-style AMM (`PalSwap`) instead of Uniswap V3.
 
@@ -39,7 +39,7 @@ See [Emission](../learn/emissions.md).
 
 **Status**: Deployed to mainnet.
 
-Release notes: [v3.4.1-413](https://github.com/opentensor/subtensor/releases/tag/v3.4.1-413)
+Release notes: [v3.4.1-413](https://github.com/RaoFoundation/subtensor/releases/tag/v3.4.1-413)
 
 - **Protocol alpha accounting (hotfix)**: Alpha bought by the protocol during TAO reserve injection is no longer immediately recycled. It is now cached per-subnet in a new storage item (`SubnetProtocolAlpha`) and included in pro-rata TAO settlement when a subnet is dissolved. This reduces individual staker payouts during dissolution proportionally to the protocol's accumulated position, and the corresponding TAO returns to the chain rather than being distributed. The cache is cleared when a subnet dissolves. See [Subnet Deregistration](../subnets/subnet-deregistration.md).
 
@@ -55,7 +55,7 @@ Release notes: [v3.4.1-413](https://github.com/opentensor/subtensor/releases/tag
 
 ## Neuron registration rework
 
-**Status**: Merged in Subtensor ([PR #2382](https://github.com/opentensor/subtensor/pull/2382)); rolling out with network upgrades. Tracking issue: [#2351](https://github.com/opentensor/subtensor/issues/2351).
+**Status**: Merged in Subtensor ([PR #2382](https://github.com/RaoFoundation/subtensor/pull/2382)); rolling out with network upgrades. Tracking issue: [#2351](https://github.com/RaoFoundation/subtensor/issues/2351).
 
 - **What**: Non-root neuron (UID) registration moves to a **continuous TAO-burn** model, similar in spirit to subnet registration pricing. Legacy **adjustment-interval** mechanics, separate **burned** vs **PoW** admission paths, and **neuron registration rate limits** (including per-interval caps) are removed on upgraded runtimes.
 - **Extrinsics**: `register` and `burned_register` remain; both use the **same** burn-based flow under the hood (legacy `register` fields are compatibility-only). **`root_register` / root subnet** behavior is **unchanged**.
