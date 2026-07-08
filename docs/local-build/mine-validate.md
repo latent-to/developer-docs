@@ -20,7 +20,7 @@ Before continuing with the rest of this tutorial, make sure you've completed the
 - [Provision wallets for the subnet creator, miner, and validator users for this tutorial.](./provision-wallets)
 - [Created and started a subnet](./create-subnet) to enable emissions.
 
-This guide uses Opentensor's [_subnet template_](https://github.com/opentensor/subnet-template/tree/main) repo. The repo provides a minimal implementation for building a custom subnet on the Bittensor network and includes the core logic for the miner and validator.
+This guide uses Opentensor's [_subnet template_](https://github.com/latent-to/subnet-template/tree/main) repo. The repo provides a minimal implementation for building a custom subnet on the Bittensor network and includes the core logic for the miner and validator.
 
 ## 1. Register the neuron hotkeys
 
@@ -194,7 +194,7 @@ The `subnet-template` repo contains the core logic for the subnet miner and vali
 To begin, clone the `subnet-template` GitHub repository and navigate into its directory:
 
 ```sh
-git clone https://github.com/opentensor/subnet-template.git
+git clone https://github.com/latent-to/subnet-template.git
 cd subnet-template
 ```
 

@@ -4,7 +4,7 @@ title: "Install Bittensor SDK"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 # Install Bittensor SDK
 
@@ -18,9 +18,9 @@ Always double-check the package name and origin before installation. Use links a
 
 ## Supported Python versions
 
-- bittensor (SDK): Python 3.10-3.15 (reference: https://github.com/opentensor/bittensor/blob/master/pyproject.toml#L14)
-- bittensor-cli: Python 3.9-3.13 (reference: https://github.com/opentensor/btcli/blob/main/pyproject.toml#L15 )
-- bittensor-wallet: Python 3.9-3.13 (reference: https://github.com/opentensor/btwallet/blob/main/pyproject.toml#L11)
+- bittensor (SDK): Python 3.10-3.15 (reference: https://github.com/RaoFoundation/bittensor/blob/master/pyproject.toml#L14)
+- bittensor-cli: Python 3.9-3.13 (reference: https://github.com/RaoFoundation/btcli/blob/main/pyproject.toml#L15 )
+- bittensor-wallet: Python 3.9-3.13 (reference: https://github.com/RaoFoundation/btwallet/blob/main/pyproject.toml#L11)
 
 ## Upgrade the Bittensor SDK
 
@@ -89,7 +89,7 @@ source btsdk_venv/bin/activate
     This is the most straightforward method. It is recommended for a beginner as it will pre-install requirements for the Bittensor SDK like Python, if they are not already present on your machine. Copy and paste the following `bash` command into your terminal:
 
     ```bash
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/opentensor/bittensor/master/scripts/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/RaoFoundation/bittensor/master/scripts/install.sh)"
     ```
 
     :::warning For Ubuntu-Linux users
@@ -103,7 +103,7 @@ source btsdk_venv/bin/activate
     1. Clone the Bittensor repo
 
       ```bash
-      git clone https://github.com/opentensor/bittensor.git
+      git clone https://github.com/RaoFoundation/bittensor.git
       ```
 
     2. Change to the Bittensor directory:

@@ -30,7 +30,6 @@ Proxy wallets are a powerful security feature, but to get the full benefits, it 
 
 Generally, the safe wallet should be given the maximum security possible, whereas the proxy wallet (if it is carefully limited in its permissions), can be handled in a more convenient, less secure way. For example, a proxy might be loaded into a less trusted compute runtime, whereas the safe wallet's coldkey private key/seed phrase should _never_ be loaded into any but the most absolutely secure device). However, depending on the proxy's configuration, compromise of a proxy wallet's coldkey can still be disastrous. For example, a proxy with `ProxyType`:`any` and `delay`:`0` can immediately perform any operation on behalf of the safe wallet, so leaking such a proxy key is just as bad as leaking the safe wallet key.
 
-
 :::warning mind your proxies!
 
 A non-zero delay creates a window to cancel transactions that implement attacks, but if you are not checking for announcements regularly, an attacker who has stolen a proxy key can announce a call and wait for the delay to expire without any intervention. The delay protects you only if you are watching.
@@ -94,12 +93,12 @@ See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
 :::info
 Multiple proxy relationships can exist between a pair of wallets, as long as each proxy entry uses a different `ProxyType`. Attempting to register a duplicate entry with the same delegate and `ProxyType` will result in a `proxy.Duplicate` error.
 :::
+
 ### Add the on-chain proxy relationship
+
 <Tabs groupId="proxy">
 
 <TabItem value="btcli" label="BTCLI">
-
-
 
 Run `btcli proxy add` to create a proxy relationship between existing wallets on-chain.
 
@@ -208,7 +207,7 @@ The proxy type can be provided either by importing and using the `ProxyType` enu
 
 ### Manage proxies through a NonTransfer proxy
 
-After initial setup, you should never need your primary coldkey to manage proxies. A `NonTransfer` proxy can create and remove other proxy relationships on behalf of the real account ([`is_superset` in `runtime/src/lib.rs:815-828`](https://github.com/opentensor/subtensor/blob/devnet-ready/runtime/src/lib.rs#L815-L828) defines which proxy types a `NonTransfer` proxy can manage: everything except `Transfer` and `SmallTransfer`).
+After initial setup, you should never need your primary coldkey to manage proxies. A `NonTransfer` proxy can create and remove other proxy relationships on behalf of the real account ([`is_superset` in `runtime/src/lib.rs:815-828`](https://github.com/RaoFoundation/subtensor/blob/devnet-ready/runtime/src/lib.rs#L815-L828) defines which proxy types a `NonTransfer` proxy can manage: everything except `Transfer` and `SmallTransfer`).
 
 This means your primary coldkey stays in cold storage. Use it once to create the initial `NonTransfer` proxy from your hardware wallet, then use that proxy for all subsequent proxy management.
 
@@ -724,7 +723,7 @@ Block Hash: 0x1c6378ee38b8c27f161b646125ec301f1aa52bffd63b090ec0c0876c9cc56ba5
 Balance:
 98.4409 τ ➡ 98.4409 τ
 
-```
+````
 </details>
 **What this does:**
 
@@ -778,7 +777,7 @@ response = subtensor.announce_proxy(
 
 print(response)
 # Save the call_hash - you'll need it to execute after the delay
-```
+````
 
 :::info
 Next, wait for the duration of the configured delay before executing the call. During the waiting period, the delegate can cancel the announcement—`subtensor.remove_proxy_announcement()`, while the real account retains final authority to reject it—`subtensor.reject_proxy_announcement()`.
@@ -984,7 +983,6 @@ This returns all pending announcements for that delegate, each with the real acc
 </TabItem>
 </Tabs>
 
-
 ### Remove an announcement you made by proxy
 
 If you made an announcement using a proxy and want to cancel it, for example if you made an error, use `remove_proxy_announcement`. This operation must be signed by wallet that made the announcement, i.e. the proxy.
@@ -1173,6 +1171,7 @@ async def main():
 
 asyncio.run(main())
 ```
+
 ```console
 ExtrinsicResponse:
   success: True
@@ -1187,7 +1186,8 @@ ExtrinsicResponse:
   transaction_alpha_fee: None
   error: None
   data: None
-  ```
+```
+
 ## Register on a subnet with a proxy
 
 Use a `Registration` proxy to register a hotkey on a subnet. The proxy coldkey signs the transaction; your primary coldkey never needs to be present on the machine.
@@ -1222,7 +1222,6 @@ response = sub.proxy(
 print(response)
 ```
 
-
 Querying which subnets a hotkey is registered on is a permissionless operation — only the public key is needed:
 
 ```python
@@ -1235,11 +1234,12 @@ wallet = bt.Wallet(
 netuids = sub.get_netuids_for_hotkey(wallet.hotkey.ss58_address)
 print(netuids)
 ```
+
 ## Troubleshooting
 
-- `proxy.Duplicate`: A proxy with the same configuration already exists on the real account. See [source code: `Duplicate` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L739).
-- `proxy.Unannounced`: A non-zero delay proxy requires an announcement; announce and wait the delay. See [source code: `Unannounced` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L743).
-- `proxy.Unproxyable`/`system.CallFiltered`: The call is not permitted under the current `ProxyType`. See [source code: `Unproxyable` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L737).
-- `proxy.TooMany`: You exceeded `MaxProxies` or `MaxPending`. Remove unused proxies/announcements. See [source code: `TooMany` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L731).
-- `proxy.NotProxy`: Ensure you're submitting from the delegate account and referencing the correct real account. See [source code: `NotProxy` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L735).
+- `proxy.Duplicate`: A proxy with the same configuration already exists on the real account. See [source code: `Duplicate` error](https://github.com/RaoFoundation/subtensor/blob/main/pallets/proxy/src/lib.rs#L739).
+- `proxy.Unannounced`: A non-zero delay proxy requires an announcement; announce and wait the delay. See [source code: `Unannounced` error](https://github.com/RaoFoundation/subtensor/blob/main/pallets/proxy/src/lib.rs#L743).
+- `proxy.Unproxyable`/`system.CallFiltered`: The call is not permitted under the current `ProxyType`. See [source code: `Unproxyable` error](https://github.com/RaoFoundation/subtensor/blob/main/pallets/proxy/src/lib.rs#L737).
+- `proxy.TooMany`: You exceeded `MaxProxies` or `MaxPending`. Remove unused proxies/announcements. See [source code: `TooMany` error](https://github.com/RaoFoundation/subtensor/blob/main/pallets/proxy/src/lib.rs#L731).
+- `proxy.NotProxy`: Ensure you're submitting from the delegate account and referencing the correct real account. See [source code: `NotProxy` error](https://github.com/RaoFoundation/subtensor/blob/main/pallets/proxy/src/lib.rs#L735).
 - `Token.FundsUnavailable`: Ensure that your real account has enough available funds to cover the transaction.

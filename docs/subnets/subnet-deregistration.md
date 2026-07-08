@@ -31,13 +31,13 @@ Subnet deregistration addresses network efficiency issues:
 
 The process begins when the subnet limit is reached and a new subnet attempts to register.
 
-Source: [`do_register_network()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/subnet.rs#L146-158)
+Source: [`do_register_network()`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/subnets/subnet.rs#L146-158)
 
 ### Selection Criteria
 
 The subnet to deregister is the subnet with lowest EMA (Exponential Moving Average) price among non-immune subnets.
 
-Source code: [`get_network_to_prune()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L753-795)
+Source code: [`get_network_to_prune()`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L753-795)
 
 The subnet price EMA uses the standard EMA formula:
 
@@ -67,14 +67,14 @@ See also:
 Network immunity period is currently 4 months from registration block.
 
 - Formula: `current_block < registered_at + network_immunity_period`
-- Source code: [Immunity check](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L768-770)
+- Source code: [Immunity check](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L768-770)
 
 ### Rate Limiting
 
 Deregistration can occur at most every once every 2 days (coordinated with registration rate).
 
 - Block-based timing: 14400 blocks ≈ 2 days at 12s/block
-- [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L27)
+- [Source code](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L27)
 
 See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
 
@@ -84,7 +84,7 @@ See [Rate Limits in Bittensor](../learn/chain-rate-limits.md).
 
 If all subnets are still within their immunity period, the system will:
 
-1. Return `None` from [`get_network_to_prune()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L753-795)
+1. Return `None` from [`get_network_to_prune()`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L753-795)
 2. Registration fails with `SubnetLimitReached` error
 3. No subnet is deregistered until at least one becomes eligible
 
@@ -93,7 +93,7 @@ If all subnets are still within their immunity period, the system will:
 When multiple subnets have identical EMA prices:
 
 1. Select the subnet with the earliest registration timestamp
-2. Implementation: [Tie-breaking logic](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L774-781)
+2. Implementation: [Tie-breaking logic](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L774-781)
 
 ## Token Liquidation
 
@@ -142,8 +142,8 @@ When a subnet is dissolved, `SubnetProtocolAlpha` is included in the total alpha
 
 **Source Code**:
 
-- [`destroy_alpha_in_out_stakes()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L444-623)
-- [`prune_network()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L377)
+- [`destroy_alpha_in_out_stakes()`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs#L444-623)
+- [`prune_network()`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/coinbase/root.rs#L377)
 
 ## Conviction locks and deregistration
 

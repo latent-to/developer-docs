@@ -4,27 +4,27 @@ title: "OCR Subnet Tutorial"
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import { SdkVersion } from "../sdk/_sdk-version.mdx";
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
 # OCR Subnet Tutorial
 
 In this tutorial you will learn how to quickly convert your validated idea into a functional Bittensor subnet. This tutorial begins with a Python notebook that contains the already validated code for optical character recognition (OCR). We demonstrate how straightforward it is to start with such notebooks and produce a working subnet.
 
-
-## Motivation 
+## Motivation
 
 Bittensor subnets are:
-- Naturally suitable for continuous improvement of the subnet miners. 
-- High throughput environments to accomplish such improvements. 
 
-This is the motivation for creating an OCR subnet for this tutorial. By using the OCR subnet, one can extract the text from an entire library of books in a matter of hours or days. Moreover, when we expose the subnet miners, during training, to examples of  real-world use-cases, the OCR subnet can be fine-tuned to be maximally effective.
+- Naturally suitable for continuous improvement of the subnet miners.
+- High throughput environments to accomplish such improvements.
+
+This is the motivation for creating an OCR subnet for this tutorial. By using the OCR subnet, one can extract the text from an entire library of books in a matter of hours or days. Moreover, when we expose the subnet miners, during training, to examples of real-world use-cases, the OCR subnet can be fine-tuned to be maximally effective.
 
 ## Takeaway lessons
 
 When you complete this tutorial, you will know the following:
 
-- How to convert your Python notebook containing the validated idea into a working Bittensor subnet.  
-- How to use the [Bittensor Subnet Template](https://github.com/opentensor/bittensor-subnet-template) to accomplish this goal.
+- How to convert your Python notebook containing the validated idea into a working Bittensor subnet.
+- How to use the [Bittensor Subnet Template](https://github.com/RaoFoundation/bittensor-subnet-template) to accomplish this goal.
 - How to perform subnet validation and subnet mining.
 - How to design your own subnet incentive mechanism.
 
@@ -38,14 +38,13 @@ The Python [notebook](https://colab.research.google.com/drive/1Z2KT11hyKwsmMib8C
 - [Baseline miner implementation](https://colab.research.google.com/drive/1Z2KT11hyKwsmMib8C6lDsY93vnomJznz#scrollTo=hhKFy5U2EW7e).
 - [Reward model (incentive mechanism)](https://colab.research.google.com/drive/1Z2KT11hyKwsmMib8C6lDsY93vnomJznz#scrollTo=jcwFaIjwJnBj).
 
-
 ### OCR subnet repository
 
 - We will use the [OCR subnet repository](https://github.com/steffencruz/ocr_subnet) as our starting point and then incorporate the notebook code to build the OCR subnet.
 
 ## Tutorial method
 
-For the rest of this tutorial we will proceed by demonstrating which blocks of Python notebook code are copied into specific sections of the [OCR subnet repository](https://github.com/steffencruz/ocr_subnet). 
+For the rest of this tutorial we will proceed by demonstrating which blocks of Python notebook code are copied into specific sections of the [OCR subnet repository](https://github.com/steffencruz/ocr_subnet).
 
 ## Prerequisites
 
@@ -55,7 +54,7 @@ If you are new to Bittensor, read the following sections before you proceed:
 
 1. [Introduction](../learn/introduction.md) that describes how subnets form the heartbeat of the Bittensor network.
 2. [Bittensor Building Blocks](../learn/neurons.md) that presents the basic building blocks you use to develop your subnet incentive mechanism.
-3. [Anatomy of Incentive Mechanism](../learn/anatomy-of-incentive-mechanism.md) that introduces the general concept of a subnet incentive mechanism. 
+3. [Anatomy of Incentive Mechanism](../learn/anatomy-of-incentive-mechanism.md) that introduces the general concept of a subnet incentive mechanism.
 
 ## OCR subnet summary
 
@@ -70,42 +69,42 @@ sources={{
 />
 
 1. The subnet validator sends a challenge simultaneously to multiple subnet miners. In this tutorial the challenge consists of an image file of a synthetic invoice document. The serialized image file is attached to a synapse object called `OCRSynapse`. This step constitutes the **query** from the subnet validator to subnet miners.
-2. The subnet miners respond after performing the challenge **task**. After receiving the synapse object containing the image data, each miner then performs the task of extracting, from the image data, its contents, including the text content, the positional information of the text, the fonts used in the text and the font size. 
-3. The subnet validator then **scores** each subnet miner based on the quality of the response and how quickly the miner completed the task. The subnet validator uses the original synthetic invoice document as the ground truth for this step. 
-4. Finally, the subnet validator **sets the weights** for the subnet miners by sending the weights to the blockchain. 
+2. The subnet miners respond after performing the challenge **task**. After receiving the synapse object containing the image data, each miner then performs the task of extracting, from the image data, its contents, including the text content, the positional information of the text, the fonts used in the text and the font size.
+3. The subnet validator then **scores** each subnet miner based on the quality of the response and how quickly the miner completed the task. The subnet validator uses the original synthetic invoice document as the ground truth for this step.
+4. Finally, the subnet validator **sets the weights** for the subnet miners by sending the weights to the blockchain.
 
 <!-- ## Step 1. Clone the template
 
-1. Go to [Bittensor Subnet Template](https://github.com/opentensor/bittensor-subnet-template) and click on the **Use this template** dropdown on the top right. 
-2. Click on **Create a new repository** and give your preferred name in the **Repository name** field. We will use the name **ocr_subnet** in this tutorial. 
-3. Optionally provide a description in the **Description** field. 
+1. Go to [Bittensor Subnet Template](https://github.com/RaoFoundation/bittensor-subnet-template) and click on the **Use this template** dropdown on the top right.
+2. Click on **Create a new repository** and give your preferred name in the **Repository name** field. We will use the name **ocr_subnet** in this tutorial.
+3. Optionally provide a description in the **Description** field.
 4. Choose either **Public** or **Private**.
 5. Click on **Create repository**.
-6. GitHub will now show you your **ocr_subnet** repository page. 
+6. GitHub will now show you your **ocr_subnet** repository page.
 7. Clone your **ocr_subnet** repo locally. -->
 
 ## Step 1: Generate challenge and query the miners
 
 ### Step 1.1: Synthetic PDF as challenge
 
-In this tutorial, the subnet validator will generate synthetic data, which is a PDF document containing an invoice. The subnet validator will use this synthetic PDF as the basis for assessing the subnet miner performance. Synthetic data is an appropriate choice as it provides an **unlimited** source of **customizable** validation data. It also enables the subnet validators to gradually increase the **difficulty** of the task so that the miners are required to continuously improve. This is in contrast to using a pre-existing dataset from the web, where subnet miners can "lookup" the answers on the web. 
+In this tutorial, the subnet validator will generate synthetic data, which is a PDF document containing an invoice. The subnet validator will use this synthetic PDF as the basis for assessing the subnet miner performance. Synthetic data is an appropriate choice as it provides an **unlimited** source of **customizable** validation data. It also enables the subnet validators to gradually increase the **difficulty** of the task so that the miners are required to continuously improve. This is in contrast to using a pre-existing dataset from the web, where subnet miners can "lookup" the answers on the web.
 
 The contents of the PDF document are the ground truth labels. The subnet validator uses them to score the miner responses. The synthetic PDF document is corrupted with different types of noise to mimic poorly scanned documents. The amount of noise can also be gradually increased to make the task more challenging.
 
 To generate this challenge, the subnet validator applies the following steps:
 
-- Creates a synthetic invoice document using the [Python Faker library](https://github.com/joke2k/faker). 
-- Converts this synthetic data into PDF using [ReportLab Python library](https://docs.reportlab.com/install/open_source_installation/). 
-- Finally, the validator creates the challenge by converting this PDF into a corrupted image, called `noisy_image`. 
+- Creates a synthetic invoice document using the [Python Faker library](https://github.com/joke2k/faker).
+- Converts this synthetic data into PDF using [ReportLab Python library](https://docs.reportlab.com/install/open_source_installation/).
+- Finally, the validator creates the challenge by converting this PDF into a corrupted image, called `noisy_image`.
 
 #### Code snapshot
 
 <SdkVersion />
 
-See below for a snapshot view of the code. 
+See below for a snapshot view of the code.
 
 ```python
-# Generates a PDF invoice from the raw data passed in as "invoice_data" dictionary 
+# Generates a PDF invoice from the raw data passed in as "invoice_data" dictionary
 # and saves the PDF with "filename"
 def create_invoice(invoice_data, filename):
 ...
@@ -119,28 +118,28 @@ invoice_info = {
 }
 ...
 
-# Pass the "invoice_info" containing the Faker-generated raw data 
-# to create_invoice() method and generate the synthetic invoice PDF 
+# Pass the "invoice_info" containing the Faker-generated raw data
+# to create_invoice() method and generate the synthetic invoice PDF
 pdf_filename = "sample_invoice.pdf"
 data = create_invoice(invoice_info, pdf_filename)
 ...
 
 # Loads PDF and converts it into usable PIL image using Pillow library
-# Used by the corrupt_image() method 
+# Used by the corrupt_image() method
 def load_image(pdf_path, page=0, zoom_x=1.0, zoom_y=1.0):
   ...
 
-# Accepts a PDF, uses load_image() method to convert to image 
-# and adds noise, blur, spots, rotates the page, curls corners, darkens edges so 
-# that the overall result is noisy. Saves back in PDF format. 
-# This is our corrupted synthetic PDF document. 
+# Accepts a PDF, uses load_image() method to convert to image
+# and adds noise, blur, spots, rotates the page, curls corners, darkens edges so
+# that the overall result is noisy. Saves back in PDF format.
+# This is our corrupted synthetic PDF document.
 def corrupt_image(input_pdf_path, output_pdf_path, border=50, noise=0.1, spot=(100,100), scale=0.95, theta=0.2, blur=0.5):
   ...
 ```
 
 **Collab Notebook source:** The validated code for the above synthetic PDF generation logic is in [Validation flow cell](https://colab.research.google.com/drive/1Z2KT11hyKwsmMib8C6lDsY93vnomJznz#scrollTo=M8Cf2XVUJnBh).
 
-All we have to do is to copy the above Notebook code into a proper place in the OCR subnet repo. 
+All we have to do is to copy the above Notebook code into a proper place in the OCR subnet repo.
 
 ```bash {7,9}
 ...
@@ -159,24 +158,24 @@ All we have to do is to copy the above Notebook code into a proper place in the 
 
 We copy the above Notebook code into the following code files. Click on the OCR repo file names to see the copied code:
 
-| Python Notebook source| OCR repo destination |
-| :---------- | :-------------- |
-| Methods: `create_invoice`, `random_items`, `load_image`, and lists `items_list` and `invoice_info` and all the `import` statements in cell 34. | [ocr_subnet/validator/generate.py](https://github.com/steffencruz/ocr_subnet/blob/main/ocr_subnet/validator/generate.py) | 
-| Method: `corrupt_image`       | [ocr_subnet/validator/corrupt.py](https://github.com/steffencruz/ocr_subnet/blob/main/ocr_subnet/validator/corrupt.py) |
+| Python Notebook source                                                                                                                         | OCR repo destination                                                                                                     |
+| :--------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
+| Methods: `create_invoice`, `random_items`, `load_image`, and lists `items_list` and `invoice_info` and all the `import` statements in cell 34. | [ocr_subnet/validator/generate.py](https://github.com/steffencruz/ocr_subnet/blob/main/ocr_subnet/validator/generate.py) |
+| Method: `corrupt_image`                                                                                                                        | [ocr_subnet/validator/corrupt.py](https://github.com/steffencruz/ocr_subnet/blob/main/ocr_subnet/validator/corrupt.py)   |
 
 ### Step 1.2: Query miners
 
-Next, the subnet validator sends this `noisy_image` to the miners, tasking them to perform OCR and content extraction. 
+Next, the subnet validator sends this `noisy_image` to the miners, tasking them to perform OCR and content extraction.
 
-**Collab Notebook source:** In the validated Collab Notebook code, this step is accomplished by **directly passing the path information** of the `noisy_image` from the Validator cell to the miner. 
+**Collab Notebook source:** In the validated Collab Notebook code, this step is accomplished by **directly passing the path information** of the `noisy_image` from the Validator cell to the miner.
 
 :::tip
 [See `noisy_image` from line 32 in Quick sanity check cell](https://colab.research.google.com/drive/1Z2KT11hyKwsmMib8C6lDsY93vnomJznz#scrollTo=_rHjuG6JD--P) being passed to [line 90 of the Miner cell](https://colab.research.google.com/drive/1Z2KT11hyKwsmMib8C6lDsY93vnomJznz#scrollTo=hhKFy5U2EW7e).
-::: 
+:::
 
 #### Define OCRSynapse class
 
-However, in a Bittensor subnet, any communication between a subnet validator and a subnet miner must use an object of the type `Synapse`. Hence, the subnet validator must attach the corrupted image to a `Synapse` object and send this object to the miners. The miners will then update the passed synapse by attaching their responses into this same object and send them back to the subnet validator. 
+However, in a Bittensor subnet, any communication between a subnet validator and a subnet miner must use an object of the type `Synapse`. Hence, the subnet validator must attach the corrupted image to a `Synapse` object and send this object to the miners. The miners will then update the passed synapse by attaching their responses into this same object and send them back to the subnet validator.
 
 #### Code snapshot
 
@@ -226,7 +225,7 @@ See [Neuron-to-neuron communication](../learn/neurons.md#neuron-to-neuron-commun
 
 #### Send OCRSynapse to miners
 
-With the `OCRSynapse` class defined, next we use the network client `dendrite` of the subnet validator to send queries to the `Axon` server of the subnet miners. 
+With the `OCRSynapse` class defined, next we use the network client `dendrite` of the subnet validator to send queries to the `Axon` server of the subnet miners.
 
 #### Code snapshot
 
@@ -244,7 +243,7 @@ responses = self.dendrite.query(
 )
 ```
 
-See [**ocr_subnet/validator/forward.py**](https://github.com/steffencruz/ocr_subnet/blob/main/ocr_subnet/validator/forward.py) which contains all this communication logic. 
+See [**ocr_subnet/validator/forward.py**](https://github.com/steffencruz/ocr_subnet/blob/main/ocr_subnet/validator/forward.py) which contains all this communication logic.
 
 Also note that the [**scripts/**](https://github.com/steffencruz/ocr_subnet/tree/main/scripts) directory contains the sample invoice document and its noisy version. The subnet validator uses these as ground truth labels to score the miner responses.
 
@@ -265,11 +264,11 @@ Also note that the [**scripts/**](https://github.com/steffencruz/ocr_subnet/tree
 
 ## Step 2: Miner response
 
-Having received the `OCRSynapse` object with the corrupted image data in it, the miners will next perform the data extraction. 
+Having received the `OCRSynapse` object with the corrupted image data in it, the miners will next perform the data extraction.
 
-### Base miner 
+### Base miner
 
-The Python notebook contains an implementation of the base miner, which uses [`pytesseract`](https://github.com/madmaze/pytesseract), a popular open source OCR tool to extract data from the image sent by the subnet validator. 
+The Python notebook contains an implementation of the base miner, which uses [`pytesseract`](https://github.com/madmaze/pytesseract), a popular open source OCR tool to extract data from the image sent by the subnet validator.
 
 **Collab Notebook source**: See the `miner` method in this [Miner cell of the Collab Notebook](https://colab.research.google.com/drive/1Z2KT11hyKwsmMib8C6lDsY93vnomJznz#scrollTo=hhKFy5U2EW7e).
 
@@ -294,12 +293,12 @@ We copy the above miner code from the Notebook into the following code files. Cl
 ...
 ```
 
-| Python Notebook source| OCR repo destination |
-| :---------- | :-------------- |
-| Methods: `group_and_merge_boxes` and `miner` and all the `import` statements in this [Miner cell of the Collab Notebook](https://colab.research.google.com/drive/1Z2KT11hyKwsmMib8C6lDsY93vnomJznz#scrollTo=hhKFy5U2EW7e). | [neurons/miner.py](https://github.com/steffencruz/ocr_subnet/blob/main/neurons/miner.py) | 
+| Python Notebook source                                                                                                                                                                                                     | OCR repo destination                                                                     |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------- |
+| Methods: `group_and_merge_boxes` and `miner` and all the `import` statements in this [Miner cell of the Collab Notebook](https://colab.research.google.com/drive/1Z2KT11hyKwsmMib8C6lDsY93vnomJznz#scrollTo=hhKFy5U2EW7e). | [neurons/miner.py](https://github.com/steffencruz/ocr_subnet/blob/main/neurons/miner.py) |
 
 :::tip Student exercise
-[`pytesseract`](https://github.com/madmaze/pytesseract) is well-suited for this OCR problem. But it can be beaten by a subnet miner using more sophisticated approaches such as deep learning for OCR. 
+[`pytesseract`](https://github.com/madmaze/pytesseract) is well-suited for this OCR problem. But it can be beaten by a subnet miner using more sophisticated approaches such as deep learning for OCR.
 :::
 
 ## Step 3: Scoring miner responses
@@ -309,11 +308,11 @@ When a miner sends its response, the subnet validator scores the quality of the 
 **Prediction reward**
 : Compute the similarity between the ground truth and the prediction of the miner for the text content, text position and the font. This is conceptually equivalent to a loss function that is used in a machine learning setting, with the only difference being that rewards are a function to be **maximized** rather than **minimized**. The total prediction reward is calculated as below:
 
-- For each section of the synthetic invoice document, compute the **three** partial reward quantities: 
+- For each section of the synthetic invoice document, compute the **three** partial reward quantities:
   - text reward.
   - position reward.
-  - font reward. 
-- This is done by comparing a section in the miner response to the corresponding section in the ground truth synthetic invoice document. 
+  - font reward.
+- This is done by comparing a section in the miner response to the corresponding section in the ground truth synthetic invoice document.
 - Add the above three partial reward quantities to compute the total loss for the particular section.
 - Take the mean score of all such total rewards over all the sections of the invoice document.
 
@@ -321,6 +320,7 @@ When a miner sends its response, the subnet validator scores the quality of the 
 : Calculate the response time penalty for the miner for these predictions. The goal here is to assign higher rewards to faster miners.
 
 #### Code snapshot
+
 ```python
 # Calculate the edit distance between two strings.
 def get_text_reward(text1: str, text2: str = None):
@@ -376,21 +376,21 @@ We copy the above miner code from the Notebook into the following code files. Cl
 ...
 ```
 
-| Python Notebook source| OCR repo destination |
-| :---------- | :-------------- |
-| Methods: `reward` and `miner` and all the `import` statements in this [Miner cell of the Collab Notebook](https://colab.research.google.com/drive/1Z2KT11hyKwsmMib8C6lDsY93vnomJznz#scrollTo=hhKFy5U2EW7e). | [ocr_subnet/validator/reward.py](https://github.com/steffencruz/ocr_subnet/blob/main/ocr_subnet/validator/reward.py) | 
-| Method `section_reward`. | Method `loss` in the `reward.py`. |
-| Methods: `get_position_reward`, `get_text_reward` and `get_font_reward`. | Methods: `get_iou`, `get_edit_distance` and `get_font_distance`, respectively, in [ocr_subnet/validator/utils.py](https://github.com/steffencruz/ocr_subnet/blob/main/ocr_subnet/validator/utils.py) |
+| Python Notebook source                                                                                                                                                                                      | OCR repo destination                                                                                                                                                                                 |
+| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Methods: `reward` and `miner` and all the `import` statements in this [Miner cell of the Collab Notebook](https://colab.research.google.com/drive/1Z2KT11hyKwsmMib8C6lDsY93vnomJznz#scrollTo=hhKFy5U2EW7e). | [ocr_subnet/validator/reward.py](https://github.com/steffencruz/ocr_subnet/blob/main/ocr_subnet/validator/reward.py)                                                                                 |
+| Method `section_reward`.                                                                                                                                                                                    | Method `loss` in the `reward.py`.                                                                                                                                                                    |
+| Methods: `get_position_reward`, `get_text_reward` and `get_font_reward`.                                                                                                                                    | Methods: `get_iou`, `get_edit_distance` and `get_font_distance`, respectively, in [ocr_subnet/validator/utils.py](https://github.com/steffencruz/ocr_subnet/blob/main/ocr_subnet/validator/utils.py) |
 
+## Step 4: Set weights
 
-## Step 4: Set weights 
+Finally, as shown in the above [OCR subnet summary](#ocr-subnet-summary), the subnet validator normalizes the EMA scores and sets the weights of the subnet miners to the blockchain. This step is not in the Python notebooks. This step is performed by the function `set_weights` in the [ocr_subnet/base/validator.py](https://github.com/steffencruz/ocr_subnet/blob/main/ocr_subnet/base/validator.py#L206) and it is already available fully implemented in the OCR subnet repo.
 
-Finally, as shown in the above [OCR subnet summary](#ocr-subnet-summary), the subnet validator normalizes the EMA scores and sets the weights of the subnet miners to the blockchain. This step is not in the Python notebooks. This step is performed by the function `set_weights` in the [ocr_subnet/base/validator.py](https://github.com/steffencruz/ocr_subnet/blob/main/ocr_subnet/base/validator.py#L206) and it is already available fully implemented in the OCR subnet repo. 
-
-## Next steps 
+## Next steps
 
 Congratulations, you have successfully transformed your Python Notebook into a working Bittensor subnet. See below tips for your next steps.
 
 Can you think of ways your incentive mechanism would lead to undesirable behavior? For example:
+
 - The positional structure of the invoice, i.e., how sections are positioned in the invoice, is mostly static and thus easily predictable. Hence all subnet miners may predict the position correctly without doing much work. This will render the position reward as ineffective. How can you avoid this?
 - Experiment with the $\alpha$ hyperparameters to make the subnet miners compete more effectively. See [Reward model (incentive mechanism)](https://colab.research.google.com/drive/1Z2KT11hyKwsmMib8C6lDsY93vnomJznz#scrollTo=jcwFaIjwJnBj).

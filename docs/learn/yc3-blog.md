@@ -61,28 +61,28 @@ Yuma Consensus 3 addresses these fundamental issues with several breakthrough im
 
 The most significant innovation in YC3 is that each validator-miner bond pair now gets its own adjustment rate (alpha value) rather than using a single rate for all bonds. This allows individual relationships to evolve at different speeds based on performance and consensus differences.
 
-When [Liquid Alpha is enabled](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L633-L640), the system calculates [individual alpha values](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1166-L1206) for each validator-miner pair using a [sigmoid function](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1274-L1302). When Liquid Alpha is disabled, it falls back to a [uniform alpha calculation](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1304-L1312) based on the bonds moving average parameter.
+When [Liquid Alpha is enabled](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L633-L640), the system calculates [individual alpha values](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1166-L1206) for each validator-miner pair using a [sigmoid function](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1274-L1302). When Liquid Alpha is disabled, it falls back to a [uniform alpha calculation](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1304-L1312) based on the bonds moving average parameter.
 
 ### Fair Scaling for All Validators
 
-Bond values are computed using fixed-point arithmetic and then [converted to u16 for storage efficiency](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L859-L861), allowing precise fractional relationships while maintaining a 0-65535 storage scale. This fixes the disadvantages that plagued small-stake validators in previous versions.
+Bond values are computed using fixed-point arithmetic and then [converted to u16 for storage efficiency](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L859-L861), allowing precise fractional relationships while maintaining a 0-65535 storage scale. This fixes the disadvantages that plagued small-stake validators in previous versions.
 
 ### Early Recognition Rewards
 
 Validators who identify promising miners before they become widely recognized can now start accumulating bonds early. This creates proper incentives for proactive evaluation rather than just following the crowd.
 
-The [alpha sigmoid function](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1274-L1302) calculates adjustment rates based on the difference between a validator's current weights and the network consensus. When a validator's weight for a miner differs significantly from consensus, the sigmoid determines whether to increase or decrease the bond adjustment rate, rewarding early recognition while preventing manipulation.
+The [alpha sigmoid function](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1274-L1302) calculates adjustment rates based on the difference between a validator's current weights and the network consensus. When a validator's weight for a miner differs significantly from consensus, the sigmoid determines whether to increase or decrease the bond adjustment rate, rewarding early recognition while preventing manipulation.
 
 ## Understanding Bonds: The Key to Validator Rewards
 
 **Bonds** are the mechanism by which validators earn rewards for their evaluation work. Think of them as shares or stakes that validators accumulate with specific miners over time.
 
-Bonds held by a validator for a given miner, produce emissions in proportion to the strength of the bond and the emissions to the miner. See [source code.](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L712)
+Bonds held by a validator for a given miner, produce emissions in proportion to the strength of the bond and the emissions to the miner. See [source code.](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L712)
 
 **The Technical Implementation:**
 
-1. **Storage**: Bonds are stored as [sparse matrices](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L948-L964) on a 0-65535 scale for efficiency
-2. **Computation**: Each epoch, bonds are updated via [Exponential Moving Average (EMA)](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L651-L658) based on validator weights and previous bond values
+1. **Storage**: Bonds are stored as [sparse matrices](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L948-L964) on a 0-65535 scale for efficiency
+2. **Computation**: Each epoch, bonds are updated via [Exponential Moving Average (EMA)](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L651-L658) based on validator weights and previous bond values
 3. **Rewards**: Validator dividends are computed by multiplying bonds with miner incentives
 
 **Mathematical Foundation:** Under the hood, bonds follow the EMA equation. Here, $\Delta B_{ij}$ is the "instant bond" based on a validator's stake-weighted evaluation of a miner.
@@ -97,26 +97,26 @@ However, YC3's innovation is that α can now be different for each validator-min
 
 **In Yuma v2** (the problematic version): A validator needed to vote on a miner while at least 50% of validators were also voting for that miner. This meant early discoverers got locked out until big validators joined.
 
-**In Yuma v3**: Validators can [build bonds independently](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1108-L1127) through the EMA process. When Liquid Alpha is enabled, each validator-miner pair gets its own alpha value, allowing bonds to accumulate even when others haven't recognized the miner yet.
+**In Yuma v3**: Validators can [build bonds independently](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1108-L1127) through the EMA process. When Liquid Alpha is enabled, each validator-miner pair gets its own alpha value, allowing bonds to accumulate even when others haven't recognized the miner yet.
 
 ### Liquid Alpha Integration
 
 YC3 works seamlessly with Liquid Alpha, providing additional rewards for validators who vote for
 miners that aren't yet receiving votes from others. This further encourages independent evaluation
 and early recognition.
-YC3 integrates with Liquid Alpha when [specific conditions are met](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L633-L640):
+YC3 integrates with Liquid Alpha when [specific conditions are met](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L633-L640):
 
 1. Liquid Alpha must be enabled for the subnet
 2. Consensus values must exist and contain non-zero values
 3. The network must have sufficient activity
 
-When these conditions are satisfied, validators receive additional rewards for voting for miners that aren't yet receiving votes from others. If conditions aren't met, the system [falls back to traditional EMA bonding](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1108-L1115).
+When these conditions are satisfied, validators receive additional rewards for voting for miners that aren't yet receiving votes from others. If conditions aren't met, the system [falls back to traditional EMA bonding](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1108-L1115).
 
 ### Enhanced EMA Smoothing
 
-The system maintains strong anti-fraud protection while providing smoother bond transitions. The adjustment rate is controlled by the [bonds moving average parameter](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1055-L1062), which can be configured up to 97.5% (meaning bonds change by 2.5% per epoch toward their target values).
+The system maintains strong anti-fraud protection while providing smoother bond transitions. The adjustment rate is controlled by the [bonds moving average parameter](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1055-L1062), which can be configured up to 97.5% (meaning bonds change by 2.5% per epoch toward their target values).
 
-**Technical note:** The [EMA calculation](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1028) uses `alpha = 1 - (bonds_moving_average / 1_000_000)`, where bonds_moving_average is typically set to 975,000, resulting in approximately 2.5% adjustment per epoch.
+**Technical note:** The [EMA calculation](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1028) uses `alpha = 1 - (bonds_moving_average / 1_000_000)`, where bonds_moving_average is typically set to 975,000, resulting in approximately 2.5% adjustment per epoch.
 
 ## The Real-World Impact
 
@@ -133,7 +133,7 @@ This transformation means innovation and early recognition are properly rewarded
 
 Yuma 3 works best in subnets where validators can independently evaluate miners and benefit from early recognition of promising innovations. The system distributes dividends more fairly than previous versions, and when combined with Liquid Alpha, provides powerful tools to encourage independent evaluation.
 
-YC3 can be [toggled per subnet](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L628) through governance mechanisms. The [alpha parameter controls](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1316-L1356) allow fine-tuning of the sigmoid steepness and adjustment ranges for your specific subnet needs.
+YC3 can be [toggled per subnet](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L628) through governance mechanisms. The [alpha parameter controls](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs#L1316-L1356) allow fine-tuning of the sigmoid steepness and adjustment ranges for your specific subnet needs.
 
 **Important considerations:**
 
@@ -147,4 +147,4 @@ As Bittensor continues to grow, YC3 provides a solid foundation for fair and eff
 
 For subnet owners ready to embrace more sophisticated consensus mechanisms, YC3 combined with Liquid Alpha provides a powerful toolkit for creating equitable and efficient subnet ecosystems.
 
-YC3 was introduced to the Subtensor Code base in [PR 1593](https://github.com/opentensor/subtensor/pull/1593).
+YC3 was introduced to the Subtensor Code base in [PR 1593](https://github.com/RaoFoundation/subtensor/pull/1593).

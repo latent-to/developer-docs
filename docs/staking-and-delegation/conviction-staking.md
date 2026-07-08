@@ -462,6 +462,7 @@ Reassigns the coldkey's existing lock on `netuid` from its current hotkey to `de
 Locking stake does not change the amount of emissions you receive. Emissions are determined by stake weight and consensus participation.
 :::
 
+
 ### Accepting locked alpha transfers
 
 By default, coldkeys reject incoming locked alpha. A destination coldkey must explicitly opt in before it can receive locked alpha via a coldkey swap or stake transfer.
@@ -488,13 +489,14 @@ api.tx.subtensorModule.setRejectLockedAlpha(true)
 
 **Event emitted:** `RejectLockedAlphaUpdated { coldkey, enabled }`
 
-## Subnet ownership changes
 
-:::note Not yet active
-As a possible future feature, the ownership transfer function (`change_subnet_owner_if_needed`) is implemented in Subtensor codebase, but is currently commented out, so it is not active and enabling it will require a runtime upgrade like any other code change.
+## Subnet ownership transfer
+
+:::info Active as of spec version 425
+Conviction-based ownership enforcement is now live. `change_subnet_owner_if_needed()` runs automatically after each subnet epoch.
 :::
 
-When activated, ownership transfers automatically at the end of each block's coinbase run if two conditions hold simultaneously:
+The transfer of subnet ownership happens automatically at the end of each block's coinbase run if two conditions hold simultaneously:
 
 1. The subnet is at least **one year old** (≥ 7,200 × 365 + 1,800 blocks from `networkRegisteredAt`)
 2. Total aggregate conviction across all locks on the subnet ≥ **10% of `SubnetAlphaOut`**

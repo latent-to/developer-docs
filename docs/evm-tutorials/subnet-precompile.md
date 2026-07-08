@@ -16,7 +16,7 @@ This page:
 
 The subnet precompile is available at address `0x803` (2051 in decimal).
 
-View the [source on GitHub](https://github.com/opentensor/subtensor/blob/main/precompiles/src/subnet.rs)
+View the [source on GitHub](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/subnet.rs)
 
 :::info permissions
 Subnet operations have distinct requirements!
@@ -924,19 +924,19 @@ async function createSubnetGetSetParameter() {
     // Get the substrate address public key
     const pubk = decodeAddress(destinationAddress);
     const hex = Array.from(pubk, (byte) =>
-      byte.toString(16).padStart(2, "0")
+      byte.toString(16).padStart(2, "0"),
     ).join("");
 
     const signer = new ethers.Wallet(ethPrivateKey, provider);
 
     const ss58mirror = convertH160ToSS58(signer.address);
     let txSudoSetBalance = api.tx.sudo.sudo(
-      api.tx.balances.forceSetBalance(ss58mirror, BigInt(1e18).toString())
+      api.tx.balances.forceSetBalance(ss58mirror, BigInt(1e18).toString()),
     );
     await sendTransaction(api, txSudoSetBalance, account);
 
     const txSudoSetWhitelist = api.tx.sudo.sudo(
-      api.tx.evm.setWhitelist([signer.address])
+      api.tx.evm.setWhitelist([signer.address]),
     );
 
     await sendTransaction(api, txSudoSetWhitelist, account);
@@ -944,7 +944,7 @@ async function createSubnetGetSetParameter() {
     const contractFactory = new ethers.ContractFactory(
       subnet_contract_abi,
       subnet_contract_bytecode,
-      signer
+      signer,
     );
 
     const subnet_contract = await contractFactory.deploy(signer.address);
@@ -955,8 +955,8 @@ async function createSubnetGetSetParameter() {
     txSudoSetBalance = api.tx.sudo.sudo(
       api.tx.balances.forceSetBalance(
         convertH160ToSS58(subnet_contract.target),
-        BigInt(1e16).toString()
-      )
+        BigInt(1e16).toString(),
+      ),
     );
     await sendTransaction(api, txSudoSetBalance, account);
 
@@ -976,7 +976,7 @@ async function createSubnetGetSetParameter() {
     let tx = await subnet_contract.registerNetwork(
       encoder.encode("name"),
       encoder.encode("repo"),
-      encoder.encode("contact")
+      encoder.encode("contact"),
     );
     await tx.wait();
 
@@ -993,7 +993,7 @@ async function createSubnetGetSetParameter() {
 
     // get parameter from chain
     let parameter = Number(
-      await api.query.subtensorModule.servingRateLimit(netuid)
+      await api.query.subtensorModule.servingRateLimit(netuid),
     );
 
     assert(parameter == 255);
@@ -1004,7 +1004,7 @@ async function createSubnetGetSetParameter() {
     // check total networks after registration
     console.log(
       "total networks is ",
-      (await api.query.subtensorModule.totalNetworks()).toHuman()
+      (await api.query.subtensorModule.totalNetworks()).toHuman(),
     );
 
     process.exit(0);

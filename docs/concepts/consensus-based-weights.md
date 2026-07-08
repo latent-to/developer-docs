@@ -14,7 +14,7 @@ With this feature, a subnet validator's dividends are better correlated to the p
 
 - See [Amplifying the Weight-copying Penalty in Bittensor, a working paper (PDF)](pathname:///papers/BT-Consensus-based-Weights.pdf).
 - Blog post: [Consensus-based Weights](https://blog.bittensor.com/consensus-based-weights-1c5bbb4e029b).
-- Subtensor document section: [Validator bonding](https://github.com/opentensor/subtensor/blob/main/docs/consensus.md#validator-bonding).
+- Subtensor document section: [Validator bonding](https://github.com/RaoFoundation/subtensor/blob/main/docs/consensus.md#validator-bonding).
 - [Python notebooks](https://github.com/latent-to/developer-docs/tree/main/static/weight_copy/). Run the `weight_copy/liquid_alpha_diagnostic.ipynb` to experiment and choose the right values for the hyperparameters `alpha_low`, `alpha_high`, and `commit_reveal_interval`.
 
 ## Description
@@ -35,7 +35,7 @@ $$
 D_i = \sum_j B_{ij} \cdot I_j
 $$
 
-where $B_{ij}$ is the EMA bond value of the subnet validator $i$ with the subnet miner $j$, and $I_j$ is the subnet miner's incentive. See the subtensor document section, [Validator bonding](https://github.com/opentensor/subtensor/blob/main/docs/consensus.md#validator-bonding) for a rigorous mathematical treatment of this topic.
+where $B_{ij}$ is the EMA bond value of the subnet validator $i$ with the subnet miner $j$, and $I_j$ is the subnet miner's incentive. See the subtensor document section, [Validator bonding](https://github.com/RaoFoundation/subtensor/blob/main/docs/consensus.md#validator-bonding) for a rigorous mathematical treatment of this topic.
 
 ### What changed with this feature
 
