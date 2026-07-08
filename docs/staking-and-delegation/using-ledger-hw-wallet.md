@@ -13,14 +13,14 @@ This guide describes how to set up your Ledger hardware wallet for managing your
 
 - [Ledger device (Nano S/S+/X, Flex, Stax)](https://www.ledger.com/), set up as per Ledger's instructions.
 - A wallet app that supports TAO and your Ledger device. This guide covers three:
-  - **[Tao Wallet](https://wallet.tao.app/)** (recommended) — a first-party Bittensor browser extension that talks to the on-device **Bittensor** Ledger app directly over WebUSB/HID. It does not require Ledger Live or the Polkadot app.
+  - **[Tao Wallet](https://wallet.tao.app/)** (recommended) — a Bittensor browser extension developed by Latent Holdings, the team behind the Bittensor SDK, BTCLI and the docs, which talks to the on-device **Bittensor** Ledger app directly over WebUSB/HID. It does not require Ledger Live or the Polkadot app.
   - **Crucible** and **Talisman** — wallets that sign through the Ledger **Polkadot (DOT)** app, installed with [Ledger Live](https://www.ledger.com/ledger-live).
 
 Pick whichever wallet you prefer. The Tao Wallet flow is described first, followed by Crucible and Talisman.
 
 ## Tao Wallet Extension (recommended)
 
-[Tao Wallet](https://wallet.tao.app/) is a first-party Bittensor browser-extension wallet. Your Ledger holds the coldkey and signs on-device; the extension only prepares payloads. Unlike the Crucible and Talisman flows below, Tao Wallet connects to the on-device **Bittensor** app directly and does not use Ledger Live or the Polkadot app.
+[Tao Wallet](https://wallet.tao.app/) is a Bittensor browser-extension wallet. Your Ledger holds the coldkey and signs on-device; the extension only prepares payloads. Unlike the Crucible and Talisman flows below, Tao Wallet connects to the on-device **Bittensor** app directly and does not use Ledger Live or the Polkadot app.
 
 ### Install Tao Wallet
 
