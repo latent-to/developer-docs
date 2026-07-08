@@ -7,7 +7,7 @@
  * can be decoded correctly.
  *
  * Source of truth: pallets/subtensor/src/rpc.rs and pallets/subtensor/src/lib.rs
- * in opentensor/subtensor.
+ * in RaoFoundation/subtensor.
  */
 
 export const bittensorTypes = {

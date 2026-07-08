@@ -37,6 +37,13 @@ The Bittensor SDK and Bittensor CLI are required to interact with the local bloc
 
 ### 1. Pull the Docker image
 
+<!-- TODO: subtensor repo moved to RaoFoundation (2026-07). New images will publish to
+ghcr.io/raofoundation/subtensor-localnet, but as of 2026-07-08 that package does not exist yet
+(verified: anonymous pull token refused) and ghcr.io/opentensor/subtensor-localnet remains the
+current image. Flip the three ghcr.io references below and the packages page link once the
+raofoundation image is live. -->
+
+
 You can pull the official subtensor Docker image used to create the local blockchain instance from the [GitHub Container Repository](https://github.com/orgs/opentensor/packages/container/package/subtensor-localnet). To do this, run the following command in your terminal:
 
 ```bash
