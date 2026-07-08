@@ -11,22 +11,84 @@ This guide describes how to set up your Ledger hardware wallet for managing your
 
 ## Requirements
 
-Set up your Ledger hardware wallet as per Ledger instructions.
+- [Ledger device (Nano S/S+/X, Flex, Stax)](https://www.ledger.com/), set up as per Ledger's instructions.
+- A wallet app that supports TAO and your Ledger device. This guide covers three:
+  - **[Tao Wallet](https://wallet.tao.app/)** (recommended) — a first-party Bittensor browser extension that talks to the on-device **Bittensor** Ledger app directly over WebUSB/HID. It does not require Ledger Live or the Polkadot app.
+  - **Crucible** and **Talisman** — wallets that sign through the Ledger **Polkadot (DOT)** app, installed with [Ledger Live](https://www.ledger.com/ledger-live).
 
-- [Ledger device (Nano S/S+/X, Flex, Stax)](https://www.ledger.com/).
-- [Ledger Live app](https://www.ledger.com/ledger-live).
+Pick whichever wallet you prefer. The Tao Wallet flow is described first, followed by Crucible and Talisman.
 
-This guide assumes that you have a Ledger device and the Ledger Live app installed already.
+## Tao Wallet Extension (recommended)
 
-## Common Steps
+[Tao Wallet](https://wallet.tao.app/) is a first-party Bittensor browser-extension wallet. Your Ledger holds the coldkey and signs on-device; the extension only prepares payloads. Unlike the Crucible and Talisman flows below, Tao Wallet connects to the on-device **Bittensor** app directly and does not use Ledger Live or the Polkadot app.
+
+### Install Tao Wallet
+
+Install the extension from [wallet.tao.app](https://wallet.tao.app/). Tao Wallet supports Chromium-based browsers only (Chrome, Brave, Edge); Firefox is not supported.
+
+{/* TODO screenshot: wallet.tao.app install / welcome screen */}
+
+### Connect your Ledger
+
+Before connecting, plug in the Ledger over USB, unlock it with your PIN, and open the **Bittensor** app on the device.
+
+On a fresh install, choose **Load from Ledger** on the welcome screen. If you already have a Tao Wallet, open **Add Account** and choose **Connect Ledger**.
+
+1. Approve the browser HID/WebUSB permission prompt when the wallet asks.
+2. The wallet waits until it detects the Bittensor app on the device.
+3. Select one or more derivation rows to import. Each row shows its index, address, and balance. Use **Load More**, or jump to a specific index, to find the account you want.
+
+{/* TODO screenshot: Connect Ledger — derivation row selection */}
+
+:::tip WebUSB/HID required
+If your browser cannot use WebUSB/HID, the wallet shows a warning with a documentation link. Make sure no other application (for example Ledger Live) is holding the device connection.
+:::
+
+### Confirm each signature on the device
+
+Ledger-backed transfers and dApp signatures open a dedicated authorization window. Keep the device connected with the Bittensor app open, review the details on the device screen, and approve (or reject) on the hardware.
+
+{/* TODO screenshot: Ledger authorization window */}
+
+### Transfer TAO
+
+1. Open **Send** and pick your Ledger account as the sender.
+2. Enter the recipient address (validated as you type) and the amount in TAO. Optionally tap **Max** to send the full available balance; the fee is deducted automatically.
+3. On the confirm step, review the **From**, **To**, and **network fee** details, then choose to confirm on Ledger.
+4. Verify the transaction on the device screen and approve it on the hardware.
+5. On success, the result screen shows the amount sent, the recipient, and a transaction hash that links to the block explorer on Finney.
+
+{/* TODO screenshot: Send confirm step + device approval */}
+
+If signing fails, the wallet opens a device error sheet with retry and dismiss options.
+
+### Receive TAO
+
+Open **Receive** to show a QR code for your active Ledger address, along with the account label and a copy control. Share the address or QR code with the sender.
+
+{/* TODO screenshot: Receive QR */}
+
+:::note Tao Wallet Ledger constraints
+- Tao Wallet Ledger accounts use **ed25519**; default software accounts created in the wallet use **sr25519**.
+- The device must stay connected with the Bittensor app open for every signing step.
+- **Passkey** unlock is wallet-level; it is not a per-account substitute for the Ledger device.
+:::
+
+{/* TODO: If Tao Wallet supports Ledger staking to subnets, add a verified, screenshot-backed walkthrough here. Do not publish staking steps until confirmed against the live product. */}
+
+For the fuller illustrated guide, see the [Tao Wallet documentation](https://wallet.tao.app/).
+
+## Polkadot-app wallets: common setup
+
+The Crucible and Talisman flows below both sign through the Ledger **Polkadot (DOT)** app. Complete these common steps before using either.
 
 1. Connect Ledger device to your computer with Ledger Live installed.
 2. Open **Ledger Live** app > **My Ledger** > **Unlock Ledger** > **Approve Ledger Live**.
 3. Install the **Polkadot (DOT)** app from Ledger Live.
-4. To manage your TAO from your Ledger hardware wallet, you must install a wallet app that supports TAO and also supports the Ledger hardware wallet. [Talisman](https://www.talisman.xyz/), [Nova Wallet](https://novawallet.io/), and [Subwallet](https://www.subwallet.app/) apps satisfy this condition. Install any of these wallet apps, and make sure you have configured these wallet apps to also use the Bittensor network. This is required for either transferring TAO using your Ledger, or finding the correct address to receive TAO on your Ledger device.
+4. To manage your TAO from your Ledger hardware wallet, you must install a wallet app that supports TAO and also supports the Ledger hardware wallet. [Crucible](https://crucible.bittensor.com/), [Talisman](https://www.talisman.xyz/), [Nova Wallet](https://novawallet.io/), and [Subwallet](https://www.subwallet.app/) apps satisfy this condition. Install any of these wallet apps, and make sure you have configured these wallet apps to also use the Bittensor network. This is required for either transferring TAO using your Ledger, or finding the correct address to receive TAO on your Ledger device.
 
 :::danger Stop. Did you run the above steps?
-Proceed only after you successfully ran the above steps. The rest of this guide is described using Talisman wallet app.
+Proceed only after you successfully ran the above steps. The Crucible and Talisman sections below assume you have installed the Polkadot app and a compatible wallet app.
 :::
 
 
