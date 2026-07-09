@@ -36,7 +36,7 @@ html_theme_options = {
         "image_light": "_static/logo.svg",
         "image_dark": "_static/logo-dark-mode.svg",
     },
-    "repository_url": "https://github.com/opentensor/btwallet",
+    "repository_url": "https://github.com/RaoFoundation/btwallet",
     "use_source_button": True,
     "use_repository_button": True,
     "use_issues_button": True,

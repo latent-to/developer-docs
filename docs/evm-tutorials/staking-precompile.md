@@ -7,7 +7,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Staking Precompile
 
-Staking precompile allows Ethereum code to interact with the staking feature of subtensor. For example, by using the staking precompile, the subtensor methods [`add_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/add_stake.rs) or [`remove_stake`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs) can be called in order to delegate stake to a hotkey or undelegate stake from a hotkey.
+Staking precompile allows Ethereum code to interact with the staking feature of subtensor. For example, by using the staking precompile, the subtensor methods [`add_stake`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/staking/add_stake.rs) or [`remove_stake`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs) can be called in order to delegate stake to a hotkey or undelegate stake from a hotkey.
 
 In this tutorial you will learn how to interact with staking precompile in two ways:
 
@@ -62,7 +62,7 @@ Before you proceed, familiarize yourself with the Solidity code of the [`stakeV2
 
 In this tutorial, you will interact directly with the staking precompile by using its ABI, and use your Metamask wallet as the source of TAO to stake.
 
-1. Copy the ABI from https://github.com/opentensor/subtensor/blob/main/precompiles/src/solidity/stakingV2.abi into Remix IDE as a new file.
+1. Copy the ABI from https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/solidity/stakingV2.abi into Remix IDE as a new file.
 
 2. Copy staking precompile address `0x0000000000000000000000000000000000000805` to the **At Address** field in Remix IDE, and click **At Address** button.
 

@@ -10,11 +10,11 @@ You do not need to know Rust to use this library, its purpose is to provide an i
 
 This interface includes three main classes:
 
-| Class | Role |
-|---|---|
-| `Keypair` | A cryptographic key pair (public + optional private key). The primitive for signing, verifying, and encrypting. |
-| `Wallet` | A named wallet present on disk: a coldkey and optionally a hotkey, with their corresponding public-key files. Wraps `Keypair` objects and handles persistence. |
-| `Keyfile` | A single key file on disk. Handles at-rest password encryption and serialization. Typically accessed through `Wallet` properties rather than directly. |
+| Class     | Role                                                                                                                                                           |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Keypair` | A cryptographic key pair (public + optional private key). The primitive for signing, verifying, and encrypting.                                                |
+| `Wallet`  | A named wallet present on disk: a coldkey and optionally a hotkey, with their corresponding public-key files. Wraps `Keypair` objects and handles persistence. |
+| `Keyfile` | A single key file on disk. Handles at-rest password encryption and serialization. Typically accessed through `Wallet` properties rather than directly.         |
 
 ## Install
 
@@ -37,7 +37,7 @@ Use this option to develop or contribute to the Bittensor Wallet Rust core.
 ```bash
 python3 -m venv btwallet-venv
 source venv/bin/activate
-git clone https://github.com/opentensor/btwallet.git
+git clone https://github.com/RaoFoundation/btwallet.git
 cd btwallet
 pip install maturin
 maturin develop
@@ -54,9 +54,9 @@ print(bittensor_wallet.__version__)
 
 ## Supported Python versions
 
-- bittensor (SDK): Python 3.9-3.11 (reference: https://github.com/opentensor/bittensor/blob/master/setup.py#L86-L88)
-- bittensor-cli: Python 3.9-3.12 (reference: https://github.com/opentensor/btcli/blob/main/setup.py#L91-L94)
-- bittensor-wallet: Python 3.9-3.12 (reference: https://github.com/opentensor/btwallet/blob/main/pyproject.toml#L34-L37)
+- bittensor (SDK): Python 3.9-3.11 (reference: https://github.com/RaoFoundation/bittensor/blob/master/setup.py#L86-L88)
+- bittensor-cli: Python 3.9-3.12 (reference: https://github.com/RaoFoundation/btcli/blob/main/setup.py#L91-L94)
+- bittensor-wallet: Python 3.9-3.12 (reference: https://github.com/RaoFoundation/btwallet/blob/main/pyproject.toml#L34-L37)
 
 ## Compatibility notes
 

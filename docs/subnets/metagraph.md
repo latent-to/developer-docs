@@ -13,7 +13,7 @@ This page documents the Bittensor subnet metagraph.
 The **metagraph** is a core data structure in Bittensor that represents the complete state of a subnet at any given block. It contains comprehensive information about all neurons (miners and validators) participating in a subnet, their emissions, bonds, and trust, as well as subnet metrics.
 
 :::info source code
-The metagraph is implemented in the Bittensor blockchain (Subtensor) as a Rust data structure. The source code is located in the [Subtensor repository](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/rpc_info/metagraph.rs).
+The metagraph is implemented in the Bittensor blockchain (Subtensor) as a Rust data structure. The source code is located in the [Subtensor repository](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/rpc_info/metagraph.rs).
 :::
 
 Related reading:
@@ -114,7 +114,7 @@ The blockchain provides several RPC functions for accessing metagraph data:
 - `get_all_metagraphs()` - Returns metagraphs for all subnets
 - `get_selective_metagraph(netuid, indexes)` - Returns partial metagraph data
 
-See [Subtensor:Metagraph RPC source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/rpc_info/metagraph.rs)
+See [Subtensor:Metagraph RPC source code](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/rpc_info/metagraph.rs)
 
 ## Performance Considerations
 
@@ -141,7 +141,7 @@ metagraph.save(root_dir=['/custom', 'path'])
 :::info Cache Location
 Metagraph files are saved to `~/.bittensor/metagraphs/network-{network}/netuid-{netuid}/block-{block_number}.pt` by default. The files are persistent and not temporary.
 
-**Source**: [`bittensor/bittensor/core/metagraph.py:96-115`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/metagraph.py#L96-L115)
+**Source**: [`bittensor/bittensor/core/metagraph.py:96-115`](https://github.com/RaoFoundation/bittensor/blob/main/bittensor/core/metagraph.py#L96-L115)
 :::
 
 ## Data Structures
@@ -949,15 +949,15 @@ if __name__ == "__main__":
 
 ### Core Implementation
 
-- **Metagraph Class**: [`bittensor/bittensor/core/metagraph.py`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/metagraph.py)
-- **Chain Data**: [`bittensor/bittensor/core/chain_data/metagraph_info.py`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/chain_data/metagraph_info.py)
-- **Subtensor RPC**: [`subtensor/pallets/subtensor/src/rpc_info/metagraph.rs`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/rpc_info/metagraph.rs)
+- **Metagraph Class**: [`bittensor/bittensor/core/metagraph.py`](https://github.com/RaoFoundation/bittensor/blob/main/bittensor/core/metagraph.py)
+- **Chain Data**: [`bittensor/bittensor/core/chain_data/metagraph_info.py`](https://github.com/RaoFoundation/bittensor/blob/main/bittensor/core/chain_data/metagraph_info.py)
+- **Subtensor RPC**: [`subtensor/pallets/subtensor/src/rpc_info/metagraph.rs`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/rpc_info/metagraph.rs)
 
 ### Consensus Algorithm
 
-- **Yuma Consensus**: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs)
-- **Mathematical Operations**: [`subtensor/pallets/subtensor/src/epoch/math.rs`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/epoch/math.rs)
+- **Yuma Consensus**: [`subtensor/pallets/subtensor/src/epoch/run_epoch.rs`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/run_epoch.rs)
+- **Mathematical Operations**: [`subtensor/pallets/subtensor/src/epoch/math.rs`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/epoch/math.rs)
 
 ### Key Constants
 
-- **TAO Stake Weight**: [`bittensor/bittensor/core/settings.py:7`](https://github.com/opentensor/bittensor/blob/main/bittensor/core/settings.py#L7) - `ROOT_TAO_STAKE_WEIGHT = 0.18`
+- **TAO Stake Weight**: [`bittensor/bittensor/core/settings.py:7`](https://github.com/RaoFoundation/bittensor/blob/main/bittensor/core/settings.py#L7) - `ROOT_TAO_STAKE_WEIGHT = 0.18`

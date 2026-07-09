@@ -130,11 +130,11 @@ The primary command-line tool for Bittensor operations.
 ## Releases and Downloads
 ### Bittensor
 - **PyPI**: https://pypi.org/project/bittensor/
-- **GitHub**: https://github.com/opentensor/bittensor/releases
+- **GitHub**: https://github.com/RaoFoundation/bittensor/releases
 
 ### BTCLI
 - **PyPI**: https://pypi.org/project/bittensor-cli/
-- **GitHub**: https://github.com/opentensor/btcli/releases
+- **GitHub**: https://github.com/RaoFoundation/btcli/releases
 
 ### Subtensor
-- **GitHub**: https://github.com/opentensor/subtensor/releases
+- **GitHub**: https://github.com/RaoFoundation/subtensor/releases

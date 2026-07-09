@@ -46,7 +46,7 @@ This rate limit prevents a user from swapping a hotkey too frequently. Hotkey sw
 - Chain State Variables:
   - `TxRateLimit` (general transaction rate limit)
   - `HotkeySwapOnSubnetInterval` (global interval constant, not queryable from chain state)
-- Source Code: [swap_hotkey.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/swap/swap_hotkey.rs#L52-56)
+- Source Code: [swap_hotkey.rs](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/swap/swap_hotkey.rs#L52-56)
 - Error message: [`HotKeySetTxRateLimitExceeded`](../errors/subtensor.md#hotkeysettxratelimitexceeded)
 
 ### UID trimming rate limit
@@ -102,7 +102,7 @@ Limits how often a subnet owner can change the number of incentive mechanisms. F
 
 - Rate Limit: 7,200 blocks (~24 hours)
 - Chain State Variable: `MechanismCountSetRateLimit` (Not queryable from chain state)
-- Source Code: [lib.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1894-1897)
+- Source Code: [lib.rs](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1894-1897)
 - Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
 ### Subnet Mechanism emission split update rate limit
@@ -111,7 +111,7 @@ Limits how often a subnet owner can change the allocation of emissions among the
 
 - Rate Limit: 7,200 blocks (~24 hours) on main net; 1 block in 'fastblocks' development mode.
 - Chain State Variable: `MechanismEmissionRateLimit` (Not queryable from chain state)
-- Source Code: [lib.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1898-1902)
+- Source Code: [lib.rs](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1898-1902)
 - Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
 ### Staking operations rate limits
@@ -127,7 +127,7 @@ This rate limit controls how frequently a user can perform staking operations (a
 This rate limit controls how frequently a parent hotkey can set or revoke child hotkeys on a specific subnet. Note that revoking children is implemented by calling `set_children` with an empty list, so both operations share the same rate limit.
 
 - Rate Limit: 150 blocks (~30 minutes)
-- Source Code: [rate_limiting.rs](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L25-L28)
+- Source Code: [rate_limiting.rs](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L25-L28)
 - Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
 
 ### Child key take rate limit

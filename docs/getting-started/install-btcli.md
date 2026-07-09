@@ -17,7 +17,7 @@ Always double-check the package name and origin before installation. Use links a
 
 ## Prerequisite
 
-To install `btcli`, you must have Python version 3.9-3.12. See config file on [GitHub](https://github.com/opentensor/btcli/blob/main/pyproject.toml#L57-L60).
+To install `btcli`, you must have Python version 3.9-3.12. See config file on [GitHub](https://github.com/RaoFoundation/btcli/blob/main/pyproject.toml#L57-L60).
 
 ## Developer reference
 
@@ -76,7 +76,6 @@ Check frequently to make sure you are using the latest version of `btcli`.
 
 1. Create and activate a virtual environment.
    :::tip Create and activate a virtual environment
-
    - Create Python virtual environment. Follow [this guide on python.org](https://docs.python.org/3/library/venv.html#creating-virtual-environments).
 
    - Activate the new environment. Follow [this guide on python.org](https://docs.python.org/3/library/venv.html#how-venvs-work)
@@ -93,7 +92,7 @@ Check frequently to make sure you are using the latest version of `btcli`.
 2. Clone the Bittensor CLI repo.
 
    ```bash
-   git clone https://github.com/opentensor/btcli.git
+   git clone https://github.com/RaoFoundation/btcli.git
    ```
 
 3. `cd` into `btcli` directory.
@@ -200,4 +199,4 @@ You can change the location with the [`BTCLI_DEBUG_FILE` environment variable](#
 The debug log does not contain sensitive data (such as private keys). It is intended to be shared with developers for troubleshooting. The file includes details about the executed command, configuration, and request/response interactions with the chain.
 :::
 
-If you encounter an issue and want to preserve the log before it is overwritten, run `btcli --debug` and specify a new location to save the file. We recommend doing this first before starting your debugging with us on [Discord](https://discord.gg/bittensor) or opening an issue on [GitHub](https://github.com/opentensor/btcli/issues/new), where you can also upload your debug file.
+If you encounter an issue and want to preserve the log before it is overwritten, run `btcli --debug` and specify a new location to save the file. We recommend doing this first before starting your debugging with us on [Discord](https://discord.gg/bittensor) or opening an issue on [GitHub](https://github.com/RaoFoundation/btcli/issues/new), where you can also upload your debug file.

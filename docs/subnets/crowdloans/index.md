@@ -11,6 +11,7 @@ At finalization, the system executes an on‑chain call—typically `subtensor::
 If the crowdloan is finalized and a lease is created, emissions flow to contributors pro‑rata based on their contributed share. If the crowdloan is not finalized after the end block, anyone can call refunds; once all contributors are refunded, the creator can dissolve the crowdloan. At creation, exactly one of `call` or `target_address` must be specified. This choice is immutable and determines the finalization action, preventing mid‑campaign repurposing. This model makes subnet bootstrapping collaborative, transparent, and permissioned through a narrowly scoped proxy for safe, ongoing operations.
 
 Design features:
+
 - Strong defaults: immutable target and call, capped funding, clear end block
 - Shared upside: emissions distributed proportionally to contributions
 - Safe operations: a dedicated proxy to manage the subnet within defined permissions
@@ -27,17 +28,17 @@ See also [Create a Subnet with a Crowdloan](./crowdloans-tutorial.md)
 
 ## Crowdloan Lifecycle
 
-- **Create** a campaign with deposit, cap, end, min contribution, and **exactly one** of `call` or `target_address` (mutually exclusive; specifying both or neither is an error). [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L318-L326)
+- **Create** a campaign with deposit, cap, end, min contribution, and **exactly one** of `call` or `target_address` (mutually exclusive; specifying both or neither is an error). [Source code](https://github.com/RaoFoundation/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L318-L326)
 
-- **Contribute** funds; amounts are clipped to remaining cap and to any per-contributor maximum; contributors are counted. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L413-L420)
+- **Contribute** funds; amounts are clipped to remaining cap and to any per-contributor maximum; contributors are counted. [Source code](https://github.com/RaoFoundation/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L413-L420)
 
-- **Withdraw** before finalization; creator cannot withdraw below their deposit. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L505-L525)
+- **Withdraw** before finalization; creator cannot withdraw below their deposit. [Source code](https://github.com/RaoFoundation/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L505-L525)
 
-- **Finalize** after end when cap is fully raised. Executes either the stored `call` (with creator origin) or a balance transfer to `target_address`, whichever was specified at creation. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L566-L581)
+- **Finalize** after end when cap is fully raised. Executes either the stored `call` (with creator origin) or a balance transfer to `target_address`, whichever was specified at creation. [Source code](https://github.com/RaoFoundation/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L566-L581)
 
-- **Refund** loop refunds up to `RefundContributorsLimit` per call; may need multiple calls. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L637-L646)
+- **Refund** loop refunds up to `RefundContributorsLimit` per call; may need multiple calls. [Source code](https://github.com/RaoFoundation/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L637-L646)
 
-- **Dissolve** after refunds; creator's deposit is returned and storage cleaned up. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L711-L721)
+- **Dissolve** after refunds; creator's deposit is returned and storage cleaned up. [Source code](https://github.com/RaoFoundation/subtensor/blob/main/pallets/crowdloan/src/lib.rs#L711-L721)
 
 - **Update** parameters while crowdloan is running (creator only):
   - `update_min_contribution` - adjust minimum contribution amount
@@ -47,19 +48,19 @@ See also [Create a Subnet with a Crowdloan](./crowdloans-tutorial.md)
 
 ## Emissions distribution during a lease
 
-- When owner rewards are paid to a leased subnet, they are split into contributor dividends and a beneficiary cut. [Source code](https://github.com/opentensor/subtensor/blob/81ee047fd124f8837555fd79e8a3957688c5b0c6/pallets/subtensor/src/subnets/leasing.rs#L250)
+- When owner rewards are paid to a leased subnet, they are split into contributor dividends and a beneficiary cut. [Source code](https://github.com/RaoFoundation/subtensor/blob/81ee047fd124f8837555fd79e8a3957688c5b0c6/pallets/subtensor/src/subnets/leasing.rs#L250)
 
-- Distribution is pro‑rata by recorded share; any remainder goes to the beneficiary. A lease can be created with an emissions share from 0 to 100%, which determines the share distributed to contributors. For example, if the emissions share is 50%, it means that 50% of the owner cut (18% currently) so 9% will be split proportionally to their share to contributors. [Source code](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/subnets/leasing.rs#L324-L339)
+- Distribution is pro‑rata by recorded share; any remainder goes to the beneficiary. A lease can be created with an emissions share from 0 to 100%, which determines the share distributed to contributors. For example, if the emissions share is 50%, it means that 50% of the owner cut (18% currently) so 9% will be split proportionally to their share to contributors. [Source code](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/subnets/leasing.rs#L324-L339)
 
 ## Operating the leased subnet via proxy
 
-- On successful registration, a `SubnetLeaseBeneficiary` proxy is added from the lease coldkey to the beneficiary. This proxy can call a narrowly scoped set of operations to operate the subnet. [Source code](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L886-L907)
+- On successful registration, a `SubnetLeaseBeneficiary` proxy is added from the lease coldkey to the beneficiary. This proxy can call a narrowly scoped set of operations to operate the subnet. [Source code](https://github.com/RaoFoundation/subtensor/blob/main/runtime/src/lib.rs#L886-L907)
 
-- Allowed calls for `ProxyType::SubnetLeaseBeneficiary` include starting subnet calls and selected admin‑utils setters (hyperparameters), not unrestricted sudo. [Source code](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L792-L852)
+- Allowed calls for `ProxyType::SubnetLeaseBeneficiary` include starting subnet calls and selected admin‑utils setters (hyperparameters), not unrestricted sudo. [Source code](https://github.com/RaoFoundation/subtensor/blob/main/runtime/src/lib.rs#L792-L852)
 
 ## Runtime parameters (defaults)
 
-These constants define crowdloan requirements and operational limits in the runtime: [Source code](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L1556-L1571)
+These constants define crowdloan requirements and operational limits in the runtime: [Source code](https://github.com/RaoFoundation/subtensor/blob/main/runtime/src/lib.rs#L1556-L1571)
 
 Implications:
 
@@ -98,7 +99,6 @@ Owner rewards are split to contributors by their recorded `SubnetLeaseShares`; a
 ### What permissions does the beneficiary proxy have?
 
 They can invoke a curated set of calls (e.g., start subnet calls and selected admin‑utils setters like difficulty, weights, limits).
-
 
 ### Can the campaign parameters be updated mid‑flight?
 

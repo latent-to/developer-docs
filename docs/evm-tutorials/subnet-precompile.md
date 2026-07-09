@@ -12,7 +12,7 @@ This precompile allows you to interact with Bittensor subnets through EVM smart 
 This page describes the precompile's [available functions](#available-functions) on the precompile and demonstrates the precompile's usage with [example scripts](#example-scripts).
 
 - **Address**: The subnet precompile is available at address `0x803` (2051 in decimal).
-- **Source code**: [SubnetPrecompile reference](https://github.com/opentensor/subtensor/blob/main/precompiles/src/subnet.rs)
+- **Source code**: [SubnetPrecompile reference](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/subnet.rs)
 
 :::info permissions
 Subnet operations have distinct requirements!

@@ -29,7 +29,7 @@ The Bittensor SDK and Bittensor CLI are required to interact with the local bloc
 Clone the subtensor repository and navigate into the Subtensor directory:
 
 ```bash
-git clone https://github.com/opentensor/subtensor.git
+git clone https://github.com/RaoFoundation/subtensor.git
 cd subtensor
 ```
 

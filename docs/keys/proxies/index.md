@@ -20,7 +20,6 @@ By allowing one coldkey to serve as a _proxy_ or stand-in for another, the "real
 
 Proxy relationships are useful both for one person managing their own coldkey security, and also for allowing one person to act on behalf of another person or an organization.
 
-
 ### Common use cases
 
 Proxies are useful in many situations where the permissions of one coldkey should be gated behind another level of security:
@@ -32,7 +31,7 @@ Proxies are useful in many situations where the permissions of one coldkey shoul
 - **Operational delegation**: run subnet operations tasks like setting hyperparameters from a designated operations wallet, allowing the owner wallet to remain in maximum-security deep storage.
 - **Least-privilege permissions**: allow an employee or other designated operator to perform a constrained set of calls on a project-owned wallet.
 
-- **Nearly *all* operations:** you can even manage proxies with a proxy, so other than creating the first proxy, you should ideally not perform any operations with your primary coldkey.
+- **Nearly _all_ operations:** you can even manage proxies with a proxy, so other than creating the first proxy, you should ideally not perform any operations with your primary coldkey.
 
 ### Scope and Delays
 
@@ -79,7 +78,7 @@ See also:
 
 By default, the delegate pays the transaction fees for proxy calls in a proxy relationship. The real account can optionally be configured to pay these fees instead.
 
-To enable this, the real account must call the [`setRealPaysFee`](https://github.com/opentensor/subtensor/blob/devnet-ready/pallets/proxy/src/lib.rs#:~:text=pub%20fn%20set_real_pays_fee) extrinsic in the `Proxy` pallet and provide the delegate account along with a boolean value indicating whether the real account should pay the transaction fee. When enabled, both the transaction value and the transaction fee are deducted from the real account rather than the delegate account.
+To enable this, the real account must call the [`setRealPaysFee`](https://github.com/RaoFoundation/subtensor/blob/devnet-ready/pallets/proxy/src/lib.rs#:~:text=pub%20fn%20set_real_pays_fee) extrinsic in the `Proxy` pallet and provide the delegate account along with a boolean value indicating whether the real account should pay the transaction fee. When enabled, both the transaction value and the transaction fee are deducted from the real account rather than the delegate account.
 
 ## `ProxyType`
 
@@ -137,8 +136,8 @@ Only use the unrestricted `Any` type when no other option fits. If a proxy call 
 
 To ensure scalability and prevent abuse, proxy usage is subject to certain limits as shown:
 
-- **`MaxProxies`**: The maximum number of delegate accounts that can be linked to a single real account. Each account can register up to 20 proxies in total. See [source code: MaxProxies configuration](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L670).
-- **`MaxPending`**: The maximum number of pending announcements that a delegate account can have. Each account can have up to 75 pending announcements at a time. See [source code: MaxPending configuration](https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs#L671).
+- **`MaxProxies`**: The maximum number of delegate accounts that can be linked to a single real account. Each account can register up to 20 proxies in total. See [source code: MaxProxies configuration](https://github.com/RaoFoundation/subtensor/blob/main/runtime/src/lib.rs#L670).
+- **`MaxPending`**: The maximum number of pending announcements that a delegate account can have. Each account can have up to 75 pending announcements at a time. See [source code: MaxPending configuration](https://github.com/RaoFoundation/subtensor/blob/main/runtime/src/lib.rs#L671).
 
 <details>
 <summary><strong>Check current values on-chain</strong></summary>

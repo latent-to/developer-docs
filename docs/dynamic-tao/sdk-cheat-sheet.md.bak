@@ -19,7 +19,7 @@ pip install bittensor
 
 ### option 2: install from source
 
-1. Clone the Bittensor repository from GitHub: [`https://github.com/opentensor/bittensor`](https://github.com/opentensor/bittensor)
+1. Clone the Bittensor repository from GitHub: [`https://github.com/RaoFoundation/bittensor`](https://github.com/RaoFoundation/bittensor)
 1. Check out the `rao` branch.
 1. Run `pip install .`
 

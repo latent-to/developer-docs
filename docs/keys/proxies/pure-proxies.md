@@ -67,7 +67,7 @@ You can transfer control of a pure proxy to a new account by:
 1. Adding the new account as an _Any_ type proxy for the pure proxy
 2. Removing the old controller as proxy
 
-This is how you swap members in a multisig-of-pure-proxies setup: the outgoing member adds the incoming member as a proxy for their pure proxy, then removes themselves. See [source code: pure proxy account generation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L827-L850).
+This is how you swap members in a multisig-of-pure-proxies setup: the outgoing member adds the incoming member as a proxy for their pure proxy, then removes themselves. See [source code: pure proxy account generation](https://github.com/RaoFoundation/subtensor/blob/main/pallets/proxy/src/lib.rs#L827-L850).
 
 ## Prerequisites
 
@@ -75,7 +75,7 @@ Before creating a pure proxy, ensure you have a spawner account that will initia
 
 ## Create a pure proxy
 
-The `proxy::createPure` extrinsic creates a pure proxy. See [source code: `createPure` implementation](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L328-L360).
+The `proxy::createPure` extrinsic creates a pure proxy. See [source code: `createPure` implementation](https://github.com/RaoFoundation/subtensor/blob/main/pallets/proxy/src/lib.rs#L328-L360).
 
 Use this operation to generate a pure proxy account:
 
@@ -350,7 +350,7 @@ You can transfer funds to the pure proxy account using the `btcli wallet transfe
 
 Killing a pure proxy requires the proxy account address, the spawner account, and the proxy's complete creation metadata—the block height, extrinsic index, and the disambiguation index used during creation. Once executed, the pure proxy is permanently removed, and any funds remaining in the proxy account are lost.
 
-Pure proxies are killed using the [`killPure` extrinsic](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L380-L406):
+Pure proxies are killed using the [`killPure` extrinsic](https://github.com/RaoFoundation/subtensor/blob/main/pallets/proxy/src/lib.rs#L380-L406):
 
 :::info signing a pure proxy
 The account that signs the `killPure` extrinsic does not have to be the spawner account. It can be signed by either the spawner or a delegate with an `Any` proxy relationship to the pure proxy.
@@ -485,6 +485,6 @@ BTCLI will prompt you for confirmation with the text "KILL" to proceed.
 ## Troubleshooting
 
 - `Token.FundsUnavailable`: Ensure that the pure proxy account has been funded and has enough funds to cover the transfer.
-- `proxy.NotProxy`: Ensure you're executing the pure proxy correctly—from the creator account and referencing the pure proxy account as `real`. See [source code: `NotProxy` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L735).
-- `Proxy.NoPermission`: The `killPure` call is not permitted under the current. See [source code: `NoPermission` error](https://github.com/opentensor/subtensor/blob/main/pallets/proxy/src/lib.rs#L741).
+- `proxy.NotProxy`: Ensure you're executing the pure proxy correctly—from the creator account and referencing the pure proxy account as `real`. See [source code: `NotProxy` error](https://github.com/RaoFoundation/subtensor/blob/main/pallets/proxy/src/lib.rs#L735).
+- `Proxy.NoPermission`: The `killPure` call is not permitted under the current. See [source code: `NoPermission` error](https://github.com/RaoFoundation/subtensor/blob/main/pallets/proxy/src/lib.rs#L741).
 - `system.CallFiltered`: The call is not permitted under the current `ProxyType`.

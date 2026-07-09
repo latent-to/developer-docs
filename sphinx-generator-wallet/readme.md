@@ -6,7 +6,7 @@ This folder contains the Sphinx configuration for generating documentation for t
 
 - Python 3.9+
 - Rust toolchain (needed when building the PyO3 extension during `pip install -e "$BTWALLET_ROOT"`)
-- Access to the [`developer-docs`](https://github.com/opentensor/developer-docs) repo for publishing
+- Access to the [`developer-docs`](https://github.com/latent-to/developer-docs) repo for publishing
 
 ## Quick Start
 

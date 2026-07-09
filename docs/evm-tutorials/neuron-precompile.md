@@ -155,14 +155,14 @@ This function allows a neuron to expose a Prometheus metrics endpoint for monito
 Before using the neuron precompile, you'll need a basic setup.
 
 :::note
-The following setup code is adapted from the test implementation in [neuron.precompile.emission-check.test.ts](https://github.com/opentensor/subtensor/blob/main/evm-tests/test/neuron.precompile.emission-check.test.ts)
+The following setup code is adapted from the test implementation in [neuron.precompile.emission-check.test.ts](https://github.com/RaoFoundation/subtensor/blob/main/evm-tests/test/neuron.precompile.emission-check.test.ts)
 :::
 
 ```javascript
 import { ethers } from "ethers";
 
 // Neuron precompile address and ABI
-// Source: https://raw.githubusercontent.com/opentensor/subtensor/refs/heads/main/evm-tests/src/contracts/neuron.ts
+// Source: https://raw.githubusercontent.com/RaoFoundation/subtensor/refs/heads/main/evm-tests/src/contracts/neuron.ts
 const INEURON_ADDRESS = "0x0000000000000000000000000000000000000804";
 
 const INeuronABI = [
@@ -410,7 +410,7 @@ const neuronContract = new ethers.Contract(INEURON_ADDRESS, INeuronABI, wallet);
 #### Register a Neuron by Burning TAO
 
 :::note
-The following registration example is adapted from the test implementation in [neuron.precompile.emission-check.test.ts](https://github.com/opentensor/subtensor/blob/main/evm-tests/test/neuron.precompile.emission-check.test.ts)
+The following registration example is adapted from the test implementation in [neuron.precompile.emission-check.test.ts](https://github.com/RaoFoundation/subtensor/blob/main/evm-tests/test/neuron.precompile.emission-check.test.ts)
 :::
 
 ```javascript
@@ -436,7 +436,7 @@ async function registerNeuron() {
 #### Setting Weights Directly
 
 :::note
-The following weight setting example is adapted from the test implementation in [neuron.precompile.set-weights.test.ts](https://github.com/opentensor/subtensor/blob/main/evm-tests/test/neuron.precompile.set-weights.test.ts)
+The following weight setting example is adapted from the test implementation in [neuron.precompile.set-weights.test.ts](https://github.com/RaoFoundation/subtensor/blob/main/evm-tests/test/neuron.precompile.set-weights.test.ts)
 :::
 
 ```javascript
@@ -466,7 +466,7 @@ async function setNeuronWeights() {
 #### Commit-Reveal Weight Setting
 
 :::note
-The following commit-reveal weight setting example is adapted from the test implementation in [neuron.precompile.reveal-weights.test.ts](https://github.com/opentensor/subtensor/blob/main/evm-tests/test/neuron.precompile.reveal-weights.test.ts)
+The following commit-reveal weight setting example is adapted from the test implementation in [neuron.precompile.reveal-weights.test.ts](https://github.com/RaoFoundation/subtensor/blob/main/evm-tests/test/neuron.precompile.reveal-weights.test.ts)
 :::
 
 ```javascript
@@ -476,7 +476,7 @@ import { TypeRegistry } from "@polkadot/types";
 import { hexToU8a } from "@polkadot/util";
 
 // Helper function to convert Ethereum address to public key
-// Logic adapted from: https://github.com/opentensor/subtensor/blob/main/evm-tests/src/address-utils.ts
+// Logic adapted from: https://github.com/RaoFoundation/subtensor/blob/main/evm-tests/src/address-utils.ts
 function convertH160ToPublicKey(ethAddress) {
   const prefix = "evm:";
   const prefixBytes = new TextEncoder().encode(prefix);
@@ -495,7 +495,7 @@ function convertH160ToPublicKey(ethAddress) {
 }
 
 // Helper function to generate commit hash
-// Logic adapted from: https://github.com/opentensor/subtensor/blob/main/evm-tests/test/neuron.precompile.reveal-weights.test.ts
+// Logic adapted from: https://github.com/RaoFoundation/subtensor/blob/main/evm-tests/test/neuron.precompile.reveal-weights.test.ts
 function generateCommitHash(netuid, address, uids, values, salt, version_key) {
   const registry = new TypeRegistry();
 
@@ -584,7 +584,7 @@ async function commitRevealWeights() {
 ```
 
 :::tip
-The commit-reveal mechanism requires generating a proper hash commitment using substrate utilities. Refer to the [test implementation](https://github.com/opentensor/subtensor/blob/main/evm-tests/test/neuron.precompile.reveal-weights.test.ts) for the complete hash generation logic.
+The commit-reveal mechanism requires generating a proper hash commitment using substrate utilities. Refer to the [test implementation](https://github.com/RaoFoundation/subtensor/blob/main/evm-tests/test/neuron.precompile.reveal-weights.test.ts) for the complete hash generation logic.
 :::
 
 ### Service Configuration
@@ -592,7 +592,7 @@ The commit-reveal mechanism requires generating a proper hash commitment using s
 #### Serve Axon Endpoint
 
 :::note
-The following axon service configuration example is adapted from the test implementation in [neuron.precompile.serve.axon-prometheus.test.ts](https://github.com/opentensor/subtensor/blob/main/evm-tests/test/neuron.precompile.serve.axon-prometheus.test.ts)
+The following axon service configuration example is adapted from the test implementation in [neuron.precompile.serve.axon-prometheus.test.ts](https://github.com/RaoFoundation/subtensor/blob/main/evm-tests/test/neuron.precompile.serve.axon-prometheus.test.ts)
 :::
 
 ```javascript
@@ -630,7 +630,7 @@ async function serveAxon() {
 #### Serve Axon with TLS
 
 :::note
-The following TLS axon service configuration example is adapted from the test implementation in [neuron.precompile.serve.axon-prometheus.test.ts](https://github.com/opentensor/subtensor/blob/main/evm-tests/test/neuron.precompile.serve.axon-prometheus.test.ts)
+The following TLS axon service configuration example is adapted from the test implementation in [neuron.precompile.serve.axon-prometheus.test.ts](https://github.com/RaoFoundation/subtensor/blob/main/evm-tests/test/neuron.precompile.serve.axon-prometheus.test.ts)
 :::
 
 ```javascript
@@ -677,7 +677,7 @@ async function serveAxonTls() {
 #### Serve Prometheus Metrics
 
 :::note
-The following Prometheus metrics configuration example is adapted from the test implementation in [neuron.precompile.serve.axon-prometheus.test.ts](https://github.com/opentensor/subtensor/blob/main/evm-tests/test/neuron.precompile.serve.axon-prometheus.test.ts)
+The following Prometheus metrics configuration example is adapted from the test implementation in [neuron.precompile.serve.axon-prometheus.test.ts](https://github.com/RaoFoundation/subtensor/blob/main/evm-tests/test/neuron.precompile.serve.axon-prometheus.test.ts)
 :::
 
 ```javascript
