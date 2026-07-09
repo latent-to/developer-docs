@@ -7,7 +7,7 @@ title: "Proxy Precompile"
 The Proxy precompile exposes the Substrate proxy pallet to EVM contracts. Proxies let one account act on behalf of another for a limited set of operation types.
 
 - **Address**: `0x000000000000000000000000000000000000080b`
-- **Source code**: [ProxyPrecompile reference](https://github.com/opentensor/subtensor/blob/main/precompiles/src/proxy.rs)
+- **Source code**: [ProxyPrecompile reference](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/proxy.rs)
 
 See also: [Proxy Types and Permissions](../keys/proxies/index.md) for the full list of proxy types.
 
@@ -28,7 +28,7 @@ See also: [Proxy Types and Permissions](../keys/proxies/index.md) for the full l
 
 The following table contains available Subtensor proxy types and their indexes.
 
-Source: [`common/src/lib.rs`](https://github.com/opentensor/subtensor/blob/main/common/src/lib.rs#:~:text=match%20value%20%7B):
+Source: [`common/src/lib.rs`](https://github.com/RaoFoundation/subtensor/blob/main/common/src/lib.rs#:~:text=match%20value%20%7B):
 
 | Value | Type                     | Notes                        |
 | ----- | ------------------------ | ---------------------------- |
@@ -57,7 +57,7 @@ Check [Proxy Types](../keys/proxies/index.md#proxytype) for the authoritative up
 
 ### ABI
 
-The canonical ABI is exported from [`contract-tests/src/contracts/proxy.ts`](https://github.com/opentensor/subtensor/blob/main/contract-tests/src/contracts/proxy.ts). You can import the ABI and contract address from a local copy of the source file as shown:
+The canonical ABI is exported from [`contract-tests/src/contracts/proxy.ts`](https://github.com/RaoFoundation/subtensor/blob/main/contract-tests/src/contracts/proxy.ts). You can import the ABI and contract address from a local copy of the source file as shown:
 
 ```javascript
 import { IProxyABI, IPROXY_ADDRESS } from "./contracts/proxy";

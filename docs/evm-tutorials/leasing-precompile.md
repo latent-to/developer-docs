@@ -7,7 +7,7 @@ title: "Leasing Precompile"
 The Leasing precompile lets EVM contracts create lease crowdloans, terminate leases, and query lease state.
 
 - **Address**: `0x000000000000000000000000000000000000080a`
-- **Source code**: [LeasingPrecompile reference](https://github.com/opentensor/subtensor/blob/main/precompiles/src/leasing.rs)
+- **Source code**: [LeasingPrecompile reference](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/leasing.rs)
 
 See [Subnet Crowdloans](../subnets/crowdloans/crowdloans-tutorial.md) for the full concept.
 
@@ -25,7 +25,7 @@ See [Subnet Crowdloans](../subnets/crowdloans/crowdloans-tutorial.md) for the fu
 
 ### ABI
 
-The canonical ABI is exported from [`contract-tests/src/contracts/leasing.ts`](https://github.com/opentensor/subtensor/blob/main/contract-tests/src/contracts/leasing.ts).
+The canonical ABI is exported from [`contract-tests/src/contracts/leasing.ts`](https://github.com/RaoFoundation/subtensor/blob/main/contract-tests/src/contracts/leasing.ts).
 
 ```javascript
 import { ILeasingABI, ILEASING_ADDRESS } from "./contracts/leasing";

@@ -7,7 +7,7 @@ title: "Crowdloan Precompile"
 The Crowdloan precompile lets EVM contracts create and manage crowdloans entirely on-chain. A campaign creator sets a funding cap and deadline, contributors deposit TAO, and when the cap is reached, the crowdloan can be finalized to execute either the stored call or a transfer to a target address.
 
 - **Address**: `0x0000000000000000000000000000000000000809`
-- **Source code**: [CrowdloanPrecompile reference](https://github.com/opentensor/subtensor/blob/main/precompiles/src/crowdloan.rs)
+- **Source code**: [CrowdloanPrecompile reference](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/crowdloan.rs)
 
 See [Crowdloans](../subnets/crowdloans/index.md) for the full concept and Substrate-side workflow.
 
@@ -31,7 +31,7 @@ See [Crowdloans](../subnets/crowdloans/index.md) for the full concept and Substr
 
 ### ABI
 
-The canonical ABI is exported from [`contract-tests/src/contracts/crowdloan.ts`](https://github.com/opentensor/subtensor/blob/main/contract-tests/src/contracts/crowdloan.ts). You can import the ABI and contract address if you have a local copy of the source files as shown:
+The canonical ABI is exported from [`contract-tests/src/contracts/crowdloan.ts`](https://github.com/RaoFoundation/subtensor/blob/main/contract-tests/src/contracts/crowdloan.ts). You can import the ABI and contract address if you have a local copy of the source files as shown:
 
 ```javascript
 import { ICrowdloanABI, ICROWDLOAN_ADDRESS } from "./contracts/crowdloan";

@@ -318,7 +318,10 @@ const sidebars = {
         "evm-tutorials/proxy-precompile",
         "evm-tutorials/crowdloan-precompile",
         "evm-tutorials/leasing-precompile",
-        "evm-tutorials/voting-power-precompile",
+        "evm-tutorials/votingpower-precompile",
+        "evm-tutorials/addressmapping-precompile",
+        "evm-tutorials/uidlookup-precompile",
+        "evm-tutorials/storagequery-precompile",
       ],
     },
     // {

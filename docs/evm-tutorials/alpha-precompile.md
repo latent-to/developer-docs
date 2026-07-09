@@ -7,7 +7,7 @@ title: "Alpha Precompile"
 The Alpha precompile exposes the state of every subnet's AMM pool to EVM smart contracts. It is a read-only interface for token prices, pool reserves, swap simulation, and emission rates. Any contract that needs to react to subnet token economics uses this precompile as its data source.
 
 - **Address**: `0x0000000000000000000000000000000000000808`
-- **Source code**: [AlphaPrecompile reference](https://github.com/opentensor/subtensor/blob/main/precompiles/src/alpha.rs)
+- **Source code**: [AlphaPrecompile reference](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/alpha.rs)
 
 ## Concepts
 
@@ -76,7 +76,7 @@ The ratio `AlphaInPool / (AlphaInPool + AlphaOutPool)` tells you what fraction o
 
 ### ABI
 
-The canonical ABI is exported from [`contract-tests/src/contracts/alpha.ts`](https://github.com/opentensor/subtensor/blob/main/contract-tests/src/contracts/alpha.ts). You can import the ABI and contract address from a local copy of the source file as shown:
+The canonical ABI is exported from [`contract-tests/src/contracts/alpha.ts`](https://github.com/RaoFoundation/subtensor/blob/main/contract-tests/src/contracts/alpha.ts). You can import the ABI and contract address from a local copy of the source file as shown:
 
 ```javascript
 import { IAlphaABI, IALPHA_ADDRESS } from "./contracts/alpha";

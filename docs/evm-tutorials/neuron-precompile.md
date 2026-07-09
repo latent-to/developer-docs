@@ -16,7 +16,7 @@ Payable functions require tokens for execution
 :::
 
 - **Address**: The neuron precompile is available at address `0x804` (2052 in decimal).
-- **Source code**: [NeuronPrecompile reference](https://github.com/opentensor/subtensor/blob/main/precompiles/src/neuron.rs)
+- **Source code**: [NeuronPrecompile reference](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/neuron.rs)
 
 ## Available Functions
 

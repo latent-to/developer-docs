@@ -7,7 +7,7 @@ title: "Voting Power Precompile"
 The VotingPower precompile gives smart contracts read-only access to the per-validator EMA voting power scores tracked on each subnet. Use it to build on-chain governance mechanisms — slashing conditions, quorum checks, reward weighting — that respond to relative validator influence.
 
 - **Address**: `0x000000000000000000000000000000000000080d`
-- **Source code**: [VotingPowerPrecompile reference](https://github.com/opentensor/subtensor/blob/main/precompiles/src/voting_power.rs)
+- **Source code**: [VotingPowerPrecompile reference](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/voting_power.rs)
 
 ## Functions
 
@@ -23,7 +23,7 @@ The VotingPower precompile gives smart contracts read-only access to the per-val
 
 ### ABI
 
-The canonical ABI is exported from [`contract-tests/src/contracts/votingPower.ts`](https://github.com/opentensor/subtensor/blob/main/contract-tests/src/contracts/votingPower.ts). You can import the ABI and contract address if you have a local copy of the source files as shown:
+The canonical ABI is exported from [`contract-tests/src/contracts/votingPower.ts`](https://github.com/RaoFoundation/subtensor/blob/main/contract-tests/src/contracts/votingPower.ts). You can import the ABI and contract address if you have a local copy of the source files as shown:
 
 ```javascript
 import {

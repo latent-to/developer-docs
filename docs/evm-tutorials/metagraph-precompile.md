@@ -10,7 +10,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 The metagraph precompile allows you to query information about neurons, their relationships, and network state in the Bittensor network. This precompile provides read-only access to the metagraph data through smart contracts at precompile address.
 
 - **Address**: The subnet precompile is available at address `0x802`.
-- **Source code**: [MetagraphPrecompile reference](https://github.com/opentensor/subtensor/blob/main/precompiles/src/metagraph.rs)
+- **Source code**: [MetagraphPrecompile reference](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/metagraph.rs)
 
 ## Overview
 
