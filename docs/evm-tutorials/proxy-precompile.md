@@ -71,10 +71,10 @@ Use `addProxy` to authorize an account to act on behalf of the caller on-chain. 
 import { ethers } from "ethers";
 
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, rpcUrl } = require("./config.js");
+const { ethPrivateKey } = require("./config.js");
 import { IProxyABI, IPROXY_ADDRESS } from "./contracts/proxy";
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const signer = new ethers.Wallet(ethPrivateKey, provider);
 const contract = new ethers.Contract(IPROXY_ADDRESS, IProxyABI, signer);
 
@@ -109,7 +109,7 @@ import { hexToU8a } from "@polkadot/util";
 import { IProxyABI, IPROXY_ADDRESS } from "./contracts/proxy";
 
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, rpcUrl } = require("./config.js");
+const { ethPrivateKey } = require("./config.js");
 
 function h160ToPublicKey(evmAddress) {
   const combined = new Uint8Array(24);
@@ -118,7 +118,7 @@ function h160ToPublicKey(evmAddress) {
   return blake2AsU8a(combined);
 }
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const signer = new ethers.Wallet(ethPrivateKey, provider);
 const contract = new ethers.Contract(IPROXY_ADDRESS, IProxyABI, signer);
 
@@ -143,7 +143,7 @@ The `force_proxy_type` optionally restricts which proxy type is used for the cal
 ```js
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-const { rpcUrl, delegateEthPrivateKey } = require("./config.cjs");
+const { delegateEthPrivateKey } = require("./config.cjs");
 import { ethers } from "ethers";
 import { blake2AsU8a } from "@polkadot/util-crypto";
 import { hexToU8a } from "@polkadot/util";
@@ -151,7 +151,7 @@ import { hexToU8a } from "@polkadot/util";
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
 import { IProxyABI, IPROXY_ADDRESS } from "./contracts/proxy";
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const signer = new ethers.Wallet(delegateEthPrivateKey, provider);
 const contract = new ethers.Contract(IPROXY_ADDRESS, IProxyABI, signer);
 
@@ -182,9 +182,9 @@ import { ethers } from "ethers";
 import { IProxyABI, IPROXY_ADDRESS } from "./contracts/proxy";
 
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, rpcUrl } = require("./config.js");
+const { ethPrivateKey } = require("./config.js");
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const signer = new ethers.Wallet(ethPrivateKey, provider);
 const contract = new ethers.Contract(IPROXY_ADDRESS, IProxyABI, signer);
 
@@ -214,9 +214,9 @@ import { ethers } from "ethers";
 import { IProxyABI, IPROXY_ADDRESS } from "./contracts/proxy";
 
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, rpcUrl } = require("./config.js");
+const { ethPrivateKey } = require("./config.js");
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const signer = new ethers.Wallet(ethPrivateKey, provider);
 const contract = new ethers.Contract(IPROXY_ADDRESS, IProxyABI, signer);
 

@@ -48,9 +48,9 @@ import { ethers } from "ethers";
 import { ICrowdloanABI, ICROWDLOAN_ADDRESS } from "./contracts/crowdloan";
 
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, rpcUrl } = require("./config.js");
+const { ethPrivateKey } = require("./config.js");
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const signer = new ethers.Wallet(ethPrivateKey, provider);
 const contract = new ethers.Contract(ICROWDLOAN_ADDRESS, ICrowdloanABI, signer);
 
@@ -80,9 +80,8 @@ Use the `getCrowdloan` function to retrieve the current state of a campaign by i
 ```javascript
 import { ethers } from "ethers";
 import { ICrowdloanABI, ICROWDLOAN_ADDRESS } from "./contracts/crowdloan";
-const { rpcUrl } = require("./config.js");
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const contract = new ethers.Contract(
   ICROWDLOAN_ADDRESS,
   ICrowdloanABI,
@@ -105,9 +104,9 @@ import { ethers } from "ethers";
 import { ICrowdloanABI, ICROWDLOAN_ADDRESS } from "./contracts/crowdloan";
 
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, rpcUrl } = require("./config.js");
+const { ethPrivateKey } = require("./config.js");
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const signer = new ethers.Wallet(ethPrivateKey, provider);
 const contract = new ethers.Contract(ICROWDLOAN_ADDRESS, ICrowdloanABI, signer);
 
@@ -130,9 +129,9 @@ import { ethers } from "ethers";
 import { ICrowdloanABI, ICROWDLOAN_ADDRESS } from "./contracts/crowdloan";
 
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, rpcUrl } = require("./config.js");
+const { ethPrivateKey } = require("./config.js");
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const signer = new ethers.Wallet(ethPrivateKey, provider);
 const contract = new ethers.Contract(ICROWDLOAN_ADDRESS, ICrowdloanABI, signer);
 
@@ -152,9 +151,9 @@ import { ethers } from "ethers";
 import { ICrowdloanABI, ICROWDLOAN_ADDRESS } from "./contracts/crowdloan";
 
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, rpcUrl } = require("./config.js");
+const { ethPrivateKey } = require("./config.js");
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const signer = new ethers.Wallet(ethPrivateKey, provider);
 const contract = new ethers.Contract(ICROWDLOAN_ADDRESS, ICrowdloanABI, signer);
 

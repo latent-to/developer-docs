@@ -88,9 +88,7 @@ import { IAlphaABI, IALPHA_ADDRESS } from "./contracts/alpha";
 import { ethers } from "ethers";
 import { IAlphaABI, IALPHA_ADDRESS } from "./contracts/alpha";
 
-const { rpcUrl } = require("./config.js");
-
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const alphaContract = new ethers.Contract(IALPHA_ADDRESS, IAlphaABI, provider);
 
 const netuid = 14;

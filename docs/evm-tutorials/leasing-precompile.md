@@ -39,11 +39,11 @@ To create a lease crowdloan:
 
 ```javascript
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, rpcUrl } = require("./config.js");
+const { ethPrivateKey } = require("./config.js");
 import { ethers } from "ethers";
 import { ILeasingABI, ILEASING_ADDRESS } from "./contracts/leasing";
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const signer = new ethers.Wallet(ethPrivateKey, provider);
 const contract = new ethers.Contract(ILEASING_ADDRESS, ILeasingABI, signer);
 
@@ -92,12 +92,11 @@ On finalization, the runtime executes the embedded `register_leased_network` cal
 After finalizing a crowdloan, you can query the chain to retrieve information such as the lease details and the lease ID associated with a given subnet.
 
 ```javascript
-const { rpcUrl } = require("./config.js");
 import { ethers } from "ethers";
 import { decodeAddress } from "@polkadot/util-crypto";
 import { ILeasingABI, ILEASING_ADDRESS } from "./contracts/leasing.ts";
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const contract = new ethers.Contract(ILEASING_ADDRESS, ILeasingABI, provider);
 
 const LEASE_ID = "LEASE_ID";
@@ -120,11 +119,11 @@ Use `terminateLease` to claim full ownership of a leased subnet once the lease p
 
 ```javascript
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, rpcUrl } = require("./config.js");
+const { ethPrivateKey } = require("./config.js");
 import { ethers } from "ethers";
 import { ILeasingABI, ILEASING_ADDRESS } from "./contracts/leasing";
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const signer = new ethers.Wallet(ethPrivateKey, provider);
 const contract = new ethers.Contract(ILEASING_ADDRESS, ILeasingABI, signer);
 

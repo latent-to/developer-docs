@@ -41,7 +41,7 @@ import {
   IVOTING_POWER_ADDRESS,
 } from "./contracts/votingPower";
 
-const provider = new ethers.JsonRpcProvider("rpcUrl");
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 const vp = new ethers.Contract(
   IVOTING_POWER_ADDRESS,
   IVotingPowerABI,

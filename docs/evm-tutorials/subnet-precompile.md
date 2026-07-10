@@ -600,10 +600,10 @@ const { convertH160ToSS58 } = require("./address-mapping.js");
 const { decodeAddress } = require("@polkadot/util-crypto");
 
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, subSeed, rpcUrl, wsUrl } = require("./config.js");
+const { ethPrivateKey, subSeed, wsUrl } = require("./config.js");
 const amount1TAO = BigInt("1000000000");
 // Connect to the Subtensor node
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 
 function sendTransaction(api, call, signer) {
   return new Promise((resolve, reject) => {
