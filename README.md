@@ -3,7 +3,7 @@
     <img alt="Tao Logo" src="./static/img/tao-logo.png" />
   </a>
 </h1>
-<h2 align="center">LearnBittensor Guides</h2>
+<h2 align="center">LearnBittensor Developer Guides</h2>
 <h3 align="center">https://guides.learnbittensor.org</h3>
 
 -----------------------------------------------------------------------------

@@ -29,7 +29,7 @@ import { SiFuturelearn } from "react-icons/si";
 import { GoNumber } from "react-icons/go";
 import { VscFileMedia } from "react-icons/vsc";
 
-# LearnBittensor Guides
+# Developer Guides
 
 Bittensor is an open source platform where participants produce best-in-class digital commodities, including compute power, storage space, artificial intelligence (AI) inference and training, protein folding, financial markets prediction, and many more.
 
