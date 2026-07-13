@@ -57,7 +57,7 @@ Check [Proxy Types](../keys/proxies/index.md#proxytype) for the authoritative up
 
 ### ABI
 
-The canonical ABI is exported from [`contract-tests/src/contracts/proxy.ts`](https://github.com/RaoFoundation/subtensor/blob/main/contract-tests/src/contracts/proxy.ts). You can import the ABI and contract address from a local copy of the source file as shown:
+The canonical ABI is defined in the [Proxy precompile ABI source file](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/solidity/proxy.abi). If you have a local copy of the source files, you can import the ABI and contract address into your project as shown below:
 
 ```javascript
 import { IProxyABI, IPROXY_ADDRESS } from "./contracts/proxy";
@@ -141,14 +141,12 @@ Use the `proxyCall` function to execute a call on behalf of another account thro
 The `force_proxy_type` optionally restricts which proxy type is used for the call — pass `[0]` for `Any` or the relevant proxy type index to match the relationship. The `call` parameter is the SCALE-encoded runtime call to execute. Both of these parameters accept `uint8[]` arrays — convert the encoded call hex before passing it as shown:
 
 ```js
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
+// PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
 const { delegateEthPrivateKey } = require("./config.cjs");
 import { ethers } from "ethers";
 import { blake2AsU8a } from "@polkadot/util-crypto";
 import { hexToU8a } from "@polkadot/util";
 
-// PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
 import { IProxyABI, IPROXY_ADDRESS } from "./contracts/proxy";
 
 const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");

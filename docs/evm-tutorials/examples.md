@@ -11,11 +11,9 @@ import { InstallPartial } from "./\_install.mdx";
 The following precompiled smart contracts are available on the Bittensor EVM.
 The source code can be found [on GitHub](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src).
 
-Code examples used throughout this section are provided by the _Opentensor Foundation_ (_OTF_), and come from [this repository](https://github.com/opentensor/evm-bittensor/tree/main/examples).
-
 ## Examples
 
-The following tutorials cover common EVM workflows on Bittensor, including account management, token bridging, and interaction with precompiles:
+The tutorials in this section cover common EVM workflows on Bittensor, including account management, token bridging, and interaction with precompiles:
 
 - [Convert Ethereum (H160) Address to Substrate (SS58)](./convert-h160-to-ss58): Learn how to convert between H160 and SS58 address formats.
 - [Bridging and wrapping vTAO](./vtao-bridge-tutorial.md): Move native TAO from the Bittensor Substrate layer to the Bittensor EVM and wrap it into vTAO.
@@ -44,21 +42,21 @@ The following table consists of standard Ethereum precompiles with their address
 
 The following table lists of Bittensor-specific precompiles with their addresses, descriptions and links to their respective documentation:
 
-| Precompile                  | Address | Description                                                                                                   |
-| --------------------------- | ------- | ------------------------------------------------------------------------------------------------------------- |
-| `Ed25519Verify`             | `0x402` | Verify Ed25519 signatures. See [Ed25519 Verify](./ed25519-verify-precompile.md)                               |
-| `SR25519Verify`             | `0x403` | Verify Substrate SR25519 signatures. See SR25519 Verify ./sr25519-verify-precompile.md                        |
-| `BalanceTransferPrecompile` | `0x800` | Transfer TAO between H160 addresses. see [Transfer TAO](./transfer-between-two-h160-accounts.md)              |
-| `StakingPrecompile`         | `0x801` | Staking via `msg.value` — **deprecated**, use V2. See [Staking Precompile](./staking-precompile.md)           |
-| `MetagraphPrecompile`       | `0x802` | Interact with the metagraph (rank, trust, stake, axon). See [Metagraph Precompile](./metagraph-precompile.md) |
-| `SubnetPrecompile`          | `0x803` | Register subnets, get/set hyperparameters . See [Subnet Precompile](./subnet-precompile.md)                   |
-| `NeuronPrecompile`          | `0x804` | Register neurons, set weights, serve axon. See [Neuron Precompile](./neuron-precompile.md)                    |
-| `StakingPrecompileV2`       | `0x805` | Full staking with limits, allowances, moves . See                                                             |
-| `UidLookupPrecompile`       | `0x806` | Map EVM address → registered neuron UID. See                                                                  |
-| `StorageQueryPrecompile`    | `0x807` | Manages EVM contracts read access to Substrate chain storage.                                                 |
-| `AlphaPrecompile`           | `0x808` | AMM pool state, prices, swap simulation. See                                                                  |
-| `CrowdloanPrecompile`       | `0x809` | Create and manage crowdloan campaigns. See                                                                    |
-| `LeasingPrecompile`         | `0x80A` | Create subnet lease crowdloans, terminate leases. See                                                         |
-| `ProxyPrecompile`           | `0x80B` | Add/remove/execute Substrate proxy relationships. See                                                         |
-| `AddressMappingPrecompile`  | `0x80C` | Convert H160 → Substrate AccountId32. See                                                                     |
-| `VotingPowerPrecompile`     | `0x80D` | Query per-validator EMA voting power. See                                                                     |
+| Precompile                  | Address | Description                                                                                                               |
+| --------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `Ed25519Verify`             | `0x402` | Verify Ed25519 signatures. See [Ed25519 Verify](./ed25519-verify-precompile.md).                                          |
+| `SR25519Verify`             | `0x403` | Verify Substrate SR25519 signatures.                                                                                      |
+| `BalanceTransferPrecompile` | `0x800` | Transfer TAO between H160 addresses. see [Transfer TAO](./transfer-between-two-h160-accounts.md).                         |
+| `StakingPrecompile`         | `0x801` | Staking via `msg.value` — **deprecated**, use V2. See [Staking Precompile](./staking-precompile.md).                      |
+| `MetagraphPrecompile`       | `0x802` | Interact with the metagraph (rank, trust, stake, axon). See [Metagraph Precompile](./metagraph-precompile.md).            |
+| `SubnetPrecompile`          | `0x803` | Register subnets, get/set hyperparameters . See [Subnet Precompile](./subnet-precompile.md).                              |
+| `NeuronPrecompile`          | `0x804` | Register neurons, set weights, serve axon. See [Neuron Precompile](./neuron-precompile.md).                               |
+| `StakingPrecompileV2`       | `0x805` | Full staking with limits, allowances, moves . See [StakingPrecompileV2](./staking-precompile.md#staking-v1-and-v2).       |
+| `UidLookupPrecompile`       | `0x806` | Map EVM address → registered neuron UID. See [UidLookupPrecompile](./uidlookup-precompile.md).                            |
+| `StorageQueryPrecompile`    | `0x807` | Manages EVM contracts read access to Substrate chain storage. See [StorageQueryPrecompile](./storagequery-precompile.md). |
+| `AlphaPrecompile`           | `0x808` | AMM pool state, prices, swap simulation. See [AlphaPrecompile](./alpha-precompile.md).                                    |
+| `CrowdloanPrecompile`       | `0x809` | Create and manage crowdloan campaigns. See [CrowdloanPrecompile](./crowdloan-precompile.md).                              |
+| `LeasingPrecompile`         | `0x80A` | Create subnet lease crowdloans, terminate leases. See [LeasingPrecompile](./leasing-precompile.md).                       |
+| `ProxyPrecompile`           | `0x80B` | Add/remove/execute Substrate proxy relationships. See [ProxyPrecompile](./proxy-precompile.md).                           |
+| `AddressMappingPrecompile`  | `0x80C` | Convert H160 → Substrate AccountId32. See [AddressMappingPrecompile](./addressmapping-precompile.md).                     |
+| `VotingPowerPrecompile`     | `0x80D` | Query per-validator EMA voting power. See [VotingPowerPrecompile](./votingpower-precompile.md).                           |

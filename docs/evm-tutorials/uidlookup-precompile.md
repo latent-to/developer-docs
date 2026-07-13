@@ -21,7 +21,7 @@ See also: [Associating an EVM Key](../subtensor-api/extrinsics.md#associateevmke
 
 ### ABI
 
-Canonical ABI: [`contract-tests/src/contracts/uidLookup.ts`](https://github.com/RaoFoundation/subtensor/blob/main/contract-tests/src/contracts/uidLookup.ts). You can import the ABI and contract address if you have a local copy of the source files as shown:
+The canonical ABI is defined in the [UidLookup precompile ABI source file](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/solidity/uidLookup.abi). If you have a local copy of the source files, you can import the ABI and contract address into your project as shown below:
 
 ```javascript
 import { IUIDLookupABI, IUID_LOOKUP_ADDRESS } from "./contracts/uidLookup";

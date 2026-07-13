@@ -76,7 +76,7 @@ The ratio `AlphaInPool / (AlphaInPool + AlphaOutPool)` tells you what fraction o
 
 ### ABI
 
-The canonical ABI is exported from [`contract-tests/src/contracts/alpha.ts`](https://github.com/RaoFoundation/subtensor/blob/main/contract-tests/src/contracts/alpha.ts). You can import the ABI and contract address from a local copy of the source file as shown:
+The canonical ABI is defined in the [Alpha Precompile ABI source file](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/solidity/alpha.abi). If you have a local copy of the source files, you can import the ABI and contract address into your project as shown below:
 
 ```javascript
 import { IAlphaABI, IALPHA_ADDRESS } from "./contracts/alpha";

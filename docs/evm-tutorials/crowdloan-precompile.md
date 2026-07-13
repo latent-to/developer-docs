@@ -31,7 +31,7 @@ See [Crowdloans](../subnets/crowdloans/index.md) for the full concept and Substr
 
 ### ABI
 
-The canonical ABI is exported from [`contract-tests/src/contracts/crowdloan.ts`](https://github.com/RaoFoundation/subtensor/blob/main/contract-tests/src/contracts/crowdloan.ts). You can import the ABI and contract address if you have a local copy of the source files as shown:
+The canonical ABI is defined in the [Crowdloan precompile ABI source file](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/solidity/crowdloan.abi). If you have a local copy of the source files, you can import the ABI and contract address into your project as shown below:
 
 ```javascript
 import { ICrowdloanABI, ICROWDLOAN_ADDRESS } from "./contracts/crowdloan";

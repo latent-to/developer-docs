@@ -25,7 +25,7 @@ See [Subnet Crowdloans](../subnets/crowdloans/crowdloans-tutorial.md) for the fu
 
 ### ABI
 
-The canonical ABI is exported from [`contract-tests/src/contracts/leasing.ts`](https://github.com/RaoFoundation/subtensor/blob/main/contract-tests/src/contracts/leasing.ts).
+The canonical ABI is defined in the [Leasing precompile ABI source file](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/solidity/leasing.abi). If you have a local copy of the source files, you can import the ABI and contract address into your project as shown below:
 
 ```javascript
 import { ILeasingABI, ILEASING_ADDRESS } from "./contracts/leasing";
