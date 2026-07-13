@@ -30,6 +30,20 @@ To qualify as a validator, a node must have a validator permit. This permit is o
 The number of validators isn't hardcoded. The subnet governor has the authority to increase or decrease the maximum number of validators. Any change to this limit directly affects the number of nodes that can be issued a validator permit and, thus, act as validators.
 :::
 
+## Key security for validators
+
+Validator operations split across the same trust classes as mining:
+
+- **Unpermissioned workstation** (public keys only): check balances, monitor emissions and metagraph info, check subnet alpha prices.
+- **Coldkey workstation**: create/import coldkeys, manage TAO and alpha stake, create hotkeys (`btcli wallet new-hotkey`, `btcli wallet regen-hotkey`) and transfer only the hotkey file or mnemonic to the validator node, register a hotkey on a subnet, set the validator take (`btcli sudo set-take`), rotate keys after a compromise.
+- **Validator node (hotkey workstation)**: weight setting (`btcli weights set`, or commit/reveal for legacy salt commits) requires a hotkey with an active validator permit and runs in the live environment.
+
+:::tip
+Use a unique hotkey per subnet. Hotkeys are not encrypted by default but can be [optionally encrypted](../keys/working-with-keys#encrypting-the-hotkey).
+:::
+
+If you suspect your coldkey has leaked, you can swap it out of your wallet on-chain (5-day waiting period, 0.1 TAO fee). See [Rotate/Swap your Coldkey](../keys/coldkey-swap). For the operation-by-operation breakdown, see [Key permissions](../keys/key-permissions), and note that some validator operations incur [transaction fees](../learn/fees.md).
+
 ## Requirements for validation
 
 To have a **validator permit** in a given subnet, you must meet the following requirements:

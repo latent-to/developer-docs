@@ -118,10 +118,6 @@ const config = {
             to: "/resources/glossary",
           },
           {
-            from: "/bittensor-rel-notes",
-            to: "/resources/bittensor-rel-notes",
-          },
-          {
             from: "/questions-and-answers",
             to: "/resources/questions-and-answers",
           },
@@ -158,8 +154,44 @@ const config = {
             to: "/validators/child-hotkeys",
           },
           {
-            from: "/btcli-permissions",
-            to: "/btcli/btcli-permissions",
+            from: ["/btcli-permissions", "/btcli/btcli-permissions"],
+            to: "/keys/key-permissions",
+          },
+          {
+            from: ["/btcli/overview", "/getting-started/install-btcli"],
+            to: "/getting-started/installation",
+          },
+          {
+            from: "/miners/miners-btcli-guide",
+            to: "/miners",
+          },
+          {
+            from: "/validators/validators-btcli-guide",
+            to: "/validators",
+          },
+          {
+            from: "/subnets/subnet-creators-btcli-guide",
+            to: "/subnets/create-a-subnet",
+          },
+          {
+            from: "/subnets/managing-mechanisms-btcli",
+            to: "/subnets/managing-mechanisms-with-sdk",
+          },
+          {
+            from: "/concepts/bt-logging-levels",
+            to: "/sdk",
+          },
+          {
+            from: "/sdk/managing-subtensor-connections",
+            to: "/subnets/asyncio",
+          },
+          {
+            from: [
+              "/keys/btwallet/keypair",
+              "/keys/btwallet/encrypt-decrypt",
+              "/keys/btwallet/wallet-class",
+            ],
+            to: "/keys/btwallet",
           },
           {
             from: "/migration_guide",
@@ -202,8 +234,8 @@ const config = {
             to: "/resources/utilities",
           },
           {
-            from: "/senate",
-            to: "/governance/senate",
+            from: ["/senate", "/governance/senate"],
+            to: "/governance/governance",
           },
           {
             from: "/errors-and-troubleshooting",

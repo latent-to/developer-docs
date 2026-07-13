@@ -10,7 +10,6 @@ This tutorial shows how to configure and manage multiple incentive mechanisms in
 
 For background on the concepts, see [Understanding Multiple Incentive Mechanisms](./understanding-multiple-mech-subnets).
 
-See also [Managing Mechanisms with BTCLI](./managing-mechanisms-btcli).
 
 **Prerequisites**
 

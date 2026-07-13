@@ -12,6 +12,10 @@ Creating a subnet is a major undertaking. You should read up on [Understanding S
 
 ## Considerations
 
+### Key requirements
+
+Creating a subnet requires a **coldkey** with sufficient TAO to pay the creation burn; modifying a subnet's configuration (`btcli sudo set`) requires the coldkey that owns the subnet. Monitoring (`btcli subnet show`) is permissionless. Keep the owner coldkey on a secure workstation — see [Key permissions](../keys/key-permissions) and [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security). If the coldkey may have leaked, [swap it out on-chain](../keys/coldkey-swap) (5-day waiting period, 0.1 TAO fee).
+
 ### Research existing subnets
 
 Prospective subnet creators should familiarize themselves with the space of existing subnets.
@@ -65,7 +69,7 @@ To check the current rate limit on the blockchain, navigate to the [Polkadot.js 
 
 ## Prerequisites
 
-- [Install the most recent version of BTCLI](../getting-started/install-btcli).
+- [Install the most recent version of Bittensor](../getting-started/installation) (includes `btcli`).
 
 - [Create a wallet](../keys/working-with-keys#creating-a-wallet-with-btcli).
 

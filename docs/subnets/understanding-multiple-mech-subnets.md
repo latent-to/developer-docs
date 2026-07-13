@@ -14,7 +14,6 @@ For an introduction to incentive mechanisms in general, see [Understanding Incen
 For coverage of the procedures involved, see:
 
 - [Managing Mechanisms with SDK](./managing-mechanisms-with-sdk)
-- [Managing Mechanisms with BTCLI](./managing-mechanisms-btcli)
 
 :::info Mechanism Count Constraint
 Before attempting to modify the mechanism count on a subnet, ensure that the product of multiplying the new mechanism count by the maximum number of UIDs in the subnet remains less than 256. If it exceeds this threshold, you must first adjust the subnet’s `MaxAllowedUids` hyperparameter to accommodate the change.

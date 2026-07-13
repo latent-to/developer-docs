@@ -21,24 +21,7 @@ const sidebars = {
     // 	className: 'sidebarSearch', //  based on Class name it will add search component
     // },
     "index",
-    {
-      type: "category",
-      label: "Releases and Announcements",
-      collapsible: true,
-      collapsed: true,
-      items: [
-        {
-          type: "doc",
-          id: "resources/bittensor-rel-notes",
-          label: "Releases",
-        },
-        {
-          type: "doc",
-          id: "learn/announcements",
-          label: "Announcements",
-        },
-      ],
-    },
+  
     {
       type: "category",
       label: "Understand Bittensor",
@@ -83,19 +66,9 @@ const sidebars = {
       collapsed: true,
       items: [
         "keys/wallets",
-         {
-          type: "category",
-          label: "Bittensor Wallet",
-          collapsible: true,
-          collapsed: true,
-          items: [
-            "keys/btwallet/index",
-            "keys/btwallet/keypair",
-            "keys/btwallet/encrypt-decrypt",
-            "keys/btwallet/wallet-class",
-          ],
-        },
+        "keys/btwallet/index",
         "keys/working-with-keys",
+        "keys/key-permissions",
         "keys/handle-seed-phrase",
         "keys/coldkey-hotkey-security",
         "keys/address-poisoning-scams",
@@ -154,7 +127,6 @@ const sidebars = {
       collapsed: true,
       items: [
         "miners/index",
-        "miners/miners-btcli-guide",
         "miners/autostaking",
       ],
     },
@@ -167,7 +139,6 @@ const sidebars = {
       items: [
         "validators/index",
         "validators/child-hotkeys",
-        "validators/validators-btcli-guide",
       ],
     },
     {
@@ -185,11 +156,9 @@ const sidebars = {
           link: { type: "doc", id: "subnets/crowdloans/index" },
           items: ["subnets/crowdloans/crowdloans-tutorial"],
         },
-        "subnets/subnet-creators-btcli-guide",
         "subnets/subnet-hyperparameters",
         "subnets/working-with-subnets",
         "subnets/managing-mechanisms-with-sdk",
-        "subnets/managing-mechanisms-btcli",
         "subnets/metagraph",
         "subnets/uid-trimming",
         "subnets/subnet-deregistration",
@@ -200,29 +169,17 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "BTCLI: The Bittensor CLI",
-      collapsible: true,
-      collapsed: true,
-      link: { type: "doc", id: "btcli/overview" },
-      items: [
-        "getting-started/install-btcli",
-        "btcli/btcli-permissions",
-      ],
-    },
-    {
-      type: "category",
       label: "Bittensor Python SDK",
       collapsible: true,
       collapsed: true,
       items: [
-        "sdk/index",       
+        "sdk/index",
         "getting-started/installation",
         "sdk/env-vars",
         "sdk/mev-protection",
         "sdk/call",
         "sdk/migration-guide",
         "subnets/asyncio",
-        "sdk/managing-subtensor-connections",
       ],
     },
 
@@ -240,7 +197,6 @@ const sidebars = {
         "concepts/stake-burn",
         "concepts/consensus-based-weights",
         "concepts/inspecting-the-chain",
-        "concepts/bt-logging-levels",
         "resources/utilities",
       ],
     },

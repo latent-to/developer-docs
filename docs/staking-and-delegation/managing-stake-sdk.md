@@ -89,7 +89,7 @@ See: [MEV Shield](../concepts/mev-shield/), [Using MEV Shield with the SDK](../s
 
 ### For testing/practice
 
-- [Install btcli](../getting-started/install-btcli) and/or the [Bittensor Python SDK](../getting-started/installation)
+- [Install Bittensor](../getting-started/installation) (one package: SDK and `btcli`)
 - [Create a wallet](../keys/working-with-keys#creating-a-wallet-with-btcli)
 - Get some test TAO: ask in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553), or [run a local blockchain](../local-build/deploy.md)
 

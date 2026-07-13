@@ -8,7 +8,7 @@ title: "Governance Plan"
 Operational control of Bittensor will ultimately governed by the following decentralized protocol. All root calls, including protocol changes, runtime upgrades, and other privileged operations, will reach the chain only after passing through both stages.
 
 :::warning
-**This governance system is not yet deployed on mainnet.** The current mainnet runtime uses `pallet_sudo` for privileged operations. The collective-based system described on this page is in development and has not been released as of June 2026.
+**This governance system is not yet deployed on mainnet.** The current mainnet runtime uses `pallet_sudo` for privileged operations. The earlier senate mechanism has been removed from the runtime entirely. The collective-based system described on this page is in development and has not been released as of June 2026.
 
 Once deployed, this governance design depends on the collectives being populated. Until the reviewing collectives are populated, the review stage is a no-op that offers no additional check on the Triumvirate.
 :::

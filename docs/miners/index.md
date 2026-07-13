@@ -24,6 +24,20 @@ Each subnet may have distinct hardware requirements, but this [subnet minimum re
 Mining is not supported on Windows.
 :::
 
+## Key security for miners
+
+Miners use their registered **hotkey** to sign requests and run daily operations. The **coldkey** is only needed to create or fund hotkeys, stake TAO, or pay registration burn — it should never be present on a mining server. Machines fall into three trust classes:
+
+- **Unpermissioned workstation** (public keys only): check balances, monitor emissions and metagraph info, check subnet alpha prices.
+- **Coldkey workstation**: create/import coldkeys, create hotkeys (`btcli wallet new-hotkey`, `btcli wallet regen-hotkey`), manage TAO and alpha stake, register a hotkey on a subnet, rotate keys after a compromise.
+- **Mining node (hotkey workstation)**: import the hotkey and provide it to the subnet codebase for serving, commitments, and other signed operations.
+
+:::tip Coldkeys do not mine
+The coldkey should **never** be on an environment running untrusted ML code from containers, frameworks, or libraries that might exfiltrate secrets. Create hotkeys on a secure coldkey workstation, then transfer only the hotkey file or mnemonic to the mining machine.
+:::
+
+If you suspect your coldkey has leaked, you can swap it out of your wallet on-chain (5-day waiting period, 0.1 TAO fee). See [Rotate/Swap your Coldkey](../keys/coldkey-swap). For the full operation-by-operation permissions breakdown, see [Key permissions](../keys/key-permissions), and for workstation hardening, [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security).
+
 ## Miner registration
 
 To participate as a miner, you must first register a hotkey with the subnet in order to receive a UID on that subnet.
