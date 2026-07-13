@@ -18,7 +18,7 @@ import { useLocation } from "@docusaurus/router";
 
 // Paths owned by OTHER navbar items. The Docs dropdown highlights
 // on every path that does NOT start with one of these.
-const EXCLUDED_PATHS = ["/subtensor-api"];
+const EXCLUDED_PATHS = [];
 
 function isDocsDropdown(className) {
   return className?.includes("docs-dropdown");

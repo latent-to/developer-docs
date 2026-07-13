@@ -207,7 +207,6 @@ const sidebars = {
       items: [
         "getting-started/install-btcli",
         "btcli/btcli-permissions",
-        "btcli/btcli",
       ],
     },
     {
@@ -219,8 +218,6 @@ const sidebars = {
         "sdk/index",       
         "getting-started/installation",
         "sdk/env-vars",
-        "sdk/bt-api-ref",
-        "sdk/subtensor-api",
         "sdk/mev-protection",
         "sdk/call",
         "sdk/migration-guide",
@@ -356,15 +353,6 @@ const sidebars = {
     "resources/glossary",
     "resources/community-links",
     "resources/media-assets",
-  ],
-  apiSidebar: [
-    "subtensor-api/extrinsics",
-    "subtensor-api/errors",
-    "subtensor-api/storage",
-    "subtensor-api/events",
-    "subtensor-api/constants",
-    "subtensor-api/runtime",
-    "subtensor-api/rpc",
   ],
 };
 

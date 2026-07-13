@@ -56,7 +56,7 @@ Below are key extrinsics from pallets included in the Subtensor runtime:
 
 :::info
 
-The following outline of subtensor extrinsics is provided for high-level reference and is not exhaustive. For a complete specification of all available extrinsics and their associated parameters, see the [Subtensor API reference](../subtensor-api/extrinsics).
+The following outline of subtensor extrinsics is provided for high-level reference and is not exhaustive. For a complete specification of all available extrinsics and their associated parameters, see the [Subtensor API reference](https://docs.learnbittensor.org/subtensor-api/extrinsics).
 
 :::
 

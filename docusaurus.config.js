@@ -15,12 +15,12 @@ import rehypeKatex from "rehype-katex";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Bittensor",
-  tagline: "Developer Documentation",
+  title: "LearnBittensor Developer Guides",
+  tagline: "Guides and tutorials for the Bittensor network",
   favicon: "img/favicon.ico",
   trailingSlash: false,
   // Set the production url of your site here
-  url: "https://docs.learnbittensor.org",
+  url: "https://guides.learnbittensor.org",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
@@ -110,10 +110,6 @@ const config = {
             to: "/validators",
           },
           {
-            to: "/sdk/bt-api-ref",
-            from: "/reference/bittensor-api-ref",
-          },
-          {
             to: "/errors",
             from: "/subtensor-nodes/subtensor-error-messages",
           },
@@ -162,20 +158,12 @@ const config = {
             to: "/validators/child-hotkeys",
           },
           {
-            from: "/btcli",
-            to: "/btcli",
-          },
-          {
             from: "/btcli-permissions",
             to: "/btcli/btcli-permissions",
           },
           {
             from: "/migration_guide",
             to: "/sdk/migration-guide",
-          },
-          {
-            from: "/bt-api-ref",
-            to: "/sdk/bt-api-ref",
           },
           {
             from: "/getting-started/wallets",
@@ -291,10 +279,10 @@ const config = {
 
       navbar: {
         logo: {
-          alt: "Bittensor",
+          alt: "LearnBittensor Guides",
           src: "img/logo.svg",
           srcDark: "img/logo-dark-mode.svg",
-          href: "https://docs.learnbittensor.org",
+          href: "https://guides.learnbittensor.org",
           style: {
             objectFit: "contain",
             width: 21,
@@ -326,21 +314,6 @@ const config = {
               {
                 label: "Manage subnets",
                 to: "subnets/create-a-subnet",
-              },
-            ],
-          },
-          {
-            type: "dropdown",
-            label: "References",
-            position: "left",
-            items: [
-              {
-                label: "SDK Reference",
-                to: "sdk/bt-api-ref",
-              },
-              {
-                label: "BTCLI Reference",
-                to: "btcli",
               },
             ],
           },
@@ -378,14 +351,6 @@ const config = {
             to: "resources/bittensor-rel-notes",
             label: "Releases",
             position: "left",
-          },
-          {
-            position: "right",
-            label: "Subtensor API",
-            to: "subtensor-api/extrinsics",
-            sidebarId: "apiSidebar",
-            className: "subtensor-api",
-            activeBasePath: "/subtensor-api",
           },
           {
             href: "https://github.com/latent-to/developer-docs",

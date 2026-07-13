@@ -10,4 +10,4 @@ See:
 
 - [Install `btcli`](../getting-started/install-btcli)
 - [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md)
-- [`btcli reference document`](./btcli.md)
+- [`btcli reference document`](https://docs.learnbittensor.org/btcli/btcli)

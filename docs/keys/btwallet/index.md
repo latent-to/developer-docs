@@ -65,7 +65,7 @@ print(bittensor_wallet.__version__)
 
 ## API reference
 
-Full auto-generated API reference: [Bittensor Wallet reference](pathname:///btwallet-api/html/index.html).
+Full auto-generated API reference: [Bittensor Wallet reference](https://docs.learnbittensor.org/btwallet-api/html/index.html).
 
 ## In this section
 

@@ -34,7 +34,7 @@ You **do not** have to create a subnet to mine on the Bittensor network. Most mi
 
 Registration has a cost in TAO that fluctuates dynamically: the price **decays** over time and **increases** each time a registration succeeds. The subnet owner controls the decay rate (`BurnHalfLife`) and the increase factor (`BurnIncreaseMult`), with the floor and ceiling set by the `MinBurn` and `MaxBurn` hyperparameters, respectively. When you secure a UID slot in a subnet on the main chain, this TAO is sunk cost and cannot be recovered.
 
-By default, [`btcli subnets register`](../btcli/btcli.md#btcli-subnets-register) runs in **safe mode**: it prompts for a price tolerance and aborts if the burn exceeds it. Pass `--unsafe` to skip the guard.
+By default, [`btcli subnets register`](https://docs.learnbittensor.org/btcli/btcli#btcli-subnets-register) runs in **safe mode**: it prompts for a price tolerance and aborts if the burn exceeds it. Pass `--unsafe` to skip the guard.
 
 A subnet can have a maximum of 64 subnet validator UIDs and 192 subnet miner UIDs (256 total) in subnets other than Subnet 1.
 

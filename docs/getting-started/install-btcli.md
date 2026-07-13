@@ -21,7 +21,7 @@ To install `btcli`, you must have Python version 3.9-3.12. See config file on [G
 
 ## Developer reference
 
-For a full developer reference, see the [Bittensor CLI reference document](../btcli/btcli.md).
+For a full developer reference, see the [Bittensor CLI reference document](https://docs.learnbittensor.org/btcli/btcli).
 
 ## Install on macOS and Linux
 

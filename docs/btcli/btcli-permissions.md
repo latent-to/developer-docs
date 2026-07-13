@@ -312,7 +312,7 @@ Creating subnets requires a coldkey with sufficient balance to cover burn costs.
 #### `btcli subnets list`
 #### `btcli subnets burn-cost`
 #### `btcli subnets create`
-#### [`btcli subnets register`](../btcli/btcli.md#btcli-subnets-register)
+#### [`btcli subnets register`](https://docs.learnbittensor.org/btcli/btcli#btcli-subnets-register)
 #### `btcli subnets metagraph`
 #### `btcli subnets show`
 #### `btcli subnets price`

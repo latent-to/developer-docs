@@ -98,6 +98,6 @@ Protect your transactions from front-running and MEV attacks using the MEV Shiel
 
 ## API Reference
 
-- [Bittensor API Reference](./bt-api-ref.md): Complete API documentation
-- [Subtensor API](./subtensor-api.md): Subtensor client reference
+- [Bittensor API Reference](https://docs.learnbittensor.org/sdk/bt-api-ref): Complete API documentation
+- [Subtensor API](https://docs.learnbittensor.org/sdk/subtensor-api): Subtensor client reference
 - [Migration Guide](./migration-guide.md): Upgrade from older SDK versions

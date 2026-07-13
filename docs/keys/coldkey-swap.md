@@ -20,7 +20,7 @@ See:
 :::info coldkey swap vs transfers
 Coldkey swaps are only necessary if you need to migrate a coldkey with subnet ownerships or registrations.
 
-If you only hold and stake TAO, you do not need to perform a coldkey swap. Instead, simply transfer your staked and unstaked TAO to the new coldkey. For more information, see [`btcli wallet transfer`](../btcli/btcli.md#btcli-wallet-transfer) and [`btcli stake transfer --all`](../btcli/btcli.md#btcli-stake-transfer).
+If you only hold and stake TAO, you do not need to perform a coldkey swap. Instead, simply transfer your staked and unstaked TAO to the new coldkey. For more information, see [`btcli wallet transfer`](https://docs.learnbittensor.org/btcli/btcli#btcli-wallet-transfer) and [`btcli stake transfer --all`](https://docs.learnbittensor.org/btcli/btcli#btcli-stake-transfer).
 
 :::
 

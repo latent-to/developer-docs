@@ -831,8 +831,7 @@ ul {
   color: var(--ifm-color-primary);
 }
 
-.dropdown--active > .navbar__link,
-a.subtensor-api.navbar__link--active {
+.dropdown--active > .navbar__link {
   font-weight: 900;
   color: var(--ifm-color-primary);
   border-bottom: 2px solid var(--ifm-color-primary);
