@@ -117,10 +117,7 @@ const config = {
             from: "/glossary",
             to: "/resources/glossary",
           },
-          {
-            from: "/bittensor-rel-notes",
-            to: "/resources/bittensor-rel-notes",
-          },
+          
           {
             from: "/questions-and-answers",
             to: "/resources/questions-and-answers",
@@ -341,16 +338,6 @@ const config = {
             type: "search",
             position: "left",
             className: "custom_algolia",
-          },
-          {
-            position: "left",
-            label: "Announcements",
-            to: "learn/announcements",
-          },
-          {
-            to: "resources/bittensor-rel-notes",
-            label: "Releases",
-            position: "left",
           },
           {
             href: "https://github.com/latent-to/developer-docs",
