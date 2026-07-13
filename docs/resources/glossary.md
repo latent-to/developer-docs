@@ -46,7 +46,7 @@ A digital wallet that holds the core ownership in the Bittensor network and serv
 
 A unit of data in the Bittensor blockchain, containing a collection of transactions and a unique identifier (block hash). A single block is processed every 12 seconds in the Bittensor blockchain.
 
-**See also:** [Subtensor API](../sdk/subtensor-api.md)
+**See also:** [Subtensor API](https://docs.learnbittensor.org/sdk/subtensor-api)
 
 ### Blockchain validator
 
@@ -459,7 +459,7 @@ The basic computing node in a Bittensor subnet, representing a node in a neural 
 
 Neurons participate in the network through axon servers (miners) and dendrite clients (validators), exchanging synapse objects to perform subnet-specific tasks. Their performance is measured through metrics like rank, trust, consensus, and incentive scores, which determine emissions and validator permits.
 
-**See also:** [Understanding Neurons](../learn/neurons.md), [Subnet Validators](../validators/), [Subnet Miners](../miners/), [NeuronInfo class](pathname:///python-api/html/autoapi/bittensor/core/chain_data/neuron_info/index.html)
+**See also:** [Understanding Neurons](../learn/neurons.md), [Subnet Validators](../validators/), [Subnet Miners](../miners/), [NeuronInfo class](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/chain_data/neuron_info/index.html)
 
 ### Nominate
 
@@ -795,9 +795,9 @@ The importance assigned to each subnet determined by net TAO flows (staking minu
 
 [Subtensor](https://github.com/RaoFoundation/subtensor) is Bittensor's layer 1 blockchain based on substrate (now PolkadotSDK). This serves Bittensor as a system of record for transactions and rankings, operates Yuma Consensus, and emits liquidity to participants to incentivize their participation in network activities.
 
-The Bittensor SDK offers the [`bittensor.core.subtensor`](pathname:///python-api/html/autoapi/bittensor/core/subtensor/index.html) and [`bittensor.core.async_subtensor`](pathname:///python-api/html/autoapi/bittensor/core/async_subtensor/index.html) modules to handle Subtensor blockchain interactions.
+The Bittensor SDK offers the [`bittensor.core.subtensor`](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/subtensor/index.html) and [`bittensor.core.async_subtensor`](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/async_subtensor/index.html) modules to handle Subtensor blockchain interactions.
 
-**See also:** [Subtensor API](../sdk/subtensor-api.md), [Subtensor Nodes](../subtensor-nodes/), [Managing Subtensor Connections](../sdk/managing-subtensor-connections.md)
+**See also:** [Subtensor API](https://docs.learnbittensor.org/sdk/subtensor-api), [Subtensor Nodes](../subtensor-nodes/), [Managing Subtensor Connections](../sdk/managing-subtensor-connections.md)
 
 ### Sudo
 
@@ -805,7 +805,7 @@ A privileged role required for administrative actions, such as changing the valu
 
 On Bittensor mainnet ('finney'), sudo is controlled by the triumvirate.
 
-**See also:** [Governance Plan](../governance/governance.md), [btcli Permissions](../btcli/btcli-permissions.md)
+**See also:** [Governance Plan](../governance/governance.md), [Key Permissions](../keys/key-permissions.md)
 
 ### Synapse
 

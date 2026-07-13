@@ -15,7 +15,7 @@ The Bittensor Python SDK provides a programmable interface to the Bittensor bloc
 
 Learn how to create wallets, manage keys, and handle credentials programmatically.
 
-- [Bittensor Wallet](../keys/btwallet/index.md): install, `Keypair`, `Wallet`, and encryption API
+- [Wallet Scripting](../keys/btwallet/index.md): the `Wallet` class, keypairs, and keyfile encryption
 - [Working with Keys](../keys/working-with-keys.md): Create and manage keys with the SDK
 - [Handle Seed Phrase](../keys/handle-seed-phrase.md): Save and restore wallets securely
 
@@ -87,8 +87,16 @@ End-to-end tutorials for building incentive mechanisms.
 
 Perform operations asynchronously for better performance.
 
-- [Working with Concurrency](../subnets/asyncio.md): Use async/await patterns with the SDK
-- [Managing Subtensor Connections](./managing-subtensor-connections.md): Handle async connections
+- [Working with Concurrency](../subnets/asyncio.md): Client lifecycle, async/await patterns, and consistent multi-reads
+
+## Logging
+
+The SDK logs under the `bittensor.*` namespace via the Python standard library and configures no handlers. To see SDK logs in your scripts:
+
+```python
+import logging
+logging.getLogger("bittensor").setLevel(logging.DEBUG)
+```
 
 ## MEV Protection
 
@@ -98,6 +106,6 @@ Protect your transactions from front-running and MEV attacks using the MEV Shiel
 
 ## API Reference
 
-- [Bittensor API Reference](./bt-api-ref.md): Complete API documentation
-- [Subtensor API](./subtensor-api.md): Subtensor client reference
+- [Bittensor API Reference](https://docs.learnbittensor.org/sdk/bt-api-ref): Complete API documentation
+- [Subtensor API](https://docs.learnbittensor.org/sdk/subtensor-api): Subtensor client reference
 - [Migration Guide](./migration-guide.md): Upgrade from older SDK versions

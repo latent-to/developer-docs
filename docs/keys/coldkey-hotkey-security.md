@@ -11,7 +11,7 @@ import { SecurityWarning } from "./\_security-warning.mdx";
 See also:
 
 - [Intro to Wallets, Coldkeys and Hotkeys in Bittensor](./wallets)
-- [Bittensor CLI: Permissions Guide](../btcli/btcli-permissions)
+- [Key Permissions in Bittensor](./key-permissions)
 - [Handle your Seed Phrase/Mnemonic Securely](./handle-seed-phrase)
 
 ## Security model

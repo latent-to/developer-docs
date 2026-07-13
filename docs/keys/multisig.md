@@ -12,7 +12,7 @@ This page will guide the user through an example practice workflow of creating a
 
 ## Prerequisites
 
-- [Install the latest version of BTCLI](../getting-started/install-btcli)
+- [Install the latest version of Bittensor](../getting-started/installation) (includes `btcli`)
 - Acquire some Testnet TAO.
 - Polkadot-JS: This tutorial will employ the Polkadot-JS browser app, which allows users to submit transactions to Polkadot-based chains, including Bittensor. To use your coldkey private keys with the Polkadot-JS app, you must install the wallet browser extension, which is available for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/polkadot-js-extension/) or [Chrome](https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd).
 

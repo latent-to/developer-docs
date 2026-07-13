@@ -1,5 +1,5 @@
 ---
-title: "Docs Home"
+title: "Home"
 slug: "/"
 hidden: false
 sidebar_position: 0
@@ -29,7 +29,7 @@ import { SiFuturelearn } from "react-icons/si";
 import { GoNumber } from "react-icons/go";
 import { VscFileMedia } from "react-icons/vsc";
 
-# Bittensor Documentation
+# Developer Guides
 
 Bittensor is an open source platform where participants produce best-in-class digital commodities, including compute power, storage space, artificial intelligence (AI) inference and training, protein folding, financial markets prediction, and many more.
 
@@ -148,23 +148,23 @@ Ready to run your own subnet? Follow the below links.
 Use the Bittensor CLI and SDK and Wallet SDK to develop and participate in the Bittensor network.
 
 :::caution looking for legacy bittensor 7.4.0 docs?
-See [Legacy Bittensor 7.4.0 Documentation](pathname:///legacy-python-api/html/index.html).
+See [Legacy Bittensor 7.4.0 Documentation](https://docs.learnbittensor.org/legacy-python-api/html/index.html).
 :::
 
 <Cards>
     <CardSmall
     icon={GoCommandPalette}
     title=''
-    link='btcli'
+    link='https://docs.learnbittensor.org/btcli/btcli'
     body='Bittensor CLI' />
     <CardSmall
     icon={FaPython}
     title=''
-    link='/sdk/bt-api-ref'
+    link='https://docs.learnbittensor.org/sdk/bt-api-ref'
     body='Bittensor SDK' />
     <CardSmall
     icon={FaPython}
     title=''
     link='keys/btwallet'
-    body='Bittensor Wallet' />
+    body='Wallet Scripting' />
 </Cards>

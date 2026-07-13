@@ -29,7 +29,7 @@ However, it is critical to note that this only works if the consensus weight mat
 
 ### Validator Sets Weights
 
-The sequence of events begins when a validator calls [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html), to commit their ratings of the subnet's miners. Validators do not need to do anything different whether or not Commit Reveal is operating.
+The sequence of events begins when a validator calls [`set_weights`](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html), to commit their ratings of the subnet's miners. Validators do not need to do anything different whether or not Commit Reveal is operating.
 
 ### Automatic Commit with Time-Lock Encryption
 
@@ -37,7 +37,7 @@ Without Commit Reveal, values are committed openly to the chain.
 
 With Commit Reveal, the chain automatically:
 - Encrypts the weights using **[Drand time-lock encryption](https://drand.love/docs/timelock-encryption/)**
-- Commits the encrypted weights to the blockchain via an internal method called [`commit_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/commit_weights/index.html)
+- Commits the encrypted weights to the blockchain via an internal method called [`commit_weights`](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/extrinsics/commit_weights/index.html)
 - Calculates the target Drand round based on the current block and `commit_reveal_period`
 
 The encrypted weights cannot be decrypted by anyone—including the validator who submitted them—until the designated Drand round is reached.
@@ -78,7 +78,7 @@ style={{width: '100%', maxWidth: 900}}
 
 ### Validators and Miners
 
-After a subnet owner enables Commit Reveal, validators and miners don't need to change anything. Validators continue calling [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html) as before. All encryption, time-locking, and revealing happens automatically at the chain level.
+After a subnet owner enables Commit Reveal, validators and miners don't need to change anything. Validators continue calling [`set_weights`](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html) as before. All encryption, time-locking, and revealing happens automatically at the chain level.
 
 ### Subnet Owners
 

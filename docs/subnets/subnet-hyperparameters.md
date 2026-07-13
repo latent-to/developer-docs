@@ -1053,7 +1053,7 @@ Controls whether a subnet receives pool-side emission injection each epoch. When
 
 This toggle is intended for emergency governance use — for example, temporarily halting emissions to a subnet that is exhibiting problematic behavior, without fully dissolving it.
 
-See [`adminUtils.SubnetEmissionEnabledSet`](../subtensor-api/events.md) for the on-chain event emitted when this is changed.
+See [`adminUtils.SubnetEmissionEnabledSet`](https://docs.learnbittensor.org/subtensor-api/events) for the on-chain event emitted when this is changed.
 
 ### SubnetOwnerCut
 

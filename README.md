@@ -1,14 +1,14 @@
 <h1 align="center">
-  <a href="https://www.docs.bittensor.com">
+  <a href="https://guides.learnbittensor.org">
     <img alt="Tao Logo" src="./static/img/tao-logo.png" />
   </a>
 </h1>
-<h2 align="center">Bittensor Developer Docs</h2>
-<h3 align="center">https://docs.learnbittensor.org</h3>
+<h2 align="center">LearnBittensor Developer Guides</h2>
+<h3 align="center">https://guides.learnbittensor.org</h3>
 
 -----------------------------------------------------------------------------
 
-Welcome to Bittensor Developer Docs. These docs are built using [Docusaurus](https://docusaurus.io/). See the below instructions to build these docs locally.
+Welcome to LearnBittensor Guides. These guides are built using [Docusaurus](https://docusaurus.io/). See the below instructions to build the site locally.
 
 ## Basic
 

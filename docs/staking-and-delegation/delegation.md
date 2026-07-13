@@ -22,7 +22,7 @@ See also:
 - [Managing Your Stakes](./managing-stake-sdk.md): Complete guide to staking operations with btcli and the Python SDK
 
 :::tip tips
-Validators/delegates can configure their take. The default value is 18%. See [`btcli sudo set-take`](../btcli#btcli-sudo-set-take).
+Validators/delegates can configure their take. The default value is 18%. See [`btcli sudo set-take`](https://docs.learnbittensor.org/btcli/btcli#btcli-sudo-set-take).
 
 Minimum required stake for nominators is 0.1 TAO.
 :::

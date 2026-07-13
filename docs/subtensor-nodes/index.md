@@ -89,5 +89,5 @@ print(meta)
 ```
 
 :::tip See also
-Also see the [`metagraph` API reference](https://docs.bittensor.com/python-api/html/autoapi/bittensor/metagraph/index.html#bittensor.metagraph.metagraph.sync).
+Also see the [`metagraph` API reference](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/metagraph/index.html#bittensor.metagraph.metagraph.sync).
 :::

@@ -31,7 +31,7 @@ The steps in this guide assume that you are running the command from the machine
 Before you begin, make sure you have installed the following on your machine:
 
 - [Docker](https://docs.docker.com/desktop/use-desktop/)
-- Install [Bittensor SDK](../getting-started/installation.md) and [Bittensor CLI](../getting-started/install-btcli.md)
+- [Install Bittensor](../getting-started/installation.md) (one package: SDK and CLI)
 
 The Bittensor SDK and Bittensor CLI are required to interact with the local blockchain instance.
 
@@ -106,7 +106,7 @@ If the local blockchain is running correctly, you should see the following outpu
 Before you begin, make sure you have installed the following on your machine:
 
 - Update your Mac or Linux workstation using your package manager
-- Install [Bittensor SDK](../getting-started/installation) and [Bittensor CLI](../getting-started/install-btcli)
+- [Install Bittensor](../getting-started/installation) (one package: SDK and CLI)
 
 The Bittensor SDK and Bittensor CLI are required to interact with the local blockchain instance.
 

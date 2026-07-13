@@ -17,7 +17,7 @@
 
 .link {
   color: var(--grey-900);
-  font-family: 'DM Mono', monospace;
+  font-family: "Poppins", sans-serif;
   font-size: 0.75rem;
   line-height: normal;
   letter-spacing: 0.6px;

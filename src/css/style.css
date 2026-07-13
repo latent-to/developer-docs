@@ -5,96 +5,103 @@
  */
 
 /* You can override the default Infima variables here. */
+/* Palette and typography matched to learnbittensor.org:
+   Poppins body / Montserrat headings; indigo accent
+   (#6366f1 light, #8c8ffa dark); neutral greys. */
 :root {
-  --ifm-color-primary: rgba(14, 16, 19, 1);
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: black;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #6366f1;
+  --ifm-color-primary-dark: #4f46e5;
+  --ifm-color-primary-darker: #4338ca;
+  --ifm-color-primary-darkest: #3730a3;
+  --ifm-color-primary-light: #818cf8;
+  --ifm-color-primary-lighter: #a5b4fc;
+  --ifm-color-primary-lightest: #c7d2fe;
+  --ifm-font-family-base: "Poppins", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", system-ui, sans-serif;
+  --ifm-heading-font-family: "Montserrat", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", system-ui, sans-serif;
   --ifm-code-font-size: 95%;
   --ifm-h1-font-size: 1.8rem;
   --ifm-h2-font-size: 1.5rem;
   --ifm-h3-font-size: 1.2rem;
   --ifm-h4-font-size: 1rem;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-  --text-primary: #5f6368;
-  --text-secondary: #5f6368;
-  --grey-100: #f8f9fa; /* --contrast-100 */
-  --grey-900: #0e1013; /* --border-dashed-primary-hk */
+  --text-primary: #525252;
+  --text-secondary: #525252;
+  --grey-100: #f5f5f5; /* --contrast-100 */
+  --grey-900: #171717; /* --border-dashed-primary-hk */
   --ifm-menu-color-background-hover: var(--grey-100);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme="dark"] {
-  --ifm-color-primary: white;
-  --ifm-color-primary-dark: white;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-primary: #8c8ffa;
+  --ifm-color-primary-dark: #6366f1;
+  --ifm-color-primary-darker: #4f46e5;
+  --ifm-color-primary-darkest: #4338ca;
+  --ifm-color-primary-light: #a5b4fc;
+  --ifm-color-primary-lighter: #c7d2fe;
+  --ifm-color-primary-lightest: #e0e7ff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-  --ifm-background-surface-color: #000000 !important;
-  --ifm-background-color: #000000 !important;
+  --ifm-background-surface-color: #171717 !important;
+  --ifm-background-color: #121212 !important;
   --ifm-navbar-active-color: white;
-  --ifm-navbar-item-color: #a5abaf;
+  --ifm-navbar-item-color: #d4d4d4;
   --ifm-footer-div-color: black;
-  --ifm-table-of-contents-border: rgba(40, 42, 45, 1);
+  --ifm-table-of-contents-border: #262626;
   --ifm-table-of-contents-border-active: rgba(248, 249, 250, 1);
-  --ifm-table-of-contents-text: #a5abaf;
+  --ifm-table-of-contents-text: #a3a3a3;
   --ifm-table-of-contents-text-active: white;
   --ifm-breadcrumbs__item--active: rgba(248, 249, 250, 1);
-  --ifm-menu__link--active: #5f6368;
-  --ifm-dropdown-background-color: #242526 !important;
-  --ifm-footer-bg: #0e1013;
+  --ifm-menu__link--active: #8c8ffa;
+  --ifm-dropdown-background-color: #171717 !important;
+  --ifm-footer-bg: #171717;
   --ifm-footer-company-name-color: white;
-  --ifm-algolia-bg: #242526;
-  --ifm-algolia-border: #7f8497;
-  --ifm-navbar-border: #282a2d;
+  --ifm-algolia-bg: #171717;
+  --ifm-algolia-border: #404040;
+  --ifm-navbar-border: #262626;
   --ifm-alert-secondary: rgba(235, 237, 240, 0.15);
   --ifm-alert-success: rgba(0, 164, 0, 0.15);
   --ifm-alert-info: rgba(84, 199, 236, 0.15);
   --ifm-alert-warning: rgba(255, 186, 0, 0.15);
   --ifm-alert-danger: rgba(250, 56, 62, 0.15);
-  --ifm-blockquote-border: #606770;
+  --ifm-blockquote-border: #525252;
   --ifm-tab-container-active-bg: white;
   --ifm-tab-container-active-color: black;
   --ifm-ul: #f5f6f7;
-  --ifm-hr: rgba(95, 99, 104, 1);
-  --ifm-search-icon-color: #a5abaf;
-  --ifm-doc-search-border-color: #000000;
-  --ifm-table-header-bg: #2b2b2d;
+  --ifm-hr: #404040;
+  --ifm-search-icon-color: #a3a3a3;
+  --ifm-doc-search-border-color: #262626;
+  --ifm-table-header-bg: #262626;
   --ifm-table-header-color: white;
-  --ifm-table-body-color: #d7e3e3;
-  --ifm-table-tr-border: #3c3e42;
+  --ifm-table-body-color: #d4d4d4;
+  --ifm-table-tr-border: #404040;
   --ifm-doc-search-title-color: white;
-  --ifm-dock-search-active-a-bg: #000000;
+  --ifm-dock-search-active-a-bg: #262626;
   --ifm-dock-search-active-a-color: white;
   --ifm-dock-search-svg-color: white;
-  --ifm-doc-search-title-bg: #242526;
+  --ifm-doc-search-title-bg: #171717;
 }
 
 [data-theme="light"] {
-  --ifm-color-primary: black;
-  --ifm-color-primary-dark: white;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: black;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-primary: #6366f1;
+  --ifm-color-primary-dark: #4f46e5;
+  --ifm-color-primary-darker: #4338ca;
+  --ifm-color-primary-darkest: #3730a3;
+  --ifm-color-primary-light: #818cf8;
+  --ifm-color-primary-lighter: #a5b4fc;
+  --ifm-color-primary-lightest: #c7d2fe;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
   --ifm-navbar-active-color: black;
-  --ifm-navbar-item-color: rgb(111, 112, 114);
+  --ifm-navbar-item-color: #525252;
   --ifm-footer-div-color: white;
   --ifm-table-of-contents-border: rgba(219, 221, 225, 1);
   --ifm-table-of-contents-border-active: black;
   --ifm-table-of-contents-text: #5f6368;
   --ifm-table-of-contents-text-active: #0e1013;
   --ifm-breadcrumbs__item--active: rgba(14, 16, 19, 1);
-  --ifm-menu__link--active: rgb(111, 112, 114);
-  --ifm-footer-bg: #0e1013;
+  --ifm-menu__link--active: #6366f1;
+  --ifm-footer-bg: #171717;
   --ifm-footer-company-name-color: white;
   --ifm-algolia-bg: white;
   --ifm-algolia-border: #0e1013;
@@ -108,13 +115,13 @@
   --ifm-tab-container-active-bg: black;
   --ifm-tab-container-active-color: white;
   --ifm-ul: rgba(95, 99, 104, 1);
-  --ifm-hr: rgba(14, 16, 19, 1);
+  --ifm-hr: #d4d4d4;
   --ifm-search-icon-color: #1c1e21;
   --ifm-doc-search-border-color: rgba(219, 221, 225, 1);
-  --ifm-table-header-bg: #f8f9fa;
-  --ifm-table-header-color: #5f6368;
+  --ifm-table-header-bg: #f5f5f5;
+  --ifm-table-header-color: #525252;
   --ifm-table-body-color: rgba(95, 99, 104, 1);
-  --ifm-table-tr-border: rgba(14, 16, 19, 1);
+  --ifm-table-tr-border: #d4d4d4;
   --ifm-doc-search-title-color: rgba(14, 16, 19, 1);
   --ifm-dock-search-active-a-bg: white;
   --ifm-dock-search-active-a-color: #000000;
@@ -123,73 +130,75 @@
 }
 
 @font-face {
-  font-family: "Haffer";
-  src: url(../../static/fonts/Haffer-Light.ttf);
-  font-weight: 200;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Haffer";
-  src: url(../../static/fonts/Haffer-Medium.ttf);
+  font-family: "Poppins";
+  src: url(../../static/fonts/Poppins-Regular.ttf);
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: "Haffer";
-  src: url(../../static/fonts/Haffer-Regular.ttf);
-  font-weight: normal;
+  font-family: "Poppins";
+  src: url(../../static/fonts/Poppins-Italic.ttf);
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url(../../static/fonts/Poppins-Medium.ttf);
+  font-weight: 500;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: "Haffer";
-  src: url(../../static/fonts/Haffer-SemiBold.ttf);
-  font-weight: bold;
+  font-family: "Poppins";
+  src: url(../../static/fonts/Poppins-SemiBold.ttf);
+  font-weight: 600;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: "HafferSQ";
-  src: url(../../static/fonts/HafferSQ-Light.ttf);
-  font-weight: 200;
+  font-family: "Poppins";
+  src: url(../../static/fonts/Poppins-Bold.ttf);
+  font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: "HafferSQ";
-  src: url(../../static/fonts/HafferSQ-Medium.ttf);
+  font-family: "Montserrat";
+  src: url(../../static/fonts/Montserrat-Regular.ttf);
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: "HafferSQ";
-  src: url(../../static/fonts/HafferSQ-Regular.ttf);
-  font-weight: normal;
+  font-family: "Montserrat";
+  src: url(../../static/fonts/Montserrat-Medium.ttf);
+  font-weight: 500;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: "HafferSQ";
-  src: url(../../static/fonts/HafferSQ-SemiBold.ttf);
-  font-weight: bold;
+  font-family: "Montserrat";
+  src: url(../../static/fonts/Montserrat-SemiBold.ttf);
+  font-weight: 600;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: "TTCommonsPro";
-  src: url(../../static/fonts/TTCommonsProMonoMedium.ttf);
-  font-weight: 200;
+  font-family: "Montserrat";
+  src: url(../../static/fonts/Montserrat-Bold.ttf);
+  font-weight: 700;
   font-style: normal;
-}
-
-@font-face {
-  font-family: "TTCommonsPro";
-  src: url(../../static/fonts/TTCommonsProMonoRegular.ttf);
-  font-weight: 100;
-  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -197,46 +206,32 @@
   src: url(../../static/fonts/FiraCode_VariableFont_wght.ttf);
 }
 
-@font-face {
-  font-family: "DM Mono";
-  src: url(../../static/fonts/DMMono-Regular.ttf);
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "DM Mono";
-  src: url(../../static/fonts/DMMono-Medium.ttf);
-  font-weight: 500;
-  font-style: normal;
-}
-
 body {
-  font-family: "Haffer";
+  font-family: "Poppins", sans-serif;
   font-size: 16px;
-  font-weight: 200;
+  font-weight: 400;
   letter-spacing: 0%;
   line-height: 160%;
 }
 
 .h1 {
-  font-family: "Haffer";
+  font-family: "Montserrat", sans-serif;
   font-size: 32px;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: calc(-0.01 * 20px);
   line-height: 120%;
 }
 
 .h2 {
-  font-family: "Haffer";
+  font-family: "Montserrat", sans-serif;
   font-size: 24px;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: calc(-0.01 * 20px);
   line-height: 120%;
 }
 
 .h3 {
-  font-family: "Haffer";
+  font-family: "Montserrat", sans-serif;
   font-size: 20px;
   font-weight: 400;
   letter-spacing: 0%;
@@ -244,7 +239,7 @@ body {
 }
 
 .h4 {
-  font-family: "Haffer";
+  font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 0%;
@@ -258,34 +253,34 @@ a {
 }
 
 h1 {
-  font-weight: 400 !important;
+  font-weight: 600 !important;
   font-size: 32px !important;
   padding-bottom: 22px !important;
   margin-top: -16px !important;
 }
 
 h1.anchor {
-  font-weight: 400 !important;
+  font-weight: 600 !important;
   font-size: 32px !important;
 }
 
 h2 {
-  font-weight: 400 !important;
+  font-weight: 600 !important;
   font-size: 24px !important;
 }
 
 h2.anchor {
-  font-weight: 400 !important;
+  font-weight: 600 !important;
   font-size: 24px !important;
 }
 
 h3 {
-  font-weight: 400 !important;
+  font-weight: 600 !important;
   font-size: 20px !important;
 }
 
 h3.anchor {
-  font-weight: 400 !important;
+  font-weight: 600 !important;
   font-size: 20px !important;
 }
 
@@ -308,7 +303,7 @@ p {
   list-style: none;
   margin: 0 !important;
   padding-left: 0 !important;
-  font-family: "FiraCode";
+  font-family: "Poppins", sans-serif;
   font-size: 12px;
   font-weight: 400;
   letter-spacing: calc(0.05 * 12px);
@@ -364,7 +359,7 @@ li.theme-doc-sidebar-item-link-level-3 a {
 
 .table-of-contents,
 .table-of-contents ul {
-  font-family: "FiraCode";
+  font-family: "Poppins", sans-serif;
 }
 [class*="tableOfContents"] {
   padding-top: 20px;
@@ -385,7 +380,7 @@ li.theme-doc-sidebar-item-link-level-3 a {
 .navbar__link {
   font-size: 12px;
   font-weight: 500;
-  font-family: "DM Mono", monospace;
+  font-family: "Poppins", sans-serif;
   color: var(--text-secondary);
   letter-spacing: 0.6px;
 }
@@ -402,7 +397,7 @@ li.theme-doc-sidebar-item-link-level-3 a {
   font-weight: 400;
   font-size: 9px;
   text-transform: uppercase;
-  font-family: "FiraCode";
+  font-family: "Poppins", sans-serif;
 }
 
 .parameter-label {
@@ -417,16 +412,16 @@ li.theme-doc-sidebar-item-link-level-3 a {
 }
 
 .success {
-  background: #859900;
+  background: #10b981;
 }
 
 .important {
-  background: #dc322f;
+  background: #ef4444;
 }
 
 ul {
-  font-family: "Haffer";
-  font-weight: 200;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
   text-transform: none;
 }
 
@@ -436,7 +431,7 @@ ul {
 
 .sidebar-title {
   font-size: 1rem;
-  font-family: "Haffer";
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
   letter-spacing: 0.05em;
   margin: 0.7rem;
@@ -454,7 +449,7 @@ ul {
 
 /* NAVBAR LINKS */
 .navbar__item.navbar__link {
-  font-family: "DM Mono", monospace;
+  font-family: "Poppins", sans-serif;
   color: var(--text-secondary);
   font-size: 12px !important;
   align-items: center;
@@ -477,7 +472,7 @@ ul {
   font-size: 16px !important;
   line-height: 27.2px !important;
   font-weight: 400 !important;
-  font-family: "Haffer";
+  font-family: "Poppins", sans-serif;
   letter-spacing: 0.32px;
 }
 
@@ -491,7 +486,7 @@ ul {
 .breadcrumbs__item.breadcrumbs__item--active .breadcrumbs__link {
   background: initial !important;
   color: var(--text-primary);
-  font-family: "DM Mono", monospace;
+  font-family: "Poppins", sans-serif;
 }
 
 /* Footer */
@@ -619,7 +614,7 @@ ul {
   border-radius: 0 !important;
   color: var(--ifm-navbar-item-color);
   font-size: 12px !important;
-  font-family: "DM Mono", monospace;
+  font-family: "Poppins", sans-serif;
   letter-spacing: 0.6px !important;
 }
 
@@ -686,7 +681,7 @@ ul {
 /* right bar style */
 .table-of-contents__link {
   color: #5f6368;
-  font-family: "DM Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-size: 0.75rem;
   line-height: 130%;
   letter-spacing: 0.6px;
@@ -792,7 +787,7 @@ ul {
   margin: 0 !important;
   cursor: pointer;
   color: var(--text-secondary, #5f6368);
-  font-family: "DM Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-size: 12px;
   letter-spacing: 0.6px;
   text-transform: uppercase;
@@ -831,8 +826,7 @@ ul {
   color: var(--ifm-color-primary);
 }
 
-.dropdown--active > .navbar__link,
-a.subtensor-api.navbar__link--active {
+.dropdown--active > .navbar__link {
   font-weight: 900;
   color: var(--ifm-color-primary);
   border-bottom: 2px solid var(--ifm-color-primary);
@@ -964,7 +958,7 @@ a.subtensor-api.navbar__link--active {
   font-weight: 400 !important;
   text-transform: uppercase;
   font-size: 0.7rem;
-  font-family: "DM Mono", monospace;
+  font-family: "Poppins", sans-serif;
   letter-spacing: 0.6;
 }
 
@@ -1051,7 +1045,7 @@ a.subtensor-api.navbar__link--active {
 }
 
 .footer .footer__copyright {
-  font-family: TTCommonsPro !important;
+  font-family: "Poppins", sans-serif !important;
   font-size: 14px !important;
   text-transform: uppercase !important;
   display: flex;
@@ -1110,7 +1104,7 @@ a.subtensor-api.navbar__link--active {
 .DocSearch-Modal .DocSearch-Hit-source {
   font-size: 14px !important;
   text-transform: uppercase !important;
-  font-family: TTCommonsPro !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .DocSearch-Modal #docsearch-list li {
@@ -1131,7 +1125,7 @@ a.subtensor-api.navbar__link--active {
   position: relative;
   border-left-width: 3px !important;
   border-radius: 0 !important;
-  font-family: Haffer !important;
+  font-family: "Poppins", sans-serif !important;
   box-shadow: 0 !important;
 }
 
@@ -1257,7 +1251,7 @@ table tr th {
   color: var(--ifm-table-header-color) !important;
   font-size: 15px !important;
   /* text-align: center !important; */
-  font-family: TTCommonsPro !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 600 !important;
 }
 
@@ -1293,7 +1287,7 @@ hr {
 ol:not([class]) li {
   font-size: 16px !important;
   font-weight: 400 !important;
-  font-family: "Haffer";
+  font-family: "Poppins", sans-serif;
 }
 
 ul.dashed_ul {
@@ -1340,7 +1334,7 @@ p > a > img[loading="lazy"] {
   width: 100%;
   text-align: right;
   font-size: 12px !important;
-  font-family: TTCommonsPro !important;
+  font-family: "Poppins", sans-serif !important;
   color: #5f6368;
   position: absolute !important;
   top: -15px !important;
@@ -1447,7 +1441,7 @@ footer .container.container-fluid {
 
 [data-theme="dark"] {
   .theme-doc-sidebar-menu li:first-child > div > div {
-    border: 1px solid #282a2d !important;
+    border: 1px solid #262626 !important;
   }
 }
 
@@ -1565,7 +1559,7 @@ footer .container.container-fluid {
 }
 
 .pagination-nav__link--next > .pagination-nav__sublabel {
-  font-family: "DM Mono", monospace;
+  font-family: "Poppins", sans-serif;
   position: relative;
   padding-right: 12px;
   text-align: right;
@@ -1584,7 +1578,7 @@ footer .container.container-fluid {
 }
 
 .pagination-nav__link--prev > .pagination-nav__sublabel {
-  font-family: "DM Mono", monospace;
+  font-family: "Poppins", sans-serif;
   position: relative;
   padding-left: 12px;
 }

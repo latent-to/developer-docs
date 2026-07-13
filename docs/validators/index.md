@@ -24,11 +24,25 @@ Validating is not supported on Windows.
 
 Each subnet on the Bittensor blockchain supports a maximum of 256 active nodes, with each node assigned a unique UID slot. Out of these, only the top 64 nodes by emissions are eligible to serve as validators by default. A subnet with 64 validators means that all 64 top-ranked nodes meet the necessary criteria and choose to participate as validators.
 
-To qualify as a validator, a node must have a validator permit. This permit is only granted to nodes within the top 64 and allows them to submit miner evaluations using `btcli weights commit` or the SDK's [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html#module-bittensor.core.extrinsics.set_weights) function.
+To qualify as a validator, a node must have a validator permit. This permit is only granted to nodes within the top 64 and allows them to submit miner evaluations using `btcli weights commit` or the SDK's [`set_weights`](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html#module-bittensor.core.extrinsics.set_weights) function.
 
 :::tip Dynamic Validator Threshold
 The number of validators isn't hardcoded. The subnet governor has the authority to increase or decrease the maximum number of validators. Any change to this limit directly affects the number of nodes that can be issued a validator permit and, thus, act as validators.
 :::
+
+## Key security for validators
+
+Validator operations split across the same trust classes as mining:
+
+- **Unpermissioned workstation** (public keys only): check balances, monitor emissions and metagraph info, check subnet alpha prices.
+- **Coldkey workstation**: create/import coldkeys, manage TAO and alpha stake, create hotkeys (`btcli wallet new-hotkey`, `btcli wallet regen-hotkey`) and transfer only the hotkey file or mnemonic to the validator node, register a hotkey on a subnet, set the validator take (`btcli sudo set-take`), rotate keys after a compromise.
+- **Validator node (hotkey workstation)**: weight setting (`btcli weights set`, or commit/reveal for legacy salt commits) requires a hotkey with an active validator permit and runs in the live environment.
+
+:::tip
+Use a unique hotkey per subnet. Hotkeys are not encrypted by default but can be [optionally encrypted](../keys/working-with-keys#encrypting-the-hotkey).
+:::
+
+If you suspect your coldkey has leaked, you can swap it out of your wallet on-chain (5-day waiting period, 0.1 TAO fee). See [Rotate/Swap your Coldkey](../keys/coldkey-swap). For the operation-by-operation breakdown, see [Key permissions](../keys/key-permissions), and note that some validator operations incur [transaction fees](../learn/fees.md).
 
 ## Requirements for validation
 
@@ -165,7 +179,7 @@ btcli stake add --wallet.name <wallet name> --wallet.hotkey <your validating hot
 
 <SdkVersion />
 
-The amount of TAO needed to acquire a validator permit depends on how the other largest 64 wallets distribute TAO across themselves. You can calculate the minimum using [bt.metagraph](pathname:///python-api/html/autoapi/bittensor/core/metagraph/index.html):
+The amount of TAO needed to acquire a validator permit depends on how the other largest 64 wallets distribute TAO across themselves. You can calculate the minimum using [bt.metagraph](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/metagraph/index.html):
 
 ```python
 import bittensor as bt

@@ -90,7 +90,7 @@ There are several officially supported Bittensor wallet applications:
 
     Using the Bittensor wallet browser extension, you can [use TAO.app to manage stake](https://tao.app).
 
-  - The Bittensor Python SDK, which includes the secure [Bittensor Wallet module](https://docs.bittensor.com/btwallet-api/html/autoapi/btwallet/wallet/index.html).
+  - The Bittensor Python SDK, which includes the secure [Bittensor Wallet module](https://docs.learnbittensor.org/btwallet-api/html/autoapi/btwallet/wallet/index.html).
   - The Bittensor CLI, `btcli`, which uses the Bittensor Wallet module under the hood.
 
 
