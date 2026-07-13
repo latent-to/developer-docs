@@ -23,24 +23,6 @@ const sidebars = {
     "index",
     {
       type: "category",
-      label: "Releases and Announcements",
-      collapsible: true,
-      collapsed: true,
-      items: [
-        {
-          type: "doc",
-          id: "resources/bittensor-rel-notes",
-          label: "Releases",
-        },
-        {
-          type: "doc",
-          id: "learn/announcements",
-          label: "Announcements",
-        },
-      ],
-    },
-    {
-      type: "category",
       label: "Understand Bittensor",
       collapsible: true,
       collapsed: true,
