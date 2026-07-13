@@ -53,21 +53,30 @@ try:
 except Exception as e:
     print("overwrite refused ->", type(e).__name__, "-", str(e)[:80])
 
-# Per-keyfile env var: BT_PW_<normalized path>, exported in the environment
+# Per-keyfile password cache for the current process: save_password_to_env.
+# The BT_PW_<path> variable it sets holds an obfuscated encoding at the native
+# level; it is not a plaintext variable users can export themselves.
 name = w.coldkey_file.env_var_name()
 print("env_var_name:", name)
-code_pw = (
-    "from bittensor.wallet import Wallet\n"
-    f"w = Wallet(name='vault', path={TEST_PATH!r})\n"
-    "print('unlocked', w.coldkey.ss58_address)\n"
+w.coldkey_file.save_password_to_env("hunter2-test")
+w_cached = Wallet(name="vault", path=TEST_PATH)
+print("unlock after save_password_to_env:", w_cached.coldkey.ss58_address == kp.ss58_address)
+assert w_cached.coldkey.ss58_address == kp.ss58_address
+
+# Documented cross-process pattern: BT_WALLET_PASSWORD + resolve_wallet_password
+code_resolve = (
+    "from bittensor import wallets\n"
+    f"w = wallets.open_wallet('vault', path={TEST_PATH!r})\n"
+    "pwd = wallets.resolve_wallet_password(w)\n"
+    "print('resolved unlock', w.get_coldkey(password=pwd).ss58_address)\n"
 )
-proc_pw = subprocess.run(
-    [sys.executable, "-c", code_pw],
-    env={**os.environ, name: "hunter2-test"},
+proc_r = subprocess.run(
+    [sys.executable, "-c", code_resolve],
+    env={**os.environ, "BT_WALLET_PASSWORD": "hunter2-test"},
     capture_output=True, text=True, stdin=subprocess.DEVNULL,
 )
-print("unlock via exported BT_PW var:", proc_pw.stdout.strip(), proc_pw.stderr.strip()[:100])
-assert proc_pw.returncode == 0 and kp.ss58_address in proc_pw.stdout
+print("resolve_wallet_password run:", proc_r.stdout.strip(), proc_r.stderr.strip()[:100])
+assert proc_r.returncode == 0 and kp.ss58_address in proc_r.stdout
 
 # BT_WALLET_PASSWORD: consumed by the wallets.* helpers (subprocess so env is clean)
 code = (

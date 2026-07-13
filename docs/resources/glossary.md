@@ -805,7 +805,7 @@ A privileged role required for administrative actions, such as changing the valu
 
 On Bittensor mainnet ('finney'), sudo is controlled by the triumvirate.
 
-**See also:** [Governance Plan](../governance/governance.md), [btcli Permissions](../btcli/btcli-permissions.md)
+**See also:** [Governance Plan](../governance/governance.md), [Key Permissions](../keys/key-permissions.md)
 
 ### Synapse
 

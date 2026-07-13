@@ -166,5 +166,5 @@ See [Legacy Bittensor 7.4.0 Documentation](https://docs.learnbittensor.org/legac
     icon={FaPython}
     title=''
     link='keys/btwallet'
-    body='Bittensor Wallet' />
+    body='Wallet Scripting' />
 </Cards>

@@ -55,7 +55,7 @@ All read commands work with public keys only:
 
 ```shell
 btcli wallet balance --wallet my-wallet
-btcli subnets show --netuid 14
+btcli subnets show 14
 btcli stake list --wallet my-wallet
 ```
 
@@ -73,7 +73,7 @@ btcli utils convert 1000000000 --rao
 btcli utils latency
 ```
 
-The `btcli config` commands set persistent defaults, such as the target network (`finney`, i.e. mainnet, or `test`) and the wallet path. Run them on every workstation to initialize it. Signing transactions also supports `--dry-run` on any transaction command, which previews the fee and effects without submitting anything.
+The `btcli config` commands set persistent defaults, such as the target network (`finney`, i.e. mainnet, or `test`) and the wallet path. Run them on every workstation to initialize it. Any transaction command also accepts `--dry-run`, which previews the fee and effects without submitting anything.
 
 ## Operations requiring a hotkey
 
@@ -115,8 +115,9 @@ A hotkey (or a coldkey) can sign arbitrary messages, for example to prove contro
 
 ```shell
 btcli wallet sign --wallet miner --wallet-hotkey default --use-hotkey --message "proof of ownership"
-btcli wallet verify
 ```
+
+To check a signature, use `btcli wallet verify` with the message, the `0x`-hex signature, and the signer's address.
 
 ## Operations requiring a coldkey
 
@@ -171,7 +172,7 @@ Managing an existing subnet (hyperparameters, start, identity, mechanisms, trimm
 
 ```shell
 btcli subnets create --wallet owner
-btcli sudo set --netuid 14 --name tempo --value 360 --wallet owner
+btcli sudo set --netuid 14 --name serving_rate_limit --value 10 --wallet owner
 btcli sudo start --netuid 14 --wallet owner
 ```
 
@@ -198,9 +199,9 @@ Subnet identities are set by the subnet owner with `btcli sudo set-identity`.
 The coldkey is the recovery mechanism for the whole wallet. If a hotkey leaks, the owning coldkey can swap it for a fresh one without losing registration. If the coldkey itself may have leaked, announce and execute a coldkey swap to move everything to a new coldkey:
 
 ```shell
-btcli wallet swap-hotkey --wallet my-wallet
-btcli wallet announce-coldkey-swap --wallet my-wallet
-btcli wallet swap-coldkey --wallet my-wallet
+btcli wallet swap-hotkey --wallet my-wallet --wallet-hotkey leaked-hotkey --new-hotkey fresh-hotkey
+btcli wallet announce-coldkey-swap --wallet my-wallet --new-coldkey 5NEW...
+btcli wallet swap-coldkey --wallet my-wallet --new-coldkey 5NEW...
 ```
 
 `btcli wallet swap-check` shows whether a coldkey has a pending swap announcement (unpermissioned). See [Rotate/Swap your Coldkey](./coldkey-swap).
@@ -210,9 +211,10 @@ btcli wallet swap-coldkey --wallet my-wallet
 Crowdloan reads (`btcli crowd list`, `btcli crowd info`, `btcli crowd contributors`) are unpermissioned. Creating, contributing to, or otherwise mutating a crowdloan spends or moves TAO and is signed by the coldkey, via `btcli tx`:
 
 ```shell
-btcli tx create-crowdloan --wallet my-wallet
-btcli tx contribute-crowdloan --wallet my-wallet
+btcli tx contribute-crowdloan --crowdloan-id 0 --amount-tao 10 --wallet my-wallet
 ```
+
+Other crowdloan mutations include `btcli tx create-crowdloan`, `btcli tx withdraw-crowdloan`, `btcli tx finalize-crowdloan`, and `btcli tx refund-crowdloan`.
 
 ## Other requirements
 
