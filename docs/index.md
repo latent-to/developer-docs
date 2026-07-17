@@ -17,7 +17,7 @@ Bittensor is an open source network where participants produce best-in-class dig
 TAO holders take part by **staking**: committing TAO to a validator to earn a share of that validator's emissions, and to help direct the network's rewards. These guides cover everything you need to stake, delegate, manage your positions, and move value safely&mdash;from your first delegation to root claims, price protection, hardware wallets, and staking through the Bittensor EVM.
 
 :::tip Browse the subnets
-Explore project information and tokenomic data on the [Subnet Listings](https://tao.app).
+Explore project information and tokenomic data on the [Subnet Listings](https://tao.app/explorer).
 :::
 
 <ResponsiveCards>
