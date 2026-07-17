@@ -10,7 +10,7 @@ Bittensor clients (BTCLI and the SDK) provides three modes to give users control
 
 Other users' transactions can affect the token price, even while your transaction is pending. Subnet token prices may change rapidly, with significant consequences affecting your execution price and increasing slippage. These effects can be exploited by "sandwich attacks" and other [MEV (Maximal Extractable Value)](../resources/glossary.md#mev-maximal-extractable-value) attacks, or can result in loss of liquidity due to organic price volatility.
 
-It is therefore important to carefully manage price protection when staking and unstaking real value liquidity, i.e. on mainnet ("finney"). For additional protection against MEV attacks, consider using MEV Shield to encrypt your transactions.
+It is therefore important to carefully manage price protection when staking and unstaking real value liquidity, i.e. on mainnet ("finney"). For additional protection against MEV attacks, consider using [MEV Shield](../sdk/mev-protection.md) to encrypt your transactions.
 
 ## Price Protection Modes
 

@@ -15,15 +15,15 @@ import rehypeKatex from "rehype-katex";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "tao.app Guides",
-  tagline: "Staking and delegation guides for the Bittensor network",
+  title: "LearnBittensor Developer Guides",
+  tagline: "Guides and tutorials for the Bittensor network",
   favicon: "img/favicon.ico",
   trailingSlash: false,
   // Set the production url of your site here
-  url: "https://tao.app",
+  url: "https://guides.learnbittensor.org",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: "/guides/",
+  baseUrl: "/",
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "latent-to", // Usually your GitHub org/user name.
@@ -90,6 +90,10 @@ const config = {
             to: "/staking-and-delegation/managing-stake-sdk",
           },
           {
+            to: "/subnets/understanding-multiple-mech-subnets",
+            from: "/subnets/understanding-sub-subnets",
+          },
+          {
             to: "/staking-and-delegation/staking-polkadot-js",
             from: "/staking/staking-polkadot-js",
           },
@@ -102,9 +106,18 @@ const config = {
             from: "/staking-and-delegation/staking",
           },
           {
+            from: "/subnets/register-validate-mine",
+            to: "/validators",
+          },
+          {
+            to: "/errors",
+            from: "/subtensor-nodes/subtensor-error-messages",
+          },
+          {
             from: "/glossary",
             to: "/resources/glossary",
           },
+          
           {
             from: "/questions-and-answers",
             to: "/resources/questions-and-answers",
@@ -122,12 +135,32 @@ const config = {
             to: "/learn/yuma-consensus",
           },
           {
+            from: "/subnets/yc3-blog",
+            to: "/learn/yc3-blog",
+          },
+          {
             from: "/fees",
             to: "/learn/fees",
           },
           {
             from: "/community-links",
             to: "/resources/community-links",
+          },
+          {
+            from: "/subnets/yuma3-migration-guide",
+            to: "/learn/yuma3-migration-guide",
+          },
+          {
+            from: "/subnets/child-hotkeys",
+            to: "/validators/child-hotkeys",
+          },
+          {
+            from: "/btcli-permissions",
+            to: "/btcli/btcli-permissions",
+          },
+          {
+            from: "/migration_guide",
+            to: "/sdk/migration-guide",
           },
           {
             from: "/getting-started/wallets",
@@ -146,12 +179,28 @@ const config = {
             to: "/concepts/tools",
           },
           {
+            from: "/bittensor-networks",
+            to: "/concepts/bittensor-networks",
+          },
+          {
             from: "/commit-reveal",
             to: "/concepts/commit-reveal",
           },
           {
+            from: "/consensus-based-weights",
+            to: "/concepts/consensus-based-weights",
+          },
+          {
+            from: "/bt-logging-levels",
+            to: "/concepts/bt-logging-levels",
+          },
+          {
             from: "/utilities",
             to: "/resources/utilities",
+          },
+          {
+            from: "/senate",
+            to: "/governance/senate",
           },
           {
             from: "/errors-and-troubleshooting",
@@ -160,6 +209,14 @@ const config = {
           {
             from: "/media-assets",
             to: "/resources/media-assets",
+          },
+          {
+            from: "/subtensor-nodes/using-docker",
+            to: "/subtensor-nodes/run/using-docker",
+          },
+          {
+            from: "/subtensor-nodes/using-source",
+            to: "/subtensor-nodes/run/using-source",
           },
           {
             from: "/liquidity-positions/liquidity-positions",
@@ -187,9 +244,6 @@ const config = {
 
   stylesheets: [
     {
-      href: "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap",
-    },
-    {
       href: "https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css",
       type: "text/css",
       integrity:
@@ -203,12 +257,6 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // Lock the site to dark ("night") mode to match tao.app.
-      colorMode: {
-        defaultMode: "dark",
-        disableSwitch: true,
-        respectPrefersColorScheme: false,
-      },
       // Replace with your project's social card
       image: "img/bittensor-dev-docs-social-card.png",
       announcementBar: {
@@ -228,10 +276,10 @@ const config = {
 
       navbar: {
         logo: {
-          alt: "tao.app Guides",
+          alt: "LearnBittensor Guides",
           src: "img/logo.svg",
           srcDark: "img/logo-dark-mode.svg",
-          href: "https://tao.app",
+          href: "https://guides.learnbittensor.org",
           style: {
             objectFit: "contain",
             width: 21,
@@ -253,16 +301,16 @@ const config = {
                 to: "keys/wallets",
               },
               {
-                label: "Staking and Delegation",
-                to: "staking-and-delegation/delegation",
+                label: "Mining",
+                to: "miners",
               },
               {
-                label: "Manage your stakes",
-                to: "staking-and-delegation/managing-stake-sdk",
+                label: "Validating",
+                to: "validators",
               },
               {
-                label: "Root claims",
-                to: "staking-and-delegation/root-claims",
+                label: "Manage subnets",
+                to: "subnets/create-a-subnet",
               },
             ],
           },
@@ -272,16 +320,13 @@ const config = {
             position: "left",
             items: [
               {
-                label: "Staking precompile",
-                to: "evm-tutorials/staking-precompile",
+                label: "EVM smart contracts",
+                to: "evm-tutorials",
+                activeBaseRegex: "^/evm-tutorials/?$",
               },
               {
-                label: "Bridge vTAO",
+                label: "Token Bridging",
                 to: "evm-tutorials/bridge-vtao",
-              },
-              {
-                label: "vTAO liquidity",
-                to: "evm-tutorials/vtao-liquidity-on-aerodrome",
               },
               {
                 label: "Convert h160 to SS58",
@@ -325,9 +370,10 @@ const config = {
       footer: {
         copyright: `
 					<div className="copyRight">
-						© ${new Date().getFullYear()} <a href="https://tao.app">tao.app</a>, <span>all rights reserved.</span>
+						© ${new Date().getFullYear()} <a href="https://learnbittensor.org">LearnBittensor</a> • <a href="https://latent.to/">Latent Holdings</a>, <span>all rights reserved.</span>
+            <a href="mailto:m@latent.to">contact the docs team</a>
           </div>
-					<a href='https://tao.app/'>
+					<a href='https://learnbittensor.org/'>
 					<img src="img/logo-dark-mode.svg" alt="logo"/>
 					</a>
 				`,

@@ -54,8 +54,8 @@ KeyFileError: Keyfile at: /path/to/.bittensor/wallets/some-coldkey/hotkeys/someh
 
 See:
 
-- Miner registration
-- Validator registration
+- [Miner registration](../miners/index.md#miner-registration)
+- [Validator registration](../validators/index.md#validator-registration)
 
 ## Balances.transfer not found
 
@@ -63,7 +63,7 @@ See:
 ValueError: Call function 'Balances.transfer' not found
 ```
 
-**Likely cause and remedy**: You are working with an older version of Bittensor. Update your Bittensor to the latest version. See Install Bittensor.
+**Likely cause and remedy**: You are working with an older version of Bittensor. Update your Bittensor to the latest version. See [Install Bittensor](../getting-started/installation.md).
 
 ## Genesis mismatch
 

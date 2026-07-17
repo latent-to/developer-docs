@@ -44,7 +44,7 @@ If a wallet balance goes below the existential deposit, then this wallet account
 <details>
 <summary><strong>Check current value on-chain</strong></summary>
 
-To verify, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Constants**, select `balances.existentialDeposit`. See Inspecting the Chain.
+To verify, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Constants**, select `balances.existentialDeposit`. See [Inspecting the Chain](../concepts/inspecting-the-chain).
 
 </details>
 
@@ -215,4 +215,4 @@ This is in the form of stake to their hotkey owned by their coldkey, which can t
 
 As a TAO holder, you can stake or delegate to a validator on a subnet by exchanging your TAO for a stake balance in the subnet's alpha $\alpha$ token, which is always tied to a hotkey in the subnet, i.e. that of a validator.
 
-See [Staking/Delegation Overview](../staking-and-delegation/delegation.md) for more on staking.
+See [Staking/Delegation Overview](../staking-and-delegation/delegation) for more on staking.

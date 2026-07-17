@@ -101,8 +101,8 @@ Yes! Most participants will not create their own subnets, there are lots to choo
 
 See:
 
-- Validating in Bittensor
-- Mining in Bittensor.
+- [Validating in Bittensor](../validators/index.md)
+- [Mining in Bittensor](../miners/index.md).
 
 ### Is there a central place where I can see compute requirements for mining and validating for all subnets?
 
@@ -114,7 +114,7 @@ Browse the subnets at [TAO.app](https://tao.app), or on [Discord](https://discor
 
 You can keep trying forever, but your success depends on your performance. Mining and validating in a subnet is competitive. If a miner or validator is one of the three lowest in the subnet, it may be de-registered at the end of the tempo, and have to register again.
 
-See miner deregistration.
+See [miner deregistration](../miners/index.md#miner-deregistration).
 
 ## Who maintains the Bittensor blockchain, software, and documentation?
 

@@ -32,4 +32,4 @@ Most errors from the Bittensor network are returned in the following format:
 
 - [Bittensor CLI](https://docs.learnbittensor.org/btcli/btcli) - Command line interface documentation
 - [Bittensor Python SDK](https://docs.learnbittensor.org/sdk/bt-api-ref) - Python SDK documentation
-- Subtensor Nodes - Information about running Subtensor nodes
+- [Subtensor Nodes](../subtensor-nodes/index.md) - Information about running Subtensor nodes

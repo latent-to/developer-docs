@@ -1,0 +1,258 @@
+---
+title: "Mining in Bittensor"
+---
+
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import { SdkVersion } from "../sdk/\_sdk-version.mdx";
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Mining in Bittensor
+
+## Choosing a subnet
+
+All mining in Bittensor occurs within a subnet. Each subnet independently produces the digital commodities that are its purpose. Each subnet creator defines a different _incentive mechanism_ for validators to use in judging miners' work. Its validators score miners' performances according to the subnet's incentive mechanism. These scores determine the proportion of the subnet's emissions allocated to each miner. See [Emissions](../learn/emissions.md).
+
+Mining in Bittensor differs significantly from mining Bitcoin or other blockchains. It is active, creative, and competitive. Preparing to be a subnet miner involves researching the right subnet(s) for _you_ to mine, given your own expertise and access to hardware.
+
+Browse the subnets and explore links to their code repositories on [TAO.app' subnets listings](https://tao.app).
+
+:::tip Typical compute requirements
+Each subnet may have distinct hardware requirements, but this [subnet minimum requirements template](https://github.com/RaoFoundation/bittensor-subnet-template/blob/main/min_compute.yml#L14) may give an idea of the minimum memory, bandwidth and storage requirements for miners in a typical subnet node.
+
+Mining is not supported on Windows.
+:::
+
+## Miner registration
+
+To participate as a miner, you must first register a hotkey with the subnet in order to receive a UID on that subnet.
+
+:::tip No need to create a subnet to mine
+You **do not** have to create a subnet to mine on the Bittensor network. Most miners work on already established subnets.
+:::
+
+Registration has a cost in TAO that fluctuates dynamically: the price **decays** over time and **increases** each time a registration succeeds. The subnet owner controls the decay rate (`BurnHalfLife`) and the increase factor (`BurnIncreaseMult`), with the floor and ceiling set by the `MinBurn` and `MaxBurn` hyperparameters, respectively. When you secure a UID slot in a subnet on the main chain, this TAO is sunk cost and cannot be recovered.
+
+By default, [`btcli subnets register`](https://docs.learnbittensor.org/btcli/btcli#btcli-subnets-register) runs in **safe mode**: it prompts for a price tolerance and aborts if the burn exceeds it. Pass `--unsafe` to skip the guard.
+
+A subnet can have a maximum of 64 subnet validator UIDs and 192 subnet miner UIDs (256 total) in subnets other than Subnet 1.
+
+Upon registration, your hotkey, which is part of your wallet, becomes the holder of the UID slot.
+
+:::tip Ownership belongs to a hotkey
+When you delegate your TAO to a subnet validator, you attach your delegated TAO to that validator’s hotkey. See [Delegation](../staking-and-delegation/delegation.md).
+
+A hotkey can hold multiple UIDs across **separate** subnets. However, within one subnet, each UID must have a unique hotkey.
+:::
+
+:::tip Check the current registration cost
+Run `btcli subnets show --netuid <netuid>` to see the current **Registration cost (recycled)** before registering. The burn price rises with each registration and decays over time.
+:::
+
+<Tabs groupId="registration">
+<TabItem value="btcli" label="BTCLI">
+
+Run the following command, replacing `<your_preferred_netuid>`, `<my_coldkey>`, `<my_hotkey>` with your values. `<your_preferred_netuid>` is the `netuid` of your preferred subnet.
+
+```bash
+btcli subnet register --netuid <your_preferred_netuid>  --wallet.name  <my_coldkey> --wallet.hotkey <my_hotkey>
+```
+
+For example, to register with subnet 1:
+
+```bash
+btcli subnet register --netuid 1 --wallet.name test-coldkey --wallet.hotkey test-hotkey
+```
+
+</TabItem>
+<TabItem value="sdk" label="Bittensor SDK">
+
+<SdkVersion />
+
+```python
+import bittensor as bt
+
+sub = bt.Subtensor(network="finney")
+wallet = bt.Wallet(name="<my_coldkey>", hotkey="<my_hotkey>")
+wallet.unlock_coldkey()
+
+response = sub.register(wallet=wallet, netuid=<your_preferred_netuid>)
+print(response)
+```
+
+`register` auto-sets a 0.5% price tolerance against the current burn. To set an explicit maximum burn price, use `sub.register_limit(wallet=wallet, netuid=<netuid>, limit_price=<max_price>)` instead.
+
+</TabItem>
+</Tabs>
+
+## Miner deregistration
+
+A miner can be deregistered if it earns low emissions due to receiving low weights (ratings) from validators. Typical subnets have 256 UID slots per subnet, of which a maximum of 64 can be occupied by validators. This leaves 192 UIDs for miners, though if there are fewer than 64 eligible validators on a subnet, miners can occupy available slots.
+
+If all UID slots are occupied, a new registration will cause the lowest ranked slot deregistered from the hotkey that holds it and assigned to a new registrant.
+
+Every subnet has an immunity period, during which newly registered miners cannot be deregistered. See [`immunity_period`](../subnets/subnet-hyperparameters.md#immunityperiod). When the immunity period expires, that miner or validator can be deregistered if it has the lowest performance in the subnet and a new registration arrives.
+
+If a new registration occurs in a subnet with available UID slots, the registered neuron occupies one of the available UID slots.
+
+that UID.
+
+:::info Deregistration is based on emissions
+The subnet does not distinguish between miners and validators for the purpose of deregistration. The chain only looks at emissions (represented as 'pruning score'). Whenever a new registration occurs in the subnet, the neuron with the lowest emissions will get deregistered.
+:::
+
+### Immunity period
+
+Immunity status is calculated dynamically using the formula `is_immune = (current_block - registered_at) < immunity_period`, where:
+
+- `current_block` is the current blockchain block number
+- `registered_at` is the block number when the neuron was registered
+- `immunity_period` is the configured protection period for the subnet (default: 4096 blocks ≈ 13.7 hours)
+
+<details>
+<summary><strong>Check current value on-chain</strong></summary>
+
+Immunity period is per-subnet. To check, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Storage**, query `subtensorModule.immunityPeriod(netuid)`. See [Inspecting the Chain](../concepts/inspecting-the-chain).
+
+</details>
+  
+**Code References:**
+
+- [`subtensor/pallets/subtensor/src/utils/misc.rs:442-448`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/utils/misc.rs#L442-448) - Immunity status calculation
+- [`subtensor/pallets/subtensor/src/subnets/registration.rs:409-485`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/subnets/registration.rs#L409-485) - Pruning algorithm with immunity priority
+
+:::tip Special cases
+
+- In the unlikely event that all neurons are still immune, the one with the lowest "pruning score" will be deregistered by the next incoming registration.
+
+- In cases where two or more nodes have the lowest "pruning score", the older node gets deregistered first.
+
+- The subnet owner's hotkey has permanent immunity from deregistration.
+  :::
+
+### Registration flow diagram
+
+Below is a diagram illustrating a subnet neuron's registration timeline:
+
+<ThemedImage
+alt="Neuron deregistration"
+sources={{
+    light: useBaseUrl('/img/docs/miner-deregistration.svg'),
+    dark: useBaseUrl('/img/docs/dark-miner-deregistration.svg'),
+  }}
+style={{width: 990}}
+/>
+
+- Blocks are processed in subtensor (the Bittensor blockchain) every 12 seconds.
+- A subnet miner registers a hotkey and receives a UID—and its `immunity_period` starts.
+- The miner publishes its Axon’s `IP:PORT` for the subnet validators.
+- The subnet validators refresh their metagraph and discover the new Axon.
+- The subnet validators send requests to that Axon and evaluate its responses. This drives the subnet’s incentive mechanism, awarding emissions to the miner.
+- While still in the `immunity_period`, the subnet miner builds up its emissions from zero.
+- If the miner’s emissions rank among the lowest for nodes outside of their `immunity_period`, their UID gets transferred to the next new registrant.
+
+:::tip Subnet miner emission
+Emissions may not always appear as a smooth curve. Emission might only update at the end of tempo periods, or subnet validators might do more frequent internal updates. For example, a validator might detect new miners and refresh every 100 blocks.
+:::
+
+## Auto Staking
+
+Miners can enable auto staking to automatically stake their mining income to a validator of their choice. This feature streamlines compound staking by eliminating the need for manual staking operations.
+
+See [Auto Staking for Miners](./autostaking.md) for detailed information on setting up and managing auto staking.
+
+## Moving a subnet miner to a different machine
+
+Once your subnet miner has begun mining, you can move it to a different machine, but proceed with caution.
+
+To move a subnet miner from one machine to another, follow these steps in order:
+
+1. Start the subnet miner on the new machine.
+2. Wait for the old miner to stop receiving requests from the subnet validators.
+3. Stop the old miner.
+
+It can take subnet validators some time to recognize the updated IP of the Axon for your subnet miner.
+
+## Inspecting UIDs
+
+After you obtain a UID slot, you can view your wallet’s status by running:
+
+```bash
+btcli wallet overview --netuid
+```
+
+After providing your wallet name when prompted, you will see output such as:
+
+| Parameter   | Example value      | Description                                                                            |
+| :---------- | :----------------- | :------------------------------------------------------------------------------------- |
+| COLDKEY     | my_coldkey         | The name of the coldkey associated with your slot.                                     |
+| HOTKEY      | my_first_hotkey    | The name of the hotkey associated with your slot.                                      |
+| UID         | 5                  | Unique identifier of the neuron.                                                       |
+| ACTIVE      | True               | Whether or not the uid is considered active.                                           |
+| STAKE(τ)    | 71.296             | The amount of stake in this wallet.                                                    |
+| RANK        | 0.0629             | This miner's absolute ranking according to validators on the network.                  |
+| TRUST       | 0.2629             | This miner's trust score as a proportion of validators on the network.                 |
+| CONSENSUS   | 0.89               | The consensus score of the neuron.                                                     |
+| INCENTIVE   | 0.029              | Thencentive score representing the miner's incentive alignment.                        |
+| DIVIDENDS   | 0.001              | The dividends earned by the neuron for validating on the subnet.                       |
+| EMISSION    | 29_340_153         | The emission in RAO (p) received by the neuron.                                        |
+| VTRUST      | 0.96936            | The validator trust score indicating the network's trust in the neuron as a validator. |
+| VPERMIT     | \*                 | Whether this neuron is considered eligible for validating on this subnetwork.          |
+| UPDATED     | 43                 | Blocks since the neuron set weights on the chain.                                      |
+| AXON        | 131.186.56.85:8091 | The entrypoint advertised by this miner on the bittensor blockchain.                   |
+| HOTKEY_SS58 | 5F4tQyWr...        | The ss58-encoded address of the miner's hotkey.                                        |
+
+## Checking miner registration status
+
+<SdkVersion />
+
+Use any of the Python snippets below:
+
+- **Using Python interpreter**: Type "python" or "python3" in your terminal, then paste a snippet.
+- **Using a Python file**: Copy into, e.g., `check_reg.py`, then run `python3 check_reg.py`.
+
+### With SS58 hotkey
+
+```python
+import bittensor as bt
+# Replace below with your SS58 hotkey
+hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
+network = "finney"
+sub = bt.Subtensor(network)
+print(f"Registration status for hotkey {hotkey} is: {sub.is_hotkey_registered(hotkey)}")
+```
+
+### With SS58 hotkey and netuid
+
+```python
+import bittensor as bt
+# Replace below with your SS58 hotkey
+hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
+network = "finney"
+netuid = 1 # subnet uid
+sub = bt.Subtensor(network)
+mg = sub.metagraph(netuid)
+if hotkey not in mg.hotkeys:
+  print(f"Hotkey {hotkey} deregistered")
+else:
+  print(f"Hotkey {hotkey} is registered")
+```
+
+### With UID and SS58 hotkey
+
+```python
+import bittensor as bt
+# Replace below with your SS58 hotkey
+hotkey = "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2"
+network = "finney"
+netuid = 1 # subnet uid
+sub = bt.Subtensor(network)
+mg = sub.metagraph(netuid)
+uid = 2 # Your UID
+registered = mg.hotkeys[uid] == hotkey
+if not registered:
+  print(f"Miner at uid {uid} not registered")
+else:
+  print(f"Miner at uid {uid} registered")
+```

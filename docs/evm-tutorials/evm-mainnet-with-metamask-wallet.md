@@ -53,7 +53,7 @@ If you need to transfer tokens to the account you created in MetaMask, you must 
 ## Step 4. Copy Metamask wallet private key into config
 
 :::danger Stop. Did you install the dependencies?
-Before you proceed, make sure you finished the Install step.
+Before you proceed, make sure you finished the [Install](./install.md) step.
 :::
 
 In this step you will copy the private key from your Metamask wallet account and paste it into the configuration file in the repo. This step will ensure that you are not prompted with password each and every step as you run these tutorials.

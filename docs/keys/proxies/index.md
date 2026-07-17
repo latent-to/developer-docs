@@ -6,7 +6,7 @@ title: "Proxies: Overview"
 
 This page introduces the theory and use of proxy wallets for enhanced security in Bittensor.
 
-Operational details are covered in [Working with Proxies](./working-with-proxies.md)
+Operational details are covered in [Working with Proxies](../../keys/proxies/working-with-proxies)
 
 ## Introduction: What is a proxy?
 
@@ -109,7 +109,7 @@ When setting up and using proxies, it's important to follow practices that reduc
 
 - Always set a non-zero delay for proxies that control financial operations. The delay creates a veto window during which you can reject unauthorized announcements from your hardware wallet.
 
-- If you have a delayed proxy, monitor announcements on a schedule shorter than your delay period. See [Monitor and Reject Announcements](./working-with-proxies.md#monitor-and-reject-announcements).
+- If you have a delayed proxy, monitor announcements on a schedule shorter than your delay period. See [Monitor and Reject Announcements](../../keys/proxies/working-with-proxies#monitor-and-reject-announcements).
 
 - Clear announcements you don't plan to execute.
 
@@ -119,7 +119,7 @@ When setting up and using proxies, it's important to follow practices that reduc
 
 - An `Any` proxy at zero delay is an equal risk to the primary coldkey it should be protecting, so by creating one you actually increase your risk (since either of two keys could leak), rather than reducing it.
 
-- Understand and practice [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security.md).
+- Understand and practice [Coldkey and Hotkey Workstation Security](../../keys/coldkey-hotkey-security).
 
 ### Choosing the Right `ProxyType`
 
@@ -142,6 +142,6 @@ To ensure scalability and prevent abuse, proxy usage is subject to certain limit
 <details>
 <summary><strong>Check current values on-chain</strong></summary>
 
-To verify these limits, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Constants**, select `proxy.maxProxies` and `proxy.maxPending`. See Inspecting the Chain.
+To verify these limits, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Constants**, select `proxy.maxProxies` and `proxy.maxPending`. See [Inspecting the Chain](../../concepts/inspecting-the-chain).
 
 </details>

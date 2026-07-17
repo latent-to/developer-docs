@@ -38,7 +38,7 @@ Related:
 <details>
 <summary><strong>Check current value on-chain</strong></summary>
 
-To verify the current minimum, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Constants**, query `subtensorModule.initialMinStake()`. See Inspecting the Chain.
+To verify the current minimum, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Constants**, query `subtensorModule.initialMinStake()`. See [Inspecting the Chain](../concepts/inspecting-the-chain).
 
 </details>
 

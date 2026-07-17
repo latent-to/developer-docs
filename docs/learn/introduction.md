@@ -37,14 +37,14 @@ sources={{
 
 The following roles define the ways to participate in Bittensor, and which are covered in the documentation on this website:
 
-- **Miners**&mdash;Work to produce digital commodities. See mining in Bittensor.
-- **Validators**&mdash;Evaluate the quality of miners' work. See validating in Bittensor
-- **Subnet creators**&mdash;Manage the incentive mechanisms that specify the work miners and validators must perform and evaluate, respectively. See Create a Subnet
-- **Stakers**&mdash;TAO holders can support specific validators by staking TAO to them. See [Staking and Delegation](../staking-and-delegation/delegation.md).
+- **Miners**&mdash;Work to produce digital commodities. See [mining in Bittensor](../miners/index.md).
+- **Validators**&mdash;Evaluate the quality of miners' work. [See validating in Bittensor](../validators/index.md)
+- **Subnet creators**&mdash;Manage the incentive mechanisms that specify the work miners and validators must perform and evaluate, respectively. See [Create a Subnet](../subnets/create-a-subnet)
+- **Stakers**&mdash;TAO holders can support specific validators by staking TAO to them. See [Staking and Delegation](../staking-and-delegation/delegation).
 
 The documentation also describes the role of **Blockchain operator**. This applies during offline testing only, when the user runs a local instance of Subtensor as its own independent chain, not connected to either the Bittensor main or test network.
 
-See Running a Subnet Locally
+See [Running a Subnet Locally](../local-build/create-subnet.md)
 
 :::tip Browse the subnets
 Browse the subnets and explore links to their code repositories on [TAO.app's subnets listings](https://tao.app).

@@ -9,6 +9,9 @@ import TabItem from '@theme/TabItem';
 
 MEV Shield is a Bittensor security feature that protects transactions from maximal extractable value (MEV) attacks by keeping details hidden until they are on-chain. It (optionally) encrypts any Bittensor transaction until after block inclusion, preventing other users from profiting from any foreknowldge of your transaction details.
 
+See also: [MEV Shield Bittensor Python SDK Guide](/sdk/mev-protection).
+
+
 ## How MEV Shield Works
 
 When you submit a transaction, it first enters the [_mempool_](../../resources/glossary.md#mempool), where it becomes visible to all network participants. This transparency allows for a variety of exploits where one user can profit from other user's predictable actions in a way that is considered parasitic or unfair.

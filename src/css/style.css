@@ -5,26 +5,21 @@
  */
 
 /* You can override the default Infima variables here. */
-/* Palette and typography matched to tao.app:
-   Geist Mono across the whole UI (as tao.app applies it to *), pure
-   monochrome surfaces (white light / #1c1c1c dark) with near-black /
-   near-white accents for links and active states. Geist (sans) is kept
-   available for display headings only. */
+/* Palette and typography matched to learnbittensor.org:
+   Poppins body / Montserrat headings; indigo accent
+   (#6366f1 light, #8c8ffa dark); neutral greys. */
 :root {
-  --ifm-color-primary: #1c1c1c;
-  --ifm-color-primary-dark: #191919;
-  --ifm-color-primary-darker: #171717;
-  --ifm-color-primary-darkest: #000000;
-  --ifm-color-primary-light: #333333;
-  --ifm-color-primary-lighter: #4d4d4d;
-  --ifm-color-primary-lightest: #666666;
-  --ifm-font-family-base: "Geist Mono", ui-monospace, SFMono-Regular, Menlo,
-    Consolas, monospace;
-  --ifm-heading-font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo,
-    Consolas, monospace;
-  --ifm-font-family-monospace: "Geist Mono", ui-monospace, SFMono-Regular,
-    Menlo, Consolas, monospace;
-  --ifm-global-radius: 0.625rem;
+  --ifm-color-primary: #6366f1;
+  --ifm-color-primary-dark: #4f46e5;
+  --ifm-color-primary-darker: #4338ca;
+  --ifm-color-primary-darkest: #3730a3;
+  --ifm-color-primary-light: #818cf8;
+  --ifm-color-primary-lighter: #a5b4fc;
+  --ifm-color-primary-lightest: #c7d2fe;
+  --ifm-font-family-base: "Poppins", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", system-ui, sans-serif;
+  --ifm-heading-font-family: "Montserrat", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", system-ui, sans-serif;
   --ifm-code-font-size: 95%;
   --ifm-h1-font-size: 1.8rem;
   --ifm-h2-font-size: 1.5rem;
@@ -40,29 +35,29 @@
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme="dark"] {
-  --ifm-color-primary: #fafafa;
-  --ifm-color-primary-dark: #e6e6e6;
-  --ifm-color-primary-darker: #d4d4d4;
-  --ifm-color-primary-darkest: #a3a3a3;
-  --ifm-color-primary-light: #ffffff;
-  --ifm-color-primary-lighter: #ffffff;
-  --ifm-color-primary-lightest: #ffffff;
+  --ifm-color-primary: #8c8ffa;
+  --ifm-color-primary-dark: #6366f1;
+  --ifm-color-primary-darker: #4f46e5;
+  --ifm-color-primary-darkest: #4338ca;
+  --ifm-color-primary-light: #a5b4fc;
+  --ifm-color-primary-lighter: #c7d2fe;
+  --ifm-color-primary-lightest: #e0e7ff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-  --ifm-background-surface-color: #232323 !important;
-  --ifm-background-color: #1c1c1c !important;
+  --ifm-background-surface-color: #171717 !important;
+  --ifm-background-color: #121212 !important;
   --ifm-navbar-active-color: white;
   --ifm-navbar-item-color: #d4d4d4;
   --ifm-footer-div-color: black;
-  --ifm-table-of-contents-border: #2b2b2b;
+  --ifm-table-of-contents-border: #262626;
   --ifm-table-of-contents-border-active: rgba(248, 249, 250, 1);
   --ifm-table-of-contents-text: #a3a3a3;
   --ifm-table-of-contents-text-active: white;
   --ifm-breadcrumbs__item--active: rgba(248, 249, 250, 1);
-  --ifm-menu__link--active: #fafafa;
-  --ifm-dropdown-background-color: #232323 !important;
-  --ifm-footer-bg: #232323;
+  --ifm-menu__link--active: #8c8ffa;
+  --ifm-dropdown-background-color: #171717 !important;
+  --ifm-footer-bg: #171717;
   --ifm-footer-company-name-color: white;
-  --ifm-algolia-bg: #232323;
+  --ifm-algolia-bg: #171717;
   --ifm-algolia-border: #404040;
   --ifm-navbar-border: #262626;
   --ifm-alert-secondary: rgba(235, 237, 240, 0.15);
@@ -85,17 +80,17 @@
   --ifm-dock-search-active-a-bg: #262626;
   --ifm-dock-search-active-a-color: white;
   --ifm-dock-search-svg-color: white;
-  --ifm-doc-search-title-bg: #232323;
+  --ifm-doc-search-title-bg: #171717;
 }
 
 [data-theme="light"] {
-  --ifm-color-primary: #1c1c1c;
-  --ifm-color-primary-dark: #191919;
-  --ifm-color-primary-darker: #171717;
-  --ifm-color-primary-darkest: #000000;
-  --ifm-color-primary-light: #333333;
-  --ifm-color-primary-lighter: #4d4d4d;
-  --ifm-color-primary-lightest: #666666;
+  --ifm-color-primary: #6366f1;
+  --ifm-color-primary-dark: #4f46e5;
+  --ifm-color-primary-darker: #4338ca;
+  --ifm-color-primary-darkest: #3730a3;
+  --ifm-color-primary-light: #818cf8;
+  --ifm-color-primary-lighter: #a5b4fc;
+  --ifm-color-primary-lightest: #c7d2fe;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
   --ifm-navbar-active-color: black;
   --ifm-navbar-item-color: #525252;
@@ -105,7 +100,7 @@
   --ifm-table-of-contents-text: #5f6368;
   --ifm-table-of-contents-text-active: #0e1013;
   --ifm-breadcrumbs__item--active: rgba(14, 16, 19, 1);
-  --ifm-menu__link--active: #1c1c1c;
+  --ifm-menu__link--active: #6366f1;
   --ifm-footer-bg: #171717;
   --ifm-footer-company-name-color: white;
   --ifm-algolia-bg: white;
@@ -134,11 +129,85 @@
   --ifm-doc-search-title-bg: white;
 }
 
-/* Geist and Geist Mono are loaded from Google Fonts via the `stylesheets`
-   entry in docusaurus.config.js, matching the tao.app typography. */
+@font-face {
+  font-family: "Poppins";
+  src: url(../../static/fonts/Poppins-Regular.ttf);
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url(../../static/fonts/Poppins-Italic.ttf);
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url(../../static/fonts/Poppins-Medium.ttf);
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url(../../static/fonts/Poppins-SemiBold.ttf);
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url(../../static/fonts/Poppins-Bold.ttf);
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url(../../static/fonts/Montserrat-Regular.ttf);
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url(../../static/fonts/Montserrat-Medium.ttf);
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url(../../static/fonts/Montserrat-SemiBold.ttf);
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url(../../static/fonts/Montserrat-Bold.ttf);
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "FiraCode";
+  src: url(../../static/fonts/FiraCode_VariableFont_wght.ttf);
+}
 
 body {
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-size: 16px;
   font-weight: 400;
   letter-spacing: 0%;
@@ -146,7 +215,7 @@ body {
 }
 
 .h1 {
-  font-family: "Geist Mono", monospace;
+  font-family: "Montserrat", sans-serif;
   font-size: 32px;
   font-weight: 600;
   letter-spacing: calc(-0.01 * 20px);
@@ -154,7 +223,7 @@ body {
 }
 
 .h2 {
-  font-family: "Geist Mono", monospace;
+  font-family: "Montserrat", sans-serif;
   font-size: 24px;
   font-weight: 600;
   letter-spacing: calc(-0.01 * 20px);
@@ -162,7 +231,7 @@ body {
 }
 
 .h3 {
-  font-family: "Geist Mono", monospace;
+  font-family: "Montserrat", sans-serif;
   font-size: 20px;
   font-weight: 400;
   letter-spacing: 0%;
@@ -170,7 +239,7 @@ body {
 }
 
 .h4 {
-  font-family: "Geist Mono", monospace;
+  font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 0%;
@@ -234,7 +303,7 @@ p {
   list-style: none;
   margin: 0 !important;
   padding-left: 0 !important;
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-size: 12px;
   font-weight: 400;
   letter-spacing: calc(0.05 * 12px);
@@ -290,7 +359,7 @@ li.theme-doc-sidebar-item-link-level-3 a {
 
 .table-of-contents,
 .table-of-contents ul {
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
 }
 [class*="tableOfContents"] {
   padding-top: 20px;
@@ -311,7 +380,7 @@ li.theme-doc-sidebar-item-link-level-3 a {
 .navbar__link {
   font-size: 12px;
   font-weight: 500;
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
   color: var(--text-secondary);
   letter-spacing: 0.6px;
 }
@@ -328,7 +397,7 @@ li.theme-doc-sidebar-item-link-level-3 a {
   font-weight: 400;
   font-size: 9px;
   text-transform: uppercase;
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
 }
 
 .parameter-label {
@@ -351,7 +420,7 @@ li.theme-doc-sidebar-item-link-level-3 a {
 }
 
 ul {
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-weight: 400;
   text-transform: none;
 }
@@ -362,7 +431,7 @@ ul {
 
 .sidebar-title {
   font-size: 1rem;
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
   letter-spacing: 0.05em;
   margin: 0.7rem;
@@ -380,7 +449,7 @@ ul {
 
 /* NAVBAR LINKS */
 .navbar__item.navbar__link {
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
   color: var(--text-secondary);
   font-size: 12px !important;
   align-items: center;
@@ -403,7 +472,7 @@ ul {
   font-size: 16px !important;
   line-height: 27.2px !important;
   font-weight: 400 !important;
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
   letter-spacing: 0.32px;
 }
 
@@ -417,7 +486,7 @@ ul {
 .breadcrumbs__item.breadcrumbs__item--active .breadcrumbs__link {
   background: initial !important;
   color: var(--text-primary);
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
 }
 
 /* Footer */
@@ -545,7 +614,7 @@ ul {
   border-radius: 0 !important;
   color: var(--ifm-navbar-item-color);
   font-size: 12px !important;
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
   letter-spacing: 0.6px !important;
 }
 
@@ -612,7 +681,7 @@ ul {
 /* right bar style */
 .table-of-contents__link {
   color: #5f6368;
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-size: 0.75rem;
   line-height: 130%;
   letter-spacing: 0.6px;
@@ -718,7 +787,7 @@ ul {
   margin: 0 !important;
   cursor: pointer;
   color: var(--text-secondary, #5f6368);
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
   font-size: 12px;
   letter-spacing: 0.6px;
   text-transform: uppercase;
@@ -889,7 +958,7 @@ ul {
   font-weight: 400 !important;
   text-transform: uppercase;
   font-size: 0.7rem;
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
   letter-spacing: 0.6;
 }
 
@@ -976,7 +1045,7 @@ ul {
 }
 
 .footer .footer__copyright {
-  font-family: "Geist Mono", monospace !important;
+  font-family: "Poppins", sans-serif !important;
   font-size: 14px !important;
   text-transform: uppercase !important;
   display: flex;
@@ -1035,7 +1104,7 @@ ul {
 .DocSearch-Modal .DocSearch-Hit-source {
   font-size: 14px !important;
   text-transform: uppercase !important;
-  font-family: "Geist Mono", monospace !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .DocSearch-Modal #docsearch-list li {
@@ -1056,7 +1125,7 @@ ul {
   position: relative;
   border-left-width: 3px !important;
   border-radius: 0 !important;
-  font-family: "Geist Mono", monospace !important;
+  font-family: "Poppins", sans-serif !important;
   box-shadow: 0 !important;
 }
 
@@ -1096,14 +1165,14 @@ blockquote {
 }
 
 .language-bash > div span > span.token.plain {
-  font-family: "Geist Mono" !important;
+  font-family: FiraCode !important;
 }
 
 .theme-code-block div:first-child {
   display: flex !important;
   align-items: center;
   gap: 0 10px !important;
-  font-family: "Geist Mono" !important;
+  font-family: FiraCode !important;
 }
 
 .theme-code-block div:first-child svg {
@@ -1111,7 +1180,7 @@ blockquote {
 }
 
 code {
-  font-family: "Geist Mono" !important;
+  font-family: FiraCode !important;
 }
 
 .tabs-container > ul {
@@ -1182,7 +1251,7 @@ table tr th {
   color: var(--ifm-table-header-color) !important;
   font-size: 15px !important;
   /* text-align: center !important; */
-  font-family: "Geist Mono", monospace !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 600 !important;
 }
 
@@ -1218,7 +1287,7 @@ hr {
 ol:not([class]) li {
   font-size: 16px !important;
   font-weight: 400 !important;
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
 }
 
 ul.dashed_ul {
@@ -1265,7 +1334,7 @@ p > a > img[loading="lazy"] {
   width: 100%;
   text-align: right;
   font-size: 12px !important;
-  font-family: "Geist Mono", monospace !important;
+  font-family: "Poppins", sans-serif !important;
   color: #5f6368;
   position: absolute !important;
   top: -15px !important;
@@ -1490,7 +1559,7 @@ footer .container.container-fluid {
 }
 
 .pagination-nav__link--next > .pagination-nav__sublabel {
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
   position: relative;
   padding-right: 12px;
   text-align: right;
@@ -1509,7 +1578,7 @@ footer .container.container-fluid {
 }
 
 .pagination-nav__link--prev > .pagination-nav__sublabel {
-  font-family: "Geist Mono", monospace;
+  font-family: "Poppins", sans-serif;
   position: relative;
   padding-left: 12px;
 }

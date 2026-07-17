@@ -1,0 +1,110 @@
+---
+title: "Understanding Incentive Mechanisms"
+---
+
+# Understanding Incentive Mechanisms
+
+This page explores the concept and usage of incentive mechanisms in Bittensor.
+
+See [Components of the Bittensor platform](../learn/neurons) for an explanation of the basics, such as subnets, miners, validators, and the role of the blockchain.
+
+Each subnet has one or more _incentive mechanisms_, scoring models that drive the behavior of participants and the production of the subnet's digital commodity by defining **how validators are to evaluate miners' work**. Miners are incentivized to optimize for these models so validators will score (or 'weight') their work highly, resulting in higher emissions. Validators are incentivized to accurately score miners' work according to the models because the algorithm penalizes departure from consensus in miner scores with lower emissions.
+
+When a subnet uses multiple incentive mechanisms, each mechanism operates independently with its own bond pool for [Yuma Consensus](./yuma-consensus) calculations, allowing subnet creators to distribute emissions across different types of work or evaluation criteria.
+
+Each validator on a subnet is responsible for periodically computing vectors of weights assigned to each miner for each incentive mechanism, representing aggregate rankings based on the miners' performance in each mechanism. Validators transmit these **weight vectors** to the blockchain.
+
+The Bittensor blockchain waits for the latest rankings/weight vectors from all the validators of a given subnet, then forms **weight matrices** from these rankings (one matrix per incentive mechanism), which are then provided as input to the Yuma Consensus module on-chain. Yuma Consensus (YC) uses these weight matrices, along with the amount of stake associated with each UID on the subnet, to calculate emissions to each participant within each mechanism. These emissions are finalized and debited to participants' hotkeys at the end of each _tempo_.
+
+:::tip note
+The tempo duration is configurable per subnet by the subnet owner (default 360 blocks, range 360–50,400 blocks). The timing of tempos can also differ among subnets depending on when they were created or last had their tempo changed.
+:::
+
+## Multiple Incentive Mechanisms
+
+Subnets can implement multiple incentive mechanisms to evaluate different aspects of miner performance or to support diverse tasks within a single subnet. This allows subnet creators to:
+
+- **Distribute emissions across different tasks**: Allocate specific percentages of subnet emissions to different types of work
+- **Maintain independent evaluation**: Each mechanism operates with separate bond pools, so miner performance in one mechanism doesn't affect their rating in another
+- **Enable specialized competition**: Miners can excel in specific mechanisms that match their capabilities
+- **Provide transparent control**: All emission distributions and mechanism configurations are visible on-chain
+
+For detailed information about implementing and managing multiple incentive mechanisms, see [Multiple Incentive Mechanisms Within Subnets](../subnets/understanding-multiple-mech-subnets).
+
+## Subnet creator responsibilities
+
+In order for a subnet to succeed, the creator must:
+
+- Design an incentive mechanism that guides miners' relentless tendency to optimize their scores (and hence emissions) toward the desired outcomes
+- Facilitate miner and validator participation
+- Prevent miner and validator exploits
+
+### Enable participation
+
+To attract high-performing subnet miners and subnet validators, make sure that you publish sufficient documentation on your subnet.
+
+:::tip Good docs are important!
+Make sure that your subnet documentation helps developers successfully onboard to mining and validating.
+:::
+
+After a subnet validator registers into your subnet, they will run the validator module to begin the validation operation. Similarly, a subnet miner will register and then run the miner module. For example, see the following documents in the text prompting subnet for a quick view of these steps:
+
+- [Running a validator](https://github.com/opentensor/prompting/blob/main/VALIDATORS.md).
+- [Running a miner](https://github.com/opentensor/prompting/blob/main/SOLVERS.md).
+
+### Discourage exploits
+
+A well-designed incentive mechanism fosters a virtuous cycle, where competition drives continuous miner improvement. Conversely, a flawed mechanism encourages shortcuts and exploits that degrade the subnet’s integrity and undermine participation.
+
+Ensure that your incentive mechanism is proofed against gaming or unintended shortcuts through thorough modeling, testing, and community vetting. As a subnet creator, expect to continuously monitor miner performance and update your mechanism to fine-tune it as needed.
+
+### Design incentive mechanism
+
+Research what other subnet creators are doing.
+
+Browse the subnets and explore links to their code repositories on [TAO.app's subnets listings](https://tao.app), and learn about the latest research on subnet design, which is an active area.
+
+## Components of an incentive mechanism
+
+A subnet incentive mechanism must provide the following:
+
+- A protocol for how validators query miners and how miners respond
+- A task definition for the work miners are to perform
+- A scoring mechanism for validators to use in evaluating miners' work
+
+### Miner-validator protocol
+
+A subnet creator must define a protocol for how validators are to query miners, and how miners should respond. Protocols are built using the Axon-Dendrite client-server model and Synapse data objects.
+
+See [Neuron to neuron communication](./neurons.md#neuron-to-neuron-communication).
+
+### Subnet task
+
+The task is one of the key components of any incentive mechanism as it defines what miners will perform as work. Examples of tasks are responding to natural language prompts and storing encrypted files. The task should be designed to capture intended use case for commodity to be produced by the subnet. Generally, the task should realistically mimic an intended user interaction with a subnet.
+
+### Subnet scoring model
+
+Where the task describes **what** miners should do, the scoring model dictates **how** it should be done. Similarly, just as tasks should mimic user interactions, scoring models should mimic user preferences or desired outcomes.
+
+As with any machine learning model, a subnet has an objective function that it is continuously optimizing. The scoring model defines the quality of all miner behavior in the subnet (both intended and unintended).
+
+Operationally, it is the mathematical object that converts miner responses into numerical scores. A scoring model can in fact contain as many different scoring mechanisms as are necessary to align miners with the intended task.
+
+Miners will continuously compete to achieve the highest score possible, since it determines their emissions. If the score is capped at an upper limit, miners may not be motivated to improve further. Hence, care should be taken to enable continuous improvement of the miner, rather than stagnation.
+
+:::tip The zen of incentive mechanisms
+Subnets should be endlessly improving.
+:::
+
+## Additional considerations for incentive mechanism design
+
+- Take miner hardware into account, where it may cause differences in output, or in judging performance.
+- Set tight similarity thresholds if exact reproducibility is challenging. For example, compare embeddings (like [CLIP](https://github.com/OpenAI/CLIP)) or apply perceptual hashing.
+- Take steps to prevent miners from precomputing or caching results:
+  - Use validator-provided random seeds; avoid letting miners control all the randomness in the output.
+  - Introduce small input variations.
+  - Ensure your scoring logic prevents partial outputs from being judged as similar to complete results.
+- Consider carefully how to balance speed, reliability, and quality.
+- Consider incorporating organic queries into the validation process.
+- Expect to frequently release updates that refine your incentive mechanism and address emergent exploits or other points of suboptimality. The best subnets update frequently, accomodating new hardware, new models, and new miner behaviors.
+- Observe other subnets. Many solutions—like adopting multi-model strategies or partial randomization—can be adapted to your own.
