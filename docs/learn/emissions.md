@@ -31,7 +31,7 @@ Subnet owners can also manually trigger an epoch via the `trigger_epoch` extrins
 
 See also:
 
-- [Coinbase Implementation](../navigating-subtensor/emissions-coinbase.md) in the Subtensor codebase
+- Coinbase Implementation in the Subtensor codebase
 - [Yuma Consensus](./yuma-consensus.md)
 - [Dynamic TAO White Paper](https://drive.google.com/file/d/1vkuxOFPJyUyoY6dQzfIWwZm2_XL3AEOx/view)
 
@@ -81,7 +81,7 @@ $$
 
 **Fallback**: if the combined weight is zero across all subnets (e.g. all subnets are withholding all miner emission), `get_shares` falls back to unweighted price shares — $p_i / \sum p_j$ — so block emission is never stranded.
 
-**Implementation**: Share calculation: [`get_shares()`](<https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#:~:text=pub(crate)%20fn%20get_shares>) → `get_shares_price_ema()` in `subnet_emission.rs`
+**Implementation**: Share calculation: `get_shares()`%20fn%20get_shares>) → `get_shares_price_ema()` in `subnet_emission.rs`
 
 </details>
 
@@ -183,7 +183,7 @@ At the end of each tempo (default ~360 blocks; owner-configurable), the quantity
             Validators who hold both root TAO and subnet alphas will receive both types of token.
             </details>
 
-    See [Core Dynamic TAO Concepts: Validator stake weight](../subnets/understanding-subnets#validator-stake-weight)
+    See Core Dynamic TAO Concepts: Validator stake weight
 
 ## Note on evolution of Bittensor token economy
 

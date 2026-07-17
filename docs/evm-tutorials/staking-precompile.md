@@ -21,7 +21,7 @@ In this tutorial you will learn how to interact with staking precompile in two w
 
 ## Setup EVM localnet, subnet and delegate
 
-1. [Launch EVM localnet](./evm-localnet-with-metamask-wallet.md). Also, follow the instructions of running local chain all the way so that you have a Metamask address with some TAO balance.
+1. Launch EVM localnet. Also, follow the instructions of running local chain all the way so that you have a Metamask address with some TAO balance.
 
 2. On this EVM localnet create one subnet and a delegate hotkey. The commands below will create a subnet, register a neuron and nominate your hotkey as a delegate, in that order:
 

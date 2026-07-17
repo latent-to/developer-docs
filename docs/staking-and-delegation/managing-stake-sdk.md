@@ -15,7 +15,7 @@ TAO holders can **stake** any amount of the liquidity they hold to a validator. 
 
 Subsequently, TAO holders **unstake** from a subnet by converting subnet-specific alpha tokens back to TAO through the subnet's automated market maker (AMM).
 
-See also: [Staking/delegation overview](./delegation)
+See also: [Staking/delegation overview](./delegation.md)
 
 ## Best practices for staking securely
 
@@ -83,15 +83,15 @@ response = await subtensor.add_stake_extrinsic(
 
 MEV shield and price protection are complementary — use both for maximum safety. Price protection caps your worst-case price; MEV shield prevents adversaries from manipulating that price in the first place.
 
-See: [MEV Shield](../concepts/mev-shield/), [Using MEV Shield with the SDK](../sdk/mev-protection)
+See: [MEV Shield](../concepts/mev-shield/), Using MEV Shield with the SDK
 
 ## Prerequisites
 
 ### For testing/practice
 
-- [Install btcli](../getting-started/install-btcli) and/or the [Bittensor Python SDK](../getting-started/installation)
+- Install btcli and/or the Bittensor Python SDK
 - [Create a wallet](../keys/working-with-keys#creating-a-wallet-with-btcli)
-- Get some test TAO: ask in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553), or [run a local blockchain](../local-build/deploy.md)
+- Get some test TAO: ask in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553), or run a local blockchain
 
 ### For mainnet
 
@@ -316,7 +316,7 @@ asyncio.run(main())
 
 During the delay window, query the chain for pending announcements and verify the only pending hash is the one you announced. This script checks all delayed proxy delegates for your real account, cross-references against `announced_stake.json` from Step 1, and gives a clear verdict.
 
-btcli cannot query on-chain announcements, so use the SDK or [Polkadot.js](../concepts/inspecting-the-chain).
+btcli cannot query on-chain announcements, so use the SDK or Polkadot.js.
 
 :::warning Run this more than once
 An attacker could announce after your first check. Run this at least twice: once shortly after announcing, and again immediately before executing Step 3.

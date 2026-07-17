@@ -1,170 +1,44 @@
 ---
-title: "Home"
+title: "TAO.app Staking Guides"
 slug: "/"
-hidden: false
 sidebar_position: 0
-hide_table_of_contents: false
+hide_table_of_contents: true
 ---
 
-import ThemedImage from '@theme/ThemedImage';
-import useBaseUrl from '@docusaurus/useBaseUrl';
-
-import { HiAcademicCap } from "react-icons/hi2";
-import { MdInstallDesktop } from "react-icons/md";
-import { FaNetworkWired } from "react-icons/fa";
-import { GiMining } from "react-icons/gi";
-import { GrValidate } from "react-icons/gr";
+import { RiTeamLine } from "react-icons/ri";
 import { MdOutlineChecklistRtl } from "react-icons/md";
 import { GiArchiveRegister } from "react-icons/gi";
-import { BiMath } from "react-icons/bi";
-import { RiTeamLine } from "react-icons/ri";
-import { RiGovernmentLine } from "react-icons/ri";
-import { GiStarFormation } from "react-icons/gi";
-import { HiOutlineAcademicCap } from "react-icons/hi2";
-import { VscSymbolParameter } from "react-icons/vsc";
-import { GoCommandPalette } from "react-icons/go";
-import { FaPython } from "react-icons/fa";
-import { FaRegNewspaper } from "react-icons/fa";
-import { SiFuturelearn } from "react-icons/si";
-import { GoNumber } from "react-icons/go";
-import { VscFileMedia } from "react-icons/vsc";
+import { GrStakeholder } from "react-icons/gr";
 
-# Developer Guides
+# TAO.app Staking Guides
 
-Bittensor is an open source platform where participants produce best-in-class digital commodities, including compute power, storage space, artificial intelligence (AI) inference and training, protein folding, financial markets prediction, and many more.
+Bittensor is an open source network where participants produce best-in-class digital commodities&mdash;including AI inference and training, compute, storage, and financial-markets prediction&mdash;organized into independent **subnets**. The network constantly emits liquidity, in the form of its token, TAO ($\tau$), to participants in proportion to the value of their contributions.
 
-Bittensor is composed of distinct **subnets**. Each subnet is an independent community of miners (who produce the commodity), and validators (who evaluate the miners' work).
-
-The Bittensor network constantly emits liquidity, in the form of its token, TAO ($\tau$), to participants in proportion to the value of their contributions. Participants include:
-
-- **Miners**&mdash;Work to produce digital commodities. See [mining in Bittensor](./miners/index.md).
-- **Validators**&mdash;Evaluate the quality of miners' work. [See validating in Bittensor](./validators/index.md)
-- **Subnet Creators**&mdash;Manage the incentive mechanisms that specify the work miners and validators must perform and evaluate, respectively. See [Create a Subnet](./subnets/create-a-subnet)
-- **Stakers**&mdash;TAO holders can support specific validators by staking TAO to them. See [Staking](./staking-and-delegation/delegation).
+TAO holders take part by **staking**: committing TAO to a validator to earn a share of that validator's emissions, and to help direct the network's rewards. These guides cover everything you need to stake, delegate, manage your positions, and move value safely&mdash;from your first delegation to root claims, price protection, hardware wallets, and staking through the Bittensor EVM.
 
 :::tip Browse the subnets
-Browse the subnets and explore links to their code repositories on [TAO.app](https://www.tao.app)'s subnets listings.
+Explore project information and tokenomic data on the [Subnet Listings](https://tao.app).
 :::
-
-<ResponsiveCards>
-    <ResponsiveCard 
-    icon={GiStarFormation}
-    title='Bittensor frequently asked questions (FAQ)'
-    link='resources/questions-and-answers'
-    body='Everything you were afraid to ask about Bittensor.' />
-    <ResponsiveCard
-    icon={GoNumber}
-    title='Subnet Listings on TAO.app'
-    link='https://tao.app'
-    body='Discover the subnets that power Bittensor and browse real-time tokenomic data and analytics.'/>  
-    <ResponsiveCard 
-    icon={MdInstallDesktop}
-    title='Run a Local Bittensor Blockchain'
-    link='local-build/deploy'
-    body='Set up a local Subtensor instance for testing and development.' />
-    <ResponsiveCard 
-    icon={HiAcademicCap}
-    title='Introduction to Bittensor'
-    link='learn/introduction'
-    body='Learn fundamental Bittensor concepts' />
-    <ResponsiveCard
-    icon={MdInstallDesktop}
-    title='Guide to Bittensor tools'
-    link='concepts/tools'
-    body='Opentensor Foundation maintains open source tools for the Bittensor ecosystem, including the Python SDK and `btcli`.' />      
-    <CardSmall
-    icon={VscFileMedia}
-    title='Bittensor media assets'
-    link='resources/media-assets'
-    body='Media assets' />
-</ResponsiveCards>
-
-## Participate
-
-You can participate in an existing subnet as either a subnet validator or a subnet miner, or by staking your TAO to running validators.
 
 <ResponsiveCards>
     <ResponsiveCard
     icon={RiTeamLine}
     title='Staking and Delegation'
-    link='./staking-and-delegation/delegation'
-    body='Get to know how staking and delegating in the Bittensor network.' />
+    link='staking-and-delegation/delegation'
+    body='Get to know how staking and delegating work in the Bittensor network.' />
     <ResponsiveCard 
     icon={MdOutlineChecklistRtl}
-    title='Mining in Bittensor'
-    link='./miners'
-    body='Get ready to mine on Bittensor subnets' />
+    title='Managing your stakes'
+    link='staking-and-delegation/managing-stake-sdk'
+    body='Add, move, and remove stake with btcli and the Bittensor SDK.' />
     <ResponsiveCard
     icon={GiArchiveRegister}
-    title='Validating in Bittensor'
-    link='./validators'
-    body='Get ready to validate on Bittensor subnets' />
+    title='Root claims'
+    link='staking-and-delegation/root-claims'
+    body='Understand and manage root claims on your stake.' />
     <ResponsiveCard
-    icon={BiMath}
-    title='Emissions'
-    link='learn/emissions'
-    body='Learn how emissions are calculated.' />
-    <ResponsiveCard
-    icon={RiGovernmentLine}
-    title='Governance'
-    link='governance'
-    body='Learn how the Bittensor governance works as it transitions into full community-ownership over time.' />
-    
+    icon={GrStakeholder}
+    title='Staking on the Bittensor EVM'
+    link='evm-tutorials/staking-precompile'
+    body='Stake and unstake TAO directly from EVM smart contracts.' />
 </ResponsiveCards>
-
----
-
-## Running a subnet
-
-Ready to run your own subnet? Follow the below links.
-
-<ResponsiveCards>
-    <ResponsiveCard 
-    icon={HiAcademicCap}
-    title='Basic subnet tutorials'
-    link='tutorials/basic-subnet-tutorials'
-    body='Learn how to run a simple subnet locally or on testchain or mainchain.' />
-    <ResponsiveCard
-    icon={GiStarFormation}
-    title='Create a subnet'
-    link='subnets/create-a-subnet'
-    body='Step-by-step instructions for creating a local subnet or a subnet on testchain or mainchain.' />
-    <ResponsiveCard
-    icon={HiOutlineAcademicCap}
-    title='OCR subnet tutorial'
-    link='tutorials/ocr-subnet-tutorial'
-    body='Shows how to convert your Python notebook containing validated code for an incentive mechanism into a working subnet.' />
-    <ResponsiveCard
-    icon={VscSymbolParameter}
-    title='Subnet hyperparameters'
-    link='subnets/subnet-hyperparameters'
-    body='Get to know subnet hyperparameters and how to use them effectively. As a subnet creator, your success depends on this knowledge.' />
-</ResponsiveCards>
-
----
-
-## Bittensor CLI, SDK, Wallet SDK
-
-Use the Bittensor CLI and SDK and Wallet SDK to develop and participate in the Bittensor network.
-
-:::caution looking for legacy bittensor 7.4.0 docs?
-See [Legacy Bittensor 7.4.0 Documentation](https://docs.learnbittensor.org/legacy-python-api/html/index.html).
-:::
-
-<Cards>
-    <CardSmall
-    icon={GoCommandPalette}
-    title=''
-    link='https://docs.learnbittensor.org/btcli/btcli'
-    body='Bittensor CLI' />
-    <CardSmall
-    icon={FaPython}
-    title=''
-    link='https://docs.learnbittensor.org/sdk/bt-api-ref'
-    body='Bittensor SDK' />
-    <CardSmall
-    icon={FaPython}
-    title=''
-    link='keys/btwallet'
-    body='Bittensor Wallet' />
-</Cards>

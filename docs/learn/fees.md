@@ -186,7 +186,7 @@ Reading the state of the chain is always free. Additionally, the following extri
 
 The utility pallet's `batch`, `batch_all`, and `force_batch` extrinsics aggregate the fees of their inner calls. The weight of the outer extrinsic is the sum of the inner call weights plus a small per-call overhead for the batch wrapper itself.
 
-See: [Batch Transactions](./batch-transactions)
+See: Batch Transactions
 
 <details>
 <summary><strong>See how batch transaction fees are calculated</strong></summary>
@@ -490,8 +490,8 @@ Two methods in the SDK can be used to get fees for a transaction:
 - `subtensor.get_payment_info(call, keypair)` returns a dict including `partial_fee` (the total transaction fee in rao). This method is used by BTCLI under the hood to fetch “Extrinsic Fee”.
 - `subtensor.get_extrinsic_fee(call, keypair)` calls `get_payment_info()` but returns only the `Balance` amount for the fee.
 
-You must **compose the call** (e.g. the exact `add_stake`, `move_stake`, or other extrinsic and params) before calling these; they simulate the fee for that call and keypair. See [Working with Blockchain Calls
-](../sdk/call)
+You must **compose the call** (e.g. the exact `add_stake`, `move_stake`, or other extrinsic and params) before calling these; they simulate the fee for that call and keypair. See Working with Blockchain Calls
+
 
 ```python
 import bittensor as bt

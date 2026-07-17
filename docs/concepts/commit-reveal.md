@@ -16,7 +16,7 @@ In each Bittensor subnet, each validator scores&mdash;or _'weights'_&mdash;each 
 
 The weight matrix is public information, and must be, so that emissions in the Bittensor platform can be transparently fair. However, this transparency makes it possible for subnet validators to free-ride on the work of other validators by copying the latest consensus rather than independently evaluating subnet miners. This is unfair and potentially degrades the quality of validation work, undermining Bittensor's ability to incentivize the best miners and produce the best digital commodities overall. This is known as the **weight copying problem**.
 
-See [The Weight Copying Problem](./weight-copying-in-bittensor.md).
+See The Weight Copying Problem.
 
 
 The Commit Reveal feature is designed to solve the **weight copying problem** by hiding weights until they are stale. Copying stale weights should result in validators departing from consensus.
@@ -94,7 +94,7 @@ As a subnet owner, you must enable and configure the Commit Reveal feature using
    - Default: `1` (weights revealed after 1 tempo)
    - Example: If set to `3`, weights committed in tempo 10 will be revealed at the start of tempo 13
 
-See [Setting subnet hyperparameters](../subnets/subnet-hyperparameters.md#set-hyperparameters) for how to update these values.
+See Setting subnet hyperparameters for how to update these values.
 
 #### Commit Reveal and the neuron immunity period
 

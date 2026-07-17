@@ -13,4 +13,4 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 | **Chain ID** | 964                                                                 | 945                              | _see below_           |
 | **Test TAO** | None                                                                | Available on request             | Use Alice account     |
 
-See section [EVM Localnet with Metamask Wallet](./evm-localnet-with-metamask-wallet.md) for setting up a Local net.
+See section EVM Localnet with Metamask Wallet for setting up a Local net.

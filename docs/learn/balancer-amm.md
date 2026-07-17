@@ -4,7 +4,7 @@ title: "Balancer Weighted Pools for Subnet AMMs"
 
 # Balancer Weighted Pools for Subnet AMMs
 
-Each Bittensor subnet maintains an automated market maker (AMM) with [reserve pools](../subnets/understanding-subnets#liquidity-pools) of TAO and the subnet's alpha token.
+Each Bittensor subnet maintains an automated market maker (AMM) with reserve pools of TAO and the subnet's alpha token.
 
 A constant product AMM can be seen as similar to a scale that sets the price of a swap by weighing the two pools against each other. When the TAO and alpha pools are balanced, the price is even. Staking in, adding TAO and taking alpha from the respective pools, tilts the scale toward TAO (the pool is now heavier). The angle of the scale determines the price: the more people stake TAO and take alpha, the price of alpha (alpha's position in vertical space) goes up.
 

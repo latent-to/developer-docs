@@ -37,10 +37,10 @@ Bittensor EVM smart contracts are executed solely on the **Bittensor blockchain,
 
 See:
 
-- [Examples and Precompiles](./examples.md)
-- [EVM on Testnet](./evm-testnet-with-metamask-wallet.md)
-- [EVM on Local Chain](./evm-localnet-with-metamask-wallet.md)
+- [Subtensor networks](./subtensor-networks.md)
 - [EVM on Mainnet](./evm-mainnet-with-metamask-wallet.md)
+- [Stake with a smart contract](./staking-precompile.md)
+- [Bridge vTAO](./bridge-vtao.md)
 - [Opentensor Foundation Blogpost: EVM on Bittensor](https://blog.bittensor.com/evm-on-bittensor-draft-6f323e69aff7)
 
 ## EVM and Subtensor wallets on the Bittensor blockchian
@@ -91,58 +91,43 @@ style={{width: 400}}
 
 <ResponsiveCards>    
     <ResponsiveCard 
-    icon={GiHiveMind}
-    title='Install Dependencies'
-    link='/evm-tutorials/install'
-    body='Get started by installing dependencies first.' />    
-    <ResponsiveCard
     icon={BiSolidNetworkChart}
-    title='EVM Testnet with Metamask'
-    link='/evm-tutorials/evm-testnet-with-metamask-wallet'
-    body='Learn how to set up your Metamask wallet with EVM testnet.' />
-    <ResponsiveCard
-    icon={SiTrpc}
-    title='EVM Localnet with Metamask'
-    link='/evm-tutorials/evm-localnet-with-metamask-wallet'
-    body='Set up your Metamask wallet for a localnet with EVM feature.' />
+    title='Subtensor networks'
+    link='/evm-tutorials/subtensor-networks'
+    body='RPC endpoints and chain IDs for the Bittensor EVM.' />
     <ResponsiveCard
     icon={GiHiveMind}
     title='EVM Mainnet with Metamask'
     link='/evm-tutorials/evm-mainnet-with-metamask-wallet'
-    body='Learn how to set up your Metamask wallet with EVM mainnet.' />
-    <ResponsiveCard
-    icon={FaNetworkWired}
-    title='Configure Hardhat for subtensor EVM'
-    link='/evm-tutorials/hardhat-config-for-subtensor-evm'
-    body='Using Hardhat? Configure it to work with subtensor EVM.' />
-    <ResponsiveCard
-    icon={FaNetworkWired}
-    title='Configure Remix IDE for subtensor EVM'
-    link='/evm-tutorials/remix-config-for-subtensor-evm'
-    body='Remix IDE configuration to use with subtensor EVM.' />    
-    <ResponsiveCard
-    icon={GiCardExchange}
-    title='TAO transfer from Metamask to SS58'
-    link='/evm-tutorials/transfer-from-metamask-to-ss58'
-    body='Learn how to transfer TAO from Metamask to SS58.' />
-    <ResponsiveCard
-    icon={FaMoneyBillTransfer}
-    title='Transfer TAO between two H160 addresses'
-    link='/evm-tutorials/transfer-between-two-h160-accounts'
-    body='Learn how to transfer TAO between two Ethereum H160 addresses.' />
+    body='Set up your Metamask wallet with the EVM mainnet.' />
     <ResponsiveCard
     icon={GrStakeholder}
     title='Stake with a smart contract'
     link='/evm-tutorials/staking-precompile'
-    body='Stake to a hotkey using precompiled smart contract.' />
+    body='Stake to a hotkey using the staking precompile.' />
+    <ResponsiveCard
+    icon={FaNetworkWired}
+    title='Bridge vTAO'
+    link='/evm-tutorials/bridge-vtao'
+    body='Bridge TAO to vTAO and back across the Bittensor EVM.' />
+    <ResponsiveCard
+    icon={GiCardExchange}
+    title='vTAO bridge tutorial'
+    link='/evm-tutorials/vtao-bridge-tutorial'
+    body='Step-by-step walkthrough of bridging vTAO.' />
+    <ResponsiveCard
+    icon={FaMoneyBillTransfer}
+    title='vTAO liquidity on Aerodrome'
+    link='/evm-tutorials/vtao-liquidity-on-aerodrome'
+    body='Provide vTAO liquidity on Aerodrome.' />
+    <ResponsiveCard
+    icon={GiCardExchange}
+    title='TAO transfer from Metamask to SS58'
+    link='/evm-tutorials/transfer-from-metamask-to-ss58'
+    body='Transfer TAO from Metamask to an SS58 address.' />
     <ResponsiveCard
     icon={GoKey}
-    title='Verify ed25519 with a precompile'
-    link='/evm-tutorials/ed25519-verify-precompile'
-    body='Verify an ed25519 signature on subtensor EVM.' />
-    <ResponsiveCard
-    icon={GiHiveMind}
-    title='Troubleshooting'
-    link='/evm-tutorials/troubleshooting'
-    body='How to troubleshoot the most common issues.' />
+    title='Convert h160 to SS58'
+    link='/evm-tutorials/convert-h160-to-ss58'
+    body='Convert between h160 and ss58 address formats.' />
 </ResponsiveCards>

@@ -44,7 +44,7 @@ Currently, the waiting/locked period is **36,000 blocks** (~ **5 days**).
 <details>
 <summary><strong>Check current value on-chain</strong></summary>
 
-To verify the current swap duration, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Storage**, query `subtensorModule.coldkeySwapAnnouncementDelay()`. See [Inspecting the Chain](../concepts/inspecting-the-chain).
+To verify the current swap duration, open the [Polkadot.js app](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/chainstate) connected to Finney. Under **Developer → Chain state → Storage**, query `subtensorModule.coldkeySwapAnnouncementDelay()`. See Inspecting the Chain.
 
 </details>
 

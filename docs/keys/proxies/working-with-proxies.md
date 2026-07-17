@@ -66,7 +66,7 @@ See: [Coldkey and Hotkey Workstation Security](../coldkey-hotkey-security).
 
 To follow along with the below examples for practice, you have two options:
 
-- [Run a Local Bittensor Blockchain Instance](../../local-build/deploy).
+- Run a Local Bittensor Blockchain Instance.
 - Follow along on test network, if you have some test TAO.
 
 #### Main Network
@@ -1120,7 +1120,7 @@ A `NonTransfer` proxy can reject announcements on behalf of the real account, so
 
 ### Reject all pending announcements
 
-If you need to clear all pending announcements from a delegate at once, for example, if you suspect your proxy key is compromised, use this script to fetch and reject every pending announcement as a single atomic [batch transaction](../../learn/batch-transactions).
+If you need to clear all pending announcements from a delegate at once, for example, if you suspect your proxy key is compromised, use this script to fetch and reject every pending announcement as a single atomic batch transaction.
 
 ```python
 import asyncio

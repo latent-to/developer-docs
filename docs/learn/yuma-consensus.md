@@ -14,10 +14,10 @@ The algorithm is designed to more heavily weight the inputs of more trusted vali
 
 See:
 
-- [How Yuma Consensus 3 Makes Bittensor More Fair](./yc3-blog)
-- [Yuma Consensus 3 Migration Guide](./yuma3-migration-guide.md)
+- How Yuma Consensus 3 Makes Bittensor More Fair
+- Yuma Consensus 3 Migration Guide
 - [Emissions](./emissions)
-- [Epoch Implementation](../navigating-subtensor/epoch.md) - Implementation details
+- Epoch Implementation - Implementation details
 - [Subtensor Docs: Yuma Consensus](https://github.com/RaoFoundation/subtensor/blob/main/docs/consensus.md)
 
 ## Clipping
@@ -111,7 +111,7 @@ B_{ij}^{(t)} = \alpha \,\Delta B_{ij} + (1-\alpha)\,B_{ij}^{(t-1)}
 $$
 
 :::tip note
-The $\alpha$ variable here is unrelated to the concept of subnet specific currencies, referred to as alpha $\alpha$ tokens. Here $\alpha$ refers to a factor used in this EMA smoothing function&mdash;see [consensus-based weights, a.k.a. liquid alpha](../concepts/consensus-based-weights.md).
+The $\alpha$ variable here is unrelated to the concept of subnet specific currencies, referred to as alpha $\alpha$ tokens. Here $\alpha$ refers to a factor used in this EMA smoothing function&mdash;see consensus-based weights, a.k.a. liquid alpha.
 :::
 
 </details>

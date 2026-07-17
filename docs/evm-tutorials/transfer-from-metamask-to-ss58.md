@@ -16,8 +16,8 @@ In this tutorial you will learn how to transfer TAO from your Metamask wallet to
 
 - **Node.js** (v16 or later recommended)
 - **npm** or **yarn**
-- [Clone and install the Bittensor EVM examples repo](./install.md)
-- [Get set up for using EVM wallet on testnet](./evm-testnet-with-metamask-wallet)
+- Clone and install the Bittensor EVM examples repo
+- Get set up for using EVM wallet on testnet
 
 ## Option 1: Transfer using a Precompiled Contract
 
