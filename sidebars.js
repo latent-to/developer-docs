@@ -27,6 +27,37 @@ const sidebars = {
         "learn/fees",
       ],
     },
+    
+    {
+      type: "category",
+      label: "Staking into Subnets",
+      collapsible: true,
+      collapsed: true,
+      items: [
+        "staking-and-delegation/delegation",
+        {
+          type: "doc",
+          id: "staking-and-delegation/managing-stake-sdk",
+          label: "Managing Your Stakes",
+        },
+        "staking-and-delegation/conviction-staking",
+        {
+          type: "category",
+          label: "Root claims",
+          collapsible: true,
+          collapsed: true,
+          items: [
+            "staking-and-delegation/root-claims/index",
+            "staking-and-delegation/root-claims/managing-root-claims",
+          ],
+        },
+        "learn/price-protection",
+        "learn/balancer-amm",
+        "learn/slippage",
+        "staking-and-delegation/staking-polkadot-js",
+        "staking-and-delegation/using-ledger-hw-wallet",
+      ],
+    },
     {
       type: "category",
       label: "Wallets and Keys",
@@ -66,48 +97,7 @@ const sidebars = {
         "keys/coldkey-swap",
       ],
     },
-    {
-      type: "category",
-      label: "Staking/Delegation",
-      collapsible: true,
-      collapsed: true,
-      items: [
-        "staking-and-delegation/delegation",
-        {
-          type: "doc",
-          id: "staking-and-delegation/managing-stake-sdk",
-          label: "Managing Your Stakes",
-        },
-        "staking-and-delegation/conviction-staking",
-        {
-          type: "category",
-          label: "Root claims",
-          collapsible: true,
-          collapsed: true,
-          items: [
-            "staking-and-delegation/root-claims/index",
-            "staking-and-delegation/root-claims/managing-root-claims",
-          ],
-        },
-        "learn/price-protection",
-        "learn/balancer-amm",
-        "learn/slippage",
-        "staking-and-delegation/staking-polkadot-js",
-        "staking-and-delegation/using-ledger-hw-wallet",
-      ],
-    },
-    {
-      type: "category",
-      label: "Tools and Special Features",
-      link: { type: "doc", id: "concepts/tools" },
-      collapsible: true,
-      collapsed: true,
-      items: [
-        "concepts/mev-shield/index",
-        "concepts/commit-reveal",
-        "concepts/stake-burn",
-      ],
-    },
+    
     {
       type: "category",
       label: "Bittensor EVM: Staking and vTAO",
