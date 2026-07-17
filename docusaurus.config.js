@@ -23,7 +23,8 @@ const config = {
   url: "https://tao.app",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: "/guides/",
+  // Local/preview value. Set back to "/guides/" before deploying to tao.app/guides.
+  baseUrl: "/",
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "latent-to", // Usually your GitHub org/user name.
