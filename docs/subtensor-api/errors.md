@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **424**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **432**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -392,6 +392,11 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.errors.crowdloan.AlreadyFinalized`
 - **summary**: The crowdloan has already been finalized.
+
+### `AlreadyFinalizing`
+
+- **interface**: `api.errors.crowdloan.AlreadyFinalizing`
+- **summary**: A crowdloan finalization is already in progress.
 
 ### `BlockDurationTooLong`
 
@@ -1244,6 +1249,11 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.EvmKeyAssociateRateLimitExceeded`
 - **summary**: exceeded the rate limit for associating an EVM key.
 
+### `EvmKeyAssociationLimitExceeded`
+
+- **interface**: `api.errors.subtensorModule.EvmKeyAssociationLimitExceeded`
+- **summary**: The EVM address already has the maximum number of associated UIDs on this subnet.
+
 ### `ExpectedBeneficiaryOrigin`
 
 - **interface**: `api.errors.subtensorModule.ExpectedBeneficiaryOrigin`
@@ -1314,10 +1324,10 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.InputLengthsUnequal`
 - **summary**: Attempted to batch reveal weights with mismatched vector input lenghts.
 
-### `InsufficientBalance`
+### `InsufficientAlphaBalance`
 
-- **interface**: `api.errors.subtensorModule.InsufficientBalance`
-- **summary**: The caller does not have enough balance for the operation.
+- **interface**: `api.errors.subtensorModule.InsufficientAlphaBalance`
+- **summary**: The caller does not have enough Alpha stake for the operation.
 
 ### `InsufficientLiquidity`
 
@@ -1328,6 +1338,11 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.InsufficientStakeForLock`
 - **summary**: Insufficient stake on subnet to cover the lock amount.
+
+### `InsufficientTaoBalance`
+
+- **interface**: `api.errors.subtensorModule.InsufficientTaoBalance`
+- **summary**: The caller does not have enough TAO balance for the operation.
 
 ### `InvalidChild`
 
@@ -1454,6 +1469,11 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.LockHotkeyMismatch`
 - **summary**: Lock hotkey mismatch: existing lock is for a different hotkey.
 
+### `LockIdOverFlow`
+
+- **interface**: `api.errors.subtensorModule.LockIdOverFlow`
+- **summary**: The coldkey has already registered too many subnets
+
 ### `MaxWeightExceeded`
 
 - **interface**: `api.errors.subtensorModule.MaxWeightExceeded`
@@ -1468,6 +1488,11 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.NeedWaitingMoreBlocksToStarCall`
 - **summary**: need wait for more blocks to accept the start call extrinsic.
+
+### `NetworkDissolveAlreadyQueued`
+
+- **interface**: `api.errors.subtensorModule.NetworkDissolveAlreadyQueued`
+- **summary**: Network already in dissolved queue
 
 ### `NetworkTxRateLimitExceeded`
 
@@ -1532,7 +1557,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `NotEnoughStake`
 
 - **interface**: `api.errors.subtensorModule.NotEnoughStake`
-- **summary**: DEPRECATED: Stake amount to withdraw is zero. The caller does not have enought stake to perform this action.
+- **summary**: The caller does not have enought stake to perform this action.
 
 ### `NotEnoughStakeToSetChildkeys`
 
@@ -1643,6 +1668,16 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.StakingRateLimitExceeded`
 - **summary**: A transactor exceeded the rate limit for staking.
+
+### `StartCallNotReady`
+
+- **interface**: `api.errors.subtensorModule.StartCallNotReady`
+- **summary**: Need to wait more blocks to do the start call.
+
+### `SubnetBuybackRateLimitExceeded`
+
+- **interface**: `api.errors.subtensorModule.SubnetBuybackRateLimitExceeded`
+- **summary**: Subnet buyback exceeded the operation rate limit
 
 ### `SubnetLimitReached`
 
@@ -1758,6 +1793,11 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.VotingPowerTrackingNotEnabled`
 - **summary**: Voting power tracking is not enabled for this subnet.
+
+### `WaitingForDissolvedSubnetCleanup`
+
+- **interface**: `api.errors.subtensorModule.WaitingForDissolvedSubnetCleanup`
+- **summary**: Waiting for dissolved subnet cleanup.
 
 ### `WeightVecLengthIsLow`
 
