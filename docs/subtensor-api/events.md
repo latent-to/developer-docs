@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **424**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **432**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -817,7 +817,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `BulkBalancesSet(u16, u16)`
 
 - **interface**: `api.events.subtensorModule.BulkBalancesSet`
-- **summary**: FIXME: Not used yet
+- **summary**: bulk balances have been set (placeholder: this event is currently unused).
 
 ### `BulkNeuronsRegistered(u16, u16)`
 
@@ -844,7 +844,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.ChainIdentitySet`
 - **summary**: The identity of a coldkey has been set
 
-### `ChildKeyTakeSet(AccountId, u16)`
+### `ChildKeyTakeSet(AccountId, PerU16)`
 
 - **interface**: `api.events.subtensorModule.ChildKeyTakeSet`
 - **summary**: childkey take set
@@ -924,12 +924,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
     - **netuid**: The network identifier.
     - **who**: The account ID of the user revealing the weights.
 
-### `DefaultTakeSet(u16)`
+### `DefaultTakeSet(PerU16)`
 
 - **interface**: `api.events.subtensorModule.DefaultTakeSet`
 - **summary**: the default take is set.
 
-### `DelegateAdded(AccountId, AccountId, u16)`
+### `DelegateAdded(AccountId, AccountId, PerU16)`
 
 - **interface**: `api.events.subtensorModule.DelegateAdded`
 - **summary**: a hotkey has become a delegate.
@@ -1028,12 +1028,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.MaxBurnSet`
 - **summary**: setting max burn on a network.
 
-### `MaxChildKeyTakeSet(u16)`
+### `MaxChildKeyTakeSet(PerU16)`
 
 - **interface**: `api.events.subtensorModule.MaxChildKeyTakeSet`
 - **summary**: maximum childkey take set
 
-### `MaxDelegateTakeSet(u16)`
+### `MaxDelegateTakeSet(PerU16)`
 
 - **interface**: `api.events.subtensorModule.MaxDelegateTakeSet`
 - **summary**: maximum delegate take is set by sudo/admin transaction
@@ -1056,7 +1056,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `MaxWeightLimitSet(NetUid, u16)`
 
 - **interface**: `api.events.subtensorModule.MaxWeightLimitSet`
-- **summary**: DEPRECATED: max weight limit updates are no longer supported.
+- **summary**: max weight limit has been set for a subnet (deprecated: this event is unused).
 
 ### `MinAllowedUidsSet(NetUid, u16)`
 
@@ -1073,17 +1073,17 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.MinBurnSet`
 - **summary**: setting min burn on a network.
 
-### `MinChildKeyTakePerSubnetSet(NetUid, u16)`
+### `MinChildKeyTakePerSubnetSet(NetUid, PerU16)`
 
 - **interface**: `api.events.subtensorModule.MinChildKeyTakePerSubnetSet`
 - **summary**: subnet-specific minimum childkey take set
 
-### `MinChildKeyTakeSet(u16)`
+### `MinChildKeyTakeSet(PerU16)`
 
 - **interface**: `api.events.subtensorModule.MinChildKeyTakeSet`
 - **summary**: minimum childkey take set
 
-### `MinDelegateTakeSet(u16)`
+### `MinDelegateTakeSet(PerU16)`
 
 - **interface**: `api.events.subtensorModule.MinDelegateTakeSet`
 - **summary**: minimum delegate take is set by sudo/admin transaction
@@ -1102,6 +1102,11 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.NetworkAdded`
 - **summary**: a new network is added.
+
+### `NetworkDissolveCleanupCompleted(NetUid)`
+
+- **interface**: `api.events.subtensorModule.NetworkDissolveCleanupCompleted`
+- **summary**: data for a dissolved network has been cleaned up.
 
 ### `NetworkImmunityPeriodSet(u64)`
 
@@ -1122,6 +1127,11 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.NetworkRateLimitSet`
 - **summary**: the network creation rate limit is set.
+
+### `NetworkRegistrationQueued(AccountId, AccountId, u16, Option<SubnetIdentityOfV3>, TaoBalance, U64F64, u64)`
+
+- **interface**: `api.events.subtensorModule.NetworkRegistrationQueued`
+- **summary**: A network registration cost has been queued.
 
 ### `NetworkRemoved(NetUid)`
 
@@ -1328,12 +1338,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.SymbolUpdated`
 - **summary**: The symbol for a subnet has been updated.
 
-### `TakeDecreased(AccountId, AccountId, u16)`
+### `TakeDecreased(AccountId, AccountId, PerU16)`
 
 - **interface**: `api.events.subtensorModule.TakeDecreased`
 - **summary**: the take for a delegate is decreased.
 
-### `TakeIncreased(AccountId, AccountId, u16)`
+### `TakeIncreased(AccountId, AccountId, PerU16)`
 
 - **interface**: `api.events.subtensorModule.TakeIncreased`
 - **summary**: the take for a delegate is increased.

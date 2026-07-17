@@ -8,7 +8,7 @@ description: "This page includes runtime API calls exposed by the Subtensor runt
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **424**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **432**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[AccountNonceApi](#accountnonceapi)**
@@ -119,7 +119,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 ## `ContractsApi`
 
-### `call(origin: AccountId32, dest: AccountId32, value: u64, gas_limit: Option<Weight>, storage_deposit_limit: Option<u64>, input_data: Vec<u8>)`: `ContractResult`
+### `call(origin: AccountId32, dest: AccountId32, value: TaoBalance, gas_limit: Option<Weight>, storage_deposit_limit: Option<TaoBalance>, input_data: Vec<u8>)`: `ContractResult`
 
 - **interface**: `api.call.contractsApi.call`
 - **summary**: Perform a call from a specified account to a given contract.
@@ -133,14 +133,14 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     Returns `Ok(Some(Vec<u8>))` if the storage value exists under the given key in the specified account and `Ok(None)` if it doesn't. If the account specified by the address doesn't exist, or doesn't have a contract then `Err` is returned.
 
-### `instantiate(origin: AccountId32, value: u64, gas_limit: Option<Weight>, storage_deposit_limit: Option<u64>, code: Code, data: Vec<u8>, salt: Vec<u8>)`: `ContractResult`
+### `instantiate(origin: AccountId32, value: TaoBalance, gas_limit: Option<Weight>, storage_deposit_limit: Option<TaoBalance>, code: Code, data: Vec<u8>, salt: Vec<u8>)`: `ContractResult`
 
 - **interface**: `api.call.contractsApi.instantiate`
 - **summary**: Instantiate a new contract.
 
     See `[crate::Pallet::bare_instantiate]`.
 
-### `uploadCode(origin: AccountId32, code: Vec<u8>, storage_deposit_limit: Option<u64>, determinism: Determinism)`: `Result<CodeUploadReturnValue, DispatchError>`
+### `uploadCode(origin: AccountId32, code: Vec<u8>, storage_deposit_limit: Option<TaoBalance>, determinism: Determinism)`: `Result<CodeUploadReturnValue, DispatchError>`
 
 - **interface**: `api.call.contractsApi.uploadCode`
 - **summary**: Upload new code without instantiating a contract from it.
@@ -179,7 +179,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.call.delegateInfoRuntimeApi.getDelegate`
 
-### `getDelegated(delegatee_account: AccountId32)`: `Vec<(DelegateInfo, (u16, u64))>`
+### `getDelegated(delegatee_account: AccountId32)`: `Vec<(DelegateInfo, (NetUid, AlphaBalance))>`
 
 - **interface**: `api.call.delegateInfoRuntimeApi.getDelegated`
 
@@ -350,19 +350,19 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 ## `NeuronInfoRuntimeApi`
 
-### `getNeuron(netuid: u16, uid: u16)`: `Option<NeuronInfo>`
+### `getNeuron(netuid: NetUid, uid: u16)`: `Option<NeuronInfo>`
 
 - **interface**: `api.call.neuronInfoRuntimeApi.getNeuron`
 
-### `getNeuronLite(netuid: u16, uid: u16)`: `Option<NeuronInfoLite>`
+### `getNeuronLite(netuid: NetUid, uid: u16)`: `Option<NeuronInfoLite>`
 
 - **interface**: `api.call.neuronInfoRuntimeApi.getNeuronLite`
 
-### `getNeurons(netuid: u16)`: `Vec<NeuronInfo>`
+### `getNeurons(netuid: NetUid)`: `Vec<NeuronInfo>`
 
 - **interface**: `api.call.neuronInfoRuntimeApi.getNeurons`
 
-### `getNeuronsLite(netuid: u16)`: `Vec<NeuronInfoLite>`
+### `getNeuronsLite(netuid: NetUid)`: `Vec<NeuronInfoLite>`
 
 - **interface**: `api.call.neuronInfoRuntimeApi.getNeuronsLite`
 
@@ -377,9 +377,9 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 ## `ProxyFilterRuntimeApi`
 
-### `getProxyFilter(proxy_type: Option<u8>)`: `Vec<ProxyFilterInfo>`
+### `getProxyFilters(proxy_types: Option<Vec<u8>>)`: `Vec<ProxyFilterInfo>`
 
-- **interface**: `api.call.proxyFilterRuntimeApi.getProxyFilter`
+- **interface**: `api.call.proxyFilterRuntimeApi.getProxyFilters`
 
 ### `getProxyTypes()`: `Vec<ProxyTypeInfo>`
 
@@ -425,23 +425,23 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 ## `StakeInfoRuntimeApi`
 
-### `getColdkeyLock(coldkey: AccountId32, netuid: u16)`: `Option<LockState>`
+### `getColdkeyLock(coldkey: AccountId32, netuid: NetUid)`: `Option<LockState>`
 
 - **interface**: `api.call.stakeInfoRuntimeApi.getColdkeyLock`
 
-### `getHotkeyConviction(hotkey: AccountId32, netuid: u16)`: `FixedU128`
+### `getHotkeyConviction(hotkey: AccountId32, netuid: NetUid)`: `FixedU128`
 
 - **interface**: `api.call.stakeInfoRuntimeApi.getHotkeyConviction`
 
-### `getMostConvictedHotkeyOnSubnet(netuid: u16)`: `Option<AccountId32>`
+### `getMostConvictedHotkeyOnSubnet(netuid: NetUid)`: `Option<AccountId32>`
 
 - **interface**: `api.call.stakeInfoRuntimeApi.getMostConvictedHotkeyOnSubnet`
 
-### `getStakeAvailabilityForColdkeys(coldkey_accounts: Vec<AccountId32>, netuids: Option<Vec<u16>>)`: `BTreeMap`
+### `getStakeAvailabilityForColdkeys(coldkey_accounts: Vec<AccountId32>, netuids: Option<Vec<NetUid>>)`: `BTreeMap`
 
 - **interface**: `api.call.stakeInfoRuntimeApi.getStakeAvailabilityForColdkeys`
 
-### `getStakeFee(origin: Option<(AccountId32, u16)>, origin_coldkey_account: AccountId32, destination: Option<(AccountId32, u16)>, destination_coldkey_account: AccountId32, amount: u64)`: `u64`
+### `getStakeFee(origin: Option<(AccountId32, NetUid)>, origin_coldkey_account: AccountId32, destination: Option<(AccountId32, NetUid)>, destination_coldkey_account: AccountId32, amount: u64)`: `u64`
 
 - **interface**: `api.call.stakeInfoRuntimeApi.getStakeFee`
 
@@ -453,7 +453,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.call.stakeInfoRuntimeApi.getStakeInfoForColdkeys`
 
-### `getStakeInfoForHotkeyColdkeyNetuid(hotkey_account: AccountId32, coldkey_account: AccountId32, netuid: u16)`: `Option<StakeInfo>`
+### `getStakeInfoForHotkeyColdkeyNetuid(hotkey_account: AccountId32, coldkey_account: AccountId32, netuid: NetUid)`: `Option<StakeInfo>`
 
 - **interface**: `api.call.stakeInfoRuntimeApi.getStakeInfoForHotkeyColdkeyNetuid`
 
@@ -472,55 +472,59 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getAllMetagraphs`
 
-### `getColdkeyAutoStakeHotkey(coldkey: AccountId32, netuid: u16)`: `Option<AccountId32>`
+### `getBlockEmission()`: `TaoBalance`
+
+- **interface**: `api.call.subnetInfoRuntimeApi.getBlockEmission`
+
+### `getColdkeyAutoStakeHotkey(coldkey: AccountId32, netuid: NetUid)`: `Option<AccountId32>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getColdkeyAutoStakeHotkey`
 
-### `getDynamicInfo(netuid: u16)`: `Option<DynamicInfo>`
+### `getDynamicInfo(netuid: NetUid)`: `Option<DynamicInfo>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getDynamicInfo`
 
-### `getMechagraph(netuid: u16, mecid: u8)`: `Option<Metagraph>`
+### `getMechagraph(netuid: NetUid, mecid: MechId)`: `Option<Metagraph>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getMechagraph`
 
-### `getMetagraph(netuid: u16)`: `Option<Metagraph>`
+### `getMetagraph(netuid: NetUid)`: `Option<Metagraph>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getMetagraph`
 
-### `getNextEpochStartBlock(netuid: u16)`: `Option<u64>`
+### `getNextEpochStartBlock(netuid: NetUid)`: `Option<u64>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getNextEpochStartBlock`
 
-### `getSelectiveMechagraph(netuid: u16, subid: u8, metagraph_indexes: Vec<u16>)`: `Option<SelectiveMetagraph>`
+### `getSelectiveMechagraph(netuid: NetUid, subid: MechId, metagraph_indexes: Vec<u16>)`: `Option<SelectiveMetagraph>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSelectiveMechagraph`
 
-### `getSelectiveMetagraph(netuid: u16, metagraph_indexes: Vec<u16>)`: `Option<SelectiveMetagraph>`
+### `getSelectiveMetagraph(netuid: NetUid, metagraph_indexes: Vec<u16>)`: `Option<SelectiveMetagraph>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSelectiveMetagraph`
 
-### `getSubnetAccountId(netuid: u16)`: `Option<AccountId32>`
+### `getSubnetAccountId(netuid: NetUid)`: `Option<AccountId32>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetAccountId`
 
-### `getSubnetHyperparams(netuid: u16)`: `Option<SubnetHyperparams>`
+### `getSubnetHyperparams(netuid: NetUid)`: `Option<SubnetHyperparams>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetHyperparams`
 
-### `getSubnetHyperparamsV2(netuid: u16)`: `Option<SubnetHyperparamsV2>`
+### `getSubnetHyperparamsV2(netuid: NetUid)`: `Option<SubnetHyperparamsV2>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetHyperparamsV2`
 
-### `getSubnetHyperparamsV3(netuid: u16)`: `Option<Vec<HyperparamEntry>>`
+### `getSubnetHyperparamsV3(netuid: NetUid)`: `Option<Vec<HyperparamEntry>>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetHyperparamsV3`
 
-### `getSubnetInfo(netuid: u16)`: `Option<SubnetInfo>`
+### `getSubnetInfo(netuid: NetUid)`: `Option<SubnetInfo>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetInfo`
 
-### `getSubnetInfoV2(netuid: u16)`: `Option<SubnetInfov2>`
+### `getSubnetInfoV2(netuid: NetUid)`: `Option<SubnetInfov2>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetInfoV2`
 
@@ -532,25 +536,25 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetsInfoV2`
 
-### `getSubnetState(netuid: u16)`: `Option<SubnetState>`
+### `getSubnetState(netuid: NetUid)`: `Option<SubnetState>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetState`
 
-### `getSubnetToPrune()`: `Option<u16>`
+### `getSubnetToPrune()`: `Option<NetUid>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetToPrune`
 
 
 ## `SubnetRegistrationRuntimeApi`
 
-### `getNetworkRegistrationCost()`: `u64`
+### `getNetworkRegistrationCost()`: `TaoBalance`
 
 - **interface**: `api.call.subnetRegistrationRuntimeApi.getNetworkRegistrationCost`
 
 
 ## `SwapRuntimeApi`
 
-### `currentAlphaPrice(netuid: u16)`: `u64`
+### `currentAlphaPrice(netuid: NetUid)`: `u64`
 
 - **interface**: `api.call.swapRuntimeApi.currentAlphaPrice`
 
@@ -558,11 +562,11 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.call.swapRuntimeApi.currentAlphaPriceAll`
 
-### `simSwapAlphaForTao(netuid: u16, alpha: u64)`: `SimSwapResult`
+### `simSwapAlphaForTao(netuid: NetUid, alpha: AlphaBalance)`: `SimSwapResult`
 
 - **interface**: `api.call.swapRuntimeApi.simSwapAlphaForTao`
 
-### `simSwapTaoForAlpha(netuid: u16, tao: u64)`: `SimSwapResult`
+### `simSwapTaoForAlpha(netuid: NetUid, tao: TaoBalance)`: `SimSwapResult`
 
 - **interface**: `api.call.swapRuntimeApi.simSwapTaoForAlpha`
 
@@ -589,11 +593,11 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.call.transactionPaymentApi.queryInfo`
 
-### `queryLengthToFee(length: u32)`: `u64`
+### `queryLengthToFee(length: u32)`: `TaoBalance`
 
 - **interface**: `api.call.transactionPaymentApi.queryLengthToFee`
 
-### `queryWeightToFee(weight: Weight)`: `u64`
+### `queryWeightToFee(weight: Weight)`: `TaoBalance`
 
 - **interface**: `api.call.transactionPaymentApi.queryWeightToFee`
 
@@ -610,12 +614,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.call.transactionPaymentCallApi.queryCallInfo`
 - **summary**: Query information of a dispatch class, weight, and fee of a given encoded `Call`.
 
-### `queryLengthToFee(length: u32)`: `u64`
+### `queryLengthToFee(length: u32)`: `TaoBalance`
 
 - **interface**: `api.call.transactionPaymentCallApi.queryLengthToFee`
 - **summary**: Query the output of the current `LengthToFee` given some input.
 
-### `queryWeightToFee(weight: Weight)`: `u64`
+### `queryWeightToFee(weight: Weight)`: `TaoBalance`
 
 - **interface**: `api.call.transactionPaymentCallApi.queryWeightToFee`
 - **summary**: Query the output of the current `WeightToFee` given some input.

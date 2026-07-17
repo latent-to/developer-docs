@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **424**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **432**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -55,6 +55,11 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.adminUtils.sudoSetActivityCutoff`
 - **summary**: The extrinsic sets the activity cutoff for a subnet. It is only callable by the root account or subnet owner. The extrinsic will call the Subtensor pallet to set the activity cutoff.
 
+### `sudoSetActivityCutoffFactor(netuid: NetUid, factor_milli: u32)`
+
+- **interface**: `api.tx.adminUtils.sudoSetActivityCutoffFactor`
+- **summary**: The extrinsic sets the activity-cutoff factor for a subnet, in per-mille (1/1000) of the tempo: the effective cutoff in blocks is `(factor × tempo) / 1000`. Bounded to `[MinActivityCutoffFactorMilli, MaxActivityCutoffFactorMilli]`. It is callable by the subnet owner (rate-limited via `OwnerHyperparamUpdate`, respects the admin freeze window) or the root account (bypasses both). This supersedes the absolute-blocks `sudo_set_activity_cutoff`.
+
 ### `sudoSetAdjustmentAlpha(netuid: NetUid, adjustment_alpha: u64)`
 
 - **interface**: `api.tx.adminUtils.sudoSetAdjustmentAlpha`
@@ -75,16 +80,16 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.adminUtils.sudoSetAlphaSigmoidSteepness`
 - **summary**:     **Arguments:**
 
-    - `origin` — The origin of the call, which must be the root account.
-    - `netuid` — The unique identifier for the subnet.
-    - `steepness` — The Steepness for the alpha sigmoid function. (range is 0-int16::MAX,
+    - `origin`: The origin of the call, which must be the root account.
+    - `netuid`: The unique identifier for the subnet.
+    - `steepness`: The Steepness for the alpha sigmoid function. (range is 0-int16::MAX,
     negative values are reserved for future use)
 
     **Errors:**
 
-    - `BadOrigin` — If the caller is not the root account.
-    - `SubnetDoesNotExist` — If the specified subnet does not exist.
-    - `NegativeSigmoidSteepness` — If the steepness is negative and the caller is
+    - `BadOrigin`: If the caller is not the root account.
+    - `SubnetDoesNotExist`: If the specified subnet does not exist.
+    - `NegativeSigmoidSteepness`: If the steepness is negative and the caller is
     root.
 
     **Weight:**
@@ -111,7 +116,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.adminUtils.sudoSetBondsResetEnabled`
 - **summary**: Enables or disables Bonds Reset for a given subnet.
 
-    **Parameters:**
+    **Arguments:**
 
     - `origin`: The origin of the call, which must be the root account or subnet owner.
     - `netuid`: The unique identifier for the subnet.
@@ -165,20 +170,20 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call, which must be the subnet owner or the root account.
-    - `netuid` — The unique identifier of the subnet for which the periods are being set.
-    - `periods` — The number of epochs that define the commit-reveal period.
+    - `origin`: The origin of the call, which must be the subnet owner or the root account.
+    - `netuid`: The unique identifier of the subnet for which the periods are being set.
+    - `periods`: The number of epochs that define the commit-reveal period.
 
     **Errors:**
 
-    - `BadOrigin` — If the caller is neither the subnet owner nor the root account.
-    - `SubnetDoesNotExist` — If the specified subnet does not exist.
+    - `BadOrigin`: If the caller is neither the subnet owner nor the root account.
+    - `SubnetDoesNotExist`: If the specified subnet does not exist.
 
     **Weight:**
 
     Weight is handled by the `#[pallet::weight]` attribute.
 
-### `sudoSetDefaultTake(default_take: u16)`
+### `sudoSetDefaultTake(default_take: PerU16)`
 
 - **interface**: `api.tx.adminUtils.sudoSetDefaultTake`
 - **summary**: The extrinsic sets the default take for the network. It is only callable by the root account. The extrinsic will call the Subtensor pallet to set the default take.
@@ -197,12 +202,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call, which must be the root account.
-    - `duration` — The new duration for the dissolve network schedule, in number of blocks.
+    - `origin`: The origin of the call, which must be the root account.
+    - `duration`: The new duration for the dissolve network schedule, in number of blocks.
 
     **Errors:**
 
-    - `BadOrigin` — If the caller is not the root account.
+    - `BadOrigin`: If the caller is not the root account.
 
     **Weight:**
 
@@ -213,12 +218,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.adminUtils.sudoSetEmaPriceHalvingPeriod`
 - **summary**:     **Arguments:**
 
-    - `origin` — The origin of the call, which must be the root account.
-    - `ema_alpha_period` — Number of blocks for EMA price to halve
+    - `origin`: The origin of the call, which must be the root account.
+    - `ema_alpha_period`: Number of blocks for EMA price to halve
 
     **Errors:**
 
-    - `BadOrigin` — If the caller is not the root account.
+    - `BadOrigin`: If the caller is not the root account.
 
     **Weight:**
 
@@ -231,12 +236,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call, which must be the subnet owner or the root account.
-    - `chainId` — The u64 chain ID
+    - `origin`: The origin of the call, which must be the subnet owner or the root account.
+    - `chainId`: The u64 chain ID
 
     **Errors:**
 
-    - `BadOrigin` — If the caller is neither the subnet owner nor the root account.
+    - `BadOrigin`: If the caller is neither the subnet owner nor the root account.
 
     **Weight:**
 
@@ -257,7 +262,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.adminUtils.sudoSetLiquidAlphaEnabled`
 - **summary**: Enables or disables Liquid Alpha for a given subnet.
 
-    **Parameters:**
+    **Arguments:**
 
     - `origin`: The origin of the call, which must be the root account or subnet owner.
     - `netuid`: The unique identifier for the subnet.
@@ -332,12 +337,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.adminUtils.sudoSetMinBurn`
 - **summary**: The extrinsic sets the minimum burn for a subnet. It is only callable by root and subnet owner. The extrinsic will call the Subtensor pallet to set the minimum burn.
 
-### `sudoSetMinChildkeyTakePerSubnet(netuid: NetUid, take: u16)`
+### `sudoSetMinChildkeyTakePerSubnet(netuid: NetUid, take: PerU16)`
 
 - **interface**: `api.tx.adminUtils.sudoSetMinChildkeyTakePerSubnet`
 - **summary**: The extrinsic sets the minimum childkey take for a subnet. It is callable by root or the subnet owner. The subnet minimum can only make the global minimum stricter.
 
-### `sudoSetMinDelegateTake(take: u16)`
+### `sudoSetMinDelegateTake(take: PerU16)`
 
 - **interface**: `api.tx.adminUtils.sudoSetMinDelegateTake`
 - **summary**: The extrinsic sets the minimum delegate take. It is only callable by the root account. The extrinsic will call the Subtensor pallet to set the minimum delegate take.
@@ -417,7 +422,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.adminUtils.sudoSetRecycleOrBurn`
 - **summary**: Set the behaviour of the "burn" UID(s) for a given subnet. If set to `Burn`, the miner emission sent to the burn UID(s) will be burned. If set to `Recycle`, the miner emission sent to the burn UID(s) will be recycled.
 
-    **Parameters:**
+    **Arguments:**
 
     - `origin`: The origin of the call, which must be the root account or subnet owner.
     - `netuid`: The unique identifier for the subnet.
@@ -440,7 +445,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     This function allows either the root origin or the current subnet owner to set or update the hotkey for a given subnet. The subnet must already exist. To prevent abuse, the call is rate-limited to once per configured interval (default: one week) per subnet.
 
-    **Parameters:**
+    **Arguments:**
 
     - `origin`: The dispatch origin of the call. Must be either root or the current owner of the subnet.
     - `netuid`: The unique identifier of the subnet whose owner hotkey is being set.
@@ -498,12 +503,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.adminUtils.sudoSetSubnetMovingAlpha`
 - **summary**:     **Arguments:**
 
-    - `origin` — The origin of the call, which must be the root account.
-    - `alpha` — The new moving alpha value for the SubnetMovingAlpha.
+    - `origin`: The origin of the call, which must be the root account.
+    - `alpha`: The new moving alpha value for the SubnetMovingAlpha.
 
     **Errors:**
 
-    - `BadOrigin` — If the caller is not the root account.
+    - `BadOrigin`: If the caller is not the root account.
 
     **Weight:**
 
@@ -514,25 +519,6 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.adminUtils.sudoSetSubnetOwnerCut`
 - **summary**: The extrinsic sets the subnet owner cut for a subnet. It is only callable by the root account. The extrinsic will call the Subtensor pallet to set the subnet owner cut.
 
-### `sudoSetSubnetOwnerHotkey(netuid: NetUid, hotkey: AccountId)`
-
-- **interface**: `api.tx.adminUtils.sudoSetSubnetOwnerHotkey`
-- **summary**: Change the SubnetOwnerHotkey for a given subnet.
-
-    **Arguments:**
-
-    - `origin` — The origin of the call, which must be the subnet owner.
-    - `netuid` — The unique identifier for the subnet.
-    - `hotkey` — The new hotkey for the subnet owner.
-
-    **Errors:**
-
-    - `BadOrigin` — If the caller is not the subnet owner or root account.
-
-    **Weight:**
-
-    Weight is handled by the `#[pallet::weight]` attribute.
-
 ### `sudoSetSubtokenEnabled(netuid: NetUid, subtoken_enabled: bool)`
 
 - **interface**: `api.tx.adminUtils.sudoSetSubtokenEnabled`
@@ -540,13 +526,13 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call, which must be the root account.
-    - `netuid` — The unique identifier of the subnet.
-    - `subtoken_enabled` — A boolean indicating whether subtoken trading should be enabled or disabled.
+    - `origin`: The origin of the call, which must be the root account.
+    - `netuid`: The unique identifier of the subnet.
+    - `subtoken_enabled`: A boolean indicating whether subtoken trading should be enabled or disabled.
 
     **Errors:**
 
-    - `BadOrigin` — If the caller is not the root account.
+    - `BadOrigin`: If the caller is not the root account.
 
     **Weight:**
 
@@ -575,14 +561,14 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `sudoSetTempo(netuid: NetUid, tempo: u16)`
 
 - **interface**: `api.tx.adminUtils.sudoSetTempo`
-- **summary**: The extrinsic sets the tempo for a subnet. It is only callable by the root account. The extrinsic will call the Subtensor pallet to set the tempo.
+- **summary**: The extrinsic sets the tempo for a subnet. It is callable by the subnet owner (bounded to `[MinTempo, MaxTempo]` and rate-limited to one change per `MinTempo` blocks) or the root account (any u16, no rate limit). Both respect the admin freeze window. A successful change resets the epoch cycle (`LastEpochBlock = current_block`).
 
 ### `sudoSetToggleTransfer(netuid: NetUid, toggle: bool)`
 
 - **interface**: `api.tx.adminUtils.sudoSetToggleTransfer`
 - **summary**: Enable or disable atomic alpha transfers for a given subnet.
 
-    **Parameters:**
+    **Arguments:**
 
     - `origin`: The origin of the call, which must be the root account or subnet owner.
     - `netuid`: The unique identifier for the subnet.
@@ -595,7 +581,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `sudoSetTotalIssuance(total_issuance: TaoBalance)`
 
 - **interface**: `api.tx.adminUtils.sudoSetTotalIssuance`
-- **summary**: DEPRECATED
+- **summary**: Deprecated. This extrinsic is no longer supported and always returns `Error::Deprecated`.
 
 ### `sudoSetTxDelegateTakeRateLimit(tx_rate_limit: u64)`
 
@@ -622,7 +608,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.adminUtils.sudoSetYuma3Enabled`
 - **summary**: Enables or disables Yuma3 for a given subnet.
 
-    **Parameters:**
+    **Arguments:**
 
     - `origin`: The origin of the call, which must be the root account or subnet owner.
     - `netuid`: The unique identifier for the subnet.
@@ -639,13 +625,13 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call, which must be the root account.
-    - `precompile_id` — The identifier of the EVM precompile to toggle.
-    - `enabled` — The new enablement state of the precompile.
+    - `origin`: The origin of the call, which must be the root account.
+    - `precompile_id`: The identifier of the EVM precompile to toggle.
+    - `enabled`: The new enablement state of the precompile.
 
     **Errors:**
 
-    - `BadOrigin` — If the caller is not the root account.
+    - `BadOrigin`: If the caller is not the root account.
 
     **Weight:**
 
@@ -1696,25 +1682,31 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.addStake`
 - **summary**: Adds stake to a hotkey. The call is made from a coldkey account. This delegates stake to the hotkey.
 
-    Note: the coldkey account may own the hotkey, in which case they are delegating to themselves.
+    **Note:**
 
-    **Args:**
+    The coldkey account may own the hotkey, in which case they are delegating to themselves.
 
-    - `origin` — (\<T as frame_system::Config>Origin): — The signature of the caller's coldkey.
-    - `hotkey` (T::AccountId) — The associated hotkey account.
-    - `netuid` (u16) — Subnetwork UID
-    - `amount_staked` (u64) — The amount of stake to be added to the hotkey staking account.
+    **Arguments:**
 
-    **Event:**
+    - `origin`: The signature of the caller's coldkey.
 
-    - StakeAdded;
-    On the successfully adding stake to a global account.
+    - `hotkey`: The associated hotkey account.
 
-    **Raises:**
+    - `netuid`: Subnetwork UID.
 
-    - `NotEnoughBalanceToStake` — Not enough balance on the coldkey to add onto the global account.
-    - `NonAssociatedColdKey` — The calling coldkey is not associated with this hotkey.
-    - `BalanceWithdrawalError` — Errors stemming from transaction pallet.
+    - `amount_staked`: The amount of stake to be added to the hotkey staking account.
+
+    **Events:**
+
+    - `StakeAdded`: On the successfully adding stake to a global account.
+
+    **Errors:**
+
+    - `NotEnoughBalanceToStake`: Not enough balance on the coldkey to add onto the global account.
+
+    - `NonAssociatedColdKey`: The calling coldkey is not associated with this hotkey.
+
+    - `BalanceWithdrawalError`: Errors stemming from transaction pallet.
 
 ### `addStakeBurn(hotkey: AccountId, netuid: NetUid, amount: TaoBalance, limit: Option<TaoBalance>)`
 
@@ -1728,26 +1720,32 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     In case if slippage occurs and the price shall move beyond the limit price, the staking order may execute only partially or not execute at all.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>Origin): — The signature of the caller's coldkey.
-    - `hotkey` (T::AccountId) — The associated hotkey account.
-    - `netuid` (u16) — Subnetwork UID
-    - `amount_staked` (u64) — The amount of stake to be added to the hotkey staking account.
-    - `limit_price` (u64) — The limit price expressed in units of RAO per one Alpha.
-    - `allow_partial` (bool) — Allows partial execution of the amount. If set to false, this becomes
-    fill or kill type or order.
+    - `origin`: The signature of the caller's coldkey.
 
-    **Event:**
+    - `hotkey`: The associated hotkey account.
 
-    - StakeAdded;
-    On the successfully adding stake to a global account.
+    - `netuid`: Subnetwork UID.
 
-    **Raises:**
+    - `amount_staked`: The amount of stake to be added to the hotkey staking account.
 
-    - `NotEnoughBalanceToStake` — Not enough balance on the coldkey to add onto the global account.
-    - `NonAssociatedColdKey` — The calling coldkey is not associated with this hotkey.
-    - `BalanceWithdrawalError` — Errors stemming from transaction pallet.
+    - `limit_price`: The limit price expressed in units of RAO per one Alpha.
+
+    - `allow_partial`: Allows partial execution of the amount. If set to false, this becomes
+    fill or kill type of order.
+
+    **Events:**
+
+    - `StakeAdded`: On the successfully adding stake to a global account.
+
+    **Errors:**
+
+    - `NotEnoughBalanceToStake`: Not enough balance on the coldkey to add onto the global account.
+
+    - `NonAssociatedColdKey`: The calling coldkey is not associated with this hotkey.
+
+    - `BalanceWithdrawalError`: Errors stemming from transaction pallet.
 
 ### `announceColdkeySwap(new_coldkey_hash: H256)`
 
@@ -1775,19 +1773,23 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the transaction, which must be signed by the `hotkey`.
-    - `netuid` — The netuid that the `hotkey` belongs to.
-    - `evm_key` — The EVM key to associate with the `hotkey`.
-    - `block_number` — The block number used in the `signature`.
-    - `signature` — A signed message by the `evm_key` containing the `hotkey` and the hashed `block_number`.
+    - `origin`: The origin of the transaction, which must be signed by the `hotkey`.
+    - `netuid`: The netuid that the `hotkey` belongs to.
+    - `evm_key`: The EVM key to associate with the `hotkey`.
+    - `block_number`: The block number used in the `signature`.
+    - `signature`: A signed message by the `evm_key` containing the `hotkey` and the hashed `block_number`.
 
     **Errors:**
 
-    Returns an error if:
-    - The transaction is not signed.
-    - The hotkey does not belong to the subnet identified by the netuid.
-    - The EVM key cannot be recovered from the signature.
-    - The EVM key recovered from the signature does not match the given EVM key.
+    - `BadOrigin`: The transaction is not signed.
+    - `SubnetNotExists`: The subnet identified by `netuid` does not exist.
+    - `NonAssociatedColdKey`: The hotkey is not associated with a coldkey.
+    - `HotKeyNotRegisteredInSubNet`: The hotkey is not registered on the subnet identified by `netuid`.
+    - `EvmKeyAssociateRateLimitExceeded`: The association rate limit has not elapsed since the last association.
+    - `InvalidIdentity`: The public key cannot be recovered from the signature.
+    - `UnableToRecoverPublicKey`: The recovered public key cannot be parsed.
+    - `InvalidRecoveredPublicKey`: The EVM key recovered from the signature does not match the given `evm_key`.
+    - `EvmKeyAssociationLimitExceeded`: The EVM key is already associated with the maximum number of UIDs.
 
     **Events:**
 
@@ -1798,102 +1800,75 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.batchCommitWeights`
 - **summary**: Allows a hotkey to commit weight hashes for multiple netuids as a batch.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin`: (\<T as frame_system::Config>Origin):
-    The caller, a hotkey who wishes to set their weights.
+    - `origin`: The caller, a hotkey who wishes to set their weights.
 
-    - `netuids` (Vec\<Compact\<u16>>):
-    The network uids we are setting these weights on.
+    - `netuids`: The network uids we are setting these weights on.
 
-    - `commit_hashes` (Vec\<H256>):
-    The commit hashes to commit.
+    - `commit_hashes`: The commit hashes to commit.
 
-    **Event:**
+    **Events:**
 
-    - WeightsSet;
-    On successfully setting the weights on chain.
-    - BatchWeightsCompleted;
-    On success of the batch.
-    - BatchCompletedWithErrors;
-    On failure of any of the weights in the batch.
-    - BatchWeightItemFailed;
-    On failure for each failed item in the batch.
+    - `WeightsSet`: On successfully setting the weights on chain.
+    - `BatchWeightsCompleted`: On success of the batch.
+    - `BatchCompletedWithErrors`: On failure of any of the weights in the batch.
+    - `BatchWeightItemFailed`: On failure for each failed item in the batch.
 
 ### `batchRevealWeights(netuid: NetUid, uids_list: Vec<Vec<u16>>, values_list: Vec<Vec<u16>>, salts_list: Vec<Vec<u16>>, version_keys: Vec<u64>)`
 
 - **interface**: `api.tx.subtensorModule.batchRevealWeights`
-- **summary**: - The implementation for batch revealing committed weights.
+- **summary**: The implementation for batch revealing committed weights.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin`: (`<T as frame_system::Config>::RuntimeOrigin`):
-    The signature of the revealing hotkey.
+    - `origin`: The signature of the revealing hotkey.
 
-    - `netuid` (`u16`):
-    The u16 network identifier.
+    - `netuid`: The u16 network identifier.
 
-    - `uids_list` (`Vec<Vec<u16>>`):
-    A list of uids for each set of weights being revealed.
+    - `uids_list`: A list of uids for each set of weights being revealed.
 
-    - `values_list` (`Vec<Vec<u16>>`):
-    A list of values for each set of weights being revealed.
+    - `values_list`: A list of values for each set of weights being revealed.
 
-    - `salts_list` (`Vec<Vec<u16>>`):
-    A list of salts used to generate the commit hashes.
+    - `salts_list`: A list of salts used to generate the commit hashes.
 
-    - `version_keys` (`Vec<u64>`):
-    A list of network version keys.
+    - `version_keys`: A list of network version keys.
 
-    **Raises:**
+    **Errors:**
 
-    - `CommitRevealDisabled`:
-    Attempting to reveal weights when the commit-reveal mechanism is disabled.
+    - `CommitRevealDisabled`: Attempting to reveal weights when the commit-reveal mechanism is disabled.
 
-    - `NoWeightsCommitFound`:
-    Attempting to reveal weights without an existing commit.
+    - `NoWeightsCommitFound`: Attempting to reveal weights without an existing commit.
 
-    - `ExpiredWeightCommit`:
-    Attempting to reveal a weight commit that has expired.
+    - `ExpiredWeightCommit`: Attempting to reveal a weight commit that has expired.
 
-    - `RevealTooEarly`:
-    Attempting to reveal weights outside the valid reveal period.
+    - `RevealTooEarly`: Attempting to reveal weights outside the valid reveal period.
 
-    - `InvalidRevealCommitHashNotMatch`:
-    The revealed hash does not match any committed hash.
+    - `InvalidRevealCommitHashNotMatch`: The revealed hash does not match any committed hash.
 
-    - `InvalidInputLengths`:
-    The input vectors are of mismatched lengths.
+    - `InvalidInputLengths`: The input vectors are of mismatched lengths.
 
 ### `batchSetWeights(netuids: Vec<Compact<NetUid>>, weights: Vec<Vec<(Compact<u16>, Compact<u16>)>>, version_keys: Vec<Compact<u64>>)`
 
 - **interface**: `api.tx.subtensorModule.batchSetWeights`
 - **summary**: Allows a hotkey to set weights for multiple netuids as a batch.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin`: (\<T as frame_system::Config>Origin):
-    The caller, a hotkey who wishes to set their weights.
+    - `origin`: The caller, a hotkey who wishes to set their weights.
 
-    - `netuids` (Vec\<Compact\<u16>>):
-    The network uids we are setting these weights on.
+    - `netuids`: The network uids we are setting these weights on.
 
-    - `weights` (Vec\<Vec\<(Compact\<u16>, Compact\<u16>)>):
-    The weights to set for each network. [(uid, weight), ...]
+    - `weights`: The weights to set for each network. [(uid, weight), ...].
 
-    - `version_keys` (Vec\<Compact\<u64>>):
-    The network version keys to check if the validator is up to date.
+    - `version_keys`: The network version keys to check if the validator is up to date.
 
-    **Event:**
+    **Events:**
 
-    - WeightsSet;
-    On successfully setting the weights on chain.
-    - BatchWeightsCompleted;
-    On success of the batch.
-    - BatchCompletedWithErrors;
-    On failure of any of the weights in the batch.
-    - BatchWeightItemFailed;
-    On failure for each failed item in the batch.
+    - `WeightsSet`: On successfully setting the weights on chain.
+    - `BatchWeightsCompleted`: On success of the batch.
+    - `BatchCompletedWithErrors`: On failure of any of the weights in the batch.
+    - `BatchWeightItemFailed`: On failure for each failed item in the batch.
 
 ### `burnAlpha(hotkey: AccountId, amount: AlphaBalance, netuid: NetUid)`
 
@@ -1902,10 +1877,10 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call (must be signed by the coldkey)
-    - `hotkey` — The hotkey account
-    - `amount` — The amount of alpha to burn
-    - `netuid` — The subnet ID
+    - `origin`: The origin of the call (must be signed by the coldkey)
+    - `hotkey`: The hotkey account
+    - `amount`: The amount of alpha to burn
+    - `netuid`: The subnet ID
 
     **Events:**
 
@@ -1921,16 +1896,17 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.claimRoot`
 - **summary**: Claims the root emissions for a coldkey.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>Origin): — The signature of the caller's coldkey.
+    - `origin`: The signature of the caller's coldkey.
 
-    **Event:**
+    **Events:**
 
-    - RootClaimed;
-    On the successfully claiming the root emissions for a coldkey.
+    - `RootClaimed`: On the successfully claiming the root emissions for a coldkey.
 
-    **Raises:**
+    **Errors:**
+
+    - `InvalidSubnetNumber`: The subnet set is empty or exceeds the maximum number of claims.
 
 ### `clearColdkeySwapAnnouncement()`
 
@@ -1942,198 +1918,150 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `commitCrv3MechanismWeights(netuid: NetUid, mecid: MechId, commit: BoundedVec<u8, ConstU32<MAX_CRV3_COMMIT_SIZE_BYTES>>, reveal_round: u64)`
 
 - **interface**: `api.tx.subtensorModule.commitCrv3MechanismWeights`
-- **summary**: - Used to commit encrypted commit-reveal v3 weight values to later be revealed.
+- **summary**: Used to commit encrypted commit-reveal v3 weight values to later be revealed for mechanisms.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin`: (`<T as frame_system::Config>::RuntimeOrigin`):
-    The committing hotkey.
+    - `origin`: The committing hotkey.
 
-    - `netuid` (`u16`):
-    The u16 network identifier.
+    - `netuid`: The u16 network identifier.
 
-    - `commit` (`Vec<u8>`):
-    The encrypted compressed commit. The steps for this are:
+    - `mecid`: The u8 mechanism identifier.
+
+    - `commit`: The encrypted compressed commit.
+    The steps for this are:
     1. Instantiate [`WeightsTlockPayload`]
     2. Serialize it using the `parity_scale_codec::Encode` trait
     3. Encrypt it following the steps (here)[https://github.com/ideal-lab5/tle/blob/f8e6019f0fb02c380ebfa6b30efb61786dede07b/timelock/src/tlock.rs#L283-L336]
     to produce a [`TLECiphertext<TinyBLS381>`] type.
     4. Serialize and compress using the `ark-serialize` `CanonicalSerialize` trait.
 
-    - reveal_round (`u64`):
-    The drand reveal round which will be avaliable during epoch `n+1` from the current epoch.
+    - `reveal_round`: The drand reveal round which will be avaliable during epoch `n+1` from the current
+    epoch.
 
-    **Raises:**
+    **Errors:**
 
-    - `CommitRevealV3Disabled`:
-    Attempting to commit when the commit-reveal mechanism is disabled.
+    - `CommitRevealV3Disabled`: Attempting to commit when the commit-reveal mechanism is disabled.
 
-    - `TooManyUnrevealedCommits`:
-    Attempting to commit when the user has more than the allowed limit of unrevealed commits.
-
-    ---- Used to commit encrypted commit-reveal v3 weight values to later be revealed for mechanisms.
-
-    **Args:**
-
-    - `origin`: (`<T as frame_system::Config>::RuntimeOrigin`):
-    The committing hotkey.
-
-    - `netuid` (`u16`):
-    The u16 network identifier.
-
-    - `mecid` (`u8`):
-    The u8 mechanism identifier.
-
-    - `commit` (`Vec<u8>`):
-    The encrypted compressed commit. The steps for this are:
-    1. Instantiate [`WeightsTlockPayload`]
-    2. Serialize it using the `parity_scale_codec::Encode` trait
-    3. Encrypt it following the steps (here)[https://github.com/ideal-lab5/tle/blob/f8e6019f0fb02c380ebfa6b30efb61786dede07b/timelock/src/tlock.rs#L283-L336]
-    to produce a [`TLECiphertext<TinyBLS381>`] type.
-    4. Serialize and compress using the `ark-serialize` `CanonicalSerialize` trait.
-
-    - reveal_round (`u64`):
-    The drand reveal round which will be avaliable during epoch `n+1` from the current epoch.
-
-    **Raises:**
-
-    - `CommitRevealV3Disabled`:
-    Attempting to commit when the commit-reveal mechanism is disabled.
-
-    - `TooManyUnrevealedCommits`:
-    Attempting to commit when the user has more than the allowed limit of unrevealed commits.
+    - `TooManyUnrevealedCommits`: Attempting to commit when the user has more than the allowed limit of unrevealed commits.
 
 ### `commitMechanismWeights(netuid: NetUid, mecid: MechId, commit_hash: H256)`
 
 - **interface**: `api.tx.subtensorModule.commitMechanismWeights`
-- **summary**: - Used to commit a hash of your weight values to later be revealed for mechanisms.
+- **summary**: Used to commit a hash of your weight values to later be revealed for mechanisms.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin`: (`<T as frame_system::Config>::RuntimeOrigin`):
-    The signature of the committing hotkey.
+    - `origin`: The signature of the committing hotkey.
 
-    - `netuid` (`u16`):
-    The u16 network identifier.
+    - `netuid`: The u16 network identifier.
 
-    - `mecid` (`u8`):
-    The u8 mechanism identifier.
+    - `mecid`: The u8 mechanism identifier.
 
-    - `commit_hash` (`H256`):
-    The hash representing the committed weights.
+    - `commit_hash`: The hash representing the committed weights.
 
-    **Raises:**
+    **Errors:**
 
-    - `CommitRevealDisabled`:
-    Attempting to commit when the commit-reveal mechanism is disabled.
+    - `CommitRevealDisabled`: Attempting to commit when the commit-reveal mechanism is disabled.
 
-    - `TooManyUnrevealedCommits`:
-    Attempting to commit when the user has more than the allowed limit of unrevealed commits.
+    - `TooManyUnrevealedCommits`: Attempting to commit when the user has more than the allowed limit of unrevealed commits.
 
 ### `commitTimelockedMechanismWeights(netuid: NetUid, mecid: MechId, commit: BoundedVec<u8, ConstU32<MAX_CRV3_COMMIT_SIZE_BYTES>>, reveal_round: u64, commit_reveal_version: u16)`
 
 - **interface**: `api.tx.subtensorModule.commitTimelockedMechanismWeights`
-- **summary**: - Used to commit timelock encrypted commit-reveal weight values to later be revealed for a mechanism.
+- **summary**: Used to commit timelock encrypted commit-reveal weight values to later be revealed for a mechanism.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin`: (`<T as frame_system::Config>::RuntimeOrigin`):
-    The committing hotkey.
+    - `origin`: The committing hotkey.
 
-    - `netuid` (`u16`):
-    The u16 network identifier.
+    - `netuid`: The u16 network identifier.
 
-    - `mecid` (`u8`):
-    The u8 mechanism identifier.
+    - `mecid`: The u8 mechanism identifier.
 
-    - `commit` (`Vec<u8>`):
-    The encrypted compressed commit. The steps for this are:
+    - `commit`: The encrypted compressed commit.
+    The steps for this are:
     1. Instantiate [`WeightsTlockPayload`]
     2. Serialize it using the `parity_scale_codec::Encode` trait
     3. Encrypt it following the steps (here)[https://github.com/ideal-lab5/tle/blob/f8e6019f0fb02c380ebfa6b30efb61786dede07b/timelock/src/tlock.rs#L283-L336]
     to produce a [`TLECiphertext<TinyBLS381>`] type.
     4. Serialize and compress using the `ark-serialize` `CanonicalSerialize` trait.
 
-    - reveal_round (`u64`):
-    The drand reveal round which will be avaliable during epoch `n+1` from the current epoch.
+    - `reveal_round`: The drand reveal round which will be avaliable during epoch `n+1` from the current
+    epoch.
 
-    - commit_reveal_version (`u16`):
-    The client (bittensor-drand) version
+    - `commit_reveal_version`: The client (bittensor-drand) version.
 
 ### `commitTimelockedWeights(netuid: NetUid, commit: BoundedVec<u8, ConstU32<MAX_CRV3_COMMIT_SIZE_BYTES>>, reveal_round: u64, commit_reveal_version: u16)`
 
 - **interface**: `api.tx.subtensorModule.commitTimelockedWeights`
-- **summary**: - Used to commit timelock encrypted commit-reveal weight values to later be revealed.
+- **summary**: Used to commit timelock encrypted commit-reveal weight values to later be revealed.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin`: (`<T as frame_system::Config>::RuntimeOrigin`):
-    The committing hotkey.
+    - `origin`: The committing hotkey.
 
-    - `netuid` (`u16`):
-    The u16 network identifier.
+    - `netuid`: The u16 network identifier.
 
-    - `commit` (`Vec<u8>`):
-    The encrypted compressed commit. The steps for this are:
+    - `commit`: The encrypted compressed commit.
+    The steps for this are:
     1. Instantiate [`WeightsTlockPayload`]
     2. Serialize it using the `parity_scale_codec::Encode` trait
     3. Encrypt it following the steps (here)[https://github.com/ideal-lab5/tle/blob/f8e6019f0fb02c380ebfa6b30efb61786dede07b/timelock/src/tlock.rs#L283-L336]
     to produce a [`TLECiphertext<TinyBLS381>`] type.
     4. Serialize and compress using the `ark-serialize` `CanonicalSerialize` trait.
 
-    - reveal_round (`u64`):
-    The drand reveal round which will be avaliable during epoch `n+1` from the current epoch.
+    - `reveal_round`: The drand reveal round which will be avaliable during epoch `n+1` from the current
+    epoch.
 
-    - commit_reveal_version (`u16`):
-    The client (bittensor-drand) version
+    - `commit_reveal_version`: The client (bittensor-drand) version.
 
 ### `commitWeights(netuid: NetUid, commit_hash: H256)`
 
 - **interface**: `api.tx.subtensorModule.commitWeights`
-- **summary**: - Used to commit a hash of your weight values to later be revealed.
+- **summary**: Used to commit a hash of your weight values to later be revealed.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin`: (`<T as frame_system::Config>::RuntimeOrigin`):
-    The signature of the committing hotkey.
+    - `origin`: The signature of the committing hotkey.
 
-    - `netuid` (`u16`):
-    The u16 network identifier.
+    - `netuid`: The u16 network identifier.
 
-    - `commit_hash` (`H256`):
-    The hash representing the committed weights.
+    - `commit_hash`: The hash representing the committed weights.
 
-    **Raises:**
+    **Errors:**
 
-    - `CommitRevealDisabled`:
-    Attempting to commit when the commit-reveal mechanism is disabled.
+    - `CommitRevealDisabled`: Attempting to commit when the commit-reveal mechanism is disabled.
 
-    - `TooManyUnrevealedCommits`:
-    Attempting to commit when the user has more than the allowed limit of unrevealed commits.
+    - `TooManyUnrevealedCommits`: Attempting to commit when the user has more than the allowed limit of unrevealed commits.
 
-### `decreaseTake(hotkey: AccountId, take: u16)`
+### `decreaseTake(hotkey: AccountId, take: PerU16)`
 
 - **interface**: `api.tx.subtensorModule.decreaseTake`
 - **summary**: Allows delegates to decrease its take value.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>::Origin): — The signature of the caller's coldkey.
-    - `hotkey` (T::AccountId) — The hotkey we are delegating (must be owned by the coldkey.)
-    - `netuid` (u16) — Subnet ID to decrease take for
-    - `take` (u16) — The new stake proportion that this hotkey takes from delegations.
-    The new value can be between 0 and 11_796 and should be strictly lower than the previous value. It T is the new value (rational number), the the parameter is calculated as [65535 * T]. For example, 1% would be [0.01 * 65535] = [655.35] = 655
+    - `origin`: The signature of the caller's coldkey.
 
-    **Event:**
+    - `hotkey`: The hotkey we are delegating (must be owned by the coldkey).
 
-    - TakeDecreased;
-    On successfully setting a decreased take for this hotkey.
+    - `netuid`: Subnet ID to decrease take for.
 
-    **Raises:**
+    - `take`: The new stake proportion that this hotkey takes from delegations.
+    The new value can be between 0 and 11_796 parts and should be strictly lower than the previous value. If T is the new value (rational number), the the parameter is calculated as [65535 * T]. For example, 1% would be [0.01 * 65535] = [655.35] = 655
 
-    - `NotRegistered` — The hotkey we are delegating is not registered on the network.
-    - `NonAssociatedColdKey` — The hotkey we are delegating is not owned by the calling coldkey.
-    - `DelegateTakeTooLow` — The delegate is setting a take which is not lower than the previous.
+    **Events:**
+
+    - `TakeDecreased`: On successfully setting a decreased take for this hotkey.
+
+    **Errors:**
+
+    - `NotRegistered`: The hotkey we are delegating is not registered on the network.
+
+    - `NonAssociatedColdKey`: The hotkey we are delegating is not owned by the calling coldkey.
+
+    - `DelegateTakeTooLow`: The delegate is setting a take which is not lower than the previous.
 
 ### `disableVotingPowerTracking(netuid: NetUid)`
 
@@ -2144,14 +2072,14 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call, must be subnet owner or root.
-    - `netuid` — The subnet to schedule disabling voting power tracking for.
+    - `origin`: The origin of the call, must be subnet owner or root.
+    - `netuid`: The subnet to schedule disabling voting power tracking for.
 
     **Errors:**
 
-    - `SubnetNotExist` — If the subnet does not exist.
-    - `NotSubnetOwner` — If the caller is not the subnet owner or root.
-    - `VotingPowerTrackingNotEnabled` — If voting power tracking is not enabled.
+    - `SubnetNotExist`: If the subnet does not exist.
+    - `NotSubnetOwner`: If the caller is not the subnet owner or root.
+    - `VotingPowerTrackingNotEnabled`: If voting power tracking is not enabled.
 
 ### `disputeColdkeySwap()`
 
@@ -2176,36 +2104,39 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call, must be subnet owner or root.
-    - `netuid` — The subnet to enable voting power tracking for.
+    - `origin`: The origin of the call, must be subnet owner or root.
+    - `netuid`: The subnet to enable voting power tracking for.
 
     **Errors:**
 
-    - `SubnetNotExist` — If the subnet does not exist.
-    - `NotSubnetOwner` — If the caller is not the subnet owner or root.
+    - `SubnetNotExist`: If the subnet does not exist.
+    - `NotSubnetOwner`: If the caller is not the subnet owner or root.
 
-### `increaseTake(hotkey: AccountId, take: u16)`
+### `increaseTake(hotkey: AccountId, take: PerU16)`
 
 - **interface**: `api.tx.subtensorModule.increaseTake`
 - **summary**: Allows delegates to increase its take value. This call is rate-limited.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>::Origin): — The signature of the caller's coldkey.
-    - `hotkey` (T::AccountId) — The hotkey we are delegating (must be owned by the coldkey.)
-    - `take` (u16) — The new stake proportion that this hotkey takes from delegations.
-    The new value can be between 0 and 11_796 and should be strictly greater than the previous value. T is the new value (rational number), the the parameter is calculated as [65535 * T]. For example, 1% would be [0.01 * 65535] = [655.35] = 655
+    - `origin`: The signature of the caller's coldkey.
 
-    **Event:**
+    - `hotkey`: The hotkey we are delegating (must be owned by the coldkey).
 
-    - TakeIncreased;
-    On successfully setting a increased take for this hotkey.
+    - `take`: The new stake proportion that this hotkey takes from delegations.
+    The new value can be between 0 and 11_796 parts and should be strictly greater than the previous value. T is the new value (rational number), the the parameter is calculated as [65535 * T]. For example, 1% would be [0.01 * 65535] = [655.35] = 655
 
-    **Raises:**
+    **Events:**
 
-    - `NotRegistered` — The hotkey we are delegating is not registered on the network.
-    - `NonAssociatedColdKey` — The hotkey we are delegating is not owned by the calling coldkey.
-    - `DelegateTakeTooHigh` — The delegate is setting a take which is not greater than the previous.
+    - `TakeIncreased`: On successfully setting a increased take for this hotkey.
+
+    **Errors:**
+
+    - `NotRegistered`: The hotkey we are delegating is not registered on the network.
+
+    - `NonAssociatedColdKey`: The hotkey we are delegating is not owned by the calling coldkey.
+
+    - `DelegateTakeTooHigh`: The delegate is setting a take which is not greater than the previous.
 
 ### `lockStake(hotkey: AccountId, netuid: NetUid, amount: AlphaBalance)`
 
@@ -2216,10 +2147,10 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — Must be signed by the coldkey.
-    - `hotkey` — The hotkey to lock stake to.
-    - `netuid` — The subnet on which to lock.
-    - `amount` — The alpha amount to lock.
+    - `origin`: Must be signed by the coldkey.
+    - `hotkey`: The hotkey to lock stake to.
+    - `netuid`: The subnet on which to lock.
+    - `amount`: The alpha amount to lock.
 
 ### `moveLock(destination_hotkey: AccountId, netuid: NetUid)`
 
@@ -2230,38 +2161,32 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — Must be signed by the coldkey that owns the lock.
-    - `destination_hotkey` — The hotkey the lock should target after the move.
-    - `netuid` — The subnet on which the lock exists.
+    - `origin`: Must be signed by the coldkey that owns the lock.
+    - `destination_hotkey`: The hotkey the lock should target after the move.
+    - `netuid`: The subnet on which the lock exists.
 
     **Errors:**
 
-    - `Error::<T>::NoExistingLock` — If no lock exists for the given coldkey and subnet.
+    - `Error::<T>::NoExistingLock`: If no lock exists for the given coldkey and subnet.
 
 ### `moveStake(origin_hotkey: AccountId, destination_hotkey: AccountId, origin_netuid: NetUid, destination_netuid: NetUid, alpha_amount: AlphaBalance)`
 
 - **interface**: `api.tx.subtensorModule.moveStake`
-- **summary**: - The implementation for the extrinsic move_stake: Moves specified amount of stake from a hotkey to another across subnets.
+- **summary**: The implementation for the extrinsic move_stake: Moves specified amount of stake from a hotkey to another across subnets.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>::Origin):
-    The signature of the caller's coldkey.
+    - `origin`: The signature of the caller's coldkey.
 
-    - `origin_hotkey` (T::AccountId):
-    The hotkey account to move stake from.
+    - `origin_hotkey`: The hotkey account to move stake from.
 
-    - `destination_hotkey` (T::AccountId):
-    The hotkey account to move stake to.
+    - `destination_hotkey`: The hotkey account to move stake to.
 
-    - `origin_netuid` (T::AccountId):
-    The subnet ID to move stake from.
+    - `origin_netuid`: The subnet ID to move stake from.
 
-    - `destination_netuid` (T::AccountId):
-    The subnet ID to move stake to.
+    - `destination_netuid`: The subnet ID to move stake to.
 
-    - `alpha_amount` (T::AccountId):
-    The alpha stake amount to move.
+    - `alpha_amount`: The alpha stake amount to move.
 
 ### `recycleAlpha(hotkey: AccountId, amount: AlphaBalance, netuid: NetUid)`
 
@@ -2270,10 +2195,10 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call (must be signed by the coldkey)
-    - `hotkey` — The hotkey account
-    - `amount` — The amount of alpha to recycle
-    - `netuid` — The subnet ID
+    - `origin`: The origin of the call (must be signed by the coldkey)
+    - `hotkey`: The hotkey account
+    - `amount`: The amount of alpha to recycle
+    - `netuid`: The subnet ID
 
     **Events:**
 
@@ -2282,31 +2207,41 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `register(netuid: NetUid, block_number: u64, nonce: u64, work: Vec<u8>, hotkey: AccountId, coldkey: AccountId)`
 
 - **interface**: `api.tx.subtensorModule.register`
-- **summary**: - Registers a new neuron to the subnetwork.
+- **summary**: Registers a new neuron to the subnetwork.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>Origin): — The signature of the calling hotkey.
-    - `netuid` (u16) — The u16 network identifier.
-    - `block_number` (u64) — Block hash used to prove work done.
-    - `nonce` (u64) — Positive integer nonce used in POW.
-    - `work` (Vec\<u8>) — Vector encoded bytes representing work done.
-    - `hotkey` (T::AccountId) — Hotkey to be registered to the network.
-    - `coldkey` (T::AccountId) — Associated coldkey account.
+    - `origin`: The signature of the calling hotkey.
 
-    **Event:**
+    - `netuid`: The u16 network identifier.
 
-    - NeuronRegistered;
-    On successfully registering a uid to a neuron slot on a subnetwork.
+    - `block_number`: Block hash used to prove work done.
 
-    **Raises:**
+    - `nonce`: Positive integer nonce used in POW.
 
-    - `MechanismDoesNotExist` — Attempting to register to a non existent network.
-    - `TooManyRegistrationsThisBlock` — This registration exceeds the total allowed on this network this block.
-    - `HotKeyAlreadyRegisteredInSubNet` — The hotkey is already registered on this network.
-    - `InvalidWorkBlock` — The work has been performed on a stale, future, or non existent block.
-    - `InvalidDifficulty` — The work does not match the difficulty.
-    - `InvalidSeal` — The seal is incorrect.
+    - `work`: Vector encoded bytes representing work done.
+
+    - `hotkey`: Hotkey to be registered to the network.
+
+    - `coldkey`: Associated coldkey account.
+
+    **Events:**
+
+    - `NeuronRegistered`: On successfully registering a uid to a neuron slot on a subnetwork.
+
+    **Errors:**
+
+    - `MechanismDoesNotExist`: Attempting to register to a non existent network.
+
+    - `TooManyRegistrationsThisBlock`: This registration exceeds the total allowed on this network this block.
+
+    - `HotKeyAlreadyRegisteredInSubNet`: The hotkey is already registered on this network.
+
+    - `InvalidWorkBlock`: The work has been performed on a stale, future, or non existent block.
+
+    - `InvalidDifficulty`: The work does not match the difficulty.
+
+    - `InvalidSeal`: The seal is incorrect.
 
 ### `registerLeasedNetwork(emissions_share: Percent, end_block: Option<BlockNumberFor<T>>)`
 
@@ -2317,16 +2252,13 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     The leftover cap is refunded to the contributors and the beneficiary.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>::Origin):
-    The signature of the caller's coldkey.
+    - `origin`: The signature of the caller's coldkey.
 
-    - `emissions_share` (Percent):
-    The share of the emissions that the contributors will receive as dividends.
+    - `emissions_share`: The share of the emissions that the contributors will receive as dividends.
 
-    - `end_block` (Option\<BlockNumberFor\<T>>):
-    The block at which the lease will end. If not defined, the lease is perpetual.
+    - `end_block`: The block at which the lease will end. If not defined, the lease is perpetual.
 
 ### `registerLimit(netuid: NetUid, hotkey: AccountId, limit_price: u64)`
 
@@ -2350,23 +2282,27 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.removeStake`
 - **summary**: Remove stake from the staking account. The call must be made from the coldkey account attached to the neuron metadata. Only this key has permission to make staking and unstaking requests.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>Origin): — The signature of the caller's coldkey.
-    - `hotkey` (T::AccountId) — The associated hotkey account.
-    - `netuid` (u16) — Subnetwork UID
-    - `amount_unstaked` (u64) — The amount of stake to be added to the hotkey staking account.
+    - `origin`: The signature of the caller's coldkey.
 
-    **Event:**
+    - `hotkey`: The associated hotkey account.
 
-    - StakeRemoved;
-    On the successfully removing stake from the hotkey account.
+    - `netuid`: Subnetwork UID.
 
-    **Raises:**
+    - `amount_unstaked`: The amount of stake to be added to the hotkey staking account.
 
-    - `NotRegistered` — Thrown if the account we are attempting to unstake from is non existent.
-    - `NonAssociatedColdKey` — Thrown if the coldkey does not own the hotkey we are unstaking from.
-    - `NotEnoughStakeToWithdraw` — Thrown if there is not enough stake on the hotkey to withdwraw this amount.
+    **Events:**
+
+    - `StakeRemoved`: On the successfully removing stake from the hotkey account.
+
+    **Errors:**
+
+    - `NotRegistered`: Thrown if the account we are attempting to unstake from is non existent.
+
+    - `NonAssociatedColdKey`: Thrown if the coldkey does not own the hotkey we are unstaking from.
+
+    - `NotEnoughStakeToWithdraw`: Thrown if there is not enough stake on the hotkey to withdwraw this amount.
 
 ### `removeStakeFullLimit(hotkey: AccountId, netuid: NetUid, limit_price: Option<TaoBalance>)`
 
@@ -2380,26 +2316,32 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     In case if slippage occurs and the price shall move beyond the limit price, the staking order may execute only partially or not execute at all.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>Origin): — The signature of the caller's coldkey.
-    - `hotkey` (T::AccountId) — The associated hotkey account.
-    - `netuid` (u16) — Subnetwork UID
-    - `amount_unstaked` (u64) — The amount of stake to be added to the hotkey staking account.
-    - `limit_price` (u64) — The limit price expressed in units of RAO per one Alpha.
-    - `allow_partial` (bool) — Allows partial execution of the amount. If set to false, this becomes
-    fill or kill type or order.
+    - `origin`: The signature of the caller's coldkey.
 
-    **Event:**
+    - `hotkey`: The associated hotkey account.
 
-    - StakeRemoved;
-    On the successfully removing stake from the hotkey account.
+    - `netuid`: Subnetwork UID.
 
-    **Raises:**
+    - `amount_unstaked`: The amount of stake to be added to the hotkey staking account.
 
-    - `NotRegistered` — Thrown if the account we are attempting to unstake from is non existent.
-    - `NonAssociatedColdKey` — Thrown if the coldkey does not own the hotkey we are unstaking from.
-    - `NotEnoughStakeToWithdraw` — Thrown if there is not enough stake on the hotkey to withdwraw this amount.
+    - `limit_price`: The limit price expressed in units of RAO per one Alpha.
+
+    - `allow_partial`: Allows partial execution of the amount. If set to false, this becomes
+    fill or kill type of order.
+
+    **Events:**
+
+    - `StakeRemoved`: On the successfully removing stake from the hotkey account.
+
+    **Errors:**
+
+    - `NotRegistered`: Thrown if the account we are attempting to unstake from is non existent.
+
+    - `NonAssociatedColdKey`: Thrown if the coldkey does not own the hotkey we are unstaking from.
+
+    - `NotEnoughStakeToWithdraw`: Thrown if there is not enough stake on the hotkey to withdwraw this amount.
 
 ### `resetColdkeySwap(coldkey: AccountId)`
 
@@ -2413,89 +2355,66 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `revealMechanismWeights(netuid: NetUid, mecid: MechId, uids: Vec<u16>, values: Vec<u16>, salt: Vec<u16>, version_key: u64)`
 
 - **interface**: `api.tx.subtensorModule.revealMechanismWeights`
-- **summary**: - Used to reveal the weights for a previously committed hash for mechanisms.
+- **summary**: Used to reveal the weights for a previously committed hash for mechanisms.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin`: (`<T as frame_system::Config>::RuntimeOrigin`):
-    The signature of the revealing hotkey.
+    - `origin`: The signature of the revealing hotkey.
 
-    - `netuid` (`u16`):
-    The u16 network identifier.
+    - `netuid`: The u16 network identifier.
 
-    - `mecid` (`u8`):
-    The u8 mechanism identifier.
+    - `mecid`: The u8 mechanism identifier.
 
-    - `uids` (`Vec<u16>`):
-    The uids for the weights being revealed.
+    - `uids`: The uids for the weights being revealed.
 
-    - `values` (`Vec<u16>`):
-    The values of the weights being revealed.
+    - `values`: The values of the weights being revealed.
 
-    - `salt` (`Vec<u16>`):
-    The salt used to generate the commit hash.
+    - `salt`: The salt used to generate the commit hash.
 
-    - `version_key` (`u64`):
-    The network version key.
+    - `version_key`: The network version key.
 
-    **Raises:**
+    **Errors:**
 
-    - `CommitRevealDisabled`:
-    Attempting to reveal weights when the commit-reveal mechanism is disabled.
+    - `CommitRevealDisabled`: Attempting to reveal weights when the commit-reveal mechanism is disabled.
 
-    - `NoWeightsCommitFound`:
-    Attempting to reveal weights without an existing commit.
+    - `NoWeightsCommitFound`: Attempting to reveal weights without an existing commit.
 
-    - `ExpiredWeightCommit`:
-    Attempting to reveal a weight commit that has expired.
+    - `ExpiredWeightCommit`: Attempting to reveal a weight commit that has expired.
 
-    - `RevealTooEarly`:
-    Attempting to reveal weights outside the valid reveal period.
+    - `RevealTooEarly`: Attempting to reveal weights outside the valid reveal period.
 
-    - `InvalidRevealCommitHashNotMatch`:
-    The revealed hash does not match any committed hash.
+    - `InvalidRevealCommitHashNotMatch`: The revealed hash does not match any committed hash.
 
 ### `revealWeights(netuid: NetUid, uids: Vec<u16>, values: Vec<u16>, salt: Vec<u16>, version_key: u64)`
 
 - **interface**: `api.tx.subtensorModule.revealWeights`
-- **summary**: - Used to reveal the weights for a previously committed hash.
+- **summary**: Used to reveal the weights for a previously committed hash.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin`: (`<T as frame_system::Config>::RuntimeOrigin`):
-    The signature of the revealing hotkey.
+    - `origin`: The signature of the revealing hotkey.
 
-    - `netuid` (`u16`):
-    The u16 network identifier.
+    - `netuid`: The u16 network identifier.
 
-    - `uids` (`Vec<u16>`):
-    The uids for the weights being revealed.
+    - `uids`: The uids for the weights being revealed.
 
-    - `values` (`Vec<u16>`):
-    The values of the weights being revealed.
+    - `values`: The values of the weights being revealed.
 
-    - `salt` (`Vec<u16>`):
-    The salt used to generate the commit hash.
+    - `salt`: The salt used to generate the commit hash.
 
-    - `version_key` (`u64`):
-    The network version key.
+    - `version_key`: The network version key.
 
-    **Raises:**
+    **Errors:**
 
-    - `CommitRevealDisabled`:
-    Attempting to reveal weights when the commit-reveal mechanism is disabled.
+    - `CommitRevealDisabled`: Attempting to reveal weights when the commit-reveal mechanism is disabled.
 
-    - `NoWeightsCommitFound`:
-    Attempting to reveal weights without an existing commit.
+    - `NoWeightsCommitFound`: Attempting to reveal weights without an existing commit.
 
-    - `ExpiredWeightCommit`:
-    Attempting to reveal a weight commit that has expired.
+    - `ExpiredWeightCommit`: Attempting to reveal a weight commit that has expired.
 
-    - `RevealTooEarly`:
-    Attempting to reveal weights outside the valid reveal period.
+    - `RevealTooEarly`: Attempting to reveal weights outside the valid reveal period.
 
-    - `InvalidRevealCommitHashNotMatch`:
-    The revealed hash does not match any committed hash.
+    - `InvalidRevealCommitHashNotMatch`: The revealed hash does not match any committed hash.
 
 ### `rootDissolveNetwork(netuid: NetUid)`
 
@@ -2512,94 +2431,124 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.scheduleSwapColdkey`
 - **summary**: Schedules a coldkey swap operation to be executed at a future block.
 
-    WARNING: This function is deprecated, please migrate to `announce_coldkey_swap`/`coldkey_swap`
+    **Note:**
+
+    This function is deprecated; please migrate to `announce_coldkey_swap` / `coldkey_swap`.
 
 ### `serveAxon(netuid: NetUid, version: u32, ip: u128, port: u16, ip_type: u8, protocol: u8, placeholder1: u8, placeholder2: u8)`
 
 - **interface**: `api.tx.subtensorModule.serveAxon`
 - **summary**: Serves or updates axon /prometheus information for the neuron associated with the caller. If the caller is already registered the metadata is updated. If the caller is not registered this call throws NotRegistered.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>Origin): — The signature of the caller.
-    - `netuid` (u16) — The u16 network identifier.
-    - `version` (u64) — The bittensor version identifier.
-    - `ip` (u64) — The endpoint ip information as a u128 encoded integer.
-    - `port` (u16) — The endpoint port information as a u16 encoded integer.
-    - `ip_type` (u8) — The endpoint ip version as a u8, 4 or 6.
-    - `protocol` (u8) — UDP:1 or TCP:0
-    - `placeholder1` (u8) — Placeholder for further extra params.
-    - `placeholder2` (u8) — Placeholder for further extra params.
+    - `origin`: The signature of the caller.
 
-    **Event:**
+    - `netuid`: The u16 network identifier.
 
-    - AxonServed;
-    On successfully serving the axon info.
+    - `version`: The bittensor version identifier.
 
-    **Raises:**
+    - `ip`: The endpoint ip information as a u128 encoded integer.
 
-    - `MechanismDoesNotExist` — Attempting to set weights on a non-existent network.
-    - `NotRegistered` — Attempting to set weights from a non registered account.
-    - `InvalidIpType` — The ip type is not 4 or 6.
-    - `InvalidIpAddress` — The numerically encoded ip address does not resolve to a proper ip.
-    - `ServingRateLimitExceeded` — Attempting to set prometheus information withing the rate limit min.
+    - `port`: The endpoint port information as a u16 encoded integer.
+
+    - `ip_type`: The endpoint ip version as a u8, 4 or 6.
+
+    - `protocol`: UDP:1 or TCP:0.
+
+    - `placeholder1`: Placeholder for further extra params.
+
+    - `placeholder2`: Placeholder for further extra params.
+
+    **Events:**
+
+    - `AxonServed`: On successfully serving the axon info.
+
+    **Errors:**
+
+    - `MechanismDoesNotExist`: Attempting to set weights on a non-existent network.
+
+    - `NotRegistered`: Attempting to set weights from a non registered account.
+
+    - `InvalidIpType`: The ip type is not 4 or 6.
+
+    - `InvalidIpAddress`: The numerically encoded ip address does not resolve to a proper ip.
+
+    - `ServingRateLimitExceeded`: Attempting to set prometheus information withing the rate limit min.
 
 ### `serveAxonTls(netuid: NetUid, version: u32, ip: u128, port: u16, ip_type: u8, protocol: u8, placeholder1: u8, placeholder2: u8, certificate: Vec<u8>)`
 
 - **interface**: `api.tx.subtensorModule.serveAxonTls`
 - **summary**: Same as `serve_axon` but takes a certificate as an extra optional argument. Serves or updates axon /prometheus information for the neuron associated with the caller. If the caller is already registered the metadata is updated. If the caller is not registered this call throws NotRegistered.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>Origin): — The signature of the caller.
-    - `netuid` (u16) — The u16 network identifier.
-    - `version` (u64) — The bittensor version identifier.
-    - `ip` (u64) — The endpoint ip information as a u128 encoded integer.
-    - `port` (u16) — The endpoint port information as a u16 encoded integer.
-    - `ip_type` (u8) — The endpoint ip version as a u8, 4 or 6.
-    - `protocol` (u8) — UDP:1 or TCP:0
-    - `placeholder1` (u8) — Placeholder for further extra params.
-    - `placeholder2` (u8) — Placeholder for further extra params.
-    - `certificate` (Vec\<u8>) — TLS certificate for inter neuron communitation.
+    - `origin`: The signature of the caller.
 
-    **Event:**
+    - `netuid`: The u16 network identifier.
 
-    - AxonServed;
-    On successfully serving the axon info.
+    - `version`: The bittensor version identifier.
 
-    **Raises:**
+    - `ip`: The endpoint ip information as a u128 encoded integer.
 
-    - `MechanismDoesNotExist` — Attempting to set weights on a non-existent network.
-    - `NotRegistered` — Attempting to set weights from a non registered account.
-    - `InvalidIpType` — The ip type is not 4 or 6.
-    - `InvalidIpAddress` — The numerically encoded ip address does not resolve to a proper ip.
-    - `ServingRateLimitExceeded` — Attempting to set prometheus information withing the rate limit min.
+    - `port`: The endpoint port information as a u16 encoded integer.
+
+    - `ip_type`: The endpoint ip version as a u8, 4 or 6.
+
+    - `protocol`: UDP:1 or TCP:0.
+
+    - `placeholder1`: Placeholder for further extra params.
+
+    - `placeholder2`: Placeholder for further extra params.
+
+    - `certificate`: TLS certificate for inter neuron communitation.
+
+    **Events:**
+
+    - `AxonServed`: On successfully serving the axon info.
+
+    **Errors:**
+
+    - `MechanismDoesNotExist`: Attempting to set weights on a non-existent network.
+
+    - `NotRegistered`: Attempting to set weights from a non registered account.
+
+    - `InvalidIpType`: The ip type is not 4 or 6.
+
+    - `InvalidIpAddress`: The numerically encoded ip address does not resolve to a proper ip.
+
+    - `ServingRateLimitExceeded`: Attempting to set prometheus information withing the rate limit min.
 
 ### `servePrometheus(netuid: NetUid, version: u32, ip: u128, port: u16, ip_type: u8)`
 
 - **interface**: `api.tx.subtensorModule.servePrometheus`
-- **summary**: - Set prometheus information for the neuron.
+- **summary**: Set prometheus information for the neuron.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>Origin): — The signature of the calling hotkey.
-    - `netuid` (u16) — The u16 network identifier.
-    - `version` (u16) — The bittensor version identifier.
-    - `ip` (u128) — The prometheus ip information as a u128 encoded integer.
-    - `port` (u16) — The prometheus port information as a u16 encoded integer.
-    - `ip_type` (u8) — The ip type v4 or v6.
+    - `origin`: The signature of the calling hotkey.
+
+    - `netuid`: The u16 network identifier.
+
+    - `version`: The bittensor version identifier.
+
+    - `ip`: The prometheus ip information as a u128 encoded integer.
+
+    - `port`: The prometheus port information as a u16 encoded integer.
+
+    - `ip_type`: The ip type v4 or v6.
 
 ### `setActivityCutoffFactor(netuid: NetUid, factor_milli: u32)`
 
 - **interface**: `api.tx.subtensorModule.setActivityCutoffFactor`
-- **summary**: `set_activity_cutoff_factor`. Per-mille (1/1000) units; `cutoff_blocks = (factor × tempo) / 1000`. Validates `[MinActivityCutoffFactorMilli, MaxActivityCutoffFactorMilli]`. Callable by the subnet owner (rate-limited via `OwnerHyperparamUpdate`, respects the admin freeze window) or by root (bypasses both).
+- **summary**: Deprecated compatibility entry point retained for call-index stability. This call charges a fee, returns success, and does not modify state. Use `AdminUtils::sudo_set_activity_cutoff_factor` to change the factor.
 
 ### `setAutoParentDelegationEnabled(hotkey: AccountId, enabled: bool)`
 
 - **interface**: `api.tx.subtensorModule.setAutoParentDelegationEnabled`
 - **summary**: Allows a root validator to toggle auto parent delegation for new subnets owner hotkey
 
-### `setChildkeyTake(hotkey: AccountId, netuid: NetUid, take: u16)`
+### `setChildkeyTake(hotkey: AccountId, netuid: NetUid, take: PerU16)`
 
 - **interface**: `api.tx.subtensorModule.setChildkeyTake`
 - **summary**: Sets the childkey take for a given hotkey.
@@ -2608,28 +2557,22 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` (\<T as frame_system::Config>::RuntimeOrigin):
-    The signature of the calling coldkey. Setting childkey take can only be done by the coldkey.
+    - `origin`: The signature of the calling coldkey. Setting childkey take can only be done by the coldkey.
 
-    - `hotkey` (T::AccountId):
-    The hotkey for which the childkey take will be set.
+    - `hotkey`: The hotkey for which the childkey take will be set.
 
-    - `take` (u16):
-    The new childkey take value. This is a percentage represented as a value between 0 and 10000, where 10000 represents 100%.
+    - `take`: The new childkey take value. This is a ratio represented in parts per 65535,
+    where 65535 represents 100%.
 
     **Events:**
 
-    - `ChildkeyTakeSet`:
-    On successfully setting the childkey take for a hotkey.
+    - `ChildkeyTakeSet`: On successfully setting the childkey take for a hotkey.
 
     **Errors:**
 
-    - `NonAssociatedColdKey`:
-    The coldkey does not own the hotkey.
-    - `InvalidChildkeyTake`:
-    The provided take value is invalid (greater than the maximum allowed take).
-    - `TxChildkeyTakeRateLimitExceeded`:
-    The rate limit for changing childkey take has been exceeded.
+    - `NonAssociatedColdKey`: The coldkey does not own the hotkey.
+    - `InvalidChildkeyTake`: The provided take value is invalid (greater than the maximum allowed take).
+    - `TxChildkeyTakeRateLimitExceeded`: The rate limit for changing childkey take has been exceeded.
 
 ### `setChildren(hotkey: AccountId, netuid: NetUid, children: Vec<(u64, T::AccountId)>)`
 
@@ -2640,38 +2583,28 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` (\<T as frame_system::Config>::RuntimeOrigin):
-    The signature of the calling coldkey. Setting a hotkey child can only be done by the coldkey.
+    - `origin`: The signature of the calling coldkey. Setting a hotkey child can only be done by the coldkey.
 
-    - `hotkey` (T::AccountId):
-    The hotkey which will be assigned the child.
+    - `hotkey`: The hotkey which will be assigned the child.
 
-    - `child` (T::AccountId):
-    The child which will be assigned to the hotkey.
+    - `child`: The child which will be assigned to the hotkey.
 
-    - `netuid` (u16):
-    The u16 network identifier where the childkey will exist.
+    - `netuid`: The u16 network identifier where the childkey will exist.
 
-    - `proportion` (u64):
-    Proportion of the hotkey's stake to be given to the child, the value must be u64 normalized.
+    - `proportion`: Proportion of the hotkey's stake to be given to the child, the value must be u64 normalized.
 
     **Events:**
 
-    - `ChildAddedSingular`:
-    On successfully registering a child to a hotkey.
+    - `ChildAddedSingular`: On successfully registering a child to a hotkey.
 
     **Errors:**
 
-    - `MechanismDoesNotExist`:
-    Attempting to register to a non-existent network.
-    - `RegistrationNotPermittedOnRootSubnet`:
-    Attempting to register a child on the root network.
-    - `NonAssociatedColdKey`:
-    The coldkey does not own the hotkey or the child is the same as the hotkey.
-    - `HotKeyAccountNotExists`:
-    The hotkey account does not exist.
+    - `MechanismDoesNotExist`: Attempting to register to a non-existent network.
+    - `RegistrationNotPermittedOnRootSubnet`: Attempting to register a child on the root network.
+    - `NonAssociatedColdKey`: The coldkey does not own the hotkey or the child is the same as the hotkey.
+    - `HotKeyAccountNotExists`: The hotkey account does not exist.
 
-    **Detailed Explanation of Checks:**
+    **Note:**
 
     1. **Signature Verification**: Ensures that the caller has signed the transaction, verifying the coldkey.
     2. **Root Network Check**: Ensures that the delegation is not on the root network, as child hotkeys are not valid on the root.
@@ -2689,69 +2622,75 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     The caller selects a hotkey where all future rewards will be automatically staked.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>::Origin):
-    The signature of the caller's coldkey.
+    - `origin`: The signature of the caller's coldkey.
 
-    - `hotkey` (T::AccountId):
-    The hotkey account to designate as the autostake destination.
+    - `hotkey`: The hotkey account to designate as the autostake destination.
 
 ### `setIdentity(name: Vec<u8>, url: Vec<u8>, github_repo: Vec<u8>, image: Vec<u8>, discord: Vec<u8>, description: Vec<u8>, additional: Vec<u8>)`
 
 - **interface**: `api.tx.subtensorModule.setIdentity`
-- **summary**: - Set prometheus information for the neuron.
+- **summary**: Set prometheus information for the neuron.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>Origin): — The signature of the calling hotkey.
-    - `netuid` (u16) — The u16 network identifier.
-    - `version` (u16) — The bittensor version identifier.
-    - `ip` (u128) — The prometheus ip information as a u128 encoded integer.
-    - `port` (u16) — The prometheus port information as a u16 encoded integer.
-    - `ip_type` (u8) — The ip type v4 or v6.
+    - `origin`: The signature of the calling hotkey.
+
+    - `netuid`: The u16 network identifier.
+
+    - `version`: The bittensor version identifier.
+
+    - `ip`: The prometheus ip information as a u128 encoded integer.
+
+    - `port`: The prometheus port information as a u16 encoded integer.
+
+    - `ip_type`: The ip type v4 or v6.
 
 ### `setMechanismWeights(netuid: NetUid, mecid: MechId, dests: Vec<u16>, weights: Vec<u16>, version_key: u64)`
 
 - **interface**: `api.tx.subtensorModule.setMechanismWeights`
-- **summary**: Sets the caller weights for the incentive mechanism for mechanisms. The call can be made from the hotkey account so is potentially insecure, however, the damage of changing weights is minimal if caught early. This function includes all the checks that the passed weights meet the requirements. Stored as u16s they represent rational values in the range [0,1] which sum to 1 and can be interpreted as probabilities. The specific weights determine how inflation propagates outward from this peer.
+- **summary**: Sets the caller weights for the incentive mechanism for mechanisms. The call can be made from the hotkey account so is potentially insecure, however, the damage of changing weights is minimal if caught early. This function includes all the checks that the passed weights meet the requirements. Stored weights are u16s max-upscaled by the pallet, so the largest non-zero supplied weight is stored as `u16::MAX`. The weights determine how inflation propagates outward from this peer.
 
-    Note: The 16 bit integers weights should represent 1.0 as the max u16. However, the function normalizes all integers to u16_max anyway. This means that if the sum of all elements is larger or smaller than the amount of elements * u16_max, all elements will be corrected for this deviation.
+    **Note:**
 
-    **Args:**
+    Input weights are relative. They do not need to sum to a particular value before submission.
 
-    - `origin`: (\<T as frame_system::Config>Origin):
-    The caller, a hotkey who wishes to set their weights.
+    **Arguments:**
 
-    - `netuid` (u16):
-    The network uid we are setting these weights on.
+    - `origin`: The caller, a hotkey who wishes to set their weights.
 
-    - `mecid` (`u8`):
-    The u8 mechnism identifier.
+    - `netuid`: The network uid we are setting these weights on.
 
-    - `dests` (Vec\<u16>):
-    The edge endpoint for the weight, i.e. j for w_ij.
+    - `mecid`: The u8 mechnism identifier.
 
-    - `weights` (Vec\<u16>) — The u16 integer encoded weights. Interpreted as rational
-    values in the range [0,1]. They must sum to in32::MAX.
+    - `dests`: The edge endpoint for the weight, i.e. j for w_ij.
 
-    - `version_key` (u64) — The network version key to check if the validator is up to date.
+    - `weights`: Relative u16-encoded weights, max-upscaled by the pallet before storage.
 
-    **Event:**
+    - `version_key`: The network version key to check if the validator is up to date.
 
-    - WeightsSet;
-    On successfully setting the weights on chain.
+    **Events:**
 
-    **Raises:**
+    - `WeightsSet`: On successfully setting the weights on chain.
 
-    - `MechanismDoesNotExist` — Attempting to set weights on a non-existent network.
-    - `NotRegistered` — Attempting to set weights from a non registered account.
-    - `WeightVecNotEqualSize` — Attempting to set weights with uids not of same length.
-    - `DuplicateUids` — Attempting to set weights with duplicate uids.
-    - `UidsLengthExceedUidsInSubNet` — Attempting to set weights above the max allowed uids.
-    - `UidVecContainInvalidOne` — Attempting to set weights with invalid uids.
-    - `WeightVecLengthIsLow` — Attempting to set weights with fewer weights than min.
-    - `MaxWeightExceeded` — Attempting to set weights with max value exceeding limit.
+    **Errors:**
+
+    - `MechanismDoesNotExist`: Attempting to set weights on a non-existent network.
+
+    - `NotRegistered`: Attempting to set weights from a non registered account.
+
+    - `WeightVecNotEqualSize`: Attempting to set weights with uids not of same length.
+
+    - `DuplicateUids`: Attempting to set weights with duplicate uids.
+
+    - `UidsLengthExceedUidsInSubNet`: Attempting to set weights above the max allowed uids.
+
+    - `UidVecContainInvalidOne`: Attempting to set weights with invalid uids.
+
+    - `WeightVecLengthIsLow`: Attempting to set weights with fewer weights than min.
+
+    - `MaxWeightExceeded`: Attempting to set weights with max value exceeding limit.
 
 ### `setPendingChildkeyCooldown(cooldown: u64)`
 
@@ -2777,80 +2716,78 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.setRootClaimType`
 - **summary**: Sets the root claim type for the coldkey.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>Origin): — The signature of the caller's coldkey.
+    - `origin`: The signature of the caller's coldkey.
 
-    **Event:**
+    **Events:**
 
-    - RootClaimTypeSet;
-    On the successfully setting the root claim type for the coldkey.
+    - `RootClaimTypeSet`: On the successfully setting the root claim type for the coldkey.
 
 ### `setSubnetIdentity(netuid: NetUid, subnet_name: Vec<u8>, github_repo: Vec<u8>, subnet_contact: Vec<u8>, subnet_url: Vec<u8>, discord: Vec<u8>, description: Vec<u8>, logo_url: Vec<u8>, additional: Vec<u8>)`
 
 - **interface**: `api.tx.subtensorModule.setSubnetIdentity`
-- **summary**: - Set the identity information for a subnet.
+- **summary**: Set the identity information for a subnet.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>::Origin):
-    The signature of the calling coldkey, which must be the owner of the subnet.
+    - `origin`: The signature of the calling coldkey, which must be the owner of the subnet.
 
-    - `netuid` (u16):
-    The unique network identifier of the subnet.
+    - `netuid`: The unique network identifier of the subnet.
 
-    - `subnet_name` (Vec\<u8>):
-    The name of the subnet.
+    - `subnet_name`: The name of the subnet.
 
-    - `github_repo` (Vec\<u8>):
-    The GitHub repository associated with the subnet identity.
+    - `github_repo`: The GitHub repository associated with the subnet identity.
 
-    - `subnet_contact` (Vec\<u8>):
-    The contact information for the subnet.
+    - `subnet_contact`: The contact information for the subnet.
 
 ### `setTempo(netuid: NetUid, tempo: u16)`
 
 - **interface**: `api.tx.subtensorModule.setTempo`
-- **summary**: Owner-side `set_tempo`. Validates `[MinTempo, MaxTempo]`, applies a fixed `MinTempo`-block cooldown via `TransactionType::TempoUpdate`, respects the admin freeze window, and resets the cycle (`LastEpochBlock = current_block`) on success.
+- **summary**: Deprecated compatibility entry point retained for call-index stability. This call charges a fee, returns success, and does not modify state. Use `AdminUtils::sudo_set_tempo` to change subnet tempo.
 
 ### `setWeights(netuid: NetUid, dests: Vec<u16>, weights: Vec<u16>, version_key: u64)`
 
 - **interface**: `api.tx.subtensorModule.setWeights`
-- **summary**: Sets the caller weights for the incentive mechanism. The call can be made from the hotkey account so is potentially insecure, however, the damage of changing weights is minimal if caught early. This function includes all the checks that the passed weights meet the requirements. Stored as u16s they represent rational values in the range [0,1] which sum to 1 and can be interpreted as probabilities. The specific weights determine how inflation propagates outward from this peer.
+- **summary**: Sets the caller weights for the incentive mechanism. The call can be made from the hotkey account so is potentially insecure, however, the damage of changing weights is minimal if caught early. This function includes all the checks that the passed weights meet the requirements. Stored weights are u16s max-upscaled by the pallet, so the largest non-zero supplied weight is stored as `u16::MAX`. The weights determine how inflation propagates outward from this peer.
 
-    Note: The 16 bit integers weights should represent 1.0 as the max u16. However, the function normalizes all integers to u16_max anyway. This means that if the sum of all elements is larger or smaller than the amount of elements * u16_max, all elements will be corrected for this deviation.
+    **Note:**
 
-    **Args:**
+    Input weights are relative. They do not need to sum to a particular value before submission.
 
-    - `origin`: (\<T as frame_system::Config>Origin):
-    The caller, a hotkey who wishes to set their weights.
+    **Arguments:**
 
-    - `netuid` (u16):
-    The network uid we are setting these weights on.
+    - `origin`: The caller, a hotkey who wishes to set their weights.
 
-    - `dests` (Vec\<u16>):
-    The edge endpoint for the weight, i.e. j for w_ij.
+    - `netuid`: The network uid we are setting these weights on.
 
-    - `weights` (Vec\<u16>) — The u16 integer encoded weights. Interpreted as rational
-    values in the range [0,1]. They must sum to in32::MAX.
+    - `dests`: The edge endpoint for the weight, i.e. j for w_ij.
 
-    - `version_key` (u64) — The network version key to check if the validator is up to date.
+    - `weights`: Relative u16-encoded weights, max-upscaled by the pallet before storage.
 
-    **Event:**
+    - `version_key`: The network version key to check if the validator is up to date.
 
-    - WeightsSet;
-    On successfully setting the weights on chain.
+    **Events:**
 
-    **Raises:**
+    - `WeightsSet`: On successfully setting the weights on chain.
 
-    - `MechanismDoesNotExist` — Attempting to set weights on a non-existent network.
-    - `NotRegistered` — Attempting to set weights from a non registered account.
-    - `WeightVecNotEqualSize` — Attempting to set weights with uids not of same length.
-    - `DuplicateUids` — Attempting to set weights with duplicate uids.
-    - `UidsLengthExceedUidsInSubNet` — Attempting to set weights above the max allowed uids.
-    - `UidVecContainInvalidOne` — Attempting to set weights with invalid uids.
-    - `WeightVecLengthIsLow` — Attempting to set weights with fewer weights than min.
-    - `MaxWeightExceeded` — Attempting to set weights with max value exceeding limit.
+    **Errors:**
+
+    - `MechanismDoesNotExist`: Attempting to set weights on a non-existent network.
+
+    - `NotRegistered`: Attempting to set weights from a non registered account.
+
+    - `WeightVecNotEqualSize`: Attempting to set weights with uids not of same length.
+
+    - `DuplicateUids`: Attempting to set weights with duplicate uids.
+
+    - `UidsLengthExceedUidsInSubNet`: Attempting to set weights above the max allowed uids.
+
+    - `UidVecContainInvalidOne`: Attempting to set weights with invalid uids.
+
+    - `WeightVecLengthIsLow`: Attempting to set weights with fewer weights than min.
+
+    - `MaxWeightExceeded`: Attempting to set weights with max value exceeding limit.
 
 ### `startCall(netuid: NetUid)`
 
@@ -2859,14 +2796,14 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call, which must be signed by the subnet owner.
-    - `netuid` — The unique identifier of the subnet on which the call is being initiated.
+    - `origin`: The origin of the call, which must be signed by the subnet owner.
+    - `netuid`: The unique identifier of the subnet on which the call is being initiated.
 
     **Events:**
 
     Emits a `FirstEmissionBlockNumberSet` event on success.
 
-### `sudoSetMaxChildkeyTake(take: u16)`
+### `sudoSetMaxChildkeyTake(take: PerU16)`
 
 - **interface**: `api.tx.subtensorModule.sudoSetMaxChildkeyTake`
 - **summary**: Sets the maximum allowed childkey take.
@@ -2875,14 +2812,14 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call, must be root.
-    - `take` — The new maximum childkey take value.
+    - `origin`: The origin of the call, must be root.
+    - `take`: The new maximum childkey take value.
 
     **Errors:**
 
-    - `BadOrigin` — If the origin is not root.
+    - `BadOrigin`: If the origin is not root.
 
-### `sudoSetMinChildkeyTake(take: u16)`
+### `sudoSetMinChildkeyTake(take: PerU16)`
 
 - **interface**: `api.tx.subtensorModule.sudoSetMinChildkeyTake`
 - **summary**: Sets the minimum allowed childkey take.
@@ -2891,12 +2828,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call, must be root.
-    - `take` — The new minimum childkey take value.
+    - `origin`: The origin of the call, must be root.
+    - `take`: The new minimum childkey take value.
 
     **Errors:**
 
-    - `BadOrigin` — If the origin is not root.
+    - `BadOrigin`: If the origin is not root.
 
 ### `sudoSetNumRootClaims(new_value: u64)`
 
@@ -2917,12 +2854,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call, must be root.
-    - `tx_rate_limit` — The new rate limit in blocks.
+    - `origin`: The origin of the call, must be root.
+    - `tx_rate_limit`: The new rate limit in blocks.
 
     **Errors:**
 
-    - `BadOrigin` — If the origin is not root.
+    - `BadOrigin`: If the origin is not root.
 
 ### `sudoSetVotingPowerEmaAlpha(netuid: NetUid, alpha: u64)`
 
@@ -2933,15 +2870,15 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call, must be root.
-    - `netuid` — The subnet to set the alpha for.
-    - `alpha` — The new alpha value (u64 with 18 decimal precision).
+    - `origin`: The origin of the call, must be root.
+    - `netuid`: The subnet to set the alpha for.
+    - `alpha`: The new alpha value (u64 with 18 decimal precision).
 
     **Errors:**
 
-    - `BadOrigin` — If the origin is not root.
-    - `SubnetNotExist` — If the subnet does not exist.
-    - `InvalidVotingPowerEmaAlpha` — If alpha is greater than 10^18 (1.0).
+    - `BadOrigin`: If the origin is not root.
+    - `SubnetNotExist`: If the subnet does not exist.
+    - `InvalidVotingPowerEmaAlpha`: If alpha is greater than 10^18 (1.0).
 
 ### `swapColdkey(old_coldkey: AccountId, new_coldkey: AccountId, swap_cost: TaoBalance)`
 
@@ -2965,28 +2902,27 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `swapHotkey(hotkey: AccountId, new_hotkey: AccountId, netuid: Option<NetUid>)`
 
 - **interface**: `api.tx.subtensorModule.swapHotkey`
-- **summary**: - The extrinsic for user to change its hotkey in subnet or all subnets.
+- **summary**: The extrinsic for user to change its hotkey in subnet or all subnets.
 
     **Arguments:**
 
-    - `origin` — The origin of the transaction (must be signed by the coldkey).
-    - `hotkey` — The old hotkey to be swapped.
-    - `new_hotkey` — The new hotkey to replace the old one.
-    - `netuid` — Optional subnet ID. If `Some`, swap only on that subnet; if `None`, swap on all subnets.
-    is transferred to the new hotkey.
+    - `origin`: The origin of the transaction (must be signed by the coldkey).
+    - `hotkey`: The old hotkey to be swapped.
+    - `new_hotkey`: The new hotkey to replace the old one.
+    - `netuid`: Optional subnet ID. If `Some`, swap only on that subnet; if `None`, swap on all subnets.
 
 ### `swapHotkeyV2(hotkey: AccountId, new_hotkey: AccountId, netuid: Option<NetUid>, keep_stake: bool)`
 
 - **interface**: `api.tx.subtensorModule.swapHotkeyV2`
-- **summary**: - The extrinsic for user to change its hotkey in subnet or all subnets. This extrinsic is similar to swap_hotkey, but with keep_stake parameter bo be able to keep the stake when swapping a root key to a child key
+- **summary**: The extrinsic for user to change its hotkey in subnet or all subnets. This extrinsic is similar to swap_hotkey, but with keep_stake parameter bo be able to keep the stake when swapping a root key to a child key
 
     **Arguments:**
 
-    - `origin` — The origin of the transaction (must be signed by the coldkey).
-    - `hotkey` — The old hotkey to be swapped.
-    - `new_hotkey` — The new hotkey to replace the old one.
-    - `netuid` — Optional subnet ID. If `Some`, swap only on that subnet; if `None`, swap on all subnets.
-    - `keep_stake` — If `true`, stake remains on the old hotkey and the rest metadata
+    - `origin`: The origin of the transaction (must be signed by the coldkey).
+    - `hotkey`: The old hotkey to be swapped.
+    - `new_hotkey`: The new hotkey to replace the old one.
+    - `netuid`: Optional subnet ID. If `Some`, swap only on that subnet; if `None`, swap on all subnets.
+    - `keep_stake`: If `true`, stake remains on the old hotkey and the rest metadata
     is transferred to the new hotkey.
 
 ### `swapStake(hotkey: AccountId, origin_netuid: NetUid, destination_netuid: NetUid, alpha_amount: AlphaBalance)`
@@ -2996,20 +2932,23 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the transaction, which must be signed by the coldkey that owns the `hotkey`.
-    - `hotkey` — The hotkey whose stake is being swapped.
-    - `origin_netuid` — The network/subnet ID from which stake is removed.
-    - `destination_netuid` — The network/subnet ID to which stake is added.
-    - `alpha_amount` — The amount of stake to swap.
+    - `origin`: The origin of the transaction, which must be signed by the coldkey that owns the `hotkey`.
+    - `hotkey`: The hotkey whose stake is being swapped.
+    - `origin_netuid`: The network/subnet ID from which stake is removed.
+    - `destination_netuid`: The network/subnet ID to which stake is added.
+    - `alpha_amount`: The amount of stake to swap.
 
     **Errors:**
 
-    Returns an error if:
-    - The transaction is not signed by the correct coldkey (i.e., `coldkey_owns_hotkey` fails).
-    - Either `origin_netuid` or `destination_netuid` does not exist.
-    - The hotkey does not exist.
-    - There is insufficient stake on `(coldkey, hotkey, origin_netuid)`.
-    - The swap amount is below the minimum stake requirement.
+    - `BadOrigin`: The transaction is not signed.
+    - `SameNetuid`: `origin_netuid` and `destination_netuid` are the same.
+    - `SubnetNotExists`: Either `origin_netuid` or `destination_netuid` does not exist.
+    - `SubtokenDisabled`: The subtoken is disabled on the origin or destination subnet.
+    - `HotKeyAccountNotExists`: The `hotkey` account does not exist.
+    - `NotEnoughStakeToWithdraw`: The `(coldkey, hotkey, origin_netuid)` position has less stake than `alpha_amount`.
+    - `InsufficientLiquidity`: The swap simulation on the origin subnet fails.
+    - `AmountTooLow`: The TAO-equivalent of the swap is below the minimum stake requirement.
+    - `StakeUnavailable`: The remaining stake would not cover the locked amount on the origin subnet.
 
     **Events:**
 
@@ -3022,22 +2961,26 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the transaction, which must be signed by the coldkey that owns the `hotkey`.
-    - `hotkey` — The hotkey whose stake is being swapped.
-    - `origin_netuid` — The network/subnet ID from which stake is removed.
-    - `destination_netuid` — The network/subnet ID to which stake is added.
-    - `alpha_amount` — The amount of stake to swap.
-    - `limit_price` — The limit price expressed in units of RAO per one Alpha.
-    - `allow_partial` — Allows partial execution of the amount. If set to false, this becomes fill or kill type or order.
+    - `origin`: The origin of the transaction, which must be signed by the coldkey that owns the `hotkey`.
+    - `hotkey`: The hotkey whose stake is being swapped.
+    - `origin_netuid`: The network/subnet ID from which stake is removed.
+    - `destination_netuid`: The network/subnet ID to which stake is added.
+    - `alpha_amount`: The amount of stake to swap.
+    - `limit_price`: The limit price expressed in units of RAO per one Alpha.
+    - `allow_partial`: Allows partial execution of the amount. If set to false, this becomes fill or kill type of order.
 
     **Errors:**
 
-    Returns an error if:
-    - The transaction is not signed by the correct coldkey (i.e., `coldkey_owns_hotkey` fails).
-    - Either `origin_netuid` or `destination_netuid` does not exist.
-    - The hotkey does not exist.
-    - There is insufficient stake on `(coldkey, hotkey, origin_netuid)`.
-    - The swap amount is below the minimum stake requirement.
+    - `BadOrigin`: The transaction is not signed.
+    - `SameNetuid`: `origin_netuid` and `destination_netuid` are the same.
+    - `SubnetNotExists`: Either `origin_netuid` or `destination_netuid` does not exist.
+    - `SubtokenDisabled`: The subtoken is disabled on the origin or destination subnet.
+    - `HotKeyAccountNotExists`: The `hotkey` account does not exist.
+    - `NotEnoughStakeToWithdraw`: The `(coldkey, hotkey, origin_netuid)` position has less stake than `alpha_amount`.
+    - `InsufficientLiquidity`: The swap simulation on the origin subnet fails.
+    - `AmountTooLow`: The TAO-equivalent of the swap is below the minimum stake requirement.
+    - `SlippageTooHigh`: `allow_partial` is false and the amount would cross the limit price.
+    - `StakeUnavailable`: The remaining stake would not cover the locked amount on the origin subnet.
 
     **Events:**
 
@@ -3052,16 +2995,13 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **The hotkey must be owned by the beneficiary coldkey.**
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>::Origin):
-    The signature of the caller's coldkey.
+    - `origin`: The signature of the caller's coldkey.
 
-    - `lease_id` (LeaseId):
-    The ID of the lease to terminate.
+    - `lease_id`: The ID of the lease to terminate.
 
-    - `hotkey` (T::AccountId):
-    The hotkey of the beneficiary to mark as subnet owner hotkey.
+    - `hotkey`: The hotkey of the beneficiary to mark as subnet owner hotkey.
 
 ### `transferStake(destination_coldkey: AccountId, hotkey: AccountId, origin_netuid: NetUid, destination_netuid: NetUid, alpha_amount: AlphaBalance)`
 
@@ -3070,21 +3010,24 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the transaction, which must be signed by the `origin_coldkey`.
-    - `destination_coldkey` — The coldkey to which the stake is transferred.
-    - `hotkey` — The hotkey associated with the stake.
-    - `origin_netuid` — The network/subnet ID to move stake from.
-    - `destination_netuid` — The network/subnet ID to move stake to (for cross-subnet transfer).
-    - `alpha_amount` — The amount of stake to transfer.
+    - `origin`: The origin of the transaction, which must be signed by the `origin_coldkey`.
+    - `destination_coldkey`: The coldkey to which the stake is transferred.
+    - `hotkey`: The hotkey associated with the stake.
+    - `origin_netuid`: The network/subnet ID to move stake from.
+    - `destination_netuid`: The network/subnet ID to move stake to (for cross-subnet transfer).
+    - `alpha_amount`: The amount of stake to transfer.
 
     **Errors:**
 
-    Returns an error if:
-    - The origin is not signed by the correct coldkey.
-    - Either subnet does not exist.
-    - The hotkey does not exist.
-    - There is insufficient stake on `(origin_coldkey, hotkey, origin_netuid)`.
-    - The transfer amount is below the minimum stake requirement.
+    - `BadOrigin`: The transaction is not signed.
+    - `SubnetNotExists`: Either `origin_netuid` or `destination_netuid` does not exist.
+    - `SubtokenDisabled`: The subtoken is disabled on the origin or destination subnet.
+    - `HotKeyAccountNotExists`: The `hotkey` account does not exist.
+    - `NotEnoughStakeToWithdraw`: The `(origin_coldkey, hotkey, origin_netuid)` position has less stake than `alpha_amount`.
+    - `InsufficientLiquidity`: The swap simulation on the origin subnet fails.
+    - `AmountTooLow`: The TAO-equivalent of the transfer is below the minimum stake requirement.
+    - `TransferDisallowed`: Transfers are disabled on the origin or destination subnet.
+    - `StakeUnavailable`: The remaining stake would not cover the locked amount on the origin subnet.
 
     **Events:**
 
@@ -3102,8 +3045,8 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the transaction, which must be signed by the coldkey that owns the `hotkey`.
-    - `hotkey` — The hotkey to associate with the coldkey.
+    - `origin`: The origin of the transaction, which must be signed by the coldkey that owns the `hotkey`.
+    - `hotkey`: The hotkey to associate with the coldkey.
 
     **Note:**
 
@@ -3112,66 +3055,52 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `unstakeAll(hotkey: AccountId)`
 
 - **interface**: `api.tx.subtensorModule.unstakeAll`
-- **summary**: - The implementation for the extrinsic unstake_all: Removes all stake from a hotkey account across all subnets and adds it onto a coldkey.
+- **summary**: The implementation for the extrinsic unstake_all: Removes all stake from a hotkey account across all subnets and adds it onto a coldkey.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>::Origin):
-    The signature of the caller's coldkey.
+    - `origin`: The signature of the caller's coldkey.
 
-    - `hotkey` (T::AccountId):
-    The associated hotkey account.
+    - `hotkey`: The associated hotkey account.
 
-    **Event:**
+    **Events:**
 
-    - StakeRemoved;
-    On the successfully removing stake from the hotkey account.
+    - `StakeRemoved`: On the successfully removing stake from the hotkey account.
 
-    **Raises:**
+    **Errors:**
 
-    - `NotRegistered`:
-    Thrown if the account we are attempting to unstake from is non existent.
+    - `NotRegistered`: Thrown if the account we are attempting to unstake from is non existent.
 
-    - `NonAssociatedColdKey`:
-    Thrown if the coldkey does not own the hotkey we are unstaking from.
+    - `NonAssociatedColdKey`: Thrown if the coldkey does not own the hotkey we are unstaking from.
 
-    - `NotEnoughStakeToWithdraw`:
-    Thrown if there is not enough stake on the hotkey to withdraw this amount.
+    - `NotEnoughStakeToWithdraw`: Thrown if there is not enough stake on the hotkey to withdraw this amount.
 
-    - `TxRateLimitExceeded`:
-    Thrown if key has hit transaction rate limit
+    - `TxRateLimitExceeded`: Thrown if key has hit transaction rate limit.
 
 ### `unstakeAllAlpha(hotkey: AccountId)`
 
 - **interface**: `api.tx.subtensorModule.unstakeAllAlpha`
-- **summary**: - The implementation for the extrinsic unstake_all: Removes all stake from a hotkey account across all subnets and adds it onto a coldkey.
+- **summary**: The implementation for the extrinsic unstake_all: Removes all stake from a hotkey account across all subnets and adds it onto a coldkey.
 
-    **Args:**
+    **Arguments:**
 
-    - `origin` — (\<T as frame_system::Config>::Origin):
-    The signature of the caller's coldkey.
+    - `origin`: The signature of the caller's coldkey.
 
-    - `hotkey` (T::AccountId):
-    The associated hotkey account.
+    - `hotkey`: The associated hotkey account.
 
-    **Event:**
+    **Events:**
 
-    - StakeRemoved;
-    On the successfully removing stake from the hotkey account.
+    - `StakeRemoved`: On the successfully removing stake from the hotkey account.
 
-    **Raises:**
+    **Errors:**
 
-    - `NotRegistered`:
-    Thrown if the account we are attempting to unstake from is non existent.
+    - `NotRegistered`: Thrown if the account we are attempting to unstake from is non existent.
 
-    - `NonAssociatedColdKey`:
-    Thrown if the coldkey does not own the hotkey we are unstaking from.
+    - `NonAssociatedColdKey`: Thrown if the coldkey does not own the hotkey we are unstaking from.
 
-    - `NotEnoughStakeToWithdraw`:
-    Thrown if there is not enough stake on the hotkey to withdraw this amount.
+    - `NotEnoughStakeToWithdraw`: Thrown if there is not enough stake on the hotkey to withdraw this amount.
 
-    - `TxRateLimitExceeded`:
-    Thrown if key has hit transaction rate limit
+    - `TxRateLimitExceeded`: Thrown if key has hit transaction rate limit.
 
 ### `updateSymbol(netuid: NetUid, symbol: Vec<u8>)`
 
@@ -3180,16 +3109,16 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     **Arguments:**
 
-    - `origin` — The origin of the call, which must be the subnet owner or root.
-    - `netuid` — The unique identifier of the subnet on which the symbol is being set.
-    - `symbol` — The symbol to set for the subnet.
+    - `origin`: The origin of the call, which must be the subnet owner or root.
+    - `netuid`: The unique identifier of the subnet on which the symbol is being set.
+    - `symbol`: The symbol to set for the subnet.
 
     **Errors:**
 
-    Returns an error if:
-    - The transaction is not signed by the subnet owner.
-    - The symbol does not exist.
-    - The symbol is already in use by another subnet.
+    - `BadOrigin`: The transaction is not signed by the subnet owner or root.
+    - `SubnetNotExists`: The subnet identified by `netuid` does not exist.
+    - `SymbolDoesNotExist`: The symbol is not one of the recognized symbols.
+    - `SymbolAlreadyInUse`: The symbol is already in use by another subnet.
 
     **Events:**
 

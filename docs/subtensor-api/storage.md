@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **424**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **432**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -56,12 +56,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 ## `alphaAssets`
 
-### `alphaBurned(u16)`: `u64`
+### `alphaBurned(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.alphaAssets.alphaBurned`
 - **summary**: Total alpha burned per subnet through this pallet.
 
-### `alphaRecycled(u16)`: `u64`
+### `alphaRecycled(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.alphaAssets.alphaRecycled`
 - **summary**: Total alpha recycled per subnet through this pallet.
@@ -72,7 +72,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `totalAlphaIssuance(u16)`: `u64`
+### `totalAlphaIssuance(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.alphaAssets.totalAlphaIssuance`
 - **summary**: Total alpha issuance tracked by the pallet.
@@ -128,7 +128,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.balances.holds`
 - **summary**: Holds on account balances.
 
-### `inactiveIssuance`: `u64`
+### `inactiveIssuance`: `TaoBalance`
 
 - **interface**: `api.query.balances.inactiveIssuance`
 - **summary**: The total units of outstanding deactivated balance in the system.
@@ -153,7 +153,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     Use of reserves is deprecated in favour of holds. See `https://github.com/paritytech/substrate/pull/12951/`
 
-### `totalIssuance`: `u64`
+### `totalIssuance`: `TaoBalance`
 
 - **interface**: `api.query.balances.totalIssuance`
 - **summary**: The total units issued in the system.
@@ -288,7 +288,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 ## `crowdloan`
 
-### `contributions(u32, AccountId32)`: `u64`
+### `contributions(u32, AccountId32)`: `TaoBalance`
 
 - **interface**: `api.query.crowdloan.contributions`
 - **modifier**: `Optional`
@@ -311,7 +311,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.crowdloan.hasMigrationRun`
 - **summary**: Storage for the migration run status.
 
-### `maxContributions(u32)`: `u64`
+### `maxContributions(u32)`: `TaoBalance`
 
 - **interface**: `api.query.crowdloan.maxContributions`
 - **modifier**: `Optional`
@@ -707,7 +707,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 ## `safeMode`
 
-### `deposits(AccountId32, u32)`: `u64`
+### `deposits(AccountId32, u32)`: `TaoBalance`
 
 - **interface**: `api.query.safeMode.deposits`
 - **modifier**: `Optional`
@@ -830,32 +830,32 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.accountFlags`
 - **summary**: MAP ( coldkey ) --> flags | Account-level flags. Defaults to zero.
 
-### `accumulatedLeaseDividends(u32)`: `u64`
+### `accumulatedLeaseDividends(u32)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.accumulatedLeaseDividends`
 - **summary**: MAP ( lease_id ) --> accumulated_dividends | The accumulated dividends for a given lease that needs to be distributed.
 
-### `active(u16)`: `Vec<bool>`
+### `active(NetUid)`: `Vec<bool>`
 
 - **interface**: `api.query.subtensorModule.active`
 - **summary**: MAP ( netuid ) --> active
 
-### `activityCutoff(u16)`: `u16`
+### `activityCutoff(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.activityCutoff`
 - **summary**: MAP ( netuid ) --> activity_cutoff
 
-### `activityCutoffFactorMilli(u16)`: `u32`
+### `activityCutoffFactorMilli(NetUid)`: `u32`
 
 - **interface**: `api.query.subtensorModule.activityCutoffFactorMilli`
 - **summary**: MAP ( netuid ) --> activity-cutoff factor in per-mille epochs (1/1000 granularity). Effective cutoff in blocks = `(factor × tempo) / 1000`, clamped to ≥ 1.
 
-### `adjustmentAlpha(u16)`: `u64`
+### `adjustmentAlpha(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.adjustmentAlpha`
 - **summary**: MAP ( netuid ) --> adjustment_alpha
 
-### `adjustmentInterval(u16)`: `u16`
+### `adjustmentInterval(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.adjustmentInterval`
 - **summary**: MAP ( netuid ) --> adjustment_interval
@@ -870,7 +870,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.alpha`
 - **summary**: NMAP ( hot, cold, netuid ) --> alpha | Returns the alpha shares for a hotkey, coldkey, netuid triplet.
 
-### `alphaDividendsPerSubnet(u16, AccountId32)`: `u64`
+### `alphaDividendsPerSubnet(u16, AccountId32)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.alphaDividendsPerSubnet`
 - **summary**: DMAP ( netuid, hotkey ) --> u64 | Last alpha dividend this hotkey got on tempo.
@@ -880,7 +880,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.alphaMapLastKey`
 - **summary**: Contains last Alpha storage map key to iterate (check first)
 
-### `alphaSigmoidSteepness(u16)`: `i16`
+### `alphaSigmoidSteepness(NetUid)`: `i16`
 
 - **interface**: `api.query.subtensorModule.alphaSigmoidSteepness`
 - **summary**: MAP ( netuid ) --> AlphaSigmoidSteepness
@@ -895,7 +895,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.alphaV2MapLastKey`
 - **summary**: Contains last AlphaV2 storage map key to iterate (check first)
 
-### `alphaValues(u16)`: `(u16,u16)`
+### `alphaValues(NetUid)`: `(u16,u16)`
 
 - **interface**: `api.query.subtensorModule.alphaValues`
 - **summary**: MAP ( netuid ) --> (alpha_low, alpha_high)
@@ -904,7 +904,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.associatedEvmAddress`
 - **modifier**: `Optional`
-- **summary**: ============================= ==== EVM related storage ==== ============================= --- DMAP (netuid, uid) --> (H160, last_block_where_ownership_was_proven)
+- **summary**: DMAP (netuid, uid) --> (H160, last_block_where_ownership_was_proven)
+
+### `associatedUidsByEvmAddress(u16, H160)`: `Vec<(u16,u64)>`
+
+- **interface**: `api.query.subtensorModule.associatedUidsByEvmAddress`
+- **summary**: DMAP (netuid, H160) --> associated UIDs and last block where ownership was proven.
 
 ### `autoParentDelegationEnabled(AccountId32)`: `bool`
 
@@ -938,9 +943,9 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `blockEmission`: `u64`
 
 - **interface**: `api.query.subtensorModule.blockEmission`
-- **summary**: ================== ==== Coinbase ==== ================== --- ITEM ( global_block_emission )
+- **summary**: ITEM ( global_block_emission )
 
-### `blocksSinceLastStep(u16)`: `u64`
+### `blocksSinceLastStep(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.blocksSinceLastStep`
 - **summary**: MAP ( netuid ) --> blocks_since_last_step
@@ -950,37 +955,37 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.bonds`
 - **summary**: DMAP ( netuid, uid ) --> bonds
 
-### `bondsMovingAverage(u16)`: `u64`
+### `bondsMovingAverage(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.bondsMovingAverage`
 - **summary**: MAP ( netuid ) --> bonds_moving_average
 
-### `bondsPenalty(u16)`: `u16`
+### `bondsPenalty(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.bondsPenalty`
 - **summary**: MAP ( netuid ) --> bonds_penalty
 
-### `bondsResetOn(u16)`: `bool`
+### `bondsResetOn(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.bondsResetOn`
 - **summary**: MAP ( netuid ) --> bonds_reset
 
-### `burn(u16)`: `u64`
+### `burn(NetUid)`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.burn`
 - **summary**: MAP ( netuid ) --> Burn
 
-### `burnHalfLife(u16)`: `u16`
+### `burnHalfLife(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.burnHalfLife`
 - **summary**: MAP ( netuid ) --> BurnHalfLife (blocks)
 
-### `burnIncreaseMult(u16)`: `FixedU128`
+### `burnIncreaseMult(NetUid)`: `FixedU128`
 
 - **interface**: `api.query.subtensorModule.burnIncreaseMult`
 - **summary**: MAP ( netuid ) --> BurnIncreaseMult
 
-### `burnRegistrationsThisInterval(u16)`: `u16`
+### `burnRegistrationsThisInterval(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.burnRegistrationsThisInterval`
 - **summary**: MAP ( netuid ) --> burn_registrations_this_interval
@@ -990,7 +995,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.childKeys`
 - **summary**: DMAP ( parent, netuid ) --> Vec\<(proportion,child)>
 
-### `childkeyTake(AccountId32, u16)`: `u16`
+### `childkeyTake(AccountId32, u16)`: `PerU16`
 
 - **interface**: `api.query.subtensorModule.childkeyTake`
 - **summary**: DMAP ( hot, netuid ) --> take | Returns the hotkey childkey take for a specific subnet
@@ -1022,7 +1027,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.coldkeySwapReannouncementDelay`
 - **summary**: The delay after the initial delay has passed before a new announcement can be made.
 
-### `commitRevealWeightsEnabled(u16)`: `bool`
+### `commitRevealWeightsEnabled(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.commitRevealWeightsEnabled`
 - **summary**: MAP ( netuid ) --> commit reveal v2 weights are enabled
@@ -1032,7 +1037,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.commitRevealWeightsVersion`
 - **summary**: ITEM ( CommitRevealWeightsVersion )
 
-### `consensus(u16)`: `Vec<u16>`
+### `consensus(NetUid)`: `Vec<PerU16>`
 
 - **interface**: `api.query.subtensorModule.consensus`
 - **summary**: MAP ( netuid ) --> consensus
@@ -1040,12 +1045,18 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `crv3WeightCommits(u16, u64)`: `Vec<(AccountId32,Bytes,u64)>`
 
 - **interface**: `api.query.subtensorModule.crv3WeightCommits`
-- **summary**: MAP (netuid, epoch) → VecDeque\<(who, ciphertext, reveal_round)> DEPRECATED for CRV3WeightCommitsV2
+- **summary**: MAP (netuid, epoch) → VecDeque\<(who, ciphertext, reveal_round)> Deprecated: superseded by `CRV3WeightCommitsV2`.
 
 ### `crv3WeightCommitsV2(u16, u64)`: `Vec<(AccountId32,u64,Bytes,u64)>`
 
 - **interface**: `api.query.subtensorModule.crv3WeightCommitsV2`
-- **summary**: MAP (netuid, epoch) → VecDeque\<(who, commit_block, ciphertext, reveal_round)> DEPRECATED for TimelockedWeightCommits
+- **summary**: MAP (netuid, epoch) → VecDeque\<(who, commit_block, ciphertext, reveal_round)> Deprecated: superseded by `TimelockedWeightCommits`.
+
+### `currentDissolveCleanupStatus`: `DissolveCleanupStatus`
+
+- **interface**: `api.query.subtensorModule.currentDissolveCleanupStatus`
+- **modifier**: `Optional`
+- **summary**: ITEM ( current_dissolve_cleanup_status ) dissolve status for the network
 
 ### `decayingHotkeyLock(u16, AccountId32)`: `LockState`
 
@@ -1059,47 +1070,52 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **modifier**: `Optional`
 - **summary**: DMAP ( coldkey, netuid ) --> false | When present and false, this coldkey's lock is perpetual. Missing entries mean the lock decays by default.
 
-### `decayingOwnerLock(u16)`: `LockState`
+### `decayingOwnerLock(NetUid)`: `LockState`
 
 - **interface**: `api.query.subtensorModule.decayingOwnerLock`
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> LockState | Total decaying lock to the owner hotkey for a subnet.
 
-### `delegates(AccountId32)`: `u16`
+### `delegates(AccountId32)`: `PerU16`
 
 - **interface**: `api.query.subtensorModule.delegates`
 - **summary**: MAP ( hot ) --> take | Returns the hotkey delegation take. And signals that this key is open for delegation
 
-### `difficulty(u16)`: `u64`
+### `difficulty(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.difficulty`
 - **summary**: MAP ( netuid ) --> Difficulty
+
+### `dissolveCleanupQueue`: `Vec<u16>`
+
+- **interface**: `api.query.subtensorModule.dissolveCleanupQueue`
+- **summary**: ITEM ( dissolve_cleanup_queue ) Networks dissolved but some storage not removed yet
 
 ### `dissolveNetworkScheduleDuration`: `u32`
 
 - **interface**: `api.query.subtensorModule.dissolveNetworkScheduleDuration`
 - **summary**: Duration of dissolve network schedule before execution
 
-### `dividends(u16)`: `Vec<u16>`
+### `dividends(NetUid)`: `Vec<PerU16>`
 
 - **interface**: `api.query.subtensorModule.dividends`
 - **summary**: MAP ( netuid ) --> dividends
 
-### `emaPriceHalvingBlocks(u16)`: `u64`
+### `emaPriceHalvingBlocks(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.emaPriceHalvingBlocks`
 - **summary**: MAP ( netuid ) --> Halving time of average moving price.
 
-### `emission(u16)`: `Vec<u64>`
+### `emission(NetUid)`: `Vec<u64>`
 
 - **interface**: `api.query.subtensorModule.emission`
 - **summary**: MAP ( netuid ) --> emission
 
-### `firstEmissionBlockNumber(u16)`: `u64`
+### `firstEmissionBlockNumber(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.firstEmissionBlockNumber`
 - **modifier**: `Optional`
-- **summary**: ============================ ==== Subnet Parameters ===== ============================ --- MAP ( netuid ) --> block number of first emission
+- **summary**: MAP ( netuid ) --> block number of first emission
 
 ### `flowEmaSmoothingFactor`: `u64`
 
@@ -1114,7 +1130,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `hasMigrationRun(Bytes)`: `bool`
 
 - **interface**: `api.query.subtensorModule.hasMigrationRun`
-- **summary**: ================== ==== Genesis ===== ================== --- Storage for migration run status
+- **summary**: Storage for migration run status
 
 ### `hotkeyLock(u16, AccountId32)`: `LockState`
 
@@ -1128,17 +1144,17 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **modifier**: `Optional`
 - **summary**: MAP ( coldkey ) --> identity
 
-### `immuneOwnerUidsLimit(u16)`: `u16`
+### `immuneOwnerUidsLimit(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.immuneOwnerUidsLimit`
 - **summary**: MAP ( netuid ) --> Burn key limit
 
-### `immunityPeriod(u16)`: `u16`
+### `immunityPeriod(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.immunityPeriod`
 - **summary**: MAP ( netuid ) --> immunity_period
 
-### `incentive(u16)`: `Vec<u16>`
+### `incentive(NetUidStorageIndex)`: `Vec<PerU16>`
 
 - **interface**: `api.query.subtensorModule.incentive`
 - **summary**: MAP ( netuid ) --> incentive
@@ -1148,7 +1164,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.isNetworkMember`
 - **summary**: DMAP ( hotkey, netuid ) --> bool
 
-### `kappa(u16)`: `u16`
+### `kappa(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.kappa`
 - **summary**: MAP ( netuid ) --> Kappa
@@ -1158,12 +1174,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.keys`
 - **summary**: DMAP ( netuid, uid ) --> hotkey
 
-### `largestLocked(u16)`: `u64`
+### `largestLocked(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.largestLocked`
 - **summary**: MAP ( netuid ) --> largest_locked
 
-### `lastAdjustmentBlock(u16)`: `u64`
+### `lastAdjustmentBlock(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastAdjustmentBlock`
 - **summary**: MAP ( netuid ) -->  Block at last adjustment.
@@ -1174,12 +1190,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **modifier**: `Optional`
 - **summary**: Map (coldkey, hotkey) --> u64 the last block at which stake was added/removed.
 
-### `lastEpochBlock(u16)`: `u64`
+### `lastEpochBlock(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastEpochBlock`
-- **summary**: MAP ( netuid ) --> last epoch attempt block (consumed slot). Drives normal-cadence scheduling and the admin freeze window. Advances on every `should_run_epoch == true` slot — including consistency-skipped slots — and on a successful `set_tempo` (cycle reset).
+- **summary**: MAP ( netuid ) --> last epoch attempt block (consumed slot). Drives normal-cadence scheduling and the admin freeze window. Advances on every `should_run_epoch == true` slot — including consistency-skipped slots — and on a successful `sudo_set_tempo` (cycle reset).
 
-### `lastHotkeyEmissionOnNetuid(AccountId32, u16)`: `u64`
+### `lastHotkeyEmissionOnNetuid(AccountId32, u16)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.lastHotkeyEmissionOnNetuid`
 - **summary**: DMap ( hot, netuid ) --> emission | last hotkey emission on network.
@@ -1189,7 +1205,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.lastHotkeySwapOnNetuid`
 - **summary**: DMap ( netuid, coldkey ) --> blocknumber | last hotkey swap on network.
 
-### `lastMechansimStepBlock(u16)`: `u64`
+### `lastMechansimStepBlock(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastMechansimStepBlock`
 - **summary**: MAP ( netuid ) --> last_mechanism_step_block
@@ -1197,7 +1213,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `lastRateLimitedBlock(RateLimitKey)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastRateLimitedBlock`
-- **summary**: ============================ ==== Rate Limiting ===== ============================ --- MAP ( RateLimitKey ) --> Block number in which the last rate limited operation occured
+- **summary**: MAP ( RateLimitKey ) --> Block number in which the last rate limited operation occured
 
 ### `lastTxBlock(AccountId32)`: `u64`
 
@@ -1214,17 +1230,17 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.lastTxBlockDelegateTake`
 - **summary**: MAP ( key ) --> last_tx_block_delegate_take
 
-### `lastUpdate(u16)`: `Vec<u64>`
+### `lastUpdate(NetUidStorageIndex)`: `Vec<u64>`
 
 - **interface**: `api.query.subtensorModule.lastUpdate`
 - **summary**: MAP ( netuid ) --> last_update
 
-### `liquidAlphaOn(u16)`: `bool`
+### `liquidAlphaOn(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.liquidAlphaOn`
 - **summary**: MAP ( netuid ) --> Whether or not Liquid Alpha is enabled
 
-### `loadedEmission(u16)`: `Vec<(AccountId32,u64,u64)>`
+### `loadedEmission(NetUid)`: `Vec<(AccountId32,u64,u64)>`
 
 - **interface**: `api.query.subtensorModule.loadedEmission`
 - **modifier**: `Optional`
@@ -1247,32 +1263,32 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.maturityRate`
 - **summary**: ITEM( maturity_rate ) | Decay timescale in blocks for lock conviction.
 
-### `maxAllowedUids(u16)`: `u16`
+### `maxAllowedUids(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.maxAllowedUids`
 - **summary**: MAP ( netuid ) --> max_allowed_uids
 
-### `maxAllowedValidators(u16)`: `u16`
+### `maxAllowedValidators(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.maxAllowedValidators`
 - **summary**: MAP ( netuid ) --> max_allowed_validators
 
-### `maxBurn(u16)`: `u64`
+### `maxBurn(NetUid)`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.maxBurn`
 - **summary**: MAP ( netuid ) --> MaxBurn
 
-### `maxChildkeyTake`: `u16`
+### `maxChildkeyTake`: `PerU16`
 
 - **interface**: `api.query.subtensorModule.maxChildkeyTake`
 - **summary**: ITEM ( default_childkey_take )
 
-### `maxDelegateTake`: `u16`
+### `maxDelegateTake`: `PerU16`
 
 - **interface**: `api.query.subtensorModule.maxDelegateTake`
 - **summary**: ITEM ( default_delegate_take )
 
-### `maxDifficulty(u16)`: `u64`
+### `maxDifficulty(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.maxDifficulty`
 - **summary**: MAP ( netuid ) --> MaxDifficulty
@@ -1282,27 +1298,27 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.maxEpochsPerBlock`
 - **summary**: ITEM ( max_epochs_per_block )
 
-### `maxMechanismCount`: `u8`
+### `maxMechanismCount`: `MechId`
 
 - **interface**: `api.query.subtensorModule.maxMechanismCount`
 - **summary**: ITEM( max_mechanism_count )
 
-### `maxRegistrationsPerBlock(u16)`: `u16`
+### `maxRegistrationsPerBlock(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.maxRegistrationsPerBlock`
 - **summary**: ITEM( global_max_registrations_per_block )
 
-### `maxWeightsLimit(u16)`: `u16`
+### `maxWeightsLimit(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.maxWeightsLimit`
 - **summary**: MAP ( netuid ) --> max_weight_limit
 
-### `mechanismCountCurrent(u16)`: `u8`
+### `mechanismCountCurrent(NetUid)`: `MechId`
 
 - **interface**: `api.query.subtensorModule.mechanismCountCurrent`
 - **summary**: MAP ( netuid ) --> Current number of subnet mechanisms
 
-### `mechanismEmissionSplit(u16)`: `Vec<u16>`
+### `mechanismEmissionSplit(NetUid)`: `Vec<u16>`
 
 - **interface**: `api.query.subtensorModule.mechanismEmissionSplit`
 - **modifier**: `Optional`
@@ -1312,47 +1328,47 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.minActivityCutoff`
 
-### `minAllowedUids(u16)`: `u16`
+### `minAllowedUids(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.minAllowedUids`
 - **summary**: MAP ( netuid ) --> min_allowed_uids
 
-### `minAllowedWeights(u16)`: `u16`
+### `minAllowedWeights(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.minAllowedWeights`
 - **summary**: MAP ( netuid ) --> min_allowed_weights
 
-### `minBurn(u16)`: `u64`
+### `minBurn(NetUid)`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.minBurn`
 - **summary**: MAP ( netuid ) --> MinBurn
 
-### `minChildkeyTake`: `u16`
+### `minChildkeyTake`: `PerU16`
 
 - **interface**: `api.query.subtensorModule.minChildkeyTake`
 - **summary**: ITEM ( min_childkey_take )
 
-### `minChildkeyTakePerSubnet(u16)`: `u16`
+### `minChildkeyTakePerSubnet(NetUid)`: `PerU16`
 
 - **interface**: `api.query.subtensorModule.minChildkeyTakePerSubnet`
 - **summary**: MAP ( netuid ) --> take | Returns the subnet-specific minimum childkey take.
 
-### `minDelegateTake`: `u16`
+### `minDelegateTake`: `PerU16`
 
 - **interface**: `api.query.subtensorModule.minDelegateTake`
 - **summary**: ITEM ( min_delegate_take )
 
-### `minDifficulty(u16)`: `u64`
+### `minDifficulty(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.minDifficulty`
 - **summary**: MAP ( netuid ) --> MinDifficulty
 
-### `minerBurned(u16)`: `FixedU128`
+### `minerBurned(NetUid)`: `FixedU128`
 
 - **interface**: `api.query.subtensorModule.minerBurned`
 - **summary**: MAP ( netuid ) --> miner_burned | Proportion (0..1) of this tempo's miner (incentive) emission that was withheld from miners during emission distribution because the recipient hotkey is owned by the subnet owner (immune key). Counts emission that is either recycled or burned, so the value is independent of the subnet's RecycleOrBurn configuration.
 
-### `minNonImmuneUids(u16)`: `u16`
+### `minNonImmuneUids(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.minNonImmuneUids`
 - **summary**: MAP ( netuid ) --> minimum required number of non-immortal & non-immune UIDs
@@ -1366,7 +1382,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.networkImmunityPeriod`
 - **summary**: ITEM( network_immunity_period )
 
-### `networkLastLockCost`: `u64`
+### `networkLastLockCost`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.networkLastLockCost`
 - **summary**: ITEM( last_network_lock_cost )
@@ -1376,12 +1392,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.networkLockReductionInterval`
 - **summary**: ITEM( network_lock_reduction_interval )
 
-### `networkMinLockCost`: `u64`
+### `networkMinLockCost`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.networkMinLockCost`
 - **summary**: ITEM( min_network_lock_cost )
 
-### `networkPowRegistrationAllowed(u16)`: `bool`
+### `networkPowRegistrationAllowed(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.networkPowRegistrationAllowed`
 - **summary**: MAP ( netuid ) --> network_pow_allowed
@@ -1391,22 +1407,32 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.networkRateLimit`
 - **summary**: ITEM( network_rate_limit )
 
-### `networkRegisteredAt(u16)`: `u64`
+### `networkRegisteredAt(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.networkRegisteredAt`
 - **summary**: MAP ( netuid ) --> block_created
 
-### `networkRegistrationAllowed(u16)`: `bool`
+### `networkRegistrationAllowed(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.networkRegistrationAllowed`
 - **summary**: MAP ( netuid ) --> network_registration_allowed
+
+### `networkRegistrationLockId`: `u32`
+
+- **interface**: `api.query.subtensorModule.networkRegistrationLockId`
+- **summary**: MAP ( coldkey ) --> lock_id
+
+### `networkRegistrationQueue`: `Vec<PalletSubtensorSubnetsSubnetNetworkRegistrationInfo>`
+
+- **interface**: `api.query.subtensorModule.networkRegistrationQueue`
+- **summary**: ITEM ( network_registration_queue ) Network registrations waiting to be executed.
 
 ### `networkRegistrationStartBlock`: `u64`
 
 - **interface**: `api.query.subtensorModule.networkRegistrationStartBlock`
 - **summary**: ITEM( NetworkRegistrationStartBlock )
 
-### `networksAdded(u16)`: `bool`
+### `networksAdded(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.networksAdded`
 - **summary**: MAP ( netuid ) --> network_is_added
@@ -1450,12 +1476,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.owner`
 - **summary**: MAP ( hot ) --> cold | Returns the controlling coldkey for a hotkey
 
-### `ownerCutAutoLockEnabled(u16)`: `bool`
+### `ownerCutAutoLockEnabled(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.ownerCutAutoLockEnabled`
-- **summary**: MAP ( netuid ) --> bool | Whether subnet owner cut should be auto-locked. Missing entries default to true, so auto-locking is enabled unless explicitly disabled.
+- **summary**: MAP ( netuid ) --> bool | Whether subnet owner cut should be auto-locked. Missing entries default to false, so auto-locking is disabled unless explicitly enabled.
 
-### `ownerCutEnabled(u16)`: `bool`
+### `ownerCutEnabled(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.ownerCutEnabled`
 - **summary**: MAP ( netuid ) --> owner_cut_enabled
@@ -1465,7 +1491,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.ownerHyperparamRateLimit`
 - **summary**: Global number of epochs used to rate limit subnet owner hyperparameter updates
 
-### `ownerLock(u16)`: `LockState`
+### `ownerLock(NetUid)`: `LockState`
 
 - **interface**: `api.query.subtensorModule.ownerLock`
 - **modifier**: `Optional`
@@ -1492,32 +1518,32 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.pendingChildKeys`
 - **summary**: DMAP ( netuid, parent ) --> (Vec\<(proportion,child)>, cool_down_block)
 
-### `pendingEpochAt(u16)`: `u64`
+### `pendingEpochAt(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.pendingEpochAt`
 - **summary**: MAP ( netuid ) --> block at which a manually triggered epoch should fire. `0` means no trigger pending. Cleared after the triggered epoch runs.
 
-### `pendingOwnerCut(u16)`: `u64`
+### `pendingOwnerCut(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.pendingOwnerCut`
 - **summary**: MAP ( netuid ) --> pending_owner_cut
 
-### `pendingRootAlphaDivs(u16)`: `u64`
+### `pendingRootAlphaDivs(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.pendingRootAlphaDivs`
 - **summary**: MAP ( netuid ) --> pending_root_alpha_emission
 
-### `pendingServerEmission(u16)`: `u64`
+### `pendingServerEmission(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.pendingServerEmission`
 - **summary**: MAP ( netuid ) --> pending_server_emission
 
-### `pendingValidatorEmission(u16)`: `u64`
+### `pendingValidatorEmission(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.pendingValidatorEmission`
 - **summary**: MAP ( netuid ) --> pending_validator_emission
 
-### `powRegistrationsThisInterval(u16)`: `u16`
+### `powRegistrationsThisInterval(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.powRegistrationsThisInterval`
 - **summary**: MAP ( netuid ) --> pow_registrations_this_interval
@@ -1528,44 +1554,44 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid, hotkey ) --> prometheus_info
 
-### `raoRecycledForRegistration(u16)`: `u64`
+### `raoRecycledForRegistration(NetUid)`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.raoRecycledForRegistration`
 - **summary**: MAP ( netuid ) --> global_RAO_recycled_for_registration
 
-### `recycleOrBurn(u16)`: `RecycleOrBurnEnum`
+### `recycleOrBurn(NetUid)`: `RecycleOrBurnEnum`
 
 - **interface**: `api.query.subtensorModule.recycleOrBurn`
 - **summary**: MAP ( netuid ) --> recycle_or_burn
 
-### `registeredSubnetCounter(u16)`: `u64`
+### `registeredSubnetCounter(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.registeredSubnetCounter`
 - **summary**: MAP ( netuid ) --> registered_subnet_counter
 
     Monotonic counter incremented on every successful `do_register_network` for a given netuid. Consumers that persist per-netuid state keyed by `(user, netuid)` (e.g. the staking precompile `AllowancesStorage`) can mix the current counter value into their storage key so that entries written under a previous registration of the same netuid become unreachable after the netuid is re-registered, without requiring unbounded storage iteration on deregistration.
 
-### `registrationsThisBlock(u16)`: `u16`
+### `registrationsThisBlock(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.registrationsThisBlock`
 - **summary**: MAP ( netuid ) --> Registrations of this Block.
 
-### `registrationsThisInterval(u16)`: `u16`
+### `registrationsThisInterval(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.registrationsThisInterval`
 - **summary**: MAP ( netuid ) --> registrations_this_interval
 
-### `revealPeriodEpochs(u16)`: `u64`
+### `revealPeriodEpochs(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.revealPeriodEpochs`
 - **summary**: Map (netuid) --> Number of epochs allowed for commit reveal periods
 
-### `rho(u16)`: `u16`
+### `rho(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.rho`
 - **summary**: MAP ( netuid ) --> Rho
 
-### `rootAlphaDividendsPerSubnet(u16, AccountId32)`: `u64`
+### `rootAlphaDividendsPerSubnet(u16, AccountId32)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.rootAlphaDividendsPerSubnet`
 - **summary**: DMAP ( netuid, hotkey ) --> u64 | Last root alpha dividend this hotkey got on tempo.
@@ -1574,7 +1600,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.rootClaimable`
 
-### `rootClaimableThreshold(u16)`: `FixedI128`
+### `rootClaimableThreshold(NetUid)`: `FixedI128`
 
 - **interface**: `api.query.subtensorModule.rootClaimableThreshold`
 
@@ -1586,17 +1612,17 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.rootClaimType`
 
-### `rootProp(u16)`: `FixedU128`
+### `rootProp(NetUid)`: `FixedU128`
 
 - **interface**: `api.query.subtensorModule.rootProp`
 - **summary**: MAP ( netuid ) --> root_prop | The subnet root proportion.
 
-### `scalingLawPower(u16)`: `u16`
+### `scalingLawPower(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.scalingLawPower`
 - **summary**: MAP ( netuid ) --> scaling_law_power
 
-### `servingRateLimit(u16)`: `u64`
+### `servingRateLimit(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.servingRateLimit`
 - **summary**: MAP ( netuid ) --> serving_rate_limit
@@ -1606,10 +1632,10 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.stakeThreshold`
 - **summary**: ITEM( weights_min_stake )
 
-### `stakeWeight(u16)`: `Vec<u16>`
+### `stakeWeight(NetUid)`: `Vec<u16>`
 
 - **interface**: `api.query.subtensorModule.stakeWeight`
-- **summary**: ======================================= ==== Subnetwork Consensus Storage  ==== ======================================= --- DMAP ( netuid ) --> stake_weight | weight for stake used in YC.
+- **summary**: DMAP ( netuid ) --> stake_weight | weight for stake used in YC.
 
 ### `stakingColdkeys(AccountId32)`: `u64`
 
@@ -1631,39 +1657,39 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.startCallDelay`
 - **summary**: ITEM( start_call_delay )
 
-### `subnetAlphaIn(u16)`: `u64`
+### `subnetAlphaIn(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.subnetAlphaIn`
 - **summary**: MAP ( netuid ) --> alpha_supply_in_pool | Returns the amount of alpha in the pool.
 
-### `subnetAlphaInEmission(u16)`: `u64`
+### `subnetAlphaInEmission(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.subnetAlphaInEmission`
 - **summary**: MAP ( netuid ) --> alpha_in_emission | Returns the amount of alph in  emission into the pool per block.
 
-### `subnetAlphaOut(u16)`: `u64`
+### `subnetAlphaOut(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.subnetAlphaOut`
 - **summary**: MAP ( netuid ) --> alpha_supply_in_subnet | Returns the amount of alpha in the subnet.
 
-### `subnetAlphaOutEmission(u16)`: `u64`
+### `subnetAlphaOutEmission(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.subnetAlphaOutEmission`
 - **summary**: MAP ( netuid ) --> alpha_out_emission | Returns the amount of alpha out emission into the network per block.
 
-### `subnetEmaProtocolFlow(u16)`: `(u64,SubstrateFixedFixedI128)`
+### `subnetEmaProtocolFlow(NetUid)`: `(u64,SubstrateFixedFixedI128)`
 
 - **interface**: `api.query.subtensorModule.subnetEmaProtocolFlow`
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> subnet_ema_protocol_flow | EMA of protocol cost flow, same smoothing as SubnetEmaTaoFlow.
 
-### `subnetEmaTaoFlow(u16)`: `(u64,SubstrateFixedFixedI128)`
+### `subnetEmaTaoFlow(NetUid)`: `(u64,SubstrateFixedFixedI128)`
 
 - **interface**: `api.query.subtensorModule.subnetEmaTaoFlow`
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> subnet_ema_tao_flow | Returns the EMA of TAO inflow-outflow balance.
 
-### `subnetEmissionEnabled(u16)`: `bool`
+### `subnetEmissionEnabled(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.subnetEmissionEnabled`
 - **summary**: MAP ( netuid ) --> subnet_emission_enabled
@@ -1672,17 +1698,17 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
     Defaults to true so existing subnets keep current behavior.
 
-### `subnetEpochIndex(u16)`: `u64`
+### `subnetEpochIndex(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.subnetEpochIndex`
 - **summary**: MAP ( netuid ) --> monotonic epoch counter. Incremented by exactly one each time the subnet's epoch slot is consumed in `run_coinbase`
 
-### `subnetExcessTao(u16)`: `u64`
+### `subnetExcessTao(NetUid)`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.subnetExcessTao`
 - **summary**: MAP ( netuid ) --> excess_tao | Returns the excess TAO swapped (chain buys) into this subnet on the last block.
 
-### `subnetIdentitiesV3(u16)`: `SubnetIdentityV3`
+### `subnetIdentitiesV3(NetUid)`: `SubnetIdentityV3`
 
 - **interface**: `api.query.subtensorModule.subnetIdentitiesV3`
 - **modifier**: `Optional`
@@ -1692,7 +1718,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.subnetLeases`
 - **modifier**: `Optional`
-- **summary**: ======================== ==== Subnet Leasing ==== ======================== --- MAP ( lease_id ) --> subnet lease | The subnet lease for a given lease id.
+- **summary**: MAP ( lease_id ) --> subnet lease | The subnet lease for a given lease id.
 
 ### `subnetLeaseShares(u32, AccountId32)`: `FixedU128`
 
@@ -1702,18 +1728,21 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `subnetLimit`: `u16`
 
 - **interface**: `api.query.subtensorModule.subnetLimit`
-- **summary**: ========================== ==== Staking Counters ==== ========================== The Subtensor [`TotalIssuance`] represents the total issuance of tokens on the Bittensor network.
+- **summary**: The Subtensor [`TotalIssuance`] represents the total issuance of tokens on the Bittensor network.
 
-    It is comprised of three parts: The total amount of issued tokens, tracked in the TotalIssuance of the Balances pallet The total amount of tokens staked in the system, tracked in [`TotalStake`] The total amount of tokens locked up for subnet reg, tracked in [`TotalSubnetLocked`] attained by iterating over subnet lock.
+    It is comprised of three parts:
+    - The total amount of issued tokens, tracked in the TotalIssuance of the Balances pallet
+    - The total amount of tokens staked in the system, tracked in [`TotalStake`]
+    - The total amount of tokens locked up for subnet reg, tracked in [`TotalSubnetLocked`] attained by iterating over subnet lock.
 
-    Eventually, Bittensor should migrate to using Holds afterwhich time we will not require this separate accounting. --- ITEM ( maximum_number_of_networks )
+    Eventually, Bittensor should migrate to using Holds afterwhich time we will not require this separate accounting. ITEM ( maximum_number_of_networks )
 
-### `subnetLocked(u16)`: `u64`
+### `subnetLocked(NetUid)`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.subnetLocked`
 - **summary**: MAP ( netuid ) --> total_subnet_locked
 
-### `subnetMechanism(u16)`: `u16`
+### `subnetMechanism(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.subnetMechanism`
 - **summary**: MAP ( netuid ) --> subnet mechanism
@@ -1723,12 +1752,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.subnetMovingAlpha`
 - **summary**: ITEM ( moving_alpha ) -- subnet moving alpha.
 
-### `subnetMovingPrice(u16)`: `FixedI128`
+### `subnetMovingPrice(NetUid)`: `FixedI128`
 
 - **interface**: `api.query.subtensorModule.subnetMovingPrice`
 - **summary**: MAP ( netuid ) --> moving_price | The subnet moving price.
 
-### `subnetOwner(u16)`: `AccountId32`
+### `subnetOwner(NetUid)`: `AccountId32`
 
 - **interface**: `api.query.subtensorModule.subnetOwner`
 - **summary**: MAP ( netuid ) --> subnet_owner
@@ -1738,58 +1767,58 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.subnetOwnerCut`
 - **summary**: ITEM( subnet_owner_cut )
 
-### `subnetOwnerHotkey(u16)`: `AccountId32`
+### `subnetOwnerHotkey(NetUid)`: `AccountId32`
 
 - **interface**: `api.query.subtensorModule.subnetOwnerHotkey`
 - **summary**: MAP ( netuid ) --> subnet_owner_hotkey
 
-### `subnetProtocolAlpha(u16)`: `u64`
+### `subnetProtocolAlpha(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.subnetProtocolAlpha`
 - **summary**: MAP ( netuid ) --> protocol_alpha | Returns the protocol-owned alpha cached for the subnet.
 
-### `subnetProtocolFlow(u16)`: `i64`
+### `subnetProtocolFlow(NetUid)`: `i64`
 
 - **interface**: `api.query.subtensorModule.subnetProtocolFlow`
 - **summary**: MAP ( netuid ) --> subnet_protocol_flow | Per-block accumulator for protocol cost (emission + chain buys - root sells).
 
-### `subnetRootSellTao(u16)`: `u64`
+### `subnetRootSellTao(NetUid)`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.subnetRootSellTao`
 - **summary**: MAP ( netuid ) --> root_sell_tao | Returns the TAO received from root dividend sells on this subnet on the last block.
 
-### `subnetTAO(u16)`: `u64`
+### `subnetTAO(NetUid)`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.subnetTAO`
 - **summary**: MAP ( netuid ) --> tao_in_subnet | Returns the amount of TAO in the subnet.
 
-### `subnetTaoFlow(u16)`: `i64`
+### `subnetTaoFlow(NetUid)`: `i64`
 
 - **interface**: `api.query.subtensorModule.subnetTaoFlow`
 - **summary**: MAP ( netuid ) --> subnet_tao_flow | Returns the TAO inflow-outflow balance.
 
-### `subnetTaoInEmission(u16)`: `u64`
+### `subnetTaoInEmission(NetUid)`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.subnetTaoInEmission`
 - **summary**: MAP ( netuid ) --> tao_in_emission | Returns the amount of tao emitted into this subent on the last block.
 
-### `subnetUidToLeaseId(u16)`: `u32`
+### `subnetUidToLeaseId(NetUid)`: `u32`
 
 - **interface**: `api.query.subtensorModule.subnetUidToLeaseId`
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> lease_id | The lease id for a given netuid.
 
-### `subnetVolume(u16)`: `u128`
+### `subnetVolume(NetUid)`: `u128`
 
 - **interface**: `api.query.subtensorModule.subnetVolume`
 - **summary**: MAP ( netuid ) --> total_volume | The total amount of TAO bought and sold since the start of the network.
 
-### `subnetworkN(u16)`: `u16`
+### `subnetworkN(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.subnetworkN`
 - **summary**: MAP ( netuid ) --> subnetwork_n (Number of UIDs in the network).
 
-### `subtokenEnabled(u16)`: `bool`
+### `subtokenEnabled(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.subtokenEnabled`
 - **summary**: MAP ( netuid ) --> If subtoken trading enabled
@@ -1807,38 +1836,41 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `taoWeight`: `u64`
 
 - **interface**: `api.query.subtensorModule.taoWeight`
-- **summary**: ============================ ==== Staking Variables ==== ============================ The Subtensor [`TotalIssuance`] represents the total issuance of tokens on the Bittensor network.
+- **summary**: The Subtensor [`TotalIssuance`] represents the total issuance of tokens on the Bittensor network.
 
-    It is comprised of three parts: The total amount of issued tokens, tracked in the TotalIssuance of the Balances pallet The total amount of tokens staked in the system, tracked in [`TotalStake`] The total amount of tokens locked up for subnet reg, tracked in [`TotalSubnetLocked`] attained by iterating over subnet lock.
+    It is comprised of three parts:
+    - The total amount of issued tokens, tracked in the TotalIssuance of the Balances pallet
+    - The total amount of tokens staked in the system, tracked in [`TotalStake`]
+    - The total amount of tokens locked up for subnet reg, tracked in [`TotalSubnetLocked`] attained by iterating over subnet lock.
 
-    Eventually, Bittensor should migrate to using Holds afterwhich time we will not require this separate accounting. --- ITEM --> Global weight
+    Eventually, Bittensor should migrate to using Holds afterwhich time we will not require this separate accounting. ITEM --> Global weight
 
-### `targetRegistrationsPerInterval(u16)`: `u16`
+### `targetRegistrationsPerInterval(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.targetRegistrationsPerInterval`
 - **summary**: MAP ( netuid ) --> target_registrations_this_interval
 
-### `tempo(u16)`: `u16`
+### `tempo(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.tempo`
-- **summary**: ================= ==== Tempos ===== ================= --- MAP ( netuid ) --> tempo
+- **summary**: MAP ( netuid ) --> tempo
 
 ### `timelockedWeightCommits(u16, u64)`: `Vec<(AccountId32,u64,Bytes,u64)>`
 
 - **interface**: `api.query.subtensorModule.timelockedWeightCommits`
 - **summary**: MAP (netuid, epoch) → VecDeque\<(who, commit_block, ciphertext, reveal_round)> Stores a queue of weight commits for an account on a given subnet.
 
-### `tokenSymbol(u16)`: `Bytes`
+### `tokenSymbol(NetUid)`: `Bytes`
 
 - **interface**: `api.query.subtensorModule.tokenSymbol`
 - **summary**: MAP ( netuid ) --> token_symbol | Returns the token symbol for a subnet.
 
-### `totalHotkeyAlpha(AccountId32, u16)`: `u64`
+### `totalHotkeyAlpha(AccountId32, u16)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.totalHotkeyAlpha`
 - **summary**: DMAP ( hot, netuid ) --> alpha | Returns the total amount of alpha a hotkey owns.
 
-### `totalHotkeyAlphaLastEpoch(AccountId32, u16)`: `u64`
+### `totalHotkeyAlphaLastEpoch(AccountId32, u16)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.totalHotkeyAlphaLastEpoch`
 - **summary**: DMAP ( hot, netuid ) --> alpha | Returns the total amount of alpha a hotkey owned in the last epoch.
@@ -1853,7 +1885,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.totalHotkeySharesV2`
 - **summary**: DMAP ( hot, netuid ) --> total_alpha_shares | Returns the number of alpha shares for a hotkey on a subnet, stores SafeFloat.
 
-### `totalIssuance`: `u64`
+### `totalIssuance`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.totalIssuance`
 - **summary**: ITEM ( total_issuance )
@@ -1863,7 +1895,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.totalNetworks`
 - **summary**: ITEM( total_number_of_existing_networks )
 
-### `totalStake`: `u64`
+### `totalStake`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.totalStake`
 - **summary**: ITEM ( total_stake )
@@ -1871,12 +1903,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `transactionKeyLastBlock(AccountId32, u16, u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.transactionKeyLastBlock`
-- **summary**: ================================= ==== Axon / Promo Endpoints ===== ================================= --- NMAP ( hot, netuid, name ) --> last_block | Returns the last block of a transaction for a given key, netuid, and name.
+- **summary**: NMAP ( hot, netuid, name ) --> last_block | Returns the last block of a transaction for a given key, netuid, and name.
 
-### `transferToggle(u16)`: `bool`
+### `transferToggle(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.transferToggle`
-- **summary**: ============================ ==== Subnet Locks ===== ============================ --- MAP ( netuid ) --> transfer_toggle
+- **summary**: MAP ( netuid ) --> transfer_toggle
 
 ### `txChildkeyTakeRateLimit`: `u64`
 
@@ -1907,19 +1939,19 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 ### `usedWork(Bytes)`: `u64`
 
 - **interface**: `api.query.subtensorModule.usedWork`
-- **summary**: ============================ ==== Global Parameters ===== ============================ --- StorageItem Global Used Work.
+- **summary**: StorageItem Global Used Work.
 
-### `validatorPermit(u16)`: `Vec<bool>`
+### `validatorPermit(NetUid)`: `Vec<bool>`
 
 - **interface**: `api.query.subtensorModule.validatorPermit`
 - **summary**: MAP ( netuid ) --> validator_permit
 
-### `validatorPruneLen(u16)`: `u64`
+### `validatorPruneLen(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.validatorPruneLen`
 - **summary**: MAP ( netuid ) --> validator_prune_len
 
-### `validatorTrust(u16)`: `Vec<u16>`
+### `validatorTrust(NetUid)`: `Vec<PerU16>`
 
 - **interface**: `api.query.subtensorModule.validatorTrust`
 - **summary**: MAP ( netuid ) --> validator_trust
@@ -1929,17 +1961,17 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.votingPower`
 - **summary**: DMAP ( netuid, hotkey ) --> voting_power | EMA of stake for voting This tracks stake EMA updated every epoch when VotingPowerTrackingEnabled is true. Used by smart contracts to determine validator voting power for subnet governance.
 
-### `votingPowerDisableAtBlock(u16)`: `u64`
+### `votingPowerDisableAtBlock(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.votingPowerDisableAtBlock`
 - **summary**: MAP ( netuid ) --> block_number | Block at which voting power tracking will be disabled. When set (non-zero), tracking continues until this block, then automatically disables and clears VotingPower entries for the subnet. Provides a 14-day grace period.
 
-### `votingPowerEmaAlpha(u16)`: `u64`
+### `votingPowerEmaAlpha(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.votingPowerEmaAlpha`
 - **summary**: MAP ( netuid ) --> u64 | EMA alpha value for voting power calculation. Higher alpha = faster response to stake changes. Stored as u64 with 18 decimal precision (1.0 = 10^18). Only settable by sudo/root.
 
-### `votingPowerTrackingEnabled(u16)`: `bool`
+### `votingPowerTrackingEnabled(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.votingPowerTrackingEnabled`
 - **summary**: MAP ( netuid ) --> bool | Whether voting power tracking is enabled for this subnet. When enabled, VotingPower EMA is updated every epoch. Default is false. When disabled with disable_at_block set, tracking continues until that block.
@@ -1955,12 +1987,12 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.weights`
 - **summary**: DMAP ( netuid, uid ) --> weights
 
-### `weightsSetRateLimit(u16)`: `u64`
+### `weightsSetRateLimit(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.weightsSetRateLimit`
 - **summary**: MAP ( netuid ) --> weights_set_rate_limit
 
-### `weightsVersionKey(u16)`: `u64`
+### `weightsVersionKey(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.weightsVersionKey`
 - **summary**: MAP ( netuid ) --> weights_version_key
@@ -1970,7 +2002,7 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.weightsVersionKeyRateLimit`
 - **summary**: ITEM( weights_version_key_rate_limit ) --- Rate limit in tempos.
 
-### `yuma3On(u16)`: `bool`
+### `yuma3On(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.yuma3On`
 - **summary**: MAP ( netuid ) --> Whether or not Yuma3 is enabled
@@ -1993,7 +2025,17 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 
 ## `swap`
 
-### `feeRate(u16)`: `u16`
+### `balancerAlphaReservoir(NetUid)`: `AlphaBalance`
+
+- **interface**: `api.query.swap.balancerAlphaReservoir`
+- **summary**: Alpha protocol liquidity that could not be injected without exceeding balancer weight bounds.
+
+### `balancerTaoReservoir(NetUid)`: `TaoBalance`
+
+- **interface**: `api.query.swap.balancerTaoReservoir`
+- **summary**: TAO protocol liquidity that could not be injected without exceeding balancer weight bounds.
+
+### `feeRate(NetUid)`: `u16`
 
 - **interface**: `api.query.swap.feeRate`
 - **summary**: The fee rate applied to swaps per subnet, normalized value between 0 and u16::MAX
@@ -2009,17 +2051,17 @@ Generated from Subtensor runtime spec version **424**. Connected to: `wss://entr
 - **modifier**: `Required`
 - **summary**: Returns the current pallet version from storage
 
-### `palSwapInitialized(u16)`: `bool`
+### `palSwapInitialized(NetUid)`: `bool`
 
 - **interface**: `api.query.swap.palSwapInitialized`
 - **summary**: Storage to determine whether balancer swap was initialized for a specific subnet.
 
-### `scrapReservoirAlpha(u16)`: `u64`
+### `scrapReservoirAlpha(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.swap.scrapReservoirAlpha`
 - **summary**: Alpha reservoir for scraps of protocol claimed fees.
 
-### `swapBalancer(u16)`: `Balancer`
+### `swapBalancer(NetUid)`: `Balancer`
 
 - **interface**: `api.query.swap.swapBalancer`
 - **summary**: u64-normalized reserve weight
