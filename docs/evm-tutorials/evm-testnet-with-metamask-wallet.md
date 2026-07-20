@@ -61,7 +61,7 @@ Next, request testnet TAO in the Bittensor community [Discord](https://discord.c
 
 In this step you will copy the private key from your Metamask wallet account and paste it into the configuration file in the repo. This step will ensure that you are not prompted with password each and every step as you run these tutorials.
 
-1. Navigate to the `examples` directory of the EVM-Bittensor repo:
+1. Navigate to the `examples` directory of the [EVM-Bittensor repo](https://github.com/opentensor/evm-bittensor):
 
    ```bash
    cd examples
