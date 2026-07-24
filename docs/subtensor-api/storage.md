@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **432**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **438**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -948,7 +948,7 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 ### `blocksSinceLastStep(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.blocksSinceLastStep`
-- **summary**: MAP ( netuid ) --> blocks_since_last_step
+- **summary**: MAP ( netuid ) --> blocks_since_last_step, capped at the subnet's `tempo + 1`
 
 ### `bonds(u16, u16)`: `Vec<(u16,u16)>`
 
@@ -1005,6 +1005,34 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.ckBurn`
 - **summary**: ITEM --> CK burn
 
+### `coldkeyCollateralHotkeys(u16, AccountId32)`: `Vec<AccountId32>`
+
+- **interface**: `api.query.subtensorModule.coldkeyCollateralHotkeys`
+- **summary**: DMAP ( netuid, coldkey ) --> BoundedVec of hotkeys
+
+    Hotkeys with a standing [`MinerCollateral`] row for this coldkey on the subnet. Kept in sync by collateral create / remove / swap paths so coldkey swaps migrate bonds with a bounded indexed walk (see [`MAX_COLDKEY_COLLATERAL_HOTKEYS`]) instead of scanning unbounded association vectors.
+
+### `coldkeyMinerCollateral(u16, AccountId32)`: `AlphaBalance`
+
+- **interface**: `api.query.subtensorModule.coldkeyMinerCollateral`
+- **summary**: MAP ( netuid, coldkey ) --> total locked miner collateral
+
+    `O(1)` aggregate of `MinerCollateral.locked` across that coldkey's hotkeys on the subnet. Kept in sync by collateral credit / settle paths so unstake availability checks do not scan `OwnedHotkeys`.
+
+### `coldkeyRoot(AccountId32)`: `AccountId32`
+
+- **interface**: `api.query.subtensorModule.coldkeyRoot`
+- **modifier**: `Optional`
+- **summary**: MAP ( coldkey ) --> root_coldkey | first coldkey in this swap lineage. Absent means the coldkey is its own root. Prefer root for owner-keyed bans/attribution, not a single SS58.
+
+### `coldkeySuccessor(AccountId32)`: `AccountId32`
+
+- **interface**: `api.query.subtensorModule.coldkeySuccessor`
+- **modifier**: `Optional`
+- **summary**: MAP ( old_coldkey ) --> new_coldkey | global coldkey swap successor.
+
+    Written on each successful coldkey swap so watchers can follow owner identity without an archive node. Global (not per-netuid) because a coldkey swap moves ownership everywhere at once.
+
 ### `coldkeySwapAnnouncementDelay`: `u32`
 
 - **interface**: `api.query.subtensorModule.coldkeySwapAnnouncementDelay`
@@ -1026,6 +1054,20 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.coldkeySwapReannouncementDelay`
 - **summary**: The delay after the initial delay has passed before a new announcement can be made.
+
+### `collateralDrainRatio(NetUid)`: `FixedU128`
+
+- **interface**: `api.query.subtensorModule.collateralDrainRatio`
+- **summary**: MAP ( netuid ) --> CollateralDrainRatio (k)
+
+    Alpha of locked collateral released per alpha of hotkey emission earned (miner incentive and validator dividends). Snapshot into `MinerCollateral` at each registration.
+
+### `collateralLockShare(NetUid)`: `u16`
+
+- **interface**: `api.query.subtensorModule.collateralLockShare`
+- **summary**: MAP ( netuid ) --> CollateralLockShare (p)
+
+    Share of the registration price locked as miner collateral instead of burned, normalized so `u16::MAX` = 100%. 0 (the default) disables collateral: the whole registration price is burned as before.
 
 ### `commitRevealWeightsEnabled(NetUid)`: `bool`
 
@@ -1137,6 +1179,20 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.hotkeyLock`
 - **modifier**: `Optional`
 - **summary**: DMAP ( netuid, hotkey ) --> LockState | Total lock per hotkey per subnet.
+
+### `hotkeyRoot(u16, AccountId32)`: `AccountId32`
+
+- **interface**: `api.query.subtensorModule.hotkeyRoot`
+- **modifier**: `Optional`
+- **summary**: DMap ( netuid, hotkey ) --> root_hotkey | first hotkey in this subnet's swap lineage. Absent means the hotkey is its own root (never swapped into, or never recorded). Ban/score against the root, not a single SS58.
+
+### `hotkeySuccessor(u16, AccountId32)`: `AccountId32`
+
+- **interface**: `api.query.subtensorModule.hotkeySuccessor`
+- **modifier**: `Optional`
+- **summary**: DMap ( netuid, old_hotkey ) --> new_hotkey | hotkey swap successor on a subnet.
+
+    Written on each successful hotkey swap so watchers can follow identity without an archive node. Per-subnet because a swap may move a UID on one netuid while the old hotkey remains registered elsewhere.
 
 ### `identitiesV2(AccountId32)`: `ChainIdentityV2`
 
@@ -1367,6 +1423,14 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.minerBurned`
 - **summary**: MAP ( netuid ) --> miner_burned | Proportion (0..1) of this tempo's miner (incentive) emission that was withheld from miners during emission distribution because the recipient hotkey is owned by the subnet owner (immune key). Counts emission that is either recycled or burned, so the value is independent of the subnet's RecycleOrBurn configuration.
+
+### `minerCollateral(u16, AccountId32, AccountId32)`: `MinerCollateralState`
+
+- **interface**: `api.query.subtensorModule.minerCollateral`
+- **modifier**: `Optional`
+- **summary**: NMAP ( netuid, hotkey, coldkey ) --> MinerCollateralState
+
+    Standing registration collateral of a `(hotkey, coldkey)` stake position on a subnet. Keyed by coldkey so nominators on the same hotkey are never charged for the owner's bond. The entry persists across deregistration and is only removed when fully drained through earned emission.
 
 ### `minNonImmuneUids(NetUid)`: `u16`
 

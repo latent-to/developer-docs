@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **432**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **438**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -39,6 +39,16 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 
 - **interface**: `api.errors.adminUtils.BondsMovingAverageMaxReached`
 - **summary**: The maximum value for bonds moving average is reached
+
+### `CollateralDrainRatioOutOfBounds`
+
+- **interface**: `api.errors.adminUtils.CollateralDrainRatioOutOfBounds`
+- **summary**: The collateral drain ratio must be positive and at most the settable maximum.
+
+### `CollateralLockShareTooHigh`
+
+- **interface**: `api.errors.adminUtils.CollateralLockShareTooHigh`
+- **summary**: The collateral lock share exceeds the settable maximum (95% of the registration price).
 
 ### `Deprecated`
 
@@ -1149,6 +1159,16 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.ColdKeyAlreadyAssociated`
 - **summary**: The coldkey has already been swapped
 
+### `ColdkeyCollateralIncomplete`
+
+- **interface**: `api.errors.subtensorModule.ColdkeyCollateralIncomplete`
+- **summary**: Coldkey swap could not fully migrate miner collateral: the old coldkey's [`ColdkeyMinerCollateral`] aggregate remained non-zero after migrating every indexed collateral hotkey. Failing closed avoids under-locking the destination unstake guard.
+
+### `ColdkeyCollateralPositionsFull`
+
+- **interface**: `api.errors.subtensorModule.ColdkeyCollateralPositionsFull`
+- **summary**: This coldkey already has the maximum number of distinct hotkeys with miner collateral on the subnet ([`crate::MAX_COLDKEY_COLLATERAL_HOTKEYS`]).
+
 ### `ColdkeySwapAlreadyDisputed`
 
 - **interface**: `api.errors.subtensorModule.ColdkeySwapAlreadyDisputed`
@@ -1433,6 +1453,11 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.InvalidWorkBlock`
 - **summary**: The supplied PoW hash block is in the future or negative.
+
+### `KeepStakeBlockedByCollateral`
+
+- **interface**: `api.errors.subtensorModule.KeepStakeBlockedByCollateral`
+- **summary**: `keep_stake` hotkey swap refused because the old hotkey still has standing miner collateral. Stake would stay on the old key while the UID moves, stranding the bond. Swap with `keep_stake=false` so collateral migrates with the UID (lineage maps track the rename).
 
 ### `LeaseCannotEndInThePast`
 
