@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **432**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **438**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -51,6 +51,16 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 
 - **interface**: `api.events.adminUtils.BurnIncreaseMultSet`
 - **summary**: Event emitted when the burn increase multiplier is set for a subnet.
+
+### `CollateralDrainRatioSet(NetUid, U64F64)`
+
+- **interface**: `api.events.adminUtils.CollateralDrainRatioSet`
+- **summary**: Event emitted when the miner collateral drain ratio is set for a subnet.
+
+### `CollateralLockShareSet(NetUid, u16)`
+
+- **interface**: `api.events.adminUtils.CollateralLockShareSet`
+- **summary**: Event emitted when the miner collateral lock share is set for a subnet.
 
 ### `PrecompileUpdated(PrecompileEnum, bool)`
 
@@ -884,6 +894,11 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.ColdkeySwapReset`
 - **summary**: A coldkey swap has been reset.
 
+### `CollateralLocked(NetUid, AccountId, AlphaBalance, AlphaBalance)`
+
+- **interface**: `api.events.subtensorModule.CollateralLocked`
+- **summary**: Miner collateral was staked and locked (at registration or via `add_collateral`). Appended at the end of the enum to avoid shifting existing event indices.
+
 ### `CommitRevealEnabled(NetUid, bool)`
 
 - **interface**: `api.events.subtensorModule.CommitRevealEnabled`
@@ -1083,6 +1098,11 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.MinChildKeyTakeSet`
 - **summary**: minimum childkey take set
 
+### `MinCollateralSet(NetUid, AccountId, AlphaBalance)`
+
+- **interface**: `api.events.subtensorModule.MinCollateralSet`
+- **summary**: A miner set the self-maintaining collateral floor for a hotkey.
+
 ### `MinDelegateTakeSet(PerU16)`
 
 - **interface**: `api.events.subtensorModule.MinDelegateTakeSet`
@@ -1230,6 +1250,11 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.StakeAdded`
 - **summary**: stake has been transferred from the a coldkey account onto the hotkey staking account.
+
+### `StakeAndHotkeyTransferred(AccountId, AccountId, AccountId, AccountId, NetUid, NetUid, TaoBalance)`
+
+- **interface**: `api.events.subtensorModule.StakeAndHotkeyTransferred`
+- **summary**: Stake has been transferred from one coldkey to another, landing on a different hotkey (and optionally a different subnet).
 
 ### `StakeLocked(AccountId, AccountId, NetUid, AlphaBalance)`
 

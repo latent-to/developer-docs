@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **432**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **438**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -150,6 +150,16 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 
 - **interface**: `api.tx.adminUtils.sudoSetColdkeySwapReannouncementDelay`
 - **summary**: Sets the coldkey swap reannouncement delay.
+
+### `sudoSetCollateralDrainRatio(netuid: NetUid, drain_ratio: U64F64)`
+
+- **interface**: `api.tx.adminUtils.sudoSetCollateralDrainRatio`
+- **summary**: Sets the miner collateral drain ratio (k) for a subnet: how much locked collateral is released per alpha of hotkey emission earned (miner incentive and validator dividends). Must be positive, at most 10. Callable by root and subnet owner. Snapshot per miner at registration; changing it never affects already-locked collateral.
+
+### `sudoSetCollateralLockShare(netuid: NetUid, lock_share: u16)`
+
+- **interface**: `api.tx.adminUtils.sudoSetCollateralLockShare`
+- **summary**: Sets the miner collateral lock share (p) for a subnet: the share of the registration price that is staked to the registering hotkey and locked as collateral instead of burned. Normalized so `u16::MAX` = 100%; capped at 95% so the burned share stays positive. 0 disables collateral. Callable by root and subnet owner. Applies only to future registrations; standing collateral is never re-priced.
 
 ### `sudoSetCommitRevealVersion(version: u16)`
 
@@ -1677,6 +1687,38 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 
 ## `subtensorModule`
 
+### `addCollateral(netuid: NetUid, hotkey: AccountId, alpha: AlphaBalance, limit_price: TaoBalance)`
+
+- **interface**: `api.tx.subtensorModule.addCollateral`
+- **summary**: Locks additional miner collateral (in alpha) on the signer's own hotkey.
+
+    Prefers free alpha already staked on that `(hotkey, coldkey)` position and only buys the shortfall with TAO. Used to top up registration collateral voluntarily — for example to meet a validator-published per-machine requirement on resource subnets. The lock is released back through earned emission exactly like registration collateral (it is the same lock), keeps the existing drain-ratio snapshot, and is credited against the collateral requirement on re-registration.
+
+    **Arguments:**
+
+    - `origin`: Signed by the coldkey that owns `hotkey`.
+    - `netuid`: The subnet to lock collateral on.
+    - `hotkey`: The miner hotkey the collateral attaches to.
+    - `alpha`: Alpha of collateral to add. Fully covered by free
+    stake when possible; otherwise the unpaid remainder is bought with TAO (that remainder must meet the staking minimum).
+    - `limit_price`: Worst alpha price (RAO per alpha) accepted for any
+    TAO→alpha buy of the shortfall. Fill-or-kill: the buy fails with `SlippageTooHigh` instead of executing above this price. Pass the current spot (or spot × (1 + tolerance)) — never the swap max.
+
+    **Errors:**
+
+    - `RegistrationNotPermittedOnRootSubnet`: `netuid` is the root network.
+    - `SubnetNotExists`: The subnet does not exist.
+    - `HotKeyAccountNotExists`: The hotkey account does not exist.
+    - `NonAssociatedColdKey`: The signer does not own `hotkey`.
+    - `AmountTooLow`: `alpha` is zero, or the buy remainder is below
+    the minimum stake.
+    - `NotEnoughBalanceToStake`: The coldkey cannot cover the buy remainder.
+    - `SlippageTooHigh`: The shortfall buy would clear above `limit_price`.
+
+    **Events:**
+
+    Emits `CollateralLocked` on success.
+
 ### `addStake(hotkey: AccountId, netuid: NetUid, amount_staked: TaoBalance)`
 
 - **interface**: `api.tx.subtensorModule.addStake`
@@ -2692,6 +2734,31 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
 
     - `MaxWeightExceeded`: Attempting to set weights with max value exceeding limit.
 
+### `setMinCollateral(netuid: NetUid, hotkey: AccountId, min_locked: AlphaBalance)`
+
+- **interface**: `api.tx.subtensorModule.setMinCollateral`
+- **summary**: Sets the self-maintaining collateral floor for the signer's hotkey on a subnet.
+
+    The drain never releases the lock below the floor, and while the lock is under it, earned emission is captured into the lock until the floor is met — so a miner tracking a validator-published collateral requirement does not need to keep re-locking drained funds. Zero clears the floor and restores pure drain behavior.
+
+    **Arguments:**
+
+    - `origin`: Signed by the coldkey that owns `hotkey`.
+    - `netuid`: The subnet the floor applies to.
+    - `hotkey`: The miner hotkey the floor applies to.
+    - `min_locked`: The floor, in alpha; zero clears it.
+
+    **Errors:**
+
+    - `RegistrationNotPermittedOnRootSubnet`: `netuid` is the root network.
+    - `SubnetNotExists`: The subnet does not exist.
+    - `HotKeyAccountNotExists`: The hotkey account does not exist.
+    - `NonAssociatedColdKey`: The signer does not own `hotkey`.
+
+    **Events:**
+
+    Emits `MinCollateralSet` on success.
+
 ### `setPendingChildkeyCooldown(cooldown: u64)`
 
 - **interface**: `api.tx.subtensorModule.setPendingChildkeyCooldown`
@@ -3032,6 +3099,39 @@ Generated from Subtensor runtime spec version **432**. Connected to: `wss://entr
     **Events:**
 
     May emit a `StakeTransferred` event on success.
+
+### `transferStakeAndHotkey(destination_coldkey: AccountId, origin_hotkey: AccountId, destination_hotkey: AccountId, origin_netuid: NetUid, destination_netuid: NetUid, alpha_amount: AlphaBalance)`
+
+- **interface**: `api.tx.subtensorModule.transferStakeAndHotkey`
+- **summary**: Transfers a specified amount of stake from one coldkey to another, landing it on a different hotkey, optionally across subnets.
+
+    This is `transfer_stake` generalized to a destination hotkey: it transfers ownership of the position and re-delegates it in one atomic call. Use `transfer_stake` when the hotkey stays the same, and `move_stake` when only the hotkey changes (ownership stays with the signing coldkey).
+
+    **Arguments:**
+
+    - `origin`: The origin of the transaction, which must be signed by the `origin_coldkey`.
+    - `destination_coldkey`: The coldkey to which the stake is transferred.
+    - `origin_hotkey`: The hotkey the stake currently sits on.
+    - `destination_hotkey`: The hotkey the stake lands on.
+    - `origin_netuid`: The network/subnet ID to move stake from.
+    - `destination_netuid`: The network/subnet ID to move stake to (for cross-subnet transfer).
+    - `alpha_amount`: The amount of stake to transfer.
+
+    **Errors:**
+
+    - `BadOrigin`: The transaction is not signed.
+    - `SubnetNotExists`: Either `origin_netuid` or `destination_netuid` does not exist.
+    - `SubtokenDisabled`: The subtoken is disabled on the origin or destination subnet.
+    - `HotKeyAccountNotExists`: The `origin_hotkey` or `destination_hotkey` account does not exist.
+    - `NotEnoughStakeToWithdraw`: The `(origin_coldkey, origin_hotkey, origin_netuid)` position has less stake than `alpha_amount`.
+    - `InsufficientLiquidity`: The swap simulation on the origin subnet fails.
+    - `AmountTooLow`: The TAO-equivalent of the transfer is below the minimum stake requirement.
+    - `TransferDisallowed`: Transfers are disabled on the origin or destination subnet.
+    - `StakeUnavailable`: The remaining stake would not cover the locked amount on the origin subnet.
+
+    **Events:**
+
+    May emit a `StakeAndHotkeyTransferred` event on success.
 
 ### `triggerEpoch(netuid: NetUid)`
 
