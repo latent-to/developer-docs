@@ -347,7 +347,7 @@ Module Contents
 
       - The permissions described above may change over time as the Subtensor runtime evolves. For the most up-to-date
         and authoritative information about proxy type permissions, refer to the Subtensor source code at:
-        <https://github.com/opentensor/subtensor/blob/main/runtime/src/lib.rs>
+        <https://github.com/RaoFoundation/subtensor/blob/main/runtime/src/lib.rs>
         Specifically, look for the `impl InstanceFilter<RuntimeCall> for ProxyType` implementation which defines the
         exact filtering logic for each proxy type.
       - The values match exactly with the ProxyType enum defined in the Subtensor runtime. Any changes to the
