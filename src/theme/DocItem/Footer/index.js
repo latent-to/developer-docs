@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import clsx from "clsx";
 import { ThemeClassNames } from "@docusaurus/theme-common";
 import { useDoc } from "@docusaurus/plugin-content-docs/client";
@@ -26,7 +26,6 @@ export default function DocItemFooter() {
 
   const canDisplayTagsRow = tags.length > 0;
 
-  // Optional feedback
   const { siteConfig } = useDocusaurusContext();
   const { customFields } = siteConfig;
   const { enableFeedback } = customFields;

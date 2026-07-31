@@ -13,16 +13,21 @@ import Line from '@theme/CodeBlock/Line';
 import CopyButton from '@theme/CodeBlock/CopyButton';
 import WordWrapButton from '@theme/CodeBlock/WordWrapButton';
 import Container from '@theme/CodeBlock/Container';
-import { CiFileOn } from "react-icons/ci";
-
-import styles from './styles.module.css';
 import Link from '@docusaurus/Link';
-// Prism languages are always lowercase
-// We want to fail-safe and allow both "php" and "PHP"
-// See https://github.com/facebook/docusaurus/issues/9012
+import styles from './styles.module.css';
+
+function FileIcon(props) {
+	return (
+		<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" {...props}>
+			<path d="M6,2A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6M6,4H13V9H18V20H6V4M8,12V14H16V12H8M8,16V18H13V16H8Z" />
+		</svg>
+	);
+}
+
 function normalizeLanguage(language) {
 	return language?.toLowerCase();
 }
+
 export default function CodeBlockString({
 	children,
 	className: blockClassName = '',
@@ -39,32 +44,27 @@ export default function CodeBlockString({
 	);
 	const prismTheme = usePrismTheme();
 	const wordWrap = useCodeWordWrap();
-	// console.log(metastring,"metastring");
-	// We still parse the metastring in case we want to support more syntax in the
-	// future. Note that MDX doesn't strip quotes when parsing metastring:
-	// "title=\"xyz\"" => title: "\"xyz\""
+
 	let title = parseCodeBlockTitle(metastring) || titleProp;
 	const fileRegex = /<file\s*\/>/;
 	let isFileIconEnabled = false;
 	if (fileRegex.test(title)) {
 		isFileIconEnabled = true;
-		title = title.replace(fileRegex, '')
-	} const { lineClassNames, code } = parseLines(children, {
+		title = title.replace(fileRegex, '');
+	}
+
+	const { lineClassNames, code } = parseLines(children, {
 		metastring,
 		language,
 		magicComments,
 	});
 	const showLineNumbers =
 		showLineNumbersProp ?? containsLineNumbers(metastring);
-	const regexExtractLink = /link="([^"]+)"/;
-	const match = `${metastring}`.match(regexExtractLink);
-	// console.log(match);
+	const match = `${metastring}`.match(/link="([^"]+)"/);
 	if (match) {
-		const linkValue = match[1];
-		title = <Link href={linkValue}> {title}</Link>
-	} else {
-		// console.log('Link not found in the input string.');
+		title = <Link href={match[1]}> {title}</Link>;
 	}
+
 	return (
 		<Container
 			as="div"
@@ -74,15 +74,16 @@ export default function CodeBlockString({
 				!blockClassName.includes(`language-${language}`) &&
 				`language-${language}`,
 			)}>
-			{title && <div className={styles.codeBlockTitle}>
-				{isFileIconEnabled ? <CiFileOn className='codeTitleIcon' /> : null}
-				{title}
-			</div>}
+			{title && (
+				<div className={styles.codeBlockTitle}>
+					{isFileIconEnabled ? <FileIcon className="codeTitleIcon" /> : null}
+					{title}
+				</div>
+			)}
 			<div className={styles.codeBlockContent}>
 				<Highlight theme={prismTheme} code={code} language={language ?? 'text'}>
 					{({ className, style, tokens, getLineProps, getTokenProps }) => (
 						<pre
-							/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */
 							tabIndex={0}
 							ref={wordWrap.codeBlockRef}
 							className={clsx(className, styles.codeBlock, 'thin-scrollbar')}

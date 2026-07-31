@@ -9,7 +9,7 @@ export default function IconExternalLink({ width = 22, height = 22 }) {
       viewBox="0 0 24 24"
       className={styles.iconExternalLink}>
       <path
-        d="M8.22066 5.79577L7.21259 5.78126L7.2126 2.18043L1.50316 7.88987L0.796072 7.18279L6.50551 1.47335L2.90469 1.47335L2.89018 0.465288L8.22066 0.465288L8.22066 5.79577Z"
+        d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"
         fill="currentColor"
       />
     </svg>

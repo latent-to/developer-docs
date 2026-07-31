@@ -7,14 +7,7 @@ import isInternalUrl from '@docusaurus/isInternalUrl';
 import IconExternalLink from '@theme/Icon/ExternalLink';
 import styles from './styles.module.css';
 import SearchBar from '../../SearchBar';
-function isJson(str) {
-	try {
-		return JSON.parse(str);
-	} catch (e) {
-		return false;
-	}
-	// return true;
-}
+
 export default function DocSidebarItemLink({
 	item,
 	onItemClick,
@@ -26,14 +19,7 @@ export default function DocSidebarItemLink({
 	const { href, label, className, autoAddBaseUrl } = item;
 	const isActive = isActiveSidebarItem(item, activePath);
 	const isInternalLink = isInternalUrl(href);
-
 	const isSearchComponent = className?.includes('sidebarSearch') || false;
-	// console.log(isSearchComponent, className);
-	/**
-	 * [ ] Check it's a search component or not ()
-	 * 	- if it's search Component pass the Search Component
-	 *  - other wise show as it as same
-	 */
 
 	return (
 		<li
@@ -47,7 +33,7 @@ export default function DocSidebarItemLink({
 		>
 			{isSearchComponent ? (
 				<div className={styles.sidebarSearch}>
-					<SearchBar placeholder="Search D..." />
+					<SearchBar />
 				</div>
 			) : (
 				<Link

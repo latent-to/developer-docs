@@ -3,8 +3,16 @@
   margin-top: 0;
 }
 
+@media (max-width: 996px) {
+  .tocSpacer {
+    display: none;
+  }
+}
+
 @media (min-width: 997px) {
   .docItemCol {
-    max-width: 75% !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
   }
 }
