@@ -159,12 +159,15 @@
   --lb-on-accent: #ffffff;
   --lb-radius: 0.5rem;
   --lb-icon-size: 1.25rem;
-  --lb-font-sans: "Poppins", "Poppins Fallback", -apple-system,
-    BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --lb-font-heading: "Montserrat", "Montserrat Fallback", -apple-system,
-    BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --lb-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  --lb-font-sans:
+    "Poppins", "Poppins Fallback", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", system-ui, sans-serif;
+  --lb-font-heading:
+    "Montserrat", "Montserrat Fallback", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", system-ui, sans-serif;
+  --lb-font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 
   --lb-chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7.41 8.58 12 13.17l4.59-4.59L18 10l-6 6-6-6z'/%3E%3C/svg%3E");
   --lb-chevron-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8.59 16.58 13.17 12 8.59 7.41 10 6l6 6-6 6z'/%3E%3C/svg%3E");
@@ -508,6 +511,15 @@ h4.anchor {
   font-weight: 600 !important;
 }
 
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+  font-size: 0.85em !important;
+}
+
 p {
   font-size: 1rem !important;
   font-weight: 400 !important;
@@ -636,7 +648,9 @@ ul.theme-doc-sidebar-menu.menu__list {
   font-size: 1rem !important;
   font-family: var(--lb-font-sans);
   letter-spacing: 0 !important;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
 }
 
 .menu__link:hover,
@@ -839,7 +853,6 @@ ul.theme-doc-sidebar-menu.menu__list {
 }
 
 @media (min-width: 997px) {
-
   .navbar__items:not(.navbar__items--right) {
     width: 100%;
     justify-content: center;
@@ -1710,7 +1723,9 @@ div[class*="announcementBar"] button[class*="announcementBarClose"] {
   border-radius: 9999px;
   color: color-mix(in srgb, var(--lb-on-accent) 85%, transparent);
   opacity: 1;
-  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  transition:
+    color 0.2s ease-in-out,
+    background-color 0.2s ease-in-out;
 }
 
 div[class*="announcementBar"] button[class*="announcementBarClose"]:hover {
@@ -2176,7 +2191,6 @@ main article {
 }
 
 @media screen and (max-width: 996px) {
-
   .navbar.navbar--fixed-top,
   .navbar {
     height: 3.5rem;

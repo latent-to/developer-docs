@@ -36,7 +36,7 @@ const sidebars = {
         "learn/emissions",
         "learn/ema",
         "learn/yuma-consensus",
-        "learn/yc3-blog",        
+        "learn/yc3-blog",
         "concepts/weight-copying-in-bittensor",
         "learn/yuma3-migration-guide",
         "learn/fees",
@@ -65,7 +65,7 @@ const sidebars = {
       collapsed: true,
       items: [
         "keys/wallets",
-         {
+        {
           type: "category",
           label: "Bittensor Wallet",
           collapsible: true,
@@ -95,7 +95,6 @@ const sidebars = {
         },
         "keys/multisig",
         "keys/coldkey-swap",
-        
       ],
     },
 
@@ -186,10 +185,7 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       link: { type: "doc", id: "btcli/overview" },
-      items: [
-        "getting-started/install-btcli",
-        "btcli/btcli-permissions",
-      ],
+      items: ["getting-started/install-btcli", "btcli/btcli-permissions"],
     },
     {
       type: "category",
@@ -197,7 +193,7 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        "sdk/index",       
+        "sdk/index",
         "getting-started/installation",
         "sdk/env-vars",
         "sdk/mev-protection",
@@ -335,6 +331,15 @@ const sidebars = {
     "resources/glossary",
     "resources/community-links",
     "resources/media-assets",
+  ],
+  apiSidebar: [
+    "subtensor-api/extrinsics",
+    "subtensor-api/errors",
+    "subtensor-api/storage",
+    "subtensor-api/events",
+    "subtensor-api/constants",
+    "subtensor-api/runtime",
+    "subtensor-api/rpc",
   ],
 };
 

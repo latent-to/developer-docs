@@ -102,7 +102,7 @@ const config = {
             from: "/glossary",
             to: "/resources/glossary",
           },
-          
+
           {
             from: "/questions-and-answers",
             to: "/resources/questions-and-answers",
@@ -398,6 +398,14 @@ const config = {
                 to: "evm-tutorials/troubleshooting",
               },
             ],
+          },
+          {
+            position: "right",
+            label: "Subtensor API",
+            to: "subtensor-api/extrinsics",
+            sidebarId: "apiSidebar",
+            className: "subtensor-api",
+            activeBasePath: "/subtensor-api",
           },
           {
             type: "search",
