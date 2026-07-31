@@ -8,7 +8,7 @@ description: "This page shows JSON-RPC methods available on the Subtensor node."
 This page shows JSON-RPC methods available on the Subtensor node. Accessible via `api.rpc.<namespace>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **438**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[author](#author)**
@@ -16,7 +16,6 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **[childstate](#childstate)**
 - **[eth](#eth)**
 - **[net](#net)**
-- **[offchain](#offchain)**
 - **[payment](#payment)**
 - **[rpc](#rpc)**
 - **[state](#state)**
@@ -25,40 +24,10 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 
 ## `author`
 
-### `hasKey(publicKey: Bytes, keyType: Text)`: `bool`
-
-- **interface**: `api.rpc.author.hasKey`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Returns true if the keystore has private keys for the given public key and key type.
-
-### `hasSessionKeys(sessionKeys: Bytes)`: `bool`
-
-- **interface**: `api.rpc.author.hasSessionKeys`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Returns true if the keystore has private keys for the given session public keys.
-
-### `insertKey(keyType: Text, suri: Text, publicKey: Bytes)`: `Bytes`
-
-- **interface**: `api.rpc.author.insertKey`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Insert a key into the keystore.
-
 ### `pendingExtrinsics()`: `Vec<Extrinsic>`
 
 - **interface**: `api.rpc.author.pendingExtrinsics`
 - **summary**: Returns all pending extrinsics, potentially grouped by sender
-
-### `removeExtrinsic(bytesOrHash: Vec<ExtrinsicOrHash>)`: `Vec<Hash>`
-
-- **interface**: `api.rpc.author.removeExtrinsic`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Remove given extrinsic from the pool and temporarily ban it to prevent reimporting
-
-### `rotateKeys()`: `Bytes`
-
-- **interface**: `api.rpc.author.rotateKeys`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Generate new session keys and returns the corresponding public keys
 
 ### `submitAndWatchExtrinsic(extrinsic: Extrinsic)`: `ExtrinsicStatus`
 
@@ -328,11 +297,6 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **interface**: `api.rpc.eth.sendRawTransaction`
 - **summary**: Sends signed transaction, returning its hash.
 
-### `sendTransaction(tx: EthTransactionRequest)`: `H256`
-
-- **interface**: `api.rpc.eth.sendTransaction`
-- **summary**: Sends transaction; will block waiting for signer to return the transaction hash
-
 ### `submitHashrate(index: U256, hash: H256)`: `bool`
 
 - **interface**: `api.rpc.eth.submitHashrate`
@@ -376,27 +340,6 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 
 - **interface**: `api.rpc.net.version`
 - **summary**: Returns protocol version.
-
-
-## `offchain`
-
-### `localStorageClear(kind: StorageKind, key: Bytes)`: `Null`
-
-- **interface**: `api.rpc.offchain.localStorageClear`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Clear offchain local storage under given key and prefix
-
-### `localStorageGet(kind: StorageKind, key: Bytes)`: `Option<Bytes>`
-
-- **interface**: `api.rpc.offchain.localStorageGet`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Get offchain local storage under given key and prefix
-
-### `localStorageSet(kind: StorageKind, key: Bytes, value: Bytes)`: `Null`
-
-- **interface**: `api.rpc.offchain.localStorageSet`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Set offchain local storage under given key and prefix
 
 
 ## `payment`
@@ -501,12 +444,6 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **jsonrpc**: subscription
 - **summary**: Subscribes to storage changes for the provided keys
 
-### `traceBlock(block: Hash, targets: Option<Text>, storageKeys: Option<Text>, methods: Option<Text>)`: `TraceBlockResponse`
-
-- **interface**: `api.rpc.state.traceBlock`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Provides a way to trace the re-execution of a single block
-
 
 ## `system`
 
@@ -514,18 +451,6 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 
 - **interface**: `api.rpc.system.accountNextIndex`
 - **summary**: Retrieves the next accountIndex as available on the node
-
-### `addLogFilter(directives: Text)`: `Null`
-
-- **interface**: `api.rpc.system.addLogFilter`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Adds the supplied directives to the current log filter
-
-### `addReservedPeer(peer: Text)`: `Text`
-
-- **interface**: `api.rpc.system.addReservedPeer`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Adds a reserved peer
 
 ### `chain()`: `Text`
 
@@ -553,21 +478,10 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **interface**: `api.rpc.system.localListenAddresses`
 - **summary**: The addresses include a trailing /p2p/ with the local PeerId, and are thus suitable to be passed to addReservedPeer or as a bootnode address for example
 
-### `localPeerId()`: `Text`
-
-- **interface**: `api.rpc.system.localPeerId`
-- **summary**: Returns the base58-encoded PeerId of the node
-
 ### `name()`: `Text`
 
 - **interface**: `api.rpc.system.name`
 - **summary**: Retrieves the node name
-
-### `networkState()`: `NetworkState`
-
-- **interface**: `api.rpc.system.networkState`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Returns current state of the network
 
 ### `nodeRoles()`: `Vec<NodeRole>`
 
@@ -584,23 +498,6 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 
 - **interface**: `api.rpc.system.properties`
 - **summary**: Get a custom set of properties as a JSON object, defined in the chain spec
-
-### `removeReservedPeer(peerId: Text)`: `Text`
-
-- **interface**: `api.rpc.system.removeReservedPeer`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Remove a reserved peer
-
-### `reservedPeers()`: `Vec<Text>`
-
-- **interface**: `api.rpc.system.reservedPeers`
-- **summary**: Returns the list of reserved peers
-
-### `resetLogFilter()`: `Null`
-
-- **interface**: `api.rpc.system.resetLogFilter`
-- **unsafe**: this method is flagged as unsafe
-- **summary**: Resets the log filter to Substrate defaults
 
 ### `syncState()`: `SyncState`
 

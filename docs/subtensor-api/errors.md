@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **438**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -1753,6 +1753,11 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.TooManyRegistrationsThisInterval`
 - **summary**: The number of registration attempts exceeded the allowed number in the interval.
+
+### `TooManyRootClaimHotkeys`
+
+- **interface**: `api.errors.subtensorModule.TooManyRootClaimHotkeys`
+- **summary**: The coldkey has too many staking hotkeys for a single manual root claim.
 
 ### `TooManyUIDsPerMechanism`
 

@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **438**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -1152,6 +1152,21 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.emission`
 - **summary**: MAP ( netuid ) --> emission
+
+### `emissionBarQuantile`: `FixedU128`
+
+- **interface**: `api.query.subtensorModule.emissionBarQuantile`
+- **summary**: ITEM --> Emission Bar Quantile (q)
+
+### `emissionGateBar`: `FixedU128`
+
+- **interface**: `api.query.subtensorModule.emissionGateBar`
+- **summary**: ITEM --> Emission gate bar (theta): the q-mass demand-share threshold the Hill gate is centered on. Recomputed on a fixed block cadence from the same EMA-price shares that drive emission. Zero means "not yet computed" and disables the gate.
+
+### `emissionGateExponent`: `FixedU128`
+
+- **interface**: `api.query.subtensorModule.emissionGateExponent`
+- **summary**: ITEM --> Emission Gate Exponent (h)
 
 ### `firstEmissionBlockNumber(NetUid)`: `u64`
 

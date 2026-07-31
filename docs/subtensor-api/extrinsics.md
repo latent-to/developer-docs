@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **438**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#adminutils)**
@@ -238,6 +238,16 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     **Weight:**
 
     Weight is handled by the `#[pallet::weight]` attribute.
+
+### `sudoSetEmissionBarQuantile(quantile: U64F64)`
+
+- **interface**: `api.tx.adminUtils.sudoSetEmissionBarQuantile`
+- **summary**: Sets the emission bar quantile (q): the fraction of demand carried by subnets above the emission gate bar. Also forces a bar recompute on the next block so the new quantile takes effect immediately.
+
+### `sudoSetEmissionGateExponent(exponent: U64F64)`
+
+- **interface**: `api.tx.adminUtils.sudoSetEmissionGateExponent`
+- **summary**: Sets the emission gate Hill exponent (h): cliff sharpness at the bar.
 
 ### `sudoSetEvmChainId(chain_id: u64)`
 
@@ -1949,6 +1959,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     **Errors:**
 
     - `InvalidSubnetNumber`: The subnet set is empty or exceeds the maximum number of claims.
+    - `TooManyRootClaimHotkeys`: The coldkey's hotkey fanout exceeds one claim's bound.
 
 ### `clearColdkeySwapAnnouncement()`
 
