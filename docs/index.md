@@ -56,7 +56,7 @@ Browse the subnets and explore links to their code repositories on [TAO.app](htt
     icon={GoNumber}
     title='Subnet Listings on TAO.app'
     link='https://tao.app'
-    body='Discover the subnets that power Bittensor and browse real-time tokenomic data and analytics.'/>  
+    body='Browse Bittensor subnets with real-time tokenomic data and analytics.'/>  
     <ResponsiveCard 
     icon={MdInstallDesktop}
     title='Run a Local Bittensor Blockchain'
@@ -71,7 +71,7 @@ Browse the subnets and explore links to their code repositories on [TAO.app](htt
     icon={MdInstallDesktop}
     title='Guide to Bittensor tools'
     link='concepts/tools'
-    body='Opentensor Foundation maintains open source tools for the Bittensor ecosystem, including the Python SDK and `btcli`.' />      
+    body='Open source tools for the Bittensor ecosystem, including the Python SDK and `btcli`.' />      
     <CardSmall
     icon={VscFileMedia}
     title='Bittensor media assets'
@@ -88,7 +88,7 @@ You can participate in an existing subnet as either a subnet validator or a subn
     icon={RiTeamLine}
     title='Staking and Delegation'
     link='./staking-and-delegation/delegation'
-    body='Get to know how staking and delegating in the Bittensor network.' />
+    body='Get to know staking and delegation on the Bittensor network.' />
     <ResponsiveCard 
     icon={MdOutlineChecklistRtl}
     title='Mining in Bittensor'
@@ -108,7 +108,7 @@ You can participate in an existing subnet as either a subnet validator or a subn
     icon={RiGovernmentLine}
     title='Governance'
     link='governance'
-    body='Learn how the Bittensor governance works as it transitions into full community-ownership over time.' />
+    body='Learn how Bittensor governance transitions to full community ownership.' />
     
 </ResponsiveCards>
 
@@ -123,22 +123,22 @@ Ready to run your own subnet? Follow the below links.
     icon={HiAcademicCap}
     title='Basic subnet tutorials'
     link='tutorials/basic-subnet-tutorials'
-    body='Learn how to run a simple subnet locally or on testchain or mainchain.' />
+    body='Learn how to run a simple subnet locally, on testchain, or mainchain.' />
     <ResponsiveCard
     icon={GiStarFormation}
     title='Create a subnet'
     link='subnets/create-a-subnet'
-    body='Step-by-step instructions for creating a local subnet or a subnet on testchain or mainchain.' />
+    body='Step-by-step instructions for creating a subnet locally, on testchain, or mainchain.' />
     <ResponsiveCard
     icon={HiOutlineAcademicCap}
     title='OCR subnet tutorial'
     link='tutorials/ocr-subnet-tutorial'
-    body='Shows how to convert your Python notebook containing validated code for an incentive mechanism into a working subnet.' />
+    body='Convert your validated incentive-mechanism notebook into a working subnet.' />
     <ResponsiveCard
     icon={VscSymbolParameter}
     title='Subnet hyperparameters'
     link='subnets/subnet-hyperparameters'
-    body='Get to know subnet hyperparameters and how to use them effectively. As a subnet creator, your success depends on this knowledge.' />
+    body='Get to know subnet hyperparameters and how to use them effectively.' />
 </ResponsiveCards>
 
 ---
@@ -154,17 +154,14 @@ See [Legacy Bittensor 7.4.0 Documentation](https://docs.learnbittensor.org/legac
 <Cards>
     <CardSmall
     icon={GoCommandPalette}
-    title=''
-    link='https://docs.learnbittensor.org/btcli/btcli'
-    body='Bittensor CLI' />
+    title='Bittensor CLI'
+    link='https://docs.learnbittensor.org/btcli/btcli' />
     <CardSmall
     icon={FaPython}
-    title=''
-    link='https://docs.learnbittensor.org/sdk/bt-api-ref'
-    body='Bittensor SDK' />
+    title='Bittensor SDK'
+    link='https://docs.learnbittensor.org/sdk/bt-api-ref' />
     <CardSmall
     icon={FaPython}
-    title=''
-    link='keys/btwallet'
-    body='Bittensor Wallet' />
+    title='Bittensor Wallet'
+    link='keys/btwallet' />
 </Cards>

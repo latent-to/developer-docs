@@ -158,6 +158,7 @@
 
   --lb-on-accent: #ffffff;
   --lb-radius: 0.5rem;
+  --lb-icon-size: 1.25rem;
   --lb-font-sans: "Poppins", "Poppins Fallback", -apple-system,
     BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --lb-font-heading: "Montserrat", "Montserrat Fallback", -apple-system,
@@ -857,7 +858,7 @@ ul.theme-doc-sidebar-menu.menu__list {
     transform: translateY(-50%);
   }
 
-  .lb-brand {
+  .navbar .lb-brand {
     position: absolute;
     left: 1.5rem;
     top: 50%;
@@ -1041,8 +1042,8 @@ a.subtensor-api.navbar__link--active::before,
 }
 
 .navbar__items--right .clean-btn svg {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: var(--lb-icon-size);
+  height: var(--lb-icon-size);
 }
 
 .dropdown {
@@ -1458,14 +1459,60 @@ footer .container.container-fluid {
   }
 }
 
-.lb-footer__title {
-  font-family: var(--lb-font-heading);
-  font-size: 1.563rem !important;
-  font-weight: 600 !important;
-  letter-spacing: -0.022em;
-  line-height: 1.15;
-  color: var(--lb-text);
-  margin: 0;
+.lb-footer__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .lb-footer__brand {
+    align-items: flex-start;
+  }
+}
+
+.lb-footer__mark {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .lb-footer__mark {
+    justify-content: flex-start;
+  }
+}
+
+.lb-footer__logo {
+  display: flex;
+  align-items: center;
+  height: 1.5rem;
+  line-height: 0;
+  text-decoration: none !important;
+}
+
+.lb-footer__logo-img {
+  display: block;
+  height: 1.5rem !important;
+  width: auto !important;
+  max-width: 11.25rem;
+  object-fit: contain;
+}
+
+.lb-footer__badge {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--lb-radius);
+  background-color: var(--lb-accent);
+  color: #ffffff;
+  font-family: var(--lb-font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
 }
 
 .lb-footer__powered {
@@ -1539,21 +1586,37 @@ footer .container.container-fluid {
 }
 
 .lb-footer__copy {
-  font-size: 0.8rem !important;
+  font-family: var(--lb-font-sans);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.6;
   color: var(--lb-text-secondary);
   margin: 0;
 }
 
+.lb-icon {
+  width: var(--lb-icon-size);
+  height: var(--lb-icon-size);
+  display: block;
+  flex-shrink: 0;
+}
+
 .lb-footer__social {
   display: flex;
+  align-items: center;
   gap: 1.5rem;
 }
 
 .lb-footer__social a {
   color: var(--lb-text-secondary) !important;
   transition: color 0.2s ease-in-out;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--lb-radius);
+  text-decoration: none !important;
 }
 
 .lb-footer__social a:hover {
@@ -2097,8 +2160,8 @@ main article {
 .header-github-link:before {
   content: "";
   display: flex;
-  height: 1.25rem;
-  width: 1.25rem;
+  height: var(--lb-icon-size);
+  width: var(--lb-icon-size);
   background: currentColor;
   -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
     50% 50% / contain no-repeat;
@@ -2131,7 +2194,7 @@ main article {
     min-width: 0;
   }
 
-  .lb-brand {
+  .navbar .lb-brand {
     position: static;
     transform: none;
     margin-right: auto;
@@ -2139,7 +2202,7 @@ main article {
     gap: 0.5rem;
   }
 
-  .lb-brand__badge {
+  .navbar .lb-brand__badge {
     padding: 0.2rem 0.625rem;
     font-size: 0.875rem;
     line-height: 1.4;
@@ -2383,12 +2446,12 @@ main article {
 }
 
 @media screen and (max-width: 380px) {
-  .lb-brand {
+  .navbar .lb-brand {
     gap: 0.375rem;
     max-width: calc(100% - 5rem);
   }
 
-  .lb-brand__badge {
+  .navbar .lb-brand__badge {
     padding: 0.175rem 0.5rem;
     font-size: 0.8125rem;
   }

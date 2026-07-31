@@ -27,9 +27,9 @@ function CardContent({
   return (
     <>
       {Icon ? <Icon size={iconSize} aria-hidden="true" /> : null}
-      <h3 className={titleClassName}>{title}</h3>
-      <div className={bodyClassName}>{body}</div>
-      {withReadMore && <span className={styles.readMore}>Read more</span>}
+      {title ? <h3 className={titleClassName}>{title}</h3> : null}
+      {body ? <div className={bodyClassName}>{body}</div> : null}
+      {withReadMore ? <span className={styles.readMore}>Read more</span> : null}
     </>
   );
 }
@@ -77,7 +77,7 @@ export function CardSmall({ icon, title, body, link }) {
         icon={icon}
         title={title}
         body={body}
-        iconSize="1.2rem"
+        iconSize="2rem"
         titleClassName={styles.titleSmall}
         bodyClassName={styles.bodySmall}
       />
