@@ -40,7 +40,6 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.rpc.author.submitExtrinsic`
 - **summary**: Submit a fully formatted extrinsic for block inclusion
 
-
 ## `chain`
 
 ### `getBlock(hash?: BlockHash)`: `SignedBlock`
@@ -81,7 +80,6 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **jsonrpc**: subscription
 - **summary**: Retrieves the best header via subscription
 
-
 ## `childstate`
 
 ### `getKeys(childKey: PrefixedStorageKey, prefix: StorageKey, at?: Hash)`: `Vec<StorageKey>`
@@ -113,7 +111,6 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 - **interface**: `api.rpc.childstate.getStorageSize`
 - **summary**: Returns the size of a child storage entry at a block state
-
 
 ## `eth`
 
@@ -323,7 +320,6 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.rpc.eth.uninstallFilter`
 - **summary**: Uninstalls filter.
 
-
 ## `net`
 
 ### `listening()`: `bool`
@@ -341,7 +337,6 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.rpc.net.version`
 - **summary**: Returns protocol version.
 
-
 ## `payment`
 
 ### `queryFeeDetails(extrinsic: Bytes, at?: BlockHash)`: `FeeDetails`
@@ -354,14 +349,12 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.rpc.payment.queryInfo`
 - **summary**: Retrieves the fee information for an encoded extrinsic
 
-
 ## `rpc`
 
 ### `methods()`: `RpcMethods`
 
 - **interface**: `api.rpc.rpc.methods`
 - **summary**: Retrieves the list of RPC methods that are exposed by the node
-
 
 ## `state`
 
@@ -444,7 +437,6 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **jsonrpc**: subscription
 - **summary**: Subscribes to storage changes for the provided keys
 
-
 ## `system`
 
 ### `accountNextIndex(accountId: AccountId)`: `Index`
@@ -508,7 +500,6 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 - **interface**: `api.rpc.system.version`
 - **summary**: Retrieves the version of the node
-
 
 ## `web3`
 

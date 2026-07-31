@@ -32,16 +32,11 @@ btcli subnet register --network ws://127.0.0.1:9944
 
 3. Save the delegate hotkey address. You will use this in the staking pool use case below.
 
-4. Disable staking rate limits by setting `targetStakesPerInterval` to 1000. Follow these below steps:
-   - Open the Polkadot JS app using [this link with encoded transaction](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/extrinsics/decode/0x0c00132fe803000000000000).
-   - Click on **Submission** tab.
-   - From the **using the selected account** field, select **ALICE**.
-   - Click on **Submit Transaction** at the bottom right. This will open the **authorize transaction** window.
-   - On this **authorize transaction** window, make sure the **sign and submit** toggle is ON and click on the **Sign and Submit** on the bottom right.
-
 ## Staking V1 and V2
 
 There are two versions of staking precompile implemenation, V1 and V2. The contract address for V1 is `0x0000000000000000000000000000000000000801`. The address for V2 is `0x0000000000000000000000000000000000000805`. V1 is deprecated, but is kept for backwards-compatibility. The major difference between V1 and V2 is that the staking amount is fetched from the `msg.value` in V1. Then precompile transfers the token back to the caller. It is misleading and confuses solidity developers. In the V2 implementation, all amount parameters are defined as parameter of transaction.
+
+- **Source code**: [StakingPrecompileV2 reference](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/staking.rs)
 
 ## Call the staking precompile from another smart contract (staking pool use case)
 

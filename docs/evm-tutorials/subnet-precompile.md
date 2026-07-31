@@ -9,14 +9,10 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 This precompile allows you to interact with Bittensor subnets through EVM smart contracts, affording functionality for registering networks, viewing and setting network parameters, and querying network state.
 
-This page:
+This page describes the precompile's [available functions](#available-functions) on the precompile and demonstrates the precompile's usage with [example scripts](#example-scripts).
 
-- described the precompile's [available functions](#available-functions) on the precompile
-- demonstrates the precompile's usage with [example scripts](#example-scripts).
-
-The subnet precompile is available at address `0x803` (2051 in decimal).
-
-View the [source on GitHub](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/subnet.rs)
+- **Address**: The subnet precompile is available at address `0x803` (2051 in decimal).
+- **Source code**: [SubnetPrecompile reference](https://github.com/RaoFoundation/subtensor/blob/main/precompiles/src/subnet.rs)
 
 :::info permissions
 Subnet operations have distinct requirements!
@@ -101,83 +97,6 @@ Sets the serving rate limit for a subnet.
 
 - None (payable function)
 
-### Difficulty Management
-
-#### `getMinDifficulty`
-
-Gets the minimum difficulty for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-
-**Returns:**
-
-- `uint64`: The minimum difficulty value
-
-#### `setMinDifficulty`
-
-Sets the minimum difficulty for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-- `minDifficulty` (uint64): The new minimum difficulty value
-
-**Returns:**
-
-- None (payable function)
-
-#### `getMaxDifficulty`
-
-Gets the maximum difficulty for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-
-**Returns:**
-
-- `uint64`: The maximum difficulty value
-
-#### `setMaxDifficulty`
-
-Sets the maximum difficulty for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-- `maxDifficulty` (uint64): The new maximum difficulty value
-
-**Returns:**
-
-- None (payable function)
-
-#### `getDifficulty`
-
-Gets the current difficulty for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-
-**Returns:**
-
-- `uint64`: The current difficulty value
-
-#### `setDifficulty`
-
-Sets the current difficulty for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-- `difficulty` (uint64): The new difficulty value
-
-**Returns:**
-
-- None (payable function)
-
 ### Weight Management
 
 #### `getWeightsVersionKey`
@@ -217,7 +136,7 @@ Gets the weights set rate limit for a subnet.
 
 - `uint64`: The weights set rate limit value
 
-#### `setWeightsSetRateLimit` ⚠️ **DEPRECATED**
+#### `setWeightsSetRateLimit` ⚠️ **ROOT-ONLY**
 
 Sets the weights set rate limit for a subnet. **This function is deprecated. Subnet owners cannot set weight setting rate limits.**
 
@@ -285,31 +204,6 @@ Sets the minimum allowed weights for a subnet.
 
 ### Consensus Parameters
 
-#### `getAdjustmentAlpha`
-
-Gets the adjustment alpha parameter for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-
-**Returns:**
-
-- `uint64`: The adjustment alpha value
-
-#### `setAdjustmentAlpha`
-
-Sets the adjustment alpha parameter for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-- `adjustmentAlpha` (uint64): The new adjustment alpha value
-
-**Returns:**
-
-- None (payable function)
-
 #### `getKappa`
 
 Gets the kappa parameter for a subnet.
@@ -330,31 +224,6 @@ Sets the kappa parameter for a subnet.
 
 - `netuid` (uint16): The subnetwork ID
 - `kappa` (uint16): The new kappa value
-
-**Returns:**
-
-- None (payable function)
-
-#### `getRho`
-
-Gets the rho parameter for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-
-**Returns:**
-
-- `uint16`: The rho value
-
-#### `setRho`
-
-Sets the rho parameter for a subnet.
-
-**Parameters:**
-
-- `netuid` (uint16): The subnetwork ID
-- `rho` (uint16): The new rho value
 
 **Returns:**
 
@@ -530,9 +399,9 @@ Gets the minimum burn amount for a subnet.
 
 - `uint64`: The minimum burn amount
 
-#### `setMinBurn` ⚠️ **DEPRECATED**
+#### `setMinBurn`
 
-Sets the minimum burn amount for a subnet. **This function is deprecated. Subnet owners cannot set the minimum burn anymore.**
+Sets the minimum burn amount for a subnet.
 
 **Parameters:**
 
@@ -558,9 +427,9 @@ Gets the maximum burn amount for a subnet.
 
 - `uint64`: The maximum burn amount
 
-#### `setMaxBurn` ⚠️ **DEPRECATED**
+#### `setMaxBurn`
 
-Sets the maximum burn amount for a subnet. **This function is deprecated. Subnet owners cannot set the maximum burn anymore.**
+Sets the maximum burn amount for a subnet.
 
 **Parameters:**
 
@@ -731,10 +600,10 @@ const { convertH160ToSS58 } = require("./address-mapping.js");
 const { decodeAddress } = require("@polkadot/util-crypto");
 
 // PROTECT YOUR PRIVATE KEYS WELL, NEVER COMMIT THEM TO GITHUB OR SHARE WITH ANYONE
-const { ethPrivateKey, subSeed, rpcUrl, wsUrl } = require("./config.js");
+const { ethPrivateKey, subSeed, wsUrl } = require("./config.js");
 const amount1TAO = BigInt("1000000000");
 // Connect to the Subtensor node
-const provider = new ethers.JsonRpcProvider(rpcUrl);
+const provider = new ethers.JsonRpcProvider("YOUR_RPC_URL");
 
 function sendTransaction(api, call, signer) {
   return new Promise((resolve, reject) => {
@@ -987,7 +856,7 @@ async function createSubnetGetSetParameter() {
     console.log("networkOwner is ", networkOwner);
 
     // Note: This example uses setHyperParameter which calls setServingRateLimit
-    // Some other functions like setMinBurn, setMaxBurn, setWeightsSetRateLimit are deprecated
+    // Some other functions like setWeightsSetRateLimit are root-only and cannot be set by the subnet owner
     tx = await subnet_contract.setHyperParameter(netuid, 255);
     await tx.wait();
 
