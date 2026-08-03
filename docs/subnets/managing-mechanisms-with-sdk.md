@@ -4,7 +4,6 @@ title: "Managing Multiple Incentive Mechanisms with SDK"
 
 import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
-# Managing Multiple Incentive Mechanisms with SDK
 
 This tutorial shows how to configure and manage multiple incentive mechanisms in a single subnet using the Bittensor Python SDK.
 

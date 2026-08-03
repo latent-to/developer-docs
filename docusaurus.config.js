@@ -1,44 +1,58 @@
 // @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
 
-// const lightCodeTheme = require("prism-react-renderer/themes/github");
-// const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const { themes } = require("prism-react-renderer");
 const lightTheme = themes.github;
 const darkTheme = themes.dracula;
 
-// KaTex stuff
-// const math = require("remark-math");
-// const katex = require("rehype-katex");
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Bittensor",
-  tagline: "Developer Documentation",
-  favicon: "img/favicon.ico",
+  title: "Learn Bittensor - Developer Guides",
+  tagline: "Guides and tutorials for the Bittensor network",
+  favicon: "favicon.ico",
+  headTags: [
+    {
+      tagName: "link",
+      attributes: {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: "/favicon-32x32.png",
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "icon",
+        type: "image/png",
+        sizes: "16x16",
+        href: "/favicon-16x16.png",
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        href: "/apple-touch-icon.png",
+      },
+    },
+  ],
   trailingSlash: false,
-  // Set the production url of your site here
-  url: "https://docs.learnbittensor.org",
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
+  url: "https://guides.learnbittensor.org",
   baseUrl: "/",
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: "latent-to", // Usually your GitHub org/user name.
-  projectName: "developer-docs", // Usually your repo name.
+  organizationName: "latent-to",
+  projectName: "developer-docs",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
-  // Even if you don't use internalization, you can use this field to set useful
-  // metadata like html lang. For example, if your site is Chinese, you may want
-  // to replace "en" with "zh-Hans".
 
   customFields: {
-    enableIssueLinks: true, // Set to true to enable issue links
-    enableEditUrlLinks: true, // Set to true to enable edit url links
+    enableIssueLinks: true,
+    enableEditUrlLinks: true,
     issueBaseUrl: "https://github.com/latent-to/developer-docs/issues",
-    enableFeedback: false, // Set to false to disable feedback
+    enableFeedback: false,
   },
 
   i18n: {
@@ -68,7 +82,6 @@ const config = {
     ],
   ],
   plugins: [
-    // "@gracefullight/docusaurus-plugin-vercel-analytics",
     [
       "@docusaurus/plugin-client-redirects",
       {
@@ -110,10 +123,6 @@ const config = {
             to: "/validators",
           },
           {
-            to: "/sdk/bt-api-ref",
-            from: "/reference/bittensor-api-ref",
-          },
-          {
             to: "/errors",
             from: "/subtensor-nodes/subtensor-error-messages",
           },
@@ -121,10 +130,7 @@ const config = {
             from: "/glossary",
             to: "/resources/glossary",
           },
-          {
-            from: "/bittensor-rel-notes",
-            to: "/resources/bittensor-rel-notes",
-          },
+
           {
             from: "/questions-and-answers",
             to: "/resources/questions-and-answers",
@@ -162,20 +168,12 @@ const config = {
             to: "/validators/child-hotkeys",
           },
           {
-            from: "/btcli",
-            to: "/btcli",
-          },
-          {
             from: "/btcli-permissions",
             to: "/btcli/btcli-permissions",
           },
           {
             from: "/migration_guide",
             to: "/sdk/migration-guide",
-          },
-          {
-            from: "/bt-api-ref",
-            to: "/sdk/bt-api-ref",
           },
           {
             from: "/getting-started/wallets",
@@ -218,6 +216,38 @@ const config = {
             to: "/governance/senate",
           },
           {
+            from: "/concepts/weight-copying-in-bittensor",
+            to: "/learn/weight-copying-in-bittensor",
+          },
+          {
+            from: "/learn/avoid-staking-proxy-attacks",
+            to: "/keys/proxies/avoid-staking-proxy-attacks",
+          },
+          {
+            from: "/learn/price-protection",
+            to: "/staking-and-delegation/price-protection",
+          },
+          {
+            from: "/learn/balancer-amm",
+            to: "/staking-and-delegation/balancer-amm",
+          },
+          {
+            from: "/learn/slippage",
+            to: "/staking-and-delegation/slippage",
+          },
+          {
+            from: "/getting-started/installation",
+            to: "/sdk/installation",
+          },
+          {
+            from: "/getting-started/install-btcli",
+            to: "/btcli/install-btcli",
+          },
+          {
+            from: "/errors/subtensor",
+            to: "/subtensor-api/errors",
+          },
+          {
             from: "/errors-and-troubleshooting",
             to: "/errors/troubleshooting",
           },
@@ -235,11 +265,11 @@ const config = {
           },
           {
             from: "/liquidity-positions/liquidity-positions",
-            to: "/learn/balancer-amm",
+            to: "/staking-and-delegation/balancer-amm",
           },
           {
             from: "/liquidity-positions/managing-liquidity-positions",
-            to: "/learn/balancer-amm",
+            to: "/staking-and-delegation/balancer-amm",
           },
         ],
       },
@@ -255,7 +285,6 @@ const config = {
       defer: true,
     },
   ],
-  // clientModules: ["/static/feedbug-widjet.js"],
 
   stylesheets: [
     {
@@ -272,14 +301,17 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // Replace with your project's social card
       image: "img/bittensor-dev-docs-social-card.png",
+      metadata: [
+        { property: "og:type", content: "website" },
+        { property: "og:site_name", content: "Learn Bittensor" },
+      ],
       announcementBar: {
         id: "package_source",
         content:
-          "<strong> ⚠️ For security, only use links and commands directly from our docs or official release announcements to avoid malicious lookalikes.</strong>",
-        backgroundColor: "#FFF4E5",
-        textColor: "#4A2F00",
+          '<span class="lb-notice"><span class="lb-notice__badge">Security</span><span class="lb-notice__text"><span class="lb-notice__long">⚠️ Only use links and commands directly from our docs or official release announcements to avoid malicious lookalikes.</span><span class="lb-notice__short">⚠️ Only use links from our official docs.</span></span></span>',
+        backgroundColor: "#6366f1",
+        textColor: "#ffffff",
         isCloseable: true,
       },
       docs: {
@@ -291,13 +323,16 @@ const config = {
 
       navbar: {
         logo: {
-          alt: "Bittensor",
-          src: "img/logo.svg",
-          srcDark: "img/logo-dark-mode.svg",
-          href: "https://docs.learnbittensor.org",
+          alt: "Learn Bittensor",
+          src: "img/learnbittensor_light.png",
+          srcDark: "img/learnbittensor_dark.png",
+          href: "https://guides.learnbittensor.org",
+          width: 179,
+          height: 24,
           style: {
             objectFit: "contain",
-            width: 21,
+            height: 24,
+            width: "auto",
           },
         },
         items: [
@@ -305,42 +340,96 @@ const config = {
             type: "dropdown",
             label: "Get started",
             position: "left",
+            activeBaseRegex: "^/(keys|miners|validators|staking-and-delegation|subnets|tutorials)(/|$)",
             className: "docs-dropdown",
             items: [
               {
-                label: "Introduction",
-                to: "learn/introduction",
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Introduction</span><span class="lb-mega-item__desc">Learn what Bittensor is and how the network works</span></span>',
+                to: "/learn/introduction",
               },
               {
-                label: "Wallets and Keys",
-                to: "keys/wallets",
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Wallets and Keys</span><span class="lb-mega-item__desc">Create and secure your coldkeys and hotkeys</span></span>',
+                to: "/keys/wallets",
               },
               {
-                label: "Mining",
-                to: "miners",
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Mining</span><span class="lb-mega-item__desc">Run a miner and produce digital commodities on a subnet</span></span>',
+                to: "/miners",
               },
               {
-                label: "Validating",
-                to: "validators",
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Validating</span><span class="lb-mega-item__desc">Evaluate miner work and earn emissions as a validator</span></span>',
+                to: "/validators",
               },
               {
-                label: "Manage subnets",
-                to: "subnets/create-a-subnet",
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Manage subnets</span><span class="lb-mega-item__desc">Create and operate your own Bittensor subnet</span></span>',
+                to: "/subnets/create-a-subnet",
+              },
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Stake and delegate</span><span class="lb-mega-item__desc">Put TAO to work by delegating to a validator</span></span>',
+                to: "/staking-and-delegation/delegation",
               },
             ],
           },
           {
             type: "dropdown",
-            label: "References",
+            label: "Learn",
             position: "left",
+            activeBaseRegex: "^/(learn|concepts|resources|navigating-subtensor|governance)(/|$)",
             items: [
               {
-                label: "SDK Reference",
-                to: "sdk/bt-api-ref",
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Emissions</span><span class="lb-mega-item__desc">How TAO is minted and shared out every block</span></span>',
+                to: "/learn/emissions",
               },
               {
-                label: "BTCLI Reference",
-                to: "btcli",
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Yuma Consensus</span><span class="lb-mega-item__desc">How validator weights turn into miner rewards</span></span>',
+                to: "/learn/yuma-consensus",
+              },
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Subnets</span><span class="lb-mega-item__desc">What subnets are and how they fit together</span></span>',
+                to: "/subnets/understanding-subnets",
+              },
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Incentive mechanisms</span><span class="lb-mega-item__desc">How a subnet decides what work is worth rewarding</span></span>',
+                to: "/learn/anatomy-of-incentive-mechanism",
+              },
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Transaction fees</span><span class="lb-mega-item__desc">What each on-chain action costs and why</span></span>',
+                to: "/learn/fees",
+              },
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Glossary</span><span class="lb-mega-item__desc">Plain definitions for the terms used across these docs</span></span>',
+                to: "/resources/glossary",
+              },
+            ],
+          },
+          {
+            type: "dropdown",
+            label: "Reference",
+            position: "left",
+            activeBaseRegex: "^/(sdk|btcli|subtensor-api|errors|local-build|subtensor-nodes)(/|$)",
+            items: [
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Python SDK</span><span class="lb-mega-item__desc">Build against Bittensor from Python</span></span>',
+                to: "/sdk",
+              },
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Bittensor CLI</span><span class="lb-mega-item__desc">Manage wallets, stake and subnets from the terminal</span></span>',
+                to: "/btcli/overview",
+              },
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Subtensor API</span><span class="lb-mega-item__desc">Extrinsics, storage, events and constants</span></span>',
+                to: "/subtensor-api",
+              },
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Subnet hyperparameters</span><span class="lb-mega-item__desc">Every subnet setting and what changing it does</span></span>',
+                to: "/subnets/subnet-hyperparameters",
+              },
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Error codes</span><span class="lb-mega-item__desc">Look up a Subtensor error and what triggers it</span></span>',
+                to: "/errors",
+              },
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Troubleshooting</span><span class="lb-mega-item__desc">Fixes for the problems people hit most often</span></span>',
+                to: "/errors/troubleshooting",
               },
             ],
           },
@@ -348,44 +437,38 @@ const config = {
             type: "dropdown",
             label: "Bittensor EVM",
             position: "left",
+            activeBaseRegex: "^/evm-tutorials(/|$)",
             items: [
               {
-                label: "EVM smart contracts",
-                to: "evm-tutorials",
-                activeBaseRegex: "^/evm-tutorials/?$",
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">EVM smart contracts</span><span class="lb-mega-item__desc">Deploy and interact with smart contracts on the Bittensor EVM</span></span>',
+                to: "/evm-tutorials",
               },
               {
-                label: "Token Bridging",
-                to: "evm-tutorials/bridge-vtao",
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Token Bridging</span><span class="lb-mega-item__desc">Bridge tokens to and from the Bittensor EVM</span></span>',
+                to: "/evm-tutorials/bridge-vtao",
               },
               {
-                label: "Convert h160 to SS58",
-                to: "evm-tutorials/convert-h160-to-ss58",
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Convert H160 to SS58</span><span class="lb-mega-item__desc">Map Ethereum H160 addresses to Substrate SS58 format</span></span>',
+                to: "/evm-tutorials/convert-h160-to-ss58",
+              },
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">Precompiles</span><span class="lb-mega-item__desc">Call staking, subnet and metagraph precompiles from Solidity</span></span>',
+                to: "/evm-tutorials/examples",
+              },
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">EVM networks</span><span class="lb-mega-item__desc">Endpoints and chain IDs for mainnet, testnet and localnet</span></span>',
+                to: "/evm-tutorials/subtensor-networks",
+              },
+              {
+                html: '<span class="lb-mega-item"><span class="lb-mega-item__label">EVM troubleshooting</span><span class="lb-mega-item__desc">Gas, opcode and pending-transaction problems</span></span>',
+                to: "/evm-tutorials/troubleshooting",
               },
             ],
           },
           {
             type: "search",
-            position: "left",
-            className: "custom_algolia",
-          },
-          {
-            position: "left",
-            label: "Announcements",
-            to: "learn/announcements",
-          },
-          {
-            to: "resources/bittensor-rel-notes",
-            label: "Releases",
-            position: "left",
-          },
-          {
             position: "right",
-            label: "Subtensor API",
-            to: "subtensor-api/extrinsics",
-            sidebarId: "apiSidebar",
-            className: "subtensor-api",
-            activeBasePath: "/subtensor-api",
+            className: "custom_algolia",
           },
           {
             href: "https://github.com/latent-to/developer-docs",
@@ -409,22 +492,10 @@ const config = {
         insights: true,
         debug: false,
         searchPagePath: "search",
-        // // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
-        // replaceSearchResultPathname: {
-        //   from: "/docs/", // or as RegExp: /\/docs\//
-        //   to: "/",
-        // },
       },
       footer: {
-        copyright: `
-					<div className="copyRight">
-						© ${new Date().getFullYear()} <a href="https://learnbittensor.org">LearnBittensor</a> • <a href="https://latent.to/">Latent Holdings</a>, <span>all rights reserved.</span>
-            <a href="mailto:m@latent.to">contact the docs team</a>
-          </div>
-					<a href='https://learnbittensor.org/'>
-					<img src="img/logo-dark-mode.svg" alt="logo"/>
-					</a>
-				`,
+        // Rendered by swizzled Footer/Copyright (brand mark, links, social).
+        copyright: "© Learn Bittensor",
       },
     }),
 };

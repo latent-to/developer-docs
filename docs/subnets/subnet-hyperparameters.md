@@ -2,8 +2,6 @@
 title: "Subnet Configuration (Hyperparameters)"
 ---
 
-# Subnet Configuration (Hyperparameters)
-
 Bittensor subnets are configured with a set of state variables (known as hyperparameters) that are recorded on the blockchain. Many of these can be accessed (viewed and set) using the Bittensor CLI `btcli`, but some of them must be checked or set using Subtensor extrinsics, as noted.
 
 Note that the names of the variables may be slightly different in various representations, e.g. in `btcli` and in the [chain codebase](https://github.com/RaoFoundation/subtensor/blob/main/runtime/src/lib.rs#L1038).
@@ -1053,7 +1051,7 @@ Controls whether a subnet receives pool-side emission injection each epoch. When
 
 This toggle is intended for emergency governance use — for example, temporarily halting emissions to a subnet that is exhibiting problematic behavior, without fully dissolving it.
 
-See [`adminUtils.SubnetEmissionEnabledSet`](../subtensor-api/events.md) for the on-chain event emitted when this is changed.
+See [`adminUtils.SubnetEmissionEnabledSet`](https://docs.learnbittensor.org/subtensor-api/events) for the on-chain event emitted when this is changed.
 
 ### SubnetOwnerCut
 

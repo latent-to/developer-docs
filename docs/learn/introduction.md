@@ -5,7 +5,6 @@ title: "Introduction to Bittensor"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Introduction to Bittensor
 
 This page will orient the reader with the major concepts and components of Bittensor, and provide the roadmap to developing in the ecosystem.
 

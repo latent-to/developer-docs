@@ -2,8 +2,6 @@
 title: "Bittensor tools"
 ---
 
-# Bittensor tools
-
 Bittensor provides several tools to help developers, miners, and validators interact with the network and its features. Below is a quick overview of the core Bittensor tools, followed by links for further reading.
 
 ---
@@ -17,7 +15,7 @@ The Bittensor SDK is a Python-based library that allows developers to interact p
 - Query and monitor network activity
 - Build applications on top of Bittensor’s decentralized AI infrastructure
 
-**Learn more in the [Bittensor SDK documentation](../sdk/bt-api-ref.md)** (link for illustration).
+**Learn more in the [Bittensor SDK documentation](https://docs.learnbittensor.org/sdk/bt-api-ref)** (link for illustration).
 
 ---
 
@@ -31,7 +29,7 @@ The Bittensor command-line interface (`btcli`) provides a straightforward way to
 - View wallet information and network status
 
 It is designed for users who prefer quick terminal commands or those managing multiple nodes and subnet interactions.  
-**See [Bittensor CLI reference](../btcli/btcli.md)** for detailed usage instructions.
+**See [Bittensor CLI reference](https://docs.learnbittensor.org/btcli/btcli)** for detailed usage instructions.
 
 ---
 

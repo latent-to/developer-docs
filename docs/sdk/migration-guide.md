@@ -4,11 +4,10 @@ title: "Bittensor SDK v10 Migration Guide"
 
 import { SdkVersion } from "./\_sdk-version.mdx";
 
-# Bittensor SDK v10 Migration Guide
 
 This page documents breaking changes and new features for the Bittensor Python SDK `v10`. This is a major release with significant refactoring, standardization, and new functionality.
 
-See [Bittensor Python SDK Reference Docs](./bt-api-ref)
+See [Bittensor Python SDK Reference Docs](https://docs.learnbittensor.org/sdk/bt-api-ref)
 
 ## Executive Summary
 
@@ -197,7 +196,7 @@ subtensor = Subtensor(network="test", log_verbose=True)
 
 ### BlockInfo Class
 
-New [`BlockInfo`](pathname:///python-api/html/autoapi/bittensor/core/types/index.html) class provides rich information about blockchain blocks, including metadata and links to block explorers.
+New [`BlockInfo`](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/types/index.html) class provides rich information about blockchain blocks, including metadata and links to block explorers.
 
 ```python
 from bittensor.core.types import BlockInfo

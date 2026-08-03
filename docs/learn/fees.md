@@ -5,7 +5,6 @@ title: "Transaction Fees in Bittensor"
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Transaction Fees in Bittensor
 
 This page describes the blockchain transaction fees charged by Bittensor and shows how to estimate them before running transactions.
 

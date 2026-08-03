@@ -3,40 +3,38 @@ title: Runtime Calls
 description: "This page includes runtime API calls exposed by the Subtensor runtime."
 ---
 
-# Runtime Calls
-
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **438**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
-- **[AccountNonceApi](#accountnonceapi)**
-- **[AuraApi](#auraapi)**
-- **[BabeApi](#babeapi)**
-- **[BlockBuilder](#blockbuilder)**
-- **[ContractsApi](#contractsapi)**
-- **[ConvertTransactionRuntimeApi](#converttransactionruntimeapi)**
-- **[Core](#core)**
-- **[DelegateInfoRuntimeApi](#delegateinforuntimeapi)**
-- **[EthereumRuntimeRPCApi](#ethereumruntimerpcapi)**
-- **[GenesisBuilder](#genesisbuilder)**
-- **[GrandpaApi](#grandpaapi)**
-- **[Metadata](#metadata)**
-- **[NeuronInfoRuntimeApi](#neuroninforuntimeapi)**
-- **[OffchainWorkerApi](#offchainworkerapi)**
-- **[ProxyFilterRuntimeApi](#proxyfilterruntimeapi)**
-- **[SessionKeys](#sessionkeys)**
-- **[ShieldApi](#shieldapi)**
-- **[StakeInfoRuntimeApi](#stakeinforuntimeapi)**
-- **[SubnetInfoRuntimeApi](#subnetinforuntimeapi)**
-- **[SubnetRegistrationRuntimeApi](#subnetregistrationruntimeapi)**
-- **[SwapRuntimeApi](#swapruntimeapi)**
-- **[TaggedTransactionQueue](#taggedtransactionqueue)**
-- **[TransactionPaymentApi](#transactionpaymentapi)**
-- **[TransactionPaymentCallApi](#transactionpaymentcallapi)**
+- **[AccountNonceApi](#pallet-accountnonceapi)**
+- **[AuraApi](#pallet-auraapi)**
+- **[BabeApi](#pallet-babeapi)**
+- **[BlockBuilder](#pallet-blockbuilder)**
+- **[ContractsApi](#pallet-contractsapi)**
+- **[ConvertTransactionRuntimeApi](#pallet-converttransactionruntimeapi)**
+- **[Core](#pallet-core)**
+- **[DelegateInfoRuntimeApi](#pallet-delegateinforuntimeapi)**
+- **[EthereumRuntimeRPCApi](#pallet-ethereumruntimerpcapi)**
+- **[GenesisBuilder](#pallet-genesisbuilder)**
+- **[GrandpaApi](#pallet-grandpaapi)**
+- **[Metadata](#pallet-metadata)**
+- **[NeuronInfoRuntimeApi](#pallet-neuroninforuntimeapi)**
+- **[OffchainWorkerApi](#pallet-offchainworkerapi)**
+- **[ProxyFilterRuntimeApi](#pallet-proxyfilterruntimeapi)**
+- **[SessionKeys](#pallet-sessionkeys)**
+- **[ShieldApi](#pallet-shieldapi)**
+- **[StakeInfoRuntimeApi](#pallet-stakeinforuntimeapi)**
+- **[SubnetInfoRuntimeApi](#pallet-subnetinforuntimeapi)**
+- **[SubnetRegistrationRuntimeApi](#pallet-subnetregistrationruntimeapi)**
+- **[SwapRuntimeApi](#pallet-swapruntimeapi)**
+- **[TaggedTransactionQueue](#pallet-taggedtransactionqueue)**
+- **[TransactionPaymentApi](#pallet-transactionpaymentapi)**
+- **[TransactionPaymentCallApi](#pallet-transactionpaymentcallapi)**
 
-## `AccountNonceApi`
+## `AccountNonceApi` {#pallet-accountnonceapi}
 
 ### `accountNonce(account: AccountId32)`: `u32`
 
@@ -44,7 +42,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Get current account nonce of given `AccountId`.
 
 
-## `AuraApi`
+## `AuraApi` {#pallet-auraapi}
 
 ### `authorities()`: `Vec<Public>`
 
@@ -59,7 +57,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     Currently, only the value provided by this type at genesis will be used.
 
 
-## `BabeApi`
+## `BabeApi` {#pallet-babeapi}
 
 ### `configuration()`: `BabeConfiguration`
 
@@ -92,7 +90,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Submits an unsigned extrinsic to report an equivocation. The caller must provide the equivocation proof and a key ownership proof (should be obtained using `generate_key_ownership_proof`). The extrinsic will be unsigned and should only be accepted for local authorship (not to be broadcast to the network). This method returns `None` when creation of the extrinsic fails, e.g. if equivocation reporting is disabled for the given runtime (i.e. this method is hardcoded to return `None`). Only useful in an offchain context.
 
 
-## `BlockBuilder`
+## `BlockBuilder` {#pallet-blockbuilder}
 
 ### `applyExtrinsic(extrinsic: UncheckedExtrinsic)`: `Result<Result<Null, DispatchError>, TransactionValidityError>`
 
@@ -117,7 +115,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Generate inherent extrinsics. The inherent data will vary from chain to chain.
 
 
-## `ContractsApi`
+## `ContractsApi` {#pallet-contractsapi}
 
 ### `call(origin: AccountId32, dest: AccountId32, value: TaoBalance, gas_limit: Option<Weight>, storage_deposit_limit: Option<TaoBalance>, input_data: Vec<u8>)`: `ContractResult`
 
@@ -148,14 +146,14 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     See [`crate::Pallet::bare_upload_code`].
 
 
-## `ConvertTransactionRuntimeApi`
+## `ConvertTransactionRuntimeApi` {#pallet-converttransactionruntimeapi}
 
 ### `convertTransaction(transaction: TransactionV3)`: `UncheckedExtrinsic`
 
 - **interface**: `api.call.convertTransactionRuntimeApi.convertTransaction`
 
 
-## `Core`
+## `Core` {#pallet-core}
 
 ### `executeBlock(block: Block)`: `Null`
 
@@ -173,7 +171,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Returns the version of the runtime.
 
 
-## `DelegateInfoRuntimeApi`
+## `DelegateInfoRuntimeApi` {#pallet-delegateinforuntimeapi}
 
 ### `getDelegate(delegate_account: AccountId32)`: `Option<DelegateInfo>`
 
@@ -188,7 +186,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **interface**: `api.call.delegateInfoRuntimeApi.getDelegates`
 
 
-## `EthereumRuntimeRPCApi`
+## `EthereumRuntimeRPCApi` {#pallet-ethereumruntimerpcapi}
 
 ### `accountBasic(address: H160)`: `Basic`
 
@@ -273,7 +271,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: For a given account address and index, returns pallet_evm::AccountStorages.
 
 
-## `GenesisBuilder`
+## `GenesisBuilder` {#pallet-genesisbuilder}
 
 ### `buildState(json: Vec<u8>)`: `Result<Null, Text>`
 
@@ -301,7 +299,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     The presets from the list can be queried with [`GenesisBuilder::get_preset`] method. If no named presets are provided by the runtime the list is empty.
 
 
-## `GrandpaApi`
+## `GrandpaApi` {#pallet-grandpaapi}
 
 ### `currentSetId()`: `u64`
 
@@ -326,7 +324,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Submits an unsigned extrinsic to report an equivocation. The caller must provide the equivocation proof and a key ownership proof (should be obtained using `generate_key_ownership_proof`). The extrinsic will be unsigned and should only be accepted for local authorship (not to be broadcast to the network). This method returns `None` when creation of the extrinsic fails, e.g. if equivocation reporting is disabled for the given runtime (i.e. this method is hardcoded to return `None`). Only useful in an offchain context.
 
 
-## `Metadata`
+## `Metadata` {#pallet-metadata}
 
 ### `metadata()`: `OpaqueMetadata`
 
@@ -348,7 +346,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     This can be used to call `metadata_at_version`.
 
 
-## `NeuronInfoRuntimeApi`
+## `NeuronInfoRuntimeApi` {#pallet-neuroninforuntimeapi}
 
 ### `getNeuron(netuid: NetUid, uid: u16)`: `Option<NeuronInfo>`
 
@@ -367,7 +365,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **interface**: `api.call.neuronInfoRuntimeApi.getNeuronsLite`
 
 
-## `OffchainWorkerApi`
+## `OffchainWorkerApi` {#pallet-offchainworkerapi}
 
 ### `offchainWorker(header: Header)`: `Null`
 
@@ -375,7 +373,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Starts the off-chain task for given block header.
 
 
-## `ProxyFilterRuntimeApi`
+## `ProxyFilterRuntimeApi` {#pallet-proxyfilterruntimeapi}
 
 ### `getProxyFilters(proxy_types: Option<Vec<u8>>)`: `Vec<ProxyFilterInfo>`
 
@@ -386,7 +384,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **interface**: `api.call.proxyFilterRuntimeApi.getProxyTypes`
 
 
-## `SessionKeys`
+## `SessionKeys` {#pallet-sessionkeys}
 
 ### `decodeSessionKeys(encoded: Vec<u8>)`: `Option<Vec<(Vec<u8>, KeyTypeId)>>`
 
@@ -405,7 +403,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     Returns the concatenated SCALE encoded public keys.
 
 
-## `ShieldApi`
+## `ShieldApi` {#pallet-shieldapi}
 
 ### `isShieldedUsingCurrentKey(key_hash: [u8; 16])`: `bool`
 
@@ -423,7 +421,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Try to unshield a transaction using a decapsulation key.
 
 
-## `StakeInfoRuntimeApi`
+## `StakeInfoRuntimeApi` {#pallet-stakeinforuntimeapi}
 
 ### `getColdkeyLock(coldkey: AccountId32, netuid: NetUid)`: `Option<LockState>`
 
@@ -458,7 +456,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **interface**: `api.call.stakeInfoRuntimeApi.getStakeInfoForHotkeyColdkeyNetuid`
 
 
-## `SubnetInfoRuntimeApi`
+## `SubnetInfoRuntimeApi` {#pallet-subnetinforuntimeapi}
 
 ### `getAllDynamicInfo()`: `Vec<Option<DynamicInfo>>`
 
@@ -545,14 +543,14 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetToPrune`
 
 
-## `SubnetRegistrationRuntimeApi`
+## `SubnetRegistrationRuntimeApi` {#pallet-subnetregistrationruntimeapi}
 
 ### `getNetworkRegistrationCost()`: `TaoBalance`
 
 - **interface**: `api.call.subnetRegistrationRuntimeApi.getNetworkRegistrationCost`
 
 
-## `SwapRuntimeApi`
+## `SwapRuntimeApi` {#pallet-swapruntimeapi}
 
 ### `currentAlphaPrice(netuid: NetUid)`: `u64`
 
@@ -571,7 +569,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **interface**: `api.call.swapRuntimeApi.simSwapTaoForAlpha`
 
 
-## `TaggedTransactionQueue`
+## `TaggedTransactionQueue` {#pallet-taggedtransactionqueue}
 
 ### `validateTransaction(source: TransactionSource, tx: UncheckedExtrinsic, block_hash: H256)`: `Result<ValidTransaction, TransactionValidityError>`
 
@@ -583,7 +581,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     Note that this call may be performed by the pool multiple times and transactions might be verified in any possible order.
 
 
-## `TransactionPaymentApi`
+## `TransactionPaymentApi` {#pallet-transactionpaymentapi}
 
 ### `queryFeeDetails(uxt: UncheckedExtrinsic, len: u32)`: `FeeDetails`
 
@@ -602,7 +600,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **interface**: `api.call.transactionPaymentApi.queryWeightToFee`
 
 
-## `TransactionPaymentCallApi`
+## `TransactionPaymentCallApi` {#pallet-transactionpaymentcallapi}
 
 ### `queryCallFeeDetails(call: RuntimeCall, len: u32)`: `FeeDetails`
 

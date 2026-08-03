@@ -2,13 +2,11 @@
 title: "Staking Implementation"
 ---
 
-# Staking Implementation
-
 This page provides a detailed examination of how staking is implemented in the Subtensor codebase.
 
 Each subnet maintains its own AMM pool with TAO and Alpha reserves. When you stake, your TAO enters the subnet's TAO reserve and you receive Alpha tokens that represent your stake in that specific subnet. Alpha stake determines consensus weight and emission share for validators within a given subnet.
 
-The pool uses a **Balancer weighted pool AMM** (`pallets/swap/src/pallet/balancer.rs`). Swap output is computed via the weighted exponentiation formula rather than a simple constant product. See [Subnet AMM: Balancer Weighted Pool](../learn/balancer-amm.md) for the math.
+The pool uses a **Balancer weighted pool AMM** (`pallets/swap/src/pallet/balancer.rs`). Swap output is computed via the weighted exponentiation formula rather than a simple constant product. See [Subnet AMM: Balancer Weighted Pool](../staking-and-delegation/balancer-amm.md) for the math.
 
 See [Staking/Delegation Overview](../staking-and-delegation/delegation)
 
@@ -169,7 +167,7 @@ The staking system includes price protection mechanisms to prevent excessive sli
 - `do_add_stake_limit()` - Staking with price protection
 - `do_remove_stake_limit()` - Unstaking with price protection  
 
-These functions accept `limit_price` and `allow_partial` parameters to control protection behavior. See [Price Protection Guide](../learn/price-protection.md) for detailed usage and examples.
+These functions accept `limit_price` and `allow_partial` parameters to control protection behavior. See [Price Protection Guide](../staking-and-delegation/price-protection.md) for detailed usage and examples.
 
 ## Error Handling
 

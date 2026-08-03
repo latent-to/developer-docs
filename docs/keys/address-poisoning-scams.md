@@ -4,7 +4,6 @@ title: "Address Poisoning Scams: Protect Your Wallet"
 
 import { SecurityWarning } from "../keys/_security-warning.mdx";
 
-# Address Poisoning Scams: Protect Your Wallet
 
 Address poisoning is one of the most successful cryptocurrency scams, with over $83 million stolen from more than 6,600 victims on Ethereum and Binance Smart Chain alone. Because Bittensor wallets have a similar vulnerability, users of Bittensor wallets should understand how to protect themselves.
 

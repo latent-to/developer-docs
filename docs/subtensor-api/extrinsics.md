@@ -3,39 +3,37 @@ title: Extrinsics
 description: "The following sections contain Extrinsic methods that are part of the Subtensor runtime."
 ---
 
-# Extrinsics
-
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **438**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
-- **[adminUtils](#adminutils)**
-- **[balances](#balances)**
-- **[baseFee](#basefee)**
-- **[commitments](#commitments)**
-- **[contracts](#contracts)**
-- **[crowdloan](#crowdloan)**
-- **[drand](#drand)**
-- **[ethereum](#ethereum)**
-- **[evm](#evm)**
-- **[grandpa](#grandpa)**
-- **[limitOrders](#limitorders)**
-- **[mevShield](#mevshield)**
-- **[multisig](#multisig)**
-- **[preimage](#preimage)**
-- **[proxy](#proxy)**
-- **[safeMode](#safemode)**
-- **[scheduler](#scheduler)**
-- **[subtensorModule](#subtensormodule)**
-- **[sudo](#sudo)**
-- **[swap](#swap)**
-- **[system](#system)**
-- **[timestamp](#timestamp)**
-- **[utility](#utility)**
+- **[adminUtils](#pallet-adminutils)**
+- **[balances](#pallet-balances)**
+- **[baseFee](#pallet-basefee)**
+- **[commitments](#pallet-commitments)**
+- **[contracts](#pallet-contracts)**
+- **[crowdloan](#pallet-crowdloan)**
+- **[drand](#pallet-drand)**
+- **[ethereum](#pallet-ethereum)**
+- **[evm](#pallet-evm)**
+- **[grandpa](#pallet-grandpa)**
+- **[limitOrders](#pallet-limitorders)**
+- **[mevShield](#pallet-mevshield)**
+- **[multisig](#pallet-multisig)**
+- **[preimage](#pallet-preimage)**
+- **[proxy](#pallet-proxy)**
+- **[safeMode](#pallet-safemode)**
+- **[scheduler](#pallet-scheduler)**
+- **[subtensorModule](#pallet-subtensormodule)**
+- **[sudo](#pallet-sudo)**
+- **[swap](#pallet-swap)**
+- **[system](#pallet-system)**
+- **[timestamp](#pallet-timestamp)**
+- **[utility](#pallet-utility)**
 
-## `adminUtils`
+## `adminUtils` {#pallet-adminutils}
 
 ### `scheduleGrandpaChange(next_authorities: AuthorityList, in_blocks: u32, forced: Option<BlockNumberFor<T>>)`
 
@@ -238,6 +236,16 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     **Weight:**
 
     Weight is handled by the `#[pallet::weight]` attribute.
+
+### `sudoSetEmissionBarQuantile(quantile: U64F64)`
+
+- **interface**: `api.tx.adminUtils.sudoSetEmissionBarQuantile`
+- **summary**: Sets the emission bar quantile (q): the fraction of demand carried by subnets above the emission gate bar. Also forces a bar recompute on the next block so the new quantile takes effect immediately.
+
+### `sudoSetEmissionGateExponent(exponent: U64F64)`
+
+- **interface**: `api.tx.adminUtils.sudoSetEmissionGateExponent`
+- **summary**: Sets the emission gate Hill exponent (h): cliff sharpness at the bar.
 
 ### `sudoSetEvmChainId(chain_id: u64)`
 
@@ -660,7 +668,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: The extrinsic sets the new authorities for Aura consensus. It is only callable by the root account. The extrinsic will call the Aura pallet to change the authorities.
 
 
-## `balances`
+## `balances` {#pallet-balances}
 
 ### `burn(value: u128, keep_alive: bool)`
 
@@ -739,7 +747,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     This will waive the transaction fee if at least all but 10% of the accounts needed to be upgraded. (We let some not have to be upgraded just in order to allow for the possibility of churn).
 
 
-## `baseFee`
+## `baseFee` {#pallet-basefee}
 
 ### `setBaseFeePerGas(fee: U256)`
 
@@ -750,7 +758,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **interface**: `api.tx.baseFee.setElasticity`
 
 
-## `commitments`
+## `commitments` {#pallet-commitments}
 
 ### `setCommitment(netuid: NetUid, info: Box<CommitmentInfo<T::MaxFields>>)`
 
@@ -763,7 +771,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Sudo-set MaxSpace
 
 
-## `contracts`
+## `contracts` {#pallet-contracts}
 
 ### `call(dest: MultiAddress, value: u128, gas_limit: Weight, storage_deposit_limit: Option<<BalanceOf<T> as codec::HasCompact>::Type>, data: Vec<u8>)`
 
@@ -875,7 +883,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     Use [`Determinism::Relaxed`] exclusively for non-deterministic code. If the uploaded code is deterministic, specifying [`Determinism::Relaxed`] will be disregarded and result in higher gas costs.
 
 
-## `crowdloan`
+## `crowdloan` {#pallet-crowdloan}
 
 ### `contribute(crowdloan_id: CrowdloanId, amount: u128)`
 
@@ -1014,7 +1022,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     - `crowdloan_id`: The id of the crowdloan to withdraw from.
 
 
-## `drand`
+## `drand` {#pallet-drand}
 
 ### `setBeaconConfig(config_payload: BeaconConfigurationPayload<T::Public, BlockNumberFor<T>>, signature: Option<T::Signature>)`
 
@@ -1035,7 +1043,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Verify and write a pulse from the beacon into the runtime
 
 
-## `ethereum`
+## `ethereum` {#pallet-ethereum}
 
 ### `transact(transaction: Transaction)`
 
@@ -1043,7 +1051,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Transact an Ethereum transaction.
 
 
-## `evm`
+## `evm` {#pallet-evm}
 
 ### `call(source: H160, target: H160, input: Vec<u8>, value: U256, gas_limit: u64, max_fee_per_gas: U256, max_priority_fee_per_gas: Option<U256>, nonce: Option<U256>, access_list: Vec<(H160, Vec<H256>)>, authorization_list: AuthorizationList)`
 
@@ -1074,7 +1082,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Withdraw balance from EVM into currency/balances pallet.
 
 
-## `grandpa`
+## `grandpa` {#pallet-grandpa}
 
 ### `noteStalled(delay: u32, best_finalized_block_number: u32)`
 
@@ -1098,7 +1106,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     This extrinsic must be called unsigned and it is expected that only block authors will call it (validated in `ValidateUnsigned`), as such if the block author is defined it will be defined as the equivocation reporter.
 
 
-## `limitOrders`
+## `limitOrders` {#pallet-limitorders}
 
 ### `cancelOrder(order: VersionedOrder<T::AccountId>)`
 
@@ -1147,7 +1155,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     Must be called by root It allows disabling or enabling the pallet true means enabling, false means disabling
 
 
-## `mevShield`
+## `mevShield` {#pallet-mevshield}
 
 ### `announceNextKey(enc_key: Option<ShieldEncKey>)`
 
@@ -1206,7 +1214,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     ciphertext = key_hash || kem_len || kem_ct || nonce || aead_ct
 
 
-## `multisig`
+## `multisig` {#pallet-multisig}
 
 ### `approveAsMulti(threshold: u16, other_signatories: Vec<T::AccountId>, maybe_timepoint: Option<Timepoint<BlockNumberFor<T>>>, call_hash: [u8; 32], max_weight: Weight)`
 
@@ -1335,7 +1343,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     Emits `DepositPoked` if successful.
 
 
-## `preimage`
+## `preimage` {#pallet-preimage}
 
 ### `ensureUpdated(hashes: Vec<T::Hash>)`
 
@@ -1376,7 +1384,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     NOTE: THIS MUST NOT BE CALLED ON `hash` MORE TIMES THAN `request_preimage`.
 
 
-## `proxy`
+## `proxy` {#pallet-proxy}
 
 ### `addProxy(delegate: MultiAddress, proxy_type: T::ProxyType, delay: u32)`
 
@@ -1547,7 +1555,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     this delegate. If `false`, the delegate pays (default behavior).
 
 
-## `safeMode`
+## `safeMode` {#pallet-safemode}
 
 ### `enter()`
 
@@ -1624,7 +1632,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     Emits a [`Event::DepositReleased`] event on success. Errors with [`Error::Entered`] if the safe-mode is entered. Errors with [`Error::CannotReleaseYet`] if [`Config::ReleaseDelay`] block have not passed since safe-mode was entered. Errors with [`Error::NoDeposit`] if the payee has no reserved currency at the block specified.
 
 
-## `scheduler`
+## `scheduler` {#pallet-scheduler}
 
 ### `cancel(when: u32, index: u32)`
 
@@ -1685,7 +1693,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     Tasks scheduled as a result of a retry for a periodic task are unnamed, non-periodic clones of the original task. Their retry configuration will be derived from the original task's configuration, but will have a lower value for `remaining` than the original `total_retries`.
 
 
-## `subtensorModule`
+## `subtensorModule` {#pallet-subtensormodule}
 
 ### `addCollateral(netuid: NetUid, hotkey: AccountId, alpha: AlphaBalance, limit_price: TaoBalance)`
 
@@ -1949,6 +1957,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     **Errors:**
 
     - `InvalidSubnetNumber`: The subnet set is empty or exceeds the maximum number of claims.
+    - `TooManyRootClaimHotkeys`: The coldkey's hotkey fanout exceeds one claim's bound.
 
 ### `clearColdkeySwapAnnouncement()`
 
@@ -3225,7 +3234,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     Emits a `SymbolUpdated` event on success.
 
 
-## `sudo`
+## `sudo` {#pallet-sudo}
 
 ### `removeKey()`
 
@@ -3259,7 +3268,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     The dispatch origin for this call must be _Signed_.
 
 
-## `swap`
+## `swap` {#pallet-swap}
 
 ### `addLiquidity(hotkey: AccountId, netuid: NetUid, tick_low: TickIndex, tick_high: TickIndex, liquidity: u64)`
 
@@ -3294,7 +3303,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: DEPRECATED
 
 
-## `system`
+## `system` {#pallet-system}
 
 ### `applyAuthorizedUpgrade(code: Vec<u8>)`
 
@@ -3371,7 +3380,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Set some items of storage.
 
 
-## `timestamp`
+## `timestamp` {#pallet-timestamp}
 
 ### `set(now: u64)`
 
@@ -3394,7 +3403,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     - 1 event handler `on_timestamp_set`. Must be ``O(1)``.
 
 
-## `utility`
+## `utility` {#pallet-utility}
 
 ### `asDerivative(index: u16, call: Box<RuntimeCall>)`
 

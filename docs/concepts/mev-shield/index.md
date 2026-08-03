@@ -5,7 +5,6 @@ title: "MEV Shield: Encrypted Mempool Protection"
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# MEV Shield: Encrypted Mempool Protection
 
 MEV Shield is a Bittensor security feature that protects transactions from maximal extractable value (MEV) attacks by keeping details hidden until they are on-chain. It (optionally) encrypts any Bittensor transaction until after block inclusion, preventing other users from profiting from any foreknowldge of your transaction details.
 

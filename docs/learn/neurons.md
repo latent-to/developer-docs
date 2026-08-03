@@ -6,7 +6,6 @@ import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
-# Understanding Neurons
 
 A neuron is the generalized name for a participant in a subnet, which can be either a miner or a validator. Each neuron is identified by a unique UID within its subnet and associated with a hotkey-coldkey pair for authentication and operations.
 

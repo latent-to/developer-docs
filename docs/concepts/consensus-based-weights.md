@@ -1,10 +1,9 @@
 ---
-title: "Consensus-based Weights/Liquid alpha"
+title: "Consensus-based Weights/Liquid Alpha"
 ---
 
 import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
-# Consensus-based Weights/Liquid Alpha
 
 This guide describes how to use the **consensus-based weights** feature (also called "liquid alpha").
 

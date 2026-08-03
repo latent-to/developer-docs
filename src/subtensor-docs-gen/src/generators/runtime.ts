@@ -1,6 +1,13 @@
 import * as path from "path";
 import type { ApiPromise } from "@polkadot/api";
-import { extractDocs, resolveTypeById, fileHeader, writeFile } from "../utils";
+import {
+  extractDocs,
+  resolveTypeById,
+  fileHeader,
+  writeFile,
+  palletAnchor,
+  palletHeading,
+} from "../utils";
 
 /**
  * Converts snake_case to camelCase.
@@ -303,12 +310,12 @@ export function generateRuntimeCalls(api: ApiPromise, outputDir: string): void {
 
   // ── Table of contents ─────────────────────────────────────────────────────
   for (const entry of apiEntries) {
-    lines.push(`- **[${entry.apiName}](#${entry.apiName.toLowerCase()})**`);
+    lines.push(`- **[${entry.apiName}](#${palletAnchor(entry.apiName)})**`);
   }
 
   // ── Per-API sections ──────────────────────────────────────────────────────
   for (const { apiName, methods } of apiEntries) {
-    lines.push(`\n## \`${apiName}\`\n`);
+    lines.push(palletHeading(apiName));
 
     for (const { methodName, params, returnType, docs } of methods) {
       const signature = `${methodName}(${params})`.replace(/\s+/g, " ").trim();

@@ -65,7 +65,7 @@ Coroutines always need to be awaited, and generally speaking, “asyncio objects
 
 ## AsyncSubstrateInterface
 
-[AsyncSubstrateInterface](pathname:///python-api/html/autoapi/bittensor/utils/async_substrate_interface/index.html) is an `asyncio` rewrite of Polkadot's original [`py-substrate-interface`](https://github.com/polkascan/py-substrate-interface) library, with a few added functionalities such as using the `bt_decode` for most SCALE decoding.
+[AsyncSubstrateInterface](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/utils/async_substrate_interface/index.html) is an `asyncio` rewrite of Polkadot's original [`py-substrate-interface`](https://github.com/polkascan/py-substrate-interface) library, with a few added functionalities such as using the `bt_decode` for most SCALE decoding.
 
 While `AsyncSubstrateInterface` is about 90% API compatible with `py-substrate-interface`, it is its own library. Similar to how we initialize `aiohttp.ClientSession` as shown in line 21 of the above example, the `AsyncSubstrateInterface` is initialized in the same way, as shown below:
 
@@ -164,7 +164,7 @@ Note that there is a bit of overhead with the `async` instantiation over the syn
 Below is an example of how you can use the `AsyncSubtensor` module to retrieve balances from multiple coldkey SS58 addresses in various ways:
 
 :::tip Python reference
-Also see the Bittensor SDK reference for [AsyncSubtensor](pathname:///python-api/html/autoapi/bittensor/core/async_subtensor/index.html).
+Also see the Bittensor SDK reference for [AsyncSubtensor](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/async_subtensor/index.html).
 :::
 
 ```python

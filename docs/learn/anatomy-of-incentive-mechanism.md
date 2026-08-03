@@ -2,8 +2,6 @@
 title: "Understanding Incentive Mechanisms"
 ---
 
-# Understanding Incentive Mechanisms
-
 This page explores the concept and usage of incentive mechanisms in Bittensor.
 
 See [Components of the Bittensor platform](../learn/neurons) for an explanation of the basics, such as subnets, miners, validators, and the role of the blockchain.

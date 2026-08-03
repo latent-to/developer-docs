@@ -3,8 +3,6 @@ title: "Subtensor Pallets and Extrinsics"
 description: "This document covers the dispatchable calls of all pallets included in the Subtensor runtime. For each pallet, it lists the call methods and their arguments."
 ---
 
-# Subtensor Pallets and Extrinsics
-
 This document covers the dispatchable calls of all pallets included in the Subtensor runtime. For each pallet, it lists the call methods and their arguments.
 
 ## Overview
@@ -56,7 +54,7 @@ Below are key extrinsics from pallets included in the Subtensor runtime:
 
 :::info
 
-The following outline of subtensor extrinsics is provided for high-level reference and is not exhaustive. For a complete specification of all available extrinsics and their associated parameters, see the [Subtensor API reference](../subtensor-api/extrinsics).
+The following outline of subtensor extrinsics is provided for high-level reference and is not exhaustive. For a complete specification of all available extrinsics and their associated parameters, see the [Subtensor API reference](https://docs.learnbittensor.org/subtensor-api/extrinsics).
 
 :::
 

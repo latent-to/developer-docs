@@ -5,7 +5,6 @@ title: "Staking Precompile"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Staking Precompile
 
 Staking precompile allows Ethereum code to interact with the staking feature of subtensor. For example, by using the staking precompile, the subtensor methods [`add_stake`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/staking/add_stake.rs) or [`remove_stake`](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/staking/remove_stake.rs) can be called in order to delegate stake to a hotkey or undelegate stake from a hotkey.
 
@@ -46,7 +45,7 @@ Before you proceed, familiarize yourself with the Solidity code of the [`stakeV2
 
 1. Copy the text of [`stakeV2.sol`](https://github.com/opentensor/evm-bittensor/blob/main/solidity/stakeV2.sol) contract to Remix IDE.
 
-2. You will now convert your delegate hotkey ss58 from the above [Setup EVM localnet, subnet and delegate](#setup-evm-localnet-subnet-and-delegate) step into its corresponding public key. Use the [ss58.org](https://ss58.org/) site to obtain the public key for your delegate hotkey ss58.
+2. You will now convert your delegate hotkey SS58 from the above [Setup EVM localnet, subnet and delegate](#setup-evm-localnet-subnet-and-delegate) step into its corresponding public key. Use the [SS58.org](https://ss58.org/) site to obtain the public key for your delegate hotkey SS58.
 
 3. In the `stake.sol` text in Remix IDE, replace the `HOTKEY` constant on line 9, where it says `bytes32 constant HOTKEY = 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d;`, with your delegate hotkey's public key.
 

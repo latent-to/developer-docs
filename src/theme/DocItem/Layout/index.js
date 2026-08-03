@@ -12,9 +12,7 @@ import DocItemContent from '@theme/DocItem/Content';
 import DocBreadcrumbs from '@theme/DocBreadcrumbs';
 import Unlisted from "@theme/ContentVisibility/Unlisted";
 import styles from './styles.module.css';
-/**
- * Decide if the toc should be rendered, on mobile or desktop viewports
- */
+
 function useDocTOC() {
 	const { frontMatter, toc } = useDoc();
 	const windowSize = useWindowSize();
@@ -31,13 +29,12 @@ function useDocTOC() {
 		desktop,
 	};
 }
+
 export default function DocItemLayout({ children }) {
 	const docTOC = useDocTOC();
 	const {
-		metadata: { unlisted, formattedLastUpdatedAt },
+		metadata: { unlisted },
 	} = useDoc();
-	const { metadata } = useDoc();
-
 
 	return (
 		<div className="row">
@@ -52,10 +49,14 @@ export default function DocItemLayout({ children }) {
 						<DocItemContent>{children}</DocItemContent>
 						<DocItemFooter />
 					</article>
-					<DocItemPaginator className="helloWorld" />
+					<DocItemPaginator />
 				</div>
 			</div>
-			{docTOC.desktop && <div className="col col--3">{docTOC.desktop}</div>}
+			{docTOC.desktop ? (
+				<div className="col col--3">{docTOC.desktop}</div>
+			) : (
+				<div className={clsx('col col--3', styles.tocSpacer)} aria-hidden="true" />
+			)}
 		</div>
 	);
 }

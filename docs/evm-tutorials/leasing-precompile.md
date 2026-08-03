@@ -2,8 +2,6 @@
 title: "Leasing Precompile"
 ---
 
-# Leasing Precompile
-
 The Leasing precompile lets EVM contracts create lease crowdloans, terminate leases, and query lease state.
 
 - **Address**: `0x000000000000000000000000000000000000080a`

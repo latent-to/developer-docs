@@ -4,10 +4,9 @@ title: "Subtensor Storage Query Examples"
 
 import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
-# Subtensor Storage Query Examples
 
 :::info
-The following outline of subtensor storage query examples is provided for high-level reference and is not exhaustive. For a complete specification of all available queries, see the [Subtensor API reference](../subtensor-api/storage.md).
+The following outline of subtensor storage query examples is provided for high-level reference and is not exhaustive. For a complete specification of all available queries, see the [Subtensor API reference](https://docs.learnbittensor.org/subtensor-api/storage).
 :::
 
 ## 1. AccumulatedLeaseDividends
@@ -2761,7 +2760,7 @@ The following outline of subtensor storage query examples is provided for high-l
     ```
 ## 172. TransferToggle
 
-- **Description**: Storage for TransferToggle. When enabled, a holder of alpha stake can transfer its ownership to another coldkey/wallet using [`btcli stake transfer`](../staking-and-delegation/managing-stake-sdk#transfer-stake-ownership) or [`transfer_stake`](pathname:///python-api/html/autoapi/bittensor/core/async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor.transfer_stake).
+- **Description**: Storage for TransferToggle. When enabled, a holder of alpha stake can transfer its ownership to another coldkey/wallet using [`btcli stake transfer`](../staking-and-delegation/managing-stake-sdk#transfer-stake-ownership) or [`transfer_stake`](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/async_subtensor/index.html#bittensor.core.async_subtensor.AsyncSubtensor.transfer_stake).
 - **Query Type**: `u16 -> unknown`
 - **Parameters**:
   - `netuid`: `u16`

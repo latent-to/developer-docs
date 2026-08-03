@@ -3,44 +3,42 @@ title: Storage
 description: "This page contains storage query definitions for the Subtensor runtime."
 ---
 
-# Storage
-
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **438**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
-- **[adminUtils](#adminutils)**
-- **[alphaAssets](#alphaassets)**
-- **[aura](#aura)**
-- **[balances](#balances)**
-- **[baseFee](#basefee)**
-- **[commitments](#commitments)**
-- **[contracts](#contracts)**
-- **[crowdloan](#crowdloan)**
-- **[drand](#drand)**
-- **[ethereum](#ethereum)**
-- **[evm](#evm)**
-- **[evmChainId](#evmchainid)**
-- **[grandpa](#grandpa)**
-- **[limitOrders](#limitorders)**
-- **[mevShield](#mevshield)**
-- **[multisig](#multisig)**
-- **[preimage](#preimage)**
-- **[proxy](#proxy)**
-- **[randomnessCollectiveFlip](#randomnesscollectiveflip)**
-- **[safeMode](#safemode)**
-- **[scheduler](#scheduler)**
-- **[substrate](#substrate)**
-- **[subtensorModule](#subtensormodule)**
-- **[sudo](#sudo)**
-- **[swap](#swap)**
-- **[system](#system)**
-- **[timestamp](#timestamp)**
-- **[transactionPayment](#transactionpayment)**
+- **[adminUtils](#pallet-adminutils)**
+- **[alphaAssets](#pallet-alphaassets)**
+- **[aura](#pallet-aura)**
+- **[balances](#pallet-balances)**
+- **[baseFee](#pallet-basefee)**
+- **[commitments](#pallet-commitments)**
+- **[contracts](#pallet-contracts)**
+- **[crowdloan](#pallet-crowdloan)**
+- **[drand](#pallet-drand)**
+- **[ethereum](#pallet-ethereum)**
+- **[evm](#pallet-evm)**
+- **[evmChainId](#pallet-evmchainid)**
+- **[grandpa](#pallet-grandpa)**
+- **[limitOrders](#pallet-limitorders)**
+- **[mevShield](#pallet-mevshield)**
+- **[multisig](#pallet-multisig)**
+- **[preimage](#pallet-preimage)**
+- **[proxy](#pallet-proxy)**
+- **[randomnessCollectiveFlip](#pallet-randomnesscollectiveflip)**
+- **[safeMode](#pallet-safemode)**
+- **[scheduler](#pallet-scheduler)**
+- **[substrate](#pallet-substrate)**
+- **[subtensorModule](#pallet-subtensormodule)**
+- **[sudo](#pallet-sudo)**
+- **[swap](#pallet-swap)**
+- **[system](#pallet-system)**
+- **[timestamp](#pallet-timestamp)**
+- **[transactionPayment](#pallet-transactionpayment)**
 
-## `adminUtils`
+## `adminUtils` {#pallet-adminutils}
 
 ### `palletVersion`: `u16`
 
@@ -54,7 +52,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Map PrecompileEnum --> enabled
 
 
-## `alphaAssets`
+## `alphaAssets` {#pallet-alphaassets}
 
 ### `alphaBurned(NetUid)`: `AlphaBalance`
 
@@ -78,7 +76,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Total alpha issuance tracked by the pallet.
 
 
-## `aura`
+## `aura` {#pallet-aura}
 
 ### `authorities`: `Vec<SpConsensusAuraSr25519AppSr25519Public>`
 
@@ -99,7 +97,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Returns the current pallet version from storage
 
 
-## `balances`
+## `balances` {#pallet-balances}
 
 ### `account(AccountId32)`: `AccountData`
 
@@ -159,7 +157,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: The total units issued in the system.
 
 
-## `baseFee`
+## `baseFee` {#pallet-basefee}
 
 ### `baseFeePerGas`: `U256`
 
@@ -176,7 +174,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Returns the current pallet version from storage
 
 
-## `commitments`
+## `commitments` {#pallet-commitments}
 
 ### `commitmentOf(u16, AccountId32)`: `Registration`
 
@@ -221,7 +219,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Maps (netuid, who) -> usage (how many “bytes” they've committed) in the RateLimit window
 
 
-## `contracts`
+## `contracts` {#pallet-contracts}
 
 ### `codeInfoOf(H256)`: `CodeInfo`
 
@@ -286,7 +284,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: A mapping from a contract's code hash to its code.
 
 
-## `crowdloan`
+## `crowdloan` {#pallet-crowdloan}
 
 ### `contributions(u32, AccountId32)`: `TaoBalance`
 
@@ -329,7 +327,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Returns the current pallet version from storage
 
 
-## `drand`
+## `drand` {#pallet-drand}
 
 ### `beaconConfig`: `BeaconConfiguration`
 
@@ -370,7 +368,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: map round number to pulse
 
 
-## `ethereum`
+## `ethereum` {#pallet-ethereum}
 
 ### `blockHash(U256)`: `H256`
 
@@ -412,7 +410,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Mapping from transaction index to transaction in the current building block.
 
 
-## `evm`
+## `evm` {#pallet-evm}
 
 ### `accountCodes(H160)`: `Bytes`
 
@@ -442,7 +440,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **interface**: `api.query.evm.whitelistedCreators`
 
 
-## `evmChainId`
+## `evmChainId` {#pallet-evmchainid}
 
 ### `chainId`: `u64`
 
@@ -456,7 +454,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Returns the current pallet version from storage
 
 
-## `grandpa`
+## `grandpa` {#pallet-grandpa}
 
 ### `authorities`: `Vec<(SpConsensusGrandpaAppPublic,u64)>`
 
@@ -508,7 +506,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: State of the current authority set.
 
 
-## `limitOrders`
+## `limitOrders` {#pallet-limitorders}
 
 ### `hasMigrationRun(Bytes)`: `bool`
 
@@ -533,7 +531,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Returns the current pallet version from storage
 
 
-## `mevShield`
+## `mevShield` {#pallet-mevshield}
 
 ### `authorKeys(Public)`: `Bytes`
 
@@ -619,7 +617,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Block number at which `PendingKey` is no longer valid (exclusive upper bound). Updated every block during rotation.
 
 
-## `multisig`
+## `multisig` {#pallet-multisig}
 
 ### `multisigs(AccountId32, [u8;32])`: `Multisig`
 
@@ -634,7 +632,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Returns the current pallet version from storage
 
 
-## `preimage`
+## `preimage` {#pallet-preimage}
 
 ### `palletVersion`: `u16`
 
@@ -660,7 +658,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: The request status of a given hash.
 
 
-## `proxy`
+## `proxy` {#pallet-proxy}
 
 ### `announcements(AccountId32)`: `(Vec<PalletSubtensorProxyAnnouncement>,u64)`
 
@@ -691,7 +689,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Tracks which (real, delegate) pairs have opted in to the real account paying transaction fees for proxy calls made by the delegate. Existence of an entry means the real account pays; absence means the delegate pays (default).
 
 
-## `randomnessCollectiveFlip`
+## `randomnessCollectiveFlip` {#pallet-randomnesscollectiveflip}
 
 ### `palletVersion`: `u16`
 
@@ -705,7 +703,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Series of block headers from the last 81 blocks that acts as random seed material. This is arranged as a ring buffer with `block_number % 81` being the index into the `Vec` of the oldest hash.
 
 
-## `safeMode`
+## `safeMode` {#pallet-safemode}
 
 ### `deposits(AccountId32, u32)`: `TaoBalance`
 
@@ -732,7 +730,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Returns the current pallet version from storage
 
 
-## `scheduler`
+## `scheduler` {#pallet-scheduler}
 
 ### `agenda(u32)`: `Vec<Option<PalletSchedulerScheduled>>`
 
@@ -766,7 +764,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Retry configurations for items to be executed, indexed by task address.
 
 
-## `substrate`
+## `substrate` {#pallet-substrate}
 
 ### `changesTrieConfig`: `u32`
 
@@ -823,7 +821,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: The key that holds the current number of active layers.
 
 
-## `subtensorModule`
+## `subtensorModule` {#pallet-subtensormodule}
 
 ### `accountFlags(AccountId32)`: `u128`
 
@@ -1152,6 +1150,21 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.emission`
 - **summary**: MAP ( netuid ) --> emission
+
+### `emissionBarQuantile`: `FixedU128`
+
+- **interface**: `api.query.subtensorModule.emissionBarQuantile`
+- **summary**: ITEM --> Emission Bar Quantile (q)
+
+### `emissionGateBar`: `FixedU128`
+
+- **interface**: `api.query.subtensorModule.emissionGateBar`
+- **summary**: ITEM --> Emission gate bar (theta): the q-mass demand-share threshold the Hill gate is centered on. Recomputed on a fixed block cadence from the same EMA-price shares that drive emission. Zero means "not yet computed" and disables the gate.
+
+### `emissionGateExponent`: `FixedU128`
+
+- **interface**: `api.query.subtensorModule.emissionGateExponent`
+- **summary**: ITEM --> Emission Gate Exponent (h)
 
 ### `firstEmissionBlockNumber(NetUid)`: `u64`
 
@@ -2072,7 +2085,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: MAP ( netuid ) --> Whether or not Yuma3 is enabled
 
 
-## `sudo`
+## `sudo` {#pallet-sudo}
 
 ### `key`: `AccountId32`
 
@@ -2087,7 +2100,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Returns the current pallet version from storage
 
 
-## `swap`
+## `swap` {#pallet-swap}
 
 ### `balancerAlphaReservoir(NetUid)`: `AlphaBalance`
 
@@ -2131,7 +2144,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: u64-normalized reserve weight
 
 
-## `system`
+## `system` {#pallet-system}
 
 ### `account(AccountId32)`: `AccountInfo`
 
@@ -2252,7 +2265,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: True if we have upgraded so that `type RefCount` is `u32`. False (default) if not.
 
 
-## `timestamp`
+## `timestamp` {#pallet-timestamp}
 
 ### `didUpdate`: `bool`
 
@@ -2273,7 +2286,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Returns the current pallet version from storage
 
 
-## `transactionPayment`
+## `transactionPayment` {#pallet-transactionpayment}
 
 ### `nextFeeMultiplier`: `FixedU128`
 

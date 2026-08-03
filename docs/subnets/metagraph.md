@@ -6,7 +6,6 @@ import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
-# Subnet Metagraph
 
 This page documents the Bittensor subnet metagraph.
 
@@ -20,7 +19,7 @@ Related reading:
 
 - [Understanding Neurons](../learn/neurons.md)
 - [Subnet Hyperparameters](./subnet-hyperparameters.md)
-- [Bittensor CLI Reference](../btcli/btcli.md)
+- [Bittensor CLI Reference](https://docs.learnbittensor.org/btcli/btcli)
 - [Metagraph Precompile](../evm-tutorials/metagraph-precompile.md)
 
 ## Accessing the Metagraph
@@ -62,7 +61,7 @@ The btcli output shows a subset of metagraph data (lite mode). For complete data
 
 <SdkVersion />
 
-The Bittensor Python SDK [Metagraph module](pathname:///python-api/html/autoapi/bittensor/core/metagraph/index.html) provides programmatic access to metagraph data:
+The Bittensor Python SDK [Metagraph module](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/metagraph/index.html) provides programmatic access to metagraph data:
 
 ```python
 from bittensor.core.metagraph import Metagraph
@@ -150,7 +149,7 @@ Metagraph files are saved to `~/.bittensor/metagraphs/network-{network}/netuid-{
 
 In the Bittensor Python SDK, the `Metagraph` class encapsulates the following information about a particular subnet.
 
-[Metagraph class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/metagraph/index.html)
+[Metagraph class specification, SDK reference](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/metagraph/index.html)
 
 <!--  -->
 <details>
@@ -212,7 +211,7 @@ A neuron represents any registered participant on the subnet, whether a miner or
 See also:
 
 - [Understanding Neurons](../learn/neurons.md)
-- [NeuronInfo class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/chain_data/neuron_info/index.html#bittensor.core.chain_data.neuron_info.NeuronInfo)
+- [NeuronInfo class specification, SDK reference](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/chain_data/neuron_info/index.html#bittensor.core.chain_data.neuron_info.NeuronInfo)
 
 <details>
   <summary>Neuron Info Properties</summary>
@@ -244,8 +243,8 @@ An axon represents a server run by a registered miner, capable of answering requ
 See also:
 
 - [Understanding Neurons](../learn/neurons.md)
-- [Axon class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/axon/index.html#module-bittensor.core.axon)
-- [Axon class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/axon/index.html#module-bittensor.core.axon)
+- [Axon class specification, SDK reference](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/axon/index.html#module-bittensor.core.axon)
+- [Axon class specification, SDK reference](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/axon/index.html#module-bittensor.core.axon)
 
 <details>
   <summary>Axon Properties</summary>
@@ -270,7 +269,7 @@ Represents the hyperparameters of a subnet.
 See also:
 
 - [Subnet Hyperparameters](./subnet-hyperparameters)
-- [MetagraphInfoParams class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/chain_data/metagraph_info/index.html#bittensor.core.chain_data.metagraph_info.MetagraphInfoParams)
+- [MetagraphInfoParams class specification, SDK reference](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/chain_data/metagraph_info/index.html#bittensor.core.chain_data.metagraph_info.MetagraphInfoParams)
 
 <details>
   <summary>MetagraphInfoParams (Hyperparams) Properties</summary>
@@ -313,7 +312,7 @@ Contains information about the subnet's liquidity pool
 See also:
 
 - [Understanding Subnets: Liquidity pools](./understanding-subnets#liquidity-pools).
-- [MetagraphInfoPool class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/chain_data/metagraph_info/index.html#bittensor.core.chain_data.metagraph_info.MetagraphInfoPool)
+- [MetagraphInfoPool class specification, SDK reference](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/chain_data/metagraph_info/index.html#bittensor.core.chain_data.metagraph_info.MetagraphInfoPool)
 
 <details>
   <summary>MetagraphInfoPool properties</summary>
@@ -333,7 +332,7 @@ Contains detailed information about the subnet's emissions.
 See also:
 
 - [Emissions](../learn/emissions).
-- [MetagraphInfoEmissions class specification, SDK reference](pathname:///python-api/html/autoapi/bittensor/core/chain_data/metagraph_info/index.html#bittensor.core.chain_data.metagraph_info.MetagraphInfoPool)
+- [MetagraphInfoEmissions class specification, SDK reference](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/chain_data/metagraph_info/index.html#bittensor.core.chain_data.metagraph_info.MetagraphInfoPool)
 
 <details>
   <summary>MetagraphInfoEmissions properties</summary>

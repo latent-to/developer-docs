@@ -6,6 +6,7 @@ import clsx from "clsx";
 export function Cards({ children }) {
   return <div className={styles.cards}>{children}</div>;
 }
+
 export function ResponsiveCards({ children }) {
   return (
     <div className={clsx(styles.cards, styles.responsiveCards)}>
@@ -14,40 +15,72 @@ export function ResponsiveCards({ children }) {
   );
 }
 
-export function Card({ icon: Icon, title, body, link }) {
+function CardContent({
+  icon: Icon,
+  title,
+  body,
+  iconSize,
+  titleClassName,
+  bodyClassName,
+  withReadMore,
+}) {
   return (
-    <div className={styles.card}>
-      {Icon ? <Icon size="2rem" /> : <p />}
-      <div className={styles.title}>{title}</div>
-      <div className={styles.body}>{body}</div>
-      <Link to={link} className={styles.readMore}>
-        READ MORE
-      </Link>
-    </div>
+    <>
+      {Icon ? <Icon size={iconSize} aria-hidden="true" /> : null}
+      {title ? <h3 className={titleClassName}>{title}</h3> : null}
+      {body ? <div className={bodyClassName}>{body}</div> : null}
+      {withReadMore ? <span className={styles.readMore}>Read more</span> : null}
+    </>
   );
 }
 
-export function ResponsiveCard({ icon: Icon, title, body, link }) {
+export function Card({ icon, title, body, link }) {
   return (
-    <div className={clsx(styles.card, styles.responsiveCard)}>
-      {Icon ? <Icon size="2rem" /> : <p />}
-      <div className={styles.title}>{title}</div>
-      <div className={styles.body}>{body}</div>
-      <Link to={link} className={styles.readMore}>
-        READ MORE
-      </Link>
-    </div>
+    <Link to={link} className={clsx(styles.cardLink, styles.card)}>
+      <CardContent
+        icon={icon}
+        title={title}
+        body={body}
+        iconSize="2rem"
+        titleClassName={styles.title}
+        bodyClassName={styles.body}
+        withReadMore
+      />
+    </Link>
   );
 }
 
-export function CardSmall({ icon: Icon, title, body, link }) {
+export function ResponsiveCard({ icon, title, body, link }) {
   return (
-    <Link to={link} className={styles.cardSmallLink}>
-      <div className={styles.cardSmall}>
-        {Icon ? <Icon size="1.2rem" /> : <p />}
-        <div className={styles.titleSmall}>{title}</div>
-        <div className={styles.bodySmall}>{body}</div>
-      </div>
+    <Link
+      to={link}
+      className={clsx(styles.cardLink, styles.card, styles.responsiveCard)}>
+      <CardContent
+        icon={icon}
+        title={title}
+        body={body}
+        iconSize="2rem"
+        titleClassName={styles.title}
+        bodyClassName={styles.body}
+        withReadMore
+      />
+    </Link>
+  );
+}
+
+export function CardSmall({ icon, title, body, link }) {
+  return (
+    <Link
+      to={link}
+      className={clsx(styles.cardLink, styles.cardSmallLink, styles.cardSmall)}>
+      <CardContent
+        icon={icon}
+        title={title}
+        body={body}
+        iconSize="2rem"
+        titleClassName={styles.titleSmall}
+        bodyClassName={styles.bodySmall}
+      />
     </Link>
   );
 }

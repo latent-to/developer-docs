@@ -2,8 +2,6 @@
 title: "Bittensor Community Links"
 ---
 
-# Bittensor Community Links
-
 Welcome to the Bittensor ecosystem! This page provides links to essential community tools and resources to help you navigate the Bittensor network.
 
 You can also explore Bittensor's many Subnets and find links to their websites and repositories through [our Subnet listings](https://learnbittensor.org/subnets).

@@ -6,7 +6,6 @@ toc_max_heading_level: 2
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Child Hotkeys
 
 This guide describes the **child hotkeys** feature and how to use it. With the child hotkeys, a subnet validator is no longer required to use the same delegate hotkey for every subnet they validate in. The subnet validator can use a separate **child hotkey** per subnet. The subnet validator does this by re-delegating a portion of their stake from their delegate hotkey to this separate child hotkey on a subnet. The originating delegate hotkey is called the **parent hotkey**.
 
@@ -188,7 +187,7 @@ btcli stake child revoke \
 
 Each child hotkey can have a defined take percentage that determines the portion of rewards it receives on a given netuid. The take value can range from `0` (0%) to `0.18` (18%). This configuration is subnet-specific meaning that a child hotkey may have one take percentage on one netuid and a different value on another.
 
-The child hotkey can also set its delegate take separately from the child hotkey take. That is, a child hotkey can carry two separate take rates: the child hotkey take rate and the delegate take rate. For the delegate take rate, see [Set delegate take](../btcli/btcli.md#btcli-sudo-set-take).
+The child hotkey can also set its delegate take separately from the child hotkey take. That is, a child hotkey can carry two separate take rates: the child hotkey take rate and the delegate take rate. For the delegate take rate, see [Set delegate take](https://docs.learnbittensor.org/btcli/btcli#btcli-sudo-set-take).
 
 ### Usage
 

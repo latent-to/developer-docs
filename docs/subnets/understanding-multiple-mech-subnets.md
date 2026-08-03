@@ -5,7 +5,6 @@ title: "Multiple Incentive Mechanisms Within Subnets"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Multiple Incentive Mechanisms Within Subnets
 
 This page explores how subnets can implement multiple incentive mechanisms to distribute emissions across different evaluation criteria.
 

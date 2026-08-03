@@ -2,8 +2,6 @@
 title: "Voting Power Precompile"
 ---
 
-# Voting Power Precompile
-
 The VotingPower precompile gives smart contracts read-only access to the per-validator EMA voting power scores tracked on each subnet. Use it to build on-chain governance mechanisms — slashing conditions, quorum checks, reward weighting — that respond to relative validator influence.
 
 - **Address**: `0x000000000000000000000000000000000000080d`

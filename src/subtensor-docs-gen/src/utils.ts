@@ -105,11 +105,15 @@ export function fmtType(typeStr: string): string {
 function stripRustdocLinksFromLine(line: string): string {
   // Reference-style link definition line — drop entirely
   if (/^\s*\[`?[^\]]+`?\]:\s*\S/.test(line)) return '';
+  return stripInlineRustdocLinks(line);
+}
+
+function stripInlineRustdocLinks(text: string): string {
   // Inline backtick-label link → keep just the backtick span
-  line = line.replace(/\[(`[^`]+`)\]\([^)]*\)/g, '$1');
+  text = text.replace(/\[(`[^`]+`)\]\([^)]*\)/g, '$1');
   // Inline plain-text-label link (non-http) → keep just the label
-  line = line.replace(/\[([^\]]+)\]\((?!https?:\/\/)([^)]*)\)/g, '$1');
-  return line;
+  text = text.replace(/\[([^\]]+)\]\((?!https?:\/\/)([^)]*)\)/g, '$1');
+  return text;
 }
 
 // ── Doc comment processing ────────────────────────────────────────────────────
@@ -402,7 +406,7 @@ export function extractDocs(docs: any[]): string {
   while (out.length > 0 && out[out.length - 1] === '') out.pop();
   if (out.length === 0) return '';
 
-  return escapeMdx(out.join('\n'));
+  return escapeMdx(out.map(stripInlineRustdocLinks).join('\n'));
 }
 
 function capitalise(s: string): string {
@@ -452,7 +456,11 @@ Generated from Subtensor runtime ${versionStr}. Connected to: \`${endpoint}\`
 }
 
 export function palletAnchor(palletName: string): string {
-  return palletName.toLowerCase();
+  return `pallet-${palletName.toLowerCase()}`;
+}
+
+export function palletHeading(palletName: string): string {
+  return `\n## \`${palletName}\` {#${palletAnchor(palletName)}}\n`;
 }
 
 export const BITTENSOR_PALLETS = new Set([

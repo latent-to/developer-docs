@@ -6,7 +6,6 @@ import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { ProxyColdkeyWarning } from "../keys/_proxy-warning.mdx";
 
-# Staking/delegation overview
 
 <ProxyColdkeyWarning />
 
@@ -22,7 +21,7 @@ See also:
 - [Managing Your Stakes](./managing-stake-sdk.md): Complete guide to staking operations with btcli and the Python SDK
 
 :::tip tips
-Validators/delegates can configure their take. The default value is 18%. See [`btcli sudo set-take`](../btcli#btcli-sudo-set-take).
+Validators/delegates can configure their take. The default value is 18%. See [`btcli sudo set-take`](https://docs.learnbittensor.org/btcli/btcli#btcli-sudo-set-take).
 
 Minimum required stake for nominators is 0.1 TAO.
 :::
@@ -52,9 +51,9 @@ As a TAO holder, you will stake to a validator’s hotkey on a specific subnet. 
 3. These equivalent TAO units are then taken out of the TAO reserves of the subnet pool and are sent to the TAO holder's coldkey.
 
 :::important Key considerations when unstaking
-**Slippage**: Like staking, unstaking operations are subject to slippage because your transaction affects the subnet's AMM pool prices. Larger unstaking amounts will experience more slippage. See [Understanding Pricing and Anticipating Slippage](../learn/slippage.md) for details.
+**Slippage**: Like staking, unstaking operations are subject to slippage because your transaction affects the subnet's AMM pool prices. Larger unstaking amounts will experience more slippage. See [Understanding Pricing and Anticipating Slippage](./slippage.md) for details.
 
-**Price protection**: Bittensor provides built-in price protection mechanisms to prevent unfavorable unstaking transactions. You can set tolerance limits and enable partial execution. See [Price Protection When Staking](../learn/price-protection.md) for more information.
+**Price protection**: Bittensor provides built-in price protection mechanisms to prevent unfavorable unstaking transactions. You can set tolerance limits and enable partial execution. See [Price Protection When Staking](./price-protection.md) for more information.
 
 **Transaction fees**: Unstaking operations incur blockchain transaction fees. These fees are recycled back into the TAO emission pool. See [Transaction Fees in Bittensor](../learn/fees.md).
 
@@ -79,7 +78,7 @@ Moving stake is a special operation that transfers stake between validators or s
 Transferring stake changes ownership of staked tokens from one coldkey to another while keeping the stake on the same validator. This comprises unstaking, transferring TAO ownership, and restaking to the same validator as an atomic transaction.
 
 :::tip Stake is always expressed in alpha units
-In Dynamic TAO, except for the stake held in [the Root Subnet](../subnets/understanding-subnets.md#subnet-zero), the stake held by a hotkey in a subnet is always expressed in the subnet-specific $\alpha$ units. Root Subnet stake is expressed in $\tau$.
+In Dynamic TAO, except for the stake held in [the Root Subnet](../subnets/understanding-subnets.md#root-subnet), the stake held by a hotkey in a subnet is always expressed in the subnet-specific $\alpha$ units. Root Subnet stake is expressed in $\tau$.
 :::
 
 :::tip Prereq

@@ -1,7 +1,7 @@
 import * as path from "path";
 import type { ApiPromise } from "@polkadot/api";
 import { rpcDefinitions } from "@polkadot/types";
-import { fileHeader, writeFile, palletAnchor } from "../utils";
+import { fileHeader, writeFile, palletAnchor, palletHeading } from "../utils";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
@@ -199,7 +199,7 @@ export async function generateRpc(
   // ── Per-namespace sections ────────────────────────────────────────────────
 
   for (const [nsName, methods] of sortedNs) {
-    lines.push(`\n## \`${nsName}\`\n`);
+    lines.push(palletHeading(nsName));
 
     for (const m of methods) {
       const paramStr = m.params

@@ -2,8 +2,6 @@
 title: "Create a Subnet"
 ---
 
-# Create a Subnet
-
 This page describes the procedures for creating a new Bittensor subnet on test chain or main chain.
 
 You should first try [Creating a Subnet on a locally deployed chain](../local-build/create-subnet).
@@ -65,7 +63,7 @@ To check the current rate limit on the blockchain, navigate to the [Polkadot.js 
 
 ## Prerequisites
 
-- [Install the most recent version of BTCLI](../getting-started/install-btcli).
+- [Install the most recent version of BTCLI](../btcli/install-btcli).
 
 - [Create a wallet](../keys/working-with-keys#creating-a-wallet-with-btcli).
 

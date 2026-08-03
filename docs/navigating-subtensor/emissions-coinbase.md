@@ -2,8 +2,6 @@
 title: "Coinbase Implementation"
 ---
 
-# Coinbase Implementation
-
 This document provides a technical deep dive into the `run_coinbase()` function that orchestrates [TAO](../resources/glossary.md#tao-tau) and alpha [emission](../resources/glossary.md#emission) distribution across [subnets](../resources/glossary.md#subnet). The coinbase mechanism serves as Bittensor's economic heartbeat, connecting [subnet validators](../resources/glossary.md#subnet-validator), [subnet miners](../resources/glossary.md#subnet-miner), and [stakers](../resources/glossary.md#staking) through emission distribution.
 
 For conceptual understanding of emission mechanisms, see [Emissions](../learn/emissions.md).
@@ -63,7 +61,7 @@ let subnets_to_emit_to: Vec<NetUid> = subnets
 Each subnet's share of the block's TAO emission is proportional to its EMA price (`SubnetMovingPrice`), weighted by its miner-burn penalty, then normalized over all emission-enabled subnets.
 
 **EMA Price Smoothing Implementation:**
-The moving price for each subnet is calculated using a custom [EMA](../learn/ema#subnet-flow-emission-smoothing) that adapts its responsiveness based on subnet maturity. This creates a **double-smoothing effect**: new subnets have extremely slow price adaptation (preventing launch manipulation), while mature subnets respond more quickly to legitimate market signals.
+The moving price for each subnet is calculated using a custom [EMA](../learn/ema#subnet-price-ema-smoothing) that adapts its responsiveness based on subnet maturity. This creates a **double-smoothing effect**: new subnets have extremely slow price adaptation (preventing launch manipulation), while mature subnets respond more quickly to legitimate market signals.
 
 **Price-Based Distribution:**
 The system uses an EMA of each subnet's token price (`SubnetMovingPrice`) to determine emission shares, rather than the live spot price. Each subnet's share of the fixed block emission is weighted by EMA price, and a miner-burn penalty, then normalized over all emission-enabled subnets:

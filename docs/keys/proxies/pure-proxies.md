@@ -3,8 +3,6 @@ title: "Understanding Pure Proxies"
 toc_max_heading_level: 2
 ---
 
-# Understanding Pure Proxies
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { SdkVersion } from "../../sdk/\_sdk-version.mdx";

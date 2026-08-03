@@ -1,10 +1,10 @@
 ---
 title: "Coldkey and Hotkey Workstation Security"
+description: "How to keep Bittensor keys safe: which operations need a coldkey, when to use a hardware wallet or proxy, and how to run separate coldkey and hotkey workstations."
 ---
 
 import { SecurityWarning } from "./\_security-warning.mdx";
 
-# Coldkey and Hotkey Workstation Security
 
 <SecurityWarning />
 
@@ -160,7 +160,7 @@ A delayed proxy must broadcast its intent on-chain before executing, which allow
 
 See [Monitor and Reject Announcements](./proxies/working-with-proxies#monitor-and-reject-proxy-announcements) for how to query pending announcements, run a monitoring script, and reject.
 
-See also: [Avoid Staking Proxy Attacks](../learn/avoid-staking-proxy-attacks) for a description of the specific multi-transaction sandwich attack that delayed proxies defend against.
+See also: [Avoid Staking Proxy Attacks](./proxies/avoid-staking-proxy-attacks) for a description of the specific multi-transaction sandwich attack that delayed proxies defend against.
 
 :::warning Do not mine with primary coldkeys
 Miners need coldkeys for currency management and hotkeys for serving requests. No coldkey should be present in an environment running mining code.

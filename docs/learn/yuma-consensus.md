@@ -1,8 +1,7 @@
 ---
 title: "Yuma Consensus"
+description: "How Yuma Consensus turns validator weight vectors into miner and validator emissions, including clipping, bonds and trust."
 ---
-
-# Yuma Consensus
 
 ## Introduction
 

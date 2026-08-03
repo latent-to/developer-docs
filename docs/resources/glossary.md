@@ -1,8 +1,7 @@
 ---
 title: "Glossary"
+description: "Definitions of the terms used across the Bittensor guides, from alpha tokens and dividends to subnets, UIDs, weights and Yuma Consensus."
 ---
-
-# Glossary
 
 ## A
 
@@ -46,7 +45,7 @@ A digital wallet that holds the core ownership in the Bittensor network and serv
 
 A unit of data in the Bittensor blockchain, containing a collection of transactions and a unique identifier (block hash). A single block is processed every 12 seconds in the Bittensor blockchain.
 
-**See also:** [Subtensor API](../sdk/subtensor-api.md)
+**See also:** [Subtensor API](https://docs.learnbittensor.org/sdk/subtensor-api)
 
 ### Blockchain validator
 
@@ -85,7 +84,7 @@ The Commit Reveal feature is designed to solve the weight-copying problem by giv
 **See also:**
 
 - [Commit Reveal](../concepts/commit-reveal.md)
-- [The Weight Copying Problem](../concepts/weight-copying-in-bittensor)
+- [The Weight Copying Problem](../learn/weight-copying-in-bittensor)
 
 ### Consensus Score
 
@@ -296,7 +295,7 @@ See also [What is the Existential Deposit?](https://support.polkadot.network/sup
 
 A Bittensor wallet created through the Bittensor website or using a tool like [subkey](https://docs.substrate.io/reference/command-line-tools/subkey/), allowing users to use TAO without installing Bittensor.
 
-**See also:** [Wallets](../keys/wallets.md), [Installation](../getting-started/installation.md)
+**See also:** [Wallets](../keys/wallets.md), [Installation](../sdk/installation.md)
 
 ## F
 
@@ -381,7 +380,7 @@ A private blockchain used for developing and testing subnet incentive mechanisms
 
 A Bittensor wallet created on the user's machine, requiring the installation of Bittensor.
 
-**See also:** [Wallets](../keys/wallets.md), [Installation](../getting-started/installation.md)
+**See also:** [Wallets](../keys/wallets.md), [Installation](../sdk/installation.md)
 
 ### Loss Function
 
@@ -419,7 +418,7 @@ Common MEV attacks include:
 
 In Bittensor, MEV attacks can affect staking and unstaking operations, where attackers might exploit knowledge of pending transactions to manipulate token prices. The MEV Shield feature protects against these attacks by encrypting transactions until they are included in a block.
 
-**See also:** [MEV Shield](../sdk/mev-protection.md), [Price Protection](../learn/price-protection.md)
+**See also:** [MEV Shield](../sdk/mev-protection.md), [Price Protection](../staking-and-delegation/price-protection.md)
 
 ### Multiple Incentive Mechanisms
 
@@ -459,7 +458,7 @@ The basic computing node in a Bittensor subnet, representing a node in a neural 
 
 Neurons participate in the network through axon servers (miners) and dendrite clients (validators), exchanging synapse objects to perform subnet-specific tasks. Their performance is measured through metrics like rank, trust, consensus, and incentive scores, which determine emissions and validator permits.
 
-**See also:** [Understanding Neurons](../learn/neurons.md), [Subnet Validators](../validators/), [Subnet Miners](../miners/), [NeuronInfo class](pathname:///python-api/html/autoapi/bittensor/core/chain_data/neuron_info/index.html)
+**See also:** [Understanding Neurons](../learn/neurons.md), [Subnet Validators](../validators/), [Subnet Miners](../miners/), [NeuronInfo class](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/chain_data/neuron_info/index.html)
 
 ### Nominate
 
@@ -690,7 +689,7 @@ In Bittensor, each subnet's alpha token is traded on a constant product AMM. Whe
 
 Larger transactions cause more slippage. Bittensor provides slippage protection through tolerance limits and partial execution options.
 
-**See:** [Understanding Pricing and Anticipating Slippage](../learn/slippage.md)
+**See:** [Understanding Pricing and Anticipating Slippage](../staking-and-delegation/slippage.md)
 
 ### Stake
 
@@ -795,9 +794,9 @@ The importance assigned to each subnet determined by net TAO flows (staking minu
 
 [Subtensor](https://github.com/RaoFoundation/subtensor) is Bittensor's layer 1 blockchain based on substrate (now PolkadotSDK). This serves Bittensor as a system of record for transactions and rankings, operates Yuma Consensus, and emits liquidity to participants to incentivize their participation in network activities.
 
-The Bittensor SDK offers the [`bittensor.core.subtensor`](pathname:///python-api/html/autoapi/bittensor/core/subtensor/index.html) and [`bittensor.core.async_subtensor`](pathname:///python-api/html/autoapi/bittensor/core/async_subtensor/index.html) modules to handle Subtensor blockchain interactions.
+The Bittensor SDK offers the [`bittensor.core.subtensor`](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/subtensor/index.html) and [`bittensor.core.async_subtensor`](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/async_subtensor/index.html) modules to handle Subtensor blockchain interactions.
 
-**See also:** [Subtensor API](../sdk/subtensor-api.md), [Subtensor Nodes](../subtensor-nodes/), [Managing Subtensor Connections](../sdk/managing-subtensor-connections.md)
+**See also:** [Subtensor API](https://docs.learnbittensor.org/sdk/subtensor-api), [Subtensor Nodes](../subtensor-nodes/), [Managing Subtensor Connections](../sdk/managing-subtensor-connections.md)
 
 ### Sudo
 
@@ -925,8 +924,8 @@ Unstaking incurs blockchain transaction fees, which are recycled back into the T
 
 - [Staking/Delegation overview](../staking-and-delegation/delegation.md#unstaking)
 - [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md#unstake-from-a-validator)
-- [Understanding Pricing and Anticipating Slippage](../learn/slippage.md)
-- [Price Protection When Staking](../learn/price-protection.md)
+- [Understanding Pricing and Anticipating Slippage](../staking-and-delegation/slippage.md)
+- [Price Protection When Staking](../staking-and-delegation/price-protection.md)
 - [Transaction Fees](../learn/fees.md)
 
 ## V
@@ -1122,7 +1121,7 @@ A unique identifier derived from the public key, used as a destination for sendi
 
 The directory path where the generated Bittensor wallets are stored locally on the user's machine.
 
-**See also:** [Wallets](../keys/wallets.md), [Installation](../getting-started/installation.md)
+**See also:** [Wallets](../keys/wallets.md), [Installation](../sdk/installation.md)
 
 ### Weight Copying
 

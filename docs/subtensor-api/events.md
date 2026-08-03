@@ -3,39 +3,37 @@ title: Events
 description: "The following page contains runtime events emitted by the Subtensor runtime."
 ---
 
-# Events
-
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **438**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
-- **[adminUtils](#adminutils)**
-- **[balances](#balances)**
-- **[baseFee](#basefee)**
-- **[commitments](#commitments)**
-- **[contracts](#contracts)**
-- **[crowdloan](#crowdloan)**
-- **[drand](#drand)**
-- **[ethereum](#ethereum)**
-- **[evm](#evm)**
-- **[grandpa](#grandpa)**
-- **[limitOrders](#limitorders)**
-- **[mevShield](#mevshield)**
-- **[multisig](#multisig)**
-- **[preimage](#preimage)**
-- **[proxy](#proxy)**
-- **[safeMode](#safemode)**
-- **[scheduler](#scheduler)**
-- **[subtensorModule](#subtensormodule)**
-- **[sudo](#sudo)**
-- **[swap](#swap)**
-- **[system](#system)**
-- **[transactionPayment](#transactionpayment)**
-- **[utility](#utility)**
+- **[adminUtils](#pallet-adminutils)**
+- **[balances](#pallet-balances)**
+- **[baseFee](#pallet-basefee)**
+- **[commitments](#pallet-commitments)**
+- **[contracts](#pallet-contracts)**
+- **[crowdloan](#pallet-crowdloan)**
+- **[drand](#pallet-drand)**
+- **[ethereum](#pallet-ethereum)**
+- **[evm](#pallet-evm)**
+- **[grandpa](#pallet-grandpa)**
+- **[limitOrders](#pallet-limitorders)**
+- **[mevShield](#pallet-mevshield)**
+- **[multisig](#pallet-multisig)**
+- **[preimage](#pallet-preimage)**
+- **[proxy](#pallet-proxy)**
+- **[safeMode](#pallet-safemode)**
+- **[scheduler](#pallet-scheduler)**
+- **[subtensorModule](#pallet-subtensormodule)**
+- **[sudo](#pallet-sudo)**
+- **[swap](#pallet-swap)**
+- **[system](#pallet-system)**
+- **[transactionPayment](#pallet-transactionpayment)**
+- **[utility](#pallet-utility)**
 
-## `adminUtils`
+## `adminUtils` {#pallet-adminutils}
 
 ### `BondsResetToggled(NetUid, bool)`
 
@@ -78,7 +76,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Event emitted when the Yuma3 enable is toggled.
 
 
-## `balances`
+## `balances` {#pallet-balances}
 
 ### `BalanceSet(AccountId, u128)`
 
@@ -191,7 +189,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Some amount was withdrawn from the account (e.g. for transaction fees).
 
 
-## `baseFee`
+## `baseFee` {#pallet-basefee}
 
 ### `BaseFeeOverflow()`
 
@@ -206,7 +204,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **interface**: `api.events.baseFee.NewElasticity`
 
 
-## `commitments`
+## `commitments` {#pallet-commitments}
 
 ### `Commitment(NetUid, AccountId)`
 
@@ -224,7 +222,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: A timelock-encrypted commitment was set
 
 
-## `contracts`
+## `contracts` {#pallet-contracts}
 
 ### `Called(Origin, AccountId)`
 
@@ -289,7 +287,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
     The only way for a contract to be removed and emitting this event is by calling `seal_terminate`.
 
 
-## `crowdloan`
+## `crowdloan` {#pallet-crowdloan}
 
 ### `AllRefunded(CrowdloanId)`
 
@@ -347,7 +345,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: A contribution was withdrawn from a failed crowdloan.
 
 
-## `drand`
+## `drand` {#pallet-drand}
 
 ### `BeaconConfigChanged()`
 
@@ -365,7 +363,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Oldest Stored Round has been set.
 
 
-## `ethereum`
+## `ethereum` {#pallet-ethereum}
 
 ### `Executed(H160, H160, H256, ExitReason, Vec<u8>)`
 
@@ -373,7 +371,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: An ethereum transaction was successfully executed.
 
 
-## `evm`
+## `evm` {#pallet-evm}
 
 ### `Created(H160)`
 
@@ -401,7 +399,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Ethereum events from contracts.
 
 
-## `grandpa`
+## `grandpa` {#pallet-grandpa}
 
 ### `NewAuthorities(AuthorityList)`
 
@@ -419,7 +417,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Current authority set has been resumed.
 
 
-## `limitOrders`
+## `limitOrders` {#pallet-limitorders}
 
 ### `GroupExecutionSummary(NetUid, OrderSide, u64, u64, u32)`
 
@@ -447,7 +445,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: An order was skipped during execution.
 
 
-## `mevShield`
+## `mevShield` {#pallet-mevshield}
 
 ### `EncryptedSubmitted(H256, AccountId)`
 
@@ -510,7 +508,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Maximum on_initialize weight was updated.
 
 
-## `multisig`
+## `multisig` {#pallet-multisig}
 
 ### `DepositPoked(AccountId, CallHash, u128, u128)`
 
@@ -538,7 +536,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: A new multisig operation has begun.
 
 
-## `preimage`
+## `preimage` {#pallet-preimage}
 
 ### `Cleared(H256)`
 
@@ -556,7 +554,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: A preimage has been requested.
 
 
-## `proxy`
+## `proxy` {#pallet-proxy}
 
 ### `Announced(AccountId, AccountId, CallHashOf)`
 
@@ -599,7 +597,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: The real-pays-fee setting was updated for a proxy relationship.
 
 
-## `safeMode`
+## `safeMode` {#pallet-safemode}
 
 ### `CannotDeposit()`
 
@@ -646,7 +644,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: The safe-mode was extended until inclusively this block.
 
 
-## `scheduler`
+## `scheduler` {#pallet-scheduler}
 
 ### `AgendaIncomplete(u32)`
 
@@ -699,7 +697,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Scheduled some task.
 
 
-## `subtensorModule`
+## `subtensorModule` {#pallet-subtensormodule}
 
 ### `ActivityCutoffFactorMilliSet(NetUid, u32)`
 
@@ -1495,7 +1493,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: weights version key is set for a network.
 
 
-## `sudo`
+## `sudo` {#pallet-sudo}
 
 ### `KeyChanged(Option<T::AccountId>, AccountId)`
 
@@ -1518,7 +1516,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: A sudo_as call just took place.
 
 
-## `swap`
+## `swap` {#pallet-swap}
 
 ### `FeeRateSet(NetUid, u16)`
 
@@ -1526,7 +1524,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Event emitted when the fee rate has been updated for a subnet
 
 
-## `system`
+## `system` {#pallet-system}
 
 ### `CodeUpdated()`
 
@@ -1569,7 +1567,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: An upgrade was authorized.
 
 
-## `transactionPayment`
+## `transactionPayment` {#pallet-transactionpayment}
 
 ### `TransactionFeePaid(AccountId, u128, u128)`
 
@@ -1577,7 +1575,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: A transaction fee `actual_fee`, of which `tip` was added to the minimum inclusion fee, has been paid by `who`.
 
 
-## `utility`
+## `utility` {#pallet-utility}
 
 ### `BatchCompleted()`
 

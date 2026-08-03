@@ -4,7 +4,6 @@ title: "Handle your Seed Phrase/Mnemonic Securely"
 
 import { SecurityWarning } from "./_security-warning.mdx";
 
-# Handle your Seed Phrase/Mnemonic Securely
 
 The seed phrase (a.k.a. 'menemonic' or 'recovery phrase') is a series of (at least 12) words that is generated together with your wallet's cryptographic key pair, and which can be used to recover the coldkey private key. This seed phrase is therefore a human-usable way to save access to the cryptographic wallet offline, and to import the cryptographic wallet into a wallet application. To regenerate a keypair from a mnemonic programmatically, see [Wallet and Keyfile](./btwallet/wallet-class.md#regenerate-from-a-mnemonic).
 

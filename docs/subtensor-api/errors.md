@@ -3,37 +3,35 @@ title: Errors
 description: "This page contains error variants returned by the Subtensor runtime."
 ---
 
-# Errors
-
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **438**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
-- **[adminUtils](#adminutils)**
-- **[balances](#balances)**
-- **[commitments](#commitments)**
-- **[contracts](#contracts)**
-- **[crowdloan](#crowdloan)**
-- **[drand](#drand)**
-- **[ethereum](#ethereum)**
-- **[evm](#evm)**
-- **[grandpa](#grandpa)**
-- **[limitOrders](#limitorders)**
-- **[mevShield](#mevshield)**
-- **[multisig](#multisig)**
-- **[preimage](#preimage)**
-- **[proxy](#proxy)**
-- **[safeMode](#safemode)**
-- **[scheduler](#scheduler)**
-- **[subtensorModule](#subtensormodule)**
-- **[sudo](#sudo)**
-- **[swap](#swap)**
-- **[system](#system)**
-- **[utility](#utility)**
+- **[adminUtils](#pallet-adminutils)**
+- **[balances](#pallet-balances)**
+- **[commitments](#pallet-commitments)**
+- **[contracts](#pallet-contracts)**
+- **[crowdloan](#pallet-crowdloan)**
+- **[drand](#pallet-drand)**
+- **[ethereum](#pallet-ethereum)**
+- **[evm](#pallet-evm)**
+- **[grandpa](#pallet-grandpa)**
+- **[limitOrders](#pallet-limitorders)**
+- **[mevShield](#pallet-mevshield)**
+- **[multisig](#pallet-multisig)**
+- **[preimage](#pallet-preimage)**
+- **[proxy](#pallet-proxy)**
+- **[safeMode](#pallet-safemode)**
+- **[scheduler](#pallet-scheduler)**
+- **[subtensorModule](#pallet-subtensormodule)**
+- **[sudo](#pallet-sudo)**
+- **[swap](#pallet-swap)**
+- **[system](#pallet-system)**
+- **[utility](#pallet-utility)**
 
-## `adminUtils`
+## `adminUtils` {#pallet-adminutils}
 
 ### `BondsMovingAverageMaxReached`
 
@@ -116,7 +114,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Value not in allowed bounds.
 
 
-## `balances`
+## `balances` {#pallet-balances}
 
 ### `DeadAccount`
 
@@ -179,7 +177,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Vesting balance too high to send value.
 
 
-## `commitments`
+## `commitments` {#pallet-commitments}
 
 ### `AccountNotAllowedCommit`
 
@@ -202,7 +200,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Indicates that unreserve returned a leftover, which is unexpected.
 
 
-## `contracts`
+## `contracts` {#pallet-contracts}
 
 ### `CannotAddSelfAsDelegateDependency`
 
@@ -396,7 +394,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Failed to decode the XCM program.
 
 
-## `crowdloan`
+## `crowdloan` {#pallet-crowdloan}
 
 ### `AlreadyFinalized`
 
@@ -534,7 +532,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: An underflow occurred.
 
 
-## `drand`
+## `drand` {#pallet-drand}
 
 ### `DrandConnectionFailure`
 
@@ -567,7 +565,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: the pulse is invalid
 
 
-## `ethereum`
+## `ethereum` {#pallet-ethereum}
 
 ### `InvalidSignature`
 
@@ -580,7 +578,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Pre-log is present, therefore transact is not allowed.
 
 
-## `evm`
+## `evm` {#pallet-evm}
 
 ### `BalanceLow`
 
@@ -658,7 +656,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Withdraw fee failed
 
 
-## `grandpa`
+## `grandpa` {#pallet-grandpa}
 
 ### `ChangePending`
 
@@ -696,7 +694,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Cannot signal forced change so soon after last.
 
 
-## `limitOrders`
+## `limitOrders` {#pallet-limitorders}
 
 ### `ArithmeticOverflow`
 
@@ -794,7 +792,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: An order's pro-rata share in the batch rounded down to zero. The whole batch is rejected so the order's input is never consumed without delivering any output (conservation), and the order stays retryable in a differently-composed batch.
 
 
-## `mevShield`
+## `mevShield` {#pallet-mevshield}
 
 ### `BadEncKeyLen`
 
@@ -817,7 +815,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Weight exceeds the absolute maximum (half of total block weight).
 
 
-## `multisig`
+## `multisig` {#pallet-multisig}
 
 ### `AlreadyApproved`
 
@@ -890,7 +888,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: A different timepoint was given to the multisig operation that is underway.
 
 
-## `preimage`
+## `preimage` {#pallet-preimage}
 
 ### `AlreadyNoted`
 
@@ -933,7 +931,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: More than `MAX_HASH_UPGRADE_BULK_COUNT` hashes were requested to be upgraded at once.
 
 
-## `proxy`
+## `proxy` {#pallet-proxy}
 
 ### `AnnouncementDepositInvariantViolated`
 
@@ -986,7 +984,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: A call which is incompatible with the proxy type's filter was attempted.
 
 
-## `safeMode`
+## `safeMode` {#pallet-safemode}
 
 ### `AlreadyDeposited`
 
@@ -1024,7 +1022,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: This functionality of the pallet is disabled by the configuration.
 
 
-## `scheduler`
+## `scheduler` {#pallet-scheduler}
 
 ### `FailedToSchedule`
 
@@ -1052,7 +1050,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Given target block number is in the past.
 
 
-## `subtensorModule`
+## `subtensorModule` {#pallet-subtensormodule}
 
 ### `AccountRejectsLockedAlpha`
 
@@ -1754,6 +1752,11 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.TooManyRegistrationsThisInterval`
 - **summary**: The number of registration attempts exceeded the allowed number in the interval.
 
+### `TooManyRootClaimHotkeys`
+
+- **interface**: `api.errors.subtensorModule.TooManyRootClaimHotkeys`
+- **summary**: The coldkey has too many staking hotkeys for a single manual root claim.
+
 ### `TooManyUIDsPerMechanism`
 
 - **interface**: `api.errors.subtensorModule.TooManyUIDsPerMechanism`
@@ -1840,7 +1843,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Unsuccessfully withdraw, balance could be zero (can not make account exist) after withdrawal.
 
 
-## `sudo`
+## `sudo` {#pallet-sudo}
 
 ### `RequireSudo`
 
@@ -1848,7 +1851,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Sender must be the Sudo account.
 
 
-## `swap`
+## `swap` {#pallet-swap}
 
 ### `Deprecated`
 
@@ -1916,7 +1919,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: Swap input is too large relative to input-side liquidity
 
 
-## `system`
+## `system` {#pallet-system}
 
 ### `CallFiltered`
 
@@ -1966,7 +1969,7 @@ Generated from Subtensor runtime spec version **438**. Connected to: `wss://entr
 - **summary**: The submitted code is not authorized.
 
 
-## `utility`
+## `utility` {#pallet-utility}
 
 ### `InvalidDerivedAccount`
 

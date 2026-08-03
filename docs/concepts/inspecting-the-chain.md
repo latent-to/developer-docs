@@ -2,9 +2,6 @@
 title: "Inspecting the Chain with Polkadot.js"
 ---
 
-# Inspecting the Chain with Polkadot.js
-
-
 The [Polkadot.js Blockchain Explorer Browser App: `https://polkadot.js.org/apps/`](https://polkadot.js.org/apps/) offers a way to connect to Bittensor's blockchain layer (Subtensor) in order to query chain state, submit extrinsics, and inspect runtime metadata. This page covers the features most relevant to Bittensor users.
 
 ## Connecting to Bittensor

@@ -2,8 +2,6 @@
 title: "Miner's Guide to `BTCLI`"
 ---
 
-# Miner's Guide to `BTCLI`
-
 This page discusses `btcli` security and usage considerations specifically for Bittensor miners.
 
 For general coverage of `btcli` security and usage considerations across persona, see: [Bittensor CLI: Permissions Guide](../btcli/btcli-permissions)
@@ -26,7 +24,7 @@ See:
 - [Staking/Delegation Overview](../staking-and-delegation/delegation)
 - [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk)
 
-Creating hotkeys requires a coldkey private key, and should be done on a secure [coldkey workstation](../keys/coldkey-hotkey-security#coldkey-workstation). However, using hotkeys for signing requests when mining does not require a coldkey, which should never be present on a mining server, i.e. a hotkey workstation. The coldkey should not be placed on a machine used for mining because the software dependencies for mining should not be considered safe/trusted code to the standards of a coldkey workstation.
+Creating hotkeys requires a coldkey private key, and should be done on a secure [coldkey workstation](../keys/coldkey-hotkey-security#cold-custody-hardware-wallets). However, using hotkeys for signing requests when mining does not require a coldkey, which should never be present on a mining server, i.e. a hotkey workstation. The coldkey should not be placed on a machine used for mining because the software dependencies for mining should not be considered safe/trusted code to the standards of a coldkey workstation.
 
 See [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security).
 
@@ -63,7 +61,7 @@ Miners will need coldkeys to manage their TAO and alpha currency, as well as hot
 
 `btcli wallet new-hotkey` , `btcli wallet regen-hotkey`, : Create and register a hotkey on a secure coldkey workstation then transfer the hotkey file or mnemonic to the mining workstation.
 
-[`btcli subnets register`](../btcli/btcli.md#btcli-subnets-register): register a UID; neuron registration requires paying the **current TAO burn**. By default the command runs in safe mode and prompts for a price tolerance—pass `--unsafe` to skip. Check the current burn first with `btcli subnets show --netuid <netuid>`.
+[`btcli subnets register`](https://docs.learnbittensor.org/btcli/btcli#btcli-subnets-register): register a UID; neuron registration requires paying the **current TAO burn**. By default the command runs in safe mode and prompts for a price tolerance—pass `--unsafe` to skip. Check the current burn first with `btcli subnets show --netuid <netuid>`.
 
 ## Key rotation
 

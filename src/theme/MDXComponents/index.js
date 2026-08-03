@@ -7,6 +7,7 @@ import {
   ResponsiveCards,
   ResponsiveCard,
 } from "./Cards/index";
+import Table from "./Table/index";
 
 export default {
   // Re-use the default mapping
@@ -16,4 +17,5 @@ export default {
   CardSmall,
   ResponsiveCards,
   ResponsiveCard,
+  table: Table,
 };

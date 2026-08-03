@@ -16,7 +16,6 @@ function AdmonitionContainer({type, className, children}) {
   );
 }
 function AdmonitionHeading({ icon, title, hasChildren }) {
-	// console.log(hasChildren, 'hasChildren');
   return (
     <div className={styles.admonitionHeading}>
       <span className={styles.admonitionIcon}>{icon}</span>

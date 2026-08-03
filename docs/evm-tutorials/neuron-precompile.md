@@ -5,7 +5,6 @@ title: "Neuron Precompile"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Neuron Precompile
 
 This precompile enables full management of neurons (miner and validator nodes) through smart contracts, from registration to weight setting to service configuration.
 

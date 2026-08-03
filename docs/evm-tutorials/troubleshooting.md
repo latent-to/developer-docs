@@ -1,8 +1,7 @@
 ---
-title: "Troubleshooting"
+title: "EVM Troubleshooting"
+description: "Fixes for common Bittensor EVM problems, including failed gas estimation, unsupported opcodes and transactions that stay pending."
 ---
-
-# Troubleshooting
 
 ## Gas estimation failed
 

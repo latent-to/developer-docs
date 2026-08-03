@@ -1,12 +1,11 @@
 ---
-title: "Subnet stake burn"
+title: "Subnet Stake Burn"
 ---
 
 import StakeBurn from '/img/docs/stake-burn.png';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Subnet Stake Burn
 
 This page describes Bittensor's subnet stake burn mechanism. It covers the mechanism’s behavior, how to execute a stake burn, and its effect on a subnet.
 
@@ -69,7 +68,7 @@ end
 :::warning Slippage and Price Impact
 The initial staking on stake-burn operations execute against the subnet’s AMM pool and are subject to price slippage. Large staking amounts or low liquidity can significantly move the alpha price, resulting in fewer alpha acquired than expected. Therefore, always use limit price or slippage tolerance to control execution risk.
 
-To learn more about slippage during staking operations, see [Understanding slippage](../learn/slippage.md).
+To learn more about slippage during staking operations, see [Understanding slippage](../staking-and-delegation/slippage.md).
 :::
 
 ## Execute a stake burn

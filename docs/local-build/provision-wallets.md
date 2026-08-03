@@ -79,7 +79,7 @@ btcli wallet transfer \
 Replace `DESTINATION_ADDRESS` with the wallet address you want to send the TAO to.
 
 :::info
-Run the `btcli wallets list` command and carefully check the ss58 address of the destination coldkey that you want to fund.
+Run the `btcli wallets list` command and carefully check the SS58 address of the destination coldkey that you want to fund.
 :::
 
 To confirm your wallet balances, run the following command in your terminal:

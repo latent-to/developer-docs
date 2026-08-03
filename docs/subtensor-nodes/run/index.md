@@ -2,8 +2,6 @@
 title: "Running a Subtensor node"
 ---
 
-# Running a Subtensor node
-
 This page covers what you need to know before setting up a Subtensor node.
 
 ---

@@ -6,7 +6,6 @@ import SubstrateWallet from '/img/docs/connect-ss58-wallet.png';
 import EVMWallet from '/img/docs/connect-evm-wallet.png';
 import VTAOBridge from '/img/docs/wrap-vtao.png';
 
-# Bridging and Wrapping vTAO
 
 This page explains how to move native TAO from the Bittensor Substrate layer to the Bittensor EVM and wrap it into vTAO.
 
@@ -14,7 +13,7 @@ This page explains how to move native TAO from the Bittensor Substrate layer to 
 
 TAO, the native token of the Bittensor network, exists on Subtensor, a Substrate-based platform. Hence, TAO is normally held in Substrate-style, ss58-format wallets.
 
-If TAO is transferred to an Ethereum-style h160 wallet, it can be used in Bittensor's EVM layer. The process of moving TAO between Substrate and EVM wallets is referred to as _TAO bridging_.
+If TAO is transferred to an Ethereum-style H160 wallet, it can be used in Bittensor's EVM layer. The process of moving TAO between Substrate and EVM wallets is referred to as _TAO bridging_.
 
 ## Prerequisites
 

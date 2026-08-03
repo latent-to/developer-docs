@@ -2,8 +2,6 @@
 title: "Wallet and Keyfile"
 ---
 
-# Wallet and Keyfile
-
 The `Wallet` class represents a named Bittensor wallet on disk. It manages a coldkey, hotkey, and their corresponding public-key files, and provides access to the underlying `Keypair` objects.
 
 ```python

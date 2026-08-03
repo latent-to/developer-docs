@@ -32,7 +32,7 @@ The workstations you use to do this work can be referred to as a permissionless 
 1. A **coldkey workstation** contains one or more coldkey private key in the `wallet_path`. For any coldkey associated with mainnet TAO, the coldkey workstation should be held to the highest possible security standards.
 
    :::tip coldkey workstation security
-   See [Coldkey workstation](../keys/coldkey-hotkey-security#coldkey-workstation)
+   See [Coldkey workstation](../keys/coldkey-hotkey-security#cold-custody-hardware-wallets)
    :::
 
 1. **A hotkey workstation**—which is generally a server used for mining or validation—contains a hotkey private key in the `wallet_path` located in the `btcli config`, as well as a coldkey public key for the corresponding coldkey. Compromised hotkeys can damage your reputation if they are used to maliciously to submit inaccurate weights as a validator, or bad work as a miner. However, ownership of TAO or alpha stake can only be transferred with a coldkey, and a leaked hotkey can be swapped using the coldkey; therefore hotkey leaks are far less dangerous than coldkey leaks.
@@ -312,7 +312,7 @@ Creating subnets requires a coldkey with sufficient balance to cover burn costs.
 #### `btcli subnets list`
 #### `btcli subnets burn-cost`
 #### `btcli subnets create`
-#### [`btcli subnets register`](../btcli/btcli.md#btcli-subnets-register)
+#### [`btcli subnets register`](https://docs.learnbittensor.org/btcli/btcli#btcli-subnets-register)
 #### `btcli subnets metagraph`
 #### `btcli subnets show`
 #### `btcli subnets price`

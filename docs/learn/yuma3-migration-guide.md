@@ -2,8 +2,6 @@
 title: "Yuma Consensus 3 (YC3) Migration Guide"
 ---
 
-# Yuma Consensus 3 (YC3) Migration Guide
-
 Yuma Consensus 3 (YC3) is the latest version of the Yuma Consensus mechanism with significant improvements to validator fairness, bond mechanics, and precision handling. This guide will help subnet owners understand what's changed and how to migrate.
 
 See also:

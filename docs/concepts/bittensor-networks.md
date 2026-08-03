@@ -1,8 +1,7 @@
 ---
 title: "Bittensor Networks"
+description: "Chain endpoints, block times and intended use for the Bittensor mainnet, testnet and localnet, plus archive and lite node URLs."
 ---
-
-# Bittensor Networks
 
 The below table presents Bittensor networks and a few details:
 

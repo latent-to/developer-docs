@@ -1,10 +1,10 @@
 ---
 title: "Bittensor EVM: Examples and Precompiles"
+description: "The precompiled contracts available on the Bittensor EVM and worked examples covering address conversion, token transfers, staking and signature verification."
 ---
 
 import { InstallPartial } from "./\_install.mdx";
 
-# Bittensor EVM: Examples and Precompiles
 
 ## Available Precompiles
 

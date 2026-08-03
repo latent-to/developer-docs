@@ -4,7 +4,6 @@ title: "Using MEV Shield with the Bittensor SDK"
 
 import { SdkVersion } from "./\_sdk-version.mdx";
 
-# MEV Shield
 
 The MEV Shield feature allows users to encrypt transactions to protect them from front running and other maximal extractable value (MEV) attacks that depend on attackers knowing the details of transactions when they enter the transaction pool.
 

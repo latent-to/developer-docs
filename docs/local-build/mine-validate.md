@@ -6,7 +6,6 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
-# Mining and Validating on Localnet
 
 This page walks through mining and validating on a local Bittensor network. It covers how to register a neuron on a subnet, then run the miner and validator scripts to begin earning emissions.
 

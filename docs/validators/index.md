@@ -8,7 +8,6 @@ import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Validating in Bittensor
 
 All validating in Bittensor occurs within a subnet. Each subnet independently produces the digital commodities that are its purpose, with each subnet creator defining a different _incentive mechanism_ for validators to use in judging miners' work. The validator's work is to apply this incentive mechanism to miners, using it to score their performance, and then to submit these weights to the Bittensor blockchain.  The validator scores of miners' performance determine the proportion of the subnet's emissions allocated to each miner, according to the Yuma Consensus algorithm. See [Emissions](../learn/emissions.md).
 
@@ -24,7 +23,7 @@ Validating is not supported on Windows.
 
 Each subnet on the Bittensor blockchain supports a maximum of 256 active nodes, with each node assigned a unique UID slot. Out of these, only the top 64 nodes by emissions are eligible to serve as validators by default. A subnet with 64 validators means that all 64 top-ranked nodes meet the necessary criteria and choose to participate as validators.
 
-To qualify as a validator, a node must have a validator permit. This permit is only granted to nodes within the top 64 and allows them to submit miner evaluations using `btcli weights commit` or the SDK's [`set_weights`](pathname:///python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html#module-bittensor.core.extrinsics.set_weights) function.
+To qualify as a validator, a node must have a validator permit. This permit is only granted to nodes within the top 64 and allows them to submit miner evaluations using `btcli weights commit` or the SDK's [`set_weights`](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/extrinsics/set_weights/index.html#module-bittensor.core.extrinsics.set_weights) function.
 
 :::tip Dynamic Validator Threshold
 The number of validators isn't hardcoded. The subnet governor has the authority to increase or decrease the maximum number of validators. Any change to this limit directly affects the number of nodes that can be issued a validator permit and, thus, act as validators.
@@ -165,7 +164,7 @@ btcli stake add --wallet.name <wallet name> --wallet.hotkey <your validating hot
 
 <SdkVersion />
 
-The amount of TAO needed to acquire a validator permit depends on how the other largest 64 wallets distribute TAO across themselves. You can calculate the minimum using [bt.metagraph](pathname:///python-api/html/autoapi/bittensor/core/metagraph/index.html):
+The amount of TAO needed to acquire a validator permit depends on how the other largest 64 wallets distribute TAO across themselves. You can calculate the minimum using [bt.metagraph](https://docs.learnbittensor.org/python-api/html/autoapi/bittensor/core/metagraph/index.html):
 
 ```python
 import bittensor as bt

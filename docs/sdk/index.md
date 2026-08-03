@@ -2,13 +2,11 @@
 title: "SDK Tutorials"
 ---
 
-# SDK Tutorials
-
 The Bittensor Python SDK provides a programmable interface to the Bittensor blockchain. This page guides you through practical SDK tutorials organized as a learning path.
 
 ## Prerequisites
 
-- [Installation](../getting-started/installation.md): Install the Bittensor SDK
+- [Installation](./installation.md): Install the Bittensor SDK
 - [Environment Variables](./env-vars.md): Configure your SDK environment
 
 ## Working with Wallets
@@ -98,6 +96,6 @@ Protect your transactions from front-running and MEV attacks using the MEV Shiel
 
 ## API Reference
 
-- [Bittensor API Reference](./bt-api-ref.md): Complete API documentation
-- [Subtensor API](./subtensor-api.md): Subtensor client reference
+- [Bittensor API Reference](https://docs.learnbittensor.org/sdk/bt-api-ref): Complete API documentation
+- [Subtensor API](https://docs.learnbittensor.org/sdk/subtensor-api): Subtensor client reference
 - [Migration Guide](./migration-guide.md): Upgrade from older SDK versions

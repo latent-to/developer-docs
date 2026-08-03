@@ -1,8 +1,7 @@
 ---
 title: "Media Assets"
+description: "Where to download the Bittensor brand assets: TAO symbol, monogram, logotype, supporting elements and the brand guidelines PDF."
 ---
-
-# Media Assets
 
 Download the Bittensor media assets from the below location:
 

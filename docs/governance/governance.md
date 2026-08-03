@@ -2,9 +2,6 @@
 title: "Governance Plan"
 ---
 
-# Governance Plan
-
-
 Operational control of Bittensor will ultimately governed by the following decentralized protocol. All root calls, including protocol changes, runtime upgrades, and other privileged operations, will reach the chain only after passing through both stages.
 
 :::warning

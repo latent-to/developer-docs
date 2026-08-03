@@ -1,8 +1,68 @@
 .tableOfContents {
   max-height: calc(100vh - (var(--ifm-navbar-height) + 2rem));
   overflow-y: auto;
+  overscroll-behavior: contain;
   position: sticky;
   top: calc(var(--ifm-navbar-height) + 1rem);
+  scroll-behavior: smooth;
+}
+
+.tableOfContents:focus-within {
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+.fadeTop {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 2.5rem,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 2.5rem,
+    #000 100%
+  );
+}
+
+.fadeBottom {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 2.5rem),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 2.5rem),
+    transparent 100%
+  );
+}
+
+.fadeTop.fadeBottom {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 2.5rem,
+    #000 calc(100% - 2.5rem),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 2.5rem,
+    #000 calc(100% - 2.5rem),
+    transparent 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tableOfContents {
+    scroll-behavior: auto;
+  }
 }
 
 @media (max-width: 996px) {
@@ -13,13 +73,4 @@
   .docItemContainer {
     padding: 0 0.3rem;
   }
-}
-
-.link {
-  color: var(--grey-900);
-  font-family: 'DM Mono', monospace;
-  font-size: 0.75rem;
-  line-height: normal;
-  letter-spacing: 0.6px;
-  text-decoration-line: underline;
 }
