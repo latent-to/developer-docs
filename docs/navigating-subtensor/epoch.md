@@ -2,8 +2,6 @@
 title: "Implementation of the Yuma Consensus Epoch"
 ---
 
-# Implementation of the Yuma Consensus Epoch
-
 If [Yuma Consensus (YC](../resources/glossary.md#yuma-consensus) is the heart of Bittensor, the epoch is the heartbeat, a regular pulse of calculations that processes [validator](../resources/glossary.md#subnet-validator) weights and determines [emissions](../resources/glossary.md#emission) for participants. This page takes a deep dive into how the code accomplishes its purpose.
 
 The epoch function takes as its input the matrix of values assigned to each miner by each validator, and returns emission tuples of hotkey, emission for mining, and emission for validating.

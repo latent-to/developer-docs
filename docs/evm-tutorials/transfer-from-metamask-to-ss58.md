@@ -5,7 +5,6 @@ title: "Transfer TAO from Metamask to SS58 Address"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Transfer TAO from Metamask to SS58 Address
 
 In this tutorial you will learn how to transfer TAO from your Metamask wallet to your Bittensor SS58 address for a coldkey (wallet) or a hotkey. There are two different options:
 

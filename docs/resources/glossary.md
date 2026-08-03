@@ -1,8 +1,7 @@
 ---
 title: "Glossary"
+description: "Definitions of the terms used across the Bittensor guides, from alpha tokens and dividends to subnets, UIDs, weights and Yuma Consensus."
 ---
-
-# Glossary
 
 ## A
 
@@ -85,7 +84,7 @@ The Commit Reveal feature is designed to solve the weight-copying problem by giv
 **See also:**
 
 - [Commit Reveal](../concepts/commit-reveal.md)
-- [The Weight Copying Problem](../concepts/weight-copying-in-bittensor)
+- [The Weight Copying Problem](../learn/weight-copying-in-bittensor)
 
 ### Consensus Score
 
@@ -296,7 +295,7 @@ See also [What is the Existential Deposit?](https://support.polkadot.network/sup
 
 A Bittensor wallet created through the Bittensor website or using a tool like [subkey](https://docs.substrate.io/reference/command-line-tools/subkey/), allowing users to use TAO without installing Bittensor.
 
-**See also:** [Wallets](../keys/wallets.md), [Installation](../getting-started/installation.md)
+**See also:** [Wallets](../keys/wallets.md), [Installation](../sdk/installation.md)
 
 ## F
 
@@ -381,7 +380,7 @@ A private blockchain used for developing and testing subnet incentive mechanisms
 
 A Bittensor wallet created on the user's machine, requiring the installation of Bittensor.
 
-**See also:** [Wallets](../keys/wallets.md), [Installation](../getting-started/installation.md)
+**See also:** [Wallets](../keys/wallets.md), [Installation](../sdk/installation.md)
 
 ### Loss Function
 
@@ -419,7 +418,7 @@ Common MEV attacks include:
 
 In Bittensor, MEV attacks can affect staking and unstaking operations, where attackers might exploit knowledge of pending transactions to manipulate token prices. The MEV Shield feature protects against these attacks by encrypting transactions until they are included in a block.
 
-**See also:** [MEV Shield](../sdk/mev-protection.md), [Price Protection](../learn/price-protection.md)
+**See also:** [MEV Shield](../sdk/mev-protection.md), [Price Protection](../staking-and-delegation/price-protection.md)
 
 ### Multiple Incentive Mechanisms
 
@@ -690,7 +689,7 @@ In Bittensor, each subnet's alpha token is traded on a constant product AMM. Whe
 
 Larger transactions cause more slippage. Bittensor provides slippage protection through tolerance limits and partial execution options.
 
-**See:** [Understanding Pricing and Anticipating Slippage](../learn/slippage.md)
+**See:** [Understanding Pricing and Anticipating Slippage](../staking-and-delegation/slippage.md)
 
 ### Stake
 
@@ -925,8 +924,8 @@ Unstaking incurs blockchain transaction fees, which are recycled back into the T
 
 - [Staking/Delegation overview](../staking-and-delegation/delegation.md#unstaking)
 - [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk.md#unstake-from-a-validator)
-- [Understanding Pricing and Anticipating Slippage](../learn/slippage.md)
-- [Price Protection When Staking](../learn/price-protection.md)
+- [Understanding Pricing and Anticipating Slippage](../staking-and-delegation/slippage.md)
+- [Price Protection When Staking](../staking-and-delegation/price-protection.md)
 - [Transaction Fees](../learn/fees.md)
 
 ## V
@@ -1122,7 +1121,7 @@ A unique identifier derived from the public key, used as a destination for sendi
 
 The directory path where the generated Bittensor wallets are stored locally on the user's machine.
 
-**See also:** [Wallets](../keys/wallets.md), [Installation](../getting-started/installation.md)
+**See also:** [Wallets](../keys/wallets.md), [Installation](../sdk/installation.md)
 
 ### Weight Copying
 

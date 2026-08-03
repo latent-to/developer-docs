@@ -8,7 +8,6 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
-# Creating/Importing a Bittensor Wallet
 
 In Bittensor (like other cryptocurrency applications), a _wallet_ is a tool for proving your identity, signing transactions, accessing your TAO, and managing your stake in subnets.
 
@@ -370,7 +369,7 @@ Use this option if your activities are limited to sending and receiving TAO and 
 :::
 
 1. The Wallet will first create a wallet account address in the form of a 48-hexadecimal character string that usually starts with `5`.
-2. Critically, the Wallet will display your [_seed phrase_](./wallets#the-seed-phrase-aka-mnemonic), which you must carefully save.
+2. Critically, the Wallet will display your [_seed phrase_](./handle-seed-phrase.md), which you must carefully save.
 3. The Wallet will then prompt you for specific mnemonic words as a way of authentication.
 4. Next, you will assign a name and a password to your wallet account.
 5. Finally, to receive TAO from another party, you will give them your wallet account address from Step 1 (the 48-hexadecimal character string) as the destination address. Similarly, to send (transfer) TAO to another party, you will first ask them for their wallet address and send TAO to their wallet address. This way, you can create multiple wallet accounts, each with a different name and even a different password for each wallet account.

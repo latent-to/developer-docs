@@ -2,8 +2,6 @@
 title: "Secure your Coldkey with a Multisig Wallet"
 ---
 
-# Secure a Coldkey with a Multisig Wallet
-
 A multisig (multiple signatories) wallet is a way of distributing responsibility for a coldkey across a set of wallets, referred to as signatories. Any signatory can propose a transaction, but the action must be agreed by some threshold of others before it will execute. Conventionally, a multisig is described as "$M$ out of $N$", where $M$ is the threshold number of signatories required to sign a transaction and $N$ is the total number of signatories. The signatories on a multisig may be seperate people, or a set of keys controlled by a single individual. This gives multisigs great versatility in providing security against single points of failure, including the loss of a single key or the decision of a team-mate to act irresponsibly.
 
 A multisig account requires multiple signatories to approve a transaction before it is executed. This prevents a single point of failure, adding a strong layer of protection against malicious coldkey access. In Bittensor, this level of protection may be appropriate for very valuable wallets. This includes those with creator permissions over a subnet and those that control validator hotkeys with significant stake, but it can also include any individual wallet used for holding TAO and staking.
@@ -12,7 +10,7 @@ This page will guide the user through an example practice workflow of creating a
 
 ## Prerequisites
 
-- [Install the latest version of BTCLI](../getting-started/install-btcli)
+- [Install the latest version of BTCLI](../btcli/install-btcli)
 - Acquire some Testnet TAO.
 - Polkadot-JS: This tutorial will employ the Polkadot-JS browser app, which allows users to submit transactions to Polkadot-based chains, including Bittensor. To use your coldkey private keys with the Polkadot-JS app, you must install the wallet browser extension, which is available for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/polkadot-js-extension/) or [Chrome](https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd).
 
@@ -98,7 +96,7 @@ In this step, we'll create the multisig wallet, specifying the signatory wallets
    btcli w regen_coldkeypub --wallet-name WALLET_NAME --ss58 MULTISIG_ADDRESS
    ```
 
-   Replace `WALLET_NAME` and `MULTISIG_ADDRESS` with the name and ss58 address of the multisig address created in the Polkadot-JS browser app.
+   Replace `WALLET_NAME` and `MULTISIG_ADDRESS` with the name and SS58 address of the multisig address created in the Polkadot-JS browser app.
 
 :::info
 This command regenerates the public part of a coldkey for the multisig wallet named. You can view its balance information as shown:

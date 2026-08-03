@@ -11,6 +11,7 @@ import {
   writeFile,
   sortedPallets,
   palletAnchor,
+  palletHeading,
 } from "../utils";
 
 export function generateExtrinsics(api: ApiPromise, outputDir: string): void {
@@ -30,8 +31,7 @@ export function generateExtrinsics(api: ApiPromise, outputDir: string): void {
   for (const [n] of pallets) lines.push(`- **[${n}](#${palletAnchor(n)})**`);
 
   for (const [palletName, palletTx] of pallets) {
-    // Backtick-wrapped pallet name, no horizontal rule
-    lines.push(`\n## \`${palletName}\`\n`);
+    lines.push(palletHeading(palletName));
 
     const calls = Object.entries(palletTx as Record<string, any>).sort(
       ([a], [b]) => a.localeCompare(b),

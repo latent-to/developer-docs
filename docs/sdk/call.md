@@ -4,7 +4,6 @@ title: "Working with Blockchain Calls"
 
 import { SdkVersion } from "./_sdk-version.mdx";
 
-# Working with Blockchain Calls
 
 This guide explains how to work with blockchain calls in the Bittensor SDK using `GenericCall` and `CallBuilder`. These powerful tools allow you to create, compose, and execute complex blockchain transactions without immediately submitting them.
 

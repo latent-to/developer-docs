@@ -2,9 +2,6 @@
 title: "Navigating the Subtensor Codebase"
 ---
 
-
-# Navigating the Subtensor Codebase
-
 The heart of Bittensor is Subtensor, the L1 substrate blockchain that computes and records all transactions, as well as the internal tokenomic processes (Yuma Consensus and liquidity emission) that drive the system.
 
 This section of the docs is designed make the codebase more accessible by guiding the reader through the implementation of these critical functions in code. Each implementation page traces the complete flow of operations from initial function calls through to final state changes.

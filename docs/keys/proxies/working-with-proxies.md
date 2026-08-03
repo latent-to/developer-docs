@@ -6,7 +6,6 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { SdkVersion } from "../../sdk/\_sdk-version.mdx";
 
-# Working with Proxies
 
 This page covers each step in the use of proxy wallets as a security feature for Bittensor operations:
 
@@ -118,7 +117,7 @@ btcli proxy add \
 - `--proxy-type`: The type of proxy relationship (e.g., `Staking`, `Transfer`, `Any`, etc.)
 - `--delay`: Optional delay in blocks (0 for immediate execution)
 
-For our example, we'll use two wallets called `PracticeSafeWallet` and `PracticeProxy`. To follow along, create two new wallets with these names and substitute their coldkey ss58 addresses:
+For our example, we'll use two wallets called `PracticeSafeWallet` and `PracticeProxy`. To follow along, create two new wallets with these names and substitute their coldkey SS58 addresses:
 
 - **`PracticeSafeWallet`**: `5CS9x5NsPHpb2THeS92zBYCSSk4MFoQjjx76DB8bEzeJTTSt`
 - **`PracticeProxy`**: `5CZmB94iEG4Ld7JkejAWToAw7NKEfV3YZHX7FYaqPGh7isXe`
@@ -309,7 +308,7 @@ The language here may be counter-intuitive, in that the `--proxy` flag specifies
 
 The wallet specified by `--wallet.name` is actually the wallet we normally call "the proxy", and `--proxy` specifies the safe wallet or 'real account'. It makes more sense if you think of the `--proxy` flag as specifying that the operation is being called _by_ proxy for the wallet that follows, i.e., the safe wallet.
 
-More to the point, we can logically infer that it _must_ be the case that `--wallet.name` refers to the proxy, and the ss58 supplied (in the `--proxy` field) must refer to the safe wallet, since this command is meant to be run by the proxy, protecting the safe wallet. Therefore, the proxy's private key must be present and unlocked, not the safe wallet's, which should remain in cold storage.
+More to the point, we can logically infer that it _must_ be the case that `--wallet.name` refers to the proxy, and the SS58 supplied (in the `--proxy` field) must refer to the safe wallet, since this command is meant to be run by the proxy, protecting the safe wallet. Therefore, the proxy's private key must be present and unlocked, not the safe wallet's, which should remain in cold storage.
 :::
 
 This command will transfer 18 TAO from PracticeSafeWallet to a third wallet, Miner.

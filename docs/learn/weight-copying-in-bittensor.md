@@ -2,14 +2,12 @@
 title: "The Weight Copying Problem"
 ---
 
-
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
 
-# The Weight Copying Problem
 
-This page explains **weight copying**—a free-riding behavior where validators copy other validators' work instead of independently evaluating miners. This article covers how weight copying works, why it is problematic, and how subnet owners can prevent weight copying on their subnets using Bittensor's [Commit Reveal](./commit-reveal.md) feature.
+This page explains **weight copying**—a free-riding behavior where validators copy other validators' work instead of independently evaluating miners. This article covers how weight copying works, why it is problematic, and how subnet owners can prevent weight copying on their subnets using Bittensor's [Commit Reveal](../concepts/commit-reveal.md) feature.
 
 See also:
 - [Opentensor Weight Copying technical paper (PDF)](pathname:///papers/BT_Weight_Copier-29May2024.pdf)
@@ -17,7 +15,7 @@ See also:
 
 ## What is weight copying?
 
-In Bittensor subnets, validators are supposed to independently evaluate miners and set weights based on their performance. These weights determine miner emissions through [Yuma Consensus](../learn/yuma-consensus.md). 
+In Bittensor subnets, validators are supposed to independently evaluate miners and set weights based on their performance. These weights determine miner emissions through [Yuma Consensus](./yuma-consensus.md). 
 
 **Weight copying** occurs when a validator reads the publicly available weight matrix and copies (or derives from) other validators' weights instead of doing their own evaluation work. This allows them to:
 - Avoid the computational cost of evaluation
@@ -52,7 +50,7 @@ Weight copiers earn dividends without doing the work, in a sense free-riding or 
 
 If weight copying is more profitable than honest validation, rational actors will copy weights. Another way of thinking about this is that validators must actually pay a cost to validate honestly. Therefore, when weight copying is profitable, the incentive system driving Bittensor is distorted, weakening its ability to fulfill its purpose: producing the best digital commodities in the world.
 
-Therefore, it can be seen as the subnet owners' responsibility to the community, as well as being in their own interests, to ensure that weight copying is not profitable in their subnets. The best way to do this is by enabling and properly configuring [Commit Reveal](./commit-reveal).
+Therefore, it can be seen as the subnet owners' responsibility to the community, as well as being in their own interests, to ensure that weight copying is not profitable in their subnets. The best way to do this is by enabling and properly configuring [Commit Reveal](../concepts/commit-reveal).
 
 
 Historically, many large weight copiers used an optimized strategy which we can call the stake-weighted averaging attack, that actually gives them *higher* returns than any single honest validator:
@@ -68,7 +66,7 @@ This is a fundamental incentive problem for Bittensor subnet owners: if validato
 
 ## How Commit Reveal prevents weight copying
 
-Bittensor's [Commit Reveal feature](./commit-reveal.md) solves weight copying by introducing a time delay between when weights are set and when they're publicly visible.
+Bittensor's [Commit Reveal feature](../concepts/commit-reveal.md) solves weight copying by introducing a time delay between when weights are set and when they're publicly visible.
 
 When weights are concealed for one or more tempos, weight copiers only have access to **stale weights** from previous tempos. If miner performance has changed since those old weights were set, the old weights are inaccurate, and copying them will put the copiers far from consensus. This will wreck their vtrust and their emissions, making weight copying unprofitable.
 

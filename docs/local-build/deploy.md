@@ -7,7 +7,6 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Heading from '@theme/Heading';
 
-# Run a Local Bittensor Blockchain Instance
 
 This tutorial will guide the user through running a local instance of Subtensor, Bittensor's L1 blockchain. Running a local instance of the Subtensor blockchain is a great way to test changes and explore the network in a safe and isolated environment.
 
@@ -31,7 +30,7 @@ The steps in this guide assume that you are running the command from the machine
 Before you begin, make sure you have installed the following on your machine:
 
 - [Docker](https://docs.docker.com/desktop/use-desktop/)
-- Install [Bittensor SDK](../getting-started/installation.md) and [Bittensor CLI](../getting-started/install-btcli.md)
+- Install [Bittensor SDK](../sdk/installation.md) and [Bittensor CLI](../btcli/install-btcli.md)
 
 The Bittensor SDK and Bittensor CLI are required to interact with the local blockchain instance.
 
@@ -106,7 +105,7 @@ If the local blockchain is running correctly, you should see the following outpu
 Before you begin, make sure you have installed the following on your machine:
 
 - Update your Mac or Linux workstation using your package manager
-- Install [Bittensor SDK](../getting-started/installation) and [Bittensor CLI](../getting-started/install-btcli)
+- Install [Bittensor SDK](../sdk/installation) and [Bittensor CLI](../btcli/install-btcli)
 
 The Bittensor SDK and Bittensor CLI are required to interact with the local blockchain instance.
 

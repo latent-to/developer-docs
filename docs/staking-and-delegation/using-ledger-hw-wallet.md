@@ -5,7 +5,6 @@ title: "Using Ledger Hardware Wallet"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Using Ledger Hardware Wallet
 
 This guide describes how to set up your Ledger hardware wallet for managing your TAO on the Bittensor network.
 

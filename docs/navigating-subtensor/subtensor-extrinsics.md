@@ -3,8 +3,6 @@ title: "Subtensor Pallets and Extrinsics"
 description: "This document covers the dispatchable calls of all pallets included in the Subtensor runtime. For each pallet, it lists the call methods and their arguments."
 ---
 
-# Subtensor Pallets and Extrinsics
-
 This document covers the dispatchable calls of all pallets included in the Subtensor runtime. For each pallet, it lists the call methods and their arguments.
 
 ## Overview

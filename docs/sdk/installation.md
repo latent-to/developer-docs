@@ -4,9 +4,8 @@ title: "Install Bittensor SDK"
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import { SdkVersion } from "../sdk/\_sdk-version.mdx";
+import { SdkVersion } from "./\_sdk-version.mdx";
 
-# Install Bittensor SDK
 
 Before you can start developing, you must install Bittensor SDK and then create Bittensor wallet.
 

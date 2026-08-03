@@ -5,7 +5,6 @@ title: "Withdraw TAO from Alice Account (Local Development)"
 import { InstallPartial } from "./\_install.mdx";
 import { CreatePartial } from "./\_create-mm-wallet.mdx";
 
-# Withdraw TAO from Alice Account (Local Development)
 
 Every locally deployed dev-mode blockchain comes provisioned with an 'Alice' account holding a large bag of TAO.
 

@@ -6,7 +6,6 @@ import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { CreatePartial } from "./\_create-mm-wallet.mdx";
 
-# EVM on Testnet
 
 This page covers how to set up your Metamask wallet to use with the testnet on Bittensor. You must run this step before you can run other tutorials in this section.
 

@@ -1,8 +1,7 @@
 ---
 title: "Token Bridging"
+description: "How to move TAO between Substrate SS58 wallets and Bittensor EVM H160 wallets, and how to use vTAO to bridge to other EVM chains."
 ---
-
-# Token Bridging
 
 This guide provides an overview of two related topics:
 
@@ -19,7 +18,7 @@ Bittensor EVM smart contracts are executed solely on the **Bittensor blockchain,
 
 See [Wallets, Coldkeys and Hotkeys in Bittensor](../keys/wallets)
 
-If TAO is transferred to an Ethereum-style h160 wallet, it can be used in Bittensor's EVM layer. This is the same token, just represented in a different account format.
+If TAO is transferred to an Ethereum-style H160 wallet, it can be used in Bittensor's EVM layer. This is the same token, just represented in a different account format.
 
 You can move TAO back and forth between Substrate and EVM wallets several ways:
 Use example scripts:

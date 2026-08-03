@@ -2,8 +2,6 @@
 title: "Create a Subnet (Locally)"
 ---
 
-# Create a Subnet (Locally)
-
 This page covers creating a subnet on a locally deployed Subtensor blockchain, which is useful for local Bittensor development.
 
 For creating a subnet on Bittensor test and main network, see [Create a Subnet](../subnets/create-a-subnet).

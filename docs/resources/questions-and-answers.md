@@ -1,5 +1,6 @@
 ---
 title: "Frequently asked questions (FAQ)"
+description: "Answers to common questions about Bittensor: how subnets, mining, validating, staking, emissions, wallets and TAO work."
 hide_table_of_contents: false
 ---
 
@@ -27,7 +28,6 @@ import { SiFuturelearn } from "react-icons/si";
 import { GoNumber } from "react-icons/go";
 import { VscFileMedia } from "react-icons/vsc";
 
-# Frequently asked questions (FAQ)
 
 ## General
 

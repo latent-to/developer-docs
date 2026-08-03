@@ -5,7 +5,6 @@ title: "Staking with Polkadot JS"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Staking with Polkadot JS
 
 This document describes how you can stake to Opentensor Foundation using [Polkadot JS](https://polkadot.js.org/apps/?rpc=wss://entrypoint-finney.opentensor.ai:443#/accounts).
 

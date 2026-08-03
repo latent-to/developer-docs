@@ -2,8 +2,6 @@
 title: "Halving Mechanisms in Bittensor"
 ---
 
-# Halving Mechanisms in Bittensor
-
 This page explains the TAO and ALPHA halving mechanisms and describes how it affects the creation and distribution of new tokens across the network.
 
 ---

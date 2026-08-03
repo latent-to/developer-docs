@@ -5,7 +5,6 @@ title: "Subnet Precompile"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Subnet Precompile
 
 This precompile allows you to interact with Bittensor subnets through EVM smart contracts, affording functionality for registering networks, viewing and setting network parameters, and querying network state.
 

@@ -2,8 +2,6 @@
 title: "Basic Subnet Tutorials"
 ---
 
-# Basic Subnet Tutorials
-
 If you are new to subnets, start with these beginner tutorials with [Bittensor Subnet Template](https://github.com/latent-to/subnet-template/blob/main/README.md):
 
 - **Running locally**: Follow the step-by-step instructions described in this tutorial: [Running Subnet Locally](../local-build/create-subnet.md).

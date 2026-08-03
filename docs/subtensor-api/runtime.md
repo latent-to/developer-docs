@@ -3,47 +3,46 @@ title: Runtime Calls
 description: "This page includes runtime API calls exposed by the Subtensor runtime."
 ---
 
-# Runtime Calls
-
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
 Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
-- **[AccountNonceApi](#accountnonceapi)**
-- **[AuraApi](#auraapi)**
-- **[BabeApi](#babeapi)**
-- **[BlockBuilder](#blockbuilder)**
-- **[ContractsApi](#contractsapi)**
-- **[ConvertTransactionRuntimeApi](#converttransactionruntimeapi)**
-- **[Core](#core)**
-- **[DelegateInfoRuntimeApi](#delegateinforuntimeapi)**
-- **[EthereumRuntimeRPCApi](#ethereumruntimerpcapi)**
-- **[GenesisBuilder](#genesisbuilder)**
-- **[GrandpaApi](#grandpaapi)**
-- **[Metadata](#metadata)**
-- **[NeuronInfoRuntimeApi](#neuroninforuntimeapi)**
-- **[OffchainWorkerApi](#offchainworkerapi)**
-- **[ProxyFilterRuntimeApi](#proxyfilterruntimeapi)**
-- **[SessionKeys](#sessionkeys)**
-- **[ShieldApi](#shieldapi)**
-- **[StakeInfoRuntimeApi](#stakeinforuntimeapi)**
-- **[SubnetInfoRuntimeApi](#subnetinforuntimeapi)**
-- **[SubnetRegistrationRuntimeApi](#subnetregistrationruntimeapi)**
-- **[SwapRuntimeApi](#swapruntimeapi)**
-- **[TaggedTransactionQueue](#taggedtransactionqueue)**
-- **[TransactionPaymentApi](#transactionpaymentapi)**
-- **[TransactionPaymentCallApi](#transactionpaymentcallapi)**
+- **[AccountNonceApi](#pallet-accountnonceapi)**
+- **[AuraApi](#pallet-auraapi)**
+- **[BabeApi](#pallet-babeapi)**
+- **[BlockBuilder](#pallet-blockbuilder)**
+- **[ContractsApi](#pallet-contractsapi)**
+- **[ConvertTransactionRuntimeApi](#pallet-converttransactionruntimeapi)**
+- **[Core](#pallet-core)**
+- **[DelegateInfoRuntimeApi](#pallet-delegateinforuntimeapi)**
+- **[EthereumRuntimeRPCApi](#pallet-ethereumruntimerpcapi)**
+- **[GenesisBuilder](#pallet-genesisbuilder)**
+- **[GrandpaApi](#pallet-grandpaapi)**
+- **[Metadata](#pallet-metadata)**
+- **[NeuronInfoRuntimeApi](#pallet-neuroninforuntimeapi)**
+- **[OffchainWorkerApi](#pallet-offchainworkerapi)**
+- **[ProxyFilterRuntimeApi](#pallet-proxyfilterruntimeapi)**
+- **[SessionKeys](#pallet-sessionkeys)**
+- **[ShieldApi](#pallet-shieldapi)**
+- **[StakeInfoRuntimeApi](#pallet-stakeinforuntimeapi)**
+- **[SubnetInfoRuntimeApi](#pallet-subnetinforuntimeapi)**
+- **[SubnetRegistrationRuntimeApi](#pallet-subnetregistrationruntimeapi)**
+- **[SwapRuntimeApi](#pallet-swapruntimeapi)**
+- **[TaggedTransactionQueue](#pallet-taggedtransactionqueue)**
+- **[TransactionPaymentApi](#pallet-transactionpaymentapi)**
+- **[TransactionPaymentCallApi](#pallet-transactionpaymentcallapi)**
 
-## `AccountNonceApi`
+## `AccountNonceApi` {#pallet-accountnonceapi}
 
 ### `accountNonce(account: AccountId32)`: `u32`
 
 - **interface**: `api.call.accountNonceApi.accountNonce`
 - **summary**: Get current account nonce of given `AccountId`.
 
-## `AuraApi`
+
+## `AuraApi` {#pallet-auraapi}
 
 ### `authorities()`: `Vec<Public>`
 
@@ -55,9 +54,10 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.call.auraApi.slotDuration`
 - **summary**: Returns the slot duration for Aura.
 
-  Currently, only the value provided by this type at genesis will be used.
+    Currently, only the value provided by this type at genesis will be used.
 
-## `BabeApi`
+
+## `BabeApi` {#pallet-babeapi}
 
 ### `configuration()`: `BabeConfiguration`
 
@@ -89,14 +89,15 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.call.babeApi.submitReportEquivocationUnsignedExtrinsic`
 - **summary**: Submits an unsigned extrinsic to report an equivocation. The caller must provide the equivocation proof and a key ownership proof (should be obtained using `generate_key_ownership_proof`). The extrinsic will be unsigned and should only be accepted for local authorship (not to be broadcast to the network). This method returns `None` when creation of the extrinsic fails, e.g. if equivocation reporting is disabled for the given runtime (i.e. this method is hardcoded to return `None`). Only useful in an offchain context.
 
-## `BlockBuilder`
+
+## `BlockBuilder` {#pallet-blockbuilder}
 
 ### `applyExtrinsic(extrinsic: UncheckedExtrinsic)`: `Result<Result<Null, DispatchError>, TransactionValidityError>`
 
 - **interface**: `api.call.blockBuilder.applyExtrinsic`
 - **summary**: Apply the given extrinsic.
 
-  Returns an inclusion outcome which specifies if this extrinsic is included in this block or not.
+    Returns an inclusion outcome which specifies if this extrinsic is included in this block or not.
 
 ### `checkInherents(block: Block, data: InherentData)`: `CheckInherentsResult`
 
@@ -113,49 +114,46 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.call.blockBuilder.inherentExtrinsics`
 - **summary**: Generate inherent extrinsics. The inherent data will vary from chain to chain.
 
-## `ContractsApi`
 
-### `call(origin: AccountId32, dest: AccountId32, value: TaoBalance, gas_limit: Option<Weight>, storage_deposit_limit: Option<TaoBalance>, input_data: Vec<u8>)`: `ContractResult`
+## `ContractsApi` {#pallet-contractsapi}
 
 ### `call(origin: AccountId32, dest: AccountId32, value: TaoBalance, gas_limit: Option<Weight>, storage_deposit_limit: Option<TaoBalance>, input_data: Vec<u8>)`: `ContractResult`
 
 - **interface**: `api.call.contractsApi.call`
 - **summary**: Perform a call from a specified account to a given contract.
 
-  See [`crate::Pallet::bare_call`].
+    See [`crate::Pallet::bare_call`].
 
 ### `getStorage(address: AccountId32, key: Vec<u8>)`: `Result<Option<Vec<u8>>, ContractAccessError>`
 
 - **interface**: `api.call.contractsApi.getStorage`
 - **summary**: Query a given storage key in a given contract.
 
-  Returns `Ok(Some(Vec<u8>))` if the storage value exists under the given key in the specified account and `Ok(None)` if it doesn't. If the account specified by the address doesn't exist, or doesn't have a contract then `Err` is returned.
-
-### `instantiate(origin: AccountId32, value: TaoBalance, gas_limit: Option<Weight>, storage_deposit_limit: Option<TaoBalance>, code: Code, data: Vec<u8>, salt: Vec<u8>)`: `ContractResult`
+    Returns `Ok(Some(Vec<u8>))` if the storage value exists under the given key in the specified account and `Ok(None)` if it doesn't. If the account specified by the address doesn't exist, or doesn't have a contract then `Err` is returned.
 
 ### `instantiate(origin: AccountId32, value: TaoBalance, gas_limit: Option<Weight>, storage_deposit_limit: Option<TaoBalance>, code: Code, data: Vec<u8>, salt: Vec<u8>)`: `ContractResult`
 
 - **interface**: `api.call.contractsApi.instantiate`
 - **summary**: Instantiate a new contract.
 
-  See `[crate::Pallet::bare_instantiate]`.
-
-### `uploadCode(origin: AccountId32, code: Vec<u8>, storage_deposit_limit: Option<TaoBalance>, determinism: Determinism)`: `Result<CodeUploadReturnValue, DispatchError>`
+    See `[crate::Pallet::bare_instantiate]`.
 
 ### `uploadCode(origin: AccountId32, code: Vec<u8>, storage_deposit_limit: Option<TaoBalance>, determinism: Determinism)`: `Result<CodeUploadReturnValue, DispatchError>`
 
 - **interface**: `api.call.contractsApi.uploadCode`
 - **summary**: Upload new code without instantiating a contract from it.
 
-  See [`crate::Pallet::bare_upload_code`].
+    See [`crate::Pallet::bare_upload_code`].
 
-## `ConvertTransactionRuntimeApi`
+
+## `ConvertTransactionRuntimeApi` {#pallet-converttransactionruntimeapi}
 
 ### `convertTransaction(transaction: TransactionV3)`: `UncheckedExtrinsic`
 
 - **interface**: `api.call.convertTransactionRuntimeApi.convertTransaction`
 
-## `Core`
+
+## `Core` {#pallet-core}
 
 ### `executeBlock(block: Block)`: `Null`
 
@@ -172,13 +170,12 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.call.core.version`
 - **summary**: Returns the version of the runtime.
 
-## `DelegateInfoRuntimeApi`
+
+## `DelegateInfoRuntimeApi` {#pallet-delegateinforuntimeapi}
 
 ### `getDelegate(delegate_account: AccountId32)`: `Option<DelegateInfo>`
 
 - **interface**: `api.call.delegateInfoRuntimeApi.getDelegate`
-
-### `getDelegated(delegatee_account: AccountId32)`: `Vec<(DelegateInfo, (NetUid, AlphaBalance))>`
 
 ### `getDelegated(delegatee_account: AccountId32)`: `Vec<(DelegateInfo, (NetUid, AlphaBalance))>`
 
@@ -188,7 +185,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 - **interface**: `api.call.delegateInfoRuntimeApi.getDelegates`
 
-## `EthereumRuntimeRPCApi`
+
+## `EthereumRuntimeRPCApi` {#pallet-ethereumruntimerpcapi}
 
 ### `accountBasic(address: H160)`: `Basic`
 
@@ -272,34 +270,36 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.call.ethereumRuntimeRPCApi.storageAt`
 - **summary**: For a given account address and index, returns pallet_evm::AccountStorages.
 
-## `GenesisBuilder`
+
+## `GenesisBuilder` {#pallet-genesisbuilder}
 
 ### `buildState(json: Vec<u8>)`: `Result<Null, Text>`
 
 - **interface**: `api.call.genesisBuilder.buildState`
 - **summary**: Build `RuntimeGenesisConfig` from a JSON blob not using any defaults and store it in the storage.
 
-  In the case of a FRAME-based runtime, this function deserializes the full `RuntimeGenesisConfig` from the given JSON blob and puts it into the storage. If the provided JSON blob is incorrect or incomplete or the deserialization fails, an error is returned.
+    In the case of a FRAME-based runtime, this function deserializes the full `RuntimeGenesisConfig` from the given JSON blob and puts it into the storage. If the provided JSON blob is incorrect or incomplete or the deserialization fails, an error is returned.
 
-  Please note that provided JSON blob must contain all `RuntimeGenesisConfig` fields, no defaults will be used.
+    Please note that provided JSON blob must contain all `RuntimeGenesisConfig` fields, no defaults will be used.
 
 ### `getPreset(id: Option<Text>)`: `Option<Vec<u8>>`
 
 - **interface**: `api.call.genesisBuilder.getPreset`
 - **summary**: Returns a JSON blob representation of the built-in `RuntimeGenesisConfig` identified by `id`.
 
-  If `id` is `None` the function should return JSON blob representation of the default `RuntimeGenesisConfig` struct of the runtime. Implementation must provide default `RuntimeGenesisConfig`.
+    If `id` is `None` the function should return JSON blob representation of the default `RuntimeGenesisConfig` struct of the runtime. Implementation must provide default `RuntimeGenesisConfig`.
 
-  Otherwise function returns a JSON representation of the built-in, named `RuntimeGenesisConfig` preset identified by `id`, or `None` if such preset does not exist. Returned `Vec<u8>` contains bytes of JSON blob (patch) which comprises a list of (potentially nested) key-value pairs that are intended for customizing the default runtime genesis config. The patch shall be merged (rfc7386) with the JSON representation of the default `RuntimeGenesisConfig` to create a comprehensive genesis config that can be used in `build_state` method.
+    Otherwise function returns a JSON representation of the built-in, named `RuntimeGenesisConfig` preset identified by `id`, or `None` if such preset does not exist. Returned `Vec<u8>` contains bytes of JSON blob (patch) which comprises a list of (potentially nested) key-value pairs that are intended for customizing the default runtime genesis config. The patch shall be merged (rfc7386) with the JSON representation of the default `RuntimeGenesisConfig` to create a comprehensive genesis config that can be used in `build_state` method.
 
 ### `presetNames()`: `Vec<Text>`
 
 - **interface**: `api.call.genesisBuilder.presetNames`
 - **summary**: Returns a list of identifiers for available builtin `RuntimeGenesisConfig` presets.
 
-  The presets from the list can be queried with [`GenesisBuilder::get_preset`] method. If no named presets are provided by the runtime the list is empty.
+    The presets from the list can be queried with [`GenesisBuilder::get_preset`] method. If no named presets are provided by the runtime the list is empty.
 
-## `GrandpaApi`
+
+## `GrandpaApi` {#pallet-grandpaapi}
 
 ### `currentSetId()`: `u64`
 
@@ -316,14 +316,15 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.call.grandpaApi.grandpaAuthorities`
 - **summary**: Get the current GRANDPA authorities and weights. This should not change except for when changes are scheduled and the corresponding delay has passed.
 
-  When called at block B, it will return the set of authorities that should be used to finalize descendants of this block (B+1, B+2, ...). The block B itself is finalized by the authorities from block B-1.
+    When called at block B, it will return the set of authorities that should be used to finalize descendants of this block (B+1, B+2, ...). The block B itself is finalized by the authorities from block B-1.
 
 ### `submitReportEquivocationUnsignedExtrinsic(equivocation_proof: EquivocationProof, key_owner_proof: OpaqueValue)`: `Option<Null>`
 
 - **interface**: `api.call.grandpaApi.submitReportEquivocationUnsignedExtrinsic`
 - **summary**: Submits an unsigned extrinsic to report an equivocation. The caller must provide the equivocation proof and a key ownership proof (should be obtained using `generate_key_ownership_proof`). The extrinsic will be unsigned and should only be accepted for local authorship (not to be broadcast to the network). This method returns `None` when creation of the extrinsic fails, e.g. if equivocation reporting is disabled for the given runtime (i.e. this method is hardcoded to return `None`). Only useful in an offchain context.
 
-## `Metadata`
+
+## `Metadata` {#pallet-metadata}
 
 ### `metadata()`: `OpaqueMetadata`
 
@@ -335,18 +336,17 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.call.metadata.metadataAtVersion`
 - **summary**: Returns the metadata at a given version.
 
-  If the given `version` isn't supported, this will return `None`. Use [`Self::metadata_versions`] to find out about supported metadata version of the runtime.
+    If the given `version` isn't supported, this will return `None`. Use [`Self::metadata_versions`] to find out about supported metadata version of the runtime.
 
 ### `metadataVersions()`: `Vec<u32>`
 
 - **interface**: `api.call.metadata.metadataVersions`
 - **summary**: Returns the supported metadata versions.
 
-  This can be used to call `metadata_at_version`.
+    This can be used to call `metadata_at_version`.
 
-## `NeuronInfoRuntimeApi`
 
-### `getNeuron(netuid: NetUid, uid: u16)`: `Option<NeuronInfo>`
+## `NeuronInfoRuntimeApi` {#pallet-neuroninforuntimeapi}
 
 ### `getNeuron(netuid: NetUid, uid: u16)`: `Option<NeuronInfo>`
 
@@ -354,11 +354,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `getNeuronLite(netuid: NetUid, uid: u16)`: `Option<NeuronInfoLite>`
 
-### `getNeuronLite(netuid: NetUid, uid: u16)`: `Option<NeuronInfoLite>`
-
 - **interface**: `api.call.neuronInfoRuntimeApi.getNeuronLite`
-
-### `getNeurons(netuid: NetUid)`: `Vec<NeuronInfo>`
 
 ### `getNeurons(netuid: NetUid)`: `Vec<NeuronInfo>`
 
@@ -366,49 +362,48 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `getNeuronsLite(netuid: NetUid)`: `Vec<NeuronInfoLite>`
 
-### `getNeuronsLite(netuid: NetUid)`: `Vec<NeuronInfoLite>`
-
 - **interface**: `api.call.neuronInfoRuntimeApi.getNeuronsLite`
 
-## `OffchainWorkerApi`
+
+## `OffchainWorkerApi` {#pallet-offchainworkerapi}
 
 ### `offchainWorker(header: Header)`: `Null`
 
 - **interface**: `api.call.offchainWorkerApi.offchainWorker`
 - **summary**: Starts the off-chain task for given block header.
 
-## `ProxyFilterRuntimeApi`
+
+## `ProxyFilterRuntimeApi` {#pallet-proxyfilterruntimeapi}
 
 ### `getProxyFilters(proxy_types: Option<Vec<u8>>)`: `Vec<ProxyFilterInfo>`
 
-### `getProxyFilters(proxy_types: Option<Vec<u8>>)`: `Vec<ProxyFilterInfo>`
-
-- **interface**: `api.call.proxyFilterRuntimeApi.getProxyFilters`
 - **interface**: `api.call.proxyFilterRuntimeApi.getProxyFilters`
 
 ### `getProxyTypes()`: `Vec<ProxyTypeInfo>`
 
 - **interface**: `api.call.proxyFilterRuntimeApi.getProxyTypes`
 
-## `SessionKeys`
+
+## `SessionKeys` {#pallet-sessionkeys}
 
 ### `decodeSessionKeys(encoded: Vec<u8>)`: `Option<Vec<(Vec<u8>, KeyTypeId)>>`
 
 - **interface**: `api.call.sessionKeys.decodeSessionKeys`
 - **summary**: Decode the given public session keys.
 
-  Returns the list of public raw public keys + key type.
+    Returns the list of public raw public keys + key type.
 
 ### `generateSessionKeys(seed: Option<Vec<u8>>)`: `Vec<u8>`
 
 - **interface**: `api.call.sessionKeys.generateSessionKeys`
 - **summary**: Generate a set of session keys with optionally using the given seed. The keys should be stored within the keystore exposed via runtime externalities.
 
-  The seed needs to be a valid `utf8` string.
+    The seed needs to be a valid `utf8` string.
 
-  Returns the concatenated SCALE encoded public keys.
+    Returns the concatenated SCALE encoded public keys.
 
-## `ShieldApi`
+
+## `ShieldApi` {#pallet-shieldapi}
 
 ### `isShieldedUsingCurrentKey(key_hash: [u8; 16])`: `bool`
 
@@ -425,9 +420,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.call.shieldApi.tryUnshieldTx`
 - **summary**: Try to unshield a transaction using a decapsulation key.
 
-## `StakeInfoRuntimeApi`
 
-### `getColdkeyLock(coldkey: AccountId32, netuid: NetUid)`: `Option<LockState>`
+## `StakeInfoRuntimeApi` {#pallet-stakeinforuntimeapi}
 
 ### `getColdkeyLock(coldkey: AccountId32, netuid: NetUid)`: `Option<LockState>`
 
@@ -435,11 +429,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `getHotkeyConviction(hotkey: AccountId32, netuid: NetUid)`: `FixedU128`
 
-### `getHotkeyConviction(hotkey: AccountId32, netuid: NetUid)`: `FixedU128`
-
 - **interface**: `api.call.stakeInfoRuntimeApi.getHotkeyConviction`
-
-### `getMostConvictedHotkeyOnSubnet(netuid: NetUid)`: `Option<AccountId32>`
 
 ### `getMostConvictedHotkeyOnSubnet(netuid: NetUid)`: `Option<AccountId32>`
 
@@ -447,11 +437,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `getStakeAvailabilityForColdkeys(coldkey_accounts: Vec<AccountId32>, netuids: Option<Vec<NetUid>>)`: `BTreeMap`
 
-### `getStakeAvailabilityForColdkeys(coldkey_accounts: Vec<AccountId32>, netuids: Option<Vec<NetUid>>)`: `BTreeMap`
-
 - **interface**: `api.call.stakeInfoRuntimeApi.getStakeAvailabilityForColdkeys`
-
-### `getStakeFee(origin: Option<(AccountId32, NetUid)>, origin_coldkey_account: AccountId32, destination: Option<(AccountId32, NetUid)>, destination_coldkey_account: AccountId32, amount: u64)`: `u64`
 
 ### `getStakeFee(origin: Option<(AccountId32, NetUid)>, origin_coldkey_account: AccountId32, destination: Option<(AccountId32, NetUid)>, destination_coldkey_account: AccountId32, amount: u64)`: `u64`
 
@@ -467,11 +453,10 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `getStakeInfoForHotkeyColdkeyNetuid(hotkey_account: AccountId32, coldkey_account: AccountId32, netuid: NetUid)`: `Option<StakeInfo>`
 
-### `getStakeInfoForHotkeyColdkeyNetuid(hotkey_account: AccountId32, coldkey_account: AccountId32, netuid: NetUid)`: `Option<StakeInfo>`
-
 - **interface**: `api.call.stakeInfoRuntimeApi.getStakeInfoForHotkeyColdkeyNetuid`
 
-## `SubnetInfoRuntimeApi`
+
+## `SubnetInfoRuntimeApi` {#pallet-subnetinforuntimeapi}
 
 ### `getAllDynamicInfo()`: `Vec<Option<DynamicInfo>>`
 
@@ -491,15 +476,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `getColdkeyAutoStakeHotkey(coldkey: AccountId32, netuid: NetUid)`: `Option<AccountId32>`
 
-### `getBlockEmission()`: `TaoBalance`
-
-- **interface**: `api.call.subnetInfoRuntimeApi.getBlockEmission`
-
-### `getColdkeyAutoStakeHotkey(coldkey: AccountId32, netuid: NetUid)`: `Option<AccountId32>`
-
 - **interface**: `api.call.subnetInfoRuntimeApi.getColdkeyAutoStakeHotkey`
-
-### `getDynamicInfo(netuid: NetUid)`: `Option<DynamicInfo>`
 
 ### `getDynamicInfo(netuid: NetUid)`: `Option<DynamicInfo>`
 
@@ -507,11 +484,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `getMechagraph(netuid: NetUid, mecid: MechId)`: `Option<Metagraph>`
 
-### `getMechagraph(netuid: NetUid, mecid: MechId)`: `Option<Metagraph>`
-
 - **interface**: `api.call.subnetInfoRuntimeApi.getMechagraph`
-
-### `getMetagraph(netuid: NetUid)`: `Option<Metagraph>`
 
 ### `getMetagraph(netuid: NetUid)`: `Option<Metagraph>`
 
@@ -519,11 +492,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `getNextEpochStartBlock(netuid: NetUid)`: `Option<u64>`
 
-### `getNextEpochStartBlock(netuid: NetUid)`: `Option<u64>`
-
 - **interface**: `api.call.subnetInfoRuntimeApi.getNextEpochStartBlock`
-
-### `getSelectiveMechagraph(netuid: NetUid, subid: MechId, metagraph_indexes: Vec<u16>)`: `Option<SelectiveMetagraph>`
 
 ### `getSelectiveMechagraph(netuid: NetUid, subid: MechId, metagraph_indexes: Vec<u16>)`: `Option<SelectiveMetagraph>`
 
@@ -531,11 +500,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `getSelectiveMetagraph(netuid: NetUid, metagraph_indexes: Vec<u16>)`: `Option<SelectiveMetagraph>`
 
-### `getSelectiveMetagraph(netuid: NetUid, metagraph_indexes: Vec<u16>)`: `Option<SelectiveMetagraph>`
-
 - **interface**: `api.call.subnetInfoRuntimeApi.getSelectiveMetagraph`
-
-### `getSubnetAccountId(netuid: NetUid)`: `Option<AccountId32>`
 
 ### `getSubnetAccountId(netuid: NetUid)`: `Option<AccountId32>`
 
@@ -543,11 +508,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `getSubnetHyperparams(netuid: NetUid)`: `Option<SubnetHyperparams>`
 
-### `getSubnetHyperparams(netuid: NetUid)`: `Option<SubnetHyperparams>`
-
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetHyperparams`
-
-### `getSubnetHyperparamsV2(netuid: NetUid)`: `Option<SubnetHyperparamsV2>`
 
 ### `getSubnetHyperparamsV2(netuid: NetUid)`: `Option<SubnetHyperparamsV2>`
 
@@ -555,17 +516,11 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `getSubnetHyperparamsV3(netuid: NetUid)`: `Option<Vec<HyperparamEntry>>`
 
-### `getSubnetHyperparamsV3(netuid: NetUid)`: `Option<Vec<HyperparamEntry>>`
-
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetHyperparamsV3`
 
 ### `getSubnetInfo(netuid: NetUid)`: `Option<SubnetInfo>`
 
-### `getSubnetInfo(netuid: NetUid)`: `Option<SubnetInfo>`
-
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetInfo`
-
-### `getSubnetInfoV2(netuid: NetUid)`: `Option<SubnetInfov2>`
 
 ### `getSubnetInfoV2(netuid: NetUid)`: `Option<SubnetInfov2>`
 
@@ -581,27 +536,21 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `getSubnetState(netuid: NetUid)`: `Option<SubnetState>`
 
-### `getSubnetState(netuid: NetUid)`: `Option<SubnetState>`
-
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetState`
-
-### `getSubnetToPrune()`: `Option<NetUid>`
 
 ### `getSubnetToPrune()`: `Option<NetUid>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetToPrune`
 
-## `SubnetRegistrationRuntimeApi`
 
-### `getNetworkRegistrationCost()`: `TaoBalance`
+## `SubnetRegistrationRuntimeApi` {#pallet-subnetregistrationruntimeapi}
 
 ### `getNetworkRegistrationCost()`: `TaoBalance`
 
 - **interface**: `api.call.subnetRegistrationRuntimeApi.getNetworkRegistrationCost`
 
-## `SwapRuntimeApi`
 
-### `currentAlphaPrice(netuid: NetUid)`: `u64`
+## `SwapRuntimeApi` {#pallet-swapruntimeapi}
 
 ### `currentAlphaPrice(netuid: NetUid)`: `u64`
 
@@ -613,28 +562,26 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `simSwapAlphaForTao(netuid: NetUid, alpha: AlphaBalance)`: `SimSwapResult`
 
-### `simSwapAlphaForTao(netuid: NetUid, alpha: AlphaBalance)`: `SimSwapResult`
-
 - **interface**: `api.call.swapRuntimeApi.simSwapAlphaForTao`
-
-### `simSwapTaoForAlpha(netuid: NetUid, tao: TaoBalance)`: `SimSwapResult`
 
 ### `simSwapTaoForAlpha(netuid: NetUid, tao: TaoBalance)`: `SimSwapResult`
 
 - **interface**: `api.call.swapRuntimeApi.simSwapTaoForAlpha`
 
-## `TaggedTransactionQueue`
+
+## `TaggedTransactionQueue` {#pallet-taggedtransactionqueue}
 
 ### `validateTransaction(source: TransactionSource, tx: UncheckedExtrinsic, block_hash: H256)`: `Result<ValidTransaction, TransactionValidityError>`
 
 - **interface**: `api.call.taggedTransactionQueue.validateTransaction`
 - **summary**: Validate the transaction.
 
-  This method is invoked by the transaction pool to learn details about given transaction. The implementation should make sure to verify the correctness of the transaction against current state. The given `block_hash` corresponds to the hash of the block that is used as current state.
+    This method is invoked by the transaction pool to learn details about given transaction. The implementation should make sure to verify the correctness of the transaction against current state. The given `block_hash` corresponds to the hash of the block that is used as current state.
 
-  Note that this call may be performed by the pool multiple times and transactions might be verified in any possible order.
+    Note that this call may be performed by the pool multiple times and transactions might be verified in any possible order.
 
-## `TransactionPaymentApi`
+
+## `TransactionPaymentApi` {#pallet-transactionpaymentapi}
 
 ### `queryFeeDetails(uxt: UncheckedExtrinsic, len: u32)`: `FeeDetails`
 
@@ -646,17 +593,14 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `queryLengthToFee(length: u32)`: `TaoBalance`
 
-### `queryLengthToFee(length: u32)`: `TaoBalance`
-
 - **interface**: `api.call.transactionPaymentApi.queryLengthToFee`
-
-### `queryWeightToFee(weight: Weight)`: `TaoBalance`
 
 ### `queryWeightToFee(weight: Weight)`: `TaoBalance`
 
 - **interface**: `api.call.transactionPaymentApi.queryWeightToFee`
 
-## `TransactionPaymentCallApi`
+
+## `TransactionPaymentCallApi` {#pallet-transactionpaymentcallapi}
 
 ### `queryCallFeeDetails(call: RuntimeCall, len: u32)`: `FeeDetails`
 
@@ -670,12 +614,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 ### `queryLengthToFee(length: u32)`: `TaoBalance`
 
-### `queryLengthToFee(length: u32)`: `TaoBalance`
-
 - **interface**: `api.call.transactionPaymentCallApi.queryLengthToFee`
 - **summary**: Query the output of the current `LengthToFee` given some input.
-
-### `queryWeightToFee(weight: Weight)`: `TaoBalance`
 
 ### `queryWeightToFee(weight: Weight)`: `TaoBalance`
 

@@ -5,7 +5,6 @@ title: "Install BTCLI"
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Install BTCLI
 
 This page contains installation details for `btcli`, the Bittensor CLI.
 

@@ -4,7 +4,6 @@ title: "Understand Price Protection"
 
 import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
-# Understand Price Protection
 
 Bittensor clients (BTCLI and the SDK) provides three modes to give users control over how their transactions handle adverse price movements: Strict, Partial, and Unsafe.
 
@@ -129,7 +128,7 @@ limit_price = bt.Balance.from_tao(subnet.price.tao * (1 - rate_tolerance)).rao
 
 ### SDK Examples
 
-See [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk) for complete proxy staking workflows.
+See [Managing Your Stakes](./managing-stake-sdk) for complete proxy staking workflows.
 
 #### Strict Mode (reject if price moves beyond tolerance)
 

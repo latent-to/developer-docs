@@ -2,8 +2,6 @@
 title: "UidLookup Precompile"
 ---
 
-# UidLookup Precompile
-
 The UidLookup precompile maps an EVM address to the UIDs of neurons that have associated it via the `associate_evm_address` extrinsic.
 
 - **Address**: `0x0000000000000000000000000000000000000806`

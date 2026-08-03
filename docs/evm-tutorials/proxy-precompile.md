@@ -2,8 +2,6 @@
 title: "Proxy Precompile"
 ---
 
-# Proxy Precompile
-
 The Proxy precompile exposes the Substrate proxy pallet to EVM contracts. Proxies let one account act on behalf of another for a limited set of operation types.
 
 - **Address**: `0x000000000000000000000000000000000000080b`

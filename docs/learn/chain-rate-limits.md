@@ -2,8 +2,6 @@
 title: "Rate Limits"
 ---
 
-# Rate Limits
-
 This page reviews all rate limits implemented in the Bittensor blockchain (Subtensor). Rate limits prevent spam, ensure network stability, and maintain fair access to network resources. Rate limits in Bittensor are implemented as block-based cooldown periods. When a rate-limited operation succeeds, subsequent attempts to perform the same operation must wait for a specified number of [blocks](../resources/glossary.md#block) to pass before they can be executed again. Unsuccessful operations may be re-tried.
 
 :::info
@@ -26,7 +24,7 @@ This is the default transaction rate limit in Bittensor, but it currently only a
 
 - Rate Limit: 1 block (12 sec)
 - Chain State Variable: `TxRateLimit`
-- Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
+- Error message: [`TxRateLimitExceeded`](../subtensor-api/errors.md#txratelimitexceeded)
 
 ### Delegate take rate limit
 
@@ -34,7 +32,7 @@ This rate limit prevents frequent changes to delegate take percentages.
 
 - Rate Limit: 216,000 blocks (~30 days)
 - Chain State Variable: `TxDelegateTakeRateLimit`
-- Error message: [`DelegateTxRateLimitExceeded`](../errors/subtensor.md#delegatetxratelimitexceeded)
+- Error message: [`DelegateTxRateLimitExceeded`](../subtensor-api/errors.md#delegatetxratelimitexceeded)
 
 ### Hotkey swap rate limit
 
@@ -47,7 +45,7 @@ This rate limit prevents a user from swapping a hotkey too frequently. Hotkey sw
   - `TxRateLimit` (general transaction rate limit)
   - `HotkeySwapOnSubnetInterval` (global interval constant, not queryable from chain state)
 - Source Code: [swap_hotkey.rs](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/swap/swap_hotkey.rs#L52-56)
-- Error message: [`HotKeySetTxRateLimitExceeded`](../errors/subtensor.md#hotkeysettxratelimitexceeded)
+- Error message: [`HotKeySetTxRateLimitExceeded`](../subtensor-api/errors.md#hotkeysettxratelimitexceeded)
 
 ### UID trimming rate limit
 
@@ -55,7 +53,7 @@ This rate limit controls how frequently subnet owners can trim UIDs on their sub
 
 - Rate Limit: 216,000 blocks (~30 days) on main net; 1 block in 'fastblocks' development mode.
 - Chain State Variable: `MaxUidsTrimmingRateLimit` (Not queryable from chain state)
-- Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
+- Error message: [`TxRateLimitExceeded`](../subtensor-api/errors.md#txratelimitexceeded)
 
 ### Network registration rate limit
 
@@ -63,7 +61,7 @@ This rate limit prevents frequent creation of new subnets.
 
 - Rate Limit: 14,400 blocks (~2 days)
 - Chain State Variable: `NetworkRateLimit`
-- Error message: [`NetworkTxRateLimitExceeded`](../errors/subtensor.md#networktxratelimitexceeded)
+- Error message: [`NetworkTxRateLimitExceeded`](../subtensor-api/errors.md#networktxratelimitexceeded)
 
 <details>
 <summary><strong>Check current value on-chain</strong></summary>
@@ -78,7 +76,7 @@ This rate limit controls how frequently subnet owners can modify hyperparameters
 
 - Rate Limit: 2 tempos
 - Chain State Variable: `OwnerHyperparamRateLimit`
-- Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
+- Error message: [`TxRateLimitExceeded`](../subtensor-api/errors.md#txratelimitexceeded)
 
 ### Weights version key rate limit
 
@@ -86,7 +84,7 @@ This rate limit controls the frequency of weights version key updates.
 
 - Rate Limit: 5 blocks (~1 minute)
 - Chain State Variable: `WeightsVersionKeyRateLimit`
-- Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
+- Error message: [`TxRateLimitExceeded`](../subtensor-api/errors.md#txratelimitexceeded)
 
 ### Administrative freeze window
 
@@ -94,7 +92,7 @@ This controls the duration of the administrative freeze window at the end of eac
 
 - Duration: 10 blocks (~2 minutes)
 - Chain State Variable: `AdminFreezeWindow`
-- Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
+- Error message: [`TxRateLimitExceeded`](../subtensor-api/errors.md#txratelimitexceeded)
 
 ### Subnet Mechanism count update rate limit
 
@@ -103,7 +101,7 @@ Limits how often a subnet owner can change the number of incentive mechanisms. F
 - Rate Limit: 7,200 blocks (~24 hours)
 - Chain State Variable: `MechanismCountSetRateLimit` (Not queryable from chain state)
 - Source Code: [lib.rs](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1894-1897)
-- Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
+- Error message: [`TxRateLimitExceeded`](../subtensor-api/errors.md#txratelimitexceeded)
 
 ### Subnet Mechanism emission split update rate limit
 
@@ -112,7 +110,7 @@ Limits how often a subnet owner can change the allocation of emissions among the
 - Rate Limit: 7,200 blocks (~24 hours) on main net; 1 block in 'fastblocks' development mode.
 - Chain State Variable: `MechanismEmissionRateLimit` (Not queryable from chain state)
 - Source Code: [lib.rs](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/lib.rs#L1898-1902)
-- Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
+- Error message: [`TxRateLimitExceeded`](../subtensor-api/errors.md#txratelimitexceeded)
 
 ### Staking operations rate limits
 
@@ -120,7 +118,7 @@ This rate limit controls how frequently a user can perform staking operations (a
 
 - Rate Limit: 1 per block
 - Chain State Variable: `StakingOperationRateLimiter` (Bool, since limit is 1 operation)
-- Error message: [`StakingOperationRateLimitExceeded`](../errors/subtensor.md#stakingoperationratelimitexceeded)
+- Error message: [`StakingRateLimitExceeded`](../subtensor-api/errors.md#stakingratelimitexceeded)
 
 ### Child hotkey operations rate limit
 
@@ -128,7 +126,7 @@ This rate limit controls how frequently a parent hotkey can set or revoke child 
 
 - Rate Limit: 150 blocks (~30 minutes)
 - Source Code: [rate_limiting.rs](https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/utils/rate_limiting.rs#L25-L28)
-- Error message: [`TxRateLimitExceeded`](../errors/subtensor.md#txratelimitexceeded)
+- Error message: [`TxRateLimitExceeded`](../subtensor-api/errors.md#txratelimitexceeded)
 
 ### Child key take rate limit
 
@@ -136,7 +134,7 @@ This rate limit prevents the owner of a child hotkey from making frequent change
 
 - Rate Limit: 216,000 blocks (~30 days)
 - Chain State Variable: `TxChildkeyTakeRateLimit`
-- Error message: [`TxChildkeyTakeRateLimitExceeded`](../errors/subtensor.md#txchildkeytakeratelimitexceeded)
+- Error message: [`TxChildkeyTakeRateLimitExceeded`](../subtensor-api/errors.md#txchildkeytakeratelimitexceeded)
 
 ## Subnet-specific rate limits
 
@@ -148,7 +146,7 @@ This rate limit controls how frequently neurons can update their serving informa
 
 - Rate Limit: Configurable per subnet (default: 10 blocks)
 - Chain State Variable: `ServingRateLimit`
-- Error message: [`ServingRateLimitExceeded`](../errors/subtensor.md#servingratelimitexceeded)
+- Error message: [`ServingRateLimitExceeded`](../subtensor-api/errors.md#servingratelimitexceeded)
 
 ### Weights setting rate limit
 
@@ -156,7 +154,7 @@ This rate limit controls how frequently a subnet validator can set weights to th
 
 - Rate Limit: Configurable per subnet (default: 100 blocks, varies significantly by subnet)
 - Chain State Variable: `WeightsSetRateLimit` per subnet
-- Error message: [`SettingWeightsTooFast`](../errors/subtensor.md#settingweightstoofast)
+- Error message: [`SettingWeightsTooFast`](../subtensor-api/errors.md#settingweightstoofast)
 - Effective Period: Formula is `Tempo × WeightsSetRateLimit × 12 seconds`
 
 ### Neuron (UID) registration
@@ -173,4 +171,4 @@ When querying OTF-provided lite nodes, the following rate limits apply. We stron
 - Any OTF-provided lite node will rate limit the requests to one request per second, per IP address. Note that this rate limit may change dynamically based on the network or application requirements.
 - A request can be either WS/WSS or HTTP/HTTPS.
 - If you exceed the rate limit, you will receive the error code 429. You will then have to wait until the rate limit window has expired.
-- You can avoid OTF-lite node rate limits by running your own local lite node. You can run a lite node either [Using Docker](../subtensor-nodes/run/using-docker.md#using-lite-nodes) or [Using Source](../subtensor-nodes/run/using-docker#lite-node-on-mainchain).
+- You can avoid OTF-lite node rate limits by running your own local lite node. You can run a lite node either [Using Docker](../subtensor-nodes/run/using-docker.md#using-lite-nodes) or [Using Source](../subtensor-nodes/run/using-docker#using-lite-nodes).

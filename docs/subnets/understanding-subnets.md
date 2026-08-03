@@ -5,7 +5,6 @@ title: "Understanding Subnets"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Understanding Subnets
 
 In Bittensor, a subnet is an incentive-based competition marketplace that produces a specific kind of digital commodity related to artificial intelligence. It consists of a community of miners that produce the commodity, and a community of validators that measure the miners' work to ensure its quality. Often , parties that serve as validators do so in order to run applications that make use of the services provided by the miners.
 

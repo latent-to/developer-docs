@@ -2,8 +2,6 @@
 title: "Validator's Guide to `BTCLI`"
 ---
 
-# Validator's Guide to `BTCLI`
-
 Validators evaluate miner performance, and post their evaluations to the blockchain. This page discusses considerations specific to validators when using `btcli`.
 
 :::note Transaction Fees

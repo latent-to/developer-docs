@@ -7,8 +7,22 @@ const LINK_CLASS_NAME = "table-of-contents__link toc-highlight";
 const LINK_ACTIVE_CLASS_NAME = "table-of-contents__link--active";
 const ACTIVE_ANCHOR_RATIO = 0.35;
 const EDGE_PADDING = 56;
+const WHOLE_CODE_HEADING = /^<code>([\s\S]*)<\/code>$/;
 
-export default function TOC({ className, ...props }) {
+function simplifyEntry(value) {
+  const match = value.match(WHOLE_CODE_HEADING);
+  if (!match) {
+    return value;
+  }
+  return match[1].split("(")[0].split(":")[0].trim();
+}
+
+export default function TOC({ className, toc, ...props }) {
+  const entries = toc.map((item) => ({
+    ...item,
+    value: simplifyEntry(item.value),
+  }));
+
   const containerRef = useRef(null);
   const [shadow, setShadow] = useState({ top: false, bottom: false });
 
@@ -105,6 +119,7 @@ export default function TOC({ className, ...props }) {
       )}>
       <TOCItems
         {...props}
+        toc={entries}
         linkClassName={LINK_CLASS_NAME}
         linkActiveClassName={LINK_ACTIVE_CLASS_NAME}
       />

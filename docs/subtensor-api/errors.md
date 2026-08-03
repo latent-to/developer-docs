@@ -3,37 +3,35 @@ title: Errors
 description: "This page contains error variants returned by the Subtensor runtime."
 ---
 
-# Errors
-
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
 Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
-- **[adminUtils](#adminutils)**
-- **[balances](#balances)**
-- **[commitments](#commitments)**
-- **[contracts](#contracts)**
-- **[crowdloan](#crowdloan)**
-- **[drand](#drand)**
-- **[ethereum](#ethereum)**
-- **[evm](#evm)**
-- **[grandpa](#grandpa)**
-- **[limitOrders](#limitorders)**
-- **[mevShield](#mevshield)**
-- **[multisig](#multisig)**
-- **[preimage](#preimage)**
-- **[proxy](#proxy)**
-- **[safeMode](#safemode)**
-- **[scheduler](#scheduler)**
-- **[subtensorModule](#subtensormodule)**
-- **[sudo](#sudo)**
-- **[swap](#swap)**
-- **[system](#system)**
-- **[utility](#utility)**
+- **[adminUtils](#pallet-adminutils)**
+- **[balances](#pallet-balances)**
+- **[commitments](#pallet-commitments)**
+- **[contracts](#pallet-contracts)**
+- **[crowdloan](#pallet-crowdloan)**
+- **[drand](#pallet-drand)**
+- **[ethereum](#pallet-ethereum)**
+- **[evm](#pallet-evm)**
+- **[grandpa](#pallet-grandpa)**
+- **[limitOrders](#pallet-limitorders)**
+- **[mevShield](#pallet-mevshield)**
+- **[multisig](#pallet-multisig)**
+- **[preimage](#pallet-preimage)**
+- **[proxy](#pallet-proxy)**
+- **[safeMode](#pallet-safemode)**
+- **[scheduler](#pallet-scheduler)**
+- **[subtensorModule](#pallet-subtensormodule)**
+- **[sudo](#pallet-sudo)**
+- **[swap](#pallet-swap)**
+- **[system](#pallet-system)**
+- **[utility](#pallet-utility)**
 
-## `adminUtils`
+## `adminUtils` {#pallet-adminutils}
 
 ### `BondsMovingAverageMaxReached`
 
@@ -115,7 +113,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.adminUtils.ValueNotInBounds`
 - **summary**: Value not in allowed bounds.
 
-## `balances`
+
+## `balances` {#pallet-balances}
 
 ### `DeadAccount`
 
@@ -177,7 +176,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.balances.VestingBalance`
 - **summary**: Vesting balance too high to send value.
 
-## `commitments`
+
+## `commitments` {#pallet-commitments}
 
 ### `AccountNotAllowedCommit`
 
@@ -199,7 +199,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.commitments.UnexpectedUnreserveLeftover`
 - **summary**: Indicates that unreserve returned a leftover, which is unexpected.
 
-## `contracts`
+
+## `contracts` {#pallet-contracts}
 
 ### `CannotAddSelfAsDelegateDependency`
 
@@ -226,9 +227,9 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.contracts.CodeRejected`
 - **summary**: The contract's code was found to be invalid during validation.
 
-  The most likely cause of this is that an API was used which is not supported by the node. This happens if an older node is used with a new version of ink!. Try updating your node to the newest available version.
+    The most likely cause of this is that an API was used which is not supported by the node. This happens if an older node is used with a new version of ink!. Try updating your node to the newest available version.
 
-  A more detailed error can be found on the node console if debug messages are enabled by supplying `-lruntime::contracts=debug`.
+    A more detailed error can be found on the node console if debug messages are enabled by supplying `-lruntime::contracts=debug`.
 
 ### `CodeTooLarge`
 
@@ -308,7 +309,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 ### `NoChainExtension`
 
 - **interface**: `api.errors.contracts.NoChainExtension`
-- **summary**: The chain does not provide a chain extension. Calling the chain extension results in this error. Note that this usually shouldn't happen as deploying such contracts is rejected.
+- **summary**: The chain does not provide a chain extension. Calling the chain extension results in this error. Note that this usually  shouldn't happen as deploying such contracts is rejected.
 
 ### `NoMigrationPerformed`
 
@@ -365,7 +366,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.contracts.TerminatedInConstructor`
 - **summary**: A contract self destructed in its constructor.
 
-  This can be triggered by a call to `seal_terminate`.
+    This can be triggered by a call to `seal_terminate`.
 
 ### `TerminatedWhileReentrant`
 
@@ -392,7 +393,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.contracts.XCMDecodeFailed`
 - **summary**: Failed to decode the XCM program.
 
-## `crowdloan`
+
+## `crowdloan` {#pallet-crowdloan}
 
 ### `AlreadyFinalized`
 
@@ -529,7 +531,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.crowdloan.Underflow`
 - **summary**: An underflow occurred.
 
-## `drand`
+
+## `drand` {#pallet-drand}
 
 ### `DrandConnectionFailure`
 
@@ -561,7 +564,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.drand.UnverifiedPulse`
 - **summary**: the pulse is invalid
 
-## `ethereum`
+
+## `ethereum` {#pallet-ethereum}
 
 ### `InvalidSignature`
 
@@ -573,7 +577,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.ethereum.PreLogExists`
 - **summary**: Pre-log is present, therefore transact is not allowed.
 
-## `evm`
+
+## `evm` {#pallet-evm}
 
 ### `BalanceLow`
 
@@ -650,7 +655,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.evm.WithdrawFailed`
 - **summary**: Withdraw fee failed
 
-## `grandpa`
+
+## `grandpa` {#pallet-grandpa}
 
 ### `ChangePending`
 
@@ -687,7 +693,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.grandpa.TooSoon`
 - **summary**: Cannot signal forced change so soon after last.
 
-## `limitOrders`
+
+## `limitOrders` {#pallet-limitorders}
 
 ### `ArithmeticOverflow`
 
@@ -784,7 +791,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.limitOrders.ZeroShareInBatch`
 - **summary**: An order's pro-rata share in the batch rounded down to zero. The whole batch is rejected so the order's input is never consumed without delivering any output (conservation), and the order stays retryable in a differently-composed batch.
 
-## `mevShield`
+
+## `mevShield` {#pallet-mevshield}
 
 ### `BadEncKeyLen`
 
@@ -806,7 +814,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.mevShield.WeightExceedsAbsoluteMax`
 - **summary**: Weight exceeds the absolute maximum (half of total block weight).
 
-## `multisig`
+
+## `multisig` {#pallet-multisig}
 
 ### `AlreadyApproved`
 
@@ -878,7 +887,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.multisig.WrongTimepoint`
 - **summary**: A different timepoint was given to the multisig operation that is underway.
 
-## `preimage`
+
+## `preimage` {#pallet-preimage}
 
 ### `AlreadyNoted`
 
@@ -920,7 +930,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.preimage.TooMany`
 - **summary**: More than `MAX_HASH_UPGRADE_BULK_COUNT` hashes were requested to be upgraded at once.
 
-## `proxy`
+
+## `proxy` {#pallet-proxy}
 
 ### `AnnouncementDepositInvariantViolated`
 
@@ -972,7 +983,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.proxy.Unproxyable`
 - **summary**: A call which is incompatible with the proxy type's filter was attempted.
 
-## `safeMode`
+
+## `safeMode` {#pallet-safemode}
 
 ### `AlreadyDeposited`
 
@@ -1009,7 +1021,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.safeMode.NotConfigured`
 - **summary**: This functionality of the pallet is disabled by the configuration.
 
-## `scheduler`
+
+## `scheduler` {#pallet-scheduler}
 
 ### `FailedToSchedule`
 
@@ -1036,7 +1049,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.scheduler.TargetBlockNumberInPast`
 - **summary**: Given target block number is in the past.
 
-## `subtensorModule`
+
+## `subtensorModule` {#pallet-subtensormodule}
 
 ### `AccountRejectsLockedAlpha`
 
@@ -1828,14 +1842,16 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.ZeroBalanceAfterWithdrawn`
 - **summary**: Unsuccessfully withdraw, balance could be zero (can not make account exist) after withdrawal.
 
-## `sudo`
+
+## `sudo` {#pallet-sudo}
 
 ### `RequireSudo`
 
 - **interface**: `api.errors.sudo.RequireSudo`
 - **summary**: Sender must be the Sudo account.
 
-## `swap`
+
+## `swap` {#pallet-swap}
 
 ### `Deprecated`
 
@@ -1902,7 +1918,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.swap.SwapInputTooLarge`
 - **summary**: Swap input is too large relative to input-side liquidity
 
-## `system`
+
+## `system` {#pallet-system}
 
 ### `CallFiltered`
 
@@ -1914,7 +1931,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.system.FailedToExtractRuntimeVersion`
 - **summary**: Failed to extract the runtime version from the new runtime.
 
-  Either calling `Core_version` or decoding `RuntimeVersion` failed.
+    Either calling `Core_version` or decoding `RuntimeVersion` failed.
 
 ### `InvalidSpecName`
 
@@ -1951,7 +1968,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.system.Unauthorized`
 - **summary**: The submitted code is not authorized.
 
-## `utility`
+
+## `utility` {#pallet-utility}
 
 ### `InvalidDerivedAccount`
 

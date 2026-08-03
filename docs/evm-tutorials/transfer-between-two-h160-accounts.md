@@ -5,7 +5,6 @@ title: "Transfer Between Two H160 Accounts"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Transfer Between Two H160 Accounts
 
 The complete code for this example is located in file [`examples/transfer-h160-to-h160.js`](https://github.com/opentensor/evm-bittensor/blob/main/examples/transfer-h160-to-h160.js).
 

@@ -381,7 +381,7 @@ body {
 .markdown,
 main article {
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 main article img,
@@ -995,14 +995,12 @@ ul.theme-doc-sidebar-menu.menu__list {
   color: var(--lb-accent);
 }
 
-a.subtensor-api.navbar__link--active,
-.navbar__link--active[aria-current="page"] {
+.navbar__link--active {
   font-weight: 500;
   color: var(--lb-text);
 }
 
-a.subtensor-api.navbar__link--active::before,
-.navbar__link--active[aria-current="page"]::before {
+.navbar__link--active:not(.header-github-link)::before {
   transform: scaleX(1);
 }
 
@@ -2069,9 +2067,16 @@ table {
   border-spacing: 0 !important;
   border: 0 !important;
   display: table;
-  width: 100%;
+  width: auto;
   min-width: 100%;
   margin-bottom: 0;
+}
+
+.markdown table th,
+.markdown table td,
+.markdown table :not(pre) > code {
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 table thead {

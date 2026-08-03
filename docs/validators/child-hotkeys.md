@@ -6,7 +6,6 @@ toc_max_heading_level: 2
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Child Hotkeys
 
 This guide describes the **child hotkeys** feature and how to use it. With the child hotkeys, a subnet validator is no longer required to use the same delegate hotkey for every subnet they validate in. The subnet validator can use a separate **child hotkey** per subnet. The subnet validator does this by re-delegating a portion of their stake from their delegate hotkey to this separate child hotkey on a subnet. The originating delegate hotkey is called the **parent hotkey**.
 

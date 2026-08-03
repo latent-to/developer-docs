@@ -2,8 +2,6 @@
 title: "Proxies: Overview"
 ---
 
-# Proxies: Overview
-
 This page introduces the theory and use of proxy wallets for enhanced security in Bittensor.
 
 Operational details are covered in [Working with Proxies](../../keys/proxies/working-with-proxies)
@@ -46,7 +44,7 @@ A zero-delay proxy allows an attacker to act repeatedly and opportunistically.
 
 Without a delay, even a staking proxy can use `swap_stake` to repeatedly move a victim's stake through low-liquidity subnet AMMs, extracting value through slippage on each round trip.
 
-See: [Avoid Staking Proxy Attacks](../learn/avoid-staking-proxy-attacks)
+See: [Avoid Staking Proxy Attacks](./proxies/avoid-staking-proxy-attacks)
 
 :::
 
@@ -109,7 +107,7 @@ When setting up and using proxies, it's important to follow practices that reduc
 
 - Always set a non-zero delay for proxies that control financial operations. The delay creates a veto window during which you can reject unauthorized announcements from your hardware wallet.
 
-- If you have a delayed proxy, monitor announcements on a schedule shorter than your delay period. See [Monitor and Reject Announcements](../../keys/proxies/working-with-proxies#monitor-and-reject-announcements).
+- If you have a delayed proxy, monitor announcements on a schedule shorter than your delay period. See [Monitor and Reject Announcements](../../keys/proxies/working-with-proxies#monitor-and-reject-proxy-announcements).
 
 - Clear announcements you don't plan to execute.
 

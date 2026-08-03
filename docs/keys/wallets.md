@@ -5,7 +5,6 @@ title: "Wallets, Coldkeys and Hotkeys in Bittensor"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Wallets, Coldkeys and Hotkeys in Bittensor
 
 In Bittensor (like other cryptocurrency applications), a _wallet_ is a tool for proving your identity, signing transactions, accessing your TAO, and managing your stake in subnets.
 This page introduces the core concepts involved.
@@ -118,7 +117,7 @@ Several applications exist that can interact securely with your coldkey. This ba
 In theory this means that without your encryption password, it is impossible to steal your key—even if someone accesses your device.
 
 However, still consider that using your coldkey on a device offers other ways for attackers to steal your key, even without decrypting it.
-See [Coldkey workstation security](./coldkey-hotkey-security#coldkey-workstation).
+See [Coldkey workstation security](./coldkey-hotkey-security#cold-custody-hardware-wallets).
 
 Secure wallet apps include:
 

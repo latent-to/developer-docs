@@ -4,7 +4,6 @@ title: "Managing Subtensor Connections"
 
 import { SdkVersion } from "./_sdk-version.mdx";
 
-# Managing Subtensor Connections
 
 Every time the Bittensor Python SDK's `Subtensor` or `AsyncSubtensor` class is instantiated, it creates a new websocket connection to Subtensor, Bittensor's Blockchain. Your code should ensure that these websocket connections are handled efficiently and closed when no longer in use by your code.
 

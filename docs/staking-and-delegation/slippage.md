@@ -1,10 +1,10 @@
 ---
 title: "Understanding Slippage"
+description: "What slippage is when staking and unstaking on Bittensor, how the subnet AMM produces it, and how to estimate it before you submit a transaction."
 ---
 
 import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
-# Understanding Slippage
 
 ## Introduction
 

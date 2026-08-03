@@ -1,5 +1,6 @@
 ---
 title: "Mining in Bittensor"
+description: "How to mine on Bittensor: choosing a subnet, registering a hotkey for a UID, the cost of registration, and running and maintaining a miner."
 ---
 
 import ThemedImage from '@theme/ThemedImage';
@@ -8,7 +9,6 @@ import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Mining in Bittensor
 
 ## Choosing a subnet
 

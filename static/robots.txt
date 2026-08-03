@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://guides.learnbittensor.org/sitemap.xml

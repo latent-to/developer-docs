@@ -17,7 +17,7 @@ Connects to the Bittensor Finney network and queries:
 ## How to run
 
 ```bash
-yarn node docs/scripts/check-rate-limits.js
+yarn node src/scripts/check-rate-limits.js
 ```
 
 > **Note**: This project uses Yarn PnP, so you must run the script with `yarn node` instead of just `node`.

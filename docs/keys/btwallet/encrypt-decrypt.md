@@ -2,8 +2,6 @@
 title: "Encrypt and decrypt"
 ---
 
-# Encrypt and decrypt
-
 Bittensor Wallet supports asymmetric message encryption on `Keypair` objects. This lets one party encrypt a message to a recipient using only their public key; only the recipient's private key can decrypt it.
 
 :::info ED25519 only

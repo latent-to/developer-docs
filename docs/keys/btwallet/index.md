@@ -2,8 +2,6 @@
 title: "Bittensor Wallet"
 ---
 
-# Bittensor Wallet
-
 [bittensor-wallet](https://github.com/latent-to/btwallet) is a Python wrapper around a Rust core compiled to a native extension. Key generation, signing, verification, keyfile management, and asymmetric message encryption all execute in Rust, the language of Subtensor. Bittensor Wallet operates within the Bittensor Python SDK and BTCLI to interact with the cryptographic wallet.
 
 You do not need to know Rust to use this library, its purpose is to provide an interface for Python developers.

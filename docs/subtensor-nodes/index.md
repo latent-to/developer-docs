@@ -6,7 +6,6 @@ import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
-# Subtensor Node Basics
 
 You can run a public subtensor node and synchronize with the Bittensor network. This public subtensor node can be either a **lite node** or an **archive node**. You can connect and sync this public subtensor node with either the Bittensor mainchain or the testchain. This document describes how to run a public subtensor node either by compiling the subtensor source code into a binary and executing this binary, or by using a Docker container.
 

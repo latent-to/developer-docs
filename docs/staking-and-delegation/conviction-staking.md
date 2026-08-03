@@ -6,7 +6,6 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { ProxyColdkeyWarning } from "../keys/\_proxy-warning.mdx";
 
-# Conviction and locked stake
 
 <ProxyColdkeyWarning />
 

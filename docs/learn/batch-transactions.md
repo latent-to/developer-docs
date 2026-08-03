@@ -4,7 +4,6 @@ title: "Batch Transactions"
 
 import { ProxyColdkeyWarning } from "../keys/\_proxy-warning.mdx";
 
-# Batch Transactions
 
 The Bittensor runtime's utility pallet exposes three extrinsics: `batch`, `batch_all`, and `force_batch`, which enable multiple calls to be submitted as a single on-chain transaction. This is useful when you want to stake to multiple hotkeys, perform multiple operations atomically, or reduce the number of round-trips to the chain.
 

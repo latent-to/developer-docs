@@ -3,6 +3,7 @@ import clsx from "clsx";
 import {
   isRegexpStringMatch,
   useCollapsible,
+  useThemeConfig,
   Collapsible,
 } from "@docusaurus/theme-common";
 import {
@@ -26,8 +27,23 @@ function isItemActive(item, localPathname) {
   return false;
 }
 
-function containsActiveItems(items, localPathname) {
+function containsActiveItem(items, localPathname) {
   return items.some((item) => isItemActive(item, localPathname));
+}
+
+function useDropdownActive(items, props) {
+  const localPathname = useLocalPathname();
+  const { navbar } = useThemeConfig();
+  if (containsActiveItem(items, localPathname)) {
+    return true;
+  }
+  const claimedByAnotherDropdown = navbar.items.some((item) =>
+    containsActiveItem(item.items ?? [], localPathname),
+  );
+  return (
+    !claimedByAnotherDropdown &&
+    isRegexpStringMatch(props.activeBaseRegex, localPathname)
+  );
 }
 
 function DropdownNavbarItemDesktop({
@@ -39,6 +55,7 @@ function DropdownNavbarItemDesktop({
 }) {
   const dropdownRef = useRef(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const sectionActive = useDropdownActive(items, props);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -76,7 +93,9 @@ function DropdownNavbarItemDesktop({
         aria-expanded={showDropdown}
         role="button"
         href={props.to ? undefined : "#"}
-        className={clsx("navbar__link", className)}
+        className={clsx("navbar__link", className, {
+          "navbar__link--active": sectionActive,
+        })}
         {...props}
         onClick={
           props.to
@@ -118,16 +137,16 @@ function DropdownNavbarItemMobile({
   ...props
 }) {
   const localPathname = useLocalPathname();
-  const containsActive = containsActiveItems(items, localPathname);
+  const sectionActive = useDropdownActive(items, props);
   const { collapsed, toggleCollapsed, setCollapsed } = useCollapsible({
-    initialState: () => !containsActive,
+    initialState: () => !sectionActive,
   });
 
   useEffect(() => {
-    if (containsActive) {
-      setCollapsed(!containsActive);
+    if (sectionActive) {
+      setCollapsed(!sectionActive);
     }
-  }, [localPathname, containsActive, setCollapsed]);
+  }, [localPathname, sectionActive, setCollapsed]);
 
   return (
     <li
@@ -140,6 +159,7 @@ function DropdownNavbarItemMobile({
           styles.dropdownNavbarItemMobile,
           "menu__link menu__link--sublist menu__link--sublist-caret",
           className,
+          { "menu__link--active": sectionActive },
         )}
         {...props}
         onClick={(e) => {

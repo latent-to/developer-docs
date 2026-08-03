@@ -7,7 +7,6 @@ import AerodromeDeposit from '/img/docs/aerodrome-deposit.png';
 import vTAODeposit from '/img/docs/vtao-deposit.png';
 import ConfirmDeposit from '/img/docs/confirm-deposit.png';
 
-# Providing vTAO liquidity to Aerodrome
 
 This page walks through how to move vTAO from the Bittensor EVM to the Base network to provide liquidity on Aerodrome.
 

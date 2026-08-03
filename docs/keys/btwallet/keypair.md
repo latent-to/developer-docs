@@ -2,8 +2,6 @@
 title: "Keypair"
 ---
 
-# Keypair
-
 A `Keypair` holds a cryptographic key pair and is the core primitive of a Bittensor wallet. It can be constructed from a mnemonic, seed, URI, or raw key material, and supports signing, verification, and (for ED25519 keypairs) asymmetric message encryption.
 
 For background on what coldkeys and hotkeys are and how they're used in Bittensor, see [Wallets, Coldkeys and Hotkeys](../wallets.md). This page covers the SDK API for working with them programmatically.

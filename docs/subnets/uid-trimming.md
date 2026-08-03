@@ -2,8 +2,6 @@
 title: "UID Trimming"
 ---
 
-# UID Trimming
-
 UID trimming is a subnet management feature that allows subnet owners to reduce the number of neuron UIDs registered on their subnet, compressing the remaining UIDs to maintain consecutive indexing. UID trimming safely preserves high-performing and immune neurons,
 
 :::info UID trimming rate limit

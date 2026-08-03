@@ -3,26 +3,24 @@ title: RPC
 description: "This page shows JSON-RPC methods available on the Subtensor node."
 ---
 
-# RPC
-
 This page shows JSON-RPC methods available on the Subtensor node. Accessible via `api.rpc.<namespace>.<method_name>`.
 
 :::info
 Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
-- **[author](#author)**
-- **[chain](#chain)**
-- **[childstate](#childstate)**
-- **[eth](#eth)**
-- **[net](#net)**
-- **[payment](#payment)**
-- **[rpc](#rpc)**
-- **[state](#state)**
-- **[system](#system)**
-- **[web3](#web3)**
+- **[author](#pallet-author)**
+- **[chain](#pallet-chain)**
+- **[childstate](#pallet-childstate)**
+- **[eth](#pallet-eth)**
+- **[net](#pallet-net)**
+- **[payment](#pallet-payment)**
+- **[rpc](#pallet-rpc)**
+- **[state](#pallet-state)**
+- **[system](#pallet-system)**
+- **[web3](#pallet-web3)**
 
-## `author`
+## `author` {#pallet-author}
 
 ### `pendingExtrinsics()`: `Vec<Extrinsic>`
 
@@ -40,7 +38,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.rpc.author.submitExtrinsic`
 - **summary**: Submit a fully formatted extrinsic for block inclusion
 
-## `chain`
+
+## `chain` {#pallet-chain}
 
 ### `getBlock(hash?: BlockHash)`: `SignedBlock`
 
@@ -80,7 +79,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **jsonrpc**: subscription
 - **summary**: Retrieves the best header via subscription
 
-## `childstate`
+
+## `childstate` {#pallet-childstate}
 
 ### `getKeys(childKey: PrefixedStorageKey, prefix: StorageKey, at?: Hash)`: `Vec<StorageKey>`
 
@@ -112,7 +112,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.rpc.childstate.getStorageSize`
 - **summary**: Returns the size of a child storage entry at a block state
 
-## `eth`
+
+## `eth` {#pallet-eth}
 
 ### `accounts()`: `Vec<H160>`
 
@@ -320,7 +321,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.rpc.eth.uninstallFilter`
 - **summary**: Uninstalls filter.
 
-## `net`
+
+## `net` {#pallet-net}
 
 ### `listening()`: `bool`
 
@@ -337,7 +339,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.rpc.net.version`
 - **summary**: Returns protocol version.
 
-## `payment`
+
+## `payment` {#pallet-payment}
 
 ### `queryFeeDetails(extrinsic: Bytes, at?: BlockHash)`: `FeeDetails`
 
@@ -349,14 +352,16 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.rpc.payment.queryInfo`
 - **summary**: Retrieves the fee information for an encoded extrinsic
 
-## `rpc`
+
+## `rpc` {#pallet-rpc}
 
 ### `methods()`: `RpcMethods`
 
 - **interface**: `api.rpc.rpc.methods`
 - **summary**: Retrieves the list of RPC methods that are exposed by the node
 
-## `state`
+
+## `state` {#pallet-state}
 
 ### `call(method: Text, data: Bytes, at?: BlockHash)`: `Bytes`
 
@@ -437,7 +442,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **jsonrpc**: subscription
 - **summary**: Subscribes to storage changes for the provided keys
 
-## `system`
+
+## `system` {#pallet-system}
 
 ### `accountNextIndex(accountId: AccountId)`: `Index`
 
@@ -501,7 +507,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.rpc.system.version`
 - **summary**: Retrieves the version of the node
 
-## `web3`
+
+## `web3` {#pallet-web3}
 
 ### `clientVersion()`: `Text`
 

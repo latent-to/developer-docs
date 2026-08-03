@@ -1,41 +1,32 @@
 ---
-title: "Home"
+title: "Developer Guides"
+description: "Guides for building on Bittensor: mining, validating, staking, running subnets, and the SDK, CLI, Subtensor API and EVM."
 slug: "/"
-hidden: false
-sidebar_position: 0
-hide_table_of_contents: false
+sidebar_label: "Home"
 ---
 
-import ThemedImage from '@theme/ThemedImage';
-import useBaseUrl from '@docusaurus/useBaseUrl';
+<head>
+  <title>Learn Bittensor - Developer Guides</title>
+</head>
 
-import { HiAcademicCap } from "react-icons/hi2";
-import { MdInstallDesktop } from "react-icons/md";
-import { FaNetworkWired } from "react-icons/fa";
-import { GiMining } from "react-icons/gi";
+import { HiAcademicCap, HiOutlineAcademicCap } from "react-icons/hi2";
+import { MdInstallDesktop, MdOutlineChecklistRtl } from "react-icons/md";
+import { FaNetworkWired, FaPython, FaRegNewspaper } from "react-icons/fa";
+import { GiMining, GiStarFormation } from "react-icons/gi";
 import { GrValidate } from "react-icons/gr";
-import { MdOutlineChecklistRtl } from "react-icons/md";
-import { GiArchiveRegister } from "react-icons/gi";
 import { BiMath } from "react-icons/bi";
-import { RiTeamLine } from "react-icons/ri";
-import { RiGovernmentLine } from "react-icons/ri";
-import { GiStarFormation } from "react-icons/gi";
-import { HiOutlineAcademicCap } from "react-icons/hi2";
+import { RiTeamLine, RiGovernmentLine } from "react-icons/ri";
 import { VscSymbolParameter } from "react-icons/vsc";
-import { GoCommandPalette } from "react-icons/go";
-import { FaPython } from "react-icons/fa";
-import { FaRegNewspaper } from "react-icons/fa";
-import { SiFuturelearn } from "react-icons/si";
-import { GoNumber } from "react-icons/go";
-import { VscFileMedia } from "react-icons/vsc";
+import { GoCommandPalette, GoNumber } from "react-icons/go";
+import { CiWallet } from "react-icons/ci";
+import { SiEthereum } from "react-icons/si";
 
-# Developer Guides
 
 Bittensor is an open source platform where participants produce best-in-class digital commodities, including compute power, storage space, artificial intelligence (AI) inference and training, protein folding, financial markets prediction, and many more.
 
 Bittensor is composed of distinct **subnets**. Each subnet is an independent community of miners (who produce the commodity), and validators (who evaluate the miners' work).
 
-The Bittensor network constantly emits liquidity, in the form of its token, TAO ($\tau$), to participants in proportion to the value of their contributions. Participants include:
+The Bittensor network constantly emits liquidity, in the form of newly created TAO ($\tau$) and subnet-specific alpha tokens, to participants in proportion to the value of their contributions. Participants include:
 
 - **Miners**&mdash;Work to produce digital commodities. See [mining in Bittensor](./miners/index.md).
 - **Validators**&mdash;Evaluate the quality of miners' work. [See validating in Bittensor](./validators/index.md)
@@ -46,37 +37,29 @@ The Bittensor network constantly emits liquidity, in the form of its token, TAO 
 Browse the subnets and explore links to their code repositories on [TAO.app](https://www.tao.app)'s subnets listings.
 :::
 
+## Start here
+
 <ResponsiveCards>
-    <ResponsiveCard 
-    icon={GiStarFormation}
-    title='Bittensor frequently asked questions (FAQ)'
-    link='resources/questions-and-answers'
-    body='Everything you were afraid to ask about Bittensor.' />
     <ResponsiveCard
-    icon={GoNumber}
-    title='Subnet Listings on TAO.app'
-    link='https://tao.app'
-    body='Browse Bittensor subnets with real-time tokenomic data and analytics.'/>  
-    <ResponsiveCard 
-    icon={MdInstallDesktop}
-    title='Run a Local Bittensor Blockchain'
-    link='local-build/deploy'
-    body='Set up a local Subtensor instance for testing and development.' />
-    <ResponsiveCard 
     icon={HiAcademicCap}
     title='Introduction to Bittensor'
-    link='learn/introduction'
+    link='/learn/introduction'
     body='Learn fundamental Bittensor concepts' />
+    <ResponsiveCard
+    icon={GiStarFormation}
+    title='Bittensor frequently asked questions (FAQ)'
+    link='/resources/questions-and-answers'
+    body='Everything you were afraid to ask about Bittensor.' />
     <ResponsiveCard
     icon={MdInstallDesktop}
     title='Guide to Bittensor tools'
-    link='concepts/tools'
-    body='Open source tools for the Bittensor ecosystem, including the Python SDK and `btcli`.' />      
-    <CardSmall
-    icon={VscFileMedia}
-    title='Bittensor media assets'
-    link='resources/media-assets'
-    body='Media assets' />
+    link='/concepts/tools'
+    body='Open source tools for the Bittensor ecosystem, including the Python SDK and `btcli`.' />
+    <ResponsiveCard
+    icon={FaRegNewspaper}
+    title='Glossary'
+    link='/resources/glossary'
+    body='Definitions for the terms used throughout these guides.' />
 </ResponsiveCards>
 
 ## Participate
@@ -87,81 +70,91 @@ You can participate in an existing subnet as either a subnet validator or a subn
     <ResponsiveCard
     icon={RiTeamLine}
     title='Staking and Delegation'
-    link='./staking-and-delegation/delegation'
+    link='/staking-and-delegation/delegation'
     body='Get to know staking and delegation on the Bittensor network.' />
-    <ResponsiveCard 
-    icon={MdOutlineChecklistRtl}
+    <ResponsiveCard
+    icon={GiMining}
     title='Mining in Bittensor'
-    link='./miners'
+    link='/miners'
     body='Get ready to mine on Bittensor subnets' />
     <ResponsiveCard
-    icon={GiArchiveRegister}
+    icon={GrValidate}
     title='Validating in Bittensor'
-    link='./validators'
+    link='/validators'
     body='Get ready to validate on Bittensor subnets' />
     <ResponsiveCard
     icon={BiMath}
     title='Emissions'
-    link='learn/emissions'
+    link='/learn/emissions'
     body='Learn how emissions are calculated.' />
     <ResponsiveCard
     icon={RiGovernmentLine}
     title='Governance'
-    link='governance'
+    link='/governance'
     body='Learn how Bittensor governance transitions to full community ownership.' />
-    
 </ResponsiveCards>
-
----
 
 ## Running a subnet
 
 Ready to run your own subnet? Follow the below links.
 
 <ResponsiveCards>
-    <ResponsiveCard 
-    icon={HiAcademicCap}
-    title='Basic subnet tutorials'
-    link='tutorials/basic-subnet-tutorials'
-    body='Learn how to run a simple subnet locally, on testchain, or mainchain.' />
     <ResponsiveCard
-    icon={GiStarFormation}
+    icon={MdOutlineChecklistRtl}
     title='Create a subnet'
-    link='subnets/create-a-subnet'
+    link='/subnets/create-a-subnet'
     body='Step-by-step instructions for creating a subnet locally, on testchain, or mainchain.' />
     <ResponsiveCard
     icon={HiOutlineAcademicCap}
     title='OCR subnet tutorial'
-    link='tutorials/ocr-subnet-tutorial'
+    link='/tutorials/ocr-subnet-tutorial'
     body='Convert your validated incentive-mechanism notebook into a working subnet.' />
     <ResponsiveCard
     icon={VscSymbolParameter}
     title='Subnet hyperparameters'
-    link='subnets/subnet-hyperparameters'
+    link='/subnets/subnet-hyperparameters'
     body='Get to know subnet hyperparameters and how to use them effectively.' />
+    <ResponsiveCard
+    icon={FaNetworkWired}
+    title='Run a local Bittensor blockchain'
+    link='/local-build/deploy'
+    body='Set up a local Subtensor instance for testing and development.' />
 </ResponsiveCards>
 
----
+## Build on Bittensor
 
-## Bittensor CLI, SDK, Wallet SDK
+Use the Bittensor SDK, CLI and Wallet SDK to develop against the network, or call the chain directly.
 
-Use the Bittensor CLI and SDK and Wallet SDK to develop and participate in the Bittensor network.
-
-:::caution looking for legacy bittensor 7.4.0 docs?
-See [Legacy Bittensor 7.4.0 Documentation](https://docs.learnbittensor.org/legacy-python-api/html/index.html).
-:::
-
-<Cards>
-    <CardSmall
+<ResponsiveCards>
+    <ResponsiveCard
+    icon={FaPython}
+    title='Bittensor Python SDK'
+    link='/sdk'
+    body='Build miners, validators and tooling in Python.' />
+    <ResponsiveCard
     icon={GoCommandPalette}
     title='Bittensor CLI'
-    link='https://docs.learnbittensor.org/btcli/btcli' />
-    <CardSmall
-    icon={FaPython}
-    title='Bittensor SDK'
-    link='https://docs.learnbittensor.org/sdk/bt-api-ref' />
-    <CardSmall
-    icon={FaPython}
+    link='/btcli/overview'
+    body='Manage wallets, stake and subnet operations from the command line.' />
+    <ResponsiveCard
+    icon={CiWallet}
     title='Bittensor Wallet'
-    link='keys/btwallet' />
-</Cards>
+    link='/keys/btwallet'
+    body='Create and manage coldkeys and hotkeys programmatically.' />
+    <ResponsiveCard
+    icon={GoNumber}
+    title='Subtensor API'
+    link='/subtensor-api'
+    body='Generated reference for the extrinsics, storage, events and errors the chain exposes.' />
+    <ResponsiveCard
+    icon={SiEthereum}
+    title='Bittensor EVM'
+    link='/evm-tutorials'
+    body='Deploy smart contracts and call precompiles on the Bittensor EVM.' />
+</ResponsiveCards>
+
+## Get help
+
+If the chain rejects a call, [Subtensor Error Codes](./errors/index.md) explains the error variants the runtime returns and how they reach you through `btcli`, the SDK and PolkadotJS. [Troubleshooting](./errors/troubleshooting.md) covers the problems that come up most often when running miners and validators.
+
+For everything else, the [Bittensor community links](./resources/community-links.md) collect the Discord channels, block explorers and dashboards that the ecosystem uses day to day.

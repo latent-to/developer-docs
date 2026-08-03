@@ -68,11 +68,6 @@
   text-decoration: none !important;
 }
 
-.hideContentTitle > header:first-child,
-.hideContentTitle > h1:first-child {
-  display: none;
-}
-
 .topLevelDoc > header > h1 {
   margin-bottom: 1.25rem !important;
   font-family: var(--lb-font-heading);

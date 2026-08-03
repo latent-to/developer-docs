@@ -5,7 +5,6 @@ title: "EVM on Local Chain"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# EVM on Local Chain
 
 This page covers getting set up to use EVM on a locally deployed Bittensor blockchain.
 

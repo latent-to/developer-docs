@@ -2,8 +2,6 @@
 title: "Miner's Guide to `BTCLI`"
 ---
 
-# Miner's Guide to `BTCLI`
-
 This page discusses `btcli` security and usage considerations specifically for Bittensor miners.
 
 For general coverage of `btcli` security and usage considerations across persona, see: [Bittensor CLI: Permissions Guide](../btcli/btcli-permissions)
@@ -26,7 +24,7 @@ See:
 - [Staking/Delegation Overview](../staking-and-delegation/delegation)
 - [Managing Your Stakes](../staking-and-delegation/managing-stake-sdk)
 
-Creating hotkeys requires a coldkey private key, and should be done on a secure [coldkey workstation](../keys/coldkey-hotkey-security#coldkey-workstation). However, using hotkeys for signing requests when mining does not require a coldkey, which should never be present on a mining server, i.e. a hotkey workstation. The coldkey should not be placed on a machine used for mining because the software dependencies for mining should not be considered safe/trusted code to the standards of a coldkey workstation.
+Creating hotkeys requires a coldkey private key, and should be done on a secure [coldkey workstation](../keys/coldkey-hotkey-security#cold-custody-hardware-wallets). However, using hotkeys for signing requests when mining does not require a coldkey, which should never be present on a mining server, i.e. a hotkey workstation. The coldkey should not be placed on a machine used for mining because the software dependencies for mining should not be considered safe/trusted code to the standards of a coldkey workstation.
 
 See [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security).
 

@@ -6,7 +6,6 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
-# Auto Staking for Miners
 
 Auto staking allows miners to automatically stake their mining income to a validator of their choice, streamlining the process of compound staking without manual intervention.
 

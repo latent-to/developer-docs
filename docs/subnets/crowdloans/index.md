@@ -1,5 +1,6 @@
 ---
 title: "Crowdloans"
+description: "How Bittensor crowdloans let contributors collectively fund a subnet registration and share the resulting emissions pro-rata through a subnet lease."
 ---
 
 ### Overview

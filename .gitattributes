@@ -1,0 +1,2 @@
+docs/subtensor-api/*.md -merge linguist-generated
+docs/subtensor-api/index.md merge -linguist-generated

@@ -4,7 +4,6 @@ title: "Bittensor SDK v10 Migration Guide"
 
 import { SdkVersion } from "./\_sdk-version.mdx";
 
-# Bittensor SDK v10 Migration Guide
 
 This page documents breaking changes and new features for the Bittensor Python SDK `v10`. This is a major release with significant refactoring, standardization, and new functionality.
 

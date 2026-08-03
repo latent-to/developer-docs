@@ -7,7 +7,6 @@ import TabItem from '@theme/TabItem';
 import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 import { ProxyColdkeyWarning } from "../keys/_proxy-warning.mdx";
 
-# Managing Your Stakes
 
 This guide covers staking operations in Bittensor.
 
@@ -36,7 +35,7 @@ Every stake or unstake operation trades tokens through the subnet's AMM, which m
 
 Price protection sets a hard limit on the worst price you'll accept. If the price moves beyond your limit, the transaction is rejected (strict mode) or partially filled (partial mode).
 
-See: [Understand Price Protection](../learn/price-protection)
+See: [Understand Price Protection](./price-protection)
 
 
 <details>
@@ -89,7 +88,7 @@ See: [MEV Shield](../concepts/mev-shield/), [Using MEV Shield with the SDK](../s
 
 ### For testing/practice
 
-- [Install btcli](../getting-started/install-btcli) and/or the [Bittensor Python SDK](../getting-started/installation)
+- [Install btcli](../btcli/install-btcli) and/or the [Bittensor Python SDK](../sdk/installation)
 - [Create a wallet](../keys/working-with-keys#creating-a-wallet-with-btcli)
 - Get some test TAO: ask in [Discord](https://discord.com/channels/799672011265015819/1107738550373454028/threads/1331693251589312553), or [run a local blockchain](../local-build/deploy.md)
 
@@ -99,7 +98,7 @@ Everything above, plus:
 
 - **A hardware wallet** (Ledger or [Polkadot Vault](../keys/coldkey-hotkey-security#hardware-solution-polkadot-vault)) for your primary coldkey. Your primary coldkey should never be loaded onto an internet-connected machine.
 - **A `NonTransfer` proxy** created from your hardware wallet. This proxy manages all other proxies so the primary coldkey stays in cold storage permanently. See [Add a Proxy Relationship](../keys/proxies/working-with-proxies#add-a-proxy-relationship) and [Manage proxies through a NonTransfer proxy](../keys/proxies/working-with-proxies#manage-proxies-through-a-nontransfer-proxy).
-- **A `Staking` proxy with a non-zero delay**, created through your `NonTransfer` proxy. This is the key you will use for day-to-day staking operations on this page. The delay creates a veto window during which you can [reject unauthorized announcements](../keys/proxies/working-with-proxies#reject-an-announcement).
+- **A `Staking` proxy with a non-zero delay**, created through your `NonTransfer` proxy. This is the key you will use for day-to-day staking operations on this page. The delay creates a veto window during which you can [reject unauthorized announcements](../keys/proxies/working-with-proxies#reject-an-announcement-made-by-proxy).
 - **Sufficient TAO** in the proxy wallet to cover transaction fees (fees are dynamic and weight-based; see [Transaction Fees](../learn/fees) and [Estimating Fees](../learn/fees#estimating-fees)).
 
 See [Coldkey and Hotkey Workstation Security](../keys/coldkey-hotkey-security) for the full security model.
@@ -202,7 +201,7 @@ for rank, (uid, hotkey, stake) in enumerate(top_validators, start=1):
 ## Stake without a proxy (insecure)
 
 :::danger Do not use this on mainnet
-Staking without a proxy requires your coldkey private key on the machine. This is acceptable for testing on testnet but is a serious security risk on mainnet. For mainnet, always use a proxy. See [Best practices](#best-practices-for-staking-security).
+Staking without a proxy requires your coldkey private key on the machine. This is acceptable for testing on testnet but is a serious security risk on mainnet. For mainnet, always use a proxy. See [Best practices](#best-practices-for-staking-securely).
 :::
 
 <Tabs groupId="tool">
@@ -426,7 +425,7 @@ PENDING ANNOUNCEMENT
 ```
 
 
-If you see an unexpected hash, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately. To batch-reject all pending announcements, see [Reject all pending announcements](../keys/proxies/working-with-proxies#reject-all-pending-announcements). To reject a single announcement:
+If you see an unexpected hash, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement-made-by-proxy) immediately. To batch-reject all pending announcements, see [Reject all pending announcements](../keys/proxies/working-with-proxies#reject-all-pending-announcements). To reject a single announcement:
 
 ```python
 import asyncio
@@ -898,7 +897,7 @@ asyncio.run(monitor())
 ```
 
 
-If you see an **unexpected hash**, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately. To batch-reject all pending announcements at once, see [Reject all pending announcements](../keys/proxies/working-with-proxies#reject-all-pending-announcements). To reject a single announcement:
+If you see an **unexpected hash**, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement-made-by-proxy) immediately. To batch-reject all pending announcements at once, see [Reject all pending announcements](../keys/proxies/working-with-proxies#reject-all-pending-announcements). To reject a single announcement:
 
 ```python
 import asyncio
@@ -1153,7 +1152,7 @@ asyncio.run(main())
 The entire security value of a time-delay proxy depends on monitoring. If you skip this step, a compromised proxy key can drain your account during the delay window by submitting its own announcements. **Always verify that the pending announcements match exactly what you announced**.
 :::
 
-During the delay window, run the [monitoring script from the staking section](#step-2-monitor-announcements) to cross-reference on-chain announcements against your saved data. If you see any hash you didn't create, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately.
+During the delay window, run the [monitoring script from the staking section](#step-2-monitor-announcements) to cross-reference on-chain announcements against your saved data. If you see any hash you didn't create, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement-made-by-proxy) immediately.
 
 ### Step 3. Execute
 
@@ -1471,7 +1470,7 @@ asyncio.run(main())
 The entire security value of a time-delay proxy depends on monitoring. If you skip this step, a compromised proxy key can drain your account during the delay window by submitting its own announcements. **Always verify that the pending announcements match exactly what you announced**.
 :::
 
-During the delay window, run the [monitoring script from the staking section](#step-2-monitor-announcements) to cross-reference on-chain announcements against your saved data. If you see any hash you didn't create, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately.
+During the delay window, run the [monitoring script from the staking section](#step-2-monitor-announcements) to cross-reference on-chain announcements against your saved data. If you see any hash you didn't create, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement-made-by-proxy) immediately.
 
 ### Step 3. Execute
 
@@ -1675,7 +1674,7 @@ asyncio.run(main())
 The entire security value of a time-delay proxy depends on monitoring. A compromised Transfer proxy key could redirect your stake to an attacker-controlled coldkey. **Always verify that the pending announcements match exactly what you announced** — especially the `destination_coldkey`.
 :::
 
-During the delay window, run the [monitoring script from the staking section](#step-2-monitor-announcements) to cross-reference on-chain announcements against your saved data. If you see any hash you didn't create, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement) immediately.
+During the delay window, run the [monitoring script from the staking section](#step-2-monitor-announcements) to cross-reference on-chain announcements against your saved data. If you see any hash you didn't create, [reject it](../keys/proxies/working-with-proxies#reject-an-announcement-made-by-proxy) immediately.
 
 ### Step 3. Execute
 

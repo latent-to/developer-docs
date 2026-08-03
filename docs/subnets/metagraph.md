@@ -6,7 +6,6 @@ import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { SdkVersion } from "../sdk/\_sdk-version.mdx";
 
-# Subnet Metagraph
 
 This page documents the Bittensor subnet metagraph.
 

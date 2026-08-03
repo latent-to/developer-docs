@@ -5,7 +5,6 @@ title: "Subtensor Node Requirements"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Subtensor Node Requirements
 
 To run a public subtensor node, make sure that your computer satisfies the following system requirements:
 

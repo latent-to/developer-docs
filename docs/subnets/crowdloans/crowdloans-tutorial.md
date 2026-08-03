@@ -2,8 +2,6 @@
 title: "Create a Subnet with a Crowdloan"
 ---
 
-# Create a Subnet with a Crowdloan
-
 This page describes creating a subnet via **crowdloan** on a locally deployed Bittensor chain. We will use the Polkadot‑JS web app to submit extrinsics.
 
 See also [Crowdloans Overview](./index.md)

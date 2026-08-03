@@ -6,6 +6,7 @@ import {
   writeFile,
   sortedPallets,
   palletAnchor,
+  palletHeading,
 } from "../utils";
 
 // ── Type name helpers ─────────────────────────────────────────────────────────
@@ -218,7 +219,7 @@ export function generateStorage(api: ApiPromise, outputDir: string): void {
   for (const [n] of pallets) lines.push(`- **[${n}](#${palletAnchor(n)})**`);
 
   for (const [palletName, palletQuery] of pallets) {
-    lines.push(`\n## \`${palletName}\`\n`);
+    lines.push(palletHeading(palletName));
     const items = Object.entries(palletQuery as Record<string, any>).sort(
       ([a], [b]) => a.localeCompare(b),
     );

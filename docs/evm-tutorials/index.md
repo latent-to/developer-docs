@@ -23,7 +23,6 @@ import { BiSolidNetworkChart } from "react-icons/bi";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { GrStakeholder } from "react-icons/gr";
 
-# Bittensor EVM Smart Contracts
 
 A full ethereum virtual machine (EVM) runtime operates as an application layer on top of the Bittensor blockchain (Subtensor). This allows users to:
 
@@ -45,14 +44,14 @@ See:
 
 ## EVM and Subtensor wallets on the Bittensor blockchian
 
-Bittensor wallets are based on Polkadot-style ss58 addresses, whereas Ethereum uses h160 addresses.
+Bittensor wallets are based on Polkadot-style SS58 addresses, whereas Ethereum uses H160 addresses.
 
-The holder of a private key for an ss58 address based on the corresponding public key can sign transactions on any Bittensor chain for that address. Anyone who creates key-pairs using `btcli wallet`, for example, holds the private key and the corresponding seed phrase, and hence can sign Bittensor transactions for that wallet.
+The holder of a private key for an SS58 address based on the corresponding public key can sign transactions on any Bittensor chain for that address. Anyone who creates key-pairs using `btcli wallet`, for example, holds the private key and the corresponding seed phrase, and hence can sign Bittensor transactions for that wallet.
 
-Similarly, creating an Ethereum wallet gives you control of the h160 private key for the corresponding public key.
+Similarly, creating an Ethereum wallet gives you control of the H160 private key for the corresponding public key.
 
 :::info
-You can easily [convert an h160 address to an ss58 address](./convert-h160-to-ss58.md), or vice versa, but this does _not_ yield the corresponding private key. This means that if you create a wallet in Bittensor, you will not be able to sign Ethereum contracts with it, nor versa.
+You can easily [convert an H160 address to an SS58 address](./convert-h160-to-ss58.md), or vice versa, but this does _not_ yield the corresponding private key. This means that if you create a wallet in Bittensor, you will not be able to sign Ethereum contracts with it, nor versa.
 :::
 
 ### The HashedAddressMapping

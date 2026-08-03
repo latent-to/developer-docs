@@ -2,13 +2,11 @@
 title: "SDK Tutorials"
 ---
 
-# SDK Tutorials
-
 The Bittensor Python SDK provides a programmable interface to the Bittensor blockchain. This page guides you through practical SDK tutorials organized as a learning path.
 
 ## Prerequisites
 
-- [Installation](../getting-started/installation.md): Install the Bittensor SDK
+- [Installation](./installation.md): Install the Bittensor SDK
 - [Environment Variables](./env-vars.md): Configure your SDK environment
 
 ## Working with Wallets

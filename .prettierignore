@@ -1,1 +1,3 @@
 subtensor-storage-query-examples.md
+docs/subtensor-api/*.md
+!docs/subtensor-api/index.md

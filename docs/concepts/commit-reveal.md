@@ -5,7 +5,6 @@ title: "Commit Reveal"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Commit Reveal
 
 This page describes the **Commit Reveal** feature: a configurable waiting period that elapses between when consensus weights set by subnet validators are first committed, and when they are revealed publicly and included in [Yuma Consensus](../learn/yuma-consensus).
 
@@ -16,7 +15,7 @@ In each Bittensor subnet, each validator scores&mdash;or _'weights'_&mdash;each 
 
 The weight matrix is public information, and must be, so that emissions in the Bittensor platform can be transparently fair. However, this transparency makes it possible for subnet validators to free-ride on the work of other validators by copying the latest consensus rather than independently evaluating subnet miners. This is unfair and potentially degrades the quality of validation work, undermining Bittensor's ability to incentivize the best miners and produce the best digital commodities overall. This is known as the **weight copying problem**.
 
-See [The Weight Copying Problem](./weight-copying-in-bittensor.md).
+See [The Weight Copying Problem](../learn/weight-copying-in-bittensor.md).
 
 
 The Commit Reveal feature is designed to solve the **weight copying problem** by hiding weights until they are stale. Copying stale weights should result in validators departing from consensus.

@@ -7,6 +7,7 @@ import {
   writeFile,
   sortedPallets,
   palletAnchor,
+  palletHeading,
 } from "../utils";
 
 export function generateConstants(api: ApiPromise, outputDir: string): void {
@@ -26,7 +27,7 @@ export function generateConstants(api: ApiPromise, outputDir: string): void {
   for (const [n] of pallets) lines.push(`- **[${n}](#${palletAnchor(n)})**`);
 
   for (const [palletName, palletConsts] of pallets) {
-    lines.push(`\n## \`${palletName}\`\n`);
+    lines.push(palletHeading(palletName));
     const consts = Object.entries(palletConsts as Record<string, any>).sort(
       ([a], [b]) => a.localeCompare(b),
     );

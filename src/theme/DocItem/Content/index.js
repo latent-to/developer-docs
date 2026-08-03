@@ -8,11 +8,9 @@ import DocItemMetaActions from "./MetaActions";
 import styles from "./styles.module.css";
 
 export default function DocItemContent({ children }) {
-  const { metadata, frontMatter, contentTitle } = useDoc();
+  const { metadata, frontMatter } = useDoc();
   const topLevel = metadata?.slug?.split("/").length - 1 < 2;
-  const title = frontMatter.hide_title
-    ? null
-    : contentTitle ?? metadata.title;
+  const title = frontMatter.hide_title ? null : metadata.title;
 
   return (
     <div
@@ -27,9 +25,7 @@ export default function DocItemContent({ children }) {
         </header>
       )}
       <DocItemMetaActions />
-      <div className={clsx(contentTitle && styles.hideContentTitle)}>
-        <MDXContent>{children}</MDXContent>
-      </div>
+      <MDXContent>{children}</MDXContent>
     </div>
   );
 }

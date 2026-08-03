@@ -5,7 +5,6 @@ title: "Configuring Hardhat"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Configuring Hardhat
 
 You can use [Hardhat](https://hardhat.org/) development environment for the EVM feature on subtensor. The Hardhat networks can be configured using the `hardhat.config.ts` file, as shown below. 
 

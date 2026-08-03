@@ -2,8 +2,6 @@
 title: "StorageQuery Precompile"
 ---
 
-# StorageQuery Precompile
-
 Provides raw read access to on-chain Substrate storage from within an EVM contract. Pass a SCALE-encoded storage key as calldata; receive the raw SCALE-encoded value.
 
 The precompile is restricted to authorized pallet prefixes: `SubtensorModule`, `Swap`, `Balances`, `Proxy`, `Scheduler`, `Drand`, `Crowdloan`, `Sudo`, `Multisig`, `Timestamp`. Any key outside these prefixes returns an error.

@@ -3,34 +3,32 @@ title: Constants
 description: "This page contains compile-time runtime constants for the Subtensor runtime and their respective values."
 ---
 
-# Constants
-
 This page contains compile-time runtime constants for the Subtensor runtime and their respective values. Accessible via `api.consts.<Pallet>.<constant_name>`. Values read live from node.
 
 :::info
 Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
-- **[aura](#aura)**
-- **[balances](#balances)**
-- **[commitments](#commitments)**
-- **[contracts](#contracts)**
-- **[crowdloan](#crowdloan)**
-- **[drand](#drand)**
-- **[grandpa](#grandpa)**
-- **[limitOrders](#limitorders)**
-- **[multisig](#multisig)**
-- **[proxy](#proxy)**
-- **[safeMode](#safemode)**
-- **[scheduler](#scheduler)**
-- **[subtensorModule](#subtensormodule)**
-- **[swap](#swap)**
-- **[system](#system)**
-- **[timestamp](#timestamp)**
-- **[transactionPayment](#transactionpayment)**
-- **[utility](#utility)**
+- **[aura](#pallet-aura)**
+- **[balances](#pallet-balances)**
+- **[commitments](#pallet-commitments)**
+- **[contracts](#pallet-contracts)**
+- **[crowdloan](#pallet-crowdloan)**
+- **[drand](#pallet-drand)**
+- **[grandpa](#pallet-grandpa)**
+- **[limitOrders](#pallet-limitorders)**
+- **[multisig](#pallet-multisig)**
+- **[proxy](#pallet-proxy)**
+- **[safeMode](#pallet-safemode)**
+- **[scheduler](#pallet-scheduler)**
+- **[subtensorModule](#pallet-subtensormodule)**
+- **[swap](#pallet-swap)**
+- **[system](#pallet-system)**
+- **[timestamp](#pallet-timestamp)**
+- **[transactionPayment](#pallet-transactionpayment)**
+- **[utility](#pallet-utility)**
 
-## `aura`
+## `aura` {#pallet-aura}
 
 ### `slotDuration`: `u64`
 
@@ -38,9 +36,10 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `12000`
 - **summary**: The slot duration Aura should run with, expressed in milliseconds. The effective value of this type should not change while the chain is running.
 
-  For backwards compatibility either use [`MinimumPeriodTimesTwo`] or a const.
+    For backwards compatibility either use [`MinimumPeriodTimesTwo`] or a const.
 
-## `balances`
+
+## `balances` {#pallet-balances}
 
 ### `existentialDeposit`: `u64`
 
@@ -48,9 +47,9 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `500`
 - **summary**: The minimum amount required to keep an account open. MUST BE GREATER THAN ZERO!
 
-  If you _really_ need it to be zero, you can enable the feature `insecure_zero_ed` for this pallet. However, you do so at your own risk: this will open up a major DoS vector. In case you have multiple sources of provider references, you may also get unexpected behaviour if you set this to zero.
+    If you *really* need it to be zero, you can enable the feature `insecure_zero_ed` for this pallet. However, you do so at your own risk: this will open up a major DoS vector. In case you have multiple sources of provider references, you may also get unexpected behaviour if you set this to zero.
 
-  Bottom line: Do yourself a favour and make it at least one!
+    Bottom line: Do yourself a favour and make it at least one!
 
 ### `maxFreezes`: `u32`
 
@@ -64,7 +63,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `50`
 - **summary**: The maximum number of locks that should exist on an account. Not strictly enforced, but used for weight estimation.
 
-  Use of locks is deprecated in favour of freezes. See `https://github.com/paritytech/substrate/pull/12951/`
+    Use of locks is deprecated in favour of freezes. See `https://github.com/paritytech/substrate/pull/12951/`
 
 ### `maxReserves`: `u32`
 
@@ -72,9 +71,10 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `50`
 - **summary**: The maximum number of named reserves that can exist on an account.
 
-  Use of reserves is deprecated in favour of holds. See `https://github.com/paritytech/substrate/pull/12951/`
+    Use of reserves is deprecated in favour of holds. See `https://github.com/paritytech/substrate/pull/12951/`
 
-## `commitments`
+
+## `commitments` {#pallet-commitments}
 
 ### `fieldDeposit`: `u64`
 
@@ -94,7 +94,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `3`
 - **summary**: The maximum number of additional fields that can be added to a commitment
 
-## `contracts`
+
+## `contracts` {#pallet-contracts}
 
 ### `apiVersion`: `u16`
 
@@ -102,7 +103,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `4`
 - **summary**: The version of the HostFn APIs that are available in the runtime.
 
-  Only valid value is `()`.
+    Only valid value is `()`.
 
 ### `codeHashLockupDepositPercent`: `Perbill`
 
@@ -122,9 +123,9 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `30`
 - **summary**: The amount of balance a caller has to pay for each byte of storage.
 
-  **Note:**
+    **Note:**
 
-  Changing this value for an existing chain might need a storage migration.
+    Changing this value for an existing chain might need a storage migration.
 
 ### `depositPerItem`: `u64`
 
@@ -132,9 +133,9 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `75`
 - **summary**: The amount of balance a caller has to pay for each storage item.
 
-  **Note:**
+    **Note:**
 
-  Changing this value for an existing chain might need a storage migration.
+    Changing this value for an existing chain might need a storage migration.
 
 ### `environment`: `{"_alias":{"hash_":"hash"},"accountId":"PalletContractsEnvironmentTypeAccountId32","balance":"PalletContractsEnvironmentTypeTaoBalance","hash_":"PalletContractsEnvironmentTypeH256","hasher":"PalletContractsEnvironmentTypeBlakeTwo256","timestamp":"PalletContractsEnvironmentTypeU64","blockNumber":"PalletContractsEnvironmentTypeU32"}`
 
@@ -142,7 +143,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `{"accountId":null,"balance":null,"hash":null,"hasher":null,"timestamp":null,"blockNumber":null}`
 - **summary**: Type that bundles together all the runtime configurable interface types.
 
-  This is not a real config. We just mention the type here as constant so that its type appears in the metadata. Only valid value is `()`.
+    This is not a real config. We just mention the type here as constant so that its type appears in the metadata. Only valid value is `()`.
 
 ### `maxCodeLen`: `u32`
 
@@ -150,7 +151,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `131072`
 - **summary**: The maximum length of a contract code in bytes.
 
-  The value should be chosen carefully taking into the account the overall memory limit your runtime has, as well as the [maximum allowed callstack depth](#associatedtype.CallStack). Look into the `integrity_test()` for some insights.
+    The value should be chosen carefully taking into the account the overall memory limit your runtime has, as well as the maximum allowed callstack depth. Look into the `integrity_test()` for some insights.
 
 ### `maxDebugBufferLen`: `u32`
 
@@ -188,13 +189,14 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `false`
 - **summary**: Make contract callable functions marked as `#[unstable]` available.
 
-  Contracts that use `#[unstable]` functions won't be able to be uploaded unless this is set to `true`. This is only meant for testnets and dev nodes in order to experiment with new features.
+    Contracts that use `#[unstable]` functions won't be able to be uploaded unless this is set to `true`. This is only meant for testnets and dev nodes in order to experiment with new features.
 
-  **Warning:**
+    **Warning:**
 
-  Do **not** set to `true` on productions chains.
+    Do **not** set to `true` on productions chains.
 
-## `crowdloan`
+
+## `crowdloan` {#pallet-crowdloan}
 
 ### `absoluteMinimumContribution`: `u64`
 
@@ -237,7 +239,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `50`
 - **summary**: The maximum number of contributors that can be refunded in a single refund.
 
-## `drand`
+
+## `drand` {#pallet-drand}
 
 ### `httpFetchTimeout`: `u64`
 
@@ -251,9 +254,10 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `1048576`
 - **summary**: A configuration for base priority of unsigned transactions.
 
-  This is exposed so that it can be tuned for particular runtime, when multiple pallets send unsigned transactions.
+    This is exposed so that it can be tuned for particular runtime, when multiple pallets send unsigned transactions.
 
-## `grandpa`
+
+## `grandpa` {#pallet-grandpa}
 
 ### `maxAuthorities`: `u32`
 
@@ -273,9 +277,10 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `0`
 - **summary**: The maximum number of entries to keep in the set id to session index mapping.
 
-  Since the `SetIdSession` map is only used for validating equivocations this value should relate to the bonding duration of whatever staking system is being used (if any). If equivocation handling is not enabled then this value can be zero.
+    Since the `SetIdSession` map is only used for validating equivocations this value should relate to the bonding duration of whatever staking system is being used (if any). If equivocation handling is not enabled then this value can be zero.
 
-## `limitOrders`
+
+## `limitOrders` {#pallet-limitorders}
 
 ### `maxOrdersPerBatch`: `u32`
 
@@ -289,7 +294,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `5EYCAe5fvncY7XCnFeAMaW4jAaVtzayKdaNNRURB5Nwvtw74`
 - **summary**: Hotkey registered in each subnet that the pallet's intermediary account stakes to/from during batch execution.
 
-  This must be a hotkey registered on every subnet the pallet may operate on. Operators should register a dedicated hotkey and set this in the runtime configuration.
+    This must be a hotkey registered on every subnet the pallet may operate on. Operators should register a dedicated hotkey and set this in the runtime configuration.
 
 ### `palletId`: `[u8;8]`
 
@@ -297,9 +302,10 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `0x62742f6c696d6974`
 - **summary**: PalletId used to derive the intermediary account for batch execution.
 
-  The derived account temporarily holds pooled TAO and staked alpha during `execute_batched_orders` before distributing to order signers.
+    The derived account temporarily holds pooled TAO and staked alpha during `execute_batched_orders` before distributing to order signers.
 
-## `multisig`
+
+## `multisig` {#pallet-multisig}
 
 ### `depositBase`: `u64`
 
@@ -307,7 +313,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `132000000`
 - **summary**: The base amount of currency needed to reserve for creating a multisig execution or to store a dispatch call for later.
 
-  This is held for an additional storage item whose value size is `4 + sizeof((BlockNumber, Balance, AccountId))` bytes and whose key size is `32 + sizeof(AccountId)` bytes.
+    This is held for an additional storage item whose value size is `4 + sizeof((BlockNumber, Balance, AccountId))` bytes and whose key size is `32 + sizeof(AccountId)` bytes.
 
 ### `depositFactor`: `u64`
 
@@ -315,7 +321,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `32000000`
 - **summary**: The amount of currency needed per unit threshold when creating a multisig execution.
 
-  This is held for adding 32 bytes more into a pre-existing storage value.
+    This is held for adding 32 bytes more into a pre-existing storage value.
 
 ### `maxSignatories`: `u32`
 
@@ -323,7 +329,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `100`
 - **summary**: The maximum amount of signatories allowed in the multisig.
 
-## `proxy`
+
+## `proxy` {#pallet-proxy}
 
 ### `announcementDepositBase`: `u64`
 
@@ -331,7 +338,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `36000000`
 - **summary**: The base amount of currency needed to reserve for creating an announcement.
 
-  This is held when a new storage item holding a `Balance` is created (typically 16 bytes).
+    This is held when a new storage item holding a `Balance` is created (typically 16 bytes).
 
 ### `announcementDepositFactor`: `u64`
 
@@ -339,7 +346,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `68000000`
 - **summary**: The amount of currency needed per announcement made.
 
-  This is held for adding an `AccountId`, `Hash` and `BlockNumber` (typically 68 bytes) into a pre-existing storage value.
+    This is held for adding an `AccountId`, `Hash` and `BlockNumber` (typically 68 bytes) into a pre-existing storage value.
 
 ### `maxPending`: `u32`
 
@@ -359,7 +366,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `60000000`
 - **summary**: The base amount of currency needed to reserve for creating a proxy.
 
-  This is held for an additional storage item whose value size is `sizeof(Balance)` bytes and whose key size is `sizeof(AccountId)` bytes.
+    This is held for an additional storage item whose value size is `sizeof(Balance)` bytes and whose key size is `sizeof(AccountId)` bytes.
 
 ### `proxyDepositFactor`: `u64`
 
@@ -367,9 +374,10 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `33000000`
 - **summary**: The amount of currency needed per proxy added.
 
-  This is held for adding 32 bytes plus an instance of `ProxyType` more into a pre-existing storage value. Thus, when configuring `ProxyDepositFactor` one should take into account `32 + proxy_type.encode().len()` bytes of data.
+    This is held for adding 32 bytes plus an instance of `ProxyType` more into a pre-existing storage value. Thus, when configuring `ProxyDepositFactor` one should take into account `32 + proxy_type.encode().len()` bytes of data.
 
-## `safeMode`
+
+## `safeMode` {#pallet-safemode}
 
 ### `enterDepositAmount`: `Option<u64>`
 
@@ -377,7 +385,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: ``
 - **summary**: The amount that will be reserved upon calling [`Pallet::enter`].
 
-  `None` disallows permissionlessly enabling the safe-mode and is a sane default.
+    `None` disallows permissionlessly enabling the safe-mode and is a sane default.
 
 ### `enterDuration`: `u32`
 
@@ -391,7 +399,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: ``
 - **summary**: The amount that will be reserved upon calling [`Pallet::extend`].
 
-  `None` disallows permissionlessly extending the safe-mode and is a sane default.
+    `None` disallows permissionlessly extending the safe-mode and is a sane default.
 
 ### `extendDuration`: `u32`
 
@@ -399,7 +407,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `0`
 - **summary**: For how many blocks the safe-mode can be extended by each [`Pallet::extend`] call.
 
-  This does not impose a hard limit as the safe-mode can be extended multiple times.
+    This does not impose a hard limit as the safe-mode can be extended multiple times.
 
 ### `releaseDelay`: `Option<u32>`
 
@@ -407,11 +415,12 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: ``
 - **summary**: The minimal duration a deposit will remain reserved after safe-mode is entered or extended, unless [`Pallet::force_release_deposit`] is successfully called sooner.
 
-  Every deposit is tied to a specific activation or extension, thus each deposit can be released independently after the delay for it has passed.
+    Every deposit is tied to a specific activation or extension, thus each deposit can be released independently after the delay for it has passed.
 
-  `None` disallows permissionlessly releasing the safe-mode deposits and is a sane default.
+    `None` disallows permissionlessly releasing the safe-mode deposits and is a sane default.
 
-## `scheduler`
+
+## `scheduler` {#pallet-scheduler}
 
 ### `maximumWeight`: `{"refTime":"Compact<u64>","proofSize":"Compact<u64>"}`
 
@@ -425,10 +434,12 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `50`
 - **summary**: The maximum number of scheduled calls in the queue for a single block.
 
-  **NOTE:**
-  - Dependent pallets' benchmarks might require a higher limit for the setting. Set a higher limit under `runtime-benchmarks` feature.
+    **NOTE:**
 
-## `subtensorModule`
+    + Dependent pallets' benchmarks might require a higher limit for the setting. Set a higher limit under `runtime-benchmarks` feature.
+
+
+## `subtensorModule` {#pallet-subtensormodule}
 
 ### `alphaHigh`: `u16`
 
@@ -560,7 +571,6 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 - **interface**: `api.consts.subtensorModule.initialIssuance`
 - **value**: `0`
-- **summary**: Initial currency issuance.
 - **summary**: Initial currency issuance.
 
 ### `initialKappa`: `u16`
@@ -831,7 +841,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 - **interface**: `api.consts.subtensorModule.minBurnUpperBound`
 - **value**: `1000000000`
-- **summary**: Min burn upper bound.
+- **summary**: Min  burn upper bound.
 
 ### `minTempo`: `u16`
 
@@ -851,7 +861,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `false`
 - **summary**: A flag to indicate if Yuma3 is enabled.
 
-## `swap`
+
+## `swap` {#pallet-swap}
 
 ### `maxFeeRate`: `u16`
 
@@ -877,7 +888,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `0x74656e2f73776170`
 - **summary**: This type is used to derive protocol accoun ID.
 
-## `system`
+
+## `system` {#pallet-system}
 
 ### `blockHashCount`: `u32`
 
@@ -909,7 +921,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `42`
 - **summary**: The designated SS58 prefix of this chain.
 
-  This replaces the "ss58Format" property declared in the chain spec. Reason is that the runtime should know about the prefix in order to make use of it as an identifier of the chain.
+    This replaces the "ss58Format" property declared in the chain spec. Reason is that the runtime should know about the prefix in order to make use of it as an identifier of the chain.
 
 ### `version`: `{"specName":"Text","implName":"Text","authoringVersion":"u32","specVersion":"u32","implVersion":"u32","apis":"Vec<([u8;8],u32)>","transactionVersion":"u32","systemVersion":"u8"}`
 
@@ -917,7 +929,8 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `{"specName":"node-subtensor","implName":"node-subtensor","authoringVersion":1,"specVersion":440,"implVersion":1,"apis":[["0xdf6acb689907609b",5],["0x37e397fc7c91f5e4",2],["0x40fe3ad401f8959a",6],["0xfbc577b9d747efd6",1],["0xd2bc9897eed08f15",3],["0xf78b278be53f454c",2],["0xdd718d5cc53262d4",1],["0xab3c0572291feb8b",1],["0xed99c5acb25eedf5",3],["0xbc9d89904f5b923f",1],["0x37c8bb1350a9a2a8",4],["0xf3ff14d5ab527059",3],["0x582211f65bb14b89",6],["0xe65b00e46cedd0aa",2],["0x68b66ba122c93fa7",2],["0x42e62be4a39e5b60",1],["0x806df4ccaa9ed485",1],["0x8375104b299b74c5",2],["0x5d1fbfbe852f2807",1],["0xc6886e2f8e598b0a",1],["0xc0de4984d112f3b4",1],["0xcbca25e39f142387",2],["0xa8b093e6508d9e9c",1],["0x1c4585bd5c707202",1]],"transactionVersion":1,"systemVersion":1}`
 - **summary**: Get the chain's in-code version.
 
-## `timestamp`
+
+## `timestamp` {#pallet-timestamp}
 
 ### `minimumPeriod`: `u64`
 
@@ -925,9 +938,10 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `6000`
 - **summary**: The minimum period between blocks.
 
-  Be aware that this is different to the _expected_ period that the block production apparatus provides. Your chosen consensus system will generally work with this to determine a sensible block time. For example, in the Aura pallet it will be double this period on default settings.
+    Be aware that this is different to the *expected* period that the block production apparatus provides. Your chosen consensus system will generally work with this to determine a sensible block time. For example, in the Aura pallet it will be double this period on default settings.
 
-## `transactionPayment`
+
+## `transactionPayment` {#pallet-transactionpayment}
 
 ### `operationalFeeMultiplier`: `u8`
 
@@ -935,15 +949,16 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **value**: `5`
 - **summary**: A fee multiplier for `Operational` extrinsics to compute "virtual tip" to boost their `priority`
 
-  This value is multiplied by the `final_fee` to obtain a "virtual tip" that is later added to a tip component in regular `priority` calculations. It means that a `Normal` transaction can front-run a similarly-sized `Operational` extrinsic (with no tip), by including a tip value greater than the virtual tip.
+    This value is multiplied by the `final_fee` to obtain a "virtual tip" that is later added to a tip component in regular `priority` calculations. It means that a `Normal` transaction can front-run a similarly-sized `Operational` extrinsic (with no tip), by including a tip value greater than the virtual tip.
 
-  ```rust,ignore // For `Normal` let priority = priority_calc(tip);
+    ```rust,ignore // For `Normal` let priority = priority_calc(tip);
 
-  // For `Operational` let virtual_tip = (inclusion_fee + tip) \* OperationalFeeMultiplier; let priority = priority_calc(tip + virtual_tip); ```
+    // For `Operational` let virtual_tip = (inclusion_fee + tip) * OperationalFeeMultiplier; let priority = priority_calc(tip + virtual_tip); ```
 
-  Note that since we use `final_fee` the multiplier applies also to the regular `tip` sent with the transaction. So, not only does the transaction get a priority bump based on the `inclusion_fee`, but we also amplify the impact of tips applied to `Operational` transactions.
+    Note that since we use `final_fee` the multiplier applies also to the regular `tip` sent with the transaction. So, not only does the transaction get a priority bump based on the `inclusion_fee`, but we also amplify the impact of tips applied to `Operational` transactions.
 
-## `utility`
+
+## `utility` {#pallet-utility}
 
 ### `batchedCallsLimit`: `u32`
 

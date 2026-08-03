@@ -4,7 +4,6 @@ title: "Logging"
 
 import { SdkVersion } from "../sdk/_sdk-version.mdx";
 
-# Logging
 
 The `logging` module in Bittensor uses several levels to categorize log messages by their severity. Each level has a numeric value and the verbosity decreases as the level increases. See the below table.
 

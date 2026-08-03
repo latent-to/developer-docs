@@ -7,7 +7,6 @@ import TabItem from '@theme/TabItem';
 import { SdkVersion } from "../../sdk/_sdk-version.mdx";
 import { ProxyColdkeyWarning } from "../../keys/_proxy-warning.mdx";
 
-# Managing Root Claims
 
 This page covers how to configure, monitor, and claim root dividends, i.e. dividends from staking to validators on the Root Subnet. See [Root Claim](./)
 

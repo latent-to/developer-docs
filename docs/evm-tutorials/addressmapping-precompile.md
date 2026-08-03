@@ -2,8 +2,6 @@
 title: "AddressMapping Precompile"
 ---
 
-# AddressMapping Precompile
-
 The `AddressMapping` precompile lets you convert a H160 EVM address into its Substrate AccountId32 (`bytes32`) using the runtime's HashedAddressMapping. This mapping is one-way; therefore, you cannot reverse it to recover the H160 private key from the AccountId32.
 
 - **Address**: `0x000000000000000000000000000000000000080c`
