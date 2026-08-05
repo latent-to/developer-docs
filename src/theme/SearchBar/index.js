@@ -118,8 +118,7 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
   ).current;
 
   const resultsFooterComponent = useMemo(
-    () => (footerProps) =>
-      <ResultsFooter {...footerProps} onClose={onClose} />,
+    () => (footerProps) => <ResultsFooter {...footerProps} onClose={onClose} />,
     [onClose],
   );
 
@@ -150,6 +149,7 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
           href={`https://${props.appId}-dsn.algolia.net`}
           crossOrigin="anonymous"
         />
+        <meta name="algolia-site-verification" content="48C94B5C040FF130" />
       </Head>
       <CustomSearchButton
         onTouchStart={importDocSearchModalIfNeeded}
