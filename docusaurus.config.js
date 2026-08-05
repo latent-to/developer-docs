@@ -301,7 +301,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image: "img/bittensor-dev-docs-social-card.png",
+      image: "img/lb-logo.png",
       metadata: [
         { property: "og:type", content: "website" },
         { property: "og:site_name", content: "Learn Bittensor" },
