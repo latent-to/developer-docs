@@ -66,14 +66,36 @@ The moving price for each subnet is calculated using a custom [EMA](../learn/ema
 **Price-Based Distribution:**
 The system uses an EMA of each subnet's token price (`SubnetMovingPrice`) to determine emission shares, rather than the live spot price. Each subnet's share of the fixed block emission is weighted by EMA price, and a miner-burn penalty, then normalized over all emission-enabled subnets:
 
+**Step 1** — Raw share:
+
 $$
-\text{share}_i = \frac{p_i \cdot (1 - b_i)}{\sum_{j \in \mathbb{S}} p_j \cdot (1 - b_j)}
+s_i = p_i \cdot (1 - b_i)
+$$
+
+**Step 2** — Demand bar (per-tempo):
+
+$$
+\theta = \text{quantile}_q\bigl(\{s_i\}\bigr), \quad q = \texttt{EmissionBarQuantile}\ (\text{default } 0.61)
+$$
+
+**Step 3** — Hill gate:
+
+$$
+\text{gate}(s_i) = \frac{s_i^h}{s_i^h + \theta^h}, \quad h = \texttt{EmissionGateExponent}\ (\text{default } 3)
+$$
+
+**Step 4** — Final share:
+
+$$
+\text{share}_i = \frac{s_i \cdot \text{gate}(s_i)}{\sum_{j \in \mathbb{S}} s_j \cdot \text{gate}(s_j)}
 $$
 
 where:
 
-- $p_i$ = `SubnetMovingPrice`
-- $b_i$ = `MinerBurned` — proportion of miner (incentive) emission withheld this tempo due to an owner/immune hotkey (0 = none withheld, 1 = all withheld)
+- $p_i$ = `SubnetMovingPrice` (EMA price, dynamic smoothing factor, ~30-day half-life)
+- $b_i$ = `MinerBurned` — proportion of miner emission withheld this tempo (0 = none withheld, 1 = all withheld)
+- $\theta$ = demand bar; at $s_i = \theta$ the gate passes exactly ½; recomputed once per tempo
+- $h$ = gate sharpness; higher h = sharper cliff at the bar
 
 TAO allocated to subnet $i$ per block:
 
@@ -81,7 +103,7 @@ $$
 \text{tao\_allocation}_i = \text{block\_emission} \times \text{share}_i
 $$
 
-**Fallback**: if every subnet's combined weight is zero, `get_shares` falls back to unweighted price shares ($p_i / \sum p_j$) so block emission is never stranded.
+**Fallback**: if every subnet's combined gate-weighted sum is zero, `get_shares` falls back to unweighted price shares ($p_i / \sum p_j$) so block emission is never stranded.
 
 **Implementation:**
 
@@ -91,7 +113,8 @@ $$
 **Key Characteristics:**
 
 - Emission shares are slow to respond to price changes due to the ~92.6 day effective EMA window
-- Emission-enabled subnets receive a non-zero share determined by their EMA price and miner-burn penalty; emission-disabled subnets receive zero emissions
+- The Hill gate concentrates emission toward above-bar subnets; at defaults (q = 0.61, h = 3), the 94 below-bar subnets on current mainnet collectively receive ~12.5% of emission
+- Emission-enabled subnets receive a non-zero share determined by their gated emission weight; emission-disabled subnets receive zero
 - De-registration remains price-based and is intentionally decoupled from emission share
 - `MinerBurned` is cleared on subnet removal — no stale values after deregistration
 
