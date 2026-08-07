@@ -3,10 +3,12 @@ title: Storage
 description: "This page contains storage query definitions for the Subtensor runtime."
 ---
 
+# Storage
+
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **443**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -933,6 +935,41 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid, hotkey ) --> axon_info
 
+### `basketClaimed(AccountId32, AccountId32)`: `i128`
+
+- **interface**: `api.query.subtensorModule.basketClaimed`
+- **summary**: DMAP ( validator_hotkey, staker_coldkey ) --> fund shares already claimed (watermark).
+
+    Signed on purpose, for two reasons. First, stake-change rebasing (`claimed ± rate * delta`) must be exact in both directions: with an unsigned floor, unstaking root before claiming would clip the rebase at zero, silently forfeiting the staker's accrued entitlement and permanently stranding the matching shares (and their escrow value) in the fund. Second, this map doubles as the grant ledger for direct deposits: `stake_into_basket` credits its minted shares by *decrementing* the watermark (`owed = rate * root_stake - claimed`), so a persistent negative value is an intentional unconditional share grant, not a rebasing artifact.
+
+### `basketDepositedTao(AccountId32)`: `TaoBalance`
+
+- **interface**: `api.query.subtensorModule.basketDepositedTao`
+- **summary**: MAP ( validator_hotkey ) --> lifetime realizable TAO value deposited into the basket.
+
+    Cumulative sum of every deposit's `value_added`: the realizable NAV the deposit actually added (net of buy slippage and fees), deliberately less than the raw TAO deployed. Both dividend deposits and direct `stake_into_basket` deposits accumulate here, and dividend deposits add their full `value_added` even though only the stakers' attribution fraction mints shares. Together with [`BasketRedeemedTao`] this makes lifetime fund performance (`(NAV + redeemed) / deposited`) and deposit-rate metrics computable from two storage reads, with no event indexing. Follows the fund across hotkey swaps.
+
+### `basketRate(AccountId32)`: `FixedI128`
+
+- **interface**: `api.query.subtensorModule.basketRate`
+- **summary**: MAP ( validator_hotkey ) --> cumulative fund-shares-per-root-stake accumulator.
+
+    Each dividend deposit increments this by `minted_shares / total_root_stake`. A staker's gross entitlement is `BasketRate * root_stake`; net owed subtracts their [`BasketClaimed`] watermark. Stake additions/removals rebase the watermark by `rate * delta` so changing root stake never retroactively grants or removes accrued claimable.
+
+### `basketRedeemedTao(AccountId32)`: `TaoBalance`
+
+- **interface**: `api.query.subtensorModule.basketRedeemedTao`
+- **summary**: MAP ( validator_hotkey ) --> lifetime TAO redeemed (claimed) out of the basket.
+
+    Cumulative sum of every claim's realized payout. See [`BasketDepositedTao`].
+
+### `basketShares(AccountId32)`: `u64`
+
+- **interface**: `api.query.subtensorModule.basketShares`
+- **summary**: MAP ( validator_hotkey ) --> total outstanding basket fund shares `P`.
+
+    A validator's beta basket is a single fund: its holdings are the escrow stake positions `(hotkey, escrow, netuid)` across subnets (the root slot is the fund's TAO/cash position), and its net asset value `N` is the realizable (slippage-aware) TAO value of those holdings. Stakers' entitlements are denominated in *fund shares*, never in any particular subnet's alpha: deposits mint `value_added * P / N` shares, where `value_added` is the realizable NAV the deposit actually added (so existing holders are neither diluted nor taxed with the deposit's buy slippage), and redemption pays the staker's owed share fraction `owed / P` of every holding, sold pro-rata. Direct deposits (`stake_into_basket`) mint the same way, credited via the signed [`BasketClaimed`] watermark. Because entitlement is decoupled from composition, holdings can be rebalanced (validator-directed trading, dissolution conversions) without touching any staker's claim.
+
 ### `blockAtRegistration(u16, u16)`: `u64`
 
 - **interface**: `api.query.subtensorModule.blockAtRegistration`
@@ -1116,6 +1153,11 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> LockState | Total decaying lock to the owner hotkey for a subnet.
 
+### `deferredRootAlphaDividends(u16, AccountId32)`: `AlphaBalance`
+
+- **interface**: `api.query.subtensorModule.deferredRootAlphaDividends`
+- **summary**: Root dividend credits whose per-hotkey allocation was calculated by an epoch while the beta-basket seed migration owned the destination maps. Credits are released to the same hotkey on that subnet's first epoch after the seed completes.
+
 ### `delegates(AccountId32)`: `PerU16`
 
 - **interface**: `api.query.subtensorModule.delegates`
@@ -1155,6 +1197,11 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.emissionBarQuantile`
 - **summary**: ITEM --> Emission Bar Quantile (q)
+
+### `emissionBarRank`: `u16`
+
+- **interface**: `api.query.subtensorModule.emissionBarRank`
+- **summary**: ITEM --> Emission Bar Rank (N). When non-zero, overrides the quantile.
 
 ### `emissionGateBar`: `FixedU128`
 
@@ -1257,7 +1304,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.lastColdkeyHotkeyStakeBlock`
 - **modifier**: `Optional`
-- **summary**: Map (coldkey, hotkey) --> u64 the last block at which stake was added/removed.
+- **summary**: Map (coldkey, hotkey) --> u64 the last block at which **root** stake was added/removed/claimed for that pair. Used solely as the age basis for `RootStakeUnlockInterval`. Non-root stake ops must not write this map.
 
 ### `lastEpochBlock(NetUid)`: `u64`
 
@@ -1535,10 +1582,6 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.nominatorMinRequiredStake`
 - **summary**: ITEM( nominator_min_required_stake ) --- Factor of DefaultMinStake in per-mill format.
 
-### `numRootClaim`: `u64`
-
-- **interface**: `api.query.subtensorModule.numRootClaim`
-
 ### `numStakingColdkeys`: `u64`
 
 - **interface**: `api.query.subtensorModule.numStakingColdkeys`
@@ -1584,6 +1627,17 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.parentKeys`
 - **summary**: DMAP ( child, netuid ) --> Vec\<(proportion,parent)>
+
+### `pendingBasketDeposits(AccountId32, u16)`: `AlphaBalance`
+
+- **interface**: `api.query.subtensorModule.pendingBasketDeposits`
+- **summary**: DMAP ( hotkey, netuid ) --> alpha | Root dividend credits waiting to enter the validator's beta basket. Epochs enqueue here instead of depositing inline (a deposit prices a share mint against the fund's full NAV — one AMM quote per holding — so running one per validator inside the epoch made epoch blocks scale with `validators x holdings`). Credits merge per (hotkey, origin subnet) and are flushed as a single batched deposit per hotkey: by the one-hotkey-per-block round-robin drain (`flush_pending_basket_deposits_block`), or eagerly whenever the hotkey's claimant base or basket is touched (claims, basket stakes, root stake changes, hotkey swaps), so stake added after an epoch can never capture dividends earned before it arrived. Credits whose spot value is below `RootClaimableThreshold[ROOT]` stay queued and keep merging until they are worth a deposit, which is what keeps dust from ever becoming a basket holding row. Hotkeys deregistered from root have their remaining queued credits recycled and purged (pending only — basket holdings are untouched).
+
+### `pendingBasketFlushCursor`: `Bytes`
+
+- **interface**: `api.query.subtensorModule.pendingBasketFlushCursor`
+- **modifier**: `Optional`
+- **summary**: ITEM ( raw storage key ) | Round-robin cursor of the per-block pending-basket-deposit flush over [`PendingBasketDeposits`]: the drain flushes one hotkey per block and resumes here, so every queued hotkey gets its turn even when some entries are deferred dust that stays in the map after its hotkey's visit.
 
 ### `pendingChildKeyCooldown`: `u64`
 
@@ -1676,23 +1730,32 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 ### `rootClaimable(AccountId32)`: `BTreeMap`
 
 - **interface**: `api.query.subtensorModule.rootClaimable`
+- **summary**: MAP ( hot ) --> MAP(netuid ) --> claimable_dividends | LEGACY per-subnet root claimable rates. Superseded by the unified [`BasketRate`]; only read (and drained) by `migrate_seed_beta_basket`. Do not use in runtime logic.
 
 ### `rootClaimableThreshold(NetUid)`: `FixedI128`
 
 - **interface**: `api.query.subtensorModule.rootClaimableThreshold`
+- **summary**: Basket redemption is fund-level (not per-subnet), so only the `NetUid::ROOT` entry is consulted: a claim below `RootClaimableThreshold[ROOT]` TAO is skipped as dust. Other entries are inert.
 
 ### `rootClaimed(u16, AccountId32, AccountId32)`: `u128`
 
 - **interface**: `api.query.subtensorModule.rootClaimed`
-
-### `rootClaimType(AccountId32)`: `RootClaimTypeEnum`
-
-- **interface**: `api.query.subtensorModule.rootClaimType`
+- **summary**: LEGACY per-subnet claimed watermarks. Superseded by the unified [`BasketClaimed`]; only read (and drained) by `migrate_seed_beta_basket`. Do not use in runtime logic.
 
 ### `rootProp(NetUid)`: `FixedU128`
 
 - **interface**: `api.query.subtensorModule.rootProp`
 - **summary**: MAP ( netuid ) --> root_prop | The subnet root proportion.
+
+### `rootStakeUnlockInterval`: `u64`
+
+- **interface**: `api.query.subtensorModule.rootStakeUnlockInterval`
+- **summary**: Minimum number of blocks root (netuid 0) stake must be held before it can be removed from root (via `remove_stake`, move/swap/transfer off root, etc.), keyed off `LastColdkeyHotkeyStakeBlock`. `0` disables the hold (default), preserving legacy behaviour. When set >= one tempo it neutralises epoch-boundary "just-in-time" dividend sniping: root stake is 1:1 TAO with no AMM slippage, so without this friction a sniper can stake right before a boundary, capture a full tempo's root dividend pro-rata to instantaneous stake, and exit immediately.
+
+### `rootWeightSettingEnabled`: `bool`
+
+- **interface**: `api.query.subtensorModule.rootWeightSettingEnabled`
+- **summary**: Master switch for `set_root_weights` (basket curation). Defaults to OFF: Root Reborn launches with every fund uncurated — dividends accumulate in place — so the null strategy is the observable network-wide baseline, and validators cannot stampede into TAO-cash (netuid 0) vectors on day one, which would recreate the old mechanical sell-pressure regime under a new name. Flipped on later via `AdminUtils::sudo_set_root_weight_setting_enabled` (or a migration in the enabling upgrade). Gates only the setter: existing stored vectors, dividend deployment, and all read paths are unaffected.
 
 ### `scalingLawPower(NetUid)`: `u16`
 

@@ -3,10 +3,12 @@ title: Events
 description: "The following page contains runtime events emitted by the Subtensor runtime."
 ---
 
+# Events
+
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **443**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -64,6 +66,11 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 - **interface**: `api.events.adminUtils.PrecompileUpdated`
 - **summary**: Event emitted when a precompile operation is updated.
+
+### `RootWeightSettingToggled(bool)`
+
+- **interface**: `api.events.adminUtils.RootWeightSettingToggled`
+- **summary**: Root basket weight setting (`set_root_weights`) was enabled or disabled network-wide.
 
 ### `SubnetEmissionEnabledSet(NetUid, bool)`
 
@@ -786,6 +793,26 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.AxonServed`
 - **summary**: the axon server information is added to the network.
 
+### `BasketClaimed(AccountId, AccountId, TaoBalance)`
+
+- **interface**: `api.events.subtensorModule.BasketClaimed`
+- **summary**: A staker redeemed (claimed) their owed share of a validator's beta basket: their pro-rata fraction of every holding was realized as `tao` and staked onto their root position.
+
+### `BasketDeposited(AccountId, TaoBalance, u64)`
+
+- **interface**: `api.events.subtensorModule.BasketDeposited`
+- **summary**: A validator's beta basket (fund) received a dividend deposit: the dividend was deployed across subnets per the validator's weight vector, adding `tao` of realizable NAV to the fund and minting `shares` fund shares at the pre-deposit NAV.
+
+### `BasketHoldingConverted(AccountId, NetUid, TaoBalance)`
+
+- **interface**: `api.events.subtensorModule.BasketHoldingConverted`
+- **summary**: A validator's basket holding on a dissolving subnet was converted into the fund's root (TAO) slot. Fund shares and staker entitlements are unaffected.
+
+### `BasketStakedIn(AccountId, AccountId, TaoBalance, TaoBalance, u64)`
+
+- **interface**: `api.events.subtensorModule.BasketStakedIn`
+- **summary**: A staker deposited TAO from their balance directly into a validator's beta basket: the TAO was deployed across subnets per the validator's weight vector and `shares` fund shares were credited to the staker via their claimed watermark.
+
 ### `BatchCompletedWithErrors()`
 
 - **interface**: `api.events.subtensorModule.BatchCompletedWithErrors`
@@ -1206,23 +1233,15 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.RhoSet`
 - **summary**: Rho value is set.
 
-### `RootClaimed(AccountId)`
+### `RootClaimed(AccountId, TaoBalance)`
 
 - **interface**: `api.events.subtensorModule.RootClaimed`
 - **summary**: Root emissions have been claimed for a coldkey on all subnets and hotkeys.
 
-    **Parameters:**
+### `RootWeightsSet(u16)`
 
-    (coldkey)
-
-### `RootClaimTypeSet(AccountId, RootClaimTypeEnum)`
-
-- **interface**: `api.events.subtensorModule.RootClaimTypeSet`
-- **summary**: Root claim type for a coldkey has been set.
-
-    **Parameters:**
-
-    (coldkey, u8)
+- **interface**: `api.events.subtensorModule.RootWeightsSet`
+- **summary**: a root validator set its beta-basket distribution vector (uid on the root subnet).
 
 ### `ScalingLawPowerSet(NetUid, u16)`
 
