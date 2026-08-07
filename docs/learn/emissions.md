@@ -25,7 +25,7 @@ Bittensor's emission system operates through two stages, reflecting the system's
 - **Distribution**: At the end of each [tempo](../resources/glossary.md#tempo) (default ~360 blocks; owner-configurable), accumulated rewards within each subnet are distributed to the subnet's participants through [Yuma Consensus](../resources/glossary.md#yuma-consensus), which evaluates individual performance and determines who deserves what share.
 
 :::info Manual epoch triggering
-Subnet owners can also manually trigger an epoch via the `trigger_epoch` extrinsic on the `SubtensorModule` pallet. This operates independently of the automatic epoch schedule and allows an epoch to be executed on demand.
+Subnet owners can also schedule an out-of-band epoch via the `trigger_epoch` extrinsic on the `SubtensorModule` pallet. The epoch fires after a short delay rather than immediately. See [Tempo](../resources/glossary.md#tempo) for scheduling rules and constraints.
 :::
 
 See also:
