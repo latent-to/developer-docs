@@ -83,7 +83,7 @@ If you find yourself needing to load your primary coldkey onto a machine to perf
 
 ### Hardware Solution: Ledger
 
-Ledger hardware wallets, used with a compatible wallet app, support TAO transfers, staking, unstaking, and proxy creation. Compatible wallet apps include the Bittensor mobile wallet app ([bittensor.com/wallet](https://bittensor.com/wallet)), [Crucible](https://crucible.bittensor.com/), [Talisman](https://www.talisman.xyz/), [Nova Wallet](https://novawallet.io/), and [SubWallet](https://www.subwallet.app/).
+Ledger hardware wallets, used with a compatible wallet app, support TAO transfers, staking, unstaking, and proxy creation. Compatible wallet apps include the [Tao Wallet](https://wallet.tao.app/) browser extension, the Bittensor mobile wallet app ([bittensor.com/wallet](https://bittensor.com/wallet)), [Crucible](https://crucible.bittensor.com/), [Talisman](https://www.talisman.xyz/), [Nova Wallet](https://novawallet.io/), and [SubWallet](https://www.subwallet.app/).
 
 See [Using Ledger Hardware Wallet](../staking-and-delegation/using-ledger-hw-wallet).
 
