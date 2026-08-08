@@ -3,10 +3,12 @@ title: RPC
 description: "This page shows JSON-RPC methods available on the Subtensor node."
 ---
 
+# RPC
+
 This page shows JSON-RPC methods available on the Subtensor node. Accessible via `api.rpc.<namespace>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **443**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[author](#pallet-author)**

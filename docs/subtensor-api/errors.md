@@ -3,10 +3,12 @@ title: Errors
 description: "This page contains error variants returned by the Subtensor runtime."
 ---
 
+# Errors
+
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **443**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -1117,10 +1119,20 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.BalanceWithdrawalError`
 - **summary**: The caller is trying to add stake, but for some reason the requested amount could not be withdrawn from the coldkey account.
 
+### `BasketHasNoWeights`
+
+- **interface**: `api.errors.subtensorModule.BasketHasNoWeights`
+- **summary**: Retired (kept for SCALE index stability): direct basket deposits into an uncurated fund are now held as the fund's root (TAO cash) slot instead of erroring.
+
 ### `BeneficiaryDoesNotOwnHotkey`
 
 - **interface**: `api.errors.subtensorModule.BeneficiaryDoesNotOwnHotkey`
 - **summary**: Beneficiary does not own hotkey.
+
+### `BetaBasketSeedInProgress`
+
+- **interface**: `api.errors.subtensorModule.BetaBasketSeedInProgress`
+- **summary**: The `migrate_seed_beta_basket_v2` seed or its per-hotkey deferred-dividend release has not completed. Basket deposits, claims, coldkey / root-touching hotkey swaps, and root stake add/remove/transfer/swap are paused until it finishes so snapshotted conversion cannot desync from live stake (`Σ owed == BasketShares`).
 
 ### `CallDisabled`
 
@@ -1397,11 +1409,6 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.InvalidLeaseBeneficiary`
 - **summary**: Invalid lease beneficiary to register the leased network.
 
-### `InvalidNumRootClaim`
-
-- **interface**: `api.errors.subtensorModule.InvalidNumRootClaim`
-- **summary**: Invalid number of root claims
-
 ### `InvalidPort`
 
 - **interface**: `api.errors.subtensorModule.InvalidPort`
@@ -1431,11 +1438,6 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.InvalidSeal`
 - **summary**: The supplied PoW hash seal does not match the supplied work.
-
-### `InvalidSubnetNumber`
-
-- **interface**: `api.errors.subtensorModule.InvalidSubnetNumber`
-- **summary**: Exceeded subnet limit number or zero.
 
 ### `InvalidValue`
 
@@ -1652,6 +1654,16 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.RootNetworkDoesNotExist`
 - **summary**: The root network does not exist.
 
+### `RootStakeLocked`
+
+- **interface**: `api.errors.subtensorModule.RootStakeLocked`
+- **summary**: Root (netuid 0) stake is still within its `RootStakeUnlockInterval` hold window (measured from the last root stake add/remove/claim for that coldkey/hotkey) and cannot leave root yet. Prevents epoch-boundary just-in-time dividend sniping.
+
+### `RootWeightSettingDisabled`
+
+- **interface**: `api.errors.subtensorModule.RootWeightSettingDisabled`
+- **summary**: `set_root_weights` is disabled network-wide ([`crate::RootWeightSettingEnabled`] is false). Root Reborn launches gated: every fund runs the null strategy (dividends accumulate in place) until weight setting is switched on by governance or a later upgrade.
+
 ### `SameAutoStakeHotkeyAlreadySet`
 
 - **interface**: `api.errors.subtensorModule.SameAutoStakeHotkeyAlreadySet`
@@ -1680,7 +1692,7 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 ### `StakeTooLowForRoot`
 
 - **interface**: `api.errors.subtensorModule.StakeTooLowForRoot`
-- **summary**: A hotkey with too little stake is attempting to join the root subnet.
+- **summary**: Retired: root admission is burn-based and no longer stake-gated. Kept so later error variants keep their metadata indices.
 
 ### `StakeUnavailable`
 
@@ -1751,11 +1763,6 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.TooManyRegistrationsThisInterval`
 - **summary**: The number of registration attempts exceeded the allowed number in the interval.
-
-### `TooManyRootClaimHotkeys`
-
-- **interface**: `api.errors.subtensorModule.TooManyRootClaimHotkeys`
-- **summary**: The coldkey has too many staking hotkeys for a single manual root claim.
 
 ### `TooManyUIDsPerMechanism`
 

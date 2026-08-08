@@ -3,15 +3,18 @@ title: Runtime Calls
 description: "This page includes runtime API calls exposed by the Subtensor runtime."
 ---
 
+# Runtime Calls
+
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **443**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[AccountNonceApi](#pallet-accountnonceapi)**
 - **[AuraApi](#pallet-auraapi)**
 - **[BabeApi](#pallet-babeapi)**
+- **[BetaBasketRuntimeApi](#pallet-betabasketruntimeapi)**
 - **[BlockBuilder](#pallet-blockbuilder)**
 - **[ContractsApi](#pallet-contractsapi)**
 - **[ConvertTransactionRuntimeApi](#pallet-converttransactionruntimeapi)**
@@ -88,6 +91,54 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 - **interface**: `api.call.babeApi.submitReportEquivocationUnsignedExtrinsic`
 - **summary**: Submits an unsigned extrinsic to report an equivocation. The caller must provide the equivocation proof and a key ownership proof (should be obtained using `generate_key_ownership_proof`). The extrinsic will be unsigned and should only be accepted for local authorship (not to be broadcast to the network). This method returns `None` when creation of the extrinsic fails, e.g. if equivocation reporting is disabled for the given runtime (i.e. this method is hardcoded to return `None`). Only useful in an offchain context.
+
+
+## `BetaBasketRuntimeApi` {#pallet-betabasketruntimeapi}
+
+### `getAllValidatorBaskets()`: `Vec<BasketSummary>`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getAllValidatorBaskets`
+- **summary**: Summaries for every validator with an active basket (network-wide leaderboard).
+
+### `getBasketPayout(hotkey: AccountId32, coldkey: AccountId32)`: `TaoBalance`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getBasketPayout`
+- **summary**: TAO a coldkey would realize by redeeming its owed shares on one validator (marked).
+
+### `getRootBasketOwed(coldkey: AccountId32)`: `TaoBalance`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getRootBasketOwed`
+- **summary**: Total TAO a coldkey would realize by redeeming all its root beta baskets (marked).
+
+### `getRootBasketPositions(coldkey: AccountId32)`: `Vec<(AccountId32, u64, TaoBalance)>`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getRootBasketPositions`
+- **summary**: A staker's positions across all its validators: (hotkey, owed shares, payout TAO).
+
+### `getRootBasketTotalNav()`: `TaoBalance`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getRootBasketTotalNav`
+- **summary**: Network-wide total beta basket NAV across all validators, in TAO (marked).
+
+### `getValidatorBasket(hotkey: AccountId32)`: `Vec<(NetUid, AlphaBalance, TaoBalance)>`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getValidatorBasket`
+- **summary**: A validator's basket breakdown: (subnet, alpha held, TAO value) per subnet.
+
+### `getValidatorBasketNav(hotkey: AccountId32)`: `TaoBalance`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getValidatorBasketNav`
+- **summary**: A validator's beta basket net asset value, in TAO (marked).
+
+### `getValidatorBasketSummary(hotkey: AccountId32)`: `BasketSummary`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getValidatorBasketSummary`
+- **summary**: Full explorer-facing summary of one validator's basket: NAV (realizable and spot), shares, lifetime deposit/redemption counters, weights, and per-subnet holdings.
+
+### `getValidatorWeights(hotkey: AccountId32)`: `Vec<(NetUid, u16)>`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getValidatorWeights`
+- **summary**: A validator's basket weight vector `w`: (subnet, weight) it deploys dividends into.
 
 
 ## `BlockBuilder` {#pallet-blockbuilder}

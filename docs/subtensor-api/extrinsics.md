@@ -3,10 +3,12 @@ title: Extrinsics
 description: "The following sections contain Extrinsic methods that are part of the Subtensor runtime."
 ---
 
+# Extrinsics
+
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **440**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **443**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -242,6 +244,11 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 - **interface**: `api.tx.adminUtils.sudoSetEmissionBarQuantile`
 - **summary**: Sets the emission bar quantile (q): the fraction of demand carried by subnets above the emission gate bar. Also forces a bar recompute on the next block so the new quantile takes effect immediately.
 
+### `sudoSetEmissionBarRank(rank: u16)`
+
+- **interface**: `api.tx.adminUtils.sudoSetEmissionBarRank`
+- **summary**: Sets the emission bar rank (N): when non-zero, the emission gate bar (theta) is pinned to the Nth-largest demand share instead of the q-mass quantile, so the eligible set tracks rank N as the demand distribution shifts. Setting 0 restores quantile mode. Also forces a bar recompute on the next block so the change takes effect immediately.
+
 ### `sudoSetEmissionGateExponent(exponent: U64F64)`
 
 - **interface**: `api.tx.adminUtils.sudoSetEmissionGateExponent`
@@ -450,6 +457,11 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
 - **interface**: `api.tx.adminUtils.sudoSetRho`
 - **summary**: The extrinsic sets the rho for a subnet. It is only callable by the root account or subnet owner. The extrinsic will call the Subtensor pallet to set the rho.
+
+### `sudoSetRootWeightSettingEnabled(enabled: bool)`
+
+- **interface**: `api.tx.adminUtils.sudoSetRootWeightSettingEnabled`
+- **summary**: Enables or disables root basket weight setting (`set_root_weights`) network-wide. Root Reborn launches with this OFF so every fund runs the null (accumulate in place) strategy as the observable baseline; flip it on later to open basket curation. Gates only the setter — existing vectors, dividend deployment, and reads are unaffected. Root-only.
 
 ### `sudoSetServingRateLimit(netuid: NetUid, serving_rate_limit: u64)`
 
@@ -1944,20 +1956,36 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 ### `claimRoot(subnets: BTreeSet<NetUid>)`
 
 - **interface**: `api.tx.subtensorModule.claimRoot`
-- **summary**: Claims the root emissions for a coldkey.
+- **summary**: Claims the root emissions for a coldkey across every validator it root-stakes to.
+
+    Redemption is fund-level: for each validator, the staker's accrued entitlement is redeemed as their pro-rata fraction of that basket (sold to TAO and staked on root). The `subnets` argument is retained for call-data compatibility with pre-basket clients; it is ignored — baskets have no per-subnet claim selection.
+
+    Prefer [`Pallet::claim_root_with_hotkey`] to claim a single validator.
 
     **Arguments:**
 
     - `origin`: The signature of the caller's coldkey.
+    - `subnets`: Ignored. Kept so old clients' encoded call data still decodes.
 
     **Events:**
 
-    - `RootClaimed`: On the successfully claiming the root emissions for a coldkey.
+    - `RootClaimed`: On successfully claiming the root emissions for a coldkey.
 
-    **Errors:**
+### `claimRootWithHotkey(hotkey: AccountId)`
 
-    - `InvalidSubnetNumber`: The subnet set is empty or exceeds the maximum number of claims.
-    - `TooManyRootClaimHotkeys`: The coldkey's hotkey fanout exceeds one claim's bound.
+- **interface**: `api.tx.subtensorModule.claimRootWithHotkey`
+- **summary**: Claims the root emissions for a coldkey on one validator hotkey.
+
+    Redemption is fund-level for that validator: the staker's accrued entitlement is redeemed as their pro-rata fraction of each basket holding (sold to TAO and staked on root). Other validators' accrued yield is left untouched.
+
+    **Arguments:**
+
+    - `origin`: The signature of the caller's coldkey.
+    - `hotkey`: The validator whose basket entitlement to redeem.
+
+    **Events:**
+
+    - `RootClaimed`: On successfully claiming the root emissions for this coldkey+hotkey.
 
 ### `clearColdkeySwapAnnouncement()`
 
@@ -2475,7 +2503,9 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 ### `rootRegister(hotkey: AccountId)`
 
 - **interface**: `api.tx.subtensorModule.rootRegister`
-- **summary**: Register the hotkey to root network
+- **summary**: Register the hotkey to root network.
+
+    Admission is burn-based: the coldkey pays the root burn price (demand-priced like subnet registration), recycled out of issuance. No prior stake is required. When the network is full, the lowest-staked member is pruned to make room.
 
 ### `scheduleSwapColdkey(new_coldkey: AccountId)`
 
@@ -2787,18 +2817,16 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
     Coldkeys reject locked alpha by default. Passing `false` opts the caller into receiving locked alpha from stake transfers or coldkey swaps.
 
-### `setRootClaimType(new_root_claim_type: RootClaimTypeEnum)`
+### `setRootWeights(dests: Vec<u16>, weights: Vec<u16>)`
 
-- **interface**: `api.tx.subtensorModule.setRootClaimType`
-- **summary**: Sets the root claim type for the coldkey.
+- **interface**: `api.tx.subtensorModule.setRootWeights`
+- **summary**: Sets a root validator's basket distribution vector `w` on the root subnet (netuid 0). `dests` are subnet netuids and `weights` are the proportions of the validator's root dividends to deploy into each subnet's alpha basket. Requires at least [`crate::MIN_ROOT_BASKET_WEIGHTS`] positive destinations (softened when fewer networks exist).
 
-    **Arguments:**
+    **Args:**
 
-    - `origin`: The signature of the caller's coldkey.
-
-    **Events:**
-
-    - `RootClaimTypeSet`: On the successfully setting the root claim type for the coldkey.
+    - `origin`: the root validator hotkey.
+    - `dests` (Vec\<u16>): destination subnet netuids.
+    - `weights` (Vec\<u16>): per-subnet weights (normalized on use).
 
 ### `setSubnetIdentity(netuid: NetUid, subnet_name: Vec<u8>, github_repo: Vec<u8>, subnet_contact: Vec<u8>, subnet_url: Vec<u8>, discord: Vec<u8>, description: Vec<u8>, logo_url: Vec<u8>, additional: Vec<u8>)`
 
@@ -2865,6 +2893,31 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
     - `MaxWeightExceeded`: Attempting to set weights with max value exceeding limit.
 
+### `stakeIntoBasket(hotkey: AccountId, amount_staked: TaoBalance)`
+
+- **interface**: `api.tx.subtensorModule.stakeIntoBasket`
+- **summary**: Stakes TAO from the caller's balance directly into a validator's basket.
+
+    The TAO is deployed across subnets per the validator's root weight vector (exactly like a dividend deposit) and the caller is credited a fund entitlement at the fund's pre-buy realizable NAV, priced against the realizable value the deposit added — the depositor bears their own entry slippage and swap fees. An uncurated fund (no usable weight vector) is mirrored instead: the deposit deploys pro-rata across the fund's current holdings by realizable value, keeping deposits symmetric with claims (which redeem pro-rata of every holding); a deposit into an empty uncurated fund is held as the fund's root (TAO cash) slot. The credited entitlement is redeemable through [`Pallet::claim_root_with_hotkey`] (or coldkey-wide [`Pallet::claim_root`]); it does not require or affect root stake, and it does not change any staker's dividend accrual.
+
+    **Arguments:**
+
+    - `origin`: The signature of the caller's coldkey.
+    - `hotkey`: The validator whose basket to deposit into.
+    - `amount_staked`: TAO to take from the caller's balance and deploy.
+
+    **Events:**
+
+    - `BasketStakedIn`: On success, with the TAO taken, the realizable value added,
+    and the entitlement credited.
+
+    **Errors:**
+
+    - `HotKeyAccountNotExists`: The hotkey is not a registered account.
+    - `AmountTooLow`: Below the minimum stake, or the deposit's realizable value
+    rounds to zero entitlement.
+    - `NotEnoughBalanceToStake`: The caller cannot cover `amount_staked`.
+
 ### `startCall(netuid: NetUid)`
 
 - **interface**: `api.tx.subtensorModule.startCall`
@@ -2911,15 +2964,10 @@ Generated from Subtensor runtime spec version **440**. Connected to: `wss://entr
 
     - `BadOrigin`: If the origin is not root.
 
-### `sudoSetNumRootClaims(new_value: u64)`
-
-- **interface**: `api.tx.subtensorModule.sudoSetNumRootClaims`
-- **summary**: Sets root claim number (sudo extrinsic). Zero disables auto-claim.
-
 ### `sudoSetRootClaimThreshold(netuid: NetUid, new_value: u64)`
 
 - **interface**: `api.tx.subtensorModule.sudoSetRootClaimThreshold`
-- **summary**: Sets root claim threshold for subnet (sudo or owner origin).
+- **summary**: Sets the root claim dust threshold (sudo). Basket redemption is fund-level, so only the `NetUid::ROOT` entry is meaningful; other netuids are rejected.
 
 ### `sudoSetTxChildkeyTakeRateLimit(tx_rate_limit: u64)`
 
