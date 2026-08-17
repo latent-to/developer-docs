@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **443**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **445**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**

@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **443**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **445**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -2039,6 +2039,11 @@ Generated from Subtensor runtime spec version **443**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.totalStake`
 - **summary**: ITEM ( total_stake )
+
+### `totalVotingPower(NetUid)`: `u64`
+
+- **interface**: `api.query.subtensorModule.totalVotingPower`
+- **summary**: MAP ( netuid ) --> total_voting_power | Sum of all validator voting-power entries on the subnet. Kept in sync with `VotingPower` so consumers can read the aggregate without iterating the complete validator map.
 
 ### `transactionKeyLastBlock(AccountId32, u16, u16)`: `u64`
 
