@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **445**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **447**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -1119,6 +1119,11 @@ Generated from Subtensor runtime spec version **445**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.consensus`
 - **summary**: MAP ( netuid ) --> consensus
 
+### `consensusByMechanism(NetUidStorageIndex)`: `Vec<PerU16>`
+
+- **interface**: `api.query.subtensorModule.consensusByMechanism`
+- **summary**: MAP ( netuid storage index ) --> previous epoch consensus for each mechanism
+
 ### `crv3WeightCommits(u16, u64)`: `Vec<(AccountId32,Bytes,u64)>`
 
 - **interface**: `api.query.subtensorModule.crv3WeightCommits`
@@ -1350,6 +1355,11 @@ Generated from Subtensor runtime spec version **445**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.lastUpdate`
 - **summary**: MAP ( netuid ) --> last_update
+
+### `liquidAlphaConsensusMode(NetUid)`: `ConsensusMode`
+
+- **interface**: `api.query.subtensorModule.liquidAlphaConsensusMode`
+- **summary**: Consensus mode used by liquid alpha for each subnet.
 
 ### `liquidAlphaOn(NetUid)`: `bool`
 
