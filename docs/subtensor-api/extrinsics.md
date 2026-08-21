@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **445**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **447**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -44,9 +44,9 @@ Generated from Subtensor runtime spec version **445**. Connected to: `wss://entr
 
     Schedule a change in the authorities.
 
-    The change will be applied at the end of execution of the block `in_blocks` after the current block. This value may be 0, in which case the change is applied at the end of the current block.
+    The change is applied at the end of the current block, so `in_blocks` must be 0. This keeps the authority set and its set ID consistent in every persisted block state.
 
-    If the `forced` parameter is defined, this indicates that the current set has been synchronously determined to be offline and that after `in_blocks` the given change should be applied. The given block number indicates the median last finalized block number and it should be used as the canon block when starting the new grandpa voter.
+    If the `forced` parameter is defined, this indicates that the current set has been synchronously determined to be offline. The given block number indicates the median last finalized block number and it should be used as the canon block when starting the new grandpa voter.
 
     No change should be signaled while any change is pending. Returns an error if a change is already pending.
 
@@ -281,6 +281,11 @@ Generated from Subtensor runtime spec version **445**. Connected to: `wss://entr
 
 - **interface**: `api.tx.adminUtils.sudoSetKappa`
 - **summary**: The extrinsic sets the kappa for a subnet. It is only callable by the root account or subnet owner. The extrinsic will call the Subtensor pallet to set the kappa.
+
+### `sudoSetLiquidAlphaConsensusMode(netuid: NetUid, mode: ConsensusMode)`
+
+- **interface**: `api.tx.adminUtils.sudoSetLiquidAlphaConsensusMode`
+- **summary**: Sets which consensus values liquid alpha uses for a subnet.
 
 ### `sudoSetLiquidAlphaEnabled(netuid: NetUid, enabled: bool)`
 

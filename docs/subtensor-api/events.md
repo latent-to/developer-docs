@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **445**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **447**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -222,6 +222,11 @@ Generated from Subtensor runtime spec version **445**. Connected to: `wss://entr
 
 - **interface**: `api.events.commitments.CommitmentRevealed`
 - **summary**: A timelock-encrypted commitment was auto-revealed
+
+### `CommitmentRevealFailed(NetUid, AccountId, u64, RevealFailure)`
+
+- **interface**: `api.events.commitments.CommitmentRevealFailed`
+- **summary**: A timelock-encrypted commitment could not be revealed and was left in place
 
 ### `TimelockCommitment(NetUid, AccountId, u64)`
 
@@ -1047,6 +1052,11 @@ Generated from Subtensor runtime spec version **445**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.KappaSet`
 - **summary**: Kappa is set for a subnet.
+
+### `LiquidAlphaConsensusModeSet(NetUid, ConsensusMode)`
+
+- **interface**: `api.events.subtensorModule.LiquidAlphaConsensusModeSet`
+- **summary**: A subnet's liquid-alpha consensus mode was updated. Appended to preserve existing SCALE event indices.
 
 ### `LockMoved(AccountId, AccountId, AccountId, NetUid)`
 

@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **445**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **447**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -54,6 +54,11 @@ Generated from Subtensor runtime spec version **445**. Connected to: `wss://entr
 
 - **interface**: `api.errors.adminUtils.Deprecated`
 - **summary**: Call is deprecated
+
+### `GrandpaChangeDelayMustBeZero`
+
+- **interface**: `api.errors.adminUtils.GrandpaChangeDelayMustBeZero`
+- **summary**: GRANDPA changes must take effect at the end of the current block.
 
 ### `InvalidValue`
 
@@ -190,6 +195,11 @@ Generated from Subtensor runtime spec version **445**. Connected to: `wss://entr
 
 - **interface**: `api.errors.commitments.SpaceLimitExceeded`
 - **summary**: Space Limit Exceeded for the current interval
+
+### `TimelockRevealFailedNotAllowed`
+
+- **interface**: `api.errors.commitments.TimelockRevealFailedNotAllowed`
+- **summary**: `TimelockRevealFailed` fields may only be created by the runtime.
 
 ### `TooManyFieldsInCommitmentInfo`
 
