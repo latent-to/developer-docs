@@ -8,7 +8,7 @@ description: "This page includes runtime API calls exposed by the Subtensor runt
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **447**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **450**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[AccountNonceApi](#pallet-accountnonceapi)**
@@ -95,6 +95,11 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 
 ## `BetaBasketRuntimeApi` {#pallet-betabasketruntimeapi}
 
+### `getAllBetaPricing(start_after: Option<AccountId32>, limit: u32)`: `BetaPricingPage`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getAllBetaPricing`
+- **summary**: One bounded page of pricing snapshots for funds with outstanding shares, all marked against the same published index snapshot. `limit` is clamped to a hard per-call cap (0 = full page); the returned `next` cursor resumes the enumeration (`None` when complete), so the full leaderboard is a short loop of bounded calls instead of one unbounded scan.
+
 ### `getAllValidatorBaskets()`: `Vec<BasketSummary>`
 
 - **interface**: `api.call.betaBasketRuntimeApi.getAllValidatorBaskets`
@@ -105,10 +110,40 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 - **interface**: `api.call.betaBasketRuntimeApi.getBasketPayout`
 - **summary**: TAO a coldkey would realize by redeeming its owed shares on one validator (marked).
 
+### `getBasketPosition(hotkey: AccountId32, coldkey: AccountId32)`: `Option<BasketPosition>`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getBasketPosition`
+- **summary**: One staker's share-denominated position on one validator: owed shares, outstanding supply, fund NAV, and the position's realizable and spot TAO values. `None` when the staker has no owed shares there.
+
+### `getBetaIndex()`: `(FixedU128, FixedU128)`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getBetaIndex`
+- **summary**: The published `(bag index, stake index)` levels: the chained NAV-weighted display-price index (mix performance, flow-neutral) and the chained total-return stake index (what τ1 staked in the average fund became), maintained by the background sweep at realizable marks.
+
+### `getBetaPortfolio(coldkey: AccountId32)`: `Vec<BetaPosition>`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getBetaPortfolio`
+- **summary**: A coldkey's full display-denominated β portfolio, one position per validator with owed β, all marked against the same published index snapshot.
+
+### `getBetaPosition(hotkey: AccountId32, coldkey: AccountId32)`: `Option<BetaPosition>`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getBetaPosition`
+- **summary**: One staker's display-denominated β position on one validator (`display_beta * display_price` = spot value; `value_tao` = what a claim pays), or `None` when the staker has no owed β there.
+
+### `getBetaPricing(hotkey: AccountId32)`: `Option<BetaPricing>`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getBetaPricing`
+- **summary**: One fund's standardized pricing snapshot (index-spliced display price, total-return stake price, staker yield, published index levels), or `None` when the hotkey has no outstanding shares. The single source of truth every consumer should display. Reads the published index snapshot in `O(1)` and scans only this fund's holdings.
+
 ### `getRootBasketOwed(coldkey: AccountId32)`: `TaoBalance`
 
 - **interface**: `api.call.betaBasketRuntimeApi.getRootBasketOwed`
 - **summary**: Total TAO a coldkey would realize by redeeming all its root beta baskets (marked).
+
+### `getRootBasketPortfolio(coldkey: AccountId32)`: `Vec<BasketPosition>`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getRootBasketPortfolio`
+- **summary**: A coldkey's full basket portfolio: one share-denominated position per validator on which it has owed shares.
 
 ### `getRootBasketPositions(coldkey: AccountId32)`: `Vec<(AccountId32, u64, TaoBalance)>`
 

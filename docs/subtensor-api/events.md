@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **447**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **450**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -66,6 +66,11 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 
 - **interface**: `api.events.adminUtils.PrecompileUpdated`
 - **summary**: Event emitted when a precompile operation is updated.
+
+### `RootWeightsCapSet(u16)`
+
+- **interface**: `api.events.adminUtils.RootWeightsCapSet`
+- **summary**: The root basket concentration cap (`RootWeightsCap`) was set.
 
 ### `RootWeightSettingToggled(bool)`
 
@@ -440,6 +445,21 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 
 - **interface**: `api.events.limitOrders.LimitOrdersPalletStatusChanged`
 - **summary**: Root has either enabled(true) or disabled(false) the pallet
+
+### `LinkedOutputConsumed(H256, H256, u64, u64)`
+
+- **interface**: `api.events.limitOrders.LinkedOutputConsumed`
+- **summary**: A linked order drew against a provider record, consuming it.
+
+### `LinkedOutputPruned(H256, u64)`
+
+- **interface**: `api.events.limitOrders.LinkedOutputPruned`
+- **summary**: A provider record was removed without being drawn.
+
+### `LinkedOutputRecorded(H256, AccountId, LinkedAsset<T::AccountId>, u64, u64)`
+
+- **interface**: `api.events.limitOrders.LinkedOutputRecorded`
+- **summary**: A provider order recorded its post-fee output for a later linked draw.
 
 ### `OrderCancelled(H256, AccountId)`
 
@@ -838,6 +858,11 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 
     - **netuids**: The netuids these weights were successfully set/committed for.
     - **who**: The hotkey that set this batch.
+
+### `BetaBaselineStamped(AccountId)`
+
+- **interface**: `api.events.subtensorModule.BetaBaselineStamped`
+- **summary**: A fund's frozen display baseline was stamped at its first share mint: its index-spliced display and total-return stake prices start at the current index levels from this block on (see `BetaBaseline` storage). Appended to preserve existing SCALE event indices.
 
 ### `BondsMovingAverageSet(NetUid, u64)`
 
