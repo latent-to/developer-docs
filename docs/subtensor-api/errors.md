@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **447**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **450**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -738,6 +738,36 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 - **interface**: `api.errors.limitOrders.LimitOrdersDisabled`
 - **summary**: Limit orders are disabled
 
+### `LinkedAmountResolvedToZero`
+
+- **interface**: `api.errors.limitOrders.LinkedAmountResolvedToZero`
+- **summary**: Linked fraction floored to zero against the recorded output.
+
+### `LinkedOutputAssetMismatch`
+
+- **interface**: `api.errors.limitOrders.LinkedOutputAssetMismatch`
+- **summary**: Provider output asset is not what the linked order spends.
+
+### `LinkedOutputExpired`
+
+- **interface**: `api.errors.limitOrders.LinkedOutputExpired`
+- **summary**: Provider record has passed its `expires_at` deadline.
+
+### `LinkedOutputNotPrunable`
+
+- **interface**: `api.errors.limitOrders.LinkedOutputNotPrunable`
+- **summary**: `prune_linked_output` called by a non-signer on an unexpired record.
+
+### `LinkedOutputSignerMismatch`
+
+- **interface**: `api.errors.limitOrders.LinkedOutputSignerMismatch`
+- **summary**: Linked order signer differs from the provider's signer.
+
+### `NoLinkedOutput`
+
+- **interface**: `api.errors.limitOrders.NoLinkedOutput`
+- **summary**: Linked order named a provider with no recorded output.
+
 ### `OrderAlreadyProcessed`
 
 - **interface**: `api.errors.limitOrders.OrderAlreadyProcessed`
@@ -762,6 +792,16 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 
 - **interface**: `api.errors.limitOrders.PalletHotkeyNotRegistered`
 - **summary**: The pallet hotkey has not been registered to the pallet account. Call on_runtime_upgrade or wait for genesis to complete registration before enabling the pallet.
+
+### `PartialFillNotSupportedForLinkedAmount`
+
+- **interface**: `api.errors.limitOrders.PartialFillNotSupportedForLinkedAmount`
+- **summary**: Partial fill submitted against a linked (consuming) order.
+
+### `PartialFillNotSupportedForProvider`
+
+- **interface**: `api.errors.limitOrders.PartialFillNotSupportedForProvider`
+- **summary**: Partial fill submitted against a provider (`has_linked_order`).
 
 ### `PartialFillsNotEnabled`
 
@@ -1142,7 +1182,7 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 ### `BetaBasketSeedInProgress`
 
 - **interface**: `api.errors.subtensorModule.BetaBasketSeedInProgress`
-- **summary**: The `migrate_seed_beta_basket_v2` seed or its per-hotkey deferred-dividend release has not completed. Basket deposits, claims, coldkey / root-touching hotkey swaps, and root stake add/remove/transfer/swap are paused until it finishes so snapshotted conversion cannot desync from live stake (`Σ owed == BasketShares`).
+- **summary**: The `migrate_seed_beta_basket_v2` seed has not completed. Basket deposits, claims, coldkey / root-touching hotkey swaps, and root stake add/remove/transfer/swap are paused until it finishes so snapshotted conversion cannot desync from live stake (`Σ owed == BasketShares`).
 
 ### `CallDisabled`
 
@@ -1659,6 +1699,11 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.RevealTooEarly`
 - **summary**: Attempted to reveal weights too early.
 
+### `RootClaimTooHeavy`
+
+- **interface**: `api.errors.subtensorModule.RootClaimTooHeavy`
+- **summary**: Coldkey-wide `claim_root` would process more work units than the pre-dispatch envelope ([`crate::MAX_ROOT_CLAIM_WORK`]). Use `claim_root_with_hotkey` per validator so admission weight matches the holdings actually walked.
+
 ### `RootNetworkDoesNotExist`
 
 - **interface**: `api.errors.subtensorModule.RootNetworkDoesNotExist`
@@ -1668,6 +1713,11 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.RootStakeLocked`
 - **summary**: Root (netuid 0) stake is still within its `RootStakeUnlockInterval` hold window (measured from the last root stake add/remove/claim for that coldkey/hotkey) and cannot leave root yet. Prevents epoch-boundary just-in-time dividend sniping.
+
+### `RootWeightCapExceeded`
+
+- **interface**: `api.errors.subtensorModule.RootWeightCapExceeded`
+- **summary**: A single destination in a `set_root_weights` vector takes a larger share of the basket than [`crate::RootWeightsCap`] allows (share = value / sum of values). With the cap at 1/16 a validator must spread its basket across at least 16 destinations. Not enforced while the chain has fewer destinations than the cap demands.
 
 ### `RootWeightSettingDisabled`
 

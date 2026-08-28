@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **447**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **450**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -462,6 +462,11 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 
 - **interface**: `api.tx.adminUtils.sudoSetRho`
 - **summary**: The extrinsic sets the rho for a subnet. It is only callable by the root account or subnet owner. The extrinsic will call the Subtensor pallet to set the rho.
+
+### `sudoSetRootWeightsCap(cap: u16)`
+
+- **interface**: `api.tx.adminUtils.sudoSetRootWeightsCap`
+- **summary**: Sets the root basket concentration cap ([`pallet_subtensor::RootWeightsCap`]): the largest u16-normalized share (`u16::MAX` = 100%) any single destination may take of a `set_root_weights` vector. A cap of `u16::MAX / 16 + 1` forces funds to spread across at least 16 destinations. The check softens to an equal split when fewer destinations exist on chain. Root-only.
 
 ### `sudoSetRootWeightSettingEnabled(enabled: bool)`
 
@@ -1163,6 +1168,11 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
     met are silently skipped so that a single stale order cannot block the rest of the batch. Orders that fail for any other reason (expired, bad signature, etc.) are also skipped; the admin is expected to filter these off-chain.
     - When `true` (all-or-nothing): the first order failure aborts the
     whole batch by returning the underlying error, reverting any orders already executed in this call.
+
+### `pruneLinkedOutput(order_id: H256)`
+
+- **interface**: `api.tx.limitOrders.pruneLinkedOutput`
+- **summary**: Remove a provider record. The signer may prune at any time; anyone may prune after `expires_at`. Moves no funds.
 
 ### `setPalletStatus(enabled: bool)`
 
@@ -1963,7 +1973,7 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.claimRoot`
 - **summary**: Claims the root emissions for a coldkey across every validator it root-stakes to.
 
-    Redemption is fund-level: for each validator, the staker's accrued entitlement is redeemed as their pro-rata fraction of that basket (sold to TAO and staked on root). The `subnets` argument is retained for call-data compatibility with pre-basket clients; it is ignored — baskets have no per-subnet claim selection.
+    Redemption is fund-level: for each validator, the staker's accrued entitlement is paid as their pro-rata fraction of the basket's full-liquidation NAV and staked on root. The corresponding alpha fraction is sold; any concavity surplus over the NAV-priced entitlement remains in the basket as root TAO for the other holders. The `subnets` argument is retained for call-data compatibility with pre-basket clients; it is ignored — baskets have no per-subnet claim selection.
 
     Prefer [`Pallet::claim_root_with_hotkey`] to claim a single validator.
 
@@ -1981,7 +1991,7 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.claimRootWithHotkey`
 - **summary**: Claims the root emissions for a coldkey on one validator hotkey.
 
-    Redemption is fund-level for that validator: the staker's accrued entitlement is redeemed as their pro-rata fraction of each basket holding (sold to TAO and staked on root). Other validators' accrued yield is left untouched.
+    Redemption is fund-level for that validator: the staker's accrued entitlement is paid as their pro-rata fraction of the basket's full-liquidation NAV and staked on root. The corresponding alpha fraction is sold; any concavity surplus over the NAV-priced entitlement remains in the basket as root TAO for the other holders. Other validators' accrued yield is left untouched.
 
     **Arguments:**
 
@@ -2270,7 +2280,15 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 
     - `destination_netuid`: The subnet ID to move stake to.
 
-    - `alpha_amount`: The alpha stake amount to move.
+    - `alpha_amount`: The alpha stake amount to move. `AlphaBalance::MAX`
+    means the live origin position at execution (so a preceding `claim_root_with_hotkey` in the same batch is included).
+
+### `moveStakeLimit(origin_hotkey: AccountId, destination_hotkey: AccountId, origin_netuid: NetUid, destination_netuid: NetUid, alpha_amount: AlphaBalance, limit_price: TaoBalance, allow_partial: bool)`
+
+- **interface**: `api.tx.subtensorModule.moveStakeLimit`
+- **summary**: Moves stake from one hotkey to another and, when the subnets differ, protects the swap with a relative price limit.
+
+    `limit_price` is the minimum acceptable destination-alpha per origin-alpha ratio, scaled by 1e9. When `allow_partial` is false the call is fill-or-kill; otherwise it moves only the amount executable before the limit is crossed. `alpha_amount` of `AlphaBalance::MAX` means the live origin position at execution.
 
 ### `recycleAlpha(hotkey: AccountId, amount: AlphaBalance, netuid: NetUid)`
 
@@ -2510,7 +2528,11 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.rootRegister`
 - **summary**: Register the hotkey to root network.
 
-    Admission is burn-based: the coldkey pays the root burn price (demand-priced like subnet registration), recycled out of issuance. No prior stake is required. When the network is full, the lowest-staked member is pruned to make room.
+    Admission is burn-based: the coldkey pays the root burn price (demand-priced like subnet registration), recycled out of issuance. No prior stake is required. When the network is full, the lowest-staked non-immune member is pruned to make room.
+
+    After a successful registration, the hotkey is auto-childkeyed to every existing subnet owner unless the validator opted out of auto parent delegation. Pruning a seat clears that validator's protocol auto-parent edges.
+
+    Declared weight is `WeightInfo::root_register` plus a `TotalNetworks`-scaled `DbWeight` term for the per-subnet persist (and prune cleanup). Re-benchmark on reference hardware so the base measurement includes that work.
 
 ### `scheduleSwapColdkey(new_coldkey: AccountId)`
 
@@ -2632,7 +2654,7 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 ### `setAutoParentDelegationEnabled(hotkey: AccountId, enabled: bool)`
 
 - **interface**: `api.tx.subtensorModule.setAutoParentDelegationEnabled`
-- **summary**: Allows a root validator to toggle auto parent delegation for new subnets owner hotkey
+- **summary**: Allows a root validator to toggle auto parent delegation. When enabled (the default), the validator is childkeyed to subnet owners on new subnet registration and on this validator's own root registration.
 
 ### `setChildkeyTake(hotkey: AccountId, netuid: NetUid, take: PerU16)`
 
@@ -2825,7 +2847,7 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 ### `setRootWeights(dests: Vec<u16>, weights: Vec<u16>)`
 
 - **interface**: `api.tx.subtensorModule.setRootWeights`
-- **summary**: Sets a root validator's basket distribution vector `w` on the root subnet (netuid 0). `dests` are subnet netuids and `weights` are the proportions of the validator's root dividends to deploy into each subnet's alpha basket. Requires at least [`crate::MIN_ROOT_BASKET_WEIGHTS`] positive destinations (softened when fewer networks exist).
+- **summary**: Sets a root validator's basket distribution vector `w` on the root subnet (netuid 0). `dests` are subnet netuids and `weights` are the proportions of the validator's root dividends to deploy into each subnet's alpha basket. Requires at least [`crate::MIN_ROOT_BASKET_WEIGHTS`] positive destinations (softened when fewer networks exist), and no destination may take a larger share of the vector than [`crate::RootWeightsCap`] (skipped while fewer destinations exist than the cap demands).
 
     **Args:**
 
@@ -2908,7 +2930,7 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
     **Arguments:**
 
     - `origin`: The signature of the caller's coldkey.
-    - `hotkey`: The validator whose basket to deposit into.
+    - `hotkey`: The root-registered validator whose basket to deposit into.
     - `amount_staked`: TAO to take from the caller's balance and deploy.
 
     **Events:**
@@ -2919,6 +2941,7 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
     **Errors:**
 
     - `HotKeyAccountNotExists`: The hotkey is not a registered account.
+    - `HotKeyNotRegisteredInSubNet`: The hotkey is not registered on root.
     - `AmountTooLow`: Below the minimum stake, or the deposit's realizable value
     rounds to zero entitlement.
     - `NotEnoughBalanceToStake`: The caller cannot cover `amount_staked`.

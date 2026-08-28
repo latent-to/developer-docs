@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **447**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **450**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -520,6 +520,12 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 - **interface**: `api.query.limitOrders.limitOrdersEnabled`
 - **summary**: Switch to enable/disable the pallet. Defaults to `false` so bare node deployments are safe; genesis sets it to `true`.
 
+### `linkedOutputs(H256)`: `LinkedOutput`
+
+- **interface**: `api.query.limitOrders.linkedOutputs`
+- **modifier**: `Optional`
+- **summary**: Output recorded by orders that declared `has_linked_order`, keyed by the provider's `OrderId`. Single-use: the first linked draw removes it.
+
 ### `orders(H256)`: `OrderStatus`
 
 - **interface**: `api.query.limitOrders.orders`
@@ -916,7 +922,7 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.autoParentDelegationEnabled`
 - **summary**: MAP ( hotkey ) --> parent_delegation_enabled
 
-    When `true`, this root validator allows auto parent delegation. Defaults to `true`; validators can opt out at any time by calling `set_auto_parent_delegation_enabled(false)`.
+    When `true`, this root validator allows auto parent delegation: new subnets childkey existing root validators to the new owner, and a new root validator childkeys to all current subnet owners. Defaults to `true`; validators can opt out at any time by calling `set_auto_parent_delegation_enabled(false)`.
 
 ### `autoStakeDestination(AccountId32, u16)`: `AccountId32`
 
@@ -969,6 +975,45 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 - **summary**: MAP ( validator_hotkey ) --> total outstanding basket fund shares `P`.
 
     A validator's beta basket is a single fund: its holdings are the escrow stake positions `(hotkey, escrow, netuid)` across subnets (the root slot is the fund's TAO/cash position), and its net asset value `N` is the realizable (slippage-aware) TAO value of those holdings. Stakers' entitlements are denominated in *fund shares*, never in any particular subnet's alpha: deposits mint `value_added * P / N` shares, where `value_added` is the realizable NAV the deposit actually added (so existing holders are neither diluted nor taxed with the deposit's buy slippage), and redemption pays the staker's owed share fraction `owed / P` of every holding, sold pro-rata. Direct deposits (`stake_into_basket`) mint the same way, credited via the signed [`BasketClaimed`] watermark. Because entitlement is decoupled from composition, holdings can be rebalanced (validator-directed trading, dissolution conversions) without touching any staker's claim.
+
+### `basketTwr(AccountId32)`: `FixedU128`
+
+- **interface**: `api.query.subtensorModule.basketTwr`
+- **summary**: MAP ( validator_hotkey ) --> the fund's staker total-return accumulator.
+
+    The one canonical root-staker return series. Starts at 1.0 and multiplies by `1 + stakers_value / total_root_stake` on every dividend share mint — the value that deposit actually added per rao of claimant root stake, locked in at the deposit's own (realizable) pricing. Flows never move it; only dividends do. The staker return of τ1 staked over any window (claim-and-restake convention) is `Twr(t1) / Twr(t0) - 1`, so any two archive samples agree for every consumer. Everything staker-facing derives from it: `stake_price` is this accumulator spliced onto the stake index (`tr_splice × Twr`), and the index chains its relatives. The rate-delta figure `(BasketRate - rate0) * price` is *not* an alternative return series — it is the pending-entitlement mark (`staker_yield`), which re-values all accrued β at today's price. Accumulates from the upgrade that introduced it; earlier history lives in the seeded `tr_splice` (see `migrate_stamp_beta_baselines`). Like [`BetaBaseline`], scoped to one fund life: moves on hotkey swap and is retired when the fund drains or a dust revival starts a new life.
+
+### `betaBaseline(AccountId32)`: `BetaBaselineOf`
+
+- **interface**: `api.query.subtensorModule.betaBaseline`
+- **modifier**: `Optional`
+- **summary**: MAP ( validator_hotkey ) --> the fund's frozen display baseline (see [`BetaBaselineOf`]).
+
+    Stamped once at the fund's first share mint (or seeded from the frozen SDK table by `migrate_stamp_beta_baselines` for funds that predate on-chain stamping) and never rewritten, so the spliced display/stake prices stay continuous for the fund's whole life. Scoped to one fund *life*: follows the fund on hotkey swap, and is retired when the last share is claimed or a dust revival starts a new life (see `retire_beta_display_state`), so an entry exists only while the fund has outstanding shares. Also absent for funds born before this storage existed that have not minted since; such funds price provisionally at the live index level until their next mint stamps them.
+
+### `betaIndexFundSample(AccountId32)`: `BetaIndexFundSampleOf`
+
+- **interface**: `api.query.subtensorModule.betaIndexFundSample`
+- **modifier**: `Optional`
+- **summary**: MAP ( validator_hotkey ) --> the fund's last completed index-sweep sample (see [`BetaIndexFundSampleOf`]).
+
+    Written by the sweep as it visits each fund (the current pass's sample replaces the previous pass's in the same visit) and consumed as the start-of-period state of the next pass's price relative. Removed when the fund becomes unpriceable, retires, or starts a new life, so no relative ever chains across a gap in the fund's history.
+
+### `betaIndexSnapshot`: `BetaIndexSnapshotOf`
+
+- **interface**: `api.query.subtensorModule.betaIndexSnapshot`
+- **modifier**: `Optional`
+- **summary**: ITEM --> the latest published beta-index snapshot (see [`BetaIndexSnapshotOf`]).
+
+    Refreshed by the paged background sweep in block processing; read by baseline stamps so no state-changing path ever sweeps every fund inline. Absent until the first pass after genesis (or the runtime upgrade that introduced it) completes; stamps simply wait for the next mint while it is absent.
+
+### `betaIndexSweep`: `BetaIndexSweepOf`
+
+- **interface**: `api.query.subtensorModule.betaIndexSweep`
+- **modifier**: `Optional`
+- **summary**: ITEM --> in-progress paged beta-index sweep (see [`BetaIndexSweepOf`]).
+
+    Present only mid-pass. `advance_beta_index_sweep` processes one strictly bounded page per block and clears this on completion.
 
 ### `blockAtRegistration(u16, u16)`: `u64`
 
@@ -1157,11 +1202,6 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.decayingOwnerLock`
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> LockState | Total decaying lock to the owner hotkey for a subnet.
-
-### `deferredRootAlphaDividends(u16, AccountId32)`: `AlphaBalance`
-
-- **interface**: `api.query.subtensorModule.deferredRootAlphaDividends`
-- **summary**: Root dividend credits whose per-hotkey allocation was calculated by an epoch while the beta-basket seed migration owned the destination maps. Credits are released to the same hotkey on that subnet's first epoch after the seed completes.
 
 ### `delegates(AccountId32)`: `PerU16`
 
@@ -1762,6 +1802,11 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.rootStakeUnlockInterval`
 - **summary**: Minimum number of blocks root (netuid 0) stake must be held before it can be removed from root (via `remove_stake`, move/swap/transfer off root, etc.), keyed off `LastColdkeyHotkeyStakeBlock`. `0` disables the hold (default), preserving legacy behaviour. When set >= one tempo it neutralises epoch-boundary "just-in-time" dividend sniping: root stake is 1:1 TAO with no AMM slippage, so without this friction a sniper can stake right before a boundary, capture a full tempo's root dividend pro-rata to instantaneous stake, and exit immediately.
 
+### `rootWeightsCap(NetUid)`: `u16`
+
+- **interface**: `api.query.subtensorModule.rootWeightsCap`
+- **summary**: Concentration cap on `set_root_weights` vectors, u16-normalized (`u16::MAX` = 100% of the vector's summed weight). A cap of 1/16 forces a fund to spread across at least 16 destinations, so basket curation cannot recreate single-subnet concentration. Like [`RootClaimableThreshold`], only the `NetUid::ROOT` entry is consulted; other entries are inert. Skipped at check time while fewer destinations exist than the cap demands (young chains, tests). Set via `AdminUtils::sudo_set_root_weights_cap`.
+
 ### `rootWeightSettingEnabled`: `bool`
 
 - **interface**: `api.query.subtensorModule.rootWeightSettingEnabled`
@@ -2014,6 +2059,11 @@ Generated from Subtensor runtime spec version **447**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.tokenSymbol`
 - **summary**: MAP ( netuid ) --> token_symbol | Returns the token symbol for a subnet.
+
+### `totalAlphaStaked(NetUid)`: `AlphaBalance`
+
+- **interface**: `api.query.subtensorModule.totalAlphaStaked`
+- **summary**: MAP ( netuid ) --> alpha | Returns the total alpha staked across all hotkeys on a subnet.
 
 ### `totalHotkeyAlpha(AccountId32, u16)`: `AlphaBalance`
 
