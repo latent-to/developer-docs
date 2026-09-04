@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **450**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **453**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -1168,6 +1168,11 @@ Generated from Subtensor runtime spec version **450**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.BalanceWithdrawalError`
 - **summary**: The caller is trying to add stake, but for some reason the requested amount could not be withdrawn from the coldkey account.
+
+### `BasketDepositPending`
+
+- **interface**: `api.errors.subtensorModule.BasketDepositPending`
+- **summary**: A queued root-dividend deposit could not be settled. Operations which change the hotkey's root claimant base must retry after the deposit becomes executable.
 
 ### `BasketHasNoWeights`
 

@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **450**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **453**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -817,6 +817,11 @@ Generated from Subtensor runtime spec version **450**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.AxonServed`
 - **summary**: the axon server information is added to the network.
+
+### `BasketAlphaWrittenOff(AccountId, NetUid, AlphaBalance)`
+
+- **interface**: `api.events.subtensorModule.BasketAlphaWrittenOff`
+- **summary**: A terminally untradeable basket alpha slice was explicitly written off. This is distinct from a swap/transfer failure: only a pool too shallow to execute any sale is eligible, and removing the exact slice preserves every holder's fund proportion. Appended to preserve existing SCALE event indices.
 
 ### `BasketClaimed(AccountId, AccountId, TaoBalance)`
 

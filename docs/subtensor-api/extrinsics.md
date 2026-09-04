@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **450**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **453**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -3180,6 +3180,7 @@ Generated from Subtensor runtime spec version **450**. Connected to: `wss://entr
     - `AmountTooLow`: The TAO-equivalent of the transfer is below the minimum stake requirement.
     - `TransferDisallowed`: Transfers are disabled on the origin or destination subnet.
     - `StakeUnavailable`: The remaining stake would not cover the locked amount on the origin subnet.
+    - `CannotUseSystemAccount`: The destination coldkey is the protocol-owned basket escrow.
 
     **Events:**
 
@@ -3213,6 +3214,7 @@ Generated from Subtensor runtime spec version **450**. Connected to: `wss://entr
     - `AmountTooLow`: The TAO-equivalent of the transfer is below the minimum stake requirement.
     - `TransferDisallowed`: Transfers are disabled on the origin or destination subnet.
     - `StakeUnavailable`: The remaining stake would not cover the locked amount on the origin subnet.
+    - `CannotUseSystemAccount`: The destination coldkey is the protocol-owned basket escrow.
 
     **Events:**
 
