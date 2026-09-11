@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **453**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **455**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -1707,7 +1707,7 @@ Generated from Subtensor runtime spec version **453**. Connected to: `wss://entr
 ### `RootClaimTooHeavy`
 
 - **interface**: `api.errors.subtensorModule.RootClaimTooHeavy`
-- **summary**: Coldkey-wide `claim_root` would process more work units than the pre-dispatch envelope ([`crate::MAX_ROOT_CLAIM_WORK`]). Use `claim_root_with_hotkey` per validator so admission weight matches the holdings actually walked.
+- **summary**: A root claim would process more root hotkeys and basket rows than the fixed admission envelope. Use `claim_root_with_hotkey` per validator so admission weight matches the holdings actually walked.
 
 ### `RootNetworkDoesNotExist`
 
