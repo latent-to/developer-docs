@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **455**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **466**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -478,6 +478,11 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 - **interface**: `api.errors.crowdloan.DepositTooLow`
 - **summary**: The crowdloan initial deposit is too low.
 
+### `FundsNotSettled`
+
+- **interface**: `api.errors.crowdloan.FundsNotSettled`
+- **summary**: The finalization call did not spend the full amount raised.
+
 ### `InsufficientBalance`
 
 - **interface**: `api.errors.crowdloan.InsufficientBalance`
@@ -787,6 +792,11 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
 - **interface**: `api.errors.limitOrders.OrderNetUidMismatch`
 - **summary**: An order in the batch targets a different netuid than the batch netuid parameter.
+
+### `OrderSignerFrozen`
+
+- **interface**: `api.errors.limitOrders.OrderSignerFrozen`
+- **summary**: The order owner is temporarily prohibited from moving funds.
 
 ### `PalletHotkeyNotRegistered`
 
@@ -1169,6 +1179,11 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.BalanceWithdrawalError`
 - **summary**: The caller is trying to add stake, but for some reason the requested amount could not be withdrawn from the coldkey account.
 
+### `BasketConcentrationCapExceeded`
+
+- **interface**: `api.errors.subtensorModule.BasketConcentrationCapExceeded`
+- **summary**: A `swap_basket` buy would leave the destination holding above [`crate::BasketConcentrationCap`] of fund NAV (holdings marked at realizable value). With the cap at 1/16 a traded fund must spread across at least 16 holdings. Not enforced while the chain has fewer subnets than the cap demands.
+
 ### `BasketDepositPending`
 
 - **interface**: `api.errors.subtensorModule.BasketDepositPending`
@@ -1177,7 +1192,37 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 ### `BasketHasNoWeights`
 
 - **interface**: `api.errors.subtensorModule.BasketHasNoWeights`
-- **summary**: Retired (kept for SCALE index stability): direct basket deposits into an uncurated fund are now held as the fund's root (TAO cash) slot instead of erroring.
+- **summary**: Retired (kept for SCALE index stability): direct basket deposits into a fund with no holdings are held as the fund's root (TAO cash) slot instead of erroring.
+
+### `BasketLiquidityCapExceeded`
+
+- **interface**: `api.errors.subtensorModule.BasketLiquidityCapExceeded`
+- **summary**: The trade would leave the fund holding more of the destination subnet than [`crate::BasketLiquidityCap`] allows as a share of that subnet's alpha reserve. Trade a smaller amount or pick a deeper pool.
+
+### `BasketMinOutNotMet`
+
+- **interface**: `api.errors.subtensorModule.BasketMinOutNotMet`
+- **summary**: The `swap_basket` buy leg credited less than the caller's `min_amount_out` (destination alpha, or TAO when the destination is root). The trade rolled back. Re-quote and retry, or lower the floor.
+
+### `BasketSameSubnet`
+
+- **interface**: `api.errors.subtensorModule.BasketSameSubnet`
+- **summary**: `swap_basket` origin and destination are the same subnet.
+
+### `BasketTradingDisabled`
+
+- **interface**: `api.errors.subtensorModule.BasketTradingDisabled`
+- **summary**: `swap_basket` is disabled network-wide ([`crate::BasketTradingEnabled`] is false).
+
+### `BasketTradingFrozen`
+
+- **interface**: `api.errors.subtensorModule.BasketTradingFrozen`
+- **summary**: Basket trading is frozen for this validator hotkey by governance ([`crate::BasketTradingFrozen`]).
+
+### `BasketTurnoverBudgetExceeded`
+
+- **interface**: `api.errors.subtensorModule.BasketTurnoverBudgetExceeded`
+- **summary**: The trade would push more TAO through the fund than its turnover bucket holds ([`crate::BasketDailyTurnoverCap`] of fund NAV, refilling over [`crate::BASKET_TRADE_REFILL_BLOCKS`]). Wait for the bucket to refill or trade a smaller amount.
 
 ### `BeneficiaryDoesNotOwnHotkey`
 
@@ -1268,6 +1313,11 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.ColdkeySwapTooEarly`
 - **summary**: Coldkey swap too early.
+
+### `ColdkeySwapTooHeavy`
+
+- **interface**: `api.errors.subtensorModule.ColdkeySwapTooHeavy`
+- **summary**: The coldkey stakes through more hotkeys, or holds more stake positions, than a coldkey swap can move in one call. Consolidate (unstake or move stake) first.
 
 ### `CommitRevealDisabled`
 
@@ -1428,6 +1478,11 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.InsufficientTaoBalance`
 - **summary**: The caller does not have enough TAO balance for the operation.
+
+### `InvalidBatchLength`
+
+- **interface**: `api.errors.subtensorModule.InvalidBatchLength`
+- **summary**: A per-subnet weight batch is empty or has more items than there are networks.
 
 ### `InvalidChild`
 
@@ -1722,12 +1777,12 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 ### `RootWeightCapExceeded`
 
 - **interface**: `api.errors.subtensorModule.RootWeightCapExceeded`
-- **summary**: A single destination in a `set_root_weights` vector takes a larger share of the basket than [`crate::RootWeightsCap`] allows (share = value / sum of values). With the cap at 1/16 a validator must spread its basket across at least 16 destinations. Not enforced while the chain has fewer destinations than the cap demands.
+- **summary**: Retired (kept for SCALE index stability on the 463 testnet/devnet runtime): `set_root_weights` concentration cap. The live guard is [`Error::BasketConcentrationCapExceeded`].
 
 ### `RootWeightSettingDisabled`
 
 - **interface**: `api.errors.subtensorModule.RootWeightSettingDisabled`
-- **summary**: `set_root_weights` is disabled network-wide ([`crate::RootWeightSettingEnabled`] is false). Root Reborn launches gated: every fund runs the null strategy (dividends accumulate in place) until weight setting is switched on by governance or a later upgrade.
+- **summary**: Retired (kept for SCALE index stability): the `set_root_weights` extrinsic and its network-wide gate were removed. Funds have no target vector; dividends accumulate in place and composition changes only through `swap_basket`.
 
 ### `SameAutoStakeHotkeyAlreadySet`
 
@@ -1757,7 +1812,7 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 ### `StakeTooLowForRoot`
 
 - **interface**: `api.errors.subtensorModule.StakeTooLowForRoot`
-- **summary**: Retired: root admission is burn-based and no longer stake-gated. Kept so later error variants keep their metadata indices.
+- **summary**: A root registrant must hold at least as much root stake as the seat it would evict.
 
 ### `StakeUnavailable`
 
@@ -1828,6 +1883,11 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.TooManyRegistrationsThisInterval`
 - **summary**: The number of registration attempts exceeded the allowed number in the interval.
+
+### `TooManyStakingHotkeys`
+
+- **interface**: `api.errors.subtensorModule.TooManyStakingHotkeys`
+- **summary**: The destination coldkey already stakes through the maximum number of hotkeys that third-party transfers may add, or the signer's own `StakingHotkeys` list is at its cap. Staking to a hotkey the coldkey already stakes through is still accepted.
 
 ### `TooManyUIDsPerMechanism`
 

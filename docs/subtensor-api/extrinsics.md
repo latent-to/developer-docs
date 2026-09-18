@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **455**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **466**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -100,6 +100,31 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
 - **interface**: `api.tx.adminUtils.sudoSetAlphaValues`
 - **summary**: Sets values for liquid alpha
+
+### `sudoSetBasketConcentrationCap(cap: u16)`
+
+- **interface**: `api.tx.adminUtils.sudoSetBasketConcentrationCap`
+- **summary**: Sets the basket concentration cap ([`pallet_subtensor::BasketConcentrationCap`]): the largest u16-normalized share (`u16::MAX` = 100%) of fund NAV any single holding may reach through a `swap_basket` buy. A cap of `u16::MAX / 16 + 1` forces traded funds to spread across at least 16 holdings. The check is skipped while fewer subnets exist on chain than the cap demands. Root-only.
+
+### `sudoSetBasketDailyTurnoverCap(cap: u16)`
+
+- **interface**: `api.tx.adminUtils.sudoSetBasketDailyTurnoverCap`
+- **summary**: Sets the basket daily turnover budget ([`pallet_subtensor::BasketDailyTurnoverCap`]): the capacity of each fund's `swap_basket` turnover bucket as a u16-normalized share of fund NAV (`u16::MAX` = 100%). The bucket refills over 7200 blocks, so at most one capacity can be traded at any instant and about one per day sustained. Root-only.
+
+### `sudoSetBasketLiquidityCap(cap: u16)`
+
+- **interface**: `api.tx.adminUtils.sudoSetBasketLiquidityCap`
+- **summary**: Sets the basket liquidity cap ([`pallet_subtensor::BasketLiquidityCap`]): the largest u16-normalized share of a subnet's alpha reserve (`u16::MAX` = 100%) a fund may hold on that subnet after a `swap_basket` buy. Bounds the fund's exposure to any one pool's liquidity: with cap `L` the value at risk on a pool with TAO reserve `R` is about `R × L² / (1 + L)`. Root-only.
+
+### `sudoSetBasketTradingEnabled(enabled: bool)`
+
+- **interface**: `api.tx.adminUtils.sudoSetBasketTradingEnabled`
+- **summary**: Enables or disables validator basket trading (`swap_basket`) network-wide. Defaults OFF. Gates only the trade path: deposits, claims, dividend accrual, and reads are unaffected. Root-only.
+
+### `sudoSetBasketTradingFrozen(hotkey: AccountId, frozen: bool)`
+
+- **interface**: `api.tx.adminUtils.sudoSetBasketTradingFrozen`
+- **summary**: Freezes or unfreezes basket trading for one validator hotkey ([`pallet_subtensor::BasketTradingFrozen`]), e.g. after a suspected key compromise. A frozen fund still accepts deposits and pays claims. Root-only.
 
 ### `sudoSetBondsMovingAverage(netuid: NetUid, bonds_moving_average: u64)`
 
@@ -462,16 +487,6 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
 - **interface**: `api.tx.adminUtils.sudoSetRho`
 - **summary**: The extrinsic sets the rho for a subnet. It is only callable by the root account or subnet owner. The extrinsic will call the Subtensor pallet to set the rho.
-
-### `sudoSetRootWeightsCap(cap: u16)`
-
-- **interface**: `api.tx.adminUtils.sudoSetRootWeightsCap`
-- **summary**: Sets the root basket concentration cap ([`pallet_subtensor::RootWeightsCap`]): the largest u16-normalized share (`u16::MAX` = 100%) any single destination may take of a `set_root_weights` vector. A cap of `u16::MAX / 16 + 1` forces funds to spread across at least 16 destinations. The check softens to an equal split when fewer destinations exist on chain. Root-only.
-
-### `sudoSetRootWeightSettingEnabled(enabled: bool)`
-
-- **interface**: `api.tx.adminUtils.sudoSetRootWeightSettingEnabled`
-- **summary**: Enables or disables root basket weight setting (`set_root_weights`) network-wide. Root Reborn launches with this OFF so every fund runs the null (accumulate in place) strategy as the observable baseline; flip it on later to open basket curation. Gates only the setter — existing vectors, dividend deployment, and reads are unaffected. Root-only.
 
 ### `sudoSetServingRateLimit(netuid: NetUid, serving_rate_limit: u64)`
 
@@ -959,7 +974,7 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
     The call will either transfer the raised amount to the configured target address or dispatch the configured call using the creator origin. The stored crowdloan must contain exactly one of target address or call; if both or neither are set, finalization fails before transfer or dispatch.
 
-    When dispatching a call, the CurrentCrowdloanId will be set to the crowdloan id being finalized so the dispatched call can access it temporarily by accessing the `CurrentCrowdloanId` storage item.
+    When dispatching a call, the CurrentCrowdloanId will be set to the crowdloan id being finalized so the dispatched call can access it temporarily by accessing the `CurrentCrowdloanId` storage item. The call must spend the full raised amount from the funds account; otherwise finalization and any partial effects are rolled back.
 
     The dispatch origin for this call must be _Signed_ and must be the creator of the crowdloan.
 
@@ -2844,17 +2859,6 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
     Coldkeys reject locked alpha by default. Passing `false` opts the caller into receiving locked alpha from stake transfers or coldkey swaps.
 
-### `setRootWeights(dests: Vec<u16>, weights: Vec<u16>)`
-
-- **interface**: `api.tx.subtensorModule.setRootWeights`
-- **summary**: Sets a root validator's basket distribution vector `w` on the root subnet (netuid 0). `dests` are subnet netuids and `weights` are the proportions of the validator's root dividends to deploy into each subnet's alpha basket. Requires at least [`crate::MIN_ROOT_BASKET_WEIGHTS`] positive destinations (softened when fewer networks exist), and no destination may take a larger share of the vector than [`crate::RootWeightsCap`] (skipped while fewer destinations exist than the cap demands).
-
-    **Args:**
-
-    - `origin`: the root validator hotkey.
-    - `dests` (Vec\<u16>): destination subnet netuids.
-    - `weights` (Vec\<u16>): per-subnet weights (normalized on use).
-
 ### `setSubnetIdentity(netuid: NetUid, subnet_name: Vec<u8>, github_repo: Vec<u8>, subnet_contact: Vec<u8>, subnet_url: Vec<u8>, discord: Vec<u8>, description: Vec<u8>, logo_url: Vec<u8>, additional: Vec<u8>)`
 
 - **interface**: `api.tx.subtensorModule.setSubnetIdentity`
@@ -2925,7 +2929,7 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.stakeIntoBasket`
 - **summary**: Stakes TAO from the caller's balance directly into a validator's basket.
 
-    The TAO is deployed across subnets per the validator's root weight vector (exactly like a dividend deposit) and the caller is credited a fund entitlement at the fund's pre-buy realizable NAV, priced against the realizable value the deposit added — the depositor bears their own entry slippage and swap fees. An uncurated fund (no usable weight vector) is mirrored instead: the deposit deploys pro-rata across the fund's current holdings by realizable value, keeping deposits symmetric with claims (which redeem pro-rata of every holding); a deposit into an empty uncurated fund is held as the fund's root (TAO cash) slot. The credited entitlement is redeemable through [`Pallet::claim_root_with_hotkey`] (or coldkey-wide [`Pallet::claim_root`]); it does not require or affect root stake, and it does not change any staker's dividend accrual.
+    The TAO enters by the fund's current holdings: it is split pro-rata across every holding by realizable value and buys each one, so the deposit acquires the exposure the fund already has and stays symmetric with claims (which redeem pro-rata of every holding). A deposit into a fund with no holdings is held as the fund's root (TAO cash) slot. Inflows never change a fund's composition; only the validator's [`Pallet::swap_basket`] trades do. The caller is credited a fund entitlement at the fund's pre-buy realizable NAV, priced against the realizable value the deposit added — the depositor bears their own entry slippage and swap fees. The credited entitlement is redeemable through [`Pallet::claim_root_with_hotkey`] (or coldkey-wide [`Pallet::claim_root`]); it does not require or affect root stake, and it does not change any staker's dividend accrual.
 
     **Arguments:**
 
@@ -2942,8 +2946,8 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
     - `HotKeyAccountNotExists`: The hotkey is not a registered account.
     - `HotKeyNotRegisteredInSubNet`: The hotkey is not registered on root.
-    - `AmountTooLow`: Below the minimum stake, or the deposit's realizable value
-    rounds to zero entitlement.
+    - `AmountTooLow`: Below the minimum stake, the deposit's realizable value
+    rounds to zero entitlement, or a holding cannot be priced (or would receive a zero-TAO slice) so the deposit cannot buy every position its shares claim.
     - `NotEnoughBalanceToStake`: The caller cannot cover `amount_staked`.
 
 ### `startCall(netuid: NetUid)`
@@ -3031,6 +3035,40 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
     - `BadOrigin`: If the origin is not root.
     - `SubnetNotExist`: If the subnet does not exist.
     - `InvalidVotingPowerEmaAlpha`: If alpha is greater than 10^18 (1.0).
+
+### `swapBasket(hotkey: AccountId, origin_netuid: NetUid, destination_netuid: NetUid, amount: AlphaBalance, min_amount_out: u64)`
+
+- **interface**: `api.tx.subtensorModule.swapBasket`
+- **summary**: Rebalances a root validator's beta basket: sells `amount` of the fund's `origin_netuid` holding for TAO and buys `destination_netuid` with it. Either side may be root (netuid 0), the fund's TAO cash slot. Fund shares and staker entitlements are unchanged; only the fund's composition moves.
+
+    Guardrails: each AMM leg must fill fully within 2% of the subnet's moving price; the TAO through the middle is taken from the fund's turnover bucket (`BasketDailyTurnoverCap` of NAV, refilling over 7200 blocks); the destination holding may not end above `BasketLiquidityCap` of the destination pool's alpha reserve, nor above `BasketConcentrationCap` of NAV. Trading must be enabled network-wide and not frozen for the hotkey by governance. On top of the protocol band the caller may set its own floor: the buy leg must credit at least `min_amount_out` or the trade rolls back.
+
+    **Arguments:**
+
+    - `origin`: Signed by the coldkey that owns `hotkey` (or its `BasketTrading` proxy).
+    - `hotkey`: The root-registered validator whose basket to rebalance.
+    - `origin_netuid`: Subnet to sell out of (root = the TAO slot).
+    - `destination_netuid`: Subnet to buy into (root = the TAO slot).
+    - `amount`: Alpha of `origin_netuid` to sell (TAO at 1:1 when origin is root).
+    - `min_amount_out`: Least amount the buy leg must credit to the destination
+    holding, in `destination_netuid` alpha (rao of TAO when the destination is root), after fees. `0` sets no floor; the 2% protocol band still applies.
+
+    **Events:**
+
+    - `BasketSwapped`: On success, with the amounts on both legs.
+
+    **Errors:**
+
+    - `BasketTradingDisabled`, `BasketTradingFrozen`: Gated off.
+    - `BasketSameSubnet`: Origin equals destination.
+    - `NonAssociatedColdKey`: Caller does not own `hotkey`.
+    - `HotKeyNotRegisteredInSubNet`: `hotkey` is not on root.
+    - `NotEnoughStakeToWithdraw`: The fund holds less than `amount` on origin.
+    - `SlippageTooHigh`: A leg could not fill within 2% of the moving price.
+    - `BasketMinOutNotMet`: The buy leg credited less than `min_amount_out`.
+    - `BasketTurnoverBudgetExceeded`: The trade exceeds what the fund's turnover bucket holds.
+    - `BasketLiquidityCapExceeded`: The destination holding would exceed the liquidity cap.
+    - `BasketConcentrationCapExceeded`: The destination would exceed the concentration cap.
 
 ### `swapColdkey(old_coldkey: AccountId, new_coldkey: AccountId, swap_cost: TaoBalance)`
 
@@ -3264,6 +3302,8 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
     - `TxRateLimitExceeded`: Thrown if key has hit transaction rate limit.
 
+    The declared weight covers up to [`crate::MAX_UNSTAKE_ALL_LEGS`] positions (one `remove_stake` plus a `StakingHotkeys` walk each) and is refunded to the subnets actually visited and unstaked. Remaining positions stay for a later call so the envelope fits the normal-class block.
+
 ### `unstakeAllAlpha(hotkey: AccountId)`
 
 - **interface**: `api.tx.subtensorModule.unstakeAllAlpha`
@@ -3288,6 +3328,8 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
     - `NotEnoughStakeToWithdraw`: Thrown if there is not enough stake on the hotkey to withdraw this amount.
 
     - `TxRateLimitExceeded`: Thrown if key has hit transaction rate limit.
+
+    The declared weight covers up to [`crate::MAX_UNSTAKE_ALL_LEGS`] positions (one `remove_stake` plus a `StakingHotkeys` walk each) and is refunded to the subnets actually visited and unstaked. Remaining positions stay for a later call so the envelope fits the normal-class block.
 
 ### `updateSymbol(netuid: NetUid, symbol: Vec<u8>)`
 

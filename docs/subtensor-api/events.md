@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **455**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **466**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -36,6 +36,31 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 - **[utility](#pallet-utility)**
 
 ## `adminUtils` {#pallet-adminutils}
+
+### `BasketConcentrationCapSet(u16)`
+
+- **interface**: `api.events.adminUtils.BasketConcentrationCapSet`
+- **summary**: The basket concentration cap (`BasketConcentrationCap`) was set.
+
+### `BasketDailyTurnoverCapSet(u16)`
+
+- **interface**: `api.events.adminUtils.BasketDailyTurnoverCapSet`
+- **summary**: The basket daily turnover budget (`BasketDailyTurnoverCap`) was set.
+
+### `BasketLiquidityCapSet(u16)`
+
+- **interface**: `api.events.adminUtils.BasketLiquidityCapSet`
+- **summary**: The basket liquidity cap (`BasketLiquidityCap`) was set.
+
+### `BasketTradingFrozenSet(AccountId, bool)`
+
+- **interface**: `api.events.adminUtils.BasketTradingFrozenSet`
+- **summary**: Basket trading was frozen or unfrozen for one validator hotkey.
+
+### `BasketTradingToggled(bool)`
+
+- **interface**: `api.events.adminUtils.BasketTradingToggled`
+- **summary**: Validator basket trading (`swap_basket`) was enabled or disabled network-wide.
 
 ### `BondsResetToggled(NetUid, bool)`
 
@@ -66,16 +91,6 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
 - **interface**: `api.events.adminUtils.PrecompileUpdated`
 - **summary**: Event emitted when a precompile operation is updated.
-
-### `RootWeightsCapSet(u16)`
-
-- **interface**: `api.events.adminUtils.RootWeightsCapSet`
-- **summary**: The root basket concentration cap (`RootWeightsCap`) was set.
-
-### `RootWeightSettingToggled(bool)`
-
-- **interface**: `api.events.adminUtils.RootWeightSettingToggled`
-- **summary**: Root basket weight setting (`set_root_weights`) was enabled or disabled network-wide.
 
 ### `SubnetEmissionEnabledSet(NetUid, bool)`
 
@@ -831,7 +846,7 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 ### `BasketDeposited(AccountId, TaoBalance, u64)`
 
 - **interface**: `api.events.subtensorModule.BasketDeposited`
-- **summary**: A validator's beta basket (fund) received a dividend deposit: the dividend was deployed across subnets per the validator's weight vector, adding `tao` of realizable NAV to the fund and minting `shares` fund shares at the pre-deposit NAV.
+- **summary**: A validator's beta basket (fund) received a dividend deposit: the dividend alpha was credited in place to the fund's holding on the subnet it was earned on, adding `tao` of realizable NAV to the fund and minting `shares` fund shares at the pre-deposit NAV.
 
 ### `BasketHoldingConverted(AccountId, NetUid, TaoBalance)`
 
@@ -841,7 +856,12 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 ### `BasketStakedIn(AccountId, AccountId, TaoBalance, TaoBalance, u64)`
 
 - **interface**: `api.events.subtensorModule.BasketStakedIn`
-- **summary**: A staker deposited TAO from their balance directly into a validator's beta basket: the TAO was deployed across subnets per the validator's weight vector and `shares` fund shares were credited to the staker via their claimed watermark.
+- **summary**: A staker deposited TAO from their balance directly into a validator's beta basket: the TAO was split across the fund's current holdings by value (or held as the root cash slot of an empty fund) and `shares` fund shares were credited to the staker via their claimed watermark.
+
+### `BasketSwapped(AccountId, NetUid, NetUid, AlphaBalance, TaoBalance, AlphaBalance)`
+
+- **interface**: `api.events.subtensorModule.BasketSwapped`
+- **summary**: A validator rebalanced its beta basket: `alpha_sold` of `origin_netuid` was sold for `tao_mid` TAO, which bought `alpha_bought` of `destination_netuid`. Fund shares and staker entitlements are unaffected; only the fund's composition changed.
 
 ### `BatchCompletedWithErrors()`
 
@@ -1281,7 +1301,7 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 ### `RootWeightsSet(u16)`
 
 - **interface**: `api.events.subtensorModule.RootWeightsSet`
-- **summary**: a root validator set its beta-basket distribution vector (uid on the root subnet).
+- **summary**: Retired (kept for SCALE index stability): emitted by the removed `set_root_weights` extrinsic. Never emitted on current runtimes.
 
 ### `ScalingLawPowerSet(NetUid, u16)`
 
@@ -1302,6 +1322,11 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.SetChildrenScheduled`
 - **summary**: Setting of children of a hotkey have been scheduled
+
+### `SharePoolDenominatorReconciled(AccountId, NetUid)`
+
+- **interface**: `api.events.subtensorModule.SharePoolDenominatorReconciled`
+- **summary**: A share pool's denominator was rewritten to the sum of its live shares, so every member is quoted exactly its fraction of the pool value.
 
 ### `StakeAdded(AccountId, AccountId, TaoBalance, AlphaBalance, NetUid, u64)`
 
@@ -1380,6 +1405,11 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.SubnetLeaseDividendsDistributed`
 - **summary**: Subnet lease dividends have been distributed.
+
+### `SubnetLeaseDividendSkipped(LeaseId, AccountId, AlphaBalance)`
+
+- **interface**: `api.events.subtensorModule.SubnetLeaseDividendSkipped`
+- **summary**: A contributor's lease dividends could not be transferred this interval. The amount is recorded against that contributor and retried at the next distribution.
 
 ### `SubnetLeaseTerminated(AccountId, NetUid)`
 

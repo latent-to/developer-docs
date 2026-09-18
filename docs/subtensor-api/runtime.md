@@ -8,7 +8,7 @@ description: "This page includes runtime API calls exposed by the Subtensor runt
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **455**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **466**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[AccountNonceApi](#pallet-accountnonceapi)**
@@ -115,6 +115,11 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 - **interface**: `api.call.betaBasketRuntimeApi.getBasketPosition`
 - **summary**: One staker's share-denominated position on one validator: owed shares, outstanding supply, fund NAV, and the position's realizable and spot TAO values. `None` when the staker has no owed shares there.
 
+### `getBasketTradingStatus(hotkey: AccountId32)`: `BasketTradingStatus`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getBasketTradingStatus`
+- **summary**: One fund's `swap_basket` trading status: the network-wide and per-hotkey gates plus the turnover window a trade at the current block would be charged to.
+
 ### `getBetaIndex()`: `(FixedU128, FixedU128)`
 
 - **interface**: `api.call.betaBasketRuntimeApi.getBetaIndex`
@@ -168,12 +173,7 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 ### `getValidatorBasketSummary(hotkey: AccountId32)`: `BasketSummary`
 
 - **interface**: `api.call.betaBasketRuntimeApi.getValidatorBasketSummary`
-- **summary**: Full explorer-facing summary of one validator's basket: NAV (realizable and spot), shares, lifetime deposit/redemption counters, weights, and per-subnet holdings.
-
-### `getValidatorWeights(hotkey: AccountId32)`: `Vec<(NetUid, u16)>`
-
-- **interface**: `api.call.betaBasketRuntimeApi.getValidatorWeights`
-- **summary**: A validator's basket weight vector `w`: (subnet, weight) it deploys dividends into.
+- **summary**: Full explorer-facing summary of one validator's basket: NAV (realizable and spot), shares, lifetime deposit/redemption counters, and per-subnet holdings.
 
 
 ## `BlockBuilder` {#pallet-blockbuilder}
