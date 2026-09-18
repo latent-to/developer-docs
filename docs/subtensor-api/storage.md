@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **455**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **466**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -213,6 +213,12 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
 - **interface**: `api.query.commitments.timelockedIndex`
 - **summary**: Tracks all CommitmentOf that have at least one timelocked field.
+
+### `timelockRevealCursor`: `(u16,AccountId32)`
+
+- **interface**: `api.query.commitments.timelockRevealCursor`
+- **modifier**: `Optional`
+- **summary**: Last `TimelockedIndex` entry visited by a reveal pass that hit the per-block decryption budget. The next pass resumes after it so a burst of matured commitments at the front of the index cannot starve the rest. Absent when the previous pass covered the whole index.
 
 ### `usedSpaceOf(u16, AccountId32)`: `UsageTracker`
 
@@ -690,11 +696,13 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 - **interface**: `api.query.proxy.proxies`
 - **summary**: The set of account proxies. Maps the account which has delegated to the accounts which are being delegated to, together with the amount held on deposit.
 
-### `realPaysFee(AccountId32, AccountId32)`: `Null`
+### `realPaysFeeConsentV1(AccountId32, AccountId32)`: `Null`
 
-- **interface**: `api.query.proxy.realPaysFee`
+- **interface**: `api.query.proxy.realPaysFeeConsentV1`
 - **modifier**: `Optional`
 - **summary**: Tracks which (real, delegate) pairs have opted in to the real account paying transaction fees for proxy calls made by the delegate. Existence of an entry means the real account pays; absence means the delegate pays (default).
+
+    The versioned prefix deliberately requires renewed consent after the authorization fix. Legacy `RealPaysFee` entries cannot distinguish owner consent from restricted-proxy grants, so copying them would preserve unauthorized spending permissions.
 
 
 ## `randomnessCollectiveFlip` {#pallet-randomnesscollectiveflip}
@@ -886,6 +894,16 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.alphaMapLastKey`
 - **summary**: Contains last Alpha storage map key to iterate (check first)
 
+### `alphaShareEpoch(AccountId32, AccountId32, u16)`: `u64`
+
+- **interface**: `api.query.subtensorModule.alphaShareEpoch`
+- **summary**: NMAP ( hot, cold, netuid ) --> epoch | Pool epoch in which an `AlphaV2` (or legacy `Alpha`) share row was last written. Absent means epoch 0.
+
+### `alphaSharePoolEpoch(AccountId32, u16)`: `u64`
+
+- **interface**: `api.query.subtensorModule.alphaSharePoolEpoch`
+- **summary**: DMAP ( hot, netuid ) --> epoch | Generation of the hotkey's alpha share pool on a subnet. Incremented each time the pool is closed (its share denominator is written to zero because the pool holds no value). Share rows stamped with an older epoch belong to a closed pool and are read as absent, so they can never claim value deposited later.
+
 ### `alphaSigmoidSteepness(NetUid)`: `i16`
 
 - **interface**: `api.query.subtensorModule.alphaSigmoidSteepness`
@@ -948,12 +966,37 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
     Signed on purpose, for two reasons. First, stake-change rebasing (`claimed ± rate * delta`) must be exact in both directions: with an unsigned floor, unstaking root before claiming would clip the rebase at zero, silently forfeiting the staker's accrued entitlement and permanently stranding the matching shares (and their escrow value) in the fund. Second, this map doubles as the grant ledger for direct deposits: `stake_into_basket` credits its minted shares by *decrementing* the watermark (`owed = rate * root_stake - claimed`), so a persistent negative value is an intentional unconditional share grant, not a rebasing artifact.
 
+### `basketConcentrationCap`: `u16`
+
+- **interface**: `api.query.subtensorModule.basketConcentrationCap`
+- **summary**: ITEM --> max share of a fund's NAV one holding may reach through a `swap_basket` buy, u16-normalized (`u16::MAX` = 100%). Holdings are marked at realizable value. A cap of 1/16 forces a traded fund to spread across at least 16 holdings, so trading cannot recreate single-subnet concentration. Only buys are checked: a holding that grows past the cap through price appreciation or in-place dividends is left alone (it can be sold down, not topped up). Skipped at check time while fewer subnets exist than the cap demands (young chains, tests). Set via `AdminUtils::sudo_set_basket_concentration_cap`.
+
+### `basketDailyTurnoverCap`: `u16`
+
+- **interface**: `api.query.subtensorModule.basketDailyTurnoverCap`
+- **summary**: ITEM --> capacity of a fund's `swap_basket` turnover bucket as a u16-normalized share of the fund's NAV (`u16::MAX` = 100%). The bucket refills at `capacity / BASKET_TRADE_REFILL_BLOCKS` per block, so at most one capacity can be pushed through the fund at any instant and about one per day sustained. Each leg is also bounded to [`crate::BASKET_TRADE_MAX_SLIPPAGE_BPS`] of *both* the moving price and the spot price. Set via `AdminUtils::sudo_set_basket_daily_turnover_cap`.
+
 ### `basketDepositedTao(AccountId32)`: `TaoBalance`
 
 - **interface**: `api.query.subtensorModule.basketDepositedTao`
 - **summary**: MAP ( validator_hotkey ) --> lifetime realizable TAO value deposited into the basket.
 
     Cumulative sum of every deposit's `value_added`: the realizable NAV the deposit actually added (net of buy slippage and fees), deliberately less than the raw TAO deployed. Both dividend deposits and direct `stake_into_basket` deposits accumulate here, and dividend deposits add their full `value_added` even though only the stakers' attribution fraction mints shares. Together with [`BasketRedeemedTao`] this makes lifetime fund performance (`(NAV + redeemed) / deposited`) and deposit-rate metrics computable from two storage reads, with no event indexing. Follows the fund across hotkey swaps.
+
+### `basketLiquidityCap`: `u16`
+
+- **interface**: `api.query.subtensorModule.basketLiquidityCap`
+- **summary**: ITEM --> max share of a subnet's alpha reserve (`SubnetAlphaIn`) a fund may hold on that subnet after a `swap_basket` buy (u16-normalized, `u16::MAX` = 100%).
+
+    The concentration cap ([`BasketConcentrationCap`]) marks holdings at realizable value, which is bounded by the pool's TAO reserve, so on a thin pool a fund could keep buying while counterparties sell back into its own price support and the realizable share never grows. This cap bounds the fund's exposure to any one pool's liquidity instead: with cap `L` the value at risk on a pool with TAO reserve `R` is about `R × L² / (1 + L)` (≈ 1% of `R` at 10%). Set via `AdminUtils::sudo_set_basket_liquidity_cap`.
+
+### `basketLiquidityUsed(AccountId32, u16)`: `(u64,u64)`
+
+- **interface**: `api.query.subtensorModule.basketLiquidityUsed`
+- **modifier**: `Optional`
+- **summary**: MAP ( validator_hotkey, netuid ) --> `(alpha_bought, last_block)` of destination-pool flow used by `swap_basket` in the current refill window.
+
+    The standing-position liquidity cap resets when the fund sells the holding back to zero. This map does not: it accumulates alpha bought into `netuid` and decays to zero over [`crate::BASKET_TRADE_REFILL_BLOCKS`], so accumulate/unwind cycles cannot spend the turnover budget as band slack. Follows the fund on hotkey swap (higher used, later block).
 
 ### `basketRate(AccountId32)`: `FixedI128`
 
@@ -974,7 +1017,26 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.basketShares`
 - **summary**: MAP ( validator_hotkey ) --> total outstanding basket fund shares `P`.
 
-    A validator's beta basket is a single fund: its holdings are the escrow stake positions `(hotkey, escrow, netuid)` across subnets (the root slot is the fund's TAO/cash position), and its net asset value `N` is the realizable (slippage-aware) TAO value of those holdings. Stakers' entitlements are denominated in *fund shares*, never in any particular subnet's alpha: deposits mint `value_added * P / N` shares, where `value_added` is the realizable NAV the deposit actually added (so existing holders are neither diluted nor taxed with the deposit's buy slippage), and redemption pays the staker's owed share fraction `owed / P` of every holding, sold pro-rata. Direct deposits (`stake_into_basket`) mint the same way, credited via the signed [`BasketClaimed`] watermark. Because entitlement is decoupled from composition, holdings can be rebalanced (validator-directed trading, dissolution conversions) without touching any staker's claim.
+    A validator's beta basket is a single fund: its holdings are the escrow stake positions `(hotkey, escrow, netuid)` across subnets (the root slot is the fund's TAO/cash position), and its net asset value `N` is the realizable (slippage-aware) TAO value of those holdings. Stakers' entitlements are denominated in *fund shares*, never in any particular subnet's alpha: dividend deposits mint `value_added * P / N` shares, where `value_added` is the realizable NAV the deposit actually added, and redemption pays the staker's owed share fraction `owed / P` of every holding, sold pro-rata. Direct `stake_into_basket` deposits additionally cap that NAV-priced mint by the fraction of every existing holding actually acquired, so their proportional redemption cannot sell more units than they bought. Their shares are credited through the signed [`BasketClaimed`] watermark. Because entitlement is decoupled from composition, holdings can be rebalanced (validator-directed trading, dissolution conversions) without touching any staker's claim.
+
+### `basketTradeBucket(AccountId32)`: `(u64,u64)`
+
+- **interface**: `api.query.subtensorModule.basketTradeBucket`
+- **modifier**: `Optional`
+- **summary**: MAP ( validator_hotkey ) --> `(tao_available, last_refill_block)` of the fund's `swap_basket` turnover bucket. A missing row is a full bucket (a new fund starts full). On each trade the bucket is refilled for the blocks elapsed since `last_refill_block` at `budget / BASKET_TRADE_REFILL_BLOCKS` per block, clamped to one budget (NAV at that moment), then the TAO through the middle of the swap is taken out. Follows the fund on hotkey swap (lower level, later refill block).
+
+### `basketTradingEnabled`: `bool`
+
+- **interface**: `api.query.subtensorModule.basketTradingEnabled`
+- **summary**: Master switch for `swap_basket` (validator-directed basket rebalancing). Defaults to OFF. Flipped on via `AdminUtils::sudo_set_basket_trading_enabled`. Gates only the trade path: deposits, claims, dividend accrual, and all read paths are unaffected.
+
+### `basketTradingFrozen(AccountId32)`: `Null`
+
+- **interface**: `api.query.subtensorModule.basketTradingFrozen`
+- **modifier**: `Optional`
+- **summary**: SET ( validator_hotkey ) --> basket trading frozen for this fund.
+
+    Per-fund kill switch set by governance (`AdminUtils::sudo_set_basket_trading_frozen`), e.g. after a suspected key compromise. A frozen fund still accepts deposits and pays claims; only `swap_basket` is refused. Follows the fund on hotkey swap.
 
 ### `basketTwr(AccountId32)`: `FixedU128`
 
@@ -1079,6 +1141,18 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.childkeyTake`
 - **summary**: DMAP ( hot, netuid ) --> take | Returns the hotkey childkey take for a specific subnet
+
+### `childkeyThresholdChecks(AccountId32)`: `Null`
+
+- **interface**: `api.query.subtensorModule.childkeyThresholdChecks`
+- **modifier**: `Optional`
+- **summary**: MAP ( parent ) --> () | Parents with live child relations whose stake just changed. Drained in `on_idle`, where each parent's total stake is re-checked against `StakeThreshold` and `ChildkeyThresholdSuspended` is set or cleared.
+
+### `childkeyThresholdSuspended(AccountId32)`: `Null`
+
+- **interface**: `api.query.subtensorModule.childkeyThresholdSuspended`
+- **modifier**: `Optional`
+- **summary**: MAP ( parent ) --> () | Parents whose total stake is below `StakeThreshold`. Their child relations stay stored but are inert (hidden from `get_children` / `get_parents`) except on subnets they own, until they qualify again.
 
 ### `ckBurn`: `u64`
 
@@ -1802,16 +1876,6 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.rootStakeUnlockInterval`
 - **summary**: Minimum number of blocks root (netuid 0) stake must be held before it can be removed from root (via `remove_stake`, move/swap/transfer off root, etc.), keyed off `LastColdkeyHotkeyStakeBlock`. `0` disables the hold (default), preserving legacy behaviour. When set >= one tempo it neutralises epoch-boundary "just-in-time" dividend sniping: root stake is 1:1 TAO with no AMM slippage, so without this friction a sniper can stake right before a boundary, capture a full tempo's root dividend pro-rata to instantaneous stake, and exit immediately.
 
-### `rootWeightsCap(NetUid)`: `u16`
-
-- **interface**: `api.query.subtensorModule.rootWeightsCap`
-- **summary**: Concentration cap on `set_root_weights` vectors, u16-normalized (`u16::MAX` = 100% of the vector's summed weight). A cap of 1/16 forces a fund to spread across at least 16 destinations, so basket curation cannot recreate single-subnet concentration. Like [`RootClaimableThreshold`], only the `NetUid::ROOT` entry is consulted; other entries are inert. Skipped at check time while fewer destinations exist than the cap demands (young chains, tests). Set via `AdminUtils::sudo_set_root_weights_cap`.
-
-### `rootWeightSettingEnabled`: `bool`
-
-- **interface**: `api.query.subtensorModule.rootWeightSettingEnabled`
-- **summary**: Master switch for `set_root_weights` (basket curation). Defaults to OFF: Root Reborn launches with every fund uncurated — dividends accumulate in place — so the null strategy is the observable network-wide baseline, and validators cannot stampede into TAO-cash (netuid 0) vectors on day one, which would recreate the old mechanical sell-pressure regime under a new name. Flipped on later via `AdminUtils::sudo_set_root_weight_setting_enabled` (or a migration in the enabling upgrade). Gates only the setter: existing stored vectors, dividend deployment, and all read paths are unaffected.
-
 ### `scalingLawPower(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.scalingLawPower`
@@ -1903,6 +1967,12 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.subnetExcessTao`
 - **summary**: MAP ( netuid ) --> excess_tao | Returns the excess TAO swapped (chain buys) into this subnet on the last block.
 
+### `subnetFastMovingPrice(NetUid)`: `FixedU128`
+
+- **interface**: `api.query.subtensorModule.subnetFastMovingPrice`
+- **modifier**: `Optional`
+- **summary**: MAP ( netuid ) --> fast moving price | A fast EMA of the subnet's spot price (TAO per alpha, unclamped) with a [`BASKET_FAST_EMA_HALF_LIFE_BLOCKS`] half-life, updated once per block right after [`SubnetMovingPrice`] from the spot at the end of the previous block, so no extrinsic in the current block can move it. It is a trading anchor only — `swap_basket` bounds every leg to within [`BASKET_TRADE_MAX_SLIPPAGE_BPS`] of the strictest of this, the slow EMA, and spot — and plays no part in emission. Absent until the subnet's first update after the upgrade (trading on it is refused until then).
+
 ### `subnetIdentitiesV3(NetUid)`: `SubnetIdentityV3`
 
 - **interface**: `api.query.subtensorModule.subnetIdentitiesV3`
@@ -1919,6 +1989,11 @@ Generated from Subtensor runtime spec version **455**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.subnetLeaseShares`
 - **summary**: DMAP ( lease_id, contributor ) --> shares | The shares of a contributor for a given lease.
+
+### `subnetLeaseUnpaidDividends(u32, AccountId32)`: `AlphaBalance`
+
+- **interface**: `api.query.subtensorModule.subnetLeaseUnpaidDividends`
+- **summary**: DMAP ( lease_id, contributor ) --> alpha | A contributor's dividend slices that could not be transferred yet. The alpha stays in the lease position and is retried, for that contributor only, at the next distribution.
 
 ### `subnetLimit`: `u16`
 
