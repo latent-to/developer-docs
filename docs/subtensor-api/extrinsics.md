@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **466**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **470**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -100,6 +100,11 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
 
 - **interface**: `api.tx.adminUtils.sudoSetAlphaValues`
 - **summary**: Sets values for liquid alpha
+
+### `sudoSetBasketClaimDust(row_cap_rao: u64, row_bps: u16, slice_rao: u64, forfeit_cap_rao: u64)`
+
+- **interface**: `api.tx.adminUtils.sudoSetBasketClaimDust`
+- **summary**: Sets the four root-claim dust knobs at once. A claim does not sell a fund row whose whole holding is worth less than `min(row_cap_rao, row_bps × anchored NAV)` ([`pallet_subtensor::BasketClaimRowDustCapTao`], [`pallet_subtensor::BasketClaimRowDustBps`]), nor a row where the claimant's own slice is worth less than `slice_rao` ([`pallet_subtensor::BasketClaimSliceDustTao`]), provided that slice is worth at most `forfeit_cap_rao` ([`pallet_subtensor::BasketClaimForfeitCapTao`]) — all at the anchored mark; the skipped slices stay in the fund for the other holders. Zero turns the respective skip off (a zero cap turns every skip off). `row_bps` is at most 10_000 (100%). Declared at four times the sibling one-write basket setter's weight (four writes; a dedicated benchmark exists for CI to measure). Root-only.
 
 ### `sudoSetBasketConcentrationCap(cap: u16)`
 
@@ -1992,6 +1997,8 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
 
     Prefer [`Pallet::claim_root_with_hotkey`] to claim a single validator.
 
+    Dust rows are not sold (see [`Pallet::claim_root_with_hotkey`]); the claimant's slice of them stays in the fund. A claim that is admitted and then fails is charged the work it did, not the declared envelope; a claim refused at admission keeps the envelope.
+
     **Arguments:**
 
     - `origin`: The signature of the caller's coldkey.
@@ -2000,6 +2007,11 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
     **Events:**
 
     - `RootClaimed`: On successfully claiming the root emissions for a coldkey.
+    - `BasketClaimDustSkipped`: Per fund whose dust rows were left unsold.
+
+    **Errors:**
+
+    - `RootClaimTooHeavy`: More hotkeys or fund rows than one claim may walk.
 
 ### `claimRootWithHotkey(hotkey: AccountId)`
 
@@ -2007,6 +2019,8 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
 - **summary**: Claims the root emissions for a coldkey on one validator hotkey.
 
     Redemption is fund-level for that validator: the staker's accrued entitlement is paid as their pro-rata fraction of the basket's full-liquidation NAV and staked on root. The corresponding alpha fraction is sold; any concavity surplus over the NAV-priced entitlement remains in the basket as root TAO for the other holders. Other validators' accrued yield is left untouched.
+
+    Dust rows are not sold: a fund row worth less than `min(BasketClaimRowDustCapTao, BasketClaimRowDustBps × anchored NAV)`, or one whose slice for this claimant is worth less than `BasketClaimSliceDustTao`, is skipped when that slice is also worth at most `BasketClaimForfeitCapTao` (all at the anchored mark, which decides dust only). The claim burns the full entitlement, so the claimant's slice of a skipped row — never more than the cap at the anchored mark — is left to the remaining holders (`BasketClaimDustSkipped` reports it). A claim that is admitted and then fails is charged the work it did, not the declared envelope; a claim refused at admission keeps the envelope.
 
     **Arguments:**
 
@@ -2016,6 +2030,12 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
     **Events:**
 
     - `RootClaimed`: On successfully claiming the root emissions for this coldkey+hotkey.
+    - `BasketClaimDustSkipped`: When the claim left dust rows unsold.
+
+    **Errors:**
+
+    - `RootClaimTooHeavy`: The fund has more rows (or queued credits) than one claim
+    may walk.
 
 ### `clearColdkeySwapAnnouncement()`
 
@@ -3070,6 +3090,15 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
     - `BasketLiquidityCapExceeded`: The destination holding would exceed the liquidity cap.
     - `BasketConcentrationCapExceeded`: The destination would exceed the concentration cap.
 
+### `swapBasketMany(hotkey: AccountId, legs: BoundedVec)`
+
+- **interface**: `api.tx.subtensorModule.swapBasketMany`
+- **summary**: Rebalance several legs of one validator basket atomically.
+
+    Pending dividend deposits are flushed once and the basket is valued once. Each leg then applies the same ownership, availability, slippage, turnover, liquidity, concentration, and caller-floor checks as [`Pallet::swap_basket`]. A failed leg rolls back every trade leg in this call; the preceding dividend flush remains settled, matching the failure behavior of the single-leg call.
+
+    Each tuple is `(origin_netuid, destination_netuid, amount, min_amount_out)`.
+
 ### `swapColdkey(old_coldkey: AccountId, new_coldkey: AccountId, swap_cost: TaoBalance)`
 
 - **interface**: `api.tx.subtensorModule.swapColdkey`
@@ -3126,7 +3155,8 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
     - `hotkey`: The hotkey whose stake is being swapped.
     - `origin_netuid`: The network/subnet ID from which stake is removed.
     - `destination_netuid`: The network/subnet ID to which stake is added.
-    - `alpha_amount`: The amount of stake to swap.
+    - `alpha_amount`: The amount of stake to swap. `AlphaBalance::MAX` means the live
+    origin position at execution.
 
     **Errors:**
 
@@ -3155,7 +3185,8 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
     - `hotkey`: The hotkey whose stake is being swapped.
     - `origin_netuid`: The network/subnet ID from which stake is removed.
     - `destination_netuid`: The network/subnet ID to which stake is added.
-    - `alpha_amount`: The amount of stake to swap.
+    - `alpha_amount`: The amount of stake to swap. `AlphaBalance::MAX` means the live
+    origin position at execution.
     - `limit_price`: The limit price expressed in units of RAO per one Alpha.
     - `allow_partial`: Allows partial execution of the amount. If set to false, this becomes fill or kill type of order.
 
@@ -3205,7 +3236,8 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
     - `hotkey`: The hotkey associated with the stake.
     - `origin_netuid`: The network/subnet ID to move stake from.
     - `destination_netuid`: The network/subnet ID to move stake to (for cross-subnet transfer).
-    - `alpha_amount`: The amount of stake to transfer.
+    - `alpha_amount`: The amount of stake to transfer. `AlphaBalance::MAX` means the
+    live origin position at execution.
 
     **Errors:**
 
@@ -3239,7 +3271,8 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
     - `destination_hotkey`: The hotkey the stake lands on.
     - `origin_netuid`: The network/subnet ID to move stake from.
     - `destination_netuid`: The network/subnet ID to move stake to (for cross-subnet transfer).
-    - `alpha_amount`: The amount of stake to transfer.
+    - `alpha_amount`: The amount of stake to transfer. `AlphaBalance::MAX` means the
+    live origin position at execution.
 
     **Errors:**
 

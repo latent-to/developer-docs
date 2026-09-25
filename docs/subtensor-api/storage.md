@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **466**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **470**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -965,6 +965,26 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
 - **summary**: DMAP ( validator_hotkey, staker_coldkey ) --> fund shares already claimed (watermark).
 
     Signed on purpose, for two reasons. First, stake-change rebasing (`claimed ± rate * delta`) must be exact in both directions: with an unsigned floor, unstaking root before claiming would clip the rebase at zero, silently forfeiting the staker's accrued entitlement and permanently stranding the matching shares (and their escrow value) in the fund. Second, this map doubles as the grant ledger for direct deposits: `stake_into_basket` credits its minted shares by *decrementing* the watermark (`owed = rate * root_stake - claimed`), so a persistent negative value is an intentional unconditional share grant, not a rebasing artifact.
+
+### `basketClaimForfeitCapTao`: `u64`
+
+- **interface**: `api.query.subtensorModule.basketClaimForfeitCapTao`
+- **summary**: ITEM --> rao value a claimant's slice of a row may be worth, at the anchored mark, and still be skipped by either dust rule. A row the rules mark as dust whose slice for this claimant is worth more than this is sold as before, so no single skipped slice ever leaves more than this in the fund. `0` turns every skip off (a slice can only be skipped if it is worth nothing). Set via `AdminUtils::sudo_set_basket_claim_dust`.
+
+### `basketClaimRowDustBps`: `u16`
+
+- **interface**: `api.query.subtensorModule.basketClaimRowDustBps`
+- **summary**: ITEM --> relative part of the row-dust floor, in basis points of the fund's anchored NAV (see [`BasketClaimRowDustCapTao`]). Keeps the floor proportionate for small funds. `0` disables the row skip. Set via `AdminUtils::sudo_set_basket_claim_dust`.
+
+### `basketClaimRowDustCapTao`: `u64`
+
+- **interface**: `api.query.subtensorModule.basketClaimRowDustCapTao`
+- **summary**: ITEM --> cap, in rao, of the row-dust floor of a root claim. A claim skips a fund row entirely when the fund's whole holding on that subnet is worth less than `min(this cap, BasketClaimRowDustBps × anchored NAV)` at the anchored mark: the row is neither sold nor paid, and the claimant's slice of it (below the floor by construction) stays in the fund for the remaining holders. `0` disables the row skip. Set via `AdminUtils::sudo_set_basket_claim_dust`.
+
+### `basketClaimSliceDustTao`: `u64`
+
+- **interface**: `api.query.subtensorModule.basketClaimSliceDustTao`
+- **summary**: ITEM --> rao value below which a root claim skips a fund row for this claimant: when the claimant's pro-rata slice of the row is worth less than this at the anchored mark, the row is neither sold nor paid and the slice stays in the fund for the remaining holders. `0` disables the skip. Set via `AdminUtils::sudo_set_basket_claim_dust`.
 
 ### `basketConcentrationCap`: `u16`
 

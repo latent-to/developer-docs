@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **466**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **470**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -1208,6 +1208,11 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.BasketSameSubnet`
 - **summary**: `swap_basket` origin and destination are the same subnet.
+
+### `BasketSwapBatchEmpty`
+
+- **interface**: `api.errors.subtensorModule.BasketSwapBatchEmpty`
+- **summary**: A `swap_basket_many` call contained no trade legs. Submit at least one leg; the bounded call argument enforces the maximum at decode time.
 
 ### `BasketTradingDisabled`
 

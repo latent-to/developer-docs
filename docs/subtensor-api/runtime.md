@@ -8,7 +8,7 @@ description: "This page includes runtime API calls exposed by the Subtensor runt
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **466**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **470**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[AccountNonceApi](#pallet-accountnonceapi)**
@@ -105,6 +105,11 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
 - **interface**: `api.call.betaBasketRuntimeApi.getAllValidatorBaskets`
 - **summary**: Summaries for every validator with an active basket (network-wide leaderboard).
 
+### `getBasketClaimPreview(hotkey: AccountId32, coldkey: AccountId32)`: `Option<BasketClaimPreview>`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getBasketClaimPreview`
+- **summary**: What `claim_root_with_hotkey` would do now for this staker with the dust rules applied: full entitlement, the part a claim pays, rows sold vs skipped. `None` when the staker has no owed shares on the validator.
+
 ### `getBasketPayout(hotkey: AccountId32, coldkey: AccountId32)`: `TaoBalance`
 
 - **interface**: `api.call.betaBasketRuntimeApi.getBasketPayout`
@@ -139,6 +144,11 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
 
 - **interface**: `api.call.betaBasketRuntimeApi.getBetaPricing`
 - **summary**: One fund's standardized pricing snapshot (index-spliced display price, total-return stake price, staker yield, published index levels), or `None` when the hotkey has no outstanding shares. The single source of truth every consumer should display. Reads the published index snapshot in `O(1)` and scans only this fund's holdings.
+
+### `getRootBasketClaimPreviews(coldkey: AccountId32)`: `Vec<BasketClaimPreview>`
+
+- **interface**: `api.call.betaBasketRuntimeApi.getRootBasketClaimPreviews`
+- **summary**: The same for every validator a coldkey-wide `claim_root` would touch.
 
 ### `getRootBasketOwed(coldkey: AccountId32)`: `TaoBalance`
 
