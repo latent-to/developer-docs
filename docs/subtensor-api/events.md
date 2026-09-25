@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **466**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **470**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -36,6 +36,11 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
 - **[utility](#pallet-utility)**
 
 ## `adminUtils` {#pallet-adminutils}
+
+### `BasketClaimDustSet(u64, u16, u64, u64)`
+
+- **interface**: `api.events.adminUtils.BasketClaimDustSet`
+- **summary**: The root-claim dust floors were set (`BasketClaimRowDustCapTao`, `BasketClaimRowDustBps`, `BasketClaimSliceDustTao`, `BasketClaimForfeitCapTao`).
 
 ### `BasketConcentrationCapSet(u16)`
 
@@ -838,6 +843,11 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.BasketAlphaWrittenOff`
 - **summary**: A terminally untradeable basket alpha slice was explicitly written off. This is distinct from a swap/transfer failure: only a pool too shallow to execute any sale is eligible, and removing the exact slice preserves every holder's fund proportion. Appended to preserve existing SCALE event indices.
 
+### `BasketClaimDustSkipped(AccountId, AccountId, u32, TaoBalance)`
+
+- **interface**: `api.events.subtensorModule.BasketClaimDustSkipped`
+- **summary**: A root claim skipped `rows` dust rows of the fund: rows whose whole holding was worth less than `min(BasketClaimRowDustCapTao, BasketClaimRowDustBps × anchored NAV)`, or whose slice for this claimant was worth less than `BasketClaimSliceDustTao`, each worth at most `BasketClaimForfeitCapTao` for this claimant, all at the anchored (fast-EMA-capped) mark. Those rows were neither sold nor paid. The claim burned the whole entitlement, so the claimant's slices of those rows — about `forfeited_tao_est` at the pre-sale realizable quote — stay in the fund for the remaining holders.
+
 ### `BasketClaimed(AccountId, AccountId, TaoBalance)`
 
 - **interface**: `api.events.subtensorModule.BasketClaimed`
@@ -1488,7 +1498,7 @@ Generated from Subtensor runtime spec version **466**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.TransactionFeePaidWithAlpha`
 - **summary**: Transaction fee was paid in Alpha.
 
-    Emitted in addition to `TransactionFeePaid` when the fee payment path is Alpha. `alpha_fee` is the exact Alpha amount deducted.
+    Emitted in addition to `TransactionFeePaid` when the fee payment path is Alpha. `alpha_fee` is the exact Alpha amount sold; `tao_amount` is the TAO the call was finally charged. Since spec 469 the TAO the call did not use is refunded to the payer's free balance, so `tao_amount` can be below what the sale realised.
 
 ### `TransferToggle(NetUid, bool)`
 
