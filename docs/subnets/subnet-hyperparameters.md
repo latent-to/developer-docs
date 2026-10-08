@@ -1080,3 +1080,82 @@ The ratio of all subnet alpha emissions that is given to subnet owner as stake. 
 **Description**:
 
 The minimum stake required for validating. Currently 1000
+
+### EmissionBarQuantile
+
+**Type**: U64F64
+
+**Default**: 0.61
+
+**`btcli` setter**: none
+
+**Setter extrinsic**: `sudo_set_emission_bar_quantile`
+
+**Permissions required to set**: Root
+
+**Bounds**: strictly `(0, 1)` exclusive — values of 0 or 1 are rejected
+
+**Description**:
+
+The quantile $q$ of the demand-share distribution used to compute the emission bar $\theta$ each tempo. With the default of 0.61, the bar is set at the level where 61% of total demand is carried by subnets above it — landing around rank 32 on the current mainnet distribution.
+
+:::info Interaction with EmissionBarRank
+When `EmissionBarRank` is set to a non-zero value, it overrides `EmissionBarQuantile` entirely. The quantile is only active when `EmissionBarRank = 0` (the default).
+:::
+
+See [Emission: TAO reserve injection](../learn/emissions.md#tao-reserve-injection) for the full gate formula.
+
+### EmissionBarRank
+
+**Type**: u16
+
+**Default**: 0 (quantile mode active)
+
+**`btcli` setter**: none
+
+**Setter extrinsic**: `sudo_set_emission_bar_rank`
+
+**Permissions required to set**: Root
+
+**Description**:
+
+An alternative bar-positioning mode for the emission gate. When set to a non-zero value `N`, the demand bar $\theta$ is **pinned to the Nth-largest demand share** across all emission-enabled subnets, rather than being computed from `EmissionBarQuantile`. This makes the eligible set track a fixed rank position as the demand distribution shifts over time.
+
+Setting `EmissionBarRank = 0` restores the default **quantile mode**, where $\theta$ is computed from `EmissionBarQuantile`. A bar recompute is forced on the next block whenever this value changes.
+
+`EmissionBarRank` takes precedence over `EmissionBarQuantile` when non-zero — the two parameters are mutually exclusive.
+
+See [Emission: TAO reserve injection](../learn/emissions.md#tao-reserve-injection) for the full gate formula.
+
+### EmissionGateExponent
+
+**Type**: U64F64
+
+**Default**: 3
+
+**`btcli` setter**: none
+
+**Setter extrinsic**: `sudo_set_emission_gate_exponent`
+
+**Permissions required to set**: Root
+
+**Bounds**: `[1, 8]` — values outside this range are rejected
+
+**Description**:
+
+The Hill exponent $h$ controlling the sharpness of the emission gate at the demand bar $\theta$:
+
+$$
+\text{gate}(s) = \frac{s^h}{s^h + \theta^h}
+$$
+
+At $h = 1$ the gate is a gentle sigmoid. At $h = 3$ (the default) the cliff is decisive:
+
+- A subnet well above the bar retains close to 100% of its linear emission share
+- A subnet exactly at the bar retains 50%
+- A subnet at half the bar's demand retains ~11%
+- Deep-tail subnets retain 1–5%
+
+Higher $h$ (up to the maximum of 8) sharpens the boundary further and strengthens leverage near it. Values are bounded to `[1, 8]`; values outside this range are rejected with `InvalidValue`.
+
+See [Emission: TAO reserve injection](../learn/emissions.md#tao-reserve-injection) for the full gate formula.

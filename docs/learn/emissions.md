@@ -5,15 +5,14 @@ title: "Emission"
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-
 Emission is the economic heartbeat of Bittensor—the process that continuously distributes newly created [TAO](../resources/glossary.md#tao-tau) and subnet-specific alpha tokens to network participants who contribute value through [mining](../resources/glossary.md#subnet-miner), [validation](../resources/glossary.md#subnet-validator), [staking](../resources/glossary.md#staking), and [subnet creation](../resources/glossary.md#subnet-creator).
 
-:::tip Price-Based Emissions Now Active
-**As of June 2026**: Bittensor has reverted to a **price-based model** for determining how TAO emissions are distributed across subnets. Each subnet's share of block emissions is proportional to its EMA (Exponential Moving Average) token price, normalized over all subnets with emissions enabled.
+:::tip Price-Based Emissions with Emission Gate
+**As of June 2026**: Bittensor uses a **price-based model** for determining how TAO emissions are distributed across subnets. Subnet price shares now pass through a **Hill gate function** before normalization, concentrating emission toward subnets with above-average demand, while reducing emission allocation to idle or low-demand subnets.
 
 See:
 
-- [How price-based injection works](#tao-reserve-injection)
+- [How the emission gate works](#tao-reserve-injection)
   :::
 
 ## Injection and Distribution: Two-Stages of the Emissions Process
@@ -46,7 +45,7 @@ Each block:
 
 #### Distribution across Subnets
 
-TAO emissions across subnets are determined by a price-based model. Each subnet's emission share is proportional to its EMA price (`SubnetMovingPrice`), normalized over all emission-enabled subnets — so subnets with higher EMA prices attract a greater share of block emissions. Emission-disabled subnets receive zero and their share is redistributed proportionally to enabled subnets.
+TAO emissions across subnets are determined by a price-based model with an emission gate. Each subnet's raw share is proportional to its EMA price (`SubnetMovingPrice`) weighted by its miner-burn penalty. The raw share is then passed through a Hill gate function centered on the demand distribution. Subnets above the threshold retain nearly their full share, while those below it receive progressively smaller allocations, with the lowest-demand subnets receiving only 1–5%. Emission-disabled subnets receive zero regardless of gate position, and their share is redistributed to enabled subnets.
 
 :::info Deprecated: Flow-Based Emissions
 
@@ -61,26 +60,52 @@ A subnet's TAO reserve injection is determined by its **emission share**, calcul
 <details>
 <summary><strong>How it's calculated</strong></summary>
 
-Each subnet's share of the fixed block emission is weighted by three factors, then normalized over all emission-enabled subnets:
+Emission shares are computed in four steps:
+
+**Step 1 — Raw share** (price × miner-burn penalty):
 
 $$
-\text{share}_i = \frac{p_i \cdot (1 - b_i)}{\sum_{j \in \mathbb{S}} p_j \cdot (1 - b_j)}
+s_i = p_i \cdot (1 - b_i)
+$$
+
+**Step 2 — Demand bar** (recomputed each tempo from the same EMA prices):
+
+$$
+\theta = \text{quantile}_q\bigl(\{s_i\}_{i \in \mathbb{S}}\bigr)
+$$
+
+where $q$ = `EmissionBarQuantile` (default 0.61, landing around rank 32 on current mainnet).
+
+**Step 3 — Hill gate**:
+
+$$
+\text{gate}(s_i) = \frac{s_i^h}{s_i^h + \theta^h}
+$$
+
+where $h$ = `EmissionGateExponent` (default 3). At $s_i = \theta$ the gate passes exactly $\frac{1}{2}$; well above the bar it approaches 1; deep below it approaches 0.
+
+**Step 4 — Normalized emission share**:
+
+$$
+\text{share}_i = \frac{s_i \cdot \text{gate}(s_i)}{\sum_{j \in \mathbb{S}} s_j \cdot \text{gate}(s_j)}
 $$
 
 where:
 
 - $p_i$ = `SubnetMovingPrice` — the subnet's EMA price (not the live spot price)
-- $b_i$ = `MinerBurned` — the proportion (0–1) of the most recent tempo's miner incentive that was withheld because the recipient hotkey is owned by the subnet owner. Penalizes subnets that withhold miner emission, regardless of whether that emission is recycled or burned
+- $b_i$ = `MinerBurned` — the proportion (0–1) of the most recent tempo's miner incentive withheld because the recipient hotkey is owned by the subnet owner, regardless of whether that emission is recycled or burned
+- $\theta$ = demand bar; recomputed once per tempo
+- $h$ = gate sharpness; at $h = 3$ a subnet near the bar gains ~26% more emission for a 10% demand increase
 
-TAO injected into subnet $i$ per block is then:
+TAO injected into subnet $i$ per block:
 
 $$
 \Delta\tau_i = \Delta\bar{\tau} \times \text{share}_i
 $$
 
-**Fallback**: if the combined weight is zero across all subnets (e.g. all subnets are withholding all miner emission), `get_shares` falls back to unweighted price shares — $p_i / \sum p_j$ — so block emission is never stranded.
+**Fallback**: if the combined gate-weighted sum is zero (e.g. all subnets withholding all miner emission), `get_shares` falls back to unweighted price shares — $p_i / \sum p_j$ — so block emission is never stranded.
 
-**Implementation**: Share calculation: [`get_shares()`](<https://github.com/RaoFoundation/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs#:~:text=pub(crate)%20fn%20get_shares>) → `get_shares_price_ema()` in `subnet_emission.rs`
+**Implementation**: [`get_shares()`](https://github.com/opentensor/subtensor/blob/main/pallets/subtensor/src/coinbase/subnet_emissions.rs) → `get_shares_price_ema()` in `subnet_emissions.rs`
 
 </details>
 
