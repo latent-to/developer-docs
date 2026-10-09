@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **470**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **475**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -56,6 +56,11 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 
 - **interface**: `api.events.adminUtils.BasketLiquidityCapSet`
 - **summary**: The basket liquidity cap (`BasketLiquidityCap`) was set.
+
+### `BasketMinTradeTaoSet(u64)`
+
+- **interface**: `api.events.adminUtils.BasketMinTradeTaoSet`
+- **summary**: The minimum basket trade value was set.
 
 ### `BasketTradingFrozenSet(AccountId, bool)`
 
@@ -1054,6 +1059,11 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.DissolveNetworkScheduleDurationSet`
 - **summary**: The duration of dissolve network has been set
 
+### `EpochConsensusSet(NetUid, EpochConsensus)`
+
+- **interface**: `api.events.subtensorModule.EpochConsensusSet`
+- **summary**: The subnet owner or root selected a new epoch reward algorithm.
+
 ### `EpochDeferred(NetUid, u64, u64)`
 
 - **interface**: `api.events.subtensorModule.EpochDeferred`
@@ -1243,6 +1253,11 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.NetworkRateLimitSet`
 - **summary**: the network creation rate limit is set.
 
+### `NetworkRegistrationCancelled(AccountId, AccountId, u32, DispatchError)`
+
+- **interface**: `api.events.subtensorModule.NetworkRegistrationCancelled`
+- **summary**: A queued registration failed terminally; its escrow was refunded or its pre-upgrade balance lock was released. No subnet was created.
+
 ### `NetworkRegistrationQueued(AccountId, AccountId, u16, Option<SubnetIdentityOfV3>, TaoBalance, U64F64, u64)`
 
 - **interface**: `api.events.subtensorModule.NetworkRegistrationQueued`
@@ -1257,6 +1272,11 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.NeuronRegistered`
 - **summary**: a new neuron account has been registered to the chain.
+
+### `NullUidsPruningProgress(NetUid, u16, u16, u16, u32)`
+
+- **interface**: `api.events.subtensorModule.NullUidsPruningProgress`
+- **summary**: A bounded explicit pruning step either cancelled queued weights or removed UIDs.
 
 ### `OwnerHyperparamRateLimitSet(u16)`
 
