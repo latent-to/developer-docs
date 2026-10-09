@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **470**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **475**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -879,20 +879,10 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.adminFreezeWindow`
 - **summary**: Global window (in blocks) at the end of each tempo where admin ops are disallowed
 
-### `alpha(AccountId32, AccountId32, u16)`: `FixedU128`
-
-- **interface**: `api.query.subtensorModule.alpha`
-- **summary**: NMAP ( hot, cold, netuid ) --> alpha | Returns the alpha shares for a hotkey, coldkey, netuid triplet.
-
 ### `alphaDividendsPerSubnet(u16, AccountId32)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.alphaDividendsPerSubnet`
 - **summary**: DMAP ( netuid, hotkey ) --> u64 | Last alpha dividend this hotkey got on tempo.
-
-### `alphaMapLastKey`: `Option`
-
-- **interface**: `api.query.subtensorModule.alphaMapLastKey`
-- **summary**: Contains last Alpha storage map key to iterate (check first)
 
 ### `alphaShareEpoch(AccountId32, AccountId32, u16)`: `u64`
 
@@ -1017,6 +1007,11 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 - **summary**: MAP ( validator_hotkey, netuid ) --> `(alpha_bought, last_block)` of destination-pool flow used by `swap_basket` in the current refill window.
 
     The standing-position liquidity cap resets when the fund sells the holding back to zero. This map does not: it accumulates alpha bought into `netuid` and decays to zero over [`crate::BASKET_TRADE_REFILL_BLOCKS`], so accumulate/unwind cycles cannot spend the turnover budget as band slack. Follows the fund on hotkey swap (higher used, later block).
+
+### `basketMinTradeTao`: `u64`
+
+- **interface**: `api.query.subtensorModule.basketMinTradeTao`
+- **summary**: Minimum TAO value, in rao, through the middle of each basket trade leg. Defaults to 0.5 TAO. Set via `AdminUtils::sudo_set_basket_min_trade_tao`. The effective minimum is also bounded below by `DefaultMinStake`.
 
 ### `basketRate(AccountId32)`: `FixedI128`
 
@@ -1465,6 +1460,12 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.lastMechansimStepBlock`
 - **summary**: MAP ( netuid ) --> last_mechanism_step_block
 
+### `lastPowRegistrationBlock(AccountId32)`: `u64`
+
+- **interface**: `api.query.subtensorModule.lastPowRegistrationBlock`
+- **modifier**: `Optional`
+- **summary**: Last accepted PoW challenge block per hotkey. Keeping one watermark prevents recent proof replay without an ever-growing used-seal list.
+
 ### `lastRateLimitedBlock(RateLimitKey)`: `u64`
 
 - **interface**: `api.query.subtensorModule.lastRateLimitedBlock`
@@ -1489,6 +1490,12 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.lastUpdate`
 - **summary**: MAP ( netuid ) --> last_update
+
+### `lastYumaStepBlock(NetUid)`: `u64`
+
+- **interface**: `api.query.subtensorModule.lastYumaStepBlock`
+- **modifier**: `Optional`
+- **summary**: Last epoch that actually updated bonds. Frozen while Null consensus runs.
 
 ### `liquidAlphaConsensusMode(NetUid)`: `ConsensusMode`
 
@@ -1685,6 +1692,12 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.networkRegistrationAllowed`
 - **summary**: MAP ( netuid ) --> network_registration_allowed
 
+### `networkRegistrationEscrow(u32)`: `(AccountId32,u64)`
+
+- **interface**: `api.query.subtensorModule.networkRegistrationEscrow`
+- **modifier**: `Optional`
+- **summary**: Escrow-backed queue entries. Absence denotes a pre-upgrade balance lock. Keep the existing queue encoding unchanged so pending registrations remain decodable.
+
 ### `networkRegistrationLockId`: `u32`
 
 - **interface**: `api.query.subtensorModule.networkRegistrationLockId`
@@ -1725,6 +1738,12 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.nominatorMinRequiredStake`
 - **summary**: ITEM( nominator_min_required_stake ) --- Factor of DefaultMinStake in per-mill format.
+
+### `nullPruningTarget(NetUid)`: `u16`
+
+- **interface**: `api.query.subtensorModule.nullPruningTarget`
+- **modifier**: `Optional`
+- **summary**: Explicit Null pruning continuation. Every completed batch leaves a usable subnet.
 
 ### `numStakingColdkeys`: `u64`
 
@@ -1896,6 +1915,12 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.rootStakeUnlockInterval`
 - **summary**: Minimum number of blocks root (netuid 0) stake must be held before it can be removed from root (via `remove_stake`, move/swap/transfer off root, etc.), keyed off `LastColdkeyHotkeyStakeBlock`. `0` disables the hold (default), preserving legacy behaviour. When set >= one tempo it neutralises epoch-boundary "just-in-time" dividend sniping: root stake is 1:1 TAO with no AMM slippage, so without this friction a sniper can stake right before a boundary, capture a full tempo's root dividend pro-rata to instantaneous stake, and exit immediately.
 
+### `savedYumaMaxAllowedValidators(NetUid)`: `u16`
+
+- **interface**: `api.query.subtensorModule.savedYumaMaxAllowedValidators`
+- **modifier**: `Optional`
+- **summary**: Restore the Yuma validator capacity when leaving sole-permit Null mode.
+
 ### `scalingLawPower(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.scalingLawPower`
@@ -1905,6 +1930,13 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.servingRateLimit`
 - **summary**: MAP ( netuid ) --> serving_rate_limit
+
+### `stakeMoveCooldownUntil(u16, AccountId32)`: `u64`
+
+- **interface**: `api.query.subtensorModule.stakeMoveCooldownUntil`
+- **summary**: DMap ( netuid, hotkey ) --> blocknumber | block at which alpha moved into this hotkey may be moved again by an owner-driven hotkey swap.
+
+    Unlike [`LastHotkeySwapOnNetuid`], this is bound to the stake position rather than its current owner, so changing the owning coldkey cannot reset the recovery window. Delegator withdrawals do not consult this map.
 
 ### `stakeThreshold`: `u64`
 
@@ -1976,6 +2008,11 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
     When false, subnet pool-side emission is disabled for this subnet: `alpha_in`, `tao_in`, and `excess_tao` chain buys are all treated as zero. `alpha_out`, owner cut, root proportion, pending server emission, and pending validator emission are intentionally left unchanged.
 
     Defaults to true so existing subnets keep current behavior.
+
+### `subnetEpochConsensus(NetUid)`: `EpochConsensus`
+
+- **interface**: `api.query.subtensorModule.subnetEpochConsensus`
+- **summary**: Epoch reward algorithm per subnet. Existing and new subnets default to Yuma.
 
 ### `subnetEpochIndex(NetUid)`: `u64`
 
@@ -2169,11 +2206,6 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.totalHotkeyAlphaLastEpoch`
 - **summary**: DMAP ( hot, netuid ) --> alpha | Returns the total amount of alpha a hotkey owned in the last epoch.
-
-### `totalHotkeyShares(AccountId32, u16)`: `FixedU128`
-
-- **interface**: `api.query.subtensorModule.totalHotkeyShares`
-- **summary**: DMAP ( hot, netuid ) --> total_alpha_shares | Returns the number of alpha shares for a hotkey on a subnet.
 
 ### `totalHotkeySharesV2(AccountId32, u16)`: `SafeFloat`
 

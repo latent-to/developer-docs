@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **470**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **475**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -1323,6 +1323,16 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.ColdkeySwapTooHeavy`
 - **summary**: The coldkey stakes through more hotkeys, or holds more stake positions, than a coldkey swap can move in one call. Consolidate (unstake or move stake) first.
+
+### `CommitPayloadTooLarge`
+
+- **interface**: `api.errors.subtensorModule.CommitPayloadTooLarge`
+- **summary**: Ciphertext exceeds the selected consensus mode's payload limit.
+
+### `CommitQueueFull`
+
+- **interface**: `api.errors.subtensorModule.CommitQueueFull`
+- **summary**: The subnet's shared Null timelock queue has reached its byte or count budget.
 
 ### `CommitRevealDisabled`
 

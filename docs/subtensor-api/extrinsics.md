@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **470**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **475**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -120,6 +120,11 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 
 - **interface**: `api.tx.adminUtils.sudoSetBasketLiquidityCap`
 - **summary**: Sets the basket liquidity cap ([`pallet_subtensor::BasketLiquidityCap`]): the largest u16-normalized share of a subnet's alpha reserve (`u16::MAX` = 100%) a fund may hold on that subnet after a `swap_basket` buy. Bounds the fund's exposure to any one pool's liquidity: with cap `L` the value at risk on a pool with TAO reserve `R` is about `R × L² / (1 + L)`. Root-only.
+
+### `sudoSetBasketMinTradeTao(min_trade_rao: u64)`
+
+- **interface**: `api.tx.adminUtils.sudoSetBasketMinTradeTao`
+- **summary**: Sets the minimum TAO value through each basket trade leg, in rao. Root-only. Zero disables this additional floor; the general staking minimum still applies.
 
 ### `sudoSetBasketTradingEnabled(enabled: bool)`
 
@@ -284,6 +289,11 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 - **interface**: `api.tx.adminUtils.sudoSetEmissionGateExponent`
 - **summary**: Sets the emission gate Hill exponent (h): cliff sharpness at the bar.
 
+### `sudoSetEpochConsensus(netuid: NetUid, mode: EpochConsensus)`
+
+- **interface**: `api.tx.adminUtils.sudoSetEpochConsensus`
+- **summary**: Selects Yuma or Null reward calculation while preserving epoch scheduling.
+
 ### `sudoSetEvmChainId(chain_id: u64)`
 
 - **interface**: `api.tx.adminUtils.sudoSetEvmChainId`
@@ -445,7 +455,7 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 ### `sudoSetNetworkRegistrationAllowed(netuid: NetUid, registration_allowed: bool)`
 
 - **interface**: `api.tx.adminUtils.sudoSetNetworkRegistrationAllowed`
-- **summary**: The extrinsic sets the network registration allowed for a subnet. It is only callable by the root account or subnet owner. The extrinsic will call the Subtensor pallet to set the network registration allowed.
+- **summary**: Enable or disable burned registration independently of PoW. It is only callable by the root account or subnet owner. The extrinsic will call the Subtensor pallet to set the network registration allowed.
 
 ### `sudoSetNominatorMinRequiredStake(min_stake: u64)`
 
@@ -696,6 +706,11 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
     **Weight:**
 
     Weight is handled by the `#[pallet::weight]` attribute.
+
+### `sudoTrimNullUidsBatch(netuid: NetUid, target: u16)`
+
+- **interface**: `api.tx.adminUtils.sudoTrimNullUidsBatch`
+- **summary**: Continue explicit Null pruning by at most 64 UID deletions. Every batch leaves the subnet usable. Only the same final target may continue the original operation without restarting its cooldown.
 
 ### `sudoTrimToMaxAllowedUids(netuid: NetUid, max_n: u16)`
 
@@ -2324,6 +2339,11 @@ Generated from Subtensor runtime spec version **470**. Connected to: `wss://entr
 - **summary**: Moves stake from one hotkey to another and, when the subnets differ, protects the swap with a relative price limit.
 
     `limit_price` is the minimum acceptable destination-alpha per origin-alpha ratio, scaled by 1e9. When `allow_partial` is false the call is fill-or-kill; otherwise it moves only the amount executable before the limit is crossed. `alpha_amount` of `AlphaBalance::MAX` means the live origin position at execution.
+
+### `powRegister(netuid: NetUid, work_block: u64, nonce: u64, work: [u8; 32], hotkey: AccountId)`
+
+- **interface**: `api.tx.subtensorModule.powRegister`
+- **summary**: Register by owner-enabled PoW, without TAO burn, collateral purchase, or transaction fee. The signing coldkey is bound into the proof. Transaction validation verifies the proof before pool admission.
 
 ### `recycleAlpha(hotkey: AccountId, amount: AlphaBalance, netuid: NetUid)`
 
