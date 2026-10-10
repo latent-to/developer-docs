@@ -18,6 +18,10 @@ You can also explore Bittensor's many Subnets and find links to their websites a
 - **[Taostats](https://taostats.io/)**
 - **[Taomarketcap](https://taomarketcap.com/)**
 
+## Research and Market Tools
+
+- **[Neuralteq](https://neuralteq.com/)** - Non-custodial Bittensor dTAO research and workflow platform for subnet market data, portfolio tracking, staking tools, orders, baskets, and swaps.
+
 ## Wallet Applications
 
 - **[Bittensor Wallet](https://www.tao.com/)** - Recommended (maintained by Tao.com).
