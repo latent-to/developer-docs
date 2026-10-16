@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **475**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **479**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -597,6 +597,11 @@ Generated from Subtensor runtime spec version **475**. Connected to: `wss://entr
 
 ## `evm` {#pallet-evm}
 
+### `AuthorizationListTooLarge`
+
+- **interface**: `api.errors.evm.AuthorizationListTooLarge`
+- **summary**: The authorization list exceeds the limit enforced before signature recovery.
+
 ### `BalanceLow`
 
 - **interface**: `api.errors.evm.BalanceLow`
@@ -1118,6 +1123,11 @@ Generated from Subtensor runtime spec version **475**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.AccountRejectsLockedAlpha`
 - **summary**: The destination coldkey rejects incoming locked alpha.
+
+### `AccountRejectsStakingHotkeyGrowth`
+
+- **interface**: `api.errors.subtensorModule.AccountRejectsStakingHotkeyGrowth`
+- **summary**: The recipient refuses a new staking hotkey introduced by another account.
 
 ### `ActiveLockExists`
 

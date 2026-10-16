@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **475**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **479**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -428,6 +428,11 @@ Generated from Subtensor runtime spec version **475**. Connected to: `wss://entr
 
 - **interface**: `api.query.evm.accountCodesMetadata`
 - **modifier**: `Optional`
+
+### `accountNonces(AccountId32)`: `u32`
+
+- **interface**: `api.query.evm.accountNonces`
+- **summary**: Nonces retained when a mapped balance account is reaped. Initialized lazily from the existing system nonce by `NoncePreservingAccountProvider`.
 
 ### `accountStorages(H160, H256)`: `H256`
 
@@ -1387,6 +1392,12 @@ Generated from Subtensor runtime spec version **475**. Connected to: `wss://entr
 - **summary**: DMap ( netuid, old_hotkey ) --> new_hotkey | hotkey swap successor on a subnet.
 
     Written on each successful hotkey swap so watchers can follow identity without an archive node. Per-subnet because a swap may move a UID on one netuid while the old hotkey remains registered elsewhere.
+
+### `hotkeySwapBasketCredits(AccountId32, AccountId32)`: `Null`
+
+- **interface**: `api.query.subtensorModule.hotkeySwapBasketCredits`
+- **modifier**: `Optional`
+- **summary**: Claim-only fund associations created when a root swap leaves a staker's stake behind. These never grow StakingHotkeys or the work of a stake exit. Claims and coldkey swaps bound their selection before admitting work.
 
 ### `identitiesV2(AccountId32)`: `ChainIdentityV2`
 
