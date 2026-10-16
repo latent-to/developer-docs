@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **475**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **479**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -1108,6 +1108,11 @@ Generated from Subtensor runtime spec version **475**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.HotkeySwappedOnSubnet`
 - **summary**: the hotkey is swapped
 
+### `HotkeySwapStakeRetained(AccountId, AccountId, AccountId, NetUid)`
+
+- **interface**: `api.events.subtensorModule.HotkeySwapStakeRetained`
+- **summary**: The validator swapped, but this delegator's stake could not follow without growing its staking list. On root, basket credits follow the new hotkey.
+
 ### `ImmunityPeriodSet(NetUid, u16)`
 
 - **interface**: `api.events.subtensorModule.ImmunityPeriodSet`
@@ -1317,6 +1322,11 @@ Generated from Subtensor runtime spec version **475**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.RejectLockedAlphaUpdated`
 - **summary**: A coldkey's reject locked alpha account flag was updated.
+
+### `RejectStakingHotkeyGrowthUpdated(AccountId, bool)`
+
+- **interface**: `api.events.subtensorModule.RejectStakingHotkeyGrowthUpdated`
+- **summary**: The coldkey changed its third-party staking-list growth preference.
 
 ### `RhoSet(NetUid, u16)`
 
