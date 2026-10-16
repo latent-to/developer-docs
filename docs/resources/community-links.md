@@ -4,7 +4,7 @@ title: "Bittensor Community Links"
 
 Welcome to the Bittensor ecosystem! This page provides links to essential community tools and resources to help you navigate the Bittensor network.
 
-You can also explore Bittensor's many Subnets and find links to their websites and repositories through [our Subnet listings](https://learnbittensor.org/subnets).
+You can also explore Bittensor's many Subnets and find links to their websites and repositories through [our Subnet listings](https://taostats.io/subnets).
 
 ## Opentensor Foundation (OTF)
 
@@ -23,6 +23,10 @@ You can also explore Bittensor's many Subnets and find links to their websites a
 - **[Bittensor Wallet](https://www.tao.com/)** - Recommended (maintained by Tao.com).
 - [Crucible wallet](https://cruciblelabs.com/)
 - **[Other Polkadot Wallets](https://polkadot.com/get-started/wallets/)** - Multi-chain wallets capable of interacting with Bittensor.
+
+## Staking & Delegation Tools
+
+- **[Stakao](https://stakao.com/)** - Non-custodial automated TAO & dTAO staking platform using Substrate `ProxyType.Staking` permissions.
 
 ## Development Resources
 
