@@ -8,7 +8,7 @@ description: "This page includes runtime API calls exposed by the Subtensor runt
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **479**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **483**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[AccountNonceApi](#pallet-accountnonceapi)**
@@ -601,6 +601,11 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 ### `getSubnetAccountId(netuid: NetUid)`: `Option<AccountId32>`
 
 - **interface**: `api.call.subnetInfoRuntimeApi.getSubnetAccountId`
+
+### `getSubnetEmissionWeights(netuid: NetUid)`: `Option<SubnetEmissionWeightsInfo>`
+
+- **interface**: `api.call.subnetInfoRuntimeApi.getSubnetEmissionWeights`
+- **summary**: The subnet's `[burn, recycle, owner, validator, miner]` emission weight vector plus root's baseline share and the share root is paid off the top of the validator slot this block. `None` when the subnet does not exist.
 
 ### `getSubnetHyperparams(netuid: NetUid)`: `Option<SubnetHyperparams>`
 
