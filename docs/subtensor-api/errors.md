@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **479**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **483**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -1249,6 +1249,11 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.BetaBasketSeedInProgress`
 - **summary**: The `migrate_seed_beta_basket_v2` seed has not completed. Basket deposits, claims, coldkey / root-touching hotkey swaps, and root stake add/remove/transfer/swap are paused until it finishes so snapshotted conversion cannot desync from live stake (`Σ owed == BasketShares`).
 
+### `BurnEmissionMustBeZero`
+
+- **interface**: `api.errors.subtensorModule.BurnEmissionMustBeZero`
+- **summary**: `set_subnet_emission_weights`: burn (slot 0) is not yet enabled and must be 0.
+
 ### `CallDisabled`
 
 - **interface**: `api.errors.subtensorModule.CallDisabled`
@@ -1282,7 +1287,7 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 ### `ColdKeyAlreadyAssociated`
 
 - **interface**: `api.errors.subtensorModule.ColdKeyAlreadyAssociated`
-- **summary**: The coldkey has already been swapped
+- **summary**: Retired: coldkey swaps into an already-used destination now merge. Kept for SCALE error-index stability; never returned by current runtimes.
 
 ### `ColdkeyCollateralIncomplete`
 
@@ -1313,6 +1318,16 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.ColdkeySwapClearTooEarly`
 - **summary**: Coldkey swap clear too early.
+
+### `ColdkeySwapDestinationReservationNotFound`
+
+- **interface**: `api.errors.subtensorModule.ColdkeySwapDestinationReservationNotFound`
+- **summary**: No live coldkey-swap destination reservation exists for this account.
+
+### `ColdkeySwapDestinationReserved`
+
+- **interface**: `api.errors.subtensorModule.ColdkeySwapDestinationReserved`
+- **summary**: This account is reserved as the destination of an in-flight coldkey-swap announcement, so it cannot be registered as a hotkey (and another coldkey cannot announce to it) until that announcement is executed, cleared, released by the destination, reset, or the reservation TTL expires. Prevents recovery-delay griefing after announce reveals the dest.
 
 ### `ColdkeySwapDisputed`
 
@@ -1398,6 +1413,31 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.DynamicTempoBlockedByCommitReveal`
 - **summary**: `trigger_epoch` is blocked because commit-reveal is enabled for this subnet: an out-of-band epoch would desync the CRv3 reveal window from the wall-clock Drand schedule and silently drop committed weights.
+
+### `EmissionWeightIndexDuplicated`
+
+- **interface**: `api.errors.subtensorModule.EmissionWeightIndexDuplicated`
+- **summary**: `set_subnet_emission_weights`: each slot may appear at most once per call.
+
+### `EmissionWeightIndexOutOfRange`
+
+- **interface**: `api.errors.subtensorModule.EmissionWeightIndexOutOfRange`
+- **summary**: `set_subnet_emission_weights`: valid slots are 0 burn, 1 recycle, 2 owner, 3 validator, 4 miner. Higher (gamma) slots are reserved and not yet settable.
+
+### `EmissionWeightsDoNotSumToOne`
+
+- **interface**: `api.errors.subtensorModule.EmissionWeightsDoNotSumToOne`
+- **summary**: `set_subnet_emission_weights`: after merging with the current vector the five slots must sum to exactly one (`u64::MAX` parts). Renormalize before resubmitting; `btcli subnets emission set-value` does this automatically.
+
+### `EmissionWeightsLengthMismatch`
+
+- **interface**: `api.errors.subtensorModule.EmissionWeightsLengthMismatch`
+- **summary**: `set_subnet_emission_weights`: `uids` and `values` must have the same length; each uid names the slot the matching value sets.
+
+### `EmissionWeightsNotSettableOnRoot`
+
+- **interface**: `api.errors.subtensorModule.EmissionWeightsNotSettableOnRoot`
+- **summary**: `set_subnet_emission_weights`: the root subnet has no emission vector.
 
 ### `EpochTriggerAlreadyPending`
 
@@ -1604,6 +1644,11 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.LeaseDoesNotExist`
 - **summary**: Lease does not exist.
 
+### `LeasedSubnetOwnerCutBelowMinimum`
+
+- **interface**: `api.errors.subtensorModule.LeasedSubnetOwnerCutBelowMinimum`
+- **summary**: `set_subnet_emission_weights`: this subnet was created through a lease, so its owner cut (slot 2) may not drop below the launch default (18%) and squeeze lease dividends. Root is bound by this rule too.
+
 ### `LeaseHasNoEndBlock`
 
 - **interface**: `api.errors.subtensorModule.LeaseHasNoEndBlock`
@@ -1643,6 +1688,11 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.MechanismDoesNotExist`
 - **summary**: Subnet mechanism does not exist.
+
+### `MinerEmissionBelowMinimum`
+
+- **interface**: `api.errors.subtensorModule.MinerEmissionBelowMinimum`
+- **summary**: `set_subnet_emission_weights`: the miner share (slot 4) must be at least 33% of emission.
 
 ### `NeedWaitingMoreBlocksToStarCall`
 
@@ -1754,10 +1804,20 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.Overflow`
 - **summary**: An overflow occurred.
 
+### `OwnerEmissionAboveMaximum`
+
+- **interface**: `api.errors.subtensorModule.OwnerEmissionAboveMaximum`
+- **summary**: `set_subnet_emission_weights`: the owner cut (slot 2) may be at most 33% of emission.
+
 ### `ProportionOverflow`
 
 - **interface**: `api.errors.subtensorModule.ProportionOverflow`
 - **summary**: Proportion overflow when setting children.
+
+### `RecycleEmissionMustBeZero`
+
+- **interface**: `api.errors.subtensorModule.RecycleEmissionMustBeZero`
+- **summary**: `set_subnet_emission_weights`: recycle (slot 1) is not yet enabled and must be 0.
 
 ### `RegistrationNotPermittedOnRootSubnet`
 
@@ -1973,6 +2033,16 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.UnlockAmountTooHigh`
 - **summary**: Trying to unlock more than locked
+
+### `ValidatorEmissionAboveMaximum`
+
+- **interface**: `api.errors.subtensorModule.ValidatorEmissionAboveMaximum`
+- **summary**: `set_subnet_emission_weights`: the validator share (slot 3) may be at most 50% of emission.
+
+### `ValidatorEmissionTooLowToPreserveRoot`
+
+- **interface**: `api.errors.subtensorModule.ValidatorEmissionTooLowToPreserveRoot`
+- **summary**: `set_subnet_emission_weights`: root is paid its baseline share of this subnet's emission (what root earns here with the default validator share and the global `TaoWeight`) off the top of the validator slot every block, and alpha validators get the rest. The requested validator share (slot 3) is at or below root's baseline share right now, so validators would receive nothing. Raise the validator share above the baseline and resubmit.
 
 ### `VotingPowerTrackingNotEnabled`
 

@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **479**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **483**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -1425,6 +1425,11 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.StartCallDelaySet`
 - **summary**: the start call delay is set.
+
+### `SubnetEmissionWeightsSet(NetUid, Vec<u64>)`
+
+- **interface**: `api.events.subtensorModule.SubnetEmissionWeightsSet`
+- **summary**: The subnet owner or root set the subnet's emission weight vector.
 
 ### `SubnetIdentityRemoved(NetUid)`
 

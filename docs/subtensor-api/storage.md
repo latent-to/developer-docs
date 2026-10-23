@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **479**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **483**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -1218,16 +1218,36 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 - **modifier**: `Optional`
 - **summary**: A map of the coldkey swap announcements from a coldkey to the block number the coldkey swap can be performed.
 
+### `coldkeySwapDestinationReservations(AccountId32)`: `AccountId32`
+
+- **interface**: `api.query.subtensorModule.coldkeySwapDestinationReservations`
+- **modifier**: `Optional`
+- **summary**: Destination account reserved by an in-flight coldkey-swap announcement.
+
+    Announce takes the destination in cleartext so it can be validated before the fee; without a reservation a third party could register that address as their hotkey during the delay and force `NewColdKeyIsHotkey` at execute, repeatedly delaying recovery while the source stays announcement-restricted.
+
 ### `coldkeySwapDisputes(AccountId32)`: `u32`
 
 - **interface**: `api.query.subtensorModule.coldkeySwapDisputes`
 - **modifier**: `Optional`
-- **summary**: A map of the coldkey swap disputes from a coldkey to the block number the coldkey swap was disputed.
+- **summary**: A map of the coldkey swap disputes from a coldkey to the block number the coldkey swap was disputed. Zero means root cleared the dispute but retained the recovery lock; a successful swap or full root reset releases it.
 
 ### `coldkeySwapReannouncementDelay`: `u32`
 
 - **interface**: `api.query.subtensorModule.coldkeySwapReannouncementDelay`
 - **summary**: The delay after the initial delay has passed before a new announcement can be made.
+
+### `coldkeySwapReservedDestination(AccountId32)`: `AccountId32`
+
+- **interface**: `api.query.subtensorModule.coldkeySwapReservedDestination`
+- **modifier**: `Optional`
+- **summary**: Reverse index of [`ColdkeySwapDestinationReservations`]: announcer → reserved destination, so reannounce / clear / execute can free the prior reservation without scanning.
+
+### `coldkeySwapV2PolicySnapshots(AccountId32)`: `bool`
+
+- **interface**: `api.query.subtensorModule.coldkeySwapV2PolicySnapshots`
+- **modifier**: `Optional`
+- **summary**: V2 announcement-time decision for ignoring unsolicited destination balance when deciding whether to import the source auto-stake policy. The privilege is honored only while the matching destination reservation remains live. Legacy hash-only announcements have no entry.
 
 ### `collateralDrainRatio(NetUid)`: `FixedU128`
 
@@ -1780,6 +1800,8 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.ownerCutEnabled`
 - **summary**: MAP ( netuid ) --> owner_cut_enabled
 
+    Deprecated: an owner slot of zero in [`SubnetEmissionWeights`] now means "disabled". Kept only as the seed for `migrate_seed_subnet_emission_weights`.
+
 ### `ownerHyperparamRateLimit`: `u16`
 
 - **interface**: `api.query.subtensorModule.ownerHyperparamRateLimit`
@@ -1999,6 +2021,11 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.subnetAlphaOutEmission`
 - **summary**: MAP ( netuid ) --> alpha_out_emission | Returns the amount of alpha out emission into the network per block.
 
+### `subnetCreatedViaLease(NetUid)`: `bool`
+
+- **interface**: `api.query.subtensorModule.subnetCreatedViaLease`
+- **summary**: MAP ( netuid ) --> true when the subnet was registered through a lease. Persists after the lease ends; such subnets may not lower their owner cut below the launch default.
+
 ### `subnetEmaProtocolFlow(NetUid)`: `(u64,SubstrateFixedFixedI128)`
 
 - **interface**: `api.query.subtensorModule.subnetEmaProtocolFlow`
@@ -2019,6 +2046,11 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
     When false, subnet pool-side emission is disabled for this subnet: `alpha_in`, `tao_in`, and `excess_tao` chain buys are all treated as zero. `alpha_out`, owner cut, root proportion, pending server emission, and pending validator emission are intentionally left unchanged.
 
     Defaults to true so existing subnets keep current behavior.
+
+### `subnetEmissionWeights(NetUid)`: `Vec<u64>`
+
+- **interface**: `api.query.subtensorModule.subnetEmissionWeights`
+- **summary**: MAP ( netuid ) --> `[burn, recycle, owner, validator, miner]` in `u64::MAX` parts, summing to exactly one. See `subnets::emission_weights`.
 
 ### `subnetEpochConsensus(NetUid)`: `EpochConsensus`
 
@@ -2104,6 +2136,13 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.subnetOwnerCut`
 - **summary**: ITEM( subnet_owner_cut )
+
+    Deprecated: superseded by the owner slot of [`SubnetEmissionWeights`]. Kept as the seed for `migrate_seed_subnet_emission_weights` and for legacy global views; no emission path reads it.
+
+### `subnetOwnerCutAccrued(NetUid)`: `AlphaBalance`
+
+- **interface**: `api.query.subtensorModule.subnetOwnerCutAccrued`
+- **summary**: MAP ( netuid ) --> cumulative alpha accrued to the owner slot since the subnet was registered (seeded at migration from the legacy global cut; written as an explicit zero at registration). The legacy lock refund on dissolution deducts this history, so it must not depend on the owner's current, adjustable share. An absent entry means the subnet pre-dates the seed migration; the refund then falls back to the legacy `issuance × SubnetOwnerCut` deduction (`owner_cut_alpha_for_lock_refund`).
 
 ### `subnetOwnerHotkey(NetUid)`: `AccountId32`
 

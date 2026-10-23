@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **479**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **483**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -470,7 +470,7 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 ### `sudoSetOwnerCutEnabled(netuid: NetUid, enabled: bool)`
 
 - **interface**: `api.tx.adminUtils.sudoSetOwnerCutEnabled`
-- **summary**: Set whether the subnet owner cut is enabled for a subnet. It is only callable by root and subnet owner.
+- **summary**: Deprecated. Owner cut on/off is now expressed by slot 2 (owner) of the per-subnet emission weight vector: set it to zero to disable the owner cut through [`Call::sudo_set_subnet_emission_weights`]. Always returns `Error::Deprecated`.
 
 ### `sudoSetOwnerHparamRateLimit(epochs: u16)`
 
@@ -563,6 +563,15 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 
     This does not remove the subnet from emission share calculation and does not change `alpha_out`, owner cut, root proportion, pending server emission, or pending validator emission. It only zeros the pool-side `alpha_in`, `tao_in`, and `excess_tao` chain-buy paths.
 
+### `sudoSetSubnetEmissionWeights(netuid: NetUid, uids: Vec<u16>, values: Vec<u64>)`
+
+- **interface**: `api.tx.adminUtils.sudoSetSubnetEmissionWeights`
+- **summary**: Sets entries of a subnet's emission weight vector `[burn, recycle, owner, validator, miner]`, each a `u64` share of `u64::MAX`.
+
+    `uids` names the slots to write and `values` their new shares; slots that are not named keep their current value (burn and recycle are always zero in v1). The merged vector must satisfy every rule, each of which has its own error: burn = 0, recycle = 0, `0 ≤ owner ≤ 33%` (lease-created subnets `≥ 18%`), `validator ≤ 50%`, `miner ≥ 33%`, and the five slots must sum to exactly `u64::MAX`.
+
+    Root is paid its baseline share of the subnet's emission (what root earns with the default validator share and the global `TaoWeight`) off the top of the validator slot every block, capped at the slot; alpha validators get the rest. The call fails if the new validator share is at or below that baseline right now. Callable by the subnet owner (once per week per subnet; the first call is never rate-limited) or root (no rate limit). Both respect the admin freeze window.
+
 ### `sudoSetSubnetLimit(max_subnets: u16)`
 
 - **interface**: `api.tx.adminUtils.sudoSetSubnetLimit`
@@ -587,7 +596,7 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 ### `sudoSetSubnetOwnerCut(subnet_owner_cut: u16)`
 
 - **interface**: `api.tx.adminUtils.sudoSetSubnetOwnerCut`
-- **summary**: The extrinsic sets the subnet owner cut for a subnet. It is only callable by the root account. The extrinsic will call the Subtensor pallet to set the subnet owner cut.
+- **summary**: Deprecated. The global owner cut was replaced by the per-subnet emission weight vector; set slot 2 (owner) through [`Call::sudo_set_subnet_emission_weights`]. Always returns `Error::Deprecated`.
 
 ### `sudoSetSubtokenEnabled(netuid: NetUid, subtoken_enabled: bool)`
 
@@ -1862,17 +1871,28 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 ### `announceColdkeySwap(new_coldkey_hash: H256)`
 
 - **interface**: `api.tx.subtensorModule.announceColdkeySwap`
-- **summary**: Announces a coldkey swap using BlakeTwo256 hash of the new coldkey.
+- **summary**: Announces a coldkey swap using the BlakeTwo256 hash of the new coldkey.
 
-    This is required before the coldkey swap can be performed after the delay period.
+    Legacy commitment path: keeps the destination secret until `swap_coldkey_announced` reveals it. Does **not** validate or reserve the destination (that requires cleartext — use [`Self::announce_coldkey_swap_v2`]). Prefer V2 for merges into already-used destinations and for pre-fee admission checks.
 
     It can be reannounced after a delay of `ColdkeySwapReannouncementDelay` following the first valid execution block of the original announcement.
 
     The dispatch origin of this call must be the original coldkey that made the announcement.
 
-    - `new_coldkey_hash`: The hash of the new coldkey using BlakeTwo256.
+    - `new_coldkey_hash`: BlakeTwo256 hash of the destination coldkey.
 
     The `ColdkeySwapAnnounced` event is emitted on successful announcement.
+
+### `announceColdkeySwapV2(new_coldkey: AccountId)`
+
+- **interface**: `api.tx.subtensorModule.announceColdkeySwapV2`
+- **summary**: Announces a coldkey swap with the cleartext destination account.
+
+    Validates the destination (and combined swap work) before charging the announcement fee, then exclusively reserves that account for the delay so a third party cannot register it as a hotkey. The on-chain announcement stores a BlakeTwo256 commitment to the destination and its policy-import eligibility at announcement time. Every call creates or renews that reservation, so every call pays the key-swap cost, including reannouncements.
+
+    Prefer this over [`Self::announce_coldkey_swap`] when merging into an already-used coldkey or when pre-fee refusal of bad destinations matters.
+
+    - `new_coldkey`: Destination coldkey (validated before any fee).
 
 ### `associateEvmKey(netuid: NetUid, evm_key: H160, block_number: u64, signature: Signature)`
 
@@ -2434,6 +2454,13 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.registerNetworkWithIdentity`
 - **summary**: User register a new subnetwork
 
+### `releaseOwnColdkeySwapDestinationReservation()`
+
+- **interface**: `api.tx.subtensorModule.releaseOwnColdkeySwapDestinationReservation`
+- **summary**: Destination-authorized release of a coldkey-swap destination reservation.
+
+    V2 announce takes the destination in cleartext and exclusively reserves it. The reserved account can free that hold so a third party cannot squat someone else's coldkey indefinitely. Reservations also expire after `when + ColdkeySwapReannouncementDelay`.
+
 ### `removeStake(hotkey: AccountId, netuid: NetUid, amount_unstaked: AlphaBalance)`
 
 - **interface**: `api.tx.subtensorModule.removeStake`
@@ -2508,6 +2535,17 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
     The dispatch origin of this call must be root.
 
     - `coldkey`: The coldkey to reset the swap for.
+
+### `resetColdkeySwapKeepLocked(coldkey: AccountId)`
+
+- **interface**: `api.tx.subtensorModule.resetColdkeySwapKeepLocked`
+- **summary**: Reset a coldkey swap while retaining its recovery lock.
+
+    Clears the announcement and active dispute. The coldkey may announce again, dispute, execute the new swap, or submit an encrypted transaction, but cannot clear the announcement to unlock itself or make unrelated calls. Uses the existing dispute entry with block zero.
+
+    The dispatch origin of this call must be root.
+
+    - `coldkey`: The coldkey to reset the swap for while keeping it locked.
 
 ### `revealMechanismWeights(netuid: NetUid, mecid: MechId, uids: Vec<u16>, values: Vec<u16>, salt: Vec<u16>, version_key: u64)`
 
@@ -3138,8 +3176,8 @@ Generated from Subtensor runtime spec version **479**. Connected to: `wss://entr
 
     The dispatch origin of this call must be the original coldkey that made the announcement.
 
-    - `new_coldkey`: The new coldkey to swap to. The BlakeTwo256 hash of the new coldkey must be
-    the same as the announced coldkey hash.
+    - `new_coldkey`: The new coldkey to swap to. It must match the legacy
+    destination hash or the V2 destination-and-policy commitment.
 
     The `ColdkeySwapped` event is emitted on successful swap.
 
