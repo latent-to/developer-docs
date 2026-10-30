@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **483**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **486**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -2163,6 +2163,14 @@ Generated from Subtensor runtime spec version **483**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.subnetRootSellTao`
 - **summary**: MAP ( netuid ) --> root_sell_tao | Returns the TAO received from root dividend sells on this subnet on the last block.
+
+### `subnetState(NetUid)`: `SubnetLifecycleState`
+
+- **interface**: `api.query.subtensorModule.subnetState`
+- **modifier**: `Optional`
+- **summary**: MAP (netuid) --> user-visible subnet lifecycle state.
+
+    Absence means that the netuid is neither an existing subnet nor one whose deferred dissolution cleanup is still in progress.
 
 ### `subnetTAO(NetUid)`: `TaoBalance`
 
