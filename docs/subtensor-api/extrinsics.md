@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **486**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **488**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -21,6 +21,7 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **[ethereum](#pallet-ethereum)**
 - **[evm](#pallet-evm)**
 - **[grandpa](#pallet-grandpa)**
+- **[hashedAccounts](#pallet-hashedaccounts)**
 - **[limitOrders](#pallet-limitorders)**
 - **[mevShield](#pallet-mevshield)**
 - **[multisig](#pallet-multisig)**
@@ -312,6 +313,21 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
     Weight is handled by the `#[pallet::weight]` attribute.
 
+### `sudoSetGammaEnabled(enabled: bool)`
+
+- **interface**: `api.tx.adminUtils.sudoSetGammaEnabled`
+- **summary**: Enables or disables gamma minting network-wide; a subnet also needs its own flag. Root-only.
+
+### `sudoSetHashedAccountRegistrationDeposit(value: TaoBalance)`
+
+- **interface**: `api.tx.adminUtils.sudoSetHashedAccountRegistrationDeposit`
+- **summary**: Sets the permanent reserve for future classical, PQ, and protected derived account registrations. Existing reserves remain unchanged. Root-only; zero permits registration without a reserve.
+
+### `sudoSetHashedAccountsEnabled(enabled: bool)`
+
+- **interface**: `api.tx.adminUtils.sudoSetHashedAccountsEnabled`
+- **summary**: Enables or disables registration and signing for all hashed SR/ED and fixed/rotating ML-DSA accounts. Ordinary SR/ED signing is unaffected. Root-only. Defaults off. Disabling pauses existing accounts too; their records, generations, EVM aliases and restrictions on alternate authority remain.
+
 ### `sudoSetImmunityPeriod(netuid: NetUid, immunity_period: u16)`
 
 - **interface**: `api.tx.adminUtils.sudoSetImmunityPeriod`
@@ -572,6 +588,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
     Root is paid its baseline share of the subnet's emission (what root earns with the default validator share and the global `TaoWeight`) off the top of the validator slot every block, capped at the slot; alpha validators get the rest. The call fails if the new validator share is at or below that baseline right now. Callable by the subnet owner (once per week per subnet; the first call is never rate-limited) or root (no rate limit). Both respect the admin freeze window.
 
+### `sudoSetSubnetGammaEnabled(netuid: NetUid, enabled: bool)`
+
+- **interface**: `api.tx.adminUtils.sudoSetSubnetGammaEnabled`
+- **summary**: Enables or disables gamma minting on a subnet. Callable by the subnet owner or root; the root subnet is refused.
+
 ### `sudoSetSubnetLimit(max_subnets: u16)`
 
 - **interface**: `api.tx.adminUtils.sudoSetSubnetLimit`
@@ -631,6 +652,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.tx.adminUtils.sudoSetTaoFlowSmoothingFactor`
 - **summary**: Sets TAO flow smoothing factor (alpha)
+
+### `sudoSetTaoUsdPriceOracle(oracle: Option<T::AccountId>)`
+
+- **interface**: `api.tx.adminUtils.sudoSetTaoUsdPriceOracle`
+- **summary**: Sets the account that feeds the TAO/USD price; `None` removes it. The stored price is cleared, so the next feed is accepted as it is. Root-only.
 
 ### `sudoSetTargetRegistrationsPerInterval(netuid: NetUid, target_registrations_per_interval: u16)`
 
@@ -1122,7 +1148,7 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 ### `call(source: H160, target: H160, input: Vec<u8>, value: U256, gas_limit: u64, max_fee_per_gas: U256, max_priority_fee_per_gas: Option<U256>, nonce: Option<U256>, access_list: Vec<(H160, Vec<H256>)>, authorization_list: AuthorizationList)`
 
 - **interface**: `api.tx.evm.call`
-- **summary**: Issue an EVM call operation. This is similar to a message call transaction in Ethereum.
+- **summary**: Issue an EVM call operation. This is similar to a message call transaction in Ethereum. The native origin lookup precedes gas admission, so charge it independently of gas on call/create/create2, including every error and weight refund.
 
 ### `create(source: H160, init: Vec<u8>, value: U256, gas_limit: u64, max_fee_per_gas: U256, max_priority_fee_per_gas: Option<U256>, nonce: Option<U256>, access_list: Vec<(H160, Vec<H256>)>, authorization_list: AuthorizationList)`
 
@@ -1133,6 +1159,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.tx.evm.create2`
 - **summary**: Issue an EVM create2 operation.
+
+### `deposit(address: H160, value: Option<BalanceOf<T>>)`
+
+- **interface**: `api.tx.evm.deposit`
+- **summary**: Transfer native currency to an EVM address using its mapping at execution. A missing value transfers all spendable currency while keeping the account alive. Resolving the address here avoids funding an obsolete backing account if a protected alias is established after transaction construction.
 
 ### `disableWhitelist(disabled: bool)`
 
@@ -1172,7 +1203,43 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     This extrinsic must be called unsigned and it is expected that only block authors will call it (validated in `ValidateUnsigned`), as such if the block author is defined it will be defined as the equivocation reporter.
 
 
+## `hashedAccounts` {#pallet-hashedaccounts}
+
+### `checkDerived(descriptor: DerivedDescriptor)`
+
+- **interface**: `api.tx.hashedAccounts.checkDerived`
+
+### `checkRegistered(descriptor: RegistrationDescriptor)`
+
+- **interface**: `api.tx.hashedAccounts.checkRegistered`
+- **summary**: Check a recipient's registration without reserving funds or creating an account. An atomic payment must fail if a reorg removed its setup.
+
+### `checkRegistrationDeposit(max_deposit: u128)`
+
+- **interface**: `api.tx.hashedAccounts.checkRegistrationDeposit`
+- **summary**: Reject an atomic registration batch if its approved reserve is stale. This read-only guard remains available while registration is disabled.
+
+### `register(descriptor: RegistrationDescriptor)`
+
+- **interface**: `api.tx.hashedAccounts.register`
+- **summary**: Bind an account to its hidden initial key for the selected scheme. Anyone may sponsor the permanent deposit without gaining authority. Idempotent registration never changes an existing authorization.
+
+### `registerDerived(descriptor: DerivedDescriptor)`
+
+- **interface**: `api.tx.hashedAccounts.registerDerived`
+
+### `registerDerivedSponsored(descriptor: DerivedDescriptor, deposit_payer: AccountId32)`
+
+- **interface**: `api.tx.hashedAccounts.registerDerivedSponsored`
+- **summary**: Register through the derived account's own authority while an explicitly consenting outer signer pays the permanent deposit.
+
+
 ## `limitOrders` {#pallet-limitorders}
+
+### `authorizeOrder(order: VersionedOrder<AccountId32>)`
+
+- **interface**: `api.tx.limitOrders.authorizeOrder`
+- **summary**: Approve every economic term through the owner's normal origin. The owner must have a live System account and may hold eight live approvals. New nonces must increase. Terminal/expired slots are reclaimed here; account reaping removes all approvals without retaining any balance. The explicit Authorized order includes its replay-protection nonce.
 
 ### `cancelOrder(order: VersionedOrder<T::AccountId>)`
 
@@ -1188,8 +1255,8 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
     Unlike `execute_orders`, which hits the pool once per order, this extrinsic:
 
-    1. Validates all orders (bad signature / expired / already processed /
-    price-not-met orders are skipped and emit `OrderSkipped`).
+    1. Validates every order's authorization, expiry, status and price;
+    any failure aborts the entire batch.
     2. Fetches the current price once.
     3. Aggregates all valid buy inputs (TAO) and sell inputs (alpha).
     4. Nets the two sides: only the residual amount touches the pool in
@@ -1199,12 +1266,12 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     6. Collects protocol fees (TAO for buy orders, alpha → TAO for sell
     orders) and routes them to `FeeCollector`.
 
-    All orders in the batch must target `netuid`. Orders for a different subnet are skipped.
+    All orders must target `netuid`; a mismatch aborts the batch. Classical and account-approved entries may be mixed, with at most eight entries using account approval.
 
 ### `executeOrders(orders: BoundedVec<SignedOrder<T::AccountId>, T::MaxOrdersPerBatch>, should_fail: bool)`
 
 - **interface**: `api.tx.limitOrders.executeOrders`
-- **summary**: Execute a batch of signed limit orders. Admin-gated.
+- **summary**: Execute classical and account-approved orders in one batch. Each order independently authenticates its owner and permitted relayer; at most eight entries may use account approval.
 
     The `should_fail` flag controls how individual order failures are handled:
 
@@ -1266,7 +1333,7 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **interface**: `api.tx.mevShield.storeEncrypted`
 - **summary**: Store an encrypted extrinsic for later execution in on_initialize.
 
-### `submitEncrypted(ciphertext: BoundedVec<u8, ConstU32<8192>>)`
+### `submitEncrypted(ciphertext: BoundedVec<u8, MaxEncryptedCarrier>)`
 
 - **interface**: `api.tx.mevShield.submitEncrypted`
 - **summary**: Users submit an encrypted wrapper.
@@ -1318,6 +1385,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     - Storage: inserts one item, value size bounded by `MaxSignatories`, with a deposit
     taken for its lifetime of `DepositBase + threshold * DepositFactor`.
 
+### `approveAsMultiSafe(threshold: u16, other_signatories: Vec<T::AccountId>, maybe_timepoint: Option<Timepoint<BlockNumberFor<T>>>, call_hash: [u8; 32], max_weight: Weight)`
+
+- **interface**: `api.tx.multisig.approveAsMultiSafe`
+- **summary**: Approve a call hash for the same off-curve composite used by `as_multi_safe`.
+
 ### `asMulti(threshold: u16, other_signatories: Vec<T::AccountId>, maybe_timepoint: Option<Timepoint<BlockNumberFor<T>>>, call: Box<RuntimeCall>, max_weight: Weight)`
 
 - **interface**: `api.tx.multisig.asMulti`
@@ -1355,6 +1427,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     - Storage: inserts one item, value size bounded by `MaxSignatories`, with a deposit
     taken for its lifetime of `DepositBase + threshold * DepositFactor`.
 
+### `asMultiSafe(threshold: u16, other_signatories: Vec<T::AccountId>, maybe_timepoint: Option<Timepoint<BlockNumberFor<T>>>, call: Box<RuntimeCall>, max_weight: Weight)`
+
+- **interface**: `api.tx.multisig.asMultiSafe`
+- **summary**: Approve or execute a call using the registration-free off-curve derivation.
+
 ### `asMultiThreshold1(other_signatories: Vec<T::AccountId>, call: Box<RuntimeCall>)`
 
 - **interface**: `api.tx.multisig.asMultiThreshold1`
@@ -1371,6 +1448,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     **Complexity:**
 
     `O(Z + C)` where Z is the length of the call and C its execution weight.
+
+### `asMultiThreshold1Safe(other_signatories: Vec<T::AccountId>, call: Box<RuntimeCall>)`
+
+- **interface**: `api.tx.multisig.asMultiThreshold1Safe`
+- **summary**: Dispatch from a full-width off-curve composite. Delegation remains ordinary.
 
 ### `cancelAsMulti(threshold: u16, other_signatories: Vec<T::AccountId>, timepoint: Timepoint<BlockNumberFor<T>>, call_hash: [u8; 32])`
 
@@ -1397,6 +1479,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     - I/O: 1 read ``O(S)``, one remove.
     - Storage: removes one item.
 
+### `cancelAsMultiSafe(threshold: u16, other_signatories: Vec<T::AccountId>, timepoint: Timepoint<BlockNumberFor<T>>, call_hash: [u8; 32])`
+
+- **interface**: `api.tx.multisig.cancelAsMultiSafe`
+- **summary**: Cancel only an operation created with the off-curve derivation.
+
 ### `pokeDeposit(threshold: u16, other_signatories: Vec<T::AccountId>, call_hash: [u8; 32])`
 
 - **interface**: `api.tx.multisig.pokeDeposit`
@@ -1412,6 +1499,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     - `call_hash`: The hash of the call this deposit is reserved for.
 
     Emits `DepositPoked` if successful.
+
+### `pokeDepositSafe(threshold: u16, other_signatories: Vec<T::AccountId>, call_hash: [u8; 32])`
+
+- **interface**: `api.tx.multisig.pokeDepositSafe`
+- **summary**: Adjust an existing off-curve operation's ordinary multisig deposit.
 
 
 ## `preimage` {#pallet-preimage}
@@ -1489,6 +1581,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     - `real`: The account that the proxy will make a call on behalf of.
     - `call_hash`: The hash of the call to be made by the `real` account.
 
+### `createProtectedPure(proxy_type: T::ProxyType, delay: u32, index: u16)`
+
+- **interface**: `api.tx.proxy.createProtectedPure`
+- **summary**: Create a pure proxy and its permanent protection in one transaction. Its address derivation is identical to `create_pure`.
+
 ### `createPure(proxy_type: T::ProxyType, delay: u32, index: u16)`
 
 - **interface**: `api.tx.proxy.createPure`
@@ -1507,6 +1604,13 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
     Fails if there are insufficient funds to pay for deposit.
 
+### `createSafePure(proxy_type: T::ProxyType, delay: u32, index: u16)`
+
+- **interface**: `api.tx.proxy.createSafePure`
+- **summary**: Create a pure proxy with a full-width off-curve account identifier.
+
+    The ordinary proxy deposit applies. No account registration or protection deposit is created, and normal proxy permissions apply.
+
 ### `killPure(spawner: MultiAddress, proxy_type: T::ProxyType, index: u16, height: u32, ext_index: u32)`
 
 - **interface**: `api.tx.proxy.killPure`
@@ -1523,6 +1627,13 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     - `ext_index`: The extrinsic index in which the call to `create_pure` was processed.
 
     Fails with `NoPermission` in case the caller is not a previously created pure account whose `create_pure` call has corresponding parameters.
+
+### `killSafePure(spawner: MultiAddress, proxy_type: T::ProxyType, index: u16, height: u32, ext_index: u32)`
+
+- **interface**: `api.tx.proxy.killSafePure`
+- **summary**: Remove a safe pure proxy and refund its ordinary proxy deposit.
+
+    The supplied creation parameters must reconstruct the signed account. As with `kill_pure`, remaining funds become inaccessible after removal.
 
 ### `pokeDeposit()`
 
@@ -2079,6 +2190,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
     The `ColdkeySwapCleared` event is emitted on successful clear.
 
+### `closeGammaDeposit(hotkey: AccountId, netuid: NetUid)`
+
+- **interface**: `api.tx.subtensorModule.closeGammaDeposit`
+- **summary**: Closes the signer's empty gamma deposit at `hotkey`, releasing the hotkey.
+
 ### `commitCrv3MechanismWeights(netuid: NetUid, mecid: MechId, commit: BoundedVec<u8, ConstU32<MAX_CRV3_COMMIT_SIZE_BYTES>>, reveal_round: u64)`
 
 - **interface**: `api.tx.subtensorModule.commitCrv3MechanismWeights`
@@ -2276,6 +2392,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     - `SubnetNotExist`: If the subnet does not exist.
     - `NotSubnetOwner`: If the caller is not the subnet owner or root.
 
+### `feedTaoUsdPrice(price: u64)`
+
+- **interface**: `api.tx.subtensorModule.feedTaoUsdPrice`
+- **summary**: Feeds the TAO/USD price in gamma units (10^9 per US dollar) per TAO, at most once per block. Signed by the oracle, which pays no fee when the feed succeeds.
+
 ### `increaseTake(hotkey: AccountId, take: PerU16)`
 
 - **interface**: `api.tx.subtensorModule.increaseTake`
@@ -2315,6 +2436,21 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     - `hotkey`: The hotkey to lock stake to.
     - `netuid`: The subnet on which to lock.
     - `amount`: The alpha amount to lock.
+
+### `mintGamma(hotkey: AccountId, netuid: NetUid, amount: TaoBalance, min_amount_out: GammaBalance, spender: Option<T::AccountId>, daily_spend_cap: Option<GammaBalance>)`
+
+- **interface**: `api.tx.subtensorModule.mintGamma`
+- **summary**: Buys alpha on `netuid` with `amount` TAO, burns it, and credits its gamma to the signer's deposit at `hotkey`, which must name `spender` and have `daily_spend_cap` when they are given, or opens with them, `None` being the default spender and no cap. Fails below `min_amount_out` gamma.
+
+### `mintGammaWithStake(origin_hotkey: AccountId, destination_hotkey: AccountId, netuid: NetUid, alpha_amount: AlphaBalance, min_amount_out: GammaBalance, spender: Option<T::AccountId>, daily_spend_cap: Option<GammaBalance>)`
+
+- **interface**: `api.tx.subtensorModule.mintGammaWithStake`
+- **summary**: Burns up to `alpha_amount` of the signer's stake on `origin_hotkey`, as `burn_alpha` does, and credits its gamma to the signer's deposit at `destination_hotkey`, which must name `spender` and have `daily_spend_cap` when they are given, or opens with them, `None` being the default spender and no cap. Fails below `min_amount_out` gamma.
+
+### `moveGamma(origin_hotkey: AccountId, destination_hotkey: AccountId, netuid: NetUid, amount: GammaBalance)`
+
+- **interface**: `api.tx.subtensorModule.moveGamma`
+- **summary**: Moves up to `amount` gamma from the signer's deposit at `origin_hotkey` to `destination_hotkey`. A move that empties the origin closes it.
 
 ### `moveLock(destination_hotkey: AccountId, netuid: NetUid)`
 
@@ -2625,7 +2761,7 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
     After a successful registration, the hotkey is auto-childkeyed to every existing subnet owner unless the validator opted out of auto parent delegation. Pruning a seat clears that validator's protocol auto-parent edges.
 
-    Declared weight is `WeightInfo::root_register` plus a `TotalNetworks`-scaled `DbWeight` term for the per-subnet persist (and prune cleanup). Re-benchmark on reference hardware so the base measurement includes that work.
+    Declared weight is `WeightInfo::root_register` plus the evicted hotkey's two possible pending-dividend flushes and a `TotalNetworks`-scaled `DbWeight` term for the per-subnet persist (and prune cleanup). Re-benchmark on reference hardware so the base measurement includes that work.
 
 ### `scheduleSwapColdkey(new_coldkey: AccountId)`
 
@@ -2829,6 +2965,16 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
     - `hotkey`: The hotkey account to designate as the autostake destination.
 
+### `setGammaDepositDailySpendCap(hotkey: AccountId, netuid: NetUid, daily_spend_cap: Option<GammaBalance>)`
+
+- **interface**: `api.tx.subtensorModule.setGammaDepositDailySpendCap`
+- **summary**: Sets the daily spend cap of the signer's gamma deposit at `hotkey`; `None` removes it. A changed cap keeps what the deposit can spend now, up to the new cap.
+
+### `setGammaDepositSpender(hotkey: AccountId, netuid: NetUid, spender: Option<T::AccountId>)`
+
+- **interface**: `api.tx.subtensorModule.setGammaDepositSpender`
+- **summary**: Sets the spender of the signer's gamma deposit at `hotkey`; `None` names the default spender: the spender of the subnet owner hotkey's service while the owner owns that hotkey, otherwise the subnet owner, or its lease's beneficiary while the lease owns the subnet.
+
 ### `setIdentity(name: Vec<u8>, url: Vec<u8>, github_repo: Vec<u8>, image: Vec<u8>, discord: Vec<u8>, description: Vec<u8>, additional: Vec<u8>)`
 
 - **interface**: `api.tx.subtensorModule.setIdentity`
@@ -2942,6 +3088,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.setRejectStakingHotkeyGrowth`
 - **summary**: Opt out of staking-hotkey list growth caused by other accounts. Existing destinations and hotkeys owned by the recipient can still receive transfers.
 
+### `setService(netuid: NetUid, hotkey: AccountId, url: BoundedVec<u8, ConstU32<MAX_SERVICE_URL_LEN>>, spender: AccountId)`
+
+- **interface**: `api.tx.subtensorModule.setService`
+- **summary**: Sets the service of the coldkey's hotkey on the subnet: the url where it describes its services and the spender customers name for them. The hotkey must be registered on the subnet with a validator permit, or be the subnet owner's hotkey signed for by the subnet owner. An empty url removes the service.
+
 ### `setSubnetIdentity(netuid: NetUid, subnet_name: Vec<u8>, github_repo: Vec<u8>, subnet_contact: Vec<u8>, subnet_url: Vec<u8>, discord: Vec<u8>, description: Vec<u8>, logo_url: Vec<u8>, additional: Vec<u8>)`
 
 - **interface**: `api.tx.subtensorModule.setSubnetIdentity`
@@ -3006,6 +3157,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     - `WeightVecLengthIsLow`: Attempting to set weights with fewer weights than min.
 
     - `MaxWeightExceeded`: Attempting to set weights with max value exceeding limit.
+
+### `spendGamma(netuid: NetUid, spends: BoundedVec)`
+
+- **interface**: `api.tx.subtensorModule.spendGamma`
+- **summary**: Spends, in order, each entry's amount from the gamma deposit at its hotkey. Entries whose hotkey has no deposit, whose deposit names another spender, or whose amount is zero or above the deposit's balance or what its daily spend cap allows, are skipped. Each entry's reference is repeated in its `GammaSpent` event, or in its `GammaSpendSkipped` event with the reason, and not otherwise read. A skipped entry is charged as a spent one, less its write.
 
 ### `stakeIntoBasket(hotkey: AccountId, amount_staked: TaoBalance)`
 
@@ -3633,6 +3789,18 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     NOTE: Prior to version *12, this was called `as_limited_sub`.
 
     The dispatch origin for this call must be _Signed_.
+
+### `asProtectedDerivative(index: u16, call: Box<RuntimeCall>)`
+
+- **interface**: `api.tx.utility.asProtectedDerivative`
+- **summary**: Dispatch from the ordinary derivative address after establishing its permanent protection. A failed inner call rolls back fresh registration and child state, while any previously registered protection remains.
+
+### `asSafeDerivative(index: u16, call: Box<RuntimeCall>)`
+
+- **interface**: `api.tx.utility.asSafeDerivative`
+- **summary**: Dispatch from a full-width off-curve derivative account.
+
+    This uses a separate address domain and preserves the incoming origin's call filters. It requires no registration or protection deposit; the parent's authorization and explicit delegations remain authoritative.
 
 ### `batch(calls: Vec<RuntimeCall>)`
 
