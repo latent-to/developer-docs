@@ -8,7 +8,7 @@ description: "This page contains compile-time runtime constants for the Subtenso
 This page contains compile-time runtime constants for the Subtensor runtime and their respective values. Accessible via `api.consts.<Pallet>.<constant_name>`. Values read live from node.
 
 :::info
-Generated from Subtensor runtime spec version **486**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **488**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[aura](#pallet-aura)**
@@ -17,7 +17,9 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **[contracts](#pallet-contracts)**
 - **[crowdloan](#pallet-crowdloan)**
 - **[drand](#pallet-drand)**
+- **[evm](#pallet-evm)**
 - **[grandpa](#pallet-grandpa)**
+- **[hashedAccounts](#pallet-hashedaccounts)**
 - **[limitOrders](#pallet-limitorders)**
 - **[multisig](#pallet-multisig)**
 - **[proxy](#pallet-proxy)**
@@ -259,6 +261,14 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
     This is exposed so that it can be tuned for particular runtime, when multiple pallets send unsigned transactions.
 
 
+## `evm` {#pallet-evm}
+
+### `nativeDepositSupported`: `bool`
+
+- **interface**: `api.consts.evm.nativeDepositSupported`
+- **value**: `true`
+
+
 ## `grandpa` {#pallet-grandpa}
 
 ### `maxAuthorities`: `u32`
@@ -280,6 +290,36 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **summary**: The maximum number of entries to keep in the set id to session index mapping.
 
     Since the `SetIdSession` map is only used for validating equivocations this value should relate to the bonding duration of whatever staking system is being used (if any). If equivocation handling is not enabled then this value can be zero.
+
+
+## `hashedAccounts` {#pallet-hashedaccounts}
+
+### `derivedRegistrationDeposit`: `u64`
+
+- **interface**: `api.consts.hashedAccounts.derivedRegistrationDeposit`
+- **value**: `200000000`
+
+### `falconAccountProfiles`: `[u8;4]`
+
+- **interface**: `api.consts.hashedAccounts.falconAccountProfiles`
+- **value**: `0x06070809`
+- **summary**: Rotating and registration-free Falcon profiles, grouped by degree.
+
+### `mldsaAccountProfiles`: `[u8;2]`
+
+- **interface**: `api.consts.hashedAccounts.mldsaAccountProfiles`
+- **value**: `0x0405`
+- **summary**: Supported ML-DSA profiles: registered rotating and registration-free fixed.
+
+### `mlDsaRegistrationDeposit`: `u64`
+
+- **interface**: `api.consts.hashedAccounts.mlDsaRegistrationDeposit`
+- **value**: `200000000`
+
+### `registrationDeposit`: `u64`
+
+- **interface**: `api.consts.hashedAccounts.registrationDeposit`
+- **value**: `200000000`
 
 
 ## `limitOrders` {#pallet-limitorders}
@@ -934,7 +974,7 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 ### `version`: `{"specName":"Text","implName":"Text","authoringVersion":"u32","specVersion":"u32","implVersion":"u32","apis":"Vec<([u8;8],u32)>","transactionVersion":"u32","systemVersion":"u8"}`
 
 - **interface**: `api.consts.system.version`
-- **value**: `{"specName":"node-subtensor","implName":"node-subtensor","authoringVersion":1,"specVersion":486,"implVersion":1,"apis":[["0xdf6acb689907609b",5],["0x37e397fc7c91f5e4",2],["0x40fe3ad401f8959a",6],["0xfbc577b9d747efd6",1],["0xd2bc9897eed08f15",3],["0xf78b278be53f454c",2],["0xdd718d5cc53262d4",1],["0xab3c0572291feb8b",1],["0xed99c5acb25eedf5",3],["0xbc9d89904f5b923f",1],["0x37c8bb1350a9a2a8",4],["0xf3ff14d5ab527059",3],["0x582211f65bb14b89",6],["0xe65b00e46cedd0aa",2],["0x68b66ba122c93fa7",2],["0x42e62be4a39e5b60",1],["0x806df4ccaa9ed485",1],["0x8375104b299b74c5",3],["0x5d1fbfbe852f2807",1],["0xc6886e2f8e598b0a",1],["0x43580abff6baab45",5],["0xc0de4984d112f3b4",1],["0xcbca25e39f142387",2],["0xa8b093e6508d9e9c",1],["0x1c4585bd5c707202",1]],"transactionVersion":1,"systemVersion":1}`
+- **value**: `{"specName":"node-subtensor","implName":"node-subtensor","authoringVersion":1,"specVersion":488,"implVersion":1,"apis":[["0xdf6acb689907609b",5],["0x37e397fc7c91f5e4",2],["0x40fe3ad401f8959a",6],["0xfbc577b9d747efd6",1],["0xd2bc9897eed08f15",3],["0xf78b278be53f454c",2],["0xdd718d5cc53262d4",1],["0xab3c0572291feb8b",1],["0xed99c5acb25eedf5",3],["0xbc9d89904f5b923f",1],["0x37c8bb1350a9a2a8",4],["0xf3ff14d5ab527059",3],["0x582211f65bb14b89",6],["0xe65b00e46cedd0aa",2],["0x68b66ba122c93fa7",2],["0x42e62be4a39e5b60",1],["0x806df4ccaa9ed485",1],["0x8375104b299b74c5",3],["0x5d1fbfbe852f2807",1],["0xc6886e2f8e598b0a",1],["0x43580abff6baab45",5],["0x292808ec5d0c890b",1],["0xc0de4984d112f3b4",1],["0xcbca25e39f142387",2],["0xa8b093e6508d9e9c",1],["0x1c4585bd5c707202",1]],"transactionVersion":1,"systemVersion":1}`
 - **summary**: Get the chain's in-code version.
 
 

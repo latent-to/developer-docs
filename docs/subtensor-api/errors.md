@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **486**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **488**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -20,6 +20,7 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **[ethereum](#pallet-ethereum)**
 - **[evm](#pallet-evm)**
 - **[grandpa](#pallet-grandpa)**
+- **[hashedAccounts](#pallet-hashedaccounts)**
 - **[limitOrders](#pallet-limitorders)**
 - **[mevShield](#pallet-mevshield)**
 - **[multisig](#pallet-multisig)**
@@ -716,6 +717,79 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **summary**: Cannot signal forced change so soon after last.
 
 
+## `hashedAccounts` {#pallet-hashedaccounts}
+
+### `AliasCollision`
+
+- **interface**: `api.errors.hashedAccounts.AliasCollision`
+- **summary**: Another account already owns the derived EVM alias.
+
+### `AuthenticationKindConflict`
+
+- **interface**: `api.errors.hashedAccounts.AuthenticationKindConflict`
+- **summary**: A different permanent authentication kind already owns this identity.
+
+### `DerivedAuthorityTooComplex`
+
+- **interface**: `api.errors.hashedAccounts.DerivedAuthorityTooComplex`
+- **summary**: The derived authority graph exceeds a deterministic runtime bound.
+
+### `DescriptorMismatch`
+
+- **interface**: `api.errors.hashedAccounts.DescriptorMismatch`
+- **summary**: The derived account is already registered with a different descriptor.
+
+### `Disabled`
+
+- **interface**: `api.errors.hashedAccounts.Disabled`
+- **summary**: Hashed account registration or authorization is disabled in this runtime.
+
+### `GenerationExhausted`
+
+- **interface**: `api.errors.hashedAccounts.GenerationExhausted`
+- **summary**: The key generation counter cannot advance any further.
+
+### `InvalidDerivedAuthority`
+
+- **interface**: `api.errors.hashedAccounts.InvalidDerivedAuthority`
+- **summary**: A derived descriptor is invalid or its dependencies are not protected.
+
+### `InvalidNextCommitment`
+
+- **interface**: `api.errors.hashedAccounts.InvalidNextCommitment`
+- **summary**: The next commitment must obey the immutable account rotation policy.
+
+### `InvalidSignature`
+
+- **interface**: `api.errors.hashedAccounts.InvalidSignature`
+- **summary**: The signature does not authorize this account and complete transaction.
+
+### `NotRegistered`
+
+- **interface**: `api.errors.hashedAccounts.NotRegistered`
+- **summary**: Register the hashed account before submitting its authorization proof.
+
+### `RegistrationDepositTooHigh`
+
+- **interface**: `api.errors.hashedAccounts.RegistrationDepositTooHigh`
+- **summary**: The current registration reserve exceeds the sponsor's approved maximum.
+
+### `UnsupportedDescriptor`
+
+- **interface**: `api.errors.hashedAccounts.UnsupportedDescriptor`
+- **summary**: The descriptor version, scheme, or initial commitment is unsupported.
+
+### `WrongCommitment`
+
+- **interface**: `api.errors.hashedAccounts.WrongCommitment`
+- **summary**: The revealed public key does not match the active key commitment.
+
+### `WrongGeneration`
+
+- **interface**: `api.errors.hashedAccounts.WrongGeneration`
+- **summary**: The proof does not use the account's currently active key generation.
+
+
 ## `limitOrders` {#pallet-limitorders}
 
 ### `ArithmeticOverflow`
@@ -737,6 +811,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.errors.limitOrders.IncorrectPartialFillAmount`
 - **summary**: Incorrect partial fill amount provided
+
+### `InvalidAuthorizationMode`
+
+- **interface**: `api.errors.limitOrders.InvalidAuthorizationMode`
+- **summary**: Nonce-bearing terms and proof authorization must use the same mode.
 
 ### `InvalidSignature`
 
@@ -778,10 +857,20 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **interface**: `api.errors.limitOrders.NoLinkedOutput`
 - **summary**: Linked order named a provider with no recorded output.
 
+### `OrderAccountMissing`
+
+- **interface**: `api.errors.limitOrders.OrderAccountMissing`
+- **summary**: The owner must have an existing System account to hold approvals.
+
 ### `OrderAlreadyProcessed`
 
 - **interface**: `api.errors.limitOrders.OrderAlreadyProcessed`
 - **summary**: The order has already been Fulfilled or Cancelled.
+
+### `OrderBatchTooLarge`
+
+- **interface**: `api.errors.limitOrders.OrderBatchTooLarge`
+- **summary**: The runtime batch capacity is smaller than the submitted authorized batch.
 
 ### `OrderCancelled`
 
@@ -797,6 +886,16 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.errors.limitOrders.OrderNetUidMismatch`
 - **summary**: An order in the batch targets a different netuid than the batch netuid parameter.
+
+### `OrderNonceUsed`
+
+- **interface**: `api.errors.limitOrders.OrderNonceUsed`
+- **summary**: The nonce was already consumed or names a different canonical order.
+
+### `OrderNotApproved`
+
+- **interface**: `api.errors.limitOrders.OrderNotApproved`
+- **summary**: This full order has not been approved by its authenticated owner.
 
 ### `OrderSignerFrozen`
 
@@ -848,6 +947,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **interface**: `api.errors.limitOrders.SwapReturnedZero`
 - **summary**: The pool swap returned zero output for a non-zero input.
 
+### `TooManyApprovedOrders`
+
+- **interface**: `api.errors.limitOrders.TooManyApprovedOrders`
+- **summary**: The owner already has eight live account-approved orders.
+
 ### `Unauthorized`
 
 - **interface**: `api.errors.limitOrders.Unauthorized`
@@ -894,6 +998,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **interface**: `api.errors.multisig.AlreadyStored`
 - **summary**: The data to be stored is already stored.
 
+### `InvalidSafeAccountId`
+
+- **interface**: `api.errors.multisig.InvalidSafeAccountId`
+- **summary**: Safe accounts require an exact, untruncated 32-byte account encoding.
+
 ### `MaxWeightTooLow`
 
 - **interface**: `api.errors.multisig.MaxWeightTooLow`
@@ -924,6 +1033,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **interface**: `api.errors.multisig.NotOwner`
 - **summary**: Only the account that originally created the multisig is able to cancel it or update its deposits.
 
+### `SafeDerivationFailed`
+
+- **interface**: `api.errors.multisig.SafeDerivationFailed`
+- **summary**: All bounded address candidates admit a legacy raw public key.
+
 ### `SenderInSignatories`
 
 - **interface**: `api.errors.multisig.SenderInSignatories`
@@ -933,6 +1047,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.errors.multisig.SignatoriesOutOfOrder`
 - **summary**: The signatories were provided out of order; they should be ordered.
+
+### `ThresholdTooHigh`
+
+- **interface**: `api.errors.multisig.ThresholdTooHigh`
+- **summary**: The threshold exceeds the number of signatories.
 
 ### `TooFewSignatories`
 
@@ -1000,6 +1119,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 ## `proxy` {#pallet-proxy}
 
+### `AccountPolicyViolation`
+
+- **interface**: `api.errors.proxy.AccountPolicyViolation`
+- **summary**: This delegation would weaken the real account's authorization policy.
+
 ### `AnnouncementDepositInvariantViolated`
 
 - **interface**: `api.errors.proxy.AnnouncementDepositInvariantViolated`
@@ -1034,6 +1158,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.errors.proxy.NotProxy`
 - **summary**: Sender is not a proxy of the account to be proxied.
+
+### `SafeDerivationFailed`
+
+- **interface**: `api.errors.proxy.SafeDerivationFailed`
+- **summary**: No full-width off-curve account could be derived within the fixed bound.
 
 ### `TooMany`
 
@@ -1252,7 +1381,12 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 ### `BurnEmissionMustBeZero`
 
 - **interface**: `api.errors.subtensorModule.BurnEmissionMustBeZero`
-- **summary**: `set_subnet_emission_weights`: burn (slot 0) is not yet enabled and must be 0.
+- **summary**: Deprecated: burn may be non-zero; the combined burn+recycle cap is [`Error::BurnRecycleEmissionAboveMaximum`]. Kept so SCALE error indices stay stable.
+
+### `BurnRecycleEmissionAboveMaximum`
+
+- **interface**: `api.errors.subtensorModule.BurnRecycleEmissionAboveMaximum`
+- **summary**: `set_subnet_emission_weights`: burn (slot 0) and recycle (slot 1) together may be at most 33% of emission.
 
 ### `CallDisabled`
 
@@ -1347,7 +1481,7 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 ### `ColdkeySwapTooHeavy`
 
 - **interface**: `api.errors.subtensorModule.ColdkeySwapTooHeavy`
-- **summary**: The coldkey stakes through more hotkeys, or holds more stake positions, than a coldkey swap can move in one call. Consolidate (unstake or move stake) first.
+- **summary**: The coldkey stakes through more hotkeys, holds more stake positions, or with the destination holds more gamma deposits, than a coldkey swap can move in one call. Consolidate first.
 
 ### `CommitPayloadTooLarge`
 
@@ -1474,6 +1608,36 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.FirstEmissionBlockNumberAlreadySet`
 - **summary**: FirstEmissionBlockNumber is already set.
 
+### `GammaDepositDailySpendCapExceeded`
+
+- **interface**: `api.errors.subtensorModule.GammaDepositDailySpendCapExceeded`
+- **summary**: The amount is above what the gamma deposit's daily spend cap allows now.
+
+### `GammaDepositDailySpendCapMismatch`
+
+- **interface**: `api.errors.subtensorModule.GammaDepositDailySpendCapMismatch`
+- **summary**: A mint named a daily spend cap other than its gamma deposit's.
+
+### `GammaDepositDoesNotExist`
+
+- **interface**: `api.errors.subtensorModule.GammaDepositDoesNotExist`
+- **summary**: The hotkey holds no gamma deposit on this subnet.
+
+### `GammaDepositNotEmpty`
+
+- **interface**: `api.errors.subtensorModule.GammaDepositNotEmpty`
+- **summary**: A gamma deposit with a balance cannot be closed.
+
+### `GammaDepositSpenderMismatch`
+
+- **interface**: `api.errors.subtensorModule.GammaDepositSpenderMismatch`
+- **summary**: A mint named a spender other than the one its gamma deposit names.
+
+### `GammaDisabled`
+
+- **interface**: `api.errors.subtensorModule.GammaDisabled`
+- **summary**: Gamma minting is disabled network-wide or on this subnet.
+
 ### `HotKeyAccountNotExists`
 
 - **interface**: `api.errors.subtensorModule.HotKeyAccountNotExists`
@@ -1498,6 +1662,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.HotKeyNotRegisteredInSubNet`
 - **summary**: The hotkey is not registered in subnet
+
+### `HotkeyOwnerPolicyViolation`
+
+- **interface**: `api.errors.subtensorModule.HotkeyOwnerPolicyViolation`
+- **summary**: An ownership change would weaken a protected account's authorization.
 
 ### `HotKeySetTxRateLimitExceeded`
 
@@ -1528,6 +1697,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.InsufficientAlphaBalance`
 - **summary**: The caller does not have enough Alpha stake for the operation.
+
+### `InsufficientGammaBalance`
+
+- **interface**: `api.errors.subtensorModule.InsufficientGammaBalance`
+- **summary**: The gamma deposit's balance is below the amount.
 
 ### `InsufficientLiquidity`
 
@@ -1712,7 +1886,7 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 ### `NeuronNoValidatorPermit`
 
 - **interface**: `api.errors.subtensorModule.NeuronNoValidatorPermit`
-- **summary**: The caller is attempting to set non-self weights without being a permitted validator.
+- **summary**: The caller is setting non-self weights or a service without being a permitted validator.
 
 ### `NewColdKeyIsHotkey`
 
@@ -1784,6 +1958,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.NotEnoughStakeToWithdraw`
 - **summary**: The caller is requesting removing more stake than there exists in the staking account. See: "[remove_stake()]".
 
+### `NotGammaDepositSpender`
+
+- **interface**: `api.errors.subtensorModule.NotGammaDepositSpender`
+- **summary**: The signer is not the gamma deposit's spender.
+
 ### `NotRootSubnet`
 
 - **interface**: `api.errors.subtensorModule.NotRootSubnet`
@@ -1817,7 +1996,7 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 ### `RecycleEmissionMustBeZero`
 
 - **interface**: `api.errors.subtensorModule.RecycleEmissionMustBeZero`
-- **summary**: `set_subnet_emission_weights`: recycle (slot 1) is not yet enabled and must be 0.
+- **summary**: Deprecated: recycle may be non-zero; the combined burn+recycle cap is [`Error::BurnRecycleEmissionAboveMaximum`]. Kept so SCALE error indices stay stable.
 
 ### `RegistrationNotPermittedOnRootSubnet`
 
@@ -1949,6 +2128,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.SymbolDoesNotExist`
 - **summary**: Symbol does not exist.
 
+### `TaoUsdPriceUnavailable`
+
+- **interface**: `api.errors.subtensorModule.TaoUsdPriceUnavailable`
+- **summary**: Minting gamma needs a TAO/USD feed at most 300 blocks old.
+
 ### `TempoOutOfBounds`
 
 - **interface**: `api.errors.subtensorModule.TempoOutOfBounds`
@@ -1958,6 +2142,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.TooManyChildren`
 - **summary**: Too many children MAX 5.
+
+### `TooManyGammaDeposits`
+
+- **interface**: `api.errors.subtensorModule.TooManyGammaDeposits`
+- **summary**: The coldkey would hold more than 64 gamma deposits on this subnet.
 
 ### `TooManyRegistrationsThisBlock`
 
@@ -2202,6 +2391,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.errors.utility.InvalidDerivedAccount`
 - **summary**: Bad input data for derived account ID
+
+### `SafeDerivationFailed`
+
+- **interface**: `api.errors.utility.SafeDerivationFailed`
+- **summary**: No full-width off-curve account could be derived within the fixed bound.
 
 ### `TooManyCalls`
 

@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **486**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **488**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -24,6 +24,7 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **[evm](#pallet-evm)**
 - **[evmChainId](#pallet-evmchainid)**
 - **[grandpa](#pallet-grandpa)**
+- **[hashedAccounts](#pallet-hashedaccounts)**
 - **[limitOrders](#pallet-limitorders)**
 - **[mevShield](#pallet-mevshield)**
 - **[multisig](#pallet-multisig)**
@@ -41,6 +42,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **[transactionPayment](#pallet-transactionpayment)**
 
 ## `adminUtils` {#pallet-adminutils}
+
+### `hashedAccountsEnabled`: `bool`
+
+- **interface**: `api.query.adminUtils.hashedAccountsEnabled`
+- **summary**: Enables hashed account registration and authorization. Existing account records and authority protections survive disabling.
 
 ### `palletVersion`: `u16`
 
@@ -519,7 +525,51 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **summary**: State of the current authority set.
 
 
+## `hashedAccounts` {#pallet-hashedaccounts}
+
+### `accounts(AccountId32)`: `AccountRecord`
+
+- **interface**: `api.query.hashedAccounts.accounts`
+- **modifier**: `Optional`
+- **summary**: Permanent even when the balance becomes zero; never reset on re-registration.
+
+### `derivedAuthorities(AccountId32)`: `DerivedAuthorityRecord`
+
+- **interface**: `api.query.hashedAccounts.derivedAuthorities`
+- **modifier**: `Optional`
+- **summary**: Immutable protection, including after a pure proxy is killed.
+
+### `evmAliases([u8;20])`: `AccountId32`
+
+- **interface**: `api.query.hashedAccounts.evmAliases`
+- **modifier**: `Optional`
+- **summary**: Native hashed-account EVM addresses resolve to the permanent account.
+
+### `hashedAccountRegistrationDeposit`: `TaoBalance`
+
+- **interface**: `api.query.hashedAccounts.hashedAccountRegistrationDeposit`
+- **summary**: Permanent reserve for each new classical, PQ, or protected derived account. Changes apply only to future registrations; existing reserves are unchanged.
+
+### `mlDsaAccounts(AccountId32)`: `MlDsaAccountRecord`
+
+- **interface**: `api.query.hashedAccounts.mlDsaAccounts`
+- **modifier**: `Optional`
+- **summary**: Separate storage preserves every v1 record's encoded representation.
+
+### `palletVersion`: `u16`
+
+- **interface**: `api.query.hashedAccounts.palletVersion`
+- **modifier**: `Required`
+- **summary**: Returns the current pallet version from storage
+
+
 ## `limitOrders` {#pallet-limitorders}
+
+### `approvedOrders(AccountId32)`: `AccountOrderApprovals`
+
+- **interface**: `api.query.limitOrders.approvedOrders`
+- **modifier**: `Optional`
+- **summary**: Bounded approvals and replay watermark, removed with the System account.
 
 ### `hasMigrationRun(Bytes)`: `bool`
 
@@ -529,7 +579,7 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 ### `limitOrdersEnabled`: `bool`
 
 - **interface**: `api.query.limitOrders.limitOrdersEnabled`
-- **summary**: Switch to enable/disable the pallet. Defaults to `false` so bare node deployments are safe; genesis sets it to `true`.
+- **summary**: Switch to enable/disable the pallet; genesis enables configured deployments.
 
 ### `linkedOutputs(H256)`: `LinkedOutput`
 
@@ -683,6 +733,12 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.query.proxy.announcements`
 - **summary**: The announcements made by the proxy (key).
+
+### `announcementValidFrom`: `u32`
+
+- **interface**: `api.query.proxy.announcementValidFrom`
+- **modifier**: `Optional`
+- **summary**: The first block whose announcements were created under the restricted-proxy filter. Entries from earlier blocks remain removable (and their deposits recoverable), but can never authorize a call after the runtime upgrade.
 
 ### `lastCallResult(AccountId32)`: `Result`
 
@@ -1186,6 +1242,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
     Hotkeys with a standing [`MinerCollateral`] row for this coldkey on the subnet. Kept in sync by collateral create / remove / swap paths so coldkey swaps migrate bonds with a bounded indexed walk (see [`MAX_COLDKEY_COLLATERAL_HOTKEYS`]) instead of scanning unbounded association vectors.
 
+### `coldkeyGammaHotkeys(u16, AccountId32)`: `Vec<AccountId32>`
+
+- **interface**: `api.query.subtensorModule.coldkeyGammaHotkeys`
+- **summary**: DMAP ( netuid, coldkey ) --> hotkeys | The hotkeys holding the coldkey's gamma deposits on the subnet.
+
 ### `coldkeyMinerCollateral(u16, AccountId32)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.coldkeyMinerCollateral`
@@ -1317,6 +1378,42 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> LockState | Total decaying lock to the owner hotkey for a subnet.
 
+### `deferredBasketCashClaimed(AccountId32, AccountId32)`: `i128`
+
+- **interface**: `api.query.subtensorModule.deferredBasketCashClaimed`
+
+### `deferredBasketCashRate(AccountId32)`: `FixedI128`
+
+- **interface**: `api.query.subtensorModule.deferredBasketCashRate`
+- **summary**: TAO-per-root-stake accumulator for deferred credits sold during subnet dissolution.
+
+### `deferredBasketCashReserve(AccountId32)`: `u64`
+
+- **interface**: `api.query.subtensorModule.deferredBasketCashReserve`
+- **summary**: Sold deferred dividends held in the root reserves, outside the basket NAV.
+
+### `deferredBasketConversions(AccountId32, u16, u64)`: `DeferredBasketConversion`
+
+- **interface**: `api.query.subtensorModule.deferredBasketConversions`
+- **modifier**: `Optional`
+- **summary**: Final share/alpha conversion retained only until all stake-change corrections use it.
+
+### `deferredBasketDebts(AccountId32, AccountId32)`: `BTreeMap<u16, PalletSubtensorStakingDeferredDividendsDeferredBasketDebt>`
+
+- **interface**: `api.query.subtensorModule.deferredBasketDebts`
+- **summary**: Stake-change corrections. One bounded row per coldkey, like BasketClaimed.
+
+### `deferredBasketGeneration(AccountId32)`: `u64`
+
+- **interface**: `api.query.subtensorModule.deferredBasketGeneration`
+- **summary**: Monotone identifier, retained across subnet reuse and pending-batch completion.
+
+### `deferredBasketRates(AccountId32, u16)`: `DeferredBasketState`
+
+- **interface**: `api.query.subtensorModule.deferredBasketRates`
+- **modifier**: `Optional`
+- **summary**: Alpha-per-root-stake entitlement for a dividend batch whose valuation is deferred.
+
 ### `delegates(AccountId32)`: `PerU16`
 
 - **interface**: `api.query.subtensorModule.delegates`
@@ -1387,6 +1484,17 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.flowNormExponent`
 - **summary**: ITEM --> Flow Normalization Exponent (p)
+
+### `gammaDeposits(u16, AccountId32)`: `GammaDeposit`
+
+- **interface**: `api.query.subtensorModule.gammaDeposits`
+- **modifier**: `Optional`
+- **summary**: DMAP ( netuid, hotkey ) --> deposit | The gamma held at a hotkey on the subnet.
+
+### `gammaEnabled`: `bool`
+
+- **interface**: `api.query.subtensorModule.gammaEnabled`
+- **summary**: ITEM ( enabled ) | Whether gamma can be minted at all; a subnet also needs [`SubnetGammaEnabled`].
 
 ### `hasMigrationRun(Bytes)`: `bool`
 
@@ -1959,6 +2067,12 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.scalingLawPower`
 - **summary**: MAP ( netuid ) --> scaling_law_power
 
+### `services(u16, AccountId32)`: `ServiceInfo`
+
+- **interface**: `api.query.subtensorModule.services`
+- **modifier**: `Optional`
+- **summary**: MAP ( netuid, hotkey ) --> service_info
+
 ### `servingRateLimit(NetUid)`: `u64`
 
 - **interface**: `api.query.subtensorModule.servingRateLimit`
@@ -2072,6 +2186,16 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.subnetFastMovingPrice`
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> fast moving price | A fast EMA of the subnet's spot price (TAO per alpha, unclamped) with a [`BASKET_FAST_EMA_HALF_LIFE_BLOCKS`] half-life, updated once per block right after [`SubnetMovingPrice`] from the spot at the end of the previous block, so no extrinsic in the current block can move it. It is a trading anchor only — `swap_basket` bounds every leg to within [`BASKET_TRADE_MAX_SLIPPAGE_BPS`] of the strictest of this, the slow EMA, and spot — and plays no part in emission. Absent until the subnet's first update after the upgrade (trading on it is refused until then).
+
+### `subnetGammaEnabled(NetUid)`: `bool`
+
+- **interface**: `api.query.subtensorModule.subnetGammaEnabled`
+- **summary**: MAP ( netuid ) --> enabled | Whether gamma can be minted on the subnet.
+
+### `subnetGammaPrice(NetUid)`: `FixedU128`
+
+- **interface**: `api.query.subtensorModule.subnetGammaPrice`
+- **summary**: MAP ( netuid ) --> gamma_price | The highest price a subnet's alpha mints gamma at: set to the median subnet alpha price at registration, each block it falls to the spot price at once and rises toward it by [`SubnetFastMovingPrice`]'s weight of the gap, at most of itself.
 
 ### `subnetIdentitiesV3(NetUid)`: `SubnetIdentityV3`
 
@@ -2217,6 +2341,18 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.taoInRefundDeploymentBlock`
 - **summary**: ITEM( TaoInRefundDeploymentBlock )
+
+### `taoUsdPrice`: `TaoUsdPriceState`
+
+- **interface**: `api.query.subtensorModule.taoUsdPrice`
+- **modifier**: `Optional`
+- **summary**: ITEM ( state ) | The TAO/USD price, once fed.
+
+### `taoUsdPriceOracle`: `AccountId32`
+
+- **interface**: `api.query.subtensorModule.taoUsdPriceOracle`
+- **modifier**: `Optional`
+- **summary**: ITEM ( oracle ) | The account that feeds the TAO/USD price.
 
 ### `taoWeight`: `u64`
 

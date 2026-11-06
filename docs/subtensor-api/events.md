@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **486**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **488**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -21,6 +21,7 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **[ethereum](#pallet-ethereum)**
 - **[evm](#pallet-evm)**
 - **[grandpa](#pallet-grandpa)**
+- **[hashedAccounts](#pallet-hashedaccounts)**
 - **[limitOrders](#pallet-limitorders)**
 - **[mevShield](#pallet-mevshield)**
 - **[multisig](#pallet-multisig)**
@@ -97,6 +98,21 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **interface**: `api.events.adminUtils.CollateralLockShareSet`
 - **summary**: Event emitted when the miner collateral lock share is set for a subnet.
 
+### `GammaEnabledSet(bool)`
+
+- **interface**: `api.events.adminUtils.GammaEnabledSet`
+- **summary**: Gamma minting was enabled or disabled network-wide.
+
+### `HashedAccountRegistrationDepositSet(TaoBalance)`
+
+- **interface**: `api.events.adminUtils.HashedAccountRegistrationDepositSet`
+- **summary**: The permanent reserve required for future account registrations was set.
+
+### `HashedAccountsToggled(bool)`
+
+- **interface**: `api.events.adminUtils.HashedAccountsToggled`
+- **summary**: Hashed account registration and authorization were toggled.
+
 ### `PrecompileUpdated(PrecompileEnum, bool)`
 
 - **interface**: `api.events.adminUtils.PrecompileUpdated`
@@ -106,6 +122,16 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.events.adminUtils.SubnetEmissionEnabledSet`
 - **summary**: Pool-side subnet emission injections and chain buys were enabled or disabled.
+
+### `SubnetGammaEnabledSet(NetUid, bool)`
+
+- **interface**: `api.events.adminUtils.SubnetGammaEnabledSet`
+- **summary**: Gamma minting was enabled or disabled on a subnet.
+
+### `TaoUsdPriceOracleSet(Option<T::AccountId>)`
+
+- **interface**: `api.events.adminUtils.TaoUsdPriceOracleSet`
+- **summary**: The TAO/USD price oracle was set.
 
 ### `Yuma3EnableToggled(NetUid, bool)`
 
@@ -459,6 +485,21 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **summary**: Current authority set has been resumed.
 
 
+## `hashedAccounts` {#pallet-hashedaccounts}
+
+### `DerivedProtected(AccountId32, AccountId32, u128)`
+
+- **interface**: `api.events.hashedAccounts.DerivedProtected`
+
+### `Registered(AccountId32, AccountId32, u128)`
+
+- **interface**: `api.events.hashedAccounts.Registered`
+
+### `RegisteredMlDsa(AccountId32, AccountId32, u128)`
+
+- **interface**: `api.events.hashedAccounts.RegisteredMlDsa`
+
+
 ## `limitOrders` {#pallet-limitorders}
 
 ### `GroupExecutionSummary(NetUid, OrderSide, u64, u64, u32)`
@@ -485,6 +526,10 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.events.limitOrders.LinkedOutputRecorded`
 - **summary**: A provider order recorded its post-fee output for a later linked draw.
+
+### `OrderApproved(H256, AccountId, u64)`
+
+- **interface**: `api.events.limitOrders.OrderApproved`
 
 ### `OrderCancelled(H256, AccountId)`
 
@@ -1098,6 +1143,41 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
     netuid block number
 
+### `GammaDepositClosed(NetUid, AccountId, AccountId)`
+
+- **interface**: `api.events.subtensorModule.GammaDepositClosed`
+- **summary**: A gamma deposit was closed, releasing its hotkey.
+
+### `GammaDepositDailySpendCapSet(NetUid, AccountId, AccountId, Option<GammaBalance>)`
+
+- **interface**: `api.events.subtensorModule.GammaDepositDailySpendCapSet`
+- **summary**: A gamma deposit's daily spend cap was set.
+
+### `GammaDepositSpenderSet(NetUid, AccountId, AccountId, AccountId)`
+
+- **interface**: `api.events.subtensorModule.GammaDepositSpenderSet`
+- **summary**: A gamma deposit's spender was set.
+
+### `GammaMinted(NetUid, AccountId, AccountId, AccountId, Option<GammaBalance>, TaoBalance, AlphaBalance, TaoBalance, GammaBalance)`
+
+- **interface**: `api.events.subtensorModule.GammaMinted`
+- **summary**: Gamma was minted for burned alpha.
+
+### `GammaMoved(NetUid, AccountId, AccountId, AccountId, GammaBalance)`
+
+- **interface**: `api.events.subtensorModule.GammaMoved`
+- **summary**: Gamma moved between two of a coldkey's deposits.
+
+### `GammaSpendSkipped(NetUid, AccountId, AccountId, GammaBalance, [u8; 32], sp_runtime::DispatchError)`
+
+- **interface**: `api.events.subtensorModule.GammaSpendSkipped`
+- **summary**: A spend entry was skipped, and spent nothing.
+
+### `GammaSpent(NetUid, AccountId, AccountId, AccountId, GammaBalance, [u8; 32])`
+
+- **interface**: `api.events.subtensorModule.GammaSpent`
+- **summary**: Gamma was spent from a deposit and burned.
+
 ### `HotkeySwapped(AccountId, AccountId, AccountId)`
 
 - **interface**: `api.events.subtensorModule.HotkeySwapped`
@@ -1348,6 +1428,16 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.ScalingLawPowerSet`
 - **summary**: the scaling law power has been set for a subnet.
 
+### `ServiceRemoved(NetUid, AccountId)`
+
+- **interface**: `api.events.subtensorModule.ServiceRemoved`
+- **summary**: A hotkey's service was removed from a subnet.
+
+### `ServiceSet(NetUid, AccountId, BoundedVec<u8, ConstU32<MAX_SERVICE_URL_LEN>>, AccountId)`
+
+- **interface**: `api.events.subtensorModule.ServiceSet`
+- **summary**: A hotkey's service was set on a subnet.
+
 ### `ServingRateLimitSet(NetUid, u64)`
 
 - **interface**: `api.events.subtensorModule.ServingRateLimitSet`
@@ -1504,6 +1594,11 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.TakeIncreased`
 - **summary**: the take for a delegate is increased.
+
+### `TaoUsdPriceFed(u64)`
+
+- **interface**: `api.events.subtensorModule.TaoUsdPriceFed`
+- **summary**: The oracle fed the TAO/USD price.
 
 ### `TempoSet(NetUid, u16)`
 

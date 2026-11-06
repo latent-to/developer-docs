@@ -8,7 +8,7 @@ description: "This page includes runtime API calls exposed by the Subtensor runt
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **486**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **488**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[AccountNonceApi](#pallet-accountnonceapi)**
@@ -21,6 +21,7 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 - **[Core](#pallet-core)**
 - **[DelegateInfoRuntimeApi](#pallet-delegateinforuntimeapi)**
 - **[EthereumRuntimeRPCApi](#pallet-ethereumruntimerpcapi)**
+- **[GammaRuntimeApi](#pallet-gammaruntimeapi)**
 - **[GenesisBuilder](#pallet-genesisbuilder)**
 - **[GrandpaApi](#pallet-grandpaapi)**
 - **[Metadata](#pallet-metadata)**
@@ -365,6 +366,29 @@ Generated from Subtensor runtime spec version **486**. Connected to: `wss://entr
 
 - **interface**: `api.call.ethereumRuntimeRPCApi.storageAt`
 - **summary**: For a given account address and index, returns pallet_evm::AccountStorages.
+
+
+## `GammaRuntimeApi` {#pallet-gammaruntimeapi}
+
+### `getGammaDeposit(netuid: NetUid, hotkey: AccountId32)`: `Option<GammaDepositInfo>`
+
+- **interface**: `api.call.gammaRuntimeApi.getGammaDeposit`
+- **summary**: The deposit at a hotkey on a subnet, and what its spender can spend from it now.
+
+### `getGammaDepositsForColdkey(coldkey: AccountId32)`: `Vec<GammaDepositInfo>`
+
+- **interface**: `api.call.gammaRuntimeApi.getGammaDepositsForColdkey`
+- **summary**: Every deposit of a coldkey, on every subnet.
+
+### `simMintGamma(netuid: NetUid, amount: TaoBalance)`: `Result<(AlphaBalance, TaoBalance, GammaBalance), DispatchError>`
+
+- **interface**: `api.call.gammaRuntimeApi.simMintGamma`
+- **summary**: The alpha burned, TAO value and gamma `mint_gamma` would mint now, or the error that stops it.
+
+### `simMintGammaWithStake(netuid: NetUid, alpha_amount: AlphaBalance)`: `Result<(AlphaBalance, TaoBalance, GammaBalance), DispatchError>`
+
+- **interface**: `api.call.gammaRuntimeApi.simMintGammaWithStake`
+- **summary**: `alpha_amount` and the TAO value and gamma of burning it now, or the error that stops it; it reads no stake.
 
 
 ## `GenesisBuilder` {#pallet-genesisbuilder}
