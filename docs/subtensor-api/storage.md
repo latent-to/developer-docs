@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **488**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **490**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -1958,6 +1958,11 @@ Generated from Subtensor runtime spec version **488**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.pendingEpochAt`
 - **summary**: MAP ( netuid ) --> block at which a manually triggered epoch should fire. `0` means no trigger pending. Cleared after the triggered epoch runs.
 
+### `pendingGammaEmission(NetUid)`: `AlphaBalance`
+
+- **interface**: `api.query.subtensorModule.pendingGammaEmission`
+- **summary**: MAP ( netuid ) --> alpha | The subnet's emission accrued to its gamma shares since they were last allotted it.
+
 ### `pendingOwnerCut(NetUid)`: `AlphaBalance`
 
 - **interface**: `api.query.subtensorModule.pendingOwnerCut`
@@ -2187,6 +2192,16 @@ Generated from Subtensor runtime spec version **488**. Connected to: `wss://entr
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> fast moving price | A fast EMA of the subnet's spot price (TAO per alpha, unclamped) with a [`BASKET_FAST_EMA_HALF_LIFE_BLOCKS`] half-life, updated once per block right after [`SubnetMovingPrice`] from the spot at the end of the previous block, so no extrinsic in the current block can move it. It is a trading anchor only — `swap_basket` bounds every leg to within [`BASKET_TRADE_MAX_SLIPPAGE_BPS`] of the strictest of this, the slow EMA, and spot — and plays no part in emission. Absent until the subnet's first update after the upgrade (trading on it is refused until then).
 
+### `subnetGammaEmission(NetUid)`: `Vec<(u16,u64)>`
+
+- **interface**: `api.query.subtensorModule.subnetGammaEmission`
+- **summary**: MAP ( netuid ) --> gamma shares | The subnet's shares of its alpha emission to other subnets' gamma, in `u64::MAX` parts, in ascending target order.
+
+### `subnetGammaEmissionWhitelisted(NetUid)`: `bool`
+
+- **interface**: `api.query.subtensorModule.subnetGammaEmissionWhitelisted`
+- **summary**: MAP ( netuid ) --> whitelisted | Whether subnets may give the subnet gamma shares.
+
 ### `subnetGammaEnabled(NetUid)`: `bool`
 
 - **interface**: `api.query.subtensorModule.subnetGammaEnabled`
@@ -2213,6 +2228,12 @@ Generated from Subtensor runtime spec version **488**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.subnetLeaseShares`
 - **summary**: DMAP ( lease_id, contributor ) --> shares | The shares of a contributor for a given lease.
+
+### `subnetLeaseTerminationHotkey(u32)`: `AccountId32`
+
+- **interface**: `api.query.subtensorModule.subnetLeaseTerminationHotkey`
+- **modifier**: `Optional`
+- **summary**: Internal settlement marker: a formally terminated lease's residual payout hotkey. Kept only while a contributor debt or residual stake remains; the frozen lease layout is unchanged.
 
 ### `subnetLeaseUnpaidDividends(u32, AccountId32)`: `AlphaBalance`
 
@@ -2456,6 +2477,11 @@ Generated from Subtensor runtime spec version **488**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.uids`
 - **modifier**: `Optional`
 - **summary**: DMAP ( netuid, hotkey ) --> uid
+
+### `unconvertedGammaEmission(u16, u16)`: `AlphaBalance`
+
+- **interface**: `api.query.subtensorModule.unconvertedGammaEmission`
+- **summary**: DMAP ( netuid, target ) --> alpha | Alpha allotted to the subnet's gamma share of the target and not yet converted.
 
 ### `unlockRate`: `u64`
 
