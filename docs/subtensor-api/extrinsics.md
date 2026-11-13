@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **488**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **490**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -587,6 +587,18 @@ Generated from Subtensor runtime spec version **488**. Connected to: `wss://entr
     `uids` names the slots to write and `values` their new shares; slots that are not named keep their current value (burn and recycle are always zero in v1). The merged vector must satisfy every rule, each of which has its own error: burn = 0, recycle = 0, `0 ≤ owner ≤ 33%` (lease-created subnets `≥ 18%`), `validator ≤ 50%`, `miner ≥ 33%`, and the five slots must sum to exactly `u64::MAX`.
 
     Root is paid its baseline share of the subnet's emission (what root earns with the default validator share and the global `TaoWeight`) off the top of the validator slot every block, capped at the slot; alpha validators get the rest. The call fails if the new validator share is at or below that baseline right now. Callable by the subnet owner (once per week per subnet; the first call is never rate-limited) or root (no rate limit). Both respect the admin freeze window.
+
+### `sudoSetSubnetEmissionWeightsV2(netuid: NetUid, split: pallet_subtensor::EmissionSplit)`
+
+- **interface**: `api.tx.adminUtils.sudoSetSubnetEmissionWeightsV2`
+- **summary**: Replaces a subnet's whole emission split: the burn, recycle, owner, validator and miner shares and the shares of whitelisted subnets' gamma, each a `u64` share of `u64::MAX`, slots in strictly ascending order. A slot left out is zero.
+
+    Every rule of [`Call::sudo_set_subnet_emission_weights`] applies, with the gamma shares counted in the sum. There are at most 16 gamma shares, each at most 10% to a whitelisted subnet with gamma enabled, other than this one. A gamma share that leaves the split moves its unconverted alpha to the subnet's miners. Callable by the subnet owner, under the same rate limit as [`Call::sudo_set_subnet_emission_weights`], or root; both respect the admin freeze window.
+
+### `sudoSetSubnetGammaEmissionWhitelisted(netuid: NetUid, whitelisted: bool)`
+
+- **interface**: `api.tx.adminUtils.sudoSetSubnetGammaEmissionWhitelisted`
+- **summary**: Whitelists a subnet for gamma emission, so subnets may give it gamma shares, or removes it, which moves every share of it to its subnet's miner slot. Root-only.
 
 ### `sudoSetSubnetGammaEnabled(netuid: NetUid, enabled: bool)`
 

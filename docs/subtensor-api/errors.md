@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **488**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **490**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -1548,6 +1548,11 @@ Generated from Subtensor runtime spec version **488**. Connected to: `wss://entr
 - **interface**: `api.errors.subtensorModule.DynamicTempoBlockedByCommitReveal`
 - **summary**: `trigger_epoch` is blocked because commit-reveal is enabled for this subnet: an out-of-band epoch would desync the CRv3 reveal window from the wall-clock Drand schedule and silently drop committed weights.
 
+### `EmissionSlotsNotAscending`
+
+- **interface**: `api.errors.subtensorModule.EmissionSlotsNotAscending`
+- **summary**: `set_subnet_emission_weights_v2`: the split's slots are not in strictly ascending order.
+
 ### `EmissionWeightIndexDuplicated`
 
 - **interface**: `api.errors.subtensorModule.EmissionWeightIndexDuplicated`
@@ -1637,6 +1642,21 @@ Generated from Subtensor runtime spec version **488**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.GammaDisabled`
 - **summary**: Gamma minting is disabled network-wide or on this subnet.
+
+### `GammaEmissionAboveMaximum`
+
+- **interface**: `api.errors.subtensorModule.GammaEmissionAboveMaximum`
+- **summary**: `set_subnet_emission_weights_v2`: a gamma share may be at most 10% of emission.
+
+### `GammaEmissionNotSettableOnLeasedSubnet`
+
+- **interface**: `api.errors.subtensorModule.GammaEmissionNotSettableOnLeasedSubnet`
+- **summary**: `set_subnet_emission_weights_v2`: a subnet under a lease may not have gamma shares.
+
+### `GammaEmissionTargetNotWhitelisted`
+
+- **interface**: `api.errors.subtensorModule.GammaEmissionTargetNotWhitelisted`
+- **summary**: `set_subnet_emission_weights_v2`: a gamma share names a subnet that is not whitelisted for gamma emission.
 
 ### `HotKeyAccountNotExists`
 
@@ -2147,6 +2167,11 @@ Generated from Subtensor runtime spec version **488**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.TooManyGammaDeposits`
 - **summary**: The coldkey would hold more than 64 gamma deposits on this subnet.
+
+### `TooManyGammaShares`
+
+- **interface**: `api.errors.subtensorModule.TooManyGammaShares`
+- **summary**: `set_subnet_emission_weights_v2`: a split may have at most 16 gamma shares.
 
 ### `TooManyRegistrationsThisBlock`
 

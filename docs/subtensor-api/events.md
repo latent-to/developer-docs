@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **488**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **490**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -122,6 +122,11 @@ Generated from Subtensor runtime spec version **488**. Connected to: `wss://entr
 
 - **interface**: `api.events.adminUtils.SubnetEmissionEnabledSet`
 - **summary**: Pool-side subnet emission injections and chain buys were enabled or disabled.
+
+### `SubnetGammaEmissionWhitelistedSet(NetUid, bool)`
+
+- **interface**: `api.events.adminUtils.SubnetGammaEmissionWhitelistedSet`
+- **summary**: A subnet was whitelisted for gamma emission or removed from the whitelist.
 
 ### `SubnetGammaEnabledSet(NetUid, bool)`
 
@@ -1158,6 +1163,11 @@ Generated from Subtensor runtime spec version **488**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.GammaDepositSpenderSet`
 - **summary**: A gamma deposit's spender was set.
 
+### `GammaEmissionMinted(NetUid, NetUid, AccountId, AccountId, AccountId, AlphaBalance, TaoBalance, AlphaBalance, TaoBalance, GammaBalance)`
+
+- **interface**: `api.events.subtensorModule.GammaEmissionMinted`
+- **summary**: A subnet's gamma share minted gamma on its target.
+
 ### `GammaMinted(NetUid, AccountId, AccountId, AccountId, Option<GammaBalance>, TaoBalance, AlphaBalance, TaoBalance, GammaBalance)`
 
 - **interface**: `api.events.subtensorModule.GammaMinted`
@@ -1520,6 +1530,11 @@ Generated from Subtensor runtime spec version **488**. Connected to: `wss://entr
 
 - **interface**: `api.events.subtensorModule.SubnetEmissionWeightsSet`
 - **summary**: The subnet owner or root set the subnet's emission weight vector.
+
+### `SubnetGammaEmissionSet(NetUid, Vec<(NetUid, u64)>)`
+
+- **interface**: `api.events.subtensorModule.SubnetGammaEmissionSet`
+- **summary**: A subnet's gamma shares were set.
 
 ### `SubnetIdentityRemoved(NetUid)`
 
