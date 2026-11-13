@@ -22,7 +22,7 @@ This guide assumes that you have a Ledger device and the Ledger Live app install
 1. Connect Ledger device to your computer with Ledger Live installed.
 2. Open **Ledger Live** app > **My Ledger** > **Unlock Ledger** > **Approve Ledger Live**.
 3. Install the **Polkadot (DOT)** app from Ledger Live.
-4. To manage your TAO from your Ledger hardware wallet, you must install a wallet app that supports TAO and also supports the Ledger hardware wallet. [Talisman](https://www.talisman.xyz/), [Nova Wallet](https://novawallet.io/), and [Subwallet](https://www.subwallet.app/) apps satisfy this condition. Install any of these wallet apps, and make sure you have configured these wallet apps to also use the Bittensor network. This is required for either transferring TAO using your Ledger, or finding the correct address to receive TAO on your Ledger device.
+4. To manage your TAO from your Ledger hardware wallet, you must install a wallet app that supports TAO and also supports the Ledger hardware wallet. [Talisman](https://www.talisman.xyz/), [Nova Wallet](https://novawallet.io/), [taostats mobile](https://taostats.io/app), [taostats extension](https://taostats.io/wallet-extension), and [Subwallet](https://www.subwallet.app/) apps satisfy this condition. Install any of these wallet apps, and make sure you have configured these wallet apps to also use the Bittensor network. This is required for either transferring TAO using your Ledger, or finding the correct address to receive TAO on your Ledger device.
 
 :::danger Stop. Did you run the above steps?
 Proceed only after you successfully ran the above steps. The rest of this guide is described using Talisman wallet app.
