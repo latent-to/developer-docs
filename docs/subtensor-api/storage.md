@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **490**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **492**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -1364,19 +1364,13 @@ Generated from Subtensor runtime spec version **490**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.decayingHotkeyLock`
 - **modifier**: `Optional`
-- **summary**: DMAP ( netuid, hotkey ) --> LockState | Total decaying non-owner lock per hotkey per subnet.
+- **summary**: DMAP ( netuid, hotkey ) --> LockState | Total decaying lock per hotkey per subnet.
 
 ### `decayingLock(AccountId32, u16)`: `bool`
 
 - **interface**: `api.query.subtensorModule.decayingLock`
 - **modifier**: `Optional`
 - **summary**: DMAP ( coldkey, netuid ) --> false | When present and false, this coldkey's lock is perpetual. Missing entries mean the lock decays by default.
-
-### `decayingOwnerLock(NetUid)`: `LockState`
-
-- **interface**: `api.query.subtensorModule.decayingOwnerLock`
-- **modifier**: `Optional`
-- **summary**: MAP ( netuid ) --> LockState | Total decaying lock to the owner hotkey for a subnet.
 
 ### `deferredBasketCashClaimed(AccountId32, AccountId32)`: `i128`
 
@@ -1914,12 +1908,6 @@ Generated from Subtensor runtime spec version **490**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.ownerHyperparamRateLimit`
 - **summary**: Global number of epochs used to rate limit subnet owner hyperparameter updates
-
-### `ownerLock(NetUid)`: `LockState`
-
-- **interface**: `api.query.subtensorModule.ownerLock`
-- **modifier**: `Optional`
-- **summary**: MAP ( netuid ) --> LockState | Total perpetual lock to the owner hotkey for a subnet.
 
 ### `palletVersion`: `u16`
 
