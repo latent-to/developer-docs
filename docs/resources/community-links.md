@@ -21,6 +21,7 @@ You can also explore Bittensor's many Subnets and find links to their websites a
 ## Wallet Applications
 
 - **[Bittensor Wallet](https://www.tao.com/)** - Recommended (maintained by Tao.com).
+- **Taostats** has [mobile wallets](https://taostats.io/app) (iOS and Android) and [Chrome extensions](https://taostats.io/wallet-extension) available.
 - [Crucible wallet](https://cruciblelabs.com/)
 - **[Other Polkadot Wallets](https://polkadot.com/get-started/wallets/)** - Multi-chain wallets capable of interacting with Bittensor.
 
