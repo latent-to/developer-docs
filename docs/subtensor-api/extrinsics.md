@@ -8,7 +8,7 @@ description: "The following sections contain Extrinsic methods that are part of 
 The following sections contain Extrinsic methods that are part of the Subtensor runtime. On the API, these are exposed via `api.tx.<Pallet>.<call_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **492**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **497**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -115,7 +115,7 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 ### `sudoSetBasketDailyTurnoverCap(cap: u16)`
 
 - **interface**: `api.tx.adminUtils.sudoSetBasketDailyTurnoverCap`
-- **summary**: Sets the basket daily turnover budget ([`pallet_subtensor::BasketDailyTurnoverCap`]): the capacity of each fund's `swap_basket` turnover bucket as a u16-normalized share of fund NAV (`u16::MAX` = 100%). The bucket refills over 7200 blocks, so at most one capacity can be traded at any instant and about one per day sustained. Root-only.
+- **summary**: Sets the basket daily turnover budget ([`pallet_subtensor::BasketDailyTurnoverCap`]): the capacity of each fund's `swap_basket` turnover bucket as a u16-normalized share of fund NAV (`u16::MAX` = 100%). The bucket refills over [`pallet_subtensor::BasketTradeRefillBlocks`], so at most one capacity can be traded at any instant. Root-only.
 
 ### `sudoSetBasketLiquidityCap(cap: u16)`
 
@@ -126,6 +126,21 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
 - **interface**: `api.tx.adminUtils.sudoSetBasketMinTradeTao`
 - **summary**: Sets the minimum TAO value through each basket trade leg, in rao. Root-only. Zero disables this additional floor; the general staking minimum still applies.
+
+### `sudoSetBasketTradeMaxSlippageBps(bps: u16)`
+
+- **interface**: `api.tx.adminUtils.sudoSetBasketTradeMaxSlippageBps`
+- **summary**: Sets the maximum deviation of a `swap_basket` leg from its configured price reference, in basis points. Must be greater than zero and at most 10_000 (100%). Defaults to 200 (2%). Root-only.
+
+### `sudoSetBasketTradePriceReference(reference: pallet_subtensor::BasketTradePriceReference)`
+
+- **interface**: `api.tx.adminUtils.sudoSetBasketTradePriceReference`
+- **summary**: Selects the price reference for `swap_basket` leg bounds: the legacy strictest of the slow EMA, fast EMA, and spot (default), or current spot only. Root-only.
+
+### `sudoSetBasketTradeRefillBlocks(blocks: u64)`
+
+- **interface**: `api.tx.adminUtils.sudoSetBasketTradeRefillBlocks`
+- **summary**: Sets the number of blocks over which a `swap_basket` turnover bucket fully refills and destination-pool flow usage decays to zero. Defaults to 7200 blocks; zero is rejected. Root-only.
 
 ### `sudoSetBasketTradingEnabled(enabled: bool)`
 
@@ -196,6 +211,31 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
 - **interface**: `api.tx.adminUtils.sudoSetCollateralLockShare`
 - **summary**: Sets the miner collateral lock share (p) for a subnet: the share of the registration price that is staked to the registering hotkey and locked as collateral instead of burned. Normalized so `u16::MAX` = 100%; capped at 95% so the burned share stays positive. 0 disables collateral. Callable by root and subnet owner. Applies only to future registrations; standing collateral is never re-priced.
+
+### `sudoSetCommitBurnEnabled(netuid: NetUid, mecid: MechId, channel: u8, enabled: bool)`
+
+- **interface**: `api.tx.adminUtils.sudoSetCommitBurnEnabled`
+- **summary**: Enable or disable the optional burn for one commitment channel.
+
+### `sudoSetCommitBurnHalfLife(netuid: NetUid, mecid: MechId, channel: u8, value: u16)`
+
+- **interface**: `api.tx.adminUtils.sudoSetCommitBurnHalfLife`
+- **summary**: Set the commitment burn half-life in blocks.
+
+### `sudoSetCommitBurnIncreaseMult(netuid: NetUid, mecid: MechId, channel: u8, value: U64F64)`
+
+- **interface**: `api.tx.adminUtils.sudoSetCommitBurnIncreaseMult`
+- **summary**: Set the commitment burn multiplier, using registration's `[1, 3]` bounds.
+
+### `sudoSetCommitBurnMax(netuid: NetUid, mecid: MechId, channel: u8, value: TaoBalance)`
+
+- **interface**: `api.tx.adminUtils.sudoSetCommitBurnMax`
+- **summary**: Set the commitment burn ceiling.
+
+### `sudoSetCommitBurnMin(netuid: NetUid, mecid: MechId, channel: u8, value: TaoBalance)`
+
+- **interface**: `api.tx.adminUtils.sudoSetCommitBurnMin`
+- **summary**: Set the commitment burn floor.
 
 ### `sudoSetCommitRevealVersion(version: u16)`
 
@@ -398,6 +438,11 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 - **interface**: `api.tx.adminUtils.sudoSetMaxRegistrationsPerBlock`
 - **summary**: The extrinsic sets the maximum registrations per block for a subnet. It is only callable by the root account. The extrinsic will call the Subtensor pallet to set the maximum registrations per block.
 
+### `sudoSetMaxTimelockedCommitsPerHotkey(netuid: NetUid, max_commits: u8)`
+
+- **interface**: `api.tx.adminUtils.sudoSetMaxTimelockedCommitsPerHotkey`
+- **summary**: Sets the maximum number of timelocked commitments a hotkey may queue in one Yuma subnet mechanism and commit epoch. Zero pauses new admissions; already queued commitments remain eligible to reveal. Root-only.
+
 ### `sudoSetMechanismCount(netuid: NetUid, mechanism_count: MechId)`
 
 - **interface**: `api.tx.adminUtils.sudoSetMechanismCount`
@@ -586,7 +631,12 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
     `uids` names the slots to write and `values` their new shares; slots that are not named keep their current value (burn and recycle are always zero in v1). The merged vector must satisfy every rule, each of which has its own error: burn = 0, recycle = 0, `0 ≤ owner ≤ 33%` (lease-created subnets `≥ 18%`), `validator ≤ 50%`, `miner ≥ 33%`, and the five slots must sum to exactly `u64::MAX`.
 
-    Root is paid its baseline share of the subnet's emission (what root earns with the default validator share and the global `TaoWeight`) off the top of the validator slot every block, capped at the slot; alpha validators get the rest. The call fails if the new validator share is at or below that baseline right now. Callable by the subnet owner (once per week per subnet; the first call is never rate-limited) or root (no rate limit). Both respect the admin freeze window.
+    Root is paid its baseline share of the subnet's emission (what root earns with the default validator share and the global `TaoWeight`) off the top of the validator slot every block, capped at the slot; alpha validators get the rest. The call fails if the new validator share is at or below that baseline right now. Callable by the subnet owner under the configured per-subnet rate limit (the first call is never rate-limited) or root (no rate limit). Both respect the admin freeze window.
+
+### `sudoSetSubnetEmissionWeightsRateLimit(rate_limit: u64)`
+
+- **interface**: `api.tx.adminUtils.sudoSetSubnetEmissionWeightsRateLimit`
+- **summary**: Sets the global per-subnet rate limit for owner updates to the emission weight vector, in blocks. Defaults to 360 (one default tempo). Zero disables the limit. Root remains exempt and each subnet's first owner call is always allowed.
 
 ### `sudoSetSubnetEmissionWeightsV2(netuid: NetUid, split: pallet_subtensor::EmissionSplit)`
 
@@ -868,6 +918,11 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
 - **interface**: `api.tx.commitments.setCommitment`
 - **summary**: Set the commitment for a given netuid
+
+### `setCommitmentTo(netuid: NetUid, mecid: MechId, channel: u8, hotkey: AccountId, info: Box<CommitmentInfo<T::MaxFields>>, max_burn: TaoBalance)`
+
+- **interface**: `api.tx.commitments.setCommitmentTo`
+- **summary**: Publish a channel commitment, with the coldkey paying the optional burn.
 
 ### `setMaxSpace(new_limit: u32)`
 
@@ -2180,6 +2235,8 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
     Dust rows are not sold: a fund row worth less than `min(BasketClaimRowDustCapTao, BasketClaimRowDustBps × anchored NAV)`, or one whose slice for this claimant is worth less than `BasketClaimSliceDustTao`, is skipped when that slice is also worth at most `BasketClaimForfeitCapTao` (all at the anchored mark, which decides dust only). The claim burns the full entitlement, so the claimant's slice of a skipped row — never more than the cap at the anchored mark — is left to the remaining holders (`BasketClaimDustSkipped` reports it). A claim that is admitted and then fails is charged the work it did, not the declared envelope; a claim refused at admission keeps the envelope.
 
+    The declared weight follows the fund: it is sized from the validator's stored basket rows and queued dividend credits ([`Pallet::root_claim_hotkey_declared_weight_for`]), up to a fund of [`crate::MAX_ROOT_CLAIM_HOTKEY_WORK`] claim units. A batch or proxy computes it before any inner call runs, so a claim is refused when a `swap_basket` buy or a hotkey swap gave the same fund a new row earlier in the same transaction. Send that claim in a later transaction.
+
     **Arguments:**
 
     - `origin`: The signature of the caller's coldkey.
@@ -2192,8 +2249,8 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
     **Errors:**
 
-    - `RootClaimTooHeavy`: The fund has more rows (or queued credits) than one claim
-    may walk.
+    - `RootClaimTooHeavy`: The fund has more rows (stored, or to be opened by queued
+    credits) than one claim may walk, or it got a new row from a trade or a hotkey swap earlier in the same transaction.
 
 ### `clearColdkeySwapAnnouncement()`
 
@@ -2258,6 +2315,11 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
     - `TooManyUnrevealedCommits`: Attempting to commit when the user has more than the allowed limit of unrevealed commits.
 
+### `commitMechanismWeightsFor(netuid: NetUid, mecid: MechId, hotkey: AccountId, commit_hash: H256)`
+
+- **interface**: `api.tx.subtensorModule.commitMechanismWeightsFor`
+- **summary**: Commits a weight hash for the validator through its mechanism delegate.
+
 ### `commitTimelockedMechanismWeights(netuid: NetUid, mecid: MechId, commit: BoundedVec<u8, ConstU32<MAX_CRV3_COMMIT_SIZE_BYTES>>, reveal_round: u64, commit_reveal_version: u16)`
 
 - **interface**: `api.tx.subtensorModule.commitTimelockedMechanismWeights`
@@ -2283,6 +2345,11 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
     epoch.
 
     - `commit_reveal_version`: The client (bittensor-drand) version.
+
+### `commitTimelockedMechanismWeightsFor(netuid: NetUid, mecid: MechId, hotkey: AccountId, commit: BoundedVec<u8, ConstU32<MAX_CRV3_COMMIT_SIZE_BYTES>>, reveal_round: u64, commit_reveal_version: u16)`
+
+- **interface**: `api.tx.subtensorModule.commitTimelockedMechanismWeightsFor`
+- **summary**: Commits timelocked weights for a validator through its mechanism delegate.
 
 ### `commitTimelockedWeights(netuid: NetUid, commit: BoundedVec<u8, ConstU32<MAX_CRV3_COMMIT_SIZE_BYTES>>, reveal_round: u64, commit_reveal_version: u16)`
 
@@ -2449,20 +2516,20 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
     - `netuid`: The subnet on which to lock.
     - `amount`: The alpha amount to lock.
 
-### `mintGamma(hotkey: AccountId, netuid: NetUid, amount: TaoBalance, min_amount_out: GammaBalance, spender: Option<T::AccountId>, daily_spend_cap: Option<GammaBalance>)`
+### `mintGamma(hotkey: AccountId, netuid: NetUid, amount: TaoBalance, min_amount_out: GammaBalance, daily_spend_cap: Option<GammaBalance>)`
 
 - **interface**: `api.tx.subtensorModule.mintGamma`
-- **summary**: Buys alpha on `netuid` with `amount` TAO, burns it, and credits its gamma to the signer's deposit at `hotkey`, which must name `spender` and have `daily_spend_cap` when they are given, or opens with them, `None` being the default spender and no cap. Fails below `min_amount_out` gamma.
+- **summary**: Buys alpha on `netuid` with `amount` TAO, burns it, and credits its gamma to the signer's deposit at `hotkey`, which must have `daily_spend_cap` when it is given, or opens with it, `None` being no cap. Fails below `min_amount_out` gamma.
 
-### `mintGammaWithStake(origin_hotkey: AccountId, destination_hotkey: AccountId, netuid: NetUid, alpha_amount: AlphaBalance, min_amount_out: GammaBalance, spender: Option<T::AccountId>, daily_spend_cap: Option<GammaBalance>)`
+### `mintGammaWithStake(origin_hotkey: AccountId, destination_hotkey: AccountId, netuid: NetUid, alpha_amount: AlphaBalance, min_amount_out: GammaBalance, daily_spend_cap: Option<GammaBalance>)`
 
 - **interface**: `api.tx.subtensorModule.mintGammaWithStake`
-- **summary**: Burns up to `alpha_amount` of the signer's stake on `origin_hotkey`, as `burn_alpha` does, and credits its gamma to the signer's deposit at `destination_hotkey`, which must name `spender` and have `daily_spend_cap` when they are given, or opens with them, `None` being the default spender and no cap. Fails below `min_amount_out` gamma.
+- **summary**: Burns up to `alpha_amount` of the signer's stake on `origin_hotkey`, as `burn_alpha` does, and credits its gamma to the signer's deposit at `destination_hotkey`, which must have `daily_spend_cap` when it is given, or opens with it, `None` being no cap. Fails below `min_amount_out` gamma.
 
 ### `moveGamma(origin_hotkey: AccountId, destination_hotkey: AccountId, netuid: NetUid, amount: GammaBalance)`
 
 - **interface**: `api.tx.subtensorModule.moveGamma`
-- **summary**: Moves up to `amount` gamma from the signer's deposit at `origin_hotkey` to `destination_hotkey`. A move that empties the origin closes it.
+- **summary**: Moves up to `amount` gamma from the signer's deposit at `origin_hotkey` to `destination_hotkey`: the whole balance, or at least 0.1 gamma leaving at least as much. A move that empties the origin closes it.
 
 ### `moveLock(destination_hotkey: AccountId, netuid: NetUid)`
 
@@ -2728,6 +2795,11 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
     - `InvalidRevealCommitHashNotMatch`: The revealed hash does not match any committed hash.
 
+### `revealMechanismWeightsFor(netuid: NetUid, mecid: MechId, hotkey: AccountId, uids: Vec<u16>, values: Vec<u16>, salt: Vec<u16>, version_key: u64)`
+
+- **interface**: `api.tx.subtensorModule.revealMechanismWeightsFor`
+- **summary**: Reveals a validator's hash commit through its mechanism delegate.
+
 ### `revealWeights(netuid: NetUid, uids: Vec<u16>, values: Vec<u16>, salt: Vec<u16>, version_key: u64)`
 
 - **interface**: `api.tx.subtensorModule.revealWeights`
@@ -2982,11 +3054,6 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.setGammaDepositDailySpendCap`
 - **summary**: Sets the daily spend cap of the signer's gamma deposit at `hotkey`; `None` removes it. A changed cap keeps what the deposit can spend now, up to the new cap.
 
-### `setGammaDepositSpender(hotkey: AccountId, netuid: NetUid, spender: Option<T::AccountId>)`
-
-- **interface**: `api.tx.subtensorModule.setGammaDepositSpender`
-- **summary**: Sets the spender of the signer's gamma deposit at `hotkey`; `None` names the default spender: the spender of the subnet owner hotkey's service while the owner owns that hotkey, otherwise the subnet owner, or its lease's beneficiary while the lease owns the subnet.
-
 ### `setIdentity(name: Vec<u8>, url: Vec<u8>, github_repo: Vec<u8>, image: Vec<u8>, discord: Vec<u8>, description: Vec<u8>, additional: Vec<u8>)`
 
 - **interface**: `api.tx.subtensorModule.setIdentity`
@@ -3051,6 +3118,16 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
     - `MaxWeightExceeded`: Attempting to set weights with max value exceeding limit.
 
+### `setMechanismWeightsFor(netuid: NetUid, mecid: MechId, hotkey: AccountId, dests: Vec<u16>, weights: Vec<u16>, version_key: u64)`
+
+- **interface**: `api.tx.subtensorModule.setMechanismWeightsFor`
+- **summary**: Sets weights as the validator's authorized delegate on this mechanism only.
+
+### `setMechWeightDelegate(netuid: NetUid, mecid: MechId, delegate: Option<T::AccountId>)`
+
+- **interface**: `api.tx.subtensorModule.setMechWeightDelegate`
+- **summary**: Authorizes an account to set weights for this registered hotkey on one mechanism.
+
 ### `setMinCollateral(netuid: NetUid, hotkey: AccountId, min_locked: AlphaBalance)`
 
 - **interface**: `api.tx.subtensorModule.setMinCollateral`
@@ -3100,10 +3177,10 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.setRejectStakingHotkeyGrowth`
 - **summary**: Opt out of staking-hotkey list growth caused by other accounts. Existing destinations and hotkeys owned by the recipient can still receive transfers.
 
-### `setService(netuid: NetUid, hotkey: AccountId, url: BoundedVec<u8, ConstU32<MAX_SERVICE_URL_LEN>>, spender: AccountId)`
+### `setService(netuid: NetUid, hotkey: AccountId, url: BoundedVec<u8, ConstU32<MAX_SERVICE_URL_LEN>>)`
 
 - **interface**: `api.tx.subtensorModule.setService`
-- **summary**: Sets the service of the coldkey's hotkey on the subnet: the url where it describes its services and the spender customers name for them. The hotkey must be registered on the subnet with a validator permit, or be the subnet owner's hotkey signed for by the subnet owner. An empty url removes the service.
+- **summary**: Sets the service of the coldkey's hotkey on the subnet: the url where it describes its services. The hotkey must be registered on the subnet with a validator permit, or be the subnet owner's hotkey signed for by the subnet owner. An empty url removes the service.
 
 ### `setSubnetIdentity(netuid: NetUid, subnet_name: Vec<u8>, github_repo: Vec<u8>, subnet_contact: Vec<u8>, subnet_url: Vec<u8>, discord: Vec<u8>, description: Vec<u8>, logo_url: Vec<u8>, additional: Vec<u8>)`
 
@@ -3170,10 +3247,10 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
     - `MaxWeightExceeded`: Attempting to set weights with max value exceeding limit.
 
-### `spendGamma(netuid: NetUid, spends: BoundedVec)`
+### `spendGamma(service: AccountId, netuid: NetUid, amount: GammaBalance)`
 
 - **interface**: `api.tx.subtensorModule.spendGamma`
-- **summary**: Spends, in order, each entry's amount from the gamma deposit at its hotkey. Entries whose hotkey has no deposit, whose deposit names another spender, or whose amount is zero or above the deposit's balance or what its daily spend cap allows, are skipped. Each entry's reference is repeated in its `GammaSpent` event, or in its `GammaSpendSkipped` event with the reason, and not otherwise read. A skipped entry is charged as a spent one, less its write.
+- **summary**: Spends `amount` of the signer's gamma deposit on `netuid` at `service`, a hotkey with a service on the subnet, and adds it to what the signer has spent there. The amount is at least 0.1 gamma unless it empties the deposit, and within the deposit's balance and what its daily spend cap allows. Pays no fee: an invalid spend is refused before it enters a block, and a valid one burns its amount.
 
 ### `stakeIntoBasket(hotkey: AccountId, amount_staked: TaoBalance)`
 
@@ -3292,7 +3369,7 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 - **interface**: `api.tx.subtensorModule.swapBasket`
 - **summary**: Rebalances a root validator's beta basket: sells `amount` of the fund's `origin_netuid` holding for TAO and buys `destination_netuid` with it. Either side may be root (netuid 0), the fund's TAO cash slot. Fund shares and staker entitlements are unchanged; only the fund's composition moves.
 
-    Guardrails: each AMM leg must fill fully within 2% of the subnet's moving price; the TAO through the middle is taken from the fund's turnover bucket (`BasketDailyTurnoverCap` of NAV, refilling over 7200 blocks); the destination holding may not end above `BasketLiquidityCap` of the destination pool's alpha reserve, nor above `BasketConcentrationCap` of NAV. Trading must be enabled network-wide and not frozen for the hotkey by governance. On top of the protocol band the caller may set its own floor: the buy leg must credit at least `min_amount_out` or the trade rolls back.
+    Guardrails: each AMM leg must fill fully within the configured `BasketTradeMaxSlippageBps` of its `BasketTradePriceReference` (5% from spot by default; legacy strictest-of-EMAs-and-spot is available); the TAO through the middle is taken from the fund's turnover bucket (`BasketDailyTurnoverCap` of NAV, refilling over `BasketTradeRefillBlocks`); the destination holding may not end above `BasketLiquidityCap` of the destination pool's alpha reserve, nor above `BasketConcentrationCap` of NAV. Trading must be enabled network-wide and not frozen for the hotkey by governance. On top of the protocol band the caller may set its own floor: the buy leg must credit at least `min_amount_out` or the trade rolls back.
 
     **Arguments:**
 
@@ -3302,7 +3379,7 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
     - `destination_netuid`: Subnet to buy into (root = the TAO slot).
     - `amount`: Alpha of `origin_netuid` to sell (TAO at 1:1 when origin is root).
     - `min_amount_out`: Least amount the buy leg must credit to the destination
-    holding, in `destination_netuid` alpha (rao of TAO when the destination is root), after fees. `0` sets no floor; the 2% protocol band still applies.
+    holding, in `destination_netuid` alpha (rao of TAO when the destination is root), after fees. `0` sets no floor; the configured protocol band still applies.
 
     **Events:**
 
@@ -3315,7 +3392,7 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
     - `NonAssociatedColdKey`: Caller does not own `hotkey`.
     - `HotKeyNotRegisteredInSubNet`: `hotkey` is not on root.
     - `NotEnoughStakeToWithdraw`: The fund holds less than `amount` on origin.
-    - `SlippageTooHigh`: A leg could not fill within 2% of the moving price.
+    - `SlippageTooHigh`: A leg could not fill within the configured price band.
     - `BasketMinOutNotMet`: The buy leg credited less than `min_amount_out`.
     - `BasketTurnoverBudgetExceeded`: The trade exceeds what the fund's turnover bucket holds.
     - `BasketLiquidityCapExceeded`: The destination holding would exceed the liquidity cap.

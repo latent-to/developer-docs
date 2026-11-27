@@ -8,7 +8,7 @@ description: "This page includes runtime API calls exposed by the Subtensor runt
 This page includes runtime API calls exposed by the Subtensor runtime. Accessible via `api.call.<RuntimeApi>.<method_name>`.
 
 :::info
-Generated from Subtensor runtime spec version **492**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **497**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[AccountNonceApi](#pallet-accountnonceapi)**
@@ -373,7 +373,7 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 ### `getGammaDeposit(netuid: NetUid, hotkey: AccountId32)`: `Option<GammaDepositInfo>`
 
 - **interface**: `api.call.gammaRuntimeApi.getGammaDeposit`
-- **summary**: The deposit at a hotkey on a subnet, and what its spender can spend from it now.
+- **summary**: The deposit at a hotkey on a subnet, and what its hotkey can spend from it now.
 
 ### `getGammaDepositsForColdkey(coldkey: AccountId32)`: `Vec<GammaDepositInfo>`
 
@@ -669,6 +669,21 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
 
 ## `SubnetRegistrationRuntimeApi` {#pallet-subnetregistrationruntimeapi}
+
+### `getChannelCommitment(netuid: NetUid, mecid: MechId, channel: u8, hotkey: AccountId32)`: `Option<Vec<u8>>`
+
+- **interface**: `api.call.subnetRegistrationRuntimeApi.getChannelCommitment`
+- **summary**: Current channel commitment; `None` means absent or disabled target.
+
+### `getCommitBurn(netuid: NetUid, mecid: MechId, channel: u8)`: `Option<CommitBurnParameters>`
+
+- **interface**: `api.call.subnetRegistrationRuntimeApi.getCommitBurn`
+- **summary**: Current lazily decayed channel commitment price and its parameters.
+
+### `getMechWeightDelegate(netuid: NetUid, mecid: MechId, hotkey: AccountId32)`: `Option<AccountId32>`
+
+- **interface**: `api.call.subnetRegistrationRuntimeApi.getMechWeightDelegate`
+- **summary**: Optional weight delegate query for one validator and mechanism.
 
 ### `getNetworkRegistrationCost()`: `TaoBalance`
 
