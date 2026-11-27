@@ -8,7 +8,7 @@ description: "This page contains storage query definitions for the Subtensor run
 This page contains storage query definitions for the Subtensor runtime. Accessible via `api.query.<Pallet>.<storage_item>`.
 
 :::info
-Generated from Subtensor runtime spec version **492**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **497**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -183,6 +183,116 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
 
 ## `commitments` {#pallet-commitments}
+
+### `channelCommitmentOf(u16, AccountId32, u8)`: `Registration`
+
+- **interface**: `api.query.commitments.channelCommitmentOf`
+- **modifier**: `Optional`
+- **summary**: Independent channel commitment state; never aliases legacy mech-0 commitments.
+
+### `channelLastCommitment(u16, AccountId32, u8)`: `u32`
+
+- **interface**: `api.query.commitments.channelLastCommitment`
+- **modifier**: `Optional`
+- **summary**: Last write block for a channel target and hotkey.
+
+### `channelMechanismConfigPurgeCursor(u16, u8)`: `u16`
+
+- **interface**: `api.query.commitments.channelMechanismConfigPurgeCursor`
+- **modifier**: `Optional`
+- **summary**: Next channel whose burn configuration must be purged for a retired mechanism.
+
+### `channelMechanismPurgeQueue(u16, u8)`: `Null`
+
+- **interface**: `api.query.commitments.channelMechanismPurgeQueue`
+- **modifier**: `Optional`
+- **summary**: Retired mechanisms whose channel state must be drained before another count change. Individual rows avoid reading or rewriting a network-wide set during administration.
+
+### `channelMechanismRowsDrained(u16, u8)`: `bool`
+
+- **interface**: `api.query.commitments.channelMechanismRowsDrained`
+
+### `channelMechanismTargetsOf(u16, u8, AccountId32, u8)`: `Null`
+
+- **interface**: `api.query.commitments.channelMechanismTargetsOf`
+- **modifier**: `Optional`
+- **summary**: Mechanism-first targets make retirement a bounded prefix operation. The hotkey-first index continues to drive deregistration and deferred renames.
+
+### `channelNetuidPurgeMechanism(NetUid)`: `MechId`
+
+- **interface**: `api.query.commitments.channelNetuidPurgeMechanism`
+- **modifier**: `Optional`
+- **summary**: Next mechanism whose channel state must be removed during dissolution. Persisted so bounded retries never repeat completed mechanism cleanup.
+
+### `channelNeuronPurgeQueue(u16, AccountId32)`: `Null`
+
+- **interface**: `api.query.commitments.channelNeuronPurgeQueue`
+- **modifier**: `Optional`
+- **summary**: Hotkeys whose channel state must be removed by bounded idle work. The target index is retained until that work finishes so cancellation also finds migrated rows.
+
+### `channelPurgePending(NetUid)`: `bool`
+
+- **interface**: `api.query.commitments.channelPurgePending`
+- **summary**: Channel cleanup has begun and must finish before dissolution can complete.
+
+### `channelReservePayerOf(u16, AccountId32, u8)`: `AccountId32`
+
+- **interface**: `api.query.commitments.channelReservePayerOf`
+- **modifier**: `Optional`
+- **summary**: Reserve payer for each channel commitment. Ownership swaps do not move reserves, so cleanup must release the original payer rather than the current owner.
+
+### `channelRevealedCommitments(u16, AccountId32, u8)`: `Vec<(Bytes,u64)>`
+
+- **interface**: `api.query.commitments.channelRevealedCommitments`
+- **modifier**: `Optional`
+- **summary**: Revealed fields retained for channel commitments.
+
+### `channelSwapOrigins(u16, AccountId32, AccountId32)`: `Null`
+
+- **interface**: `api.query.commitments.channelSwapOrigins`
+- **modifier**: `Optional`
+- **summary**: Reverse rename edges `(netuid, new hotkey, old hotkey)`. One row per edge supports overlapping renames and bounded cancellation without global scans.
+
+### `channelSwapPendingHotkeys(u16, AccountId32)`: `AccountId32`
+
+- **interface**: `api.query.commitments.channelSwapPendingHotkeys`
+- **modifier**: `Optional`
+- **summary**: Forward rename edges `(netuid, old hotkey) -> new hotkey`.
+
+### `channelTargetsOf(u16, AccountId32, u8, u8)`: `Null`
+
+- **interface**: `api.query.commitments.channelTargetsOf`
+- **modifier**: `Optional`
+- **summary**: Channel targets indexed by `(netuid, hotkey, mechanism, channel)`. One row per target keeps enqueue, move and cleanup work independent of set size.
+
+### `channelTimelockedIndex(u16, u8, AccountId32)`: `Null`
+
+- **interface**: `api.query.commitments.channelTimelockedIndex`
+- **modifier**: `Optional`
+- **summary**: Additional timelocked channel targets. Keyed separately from `TimelockedIndex` so its encoding and cursor remain backward compatible, while reveal and lifecycle work can use bounded storage iterators instead of copying a global set.
+
+### `channelTimelockRevealCursor`: `Bytes`
+
+- **interface**: `api.query.commitments.channelTimelockRevealCursor`
+- **modifier**: `Optional`
+- **summary**: Raw-key cursor for the bounded, round-robin channel reveal pass. An inclusive cursor survives removal of the previously visited row without starving other entries.
+
+### `channelUsedSpaceOf(u16, AccountId32, u8)`: `UsageTracker`
+
+- **interface**: `api.query.commitments.channelUsedSpaceOf`
+- **modifier**: `Optional`
+- **summary**: Per-target and hotkey tempo usage.
+
+### `commitBurnConfig(u16, u8)`: `CommitBurnParameters`
+
+- **interface**: `api.query.commitments.commitBurnConfig`
+- **modifier**: `Optional`
+- **summary**: Optional floating burn price for each commitment channel.
+
+### `commitBurnSequence(u16, u8)`: `u64`
+
+- **interface**: `api.query.commitments.commitBurnSequence`
+- **summary**: Per-channel monotonic burn receipt sequence.
 
 ### `commitmentOf(u16, AccountId32)`: `Registration`
 
@@ -1045,7 +1155,7 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 ### `basketDailyTurnoverCap`: `u16`
 
 - **interface**: `api.query.subtensorModule.basketDailyTurnoverCap`
-- **summary**: ITEM --> capacity of a fund's `swap_basket` turnover bucket as a u16-normalized share of the fund's NAV (`u16::MAX` = 100%). The bucket refills at `capacity / BASKET_TRADE_REFILL_BLOCKS` per block, so at most one capacity can be pushed through the fund at any instant and about one per day sustained. Each leg is also bounded to [`crate::BASKET_TRADE_MAX_SLIPPAGE_BPS`] of *both* the moving price and the spot price. Set via `AdminUtils::sudo_set_basket_daily_turnover_cap`.
+- **summary**: ITEM --> capacity of a fund's `swap_basket` turnover bucket as a u16-normalized share of the fund's NAV (`u16::MAX` = 100%). The bucket refills continuously over [`BasketTradeRefillBlocks`], so at most one capacity can be pushed through the fund at any instant. Each leg is also bounded by [`BasketTradeMaxSlippageBps`] around the reference selected by [`BasketTradePriceReferenceMode`]. Set via `AdminUtils::sudo_set_basket_daily_turnover_cap`.
 
 ### `basketDepositedTao(AccountId32)`: `TaoBalance`
 
@@ -1067,7 +1177,7 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 - **modifier**: `Optional`
 - **summary**: MAP ( validator_hotkey, netuid ) --> `(alpha_bought, last_block)` of destination-pool flow used by `swap_basket` in the current refill window.
 
-    The standing-position liquidity cap resets when the fund sells the holding back to zero. This map does not: it accumulates alpha bought into `netuid` and decays to zero over [`crate::BASKET_TRADE_REFILL_BLOCKS`], so accumulate/unwind cycles cannot spend the turnover budget as band slack. Follows the fund on hotkey swap (higher used, later block).
+    The standing-position liquidity cap resets when the fund sells the holding back to zero. This map does not: it accumulates alpha bought into `netuid` and decays to zero over [`BasketTradeRefillBlocks`], so accumulate/unwind cycles cannot spend the turnover budget as band slack. Follows the fund on hotkey swap (higher used, later block).
 
 ### `basketMinTradeTao`: `u64`
 
@@ -1088,6 +1198,18 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
     Cumulative sum of every claim's realized payout. See [`BasketDepositedTao`].
 
+### `basketRowsCountedAt(AccountId32)`: `(u64,u32,Option<PalletSubtensorStakingClaimRootRootClaimHotkeyWork>)`
+
+- **interface**: `api.query.subtensorModule.basketRowsCountedAt`
+- **modifier**: `Optional`
+- **summary**: MAP ( validator_hotkey ) --> `(block, extrinsic_index, count)`: the rows and the queued dividend credits of the fund, as the transaction `(block, extrinsic_index)` counted them for the weight of `claim_root_with_hotkey`. `count` is `None` for a fund above the limit of one claim. The weight of that call is computed several times in one transaction: by the block executive, by the fee logic, and by each batch or proxy that holds the call. The first of them counts the fund and writes this record. The others, and the claim, read it. A record of an earlier transaction has no effect. Only a hotkey whose fund has a row or a queued credit gets a record, and a hotkey swap removes it: at most one entry for each fund.
+
+### `basketRowsOpenedAt(AccountId32)`: `(u64,u32)`
+
+- **interface**: `api.query.subtensorModule.basketRowsOpenedAt`
+- **modifier**: `Optional`
+- **summary**: MAP ( validator_hotkey ) --> `(block, extrinsic_index)` of the last transaction in which the fund got a row that its single-hotkey claim weight had not counted: by a `swap_basket` buy, a hotkey swap, or a coldkey swap into the escrow account. `claim_root_with_hotkey` declares its weight from the fund's rows before the transaction runs, so a claim later in that same transaction is refused (`RootClaimTooHeavy`). A hotkey swap removes the record of the old hotkey.
+
 ### `basketShares(AccountId32)`: `u64`
 
 - **interface**: `api.query.subtensorModule.basketShares`
@@ -1099,7 +1221,22 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.basketTradeBucket`
 - **modifier**: `Optional`
-- **summary**: MAP ( validator_hotkey ) --> `(tao_available, last_refill_block)` of the fund's `swap_basket` turnover bucket. A missing row is a full bucket (a new fund starts full). On each trade the bucket is refilled for the blocks elapsed since `last_refill_block` at `budget / BASKET_TRADE_REFILL_BLOCKS` per block, clamped to one budget (NAV at that moment), then the TAO through the middle of the swap is taken out. Follows the fund on hotkey swap (lower level, later refill block).
+- **summary**: MAP ( validator_hotkey ) --> `(tao_available, last_refill_block)` of the fund's `swap_basket` turnover bucket. A missing row is a full bucket (a new fund starts full). On each trade the bucket is refilled for the blocks elapsed since `last_refill_block` at `budget / BasketTradeRefillBlocks` per block, clamped to one budget (NAV at that moment), then the TAO through the middle of the swap is taken out. Follows the fund on hotkey swap (lower level, later refill block).
+
+### `basketTradeMaxSlippageBps`: `u16`
+
+- **interface**: `api.query.subtensorModule.basketTradeMaxSlippageBps`
+- **summary**: Maximum `swap_basket` leg price deviation from its selected reference, in basis points (`10_000` = 100%). Defaults to 2% around the strictest EMA/spot reference. Set via `AdminUtils::sudo_set_basket_trade_max_slippage_bps`.
+
+### `basketTradePriceReferenceMode`: `BasketTradePriceReference`
+
+- **interface**: `api.query.subtensorModule.basketTradePriceReferenceMode`
+- **summary**: Price reference for `swap_basket` leg bounds. Defaults to the strictest of slow EMA, fast EMA, and spot. Governance can select `SpotOnly` through `AdminUtils::sudo_set_basket_trade_price_reference`.
+
+### `basketTradeRefillBlocks`: `u64`
+
+- **interface**: `api.query.subtensorModule.basketTradeRefillBlocks`
+- **summary**: Blocks for an empty `swap_basket` turnover bucket to refill completely and for destination-pool flow usage to decay to zero. Defaults to 7200 blocks. Set via `AdminUtils::sudo_set_basket_trade_refill_blocks`; zero is rejected.
 
 ### `basketTradingEnabled`: `bool`
 
@@ -1490,6 +1627,11 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.gammaEnabled`
 - **summary**: ITEM ( enabled ) | Whether gamma can be minted at all; a subnet also needs [`SubnetGammaEnabled`].
 
+### `gammaSpent(u16, AccountId32, AccountId32)`: `GammaBalance`
+
+- **interface**: `api.query.subtensorModule.gammaSpent`
+- **summary**: NMAP ( netuid, service, hotkey ) --> gamma | The gamma the hotkey has spent at the service on the subnet.
+
 ### `hasMigrationRun(Bytes)`: `bool`
 
 - **interface**: `api.query.subtensorModule.hasMigrationRun`
@@ -1708,6 +1850,11 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.maxRegistrationsPerBlock`
 - **summary**: ITEM( global_max_registrations_per_block )
 
+### `maxTimelockedCommitsPerHotkey(NetUid)`: `u8`
+
+- **interface**: `api.query.subtensorModule.maxTimelockedCommitsPerHotkey`
+- **summary**: MAP ( netuid ) --> maximum Yuma timelocked commits per hotkey and queue epoch.
+
 ### `maxWeightsLimit(NetUid)`: `u16`
 
 - **interface**: `api.query.subtensorModule.maxWeightsLimit`
@@ -1723,6 +1870,47 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.mechanismEmissionSplit`
 - **modifier**: `Optional`
 - **summary**: MAP ( netuid ) --> Normalized vector of emission split proportion between subnet mechanisms
+
+### `mechWeightDelegate(u16, AccountId32)`: `AccountId32`
+
+- **interface**: `api.query.subtensorModule.mechWeightDelegate`
+- **modifier**: `Optional`
+- **summary**: The account authorized to submit weights for a validator on one mechanism. The tuple key is the mechanism storage index and the validator hotkey.
+
+### `mechWeightDelegateMechanismMoves(u16, u8, AccountId32)`: `Null`
+
+- **interface**: `api.query.subtensorModule.mechWeightDelegateMechanismMoves`
+- **modifier**: `Optional`
+- **summary**: Pending moves indexed by mechanism and origin hotkey.
+
+### `mechWeightDelegateMoveOrigins(u16, AccountId32, AccountId32, u8)`: `Null`
+
+- **interface**: `api.query.subtensorModule.mechWeightDelegateMoveOrigins`
+- **modifier**: `Optional`
+- **summary**: Incoming rename edges for a validator hotkey. These must be removed on deregistration.
+
+### `mechWeightDelegateMoveQueue(u16, AccountId32, u8)`: `PendingMechWeightDelegateMove`
+
+- **interface**: `api.query.subtensorModule.mechWeightDelegateMoveQueue`
+- **modifier**: `Optional`
+
+### `mechWeightDelegatePurgeQueue(u16, AccountId32)`: `Option`
+
+- **interface**: `api.query.subtensorModule.mechWeightDelegatePurgeQueue`
+- **modifier**: `Optional`
+- **summary**: Invalidated validator hotkeys awaiting bounded removal of their grants.
+
+### `mechWeightDelegateRetirementQueue(u16, u8)`: `Null`
+
+- **interface**: `api.query.subtensorModule.mechWeightDelegateRetirementQueue`
+- **modifier**: `Optional`
+- **summary**: Retired mechanisms whose grants must be removed before another count change.
+
+### `mechWeightDelegateTargets(u16, AccountId32, u8)`: `Null`
+
+- **interface**: `api.query.subtensorModule.mechWeightDelegateTargets`
+- **modifier**: `Optional`
+- **summary**: Mechanisms granted by one validator. Per-grant rows avoid rewriting a set.
 
 ### `minActivityCutoff`: `u16`
 
@@ -2159,6 +2347,11 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 - **interface**: `api.query.subtensorModule.subnetEmissionWeights`
 - **summary**: MAP ( netuid ) --> `[burn, recycle, owner, validator, miner]` in `u64::MAX` parts, summing to exactly one. See `subnets::emission_weights`.
 
+### `subnetEmissionWeightsRateLimit`: `u64`
+
+- **interface**: `api.query.subtensorModule.subnetEmissionWeightsRateLimit`
+- **summary**: Blocks an owner must wait between subnet emission weight vector updates. Set network-wide through `AdminUtils::sudo_set_subnet_emission_weights_rate_limit`.
+
 ### `subnetEpochConsensus(NetUid)`: `EpochConsensus`
 
 - **interface**: `api.query.subtensorModule.subnetEpochConsensus`
@@ -2178,7 +2371,7 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
 - **interface**: `api.query.subtensorModule.subnetFastMovingPrice`
 - **modifier**: `Optional`
-- **summary**: MAP ( netuid ) --> fast moving price | A fast EMA of the subnet's spot price (TAO per alpha, unclamped) with a [`BASKET_FAST_EMA_HALF_LIFE_BLOCKS`] half-life, updated once per block right after [`SubnetMovingPrice`] from the spot at the end of the previous block, so no extrinsic in the current block can move it. It is a trading anchor only — `swap_basket` bounds every leg to within [`BASKET_TRADE_MAX_SLIPPAGE_BPS`] of the strictest of this, the slow EMA, and spot — and plays no part in emission. Absent until the subnet's first update after the upgrade (trading on it is refused until then).
+- **summary**: MAP ( netuid ) --> fast moving price | A fast EMA of the subnet's spot price (TAO per alpha, unclamped) with a [`BASKET_FAST_EMA_HALF_LIFE_BLOCKS`] half-life, updated once per block right after [`SubnetMovingPrice`] from the spot at the end of the previous block, so no extrinsic in the current block can move it. It remains an emission-independent valuation anchor and is required by `swap_basket` in the default [`BasketTradePriceReference::StrictestEmaAndSpot`] mode. Trades are refused while it is missing or zero; governance-selected spot-only mode does not require it.
 
 ### `subnetGammaEmission(NetUid)`: `Vec<(u16,u64)>`
 

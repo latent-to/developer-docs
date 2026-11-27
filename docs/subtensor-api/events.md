@@ -8,7 +8,7 @@ description: "The following page contains runtime events emitted by the Subtenso
 The following page contains runtime events emitted by the Subtensor runtime. Accessible via `api.events.<Pallet>.<EventName>`.
 
 :::info
-Generated from Subtensor runtime spec version **492**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **497**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -63,6 +63,21 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 - **interface**: `api.events.adminUtils.BasketMinTradeTaoSet`
 - **summary**: The minimum basket trade value was set.
 
+### `BasketTradeMaxSlippageBpsSet(u16)`
+
+- **interface**: `api.events.adminUtils.BasketTradeMaxSlippageBpsSet`
+- **summary**: The basket trade band (`BasketTradeMaxSlippageBps`) was set.
+
+### `BasketTradePriceReferenceSet(pallet_subtensor::BasketTradePriceReference)`
+
+- **interface**: `api.events.adminUtils.BasketTradePriceReferenceSet`
+- **summary**: The basket trade price reference (`BasketTradePriceReference`) was set.
+
+### `BasketTradeRefillBlocksSet(u64)`
+
+- **interface**: `api.events.adminUtils.BasketTradeRefillBlocksSet`
+- **summary**: The basket turnover-bucket refill period (`BasketTradeRefillBlocks`) was set.
+
 ### `BasketTradingFrozenSet(AccountId, bool)`
 
 - **interface**: `api.events.adminUtils.BasketTradingFrozenSet`
@@ -98,6 +113,11 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 - **interface**: `api.events.adminUtils.CollateralLockShareSet`
 - **summary**: Event emitted when the miner collateral lock share is set for a subnet.
 
+### `CommitBurnConfigSet(NetUid, MechId, u8)`
+
+- **interface**: `api.events.adminUtils.CommitBurnConfigSet`
+- **summary**: A channel commitment burn setting was changed by its owner or root.
+
 ### `GammaEnabledSet(bool)`
 
 - **interface**: `api.events.adminUtils.GammaEnabledSet`
@@ -122,6 +142,11 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
 - **interface**: `api.events.adminUtils.SubnetEmissionEnabledSet`
 - **summary**: Pool-side subnet emission injections and chain buys were enabled or disabled.
+
+### `SubnetEmissionWeightsRateLimitSet(u64)`
+
+- **interface**: `api.events.adminUtils.SubnetEmissionWeightsRateLimitSet`
+- **summary**: The subnet emission weight vector owner rate limit was set.
 
 ### `SubnetGammaEmissionWhitelistedSet(NetUid, bool)`
 
@@ -274,10 +299,20 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
 ## `commitments` {#pallet-commitments}
 
+### `ChannelCommitmentRevealed(NetUid, MechId, u8, AccountId)`
+
+- **interface**: `api.events.commitments.ChannelCommitmentRevealed`
+- **summary**: A channel timelock-encrypted commitment was auto-revealed.
+
 ### `Commitment(NetUid, AccountId)`
 
 - **interface**: `api.events.commitments.Commitment`
 - **summary**: A commitment was set
+
+### `CommitmentBurned(NetUid, MechId, u8, AccountId, AccountId, TaoBalance, AlphaBalance, TaoBalance, u64, [u8; 32])`
+
+- **interface**: `api.events.commitments.CommitmentBurned`
+- **summary**: A coldkey paid to publish a channel commitment.
 
 ### `CommitmentRevealed(NetUid, AccountId)`
 
@@ -1161,14 +1196,14 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 ### `GammaDepositSpenderSet(NetUid, AccountId, AccountId, AccountId)`
 
 - **interface**: `api.events.subtensorModule.GammaDepositSpenderSet`
-- **summary**: A gamma deposit's spender was set.
+- **summary**: A gamma deposit's spender was set (deprecated: deposits have no spender).
 
-### `GammaEmissionMinted(NetUid, NetUid, AccountId, AccountId, AccountId, AlphaBalance, TaoBalance, AlphaBalance, TaoBalance, GammaBalance)`
+### `GammaEmissionMinted(NetUid, NetUid, AccountId, AccountId, AlphaBalance, TaoBalance, AlphaBalance, TaoBalance, GammaBalance)`
 
 - **interface**: `api.events.subtensorModule.GammaEmissionMinted`
 - **summary**: A subnet's gamma share minted gamma on its target.
 
-### `GammaMinted(NetUid, AccountId, AccountId, AccountId, Option<GammaBalance>, TaoBalance, AlphaBalance, TaoBalance, GammaBalance)`
+### `GammaMinted(NetUid, AccountId, AccountId, Option<GammaBalance>, TaoBalance, AlphaBalance, TaoBalance, GammaBalance)`
 
 - **interface**: `api.events.subtensorModule.GammaMinted`
 - **summary**: Gamma was minted for burned alpha.
@@ -1181,12 +1216,12 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 ### `GammaSpendSkipped(NetUid, AccountId, AccountId, GammaBalance, [u8; 32], sp_runtime::DispatchError)`
 
 - **interface**: `api.events.subtensorModule.GammaSpendSkipped`
-- **summary**: A spend entry was skipped, and spent nothing.
+- **summary**: A spend entry was skipped, and spent nothing (deprecated: spends are not batched).
 
-### `GammaSpent(NetUid, AccountId, AccountId, AccountId, GammaBalance, [u8; 32])`
+### `GammaSpent(NetUid, AccountId, AccountId, GammaBalance)`
 
 - **interface**: `api.events.subtensorModule.GammaSpent`
-- **summary**: Gamma was spent from a deposit and burned.
+- **summary**: A hotkey spent gamma from its deposit at a service; the gamma is burned.
 
 ### `HotkeySwapped(AccountId, AccountId, AccountId)`
 
@@ -1268,10 +1303,20 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.MaxRegistrationsPerBlockSet`
 - **summary**: we set max registrations per block.
 
+### `MaxTimelockedCommitsPerHotkeySet(NetUid, u8)`
+
+- **interface**: `api.events.subtensorModule.MaxTimelockedCommitsPerHotkeySet`
+- **summary**: Maximum Yuma timelocked commits per hotkey and queue epoch was set.
+
 ### `MaxWeightLimitSet(NetUid, u16)`
 
 - **interface**: `api.events.subtensorModule.MaxWeightLimitSet`
 - **summary**: max weight limit has been set for a subnet (deprecated: this event is unused).
+
+### `MechWeightDelegateSet(NetUid, MechId, AccountId, Option<T::AccountId>)`
+
+- **interface**: `api.events.subtensorModule.MechWeightDelegateSet`
+- **summary**: A validator changed its weight delegate on one mechanism.
 
 ### `MinAllowedUidsSet(NetUid, u16)`
 
@@ -1443,7 +1488,7 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 - **interface**: `api.events.subtensorModule.ServiceRemoved`
 - **summary**: A hotkey's service was removed from a subnet.
 
-### `ServiceSet(NetUid, AccountId, BoundedVec<u8, ConstU32<MAX_SERVICE_URL_LEN>>, AccountId)`
+### `ServiceSet(NetUid, AccountId, BoundedVec<u8, ConstU32<MAX_SERVICE_URL_LEN>>)`
 
 - **interface**: `api.events.subtensorModule.ServiceSet`
 - **summary**: A hotkey's service was set on a subnet.

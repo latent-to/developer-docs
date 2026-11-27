@@ -8,7 +8,7 @@ description: "This page contains error variants returned by the Subtensor runtim
 This page contains error variants returned by the Subtensor runtime. Accessible via `api.errors.<Pallet>.<ErrorName>`.
 
 :::info
-Generated from Subtensor runtime spec version **492**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
+Generated from Subtensor runtime spec version **497**. Connected to: `wss://entrypoint-finney.opentensor.ai:443`
 :::
 
 - **[adminUtils](#pallet-adminutils)**
@@ -191,6 +191,31 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
 - **interface**: `api.errors.commitments.AccountNotAllowedCommit`
 - **summary**: Account is not allowed to make commitments to the chain
+
+### `AccountNotAuthorized`
+
+- **interface**: `api.errors.commitments.AccountNotAuthorized`
+- **summary**: The signer is not authorized to fund this hotkey commitment.
+
+### `BurnPriceLimitExceeded`
+
+- **interface**: `api.errors.commitments.BurnPriceLimitExceeded`
+- **summary**: The current price is above the caller's `max_burn`.
+
+### `ChannelMigrationPending`
+
+- **interface**: `api.errors.commitments.ChannelMigrationPending`
+- **summary**: This hotkey's channels are awaiting a bounded hotkey-swap migration.
+
+### `FreeCommitmentDisabled`
+
+- **interface**: `api.errors.commitments.FreeCommitmentDisabled`
+- **summary**: A free hotkey-signed commit cannot pay this channel's enabled burn.
+
+### `MechanismDoesNotExist`
+
+- **interface**: `api.errors.commitments.MechanismDoesNotExist`
+- **summary**: The target mechanism does not exist.
 
 ### `SpaceLimitExceeded`
 
@@ -1366,7 +1391,7 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 ### `BasketTurnoverBudgetExceeded`
 
 - **interface**: `api.errors.subtensorModule.BasketTurnoverBudgetExceeded`
-- **summary**: The trade would push more TAO through the fund than its turnover bucket holds ([`crate::BasketDailyTurnoverCap`] of fund NAV, refilling over [`crate::BASKET_TRADE_REFILL_BLOCKS`]). Wait for the bucket to refill or trade a smaller amount.
+- **summary**: The trade would push more TAO through the fund than its turnover bucket holds ([`crate::BasketDailyTurnoverCap`] of fund NAV, refilling over [`crate::BasketTradeRefillBlocks`]). Wait for the bucket to refill or trade a smaller amount.
 
 ### `BeneficiaryDoesNotOwnHotkey`
 
@@ -1636,7 +1661,7 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 ### `GammaDepositSpenderMismatch`
 
 - **interface**: `api.errors.subtensorModule.GammaDepositSpenderMismatch`
-- **summary**: A mint named a spender other than the one its gamma deposit names.
+- **summary**: Deprecated: deposits have no spender. Kept so SCALE error indices stay stable.
 
 ### `GammaDisabled`
 
@@ -1981,7 +2006,12 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 ### `NotGammaDepositSpender`
 
 - **interface**: `api.errors.subtensorModule.NotGammaDepositSpender`
-- **summary**: The signer is not the gamma deposit's spender.
+- **summary**: Deprecated: deposits have no spender. Kept so SCALE error indices stay stable.
+
+### `NotMechWeightDelegate`
+
+- **interface**: `api.errors.subtensorModule.NotMechWeightDelegate`
+- **summary**: The signer is not the validator's delegate for this exact mechanism.
 
 ### `NotRootSubnet`
 
@@ -2046,7 +2076,7 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 ### `RootClaimTooHeavy`
 
 - **interface**: `api.errors.subtensorModule.RootClaimTooHeavy`
-- **summary**: A root claim would process more root hotkeys and basket rows than the fixed admission envelope. Use `claim_root_with_hotkey` per validator so admission weight matches the holdings actually walked.
+- **summary**: A root claim would process more root hotkeys and basket rows than the admission envelope. Use `claim_root_with_hotkey` per validator so admission weight matches the holdings actually walked. A `claim_root_with_hotkey` also fails with this error when a `swap_basket` buy or a hotkey swap gave the same fund a new row earlier in the same transaction; send the claim in a later transaction.
 
 ### `RootNetworkDoesNotExist`
 
@@ -2077,6 +2107,11 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.SameNetuid`
 - **summary**: Invalid netuid duplication
+
+### `ServiceDoesNotExist`
+
+- **interface**: `api.errors.subtensorModule.ServiceDoesNotExist`
+- **summary**: The hotkey has no service on this subnet.
 
 ### `ServingRateLimitExceeded`
 
@@ -2197,6 +2232,11 @@ Generated from Subtensor runtime spec version **492**. Connected to: `wss://entr
 
 - **interface**: `api.errors.subtensorModule.TooManyUnrevealedCommits`
 - **summary**: Maximum commit limit reached
+
+### `TooManyWeightsForNullMechanism`
+
+- **interface**: `api.errors.subtensorModule.TooManyWeightsForNullMechanism`
+- **summary**: A Null weight row exceeds the total row budget divided by mechanism count.
 
 ### `TransactorAccountShouldBeHotKey`
 
